@@ -1,0 +1,100 @@
+// Standard Breakpoints
+$breakpoints: (
+    xxs: 480px,
+    xs: 768px,
+    sm: 991px,
+    md: 1280px,
+    lg: 1920px,
+);
+
+// Function for handling breakpoints
+@function breakpoint($breakpoint) {
+    $value: map-get($breakpoints, $breakpoint);
+
+    @if not $value {
+        @error "Invalid breakpoint: #{$breakpoint}.";
+        @return null;
+    }
+
+    @return $value;
+}
+
+// Function for handling custom sizes
+@function custom-size($size, $type: max) {
+    @if not unitless($size) {
+        @error "Invalid custom size: #{$size}. Please provide a unitless value.";
+        @return null;
+    }
+
+    @if $type == max {
+        @return $size + px; // Add "px" to the size
+    } @else if $type == min {
+        @return $size + px; // Add "px" to the size
+    } @else {
+        @error "Invalid size type: #{$type}. Use 'min' or 'max'.";
+        @return null;
+    }
+}
+
+// Media queries mixin for breakpoints
+@mixin break($breakpoint, $type: max) {
+    $value: breakpoint($breakpoint);
+
+    @if not $value {
+        @content;
+    } @else {
+        @if $type == max {
+            @media screen and (max-width: $value) {
+                @content;
+            }
+        } @else if $type == min {
+            @media screen and (min-width: $value) {
+                @content;
+            }
+        } @else {
+            @error "Invalid breakpoint type: #{$type}. Use 'min' or 'max'.";
+        }
+    }
+}
+
+// Mixin for handling custom sizes
+@mixin breakSize($size, $type: max) {
+    $value: custom-size($size, $type);
+
+    @if not $value {
+        @content;
+    } @else {
+        @if $type == max {
+            @media screen and (max-width: #{$value}) {
+                // Use interpolation here
+                @content;
+            }
+        } @else if $type == min {
+            @media screen and (min-width: #{$value}) {
+                // Use interpolation here
+                @content;
+            }
+        } @else {
+            @error "Invalid size type: #{$type}. Use 'min' or 'max'.";
+        }
+    }
+}
+
+// // Example usage
+// .element {
+//   @include break(md, min) {
+//     // Styles for medium-sized screens and larger
+//   }
+
+//   @include break(sm) {
+//     // Styles for small-sized screens and smaller
+//   }
+
+//   @include breakSize(600, max) {
+//     // Styles for screens up to 600px wide
+//   }
+
+//   @include breakSize(800, min) {
+//     // Styles for screens at least 800px wide
+//   }
+// }

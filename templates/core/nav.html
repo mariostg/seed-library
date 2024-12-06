@@ -1,0 +1,7 @@
+    <nav class='form-container'>
+        <div><a href="{% url 'index' %}">Home</a></div>&nbsp;&nbsp;|&nbsp;&nbsp;
+        <div><a href="{% url 'search-plant' %}">New Search</a></div>&nbsp;&nbsp;|&nbsp;&nbsp;
+        {% if request.user.is_authenticated %}
+        <div><a href="{% url 'update-availability' %}">Update Availability</a></div>
+        {% endif %}
+    </nav>

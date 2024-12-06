@@ -1,0 +1,33 @@
+.show {
+  display: block;
+}
+.hide {
+  display: none;
+  div {
+    display: flex;
+    justify-content: space-between;
+    span {
+      padding: 0 0.75rem;
+    }
+  }
+}
+
+.yellow {
+  background-color: yellow;
+}
+
+img {
+  height: auto;
+  max-width: 100%;
+}
+
+.checkmark::before {
+  content: "\2713";
+  display: inline-block;
+  color: green;
+}
+.crossmark::before {
+  content: "\2717";
+  display: inline-block;
+  color: red;
+}

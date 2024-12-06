@@ -1,0 +1,12 @@
+.git/
+.gitignore
+.venv-owsl
+.env
+.vscode
+.DS_Store
+*__pycache__*
+README.md
+rsync-exclude.txt
+upload.sh
+scss/
+db.sqlite3

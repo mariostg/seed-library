@@ -1,0 +1,36 @@
+@charset "UTF-8";
+.show {
+  display: block;
+}
+
+.hide {
+  display: none;
+}
+.hide div {
+  display: flex;
+  justify-content: space-between;
+}
+.hide div span {
+  padding: 0 0.75rem;
+}
+
+.yellow {
+  background-color: yellow;
+}
+
+img {
+  height: auto;
+  max-width: 100%;
+}
+
+.checkmark::before {
+  content: "✓";
+  display: inline-block;
+  color: green;
+}
+
+.crossmark::before {
+  content: "✗";
+  display: inline-block;
+  color: red;
+}

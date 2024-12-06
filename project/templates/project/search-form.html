@@ -1,0 +1,71 @@
+
+<div class="form-container">
+    <form class='form' action="/search-plant/" method="GET">
+        <header class="form__header">Input one or many search criterion</header>
+        <div class="panel">
+        <div class="flex-col">
+            <div class="form-label">Plant Names</div>
+            <div class="flex-row">
+                <div class="form__field"><label class="form-label">Latin</label> {{form.latin_name}}</div>
+                <div class="form__field"><label class="form-label">English</label> {{form.english_name}}</div>
+                <div class="form__field"><label class="form-label">French</label> {{form.french_name}}</div>
+            </div>
+        </div>
+
+        <div class="flex-row">
+            <div class="flex-col">
+                <div class="form-label">Sun Requirement</div>
+                <div class="light-range__inputs">
+                    <div class="form__field"><label class="form-label">Max</label>{{form.light_from}}</div>
+                    <div class="form__field"><label class="form-label">Min</label>{{form.light_to}}</div>
+                </div>
+            </div>
+            <div class="flex-col">
+                <div class="form-label">Humidity Range</div>
+                <div class="humidity-range__inputs">
+                    <div class="form__field"><label class="form-label">Min</label>{{form.soil_humidity_min}}</div>
+                    <div class="form__field"><label class="form-label">Max</label>{{form.soil_humidity_max}}</div>
+                </div>
+            </div>
+            <div class="flex-col">
+                <div class="form-label">Bloom Period</div>
+                <div class="humidity-range__inputs">
+                    <div class="form__field"><label class="form-label">Start</label>{{form.bloom_start}}</div>
+                    <div class="form__field"><label class="form-label">End</label>{{form.bloom_end}}</div>
+                </div>
+            </div>
+            <div class="flex-col">
+                <div class="form-label">Harvesting Period</div>
+                <div class="humidity-range__inputs">
+                    <div class="form__field"><label class="form-label">Start</label>{{form.harvesting_start}}</div>
+                    <div class="form__field"><label class="form-label">End</label>{{form.harvesting_end}}</div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="flex-col">
+            <div class="form-label">Growth</div>
+            <div class="flex-row">
+                <div class="form__field"><label class="form-label">Germinate Easily</label>{{form.germinate_easy}}</div>
+                <div class="form__field"><label class="form-label">Maximum height</label>{{form.max_height}}</div>
+                <div class="form__field"><label class="form-label">Stratification duration</label>{{form.stratification_duration}}</div>
+            </div>
+        </div>
+
+        <div class="flex-col">
+            <div class="form-label">Seed Sharing</div>
+            <div class="flex-row">
+
+                <div class="form__field">{{form.sharing_priority.label_tag}}{{form.sharing_priority}}</div>
+                <div class="form__field">{{form.seed_availability.label_tag}}{{form.seed_availability}}</div>
+            </div>
+
+        </div>
+        <div class="button-row">
+            <button type="submit" class="button">Lancer recherche</button>
+            <a href="{% url 'search-plant' %}" class="button">Reset</a>
+        </div>
+    </div>
+    </form>
+</div>

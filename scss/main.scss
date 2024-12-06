@@ -1,0 +1,154 @@
+@import "_variables";
+@import "_normalize";
+@import "_form";
+@import "_layout";
+body {
+  font-family: sans-serif;
+  line-height: 1.5rem;
+  background-color: $brown;
+}
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+header {
+  background-color: $yellow;
+}
+.page-container {
+  max-width: 960px;
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+}
+.sheet {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 1rem 0.5rem;
+  align-items: center;
+}
+img.logo {
+  max-width: 225px;
+}
+
+h2 {
+  padding: 1rem 0;
+}
+
+.title {
+  display: flex;
+  flex-direction: column;
+}
+.dark-row {
+  background-color: rgba(white, 0.7);
+  padding: 0 1rem;
+  &:last-child {
+    border-radius: 0 0 1rem 1rem;
+  }
+}
+.normal-row {
+  padding: 0 1rem;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+}
+.priority {
+  padding: 0 8px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  background-color: #ccd5ae;
+  border-radius: 1rem;
+  max-width: 600px;
+  width: 100%;
+  gap: 1rem;
+  &__header {
+    background: rgba(white, 0.5);
+    border-radius: 1rem 1rem 0 0;
+    text-align: center;
+    font-size: 1.1rem;
+    font-weight: 700;
+    padding: 4px 2rem;
+    display: flex;
+    justify-content: space-around;
+  }
+  &__detail {
+    border-radius: 0 0 1rem 1rem;
+    div {
+      display: flex;
+      justify-content: space-between;
+      span {
+        padding: 0.25rem 0.75rem;
+      }
+    }
+  }
+}
+
+.ok {
+  background: green;
+  color: #fff;
+}
+.maybe {
+  background: rgb(235, 201, 7);
+  color: black;
+}
+.no {
+  background: rgb(215, 19, 19);
+  color: #fff;
+}
+.enough {
+  background: lightskyblue;
+  color: #000;
+}
+
+/*Table*/
+table {
+  border-collapse: collapse;
+  @include break(xxs) {
+    width: 790px;
+  }
+  @include break(sm) {
+    width: 790px;
+  }
+}
+thead {
+  background-color: $dark-green;
+}
+th {
+  text-align: left;
+  padding: 0 1rem;
+}
+.odd-row {
+  background-color: $light-green;
+}
+.even-row {
+  background-color: $yellow;
+}
+.table-overflow {
+  @include break(xxs) {
+    width: 360px;
+    overflow-x: auto;
+  }
+  @include break(sm) {
+    width: 790px;
+    overflow-x: auto;
+  }
+}
+.outcome {
+  background-color: $beige;
+  padding: 0.2rem 1rem;
+}
+
+.align-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

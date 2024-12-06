@@ -1,0 +1,41 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block content %}
+
+<div class="page-container">
+  <p>Welcome to the native plant database of the Ottawa Wildflower Seed Library. To get started, move ahead to the <a href="{% url 'search-plant' %}">search page</a>.  From there, you can search the database using a wide variety of search criteria.</p>
+<p>The purpose of this database is to provide a one stop place to provide all information to grow, harvest and pack seeds.  It will allow you to enjoy the growth and blooming of indigenous species in your garden while giving you the opportunity to share the seeds you patiently harvested. Visit the <a target='blank' href="https://wildflowerseedlibrary.ca/plan-your-garden/">Plan your garden</a> page for more inspiration and resources.</p>
+
+<p>Plants <a href="search-plant/?seed_availability=true">available</a> at the next event</p>
+
+<p>The seeds can be donated at any events or at one of our drop-off locations across the city.  The donation form is available here:  <a href="https://wildflowerseedlibrary.ca/donate-seeds/">https://wildflowerseedlibrary.ca/donate-seeds/</a> </p>
+<p>Link to video on how to pack seeds requiring to be kept dry at room temperature: <a href="https://www.youtube.com/watch?v=sm6QGOEytrA&t=42s">https://www.youtube.com/watch?v=sm6QGOEytrA&t=42s</a></p>
+<p>Link to video on how to pack seeds requiring to be kept moisten and cold: <a href="https://www.youtube.com/watch?v=PfhT2i0SpzA&t=13s">https://www.youtube.com/watch?v=PfhT2i0SpzA&t=13s</a></p>
+<p>Instructions to pack envelopes can be found here <a href="https://docs.google.com/document/d/1LSl3RB_EqPeeC9ICKS_5OUK6nvAyWQr4eoZkfw-PMUU/edit">https://docs.google.com/document/d/1LSl3RB_EqPeeC9ICKS_5OUK6nvAyWQr4eoZkfw-PMUU/edit</a></p>
+<p>If you have any questions or comments, please direct them to <a href="mailto:wildflowerseedlibrary@gmail.com">wildflowerseedlibrary@gmail.com</a> 	</p>
+<p>The number of cold moist stratification (CMS) days is the amount of time the seeds must be kept cold and moist in order to enable germination. This can be done by keeping the seeds in the fridge for that time or by winter sowing. If seeds are winter sown, the number of CMS days is the minimum amount of time they must be outside in cold temperatures. In Ottawa, to determine the latest that seeds can go outside, the best practise is to count backwards from about mid-April.</p>
+
+<h4>LIGHT REQUIREMENTS</h4>
+<ul>
+  <li>Full sun: More than 6 hours of direct sun a day</li>
+  <li>Part shade: More than 2 or 3 hours but less than 6 hours of direct sun a day</li>
+  <li>Full shade: Less than 2 or 3 hours of direct sun a day</li>
+</ul>
+
+<h4>MOISTURE</h4>
+<ul>
+  <li>Dry: Water runs through after rainfall</li>
+  <li>Medium: Sometimes holds water but for short periods of time</li>
+  <li>Wet: Stays damp all year.</li>
+</ul>
+
+<h4>HARVESTING</h4>
+<ul>
+  <li>Paper bag: Air dry, in paper bags or open containers. Do not use a dehydrator</li>
+  <li>Fridge: Keep moisten and cool until sowing. In ziploc bag, in fridge, in a moisten paper towel, coffee filter, perlite mix, regular potting mix or towel</li>
+</ul>
+
+</div>
+
+{% endblock content %}

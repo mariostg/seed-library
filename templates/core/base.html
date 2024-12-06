@@ -1,0 +1,32 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="{% static 'css/main.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/plant-file.css' %}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wild flower seed library Database</title>
+  </head>
+  <body>
+
+    <header class='form-container'>
+      <a target='blank'href="https://wildflowerseedlibrary.ca/">
+        <img class='logo' src="{% static 'images/logo.png' %}" alt="Login System Logo" />
+      </a>
+    </header>
+    {% include "core/nav.html" %}
+    <main>
+      {% if messages %}
+      {% for message in messages %}
+      <div class="container alert  alert--{{message.tags}}">
+        <p class="alert__message">{{message|safe}}</p>
+      </div>
+      {% endfor %}
+      {% endif %}
+          {% block content %}
+
+          {% endblock content %}
+    </main>
+  </body>
+</html>
