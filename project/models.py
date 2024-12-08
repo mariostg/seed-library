@@ -94,6 +94,14 @@ class Lighting(Base):
         return self.lighting
 
 
+class Color(Base):
+    color = models.CharField(max_length=25, blank=True)
+
+
+class Habitat(Base):
+    habitat = models.CharField(max_length=30, blank=True)
+
+
 class SoilHumidity(Base):
     soil_humidity = models.CharField(max_length=45, blank=True)
 
@@ -163,6 +171,13 @@ class SeedLibrary(Base):
     wind_break_hedge = models.BooleanField(default=False, null=True, blank=True)
     erosion_control = models.BooleanField(default=False, null=True, blank=True)
     seed_availability = models.BooleanField(default=False, null=True, blank=True)
+    keystones_species = models.BooleanField(default=False, null=True, blank=True)
+    draught_tolerent = models.BooleanField(default=False, null=True, blank=True)
+    salt_tolerent = models.BooleanField(default=False, null=True, blank=True)
+    deer_tolerent = models.BooleanField(default=False, null=True, blank=True)
+    easy_to_contain = models.BooleanField(default=False, null=True, blank=True)
+    flower_color = models.ForeignKey(Color, on_delete=models.RESTRICT, null=True, blank=True)
+    habitat = models.ForeignKey(Habitat, on_delete=models.RESTRICT, null=True, blank=True)
 
     def __str__(self) -> str:
         return f"{self.latin_name} | {self.english_name} | {self.french_name}| {self.soil_humidity_max}"
