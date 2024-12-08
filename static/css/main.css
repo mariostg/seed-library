@@ -628,6 +628,9 @@ h2 {
 .card__detail div span {
   padding: 0.25rem 0.75rem;
 }
+.card__detail div span > span {
+  padding: 0;
+}
 
 .ok {
   background: green;

@@ -87,6 +87,9 @@ h2 {
       justify-content: space-between;
       span {
         padding: 0.25rem 0.75rem;
+        & > span {
+          padding: 0;
+        }
       }
     }
   }
