@@ -89,6 +89,7 @@ class SeedStorageLabelInfo(Base):
 
 class Lighting(Base):
     lighting = models.CharField(max_length=45, blank=True)
+    definition = models.CharField(max_length=75, blank=True)
 
     def __str__(self) -> str:
         return self.lighting
@@ -104,6 +105,7 @@ class Habitat(Base):
 
 class SoilHumidity(Base):
     soil_humidity = models.CharField(max_length=45, blank=True)
+    definition = models.CharField(max_length=75, blank=True)
 
     def __str__(self) -> str:
         return self.soil_humidity
