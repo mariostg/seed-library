@@ -98,9 +98,15 @@ class Lighting(Base):
 class Color(Base):
     color = models.CharField(max_length=25, blank=True)
 
+    def __str__(self) -> str:
+        return self.color
 
-class Habitat(Base):
-    habitat = models.CharField(max_length=30, blank=True)
+
+class Habit(Base):
+    habit = models.CharField(max_length=30, blank=True)
+
+    def __str__(self) -> str:
+        return self.habit
 
 
 class SoilHumidity(Base):
@@ -179,7 +185,7 @@ class SeedLibrary(Base):
     deer_tolerent = models.BooleanField(default=False, null=True, blank=True)
     easy_to_contain = models.BooleanField(default=False, null=True, blank=True)
     flower_color = models.ForeignKey(Color, on_delete=models.RESTRICT, null=True, blank=True)
-    habitat = models.ForeignKey(Habitat, on_delete=models.RESTRICT, null=True, blank=True)
+    habit = models.ForeignKey(Habit, on_delete=models.RESTRICT, null=True, blank=True)
 
     def __str__(self) -> str:
         return f"{self.latin_name} | {self.english_name} | {self.french_name}| {self.soil_humidity_max}"
