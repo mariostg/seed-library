@@ -128,6 +128,9 @@ textarea {
   grid-column: 1/-1;
   resize: vertical;
 }
+input[type="submit"] {
+  height: 48px;
+}
 input[type="checkbox"] {
   display: grid;
   place-content: center;
@@ -172,20 +175,71 @@ input[type="checkbox"]:disabled {
   color: #959495;
   cursor: not-allowed;
 }
-.button {
+.btn {
+  font-family: inherit;
+  font-size: 1.5rem;
+  background-color: $submit;
   border: none;
-  background: $submit;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   color: $form;
-  border-radius: 5px;
-  padding: 1rem;
-  text-align: center;
-  width: 100%;
+  border-radius: 4px;
+  box-shadow: 0 3px 5px rgba(75, 85, 68, 0.8);
+  padding: 0.5em 1em;
+  min-width: 15ch;
+  min-height: 24px;
+  transition: 220ms all ease-in-out;
+  line-height: 1.1rem;
+  text-decoration: none;
+  margin: 0.5rem;
+
   &:hover {
     cursor: pointer;
   }
+
+  &:hover,
+  :active {
+    opacity: 0.6;
+    color: #f3f3f3;
+  }
+  &:focus {
+    outline-style: solid;
+    outline-color: transparent;
+    box-shadow: 0 0 0 2px rgba(75, 85, 68, 0.8);
+  }
+
   &-row {
     display: flex;
     padding: 1rem;
     gap: 1rem;
+  }
+  &-add {
+    background: url(../images/icon-btn-add.svg) 5px 1px no-repeat;
+    background-color: #404040;
+    background-size: 2rem;
+    padding-bottom: 0.1rem;
+    padding-right: 1rem;
+    min-width: fit-content;
+  }
+  &-edit {
+    background: url(../images/icon-btn-edit.svg) 5px 1px no-repeat;
+    background-color: #404040;
+    background-size: 2rem;
+    padding-bottom: 0.1rem;
+    padding-right: 1rem;
+    min-width: fit-content;
+  }
+  &-delete {
+    background: url(../images/icon-btn-delete.svg) 5px 1px no-repeat;
+    background-size: 2rem;
+    min-width: fit-content;
+    background-color: #404040;
+    padding-bottom: 0.1rem;
+    padding-right: 1rem;
+  }
+  &-back {
+    background-color: #404040;
   }
 }

@@ -15,6 +15,13 @@ urlpatterns = [
     path("toggle-availability/<int:pk>", views.toggle_availability, name="toggle-availability"),
 ]
 
+urlpatterns += [
+    path("color-add/", views.color_add, name="color-add"),
+    path("color-table/", views.color_table, name="color-table"),
+    path("color-delete/<int:pk>", views.color_delete, name="color-delete"),
+    path("color-update/<int:pk>/", views.color_update, name="color-update"),
+]
+
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

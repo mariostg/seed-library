@@ -1,8 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from project import utils, models
 from project import forms
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
+from django.db.models import RestrictedError
+from django.contrib import messages
 
 
 # Create your views here.
@@ -43,3 +45,68 @@ def single_plant(request, pk):
     context = {"plant": plant, "sharing_css_class": sharing_priority_highlight[plant.sharing_priority_id]}
     print("H:", plant.soil_humidity_max)
     return render(request, "project/single-plant.html", context)
+
+
+def color_table(request):
+    data = models.Color.objects.all()
+    context = {
+        "data": data,
+        "url_name": "color-table",
+        "title": "Colors",
+    }
+    return render(request, "project/color-table.html", context)
+
+
+def color_add(request):
+    context = {
+        "title": "Create Color",
+        "url_name": "color-table",
+    }
+    if request.method == "POST":
+        form = forms.ColorForm(request.POST)
+        if form.is_valid():
+            context["form"] = form
+            form.save()
+            return redirect("color-table")
+    else:
+        context["form"] = forms.ColorForm
+
+    return render(request, "project/color-form.html", context)
+
+
+def color_update(request, pk):
+    color = models.Color.objects.get(id=pk)
+    form = forms.ColorForm(instance=color)
+
+    if request.method == "POST":
+        form = forms.ColorForm(request.POST, instance=color)
+        if form.is_valid():
+            form.save()
+            return redirect("color-table")
+
+    return render(
+        request,
+        "project/color-form.html",
+        {
+            "form": form,
+            "title": "Color Update",
+            "url_name": "color-table",
+        },
+    )
+
+
+def color_delete(request, pk):
+    color = models.Color.objects.get(id=pk)
+    if request.method == "POST":
+        try:
+            color.delete()
+        except RestrictedError as e:
+            msg = e.args[0].split(":")[0] + " : "
+            fkeys = []
+            for fk in e.restricted_objects:
+                fkeys.append(fk.color)
+            msg = msg + ", ".join(fkeys)
+            messages.warning(request, msg)
+        return redirect("color-table")
+    context = {"object": color, "back": "color-table"}
+    return render(request, "core/delete-object.html", context)

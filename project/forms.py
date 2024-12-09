@@ -1,11 +1,11 @@
 from django import forms
 from django.forms import ModelForm
-from project.models import SeedLibrary
+from project import models
 
 
 class SearchPlantForm(forms.ModelForm):
     class Meta:
-        model = SeedLibrary
+        model = models.SeedLibrary
 
         fields = [
             "english_name",
@@ -32,3 +32,12 @@ class SearchPlantForm(forms.ModelForm):
         for name, field in self.fields.items():
             field.widget.attrs.update({"class": "input"})
             field.required = False
+
+
+class ColorForm(forms.ModelForm):
+    class Meta:
+        model = models.Color
+        fields = ["color"]
+
+    def __init__(self, *args, **kwargs):
+        super(ColorForm, self).__init__(*args, **kwargs)
