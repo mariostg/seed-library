@@ -88,7 +88,7 @@ class SeedStorageLabelInfo(Base):
 
 
 class Lighting(Base):
-    lighting = models.CharField(max_length=45, blank=True)
+    lighting = models.CharField(unique=True, max_length=45, blank=True)
     definition = models.CharField(max_length=75, blank=True)
 
     def __str__(self) -> str:
@@ -96,14 +96,14 @@ class Lighting(Base):
 
 
 class Color(Base):
-    color = models.CharField(max_length=25, blank=True)
+    color = models.CharField(unique=True, max_length=25, blank=True)
 
     def __str__(self) -> str:
         return self.color
 
 
 class Habit(Base):
-    habit = models.CharField(max_length=30, blank=True)
+    habit = models.CharField(unique=True, max_length=30, blank=True)
 
     def __str__(self) -> str:
         return self.habit
