@@ -2,6 +2,7 @@
 @import "_normalize";
 @import "_form";
 @import "_layout";
+@import "_alerts";
 body {
   font-family: sans-serif;
   line-height: 1.5rem;
@@ -15,6 +16,7 @@ main {
 }
 header {
   background-color: $yellow;
+  padding: 0 12px;
 }
 .page-container {
   max-width: 960px;
@@ -31,10 +33,6 @@ header {
 }
 img.logo {
   max-width: 225px;
-}
-
-h2 {
-  padding: 1rem 0;
 }
 
 .title {

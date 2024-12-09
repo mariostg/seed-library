@@ -583,6 +583,37 @@ input[type=checkbox]:disabled {
   }
 }
 
+header {
+  display: flex;
+  justify-content: center;
+}
+
+.alert {
+  display: flex;
+  padding: 0.5rem;
+  justify-content: space-around;
+}
+
+.alert--info {
+  background-color: #2196f3;
+  color: #f3f3f3;
+}
+
+.alert--success {
+  background-color: #359e64;
+  color: #f3f3f3;
+}
+
+.alert--warning {
+  background-color: #ff5722;
+  color: #f3f3f3;
+}
+
+.alert--error {
+  background-color: firebrick;
+  color: #f3f3f3;
+}
+
 body {
   font-family: sans-serif;
   line-height: 1.5rem;
@@ -598,6 +629,7 @@ main {
 
 header {
   background-color: #fefae0;
+  padding: 0 12px;
 }
 
 .page-container {
@@ -617,10 +649,6 @@ header {
 
 img.logo {
   max-width: 225px;
-}
-
-h2 {
-  padding: 1rem 0;
 }
 
 .title {

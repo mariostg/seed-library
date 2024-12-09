@@ -1,4 +1,4 @@
-from django.db import models
+from django.db import models, IntegrityError
 from django.utils.dates import MONTHS
 
 
@@ -100,6 +100,10 @@ class Color(Base):
 
     def __str__(self) -> str:
         return self.color
+
+    def save(self, *args, **kwargs):
+        self.color = self.color.capitalize()
+        super(Color, self).save(*args, **kwargs)
 
 
 class Habit(Base):

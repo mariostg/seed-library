@@ -3,23 +3,20 @@
 {% block title %}{{title}}{% endblock title %}
 {% block content %}
 
-    <div class="container">
+    <section class="flex-col form form__fields">
       <header class=''>
-        <h2>{{title}}</h2>
+        <h2>{{title}} Management</h2>
       </header>
       {% if user.is_authenticated %}
-        <div class=''>
-          <div class="action-bar block">
+        <div class='flex-row center'>
             <a class='btn btn-add' href="{% url 'color-add' %}"></a>
-          </div>
         </div>
       {% endif %}
-    </div>
 
     <table class='container' id='color-table'>
       <thead>
         <tr>
-          <th>Color</th>
+          <th>{{title}}</th>
           {% if user.is_authenticated %}
             <th colspan=2></th>
           {% endif %}
@@ -40,6 +37,8 @@
 
       </tbody>
     </table>
+  </section>
+
   </body>
   </html>
 {% endblock content %}

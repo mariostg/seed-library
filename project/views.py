@@ -5,6 +5,7 @@ from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.db.models import RestrictedError
 from django.contrib import messages
+from django.db import IntegrityError
 
 
 # Create your views here.
@@ -48,7 +49,7 @@ def single_plant(request, pk):
 
 
 def color_table(request):
-    data = models.Color.objects.all()
+    data = models.Color.objects.all().order_by("color")
     context = {
         "data": data,
         "url_name": "color-table",
@@ -66,8 +67,20 @@ def color_add(request):
         form = forms.ColorForm(request.POST)
         if form.is_valid():
             context["form"] = form
-            form.save()
-            return redirect("color-table")
+            obj = form.save(commit=False)
+            try:
+                form.save()
+            except IntegrityError:
+                messages.error(request, f"Color {obj.color} exists already.")
+                return render(
+                    request,
+                    "project/color-form.html",
+                    context,
+                )
+        else:
+            messages.error(request, f"Color not valid.")
+            context["form"] = form
+            print("DID NOT VALIDATE")
     else:
         context["form"] = forms.ColorForm
 
