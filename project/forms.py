@@ -41,3 +41,12 @@ class ColorForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(ColorForm, self).__init__(*args, **kwargs)
+
+
+class HabitForm(forms.ModelForm):
+    class Meta:
+        model = models.Habit
+        fields = ["habit"]
+
+    def __init__(self, *args, **kwargs):
+        super(HabitForm, self).__init__(*args, **kwargs)

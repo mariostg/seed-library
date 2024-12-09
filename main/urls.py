@@ -22,6 +22,13 @@ urlpatterns += [
     path("color-update/<int:pk>/", views.color_update, name="color-update"),
 ]
 
+urlpatterns += [
+    path("habit-add/", views.habit_add, name="habit-add"),
+    path("habit-table/", views.habit_table, name="habit-table"),
+    path("habit-delete/<int:pk>", views.habit_delete, name="habit-delete"),
+    path("habit-update/<int:pk>/", views.habit_update, name="habit-update"),
+]
+
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

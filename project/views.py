@@ -58,6 +58,16 @@ def color_table(request):
     return render(request, "project/color-table.html", context)
 
 
+def habit_table(request):
+    data = models.Habit.objects.all().order_by("habit")
+    context = {
+        "data": data,
+        "url_name": "habit-table",
+        "title": "Habits",
+    }
+    return render(request, "project/habit-table.html", context)
+
+
 def color_add(request):
     context = {
         "title": "Create Color",
@@ -74,7 +84,7 @@ def color_add(request):
                 messages.error(request, f"Color {obj.color} exists already.")
                 return render(
                     request,
-                    "project/color-form.html",
+                    "project/simple-form.html",
                     context,
                 )
         else:
@@ -84,7 +94,35 @@ def color_add(request):
     else:
         context["form"] = forms.ColorForm
 
-    return render(request, "project/color-form.html", context)
+    return render(request, "project/simple-form.html", context)
+
+
+def habit_add(request):
+    context = {
+        "title": "Create Habit",
+        "url_name": "habit-table",
+    }
+    if request.method == "POST":
+        form = forms.HabitForm(request.POST)
+        if form.is_valid():
+            context["form"] = form
+            obj = form.save(commit=False)
+            try:
+                form.save()
+            except IntegrityError:
+                messages.error(request, f"Habit {obj.habit} exists already.")
+                return render(
+                    request,
+                    "project/simple-form.html",
+                    context,
+                )
+        else:
+            messages.error(request, "Habit not valid.")
+            context["form"] = form
+    else:
+        context["form"] = forms.HabitForm
+
+    return render(request, "project/simple-form.html", context)
 
 
 def color_update(request, pk):
@@ -99,11 +137,32 @@ def color_update(request, pk):
 
     return render(
         request,
-        "project/color-form.html",
+        "project/simple-form.html",
         {
             "form": form,
             "title": "Color Update",
             "url_name": "color-table",
+        },
+    )
+
+
+def habit_update(request, pk):
+    obj = models.Habit.objects.get(id=pk)
+    form = forms.HabitForm(instance=obj)
+
+    if request.method == "POST":
+        form = forms.ColorForm(request.POST, instance=obj)
+        if form.is_valid():
+            form.save()
+            return redirect("habit-table")
+
+    return render(
+        request,
+        "project/simple-form.html",
+        {
+            "form": form,
+            "title": "Habit Update",
+            "url_name": "habit-table",
         },
     )
 
@@ -122,4 +181,21 @@ def color_delete(request, pk):
             messages.warning(request, msg)
         return redirect("color-table")
     context = {"object": color, "back": "color-table"}
+    return render(request, "core/delete-object.html", context)
+
+
+def habit_delete(request, pk):
+    obj: models.Habit = models.Habit.objects.get(id=pk)
+    if request.method == "POST":
+        try:
+            obj.delete()
+        except RestrictedError as e:
+            msg = e.args[0].split(":")[0] + " : "
+            fkeys = []
+            for fk in e.restricted_objects:
+                fkeys.append(fk.habit)
+            msg = msg + ", ".join(fkeys)
+            messages.warning(request, msg)
+        return redirect("habit-table")
+    context = {"object": obj, "back": "habit-table"}
     return render(request, "core/delete-object.html", context)
