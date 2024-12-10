@@ -70,6 +70,15 @@ class HarvestingIndicatorForm(forms.ModelForm):
         super(HarvestingIndicatorForm, self).__init__(*args, **kwargs)
 
 
+class HarvestingMeanForm(forms.ModelForm):
+    class Meta:
+        model = models.HarvestingMean
+        fields = ["harvesting_mean"]
+
+    def __init__(self, *args, **kwargs):
+        super(HarvestingMeanForm, self).__init__(*args, **kwargs)
+
+
 class ProjectUserForm(ModelForm):
     class Meta:
         model = models.ProjectUser

@@ -90,6 +90,16 @@ def harvesting_indicator_table(request):
     return render(request, "project/harvesting-indicator-table.html", context)
 
 
+def harvesting_mean_table(request):
+    data = models.HarvestingMean.objects.all().order_by("harvesting_mean")
+    context = {
+        "data": data,
+        "url_name": "harvesting-mean-table",
+        "title": "Harvesting Means",
+    }
+    return render(request, "project/harvesting-mean-table.html", context)
+
+
 def color_add(request):
     context = {
         "title": "Create Color",
@@ -203,6 +213,34 @@ def harvesting_indicator_add(request):
     return render(request, "project/simple-form.html", context)
 
 
+def harvesting_mean_add(request):
+    context = {
+        "title": "Create Harvesting Mean Statement",
+        "url_name": "harvesting-mean-table",
+    }
+    if request.method == "POST":
+        form = forms.HarvestingMeanForm(request.POST)
+        if form.is_valid():
+            context["form"] = form
+            obj = form.save(commit=False)
+            try:
+                form.save()
+            except IntegrityError:
+                messages.error(request, f"Harvesting Mean {obj.harvesting_mean} exists already.")
+                return render(
+                    request,
+                    "project/simple-form.html",
+                    context,
+                )
+        else:
+            messages.error(request, "Harvesting Mean not valid.")
+            context["form"] = form
+    else:
+        context["form"] = forms.HarvestingMeanForm
+
+    return render(request, "project/simple-form.html", context)
+
+
 def color_update(request, pk):
     color = models.Color.objects.get(id=pk)
     form = forms.ColorForm(instance=color)
@@ -287,6 +325,27 @@ def harvesting_indicator_update(request, pk):
     )
 
 
+def harvesting_mean_update(request, pk):
+    obj = models.HarvestingMean.objects.get(id=pk)
+    form = forms.HarvestingMeanForm(instance=obj)
+
+    if request.method == "POST":
+        form = forms.HarvestingMeanForm(request.POST, instance=obj)
+        if form.is_valid():
+            form.save()
+            return redirect("harvesting-mean-table")
+
+    return render(
+        request,
+        "project/simple-form.html",
+        {
+            "form": form,
+            "title": "Harvesting Mean Update",
+            "url_name": "harvesting-mean-table",
+        },
+    )
+
+
 def color_delete(request, pk):
     obj = models.Color.objects.get(id=pk)
     if request.method == "POST":
@@ -352,6 +411,23 @@ def harvesting_indicator_delete(request, pk):
             messages.warning(request, msg)
         return redirect("harvesting-indicator-table")
     context = {"object": obj, "back": "harvesting-indicator-table"}
+    return render(request, "core/delete-object.html", context)
+
+
+def harvesting_mean_delete(request, pk):
+    obj: models.HarvestingMean = models.HarvestingMean.objects.get(id=pk)
+    if request.method == "POST":
+        try:
+            obj.delete()
+        except RestrictedError as e:
+            msg = e.args[0].split(":")[0] + " : "
+            fkeys = []
+            for fk in e.restricted_objects:
+                fkeys.append(fk.harvesting_mean)
+            msg = msg + ", ".join(fkeys)
+            messages.warning(request, msg)
+        return redirect("harvesting-mean-table")
+    context = {"object": obj, "back": "harvesting-mean-table"}
     return render(request, "core/delete-object.html", context)
 
 

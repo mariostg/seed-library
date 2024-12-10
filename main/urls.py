@@ -52,6 +52,13 @@ urlpatterns += [
 ]
 
 urlpatterns += [
+    path("harvesting-mean-add/", views.harvesting_mean_add, name="harvesting-mean-add"),
+    path("harvesting-mean-table/", views.harvesting_mean_table, name="harvesting-mean-table"),
+    path("harvesting-mean-delete/<int:pk>", views.harvesting_mean_delete, name="harvesting-mean-delete"),
+    path("harvesting-mean-update/<int:pk>/", views.harvesting_mean_update, name="harvesting-mean-update"),
+]
+
+urlpatterns += [
     path("login/", views.user_login, name="login"),
     path("logout/", views.user_logout, name="logout"),
     path("site-admin/", views.siteadmin, name="site-admin"),
