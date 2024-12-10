@@ -94,7 +94,7 @@ class Lighting(Base):
     definition = models.CharField(max_length=75, blank=True)
 
     def __str__(self) -> str:
-        return self.lighting
+        return f"{self.lighting} - {self.definition}"
 
 
 class Color(Base):
@@ -120,7 +120,7 @@ class SoilHumidity(Base):
     definition = models.CharField(max_length=75, blank=True)
 
     def __str__(self) -> str:
-        return self.soil_humidity
+        return f"{self.soil_humidity} - {self.definition}"
 
 
 class SeedLibrary(Base):
