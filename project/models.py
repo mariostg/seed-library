@@ -89,6 +89,13 @@ class SeedStorageLabelInfo(Base):
         return self.seed_storage_label_info
 
 
+class SowingDepth(Base):
+    sowing_depth = models.CharField(max_length=25, blank=True)
+
+    def __str__(self) -> str:
+        return self.sowing_depth
+
+
 class Lighting(Base):
     lighting = models.CharField(unique=True, max_length=45, blank=True)
     definition = models.CharField(max_length=75, blank=True)
@@ -147,7 +154,7 @@ class SeedLibrary(Base):
     size = models.CharField(max_length=35, blank=True)
     stratification_detail = models.CharField(max_length=55, blank=True)
     stratification_duration = models.SmallIntegerField(blank=True, default=0)
-    sowing_depth = models.CharField(max_length=55, blank=True)
+    sowing_depth = models.ForeignKey(SowingDepth, on_delete=models.RESTRICT, blank=True, null=True)
     sowing_period = models.CharField(max_length=55, blank=True)
     sharing_priority = models.ForeignKey(SharingPriority, on_delete=models.RESTRICT, blank=True, null=True)
     harvesting_start = models.SmallIntegerField(choices=MONTHS.items(), blank=True, default=0)

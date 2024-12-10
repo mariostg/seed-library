@@ -21,12 +21,21 @@ class Command(BaseCommand):
     PWD = os.getenv("PWD")
     source_tables = Path(PWD).resolve() / "data/csv"
 
-    def handle(self, *args, **options):
+    def add_arguments(self, parser):
+        parser.add_argument(
+            "--filepath",
+            action="store",
+            help="Specify the path of the csv file.",
+        )
+
+    def handle(self, *args, filepath, **options):
+        print("FILAPATH: ", filepath)
         if DEBUG:
+            filepath = Path(filepath)
             models.SeedLibrary.objects.all().delete()
-            self.set_seed_library()
+            self.set_seed_library(filepath)
         else:
             print("This capability is only available when DEBUG is True")
 
-    def set_seed_library(self):
-        uploadprocessor.SeedLibraryProcessor(self.source_tables / "seed-library.csv").main()
+    def set_seed_library(self, filepath):
+        uploadprocessor.SeedLibraryProcessor(filepath).main()

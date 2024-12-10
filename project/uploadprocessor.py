@@ -161,6 +161,15 @@ class SeedLibraryProcessor(UploadProcessor):
             )
             exit(0)
 
+        # Sowing Depth
+        try:
+            item["sowing_depth"] = models.SowingDepth.objects.get(sowing_depth=item["sowing_depth"])
+        except models.SowingDepth.DoesNotExist:
+            print(
+                f"No record found for <<{item['sowing_depth']}>> in Sowing Depth for <<{item['latin_name']}>>"
+            )
+            exit(0)
+
         # Packaging Measure
         try:
             item["packaging_measure"] = models.PackagingMeasure.objects.get(
