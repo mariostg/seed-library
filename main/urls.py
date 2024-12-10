@@ -23,10 +23,32 @@ urlpatterns += [
 ]
 
 urlpatterns += [
+    path("dormancy-add/", views.dormancy_add, name="dormancy-add"),
+    path("dormancy-table/", views.dormancy_table, name="dormancy-table"),
+    path("dormancy-delete/<int:pk>", views.dormancy_delete, name="dormancy-delete"),
+    path("dormancy-update/<int:pk>/", views.habit_update, name="dormancy-update"),
+]
+
+urlpatterns += [
     path("habit-add/", views.habit_add, name="habit-add"),
     path("habit-table/", views.habit_table, name="habit-table"),
     path("habit-delete/<int:pk>", views.habit_delete, name="habit-delete"),
     path("habit-update/<int:pk>/", views.habit_update, name="habit-update"),
+]
+
+urlpatterns += [
+    path("harvesting-indicator-add/", views.harvesting_indicator_add, name="harvesting-indicator-add"),
+    path("harvesting-indicator-table/", views.harvesting_indicator_table, name="harvesting-indicator-table"),
+    path(
+        "harvesting-indicator-delete/<int:pk>",
+        views.harvesting_indicator_delete,
+        name="harvesting-indicator-delete",
+    ),
+    path(
+        "harvesting-indicator-update/<int:pk>/",
+        views.harvesting_indicator_update,
+        name="harvesting-indicator-update",
+    ),
 ]
 
 if settings.DEBUG:

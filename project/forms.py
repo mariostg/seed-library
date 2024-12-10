@@ -43,6 +43,15 @@ class ColorForm(forms.ModelForm):
         super(ColorForm, self).__init__(*args, **kwargs)
 
 
+class DormancyForm(forms.ModelForm):
+    class Meta:
+        model = models.Dormancy
+        fields = ["dormancy"]
+
+    def __init__(self, *args, **kwargs):
+        super(DormancyForm, self).__init__(*args, **kwargs)
+
+
 class HabitForm(forms.ModelForm):
     class Meta:
         model = models.Habit
@@ -50,3 +59,12 @@ class HabitForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(HabitForm, self).__init__(*args, **kwargs)
+
+
+class HarvestingIndicatorForm(forms.ModelForm):
+    class Meta:
+        model = models.HarvestingIndicator
+        fields = ["harvesting_indicator"]
+
+    def __init__(self, *args, **kwargs):
+        super(HarvestingIndicatorForm, self).__init__(*args, **kwargs)

@@ -747,6 +747,10 @@ table {
   }
 }
 
+table.editor td:nth-child(2) {
+  min-width: 120px;
+}
+
 thead {
   background-color: #ccd5ae;
 }

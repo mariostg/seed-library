@@ -9,11 +9,11 @@
       </header>
       {% if user.is_authenticated %}
         <div class='flex-row center'>
-            <a class='btn btn-add' href="{% url 'color-add' %}"></a>
+            <a class='btn btn-add' href="{% url 'habit-add' %}"></a>
         </div>
       {% endif %}
 
-    <table class='container' id='color-table'>
+    <table class='container'>
       <thead>
         <tr>
           <th>{{title}}</th>

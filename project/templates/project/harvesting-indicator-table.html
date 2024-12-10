@@ -9,11 +9,11 @@
       </header>
       {% if user.is_authenticated %}
         <div class='flex-row center'>
-            <a class='btn btn-add' href="{% url 'color-add' %}"></a>
+            <a class='btn btn-add' href="{% url 'harvesting-indicator-add' %}"></a>
         </div>
       {% endif %}
 
-    <table class='container'>
+    <table class='editor'>
       <thead>
         <tr>
           <th>{{title}}</th>
@@ -24,12 +24,12 @@
       </thead>
       <tbody>
         {% for item in data %}
-          <tr>
-            <td>{{item.color}}</td>
+          <tr class="{% cycle 'odd-row' 'even-row' %}">
+            <td>{{item.harvesting_indicator}}</td>
             {% if user.is_authenticated %}
               <td>
-                <a class='btn btn-edit' href="{% url "color-update" item.id %}"></a>
-                <a class='btn btn-delete' href="{% url "color-delete" item.id %}"></a>
+                <a class='btn btn-edit' href="{% url "harvesting-indicator-update" item.id %}"></a>
+                <a class='btn btn-delete' href="{% url "harvesting-indicator-delete" item.id %}"></a>
               </td>
             {% endif %}
           </tr>
