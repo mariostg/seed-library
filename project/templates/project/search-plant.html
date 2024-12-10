@@ -17,16 +17,16 @@
 
                 <td><a href="{% url 'single-plant' item.pk %}">{{item.latin_name}}</a>
                     <br>{{item.english_name}}<br>{{item.french_name}}</td>
-                    <td>{{item.light_from}}
-                        {% if item.light_to.lighting %} to<br> {{item.light_to}} {% endif %}
+                    <td>{{item.light_from.lighting}}
+                        {% if item.light_to.lighting %} to<br> {{item.light_to.lighting}} {% endif %}
                     </td>
                     <td>{{item.bloom_start|month_name}}
                         {% if item.bloom_end != 0 %}to<br> {{item.bloom_end|month_name}} {% endif %}
                     </td>
                     <td>{{item.harvesting_start|month_name}}
                         {% if item.harvesting_end != 0 %}to<br> {{item.harvesting_end|month_name}} {% endif %} </td>
-                        <td>{{item.soil_humidity_min}}
-                            {% if item.soil_humidity_max.soil_humidity %} to <br>{{item.soil_humidity_max}} {% endif %}</td>
+                        <td>{{item.soil_humidity_min.soil_humidity}}
+                            {% if item.soil_humidity_max.soil_humidity %} to <br>{{item.soil_humidity_max.soil_humidity}} {% endif %}</td>
                             <td>{{item.max_height}}</td>
                             <td>{{item.stratification_detail}}</td>
                             <td>{{item.sowing_depth}} {% if item.sowing_detail %}<br>{{intm.sowing_detail}}{% endif %}</td>
