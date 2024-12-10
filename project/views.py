@@ -6,6 +6,8 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import RestrictedError
 from django.contrib import messages
 from django.db import IntegrityError
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
 
 
 # Create your views here.
@@ -351,3 +353,38 @@ def harvesting_indicator_delete(request, pk):
         return redirect("harvesting-indicator-table")
     context = {"object": obj, "back": "harvesting-indicator-table"}
     return render(request, "core/delete-object.html", context)
+
+
+####
+# User
+####
+
+
+def user_login(request):
+    if request.method == "POST":
+        username = request.POST["username"].lower()
+        password = request.POST["password"]
+
+        try:
+            user = User.objects.get(username=username)
+        except User.DoesNotExist:
+            messages.error(request, "Username does not exist")
+
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+            return redirect(request.GET["next"] if "next" in request.GET else "site-admin")
+        else:
+            messages.error(request, "Username OR password is incorrect")
+
+    return render(request, "project/login.html")
+
+
+def user_logout(request):
+    logout(request)
+    return redirect("login")
+
+
+def siteadmin(request):
+    return render(request, "project/admin.html")

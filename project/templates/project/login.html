@@ -1,0 +1,52 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block extracss %}
+<link rel="stylesheet" href={% static "css/form-login.css"%} /> {% endblock extracss %}
+{% block content %}
+
+<div class="form-login">
+  <div class="h3 mb-3 fw-normal text-center">
+      <h2>Grainothèque | Seed Library</h2>
+      <h4>Administration</h4>
+  </div>
+
+  <form action="#" method="POST">
+      {% csrf_token %}
+      <div class="form__field">
+        <label class='form-label' for="username">Username</label>
+        <input class="form-input" type="text" name="username" autofocus="autofocus" />
+      </div>
+
+    <div class="form__field">
+        <label class='form-label' for="password">Password</label>
+        <input
+            class="form-input"
+            id="formInput#password"
+            type="password"
+            name="password"
+            placeholder="••••••••"
+        />
+    </div>
+
+    <div class="form__field-checkbox">
+      <input class="form-input" type="checkbox" onclick="togglePassword()" />
+      <label class="form-label" id="show_password"> Montrer le mot de passe </label>
+  </div>
+
+  <input class="btn btn-login" type="submit" value="Log In" />
+  </form>
+
+
+</div>
+
+<script>
+  function togglePassword() {
+    var x = document.getElementById("formInput#password");
+    if (x.type === "password") {
+      x.type = "text";
+    } else {
+      x.type = "password";
+    }
+  }
+</script>
+  {% endblock content %}

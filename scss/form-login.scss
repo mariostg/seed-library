@@ -1,0 +1,16 @@
+@import "_variables";
+.form-login {
+  display: flex;
+  flex-direction: column;
+  max-width: 330px;
+  padding: 1rem;
+  border-radius: $border-radius;
+  background-color: #d5e6de;
+  text-align: center;
+}
+.btn-login {
+  background-color: $primary-bg;
+}
+.btn-forgot {
+  background-color: #8fbcbc;
+}

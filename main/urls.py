@@ -51,6 +51,12 @@ urlpatterns += [
     ),
 ]
 
+urlpatterns += [
+    path("login/", views.user_login, name="login"),
+    path("logout/", views.user_logout, name="logout"),
+    path("site-admin/", views.siteadmin, name="site-admin"),
+]
+
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

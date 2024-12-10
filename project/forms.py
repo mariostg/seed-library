@@ -68,3 +68,15 @@ class HarvestingIndicatorForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(HarvestingIndicatorForm, self).__init__(*args, **kwargs)
+
+
+class ProjectUserForm(ModelForm):
+    class Meta:
+        model = models.ProjectUser
+        fields = ["name", "email"]
+
+    def __init__(self, *args, **kwargs):
+        super(ProjectUserForm, self).__init__(*args, **kwargs)
+
+        for name, field in self.fields.items():
+            field.widget.attrs.update({"class": "input"})

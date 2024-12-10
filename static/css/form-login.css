@@ -1,0 +1,17 @@
+.form-login {
+  display: flex;
+  flex-direction: column;
+  max-width: 330px;
+  padding: 1rem;
+  border-radius: 0.375rem;
+  background-color: #d5e6de;
+  text-align: center;
+}
+
+.btn-login {
+  background-color: rgb(29, 48, 48);
+}
+
+.btn-forgot {
+  background-color: #8fbcbc;
+}

@@ -343,7 +343,7 @@ summary {
 .form__field-checkbox {
   display: flex;
   flex-direction: row;
-  align-items: center;
+  justify-content: center;
   gap: 5px;
   padding: 0.2rem 0;
   min-width: 120px;
