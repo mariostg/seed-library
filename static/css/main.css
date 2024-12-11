@@ -551,6 +551,9 @@ input[type=checkbox]:disabled {
   display: flex;
   gap: 0.5rem;
 }
+.flex-row > * {
+  flex: 1;
+}
 @media screen and (max-width: 991px) {
   .flex-row {
     flex-direction: column;

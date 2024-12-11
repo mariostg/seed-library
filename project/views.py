@@ -28,6 +28,34 @@ def toggle_availability(request, pk):
     # return render(request, "project/update-availability.html", context)
 
 
+@login_required
+def plant_profile_add(request):
+    context = {
+        "title": "Create Plant Profile",
+        "url_name": "index",
+    }
+    if request.method == "POST":
+        form = forms.PlantProfileForm(request.POST)
+        if form.is_valid():
+            context["form"] = form
+            obj: models.SeedLibrary = form.save(commit=False)
+            try:
+                form.save()
+            except IntegrityError:
+                messages.error(request, f"Color {obj.latin_name} exists already.")
+                return render(
+                    request,
+                    "project/plant-profile-form.html",
+                    context,
+                )
+        else:
+            messages.error(request, "Plant Profile not valid.")
+            context["form"] = form
+    else:
+        context["form"] = forms.PlantProfileForm
+    return render(request, "project/plant-profile-form.html", context)
+
+
 def search_plant(request):
     plants, initial = utils.search_plants(request)
     form = forms.SearchPlantForm(initial=initial)

@@ -4,6 +4,7 @@
 {% if request.user.is_authenticated %}
 <div>
     <div><a href="{% url 'update-availability' %}">Update Availability</a></div>
+    <div><a href="{% url 'plant-profile-add' %}">Create Plant Profile</a></div>
 </div>
 <div>
     <div><a href="{% url 'color-add' %}">Add Color</a></div>

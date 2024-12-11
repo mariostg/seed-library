@@ -1,0 +1,99 @@
+
+{% extends "core/base.html" %}
+{% load months %}
+    {% block content %}
+<div class="form-container">
+    <form class='form' action="/search-plant/" method="POST">
+        {% csrf_token %}
+        <header class="form__header">Plant profile</header>
+        <div class="panel">
+        <div class="flex-col">
+            <div class="form-label">Plant Names</div>
+            <div class="flex-row">
+                <div class="form__field"><label class="form-label">Latin</label> {{form.latin_name}}</div>
+                <div class="form__field"><label class="form-label">English</label> {{form.english_name}}</div>
+                <div class="form__field"><label class="form-label">French</label> {{form.french_name}}</div>
+            </div>
+        </div>
+
+        <div class="flex-row">
+            <div class="flex-col">
+                <div class="form-label">Sun Requirement</div>
+                <div class="light-range__inputs">
+                    <div class="form__field"><label class="form-label">Max</label>{{form.light_from}}</div>
+                    <div class="form__field"><label class="form-label">Min</label>{{form.light_to}}</div>
+                </div>
+            </div>
+            <div class="flex-col">
+                <div class="form-label">Humidity Range</div>
+                <div class="humidity-range__inputs">
+                    <div class="form__field"><label class="form-label">Min</label>{{form.soil_humidity_min}}</div>
+                    <div class="form__field"><label class="form-label">Max</label>{{form.soil_humidity_max}}</div>
+                </div>
+            </div>
+            <div class="flex-col">
+                <div class="form-label">Bloom Period</div>
+                <div class="humidity-range__inputs">
+                    <div class="form__field"><label class="form-label">Start</label>{{form.bloom_start}}</div>
+                    <div class="form__field"><label class="form-label">End</label>{{form.bloom_end}}</div>
+                </div>
+            </div>
+            <div class="flex-col">
+                <div class="form-label">Harvesting Period</div>
+                <div class="humidity-range__inputs">
+                    <div class="form__field"><label class="form-label">Start</label>{{form.harvesting_start}}</div>
+                    <div class="form__field"><label class="form-label">End</label>{{form.harvesting_end}}</div>
+                </div>
+            </div>
+        </div>
+        <div class="flex-col">
+            <div class="form-label">Growth</div>
+            <div class="flex-row">
+                <div class="flex-col">
+                    <div></div>
+                    <div class="form__field"><label class="form-label">Germinate Easily</label>{{form.germinate_easy}}</div>
+                    <div class="form__field"><label class="form-label">Sowing Depth</label>{{form.sowing_depth}}</div>
+                </div>
+                <div class="flex-col">
+                    <div></div>
+                    <div class="form__field"><label class="form-label">Minumum height</label>{{form.min_height}}</div>
+                    <div class="form__field"><label class="form-label">Maximum height</label>{{form.max_height}}</div>
+                </div>
+                <div class="flex-col">
+                    <div></div>
+                    <div class="form__field"><label class="form-label">Stratification duration</label>{{form.stratification_duration}}</div>
+                    <div class="form__field"><label class="form-label">Stratification detail</label>{{form.stratification_detail}}</div>
+                </div>
+                <div class="flex-col">
+                    <div></div>
+                    <div class="form__field"><label class="form-label">Sowing Start</label>{{form.sowing_period}}</div>
+                    <div class="form__field"><label class="form-label">Sowing end</label>{{form.stratification_detail}}</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex-col">
+            <div class="form-label">Seed Sharing</div>
+            <div class="flex-row">
+                <div class="form__field">{{form.sharing_priority.label_tag}}{{form.sharing_priority}}</div>
+                <div class="form__field">{{form.seed_availability.label_tag}}{{form.seed_availability}}</div>
+            </div>
+        </div>
+
+        <div class="flex-col">
+            <div class="form-label">Links</div>
+            <div class="flex-col">
+                <div></div>
+                <div class="form__field"><label class='form-label'>URL</label>{{form.url}}</div>
+                <div class="form__field"><label class='form-label'>Envelope Labels</label>{{form.envelope_label_link}}</div>
+                <div class="form__field"><label class='form-label'>Harvesting Video</label>{{form.harvesting_video_link}}</div>
+                <div class="form__field"><label class='form-label'>Seed Pictures</label>{{form.seed_picture_link}}</div>
+                <div class="form__field"><label class='form-label'>Pods and Seeds Pictures</label>{{form.pods_seed_head_picture_link}}</div>
+                <div class="form__field"><label class='form-label'>Hyperlink??</label>{{form.hyperlink}}</div>
+            </div>
+        </div>
+        {% include 'core/form-buttons.html' %}
+    </div>
+    </form>
+</div>
+{% endblock content %}
