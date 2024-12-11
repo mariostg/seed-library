@@ -1,4 +1,4 @@
-from project.models import SeedLibrary
+from project.models import PlantProfile
 
 MONTHS = {
     None: "",
@@ -18,7 +18,7 @@ MONTHS = {
 
 
 def all_plants(request):
-    return SeedLibrary.objects.all()
+    return PlantProfile.objects.all()
 
 
 def search_plants(request):
@@ -40,7 +40,7 @@ def search_plants(request):
         "harvesting_end": 0,
         "germinate_easy": "unknown",
     }
-    dataset = SeedLibrary.objects.all()
+    dataset = PlantProfile.objects.all()
 
     if not request.GET:
         return {}, search_criterion
@@ -202,7 +202,7 @@ def search_plants(request):
 
 
 def single_plant(pk):
-    plant = SeedLibrary.objects.get(pk=pk)
+    plant = PlantProfile.objects.get(pk=pk)
     plant.bloom_start = MONTHS[plant.bloom_start]
     plant.bloom_end = MONTHS[plant.bloom_end]
     if plant.harvesting_end == plant.harvesting_start:

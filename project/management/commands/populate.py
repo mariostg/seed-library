@@ -32,10 +32,10 @@ class Command(BaseCommand):
         print("FILAPATH: ", filepath)
         if DEBUG:
             filepath = Path(filepath)
-            models.SeedLibrary.objects.all().delete()
+            models.PlantProfile.objects.all().delete()
             self.set_seed_library(filepath)
         else:
             print("This capability is only available when DEBUG is True")
 
     def set_seed_library(self, filepath):
-        uploadprocessor.SeedLibraryProcessor(filepath).main()
+        uploadprocessor.PlantProfileProcessor(filepath).main()

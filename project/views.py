@@ -17,11 +17,11 @@ def index(request):
 
 @login_required
 def toggle_availability(request, pk):
-    plant = models.SeedLibrary.objects.get(pk=pk)
+    plant = models.PlantProfile.objects.get(pk=pk)
     print(plant)
     plant.seed_availability = not plant.seed_availability
     plant.save()
-    plant = models.SeedLibrary.objects.get(pk=pk)
+    plant = models.PlantProfile.objects.get(pk=pk)
     context = {"pk": plant.pk, "availability": plant.seed_availability}
     print(context)
     return JsonResponse(context)
@@ -38,7 +38,7 @@ def plant_profile_add(request):
         form = forms.PlantProfileForm(request.POST)
         if form.is_valid():
             context["form"] = form
-            obj: models.SeedLibrary = form.save(commit=False)
+            obj: models.PlantProfile = form.save(commit=False)
             try:
                 form.save()
             except IntegrityError:

@@ -5,7 +5,7 @@ from project import models
 
 class PlantProfileForm(forms.ModelForm):
     class Meta:
-        model = models.SeedLibrary
+        model = models.PlantProfile
 
         fields = [
             "english_name",  #
@@ -75,7 +75,7 @@ class PlantProfileForm(forms.ModelForm):
 
 class SearchPlantForm(forms.ModelForm):
     class Meta:
-        model = models.SeedLibrary
+        model = models.PlantProfile
 
         fields = [
             "english_name",

@@ -160,7 +160,7 @@ class SoilHumidity(Base):
         return f"{self.soil_humidity} - {self.definition}"
 
 
-class SeedLibrary(Base):
+class PlantProfile(Base):
     latin_name = models.CharField(max_length=75)
     english_name = models.CharField(max_length=75)
     french_name = models.CharField(max_length=75)

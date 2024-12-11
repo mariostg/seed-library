@@ -35,12 +35,12 @@ from project import models
 #         )
 
 
-class SeedLibraryAdmin(admin.ModelAdmin):
+class PlantProfileAdmin(admin.ModelAdmin):
     # list_filter = ["harvest_start",]
     search_fields = ["latin_name", "french_name"]
 
 
-admin.site.register(models.SeedLibrary, SeedLibraryAdmin)
+admin.site.register(models.PlantProfile, PlantProfileAdmin)
 admin.site.register(models.SharingPriority)
 admin.site.register(models.HarvestingIndicator)
 admin.site.register(models.HarvestingMean)
