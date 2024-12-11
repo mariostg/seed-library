@@ -51,8 +51,9 @@
             <div class="flex-row">
                 <div class="flex-col">
                     <div></div>
-                    <div class="form__field"><label class="form-label">Germinate Easily</label>{{form.germinate_easy}}</div>
-                    <div class="form__field"><label class="form-label">Sowing Depth</label>{{form.sowing_depth}}</div>
+                    <div class="form__field"><label class="form-label">Habit</label>{{form.habit}}</div>
+                    <div class="form__field"><label class="form-label">Flower Color</label>{{form.flower_color}}</div>
+
                 </div>
                 <div class="flex-col">
                     <div></div>
@@ -70,16 +71,61 @@
                     <div class="form__field"><label class="form-label">Sowing end</label>{{form.stratification_detail}}</div>
                 </div>
             </div>
+            <div class="flex-row">
+                <div class="form__field"><label class="form-label">Germinate Easily</label>{{form.germinate_easy}}</div>
+                <div class="form__field"><label class="form-label">Sowing Depth</label>{{form.sowing_depth}}</div>
+                <div class="form__field"><label class="form-label">Dormancy Need</label>{{form.dormancy}}</div>
+
+            </div>
         </div>
 
         <div class="flex-col">
             <div class="form-label">Seed Sharing</div>
             <div class="flex-row">
-                <div class="form__field">{{form.sharing_priority.label_tag}}{{form.sharing_priority}}</div>
-                <div class="form__field">{{form.seed_availability.label_tag}}{{form.seed_availability}}</div>
+
+                <div class="flex-col">
+                    <div></div>
+                    <div class="form__field">{{form.seed_availability.label_tag}}{{form.seed_availability}}</div>
+                    <div class="form__field">{{form.sharing_priority.label_tag}}{{form.sharing_priority}}</div>
+
+                </div>
+                <div class="flex-col">
+                    <div></div>
+                    <div class="form__field">{{form.harvesting_start.label_tag}}{{form.harvesting_start}}</div>
+                    <div class="form__field">{{form.harvesting_end.label_tag}}{{form.harvesting_end}}</div>
+                </div>
+                <div class="flex-col">
+                    <div></div>
+                    <div class="form__field">{{form.harvesting_indicator.label_tag}}{{form.harvesting_indicator}}</div>
+                    <div class="form__field">{{form.harvesting_mean.label_tag}}{{form.harvesting_mean}}</div>
+                </div>
+            </div>
+            <div class="flex-row">
+                <div class="form__field">{{form.one_cultivar.label_tag}}{{form.one_cultivar}}</div>
             </div>
         </div>
 
+        <div class="flex-col">
+            <div class="form-label">Seed Handling and Preparation</div>
+            <div class="flex-row">
+                <div class="flex-col">
+                    <div></div>
+                    <div class="form__field">{{form.seed_head.label_tag}}{{form.seed_head}}</div>
+                    <div class="form__field">{{form.remove_non_seed_material.label_tag}}{{form.remove_non_seed_material}}</div>
+                </div>
+                <div class="flex-col">
+                    <div></div>
+                    <div class="form__field">{{form.seed_storage.label_tag}}{{form.seed_storage}}</div>
+                    <div class="form__field">{{form.viability_test.label_tag}}{{form.viability_test}}</div>
+                </div>
+                <div class="flex-col">
+                    <div></div>
+                    <div class="form__field">{{form.seed_preparation.label_tag}}{{form.seed_preparation}}</div>
+                    <div class="form__field">{{form.packaging_measure.label_tag}}{{form.packaging_measure}}</div>
+                    <div class="form__field">{{form.seed_storage_label_info.label_tag}}{{form.seed_storage_label_info}}</div>
+                </div>
+            </div>
+        </div>
         <div class="flex-col">
             <div class="form-label">Links</div>
             <div class="flex-col">
@@ -90,6 +136,47 @@
                 <div class="form__field"><label class='form-label'>Seed Pictures</label>{{form.seed_picture_link}}</div>
                 <div class="form__field"><label class='form-label'>Pods and Seeds Pictures</label>{{form.pods_seed_head_picture_link}}</div>
                 <div class="form__field"><label class='form-label'>Hyperlink??</label>{{form.hyperlink}}</div>
+            </div>
+        </div>
+        <div class="flex-col">
+            <div class="form-label">Misc</div>
+            <div class="flex-row">
+                <div class="form__field">{{form.notes.label_tag}}{{form.notes}}</div>
+            </div>
+        </div>
+        <div class="flex-col">
+            <div class="form-label">Features</div>
+            <div class="flex-row">
+                <div class="flex-col">
+                    <div></div>
+                    <div class="form__field">{{form.rock_garden.label_tag}}{{form.rock_garden}}</div>
+                    <div class="form__field">{{form.rain_garden.label_tag}}{{form.rain_garden}}</div>
+                    <div class="form__field">{{form.pond_edge.label_tag}}{{form.pond_edge}}</div>
+                </div>
+                <div class="flex-col">
+                    <div></div>
+                    <div class="form__field">{{form.shoreline_rehab.label_tag}}{{form.shoreline_rehab}}</div>
+                    <div class="form__field">{{form.container_suitable.label_tag}}{{form.container_suitable}}</div>
+                    <div class="form__field">{{form.ground_cover.label_tag}}{{form.ground_cover}}</div>
+                </div>
+                <div class="flex-col">
+                    <div></div>
+                    <div class="form__field">{{form.garden_edge.label_tag}}{{form.garden_edge}}</div>
+                    <div class="form__field">{{form.woodland_garden.label_tag}}{{form.woodland_garden}}</div>
+                    <div class="form__field">{{form.wind_break_hedge.label_tag}}{{form.wind_break_hedge}}</div>
+                </div>
+                <div class="flex-col">
+                    <div></div>
+                    <div class="form__field">{{form.erosion_control.label_tag}}{{form.erosion_control}}</div>
+                    <div class="form__field">{{form.keystones_species.label_tag}}{{form.keystones_species}}</div>
+                    <div class="form__field">{{form.draught_tolerent.label_tag}}{{form.draught_tolerent}}</div>
+                </div>
+                <div class="flex-col">
+                    <div></div>
+                    <div class="form__field">{{form.salt_tolerent.label_tag}}{{form.salt_tolerent}}</div>
+                    <div class="form__field">{{form.deer_tolerent.label_tag}}{{form.deer_tolerent}}</div>
+                    <div class="form__field">{{form.easy_to_contain.label_tag}}{{form.easy_to_contain}}</div>
+                </div>
             </div>
         </div>
         {% include 'core/form-buttons.html' %}
