@@ -25,12 +25,18 @@ class HarvestingIndicator(Base):
     def __str__(self) -> str:
         return self.harvesting_indicator
 
+    class Meta:
+        ordering = ["harvesting_indicator"]
+
 
 class HarvestingMean(Base):
     harvesting_mean = models.CharField(max_length=100, blank=True)
 
     def __str__(self) -> str:
         return self.harvesting_mean
+
+    class Meta:
+        ordering = ["harvesting_mean"]
 
 
 class SeedHead(Base):
@@ -39,12 +45,18 @@ class SeedHead(Base):
     def __str__(self) -> str:
         return self.seed_head
 
+    class Meta:
+        ordering = ["seed_head"]
+
 
 class ViablityTest(Base):
     viability_test = models.CharField(max_length=150, blank=True)
 
     def __str__(self) -> str:
         return self.viability_test
+
+    class Meta:
+        ordering = ["viability_test"]
 
 
 class SeedStorage(Base):
@@ -60,12 +72,18 @@ class OneCultivar(Base):
     def __str__(self) -> str:
         return self.one_cultivar
 
+    class Meta:
+        ordering = ["one_cultivar"]
+
 
 class PackagingMeasure(Base):
     packaging_measure = models.CharField(max_length=35, blank=True)
 
     def __str__(self) -> str:
         return self.packaging_measure
+
+    class Meta:
+        ordering = ["packaging_measure"]
 
 
 class Dormancy(Base):
@@ -81,6 +99,9 @@ class SeedPreparation(Base):
     def __str__(self) -> str:
         return self.seed_preparation
 
+    class Meta:
+        ordering = ["seed_preparation"]
+
 
 class SeedStorageLabelInfo(Base):
     seed_storage_label_info = models.CharField(max_length=50, blank=True)
@@ -88,12 +109,18 @@ class SeedStorageLabelInfo(Base):
     def __str__(self) -> str:
         return self.seed_storage_label_info
 
+    class Meta:
+        ordering = ["seed_storage_label_info"]
+
 
 class SowingDepth(Base):
     sowing_depth = models.CharField(max_length=25, blank=True)
 
     def __str__(self) -> str:
         return self.sowing_depth
+
+    class Meta:
+        ordering = ["sowing_depth"]
 
 
 class Lighting(Base):
@@ -120,6 +147,9 @@ class Habit(Base):
 
     def __str__(self) -> str:
         return self.habit
+
+    class Meta:
+        ordering = ["habit"]
 
 
 class SoilHumidity(Base):
