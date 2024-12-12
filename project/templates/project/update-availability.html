@@ -2,7 +2,8 @@
 {% load static %}
 {% block content %}
 {% if object_list %}
-<div>
+<section class='wrapper'>
+    <p class='container'>Use this table to prepare a list of available plants for the next give away event.  Click on the plant to toggle its availailability.  Plants highlighted in green are marked available. View <a target='blank' href="/search-plant/?seed_availability=true#search-results">available plants</a> in a new tab. From there, you can drill down further to refine the research.</p>
     <table>
         <thead>
             <tr>
@@ -16,7 +17,7 @@
             <td>{{item.latin_name}}</td><td> {{item.english_name}}</td><td>{{item.french_name}}</td>
         {% endfor %}
     </table>
-</div>
+</section>
 {% endif %}
 <script src="{% static 'js/availability-toggler.js' %}"></script>
 {% endblock content %}
