@@ -3,7 +3,7 @@
 {% load months %}
     {% block content %}
 <div class="form-container">
-    <form class='form' action="/search-plant/" method="POST">
+    <form class='form' action="{% url 'plant-profile-add' %}" method="POST">
         {% csrf_token %}
         <header class="form__header">Plant profile</header>
         <div class="panel">

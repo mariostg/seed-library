@@ -15,7 +15,7 @@ urlpatterns = [
     path("toggle-availability/<int:pk>", views.toggle_availability, name="toggle-availability"),
 ]
 urlpatterns += [
-    path("plant_profile_add/", views.plant_profile_add, name="plant-profile-add"),
+    path("plant-profile-add/", views.plant_profile_add, name="plant-profile-add"),
 ]
 urlpatterns += [
     path("color-add/", views.color_add, name="color-add"),
