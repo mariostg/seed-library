@@ -8,6 +8,7 @@ from django.contrib import messages
 from django.db import IntegrityError
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
 
 
 # Create your views here.
@@ -28,7 +29,7 @@ def toggle_availability(request, pk):
     # return render(request, "project/update-availability.html", context)
 
 
-@login_required
+# @login_required
 def plant_profile_add(request):
     context = {
         "title": "Create Plant Profile",
@@ -42,13 +43,16 @@ def plant_profile_add(request):
             try:
                 form.save()
             except IntegrityError:
-                messages.error(request, f"Color {obj.latin_name} exists already.")
+                messages.error(request, f"Plant {obj.latin_name} exists already.")
                 return render(
                     request,
                     "project/plant-profile-form.html",
                     context,
                 )
+            except ValueError as e:
+                messages.error(request, e)
         else:
+            print(form.errors)
             messages.error(request, "Plant Profile not valid.")
             context["form"] = form
     else:

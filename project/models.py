@@ -161,9 +161,9 @@ class SoilHumidity(Base):
 
 
 class PlantProfile(Base):
-    latin_name = models.CharField(max_length=75)
-    english_name = models.CharField(max_length=75)
-    french_name = models.CharField(max_length=75)
+    latin_name = models.CharField(max_length=75, unique=True)
+    english_name = models.CharField(max_length=75, blank=True)
+    french_name = models.CharField(max_length=75, blank=True)
     url = models.CharField(max_length=250, blank=True)
     light_from = models.ForeignKey(
         Lighting, related_name="light_from", on_delete=models.RESTRICT, blank=True, null=True
@@ -179,11 +179,11 @@ class PlantProfile(Base):
     soil_humidity_max = models.ForeignKey(
         SoilHumidity, related_name="soil_humidity_max", on_delete=models.RESTRICT, blank=True, null=True
     )
-    min_height = models.SmallIntegerField(blank=True, default=0)
-    max_height = models.SmallIntegerField(blank=True, default=0)
+    min_height = models.SmallIntegerField(blank=True, null=True, default=0)
+    max_height = models.SmallIntegerField(blank=True, null=True, default=0)
     size = models.CharField(max_length=35, blank=True)
     stratification_detail = models.CharField(max_length=55, blank=True)
-    stratification_duration = models.SmallIntegerField(blank=True, default=0)
+    stratification_duration = models.SmallIntegerField(blank=True, null=True, default=0)
     sowing_depth = models.ForeignKey(SowingDepth, on_delete=models.RESTRICT, blank=True, null=True)
     sowing_period = models.CharField(max_length=55, blank=True)
     sharing_priority = models.ForeignKey(SharingPriority, on_delete=models.RESTRICT, blank=True, null=True)
@@ -232,6 +232,23 @@ class PlantProfile(Base):
 
     def __str__(self) -> str:
         return f"{self.latin_name} | {self.english_name} | {self.french_name}| {self.soil_humidity_max}"
+
+    class Meta:
+        ordering = ["latin_name"]
+
+    def save(self, *args, **kwargs):
+        if not self.bloom_start:
+            self.bloom_start = 0
+        if not self.bloom_end:
+            self.bloom_end = 0
+            self.bloom_start = 0
+        if not self.harvesting_start:
+            self.harvesting_start = 0
+        if not self.harvesting_end:
+            self.harvesting_end = 0
+        if not self.latin_name:
+            raise ValueError("Missing Latin Name")
+        super(PlantProfile, self).save(*args, **kwargs)
 
 
 class ProjectUser(models.Model):
