@@ -27,7 +27,10 @@
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  & > div:first-child {
+  .title {
+    font-weight: 300;
+    font-size: 1.2rem;
+    color: #4b5544;
     background-color: $dark-green;
     text-align: center;
   }
