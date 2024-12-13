@@ -10,11 +10,11 @@ urlpatterns = [
     path("__reload__/", include("django_browser_reload.urls")),
     path("", views.index, name="index"),
     path("search-plant/", views.search_plant, name="search-plant"),
-    path("single-plant/<int:pk>", views.single_plant, name="single-plant"),
     path("update-availability/", views.update_availability, name="update-availability"),
     path("toggle-availability/<int:pk>", views.toggle_availability, name="toggle-availability"),
 ]
 urlpatterns += [
+    path("plant-profile-page/<int:pk>", views.plant_profile_page, name="plant-profile-page"),
     path("plant-profile-add/", views.plant_profile_add, name="plant-profile-add"),
     path("plant-profile-update/<int:pk>", views.plant_profile_update, name="plant-profile-update"),
 ]

@@ -72,7 +72,7 @@ def plant_profile_update(request, pk):
         if form.is_valid:
             obj = form.save(commit=False)
             obj.save()
-            return redirect("single-plant", pk=obj.pk)
+            return redirect("plant-profile-page", pk=obj.pk)
     return render(request, "project/plant-profile-form.html", context)
 
 
@@ -89,7 +89,7 @@ def update_availability(request):
     return render(request, "project/update-availability.html", context)
 
 
-def single_plant(request, pk):
+def plant_profile_page(request, pk):
     plant = utils.single_plant(pk)
 
     sharing_priority_highlight = {
@@ -102,7 +102,7 @@ def single_plant(request, pk):
 
     context = {"plant": plant, "sharing_css_class": sharing_priority_highlight[plant.sharing_priority_id]}
     print("H:", plant.soil_humidity_max)
-    return render(request, "project/single-plant.html", context)
+    return render(request, "project/plant-profile-page.html", context)
 
 
 def color_table(request):

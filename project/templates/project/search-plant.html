@@ -15,7 +15,7 @@
             {% for item in object_list  %}
             <tr class="{% cycle 'even-row' 'odd-row' as rowcolors %}">
 
-                <td><a href="{% url 'single-plant' item.pk %}">{{item.latin_name}}</a>
+                <td><a href="{% url 'plant-profile-page' item.pk %}">{{item.latin_name}}</a>
                     <br>{{item.english_name}}<br>{{item.french_name}}</td>
                     <td>{{item.light_from.lighting}}
                         {% if item.light_to.lighting %} to<br> {{item.light_to.lighting}} {% endif %}
