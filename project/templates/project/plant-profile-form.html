@@ -19,7 +19,7 @@
 <div class="form-container">
     <form class='form' action="{% url 'plant-profile-add' %}" method="POST">
         {% csrf_token %}
-        <header class="form__header">Plant profile</header>
+        <header class="form__header">{{title}}</header>
         <div class="panel">
         <div class="flex-col">
             <div class="title">Plant Names</div>
