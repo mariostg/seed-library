@@ -76,6 +76,7 @@ def plant_profile_add(request):
     return render(request, "project/plant-profile-form.html", context)
 
 
+# @login_required
 def plant_profile_update(request, pk):
     context = {
         "title": "Update Plant Profile",
@@ -92,6 +93,7 @@ def plant_profile_update(request, pk):
     return render(request, "project/plant-profile-form.html", context)
 
 
+# @login_required
 def plant_profile_delete(request, pk):
     data = models.PlantProfile.objects.get(id=pk)
     if request.method == "POST":
@@ -113,6 +115,7 @@ def search_plant(request):
     return render(request, "project/search-plant.html", context)
 
 
+# @login_required
 def update_availability(request):
     plants = utils.all_plants(request)
     context = {"object_list": plants}
@@ -169,6 +172,7 @@ def harvesting_mean_table(request):
     return render(request, "project/harvesting-mean-table.html", context)
 
 
+# @login_required
 def color_add(request):
     context = {
         "title": "Create Color",
@@ -198,6 +202,7 @@ def color_add(request):
     return render(request, "project/simple-form.html", context)
 
 
+# @login_required
 def dormancy_add(request):
     context = {
         "title": "Create Dormancy",
@@ -226,6 +231,7 @@ def dormancy_add(request):
     return render(request, "project/simple-form.html", context)
 
 
+# @login_required
 def habit_add(request):
     context = {
         "title": "Create Habit",
@@ -254,6 +260,7 @@ def habit_add(request):
     return render(request, "project/simple-form.html", context)
 
 
+# @login_required
 def harvesting_indicator_add(request):
     context = {
         "title": "Create Harvesting Indicator",
@@ -282,6 +289,7 @@ def harvesting_indicator_add(request):
     return render(request, "project/simple-form.html", context)
 
 
+# @login_required
 def harvesting_mean_add(request):
     context = {
         "title": "Create Harvesting Mean Statement",
@@ -310,6 +318,7 @@ def harvesting_mean_add(request):
     return render(request, "project/simple-form.html", context)
 
 
+# @login_required
 def color_update(request, pk):
     color = models.Color.objects.get(id=pk)
     form = forms.ColorForm(instance=color)
@@ -331,6 +340,7 @@ def color_update(request, pk):
     )
 
 
+# @login_required
 def dormancy_update(request, pk):
     obj = models.Dormancy.objects.get(id=pk)
     form = forms.DormancyForm(instance=obj)
@@ -352,6 +362,7 @@ def dormancy_update(request, pk):
     )
 
 
+# @login_required
 def habit_update(request, pk):
     obj = models.Habit.objects.get(id=pk)
     form = forms.HabitForm(instance=obj)
@@ -373,6 +384,7 @@ def habit_update(request, pk):
     )
 
 
+# @login_required
 def harvesting_indicator_update(request, pk):
     obj = models.HarvestingIndicator.objects.get(id=pk)
     form = forms.HarvestingIndicatorForm(instance=obj)
@@ -394,6 +406,7 @@ def harvesting_indicator_update(request, pk):
     )
 
 
+# @login_required
 def harvesting_mean_update(request, pk):
     obj = models.HarvestingMean.objects.get(id=pk)
     form = forms.HarvestingMeanForm(instance=obj)
@@ -415,6 +428,7 @@ def harvesting_mean_update(request, pk):
     )
 
 
+# @login_required
 def color_delete(request, pk):
     obj = models.Color.objects.get(id=pk)
     if request.method == "POST":
@@ -432,6 +446,7 @@ def color_delete(request, pk):
     return render(request, "core/delete-object.html", context)
 
 
+# @login_required
 def dormancy_delete(request, pk):
     obj = models.Dormancy.objects.get(id=pk)
     if request.method == "POST":
@@ -449,6 +464,7 @@ def dormancy_delete(request, pk):
     return render(request, "core/delete-object.html", context)
 
 
+# @login_required
 def habit_delete(request, pk):
     obj: models.Habit = models.Habit.objects.get(id=pk)
     if request.method == "POST":
@@ -466,6 +482,7 @@ def habit_delete(request, pk):
     return render(request, "core/delete-object.html", context)
 
 
+# @login_required
 def harvesting_indicator_delete(request, pk):
     obj: models.HarvestingIndicator = models.HarvestingIndicator.objects.get(id=pk)
     if request.method == "POST":
@@ -483,6 +500,7 @@ def harvesting_indicator_delete(request, pk):
     return render(request, "core/delete-object.html", context)
 
 
+# @login_required
 def harvesting_mean_delete(request, pk):
     obj: models.HarvestingMean = models.HarvestingMean.objects.get(id=pk)
     if request.method == "POST":
@@ -531,5 +549,6 @@ def user_logout(request):
     return redirect("login")
 
 
+# @login_required
 def siteadmin(request):
     return render(request, "project/admin.html")
