@@ -29,6 +29,22 @@ def toggle_availability(request, pk):
     # return render(request, "project/update-availability.html", context)
 
 
+def plant_profile_page(request, pk):
+    plant = utils.single_plant(pk)
+
+    sharing_priority_highlight = {
+        1: "ok",
+        2: "maybe",
+        3: "no",
+        4: "enough",
+        None: "",
+    }
+
+    context = {"plant": plant, "sharing_css_class": sharing_priority_highlight[plant.sharing_priority_id]}
+    print("H:", plant.soil_humidity_max)
+    return render(request, "project/plant-profile-page.html", context)
+
+
 # @login_required
 def plant_profile_add(request):
     context = {
@@ -60,22 +76,6 @@ def plant_profile_add(request):
     return render(request, "project/plant-profile-form.html", context)
 
 
-def plant_profile_page(request, pk):
-    plant = utils.single_plant(pk)
-
-    sharing_priority_highlight = {
-        1: "ok",
-        2: "maybe",
-        3: "no",
-        4: "enough",
-        None: "",
-    }
-
-    context = {"plant": plant, "sharing_css_class": sharing_priority_highlight[plant.sharing_priority_id]}
-    print("H:", plant.soil_humidity_max)
-    return render(request, "project/plant-profile-page.html", context)
-
-
 def plant_profile_update(request, pk):
     context = {
         "title": "Update Plant Profile",
@@ -90,6 +90,20 @@ def plant_profile_update(request, pk):
             obj.save()
             return redirect("plant-profile-page", pk=obj.pk)
     return render(request, "project/plant-profile-form.html", context)
+
+
+def plant_profile_delete(request, pk):
+    data = models.PlantProfile.objects.get(id=pk)
+    if request.method == "POST":
+        try:
+            data.delete()
+        except RestrictedError:
+            messages.info(
+                request, f"Plant Profile {data} ne peut-être effacée car il existe des éléments associés."
+            )
+        return redirect("plant-profile-page", pk=pk)
+    context = {"data": data, "back": f"plant-profile-page/{pk}"}
+    return render(request, "siteornitho/delete_template.html", context)
 
 
 def search_plant(request):

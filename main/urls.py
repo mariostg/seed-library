@@ -16,6 +16,7 @@ urlpatterns = [
 urlpatterns += [
     path("plant-profile-page/<int:pk>", views.plant_profile_page, name="plant-profile-page"),
     path("plant-profile-add/", views.plant_profile_add, name="plant-profile-add"),
+    path("plant-profile-delete/<int:pk>", views.plant_profile_delete, name="plant-profile-delete"),
     path("plant-profile-update/<int:pk>", views.plant_profile_update, name="plant-profile-update"),
 ]
 urlpatterns += [

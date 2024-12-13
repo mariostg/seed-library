@@ -3,6 +3,12 @@
 {% block content %}
 <section class="sheet">
 
+    {% if request.user.is_authenticated %}
+        <div class="button-row frame">
+            <a class='btn btn-edit' href="{% url 'plant-profile-update' pk=plant.pk %}"></a>
+            <a class='btn btn-delete' href="{% url 'plant-profile-delete' pk=plant.pk %}"></a>
+        </div>
+    {% endif %}
         <div class="card">
             <div class="card__header title">
                 <div><a target="blank" href="{{plant.url}}">{{plant.latin_name}}</a></div>
