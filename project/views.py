@@ -60,6 +60,22 @@ def plant_profile_add(request):
     return render(request, "project/plant-profile-form.html", context)
 
 
+def plant_profile_page(request, pk):
+    plant = utils.single_plant(pk)
+
+    sharing_priority_highlight = {
+        1: "ok",
+        2: "maybe",
+        3: "no",
+        4: "enough",
+        None: "",
+    }
+
+    context = {"plant": plant, "sharing_css_class": sharing_priority_highlight[plant.sharing_priority_id]}
+    print("H:", plant.soil_humidity_max)
+    return render(request, "project/plant-profile-page.html", context)
+
+
 def plant_profile_update(request, pk):
     context = {
         "title": "Update Plant Profile",
@@ -87,22 +103,6 @@ def update_availability(request):
     plants = utils.all_plants(request)
     context = {"object_list": plants}
     return render(request, "project/update-availability.html", context)
-
-
-def plant_profile_page(request, pk):
-    plant = utils.single_plant(pk)
-
-    sharing_priority_highlight = {
-        1: "ok",
-        2: "maybe",
-        3: "no",
-        4: "enough",
-        None: "",
-    }
-
-    context = {"plant": plant, "sharing_css_class": sharing_priority_highlight[plant.sharing_priority_id]}
-    print("H:", plant.soil_humidity_max)
-    return render(request, "project/plant-profile-page.html", context)
 
 
 def color_table(request):
