@@ -16,6 +16,7 @@ urlpatterns = [
 ]
 urlpatterns += [
     path("plant-profile-add/", views.plant_profile_add, name="plant-profile-add"),
+    path("plant-profile-update/<int:pk>", views.plant_profile_update, name="plant-profile-update"),
 ]
 urlpatterns += [
     path("color-add/", views.color_add, name="color-add"),

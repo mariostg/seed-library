@@ -60,6 +60,22 @@ def plant_profile_add(request):
     return render(request, "project/plant-profile-form.html", context)
 
 
+def plant_profile_update(request, pk):
+    context = {
+        "title": "Update Plant Profile",
+        "url_name": "index",
+    }
+    obj = models.PlantProfile.objects.get(pk=pk)
+    context["form"] = forms.PlantProfileForm(instance=obj)
+    if request.method == "POST":
+        form = forms.PlantProfileForm(request.POST, instance=obj)
+        if form.is_valid:
+            obj = form.save(commit=False)
+            obj.save()
+            return redirect("single-plant", pk=obj.pk)
+    return render(request, "project/plant-profile-form.html", context)
+
+
 def search_plant(request):
     plants, initial = utils.search_plants(request)
     form = forms.SearchPlantForm(initial=initial)
@@ -75,7 +91,14 @@ def update_availability(request):
 
 def single_plant(request, pk):
     plant = utils.single_plant(pk)
-    sharing_priority_highlight = {1: "ok", 2: "maybe", 3: "no", 4: "enough"}
+
+    sharing_priority_highlight = {
+        1: "ok",
+        2: "maybe",
+        3: "no",
+        4: "enough",
+        None: "",
+    }
 
     context = {"plant": plant, "sharing_css_class": sharing_priority_highlight[plant.sharing_priority_id]}
     print("H:", plant.soil_humidity_max)

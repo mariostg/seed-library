@@ -14,7 +14,10 @@
 
         <tr data-availability={{item.seed_availability}} data-pk={{item.pk}}
         class="toggler {% if item.seed_availability %}ok {% endif %}">
-            <td>{{item.latin_name}}</td><td> {{item.english_name}}</td><td>{{item.french_name}}</td>
+            <td>{{item.latin_name}}</td>
+            <td> {{item.english_name}}</td>
+            <td>{{item.french_name}}</td>
+            <td><a href="{% url 'plant-profile-update' item.pk%}">Edit</a></td>
         {% endfor %}
     </table>
 </section>
