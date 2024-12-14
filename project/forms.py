@@ -1,6 +1,8 @@
 from django import forms
 from django.forms import ModelForm
 from project import models
+from django.core.exceptions import ValidationError
+from django.utils.dates import MONTHS
 
 
 class PlantProfileForm(forms.ModelForm):
@@ -71,6 +73,22 @@ class PlantProfileForm(forms.ModelForm):
         for name, field in self.fields.items():
             field.widget.attrs.update({"class": "input"})
             field.required = False
+
+    def clean(self):
+        cleaned_data = super().clean()
+        min_height = cleaned_data.get("min_height")
+        max_height = cleaned_data.get("max_height")
+        if min_height and max_height and min_height > max_height:
+            raise ValidationError(
+                f"Minimum height ({min_height}) must be smaller than maximum height ({max_height})"
+            )
+
+        bloom_start = cleaned_data.get("bloom_start")
+        bloom_end = cleaned_data.get("bloom_end")
+        if bloom_end and bloom_start and bloom_start > bloom_end:
+            raise ValidationError(
+                f"Beginning of blooming period ({ MONTHS[bloom_start]}) must be before end of blooming period ({MONTHS[bloom_end]})"
+            )
 
 
 class SearchPlantForm(forms.ModelForm):

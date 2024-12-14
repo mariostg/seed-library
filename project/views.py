@@ -86,9 +86,9 @@ def plant_profile_update(request, pk):
     context["form"] = forms.PlantProfileForm(instance=obj)
     if request.method == "POST":
         form = forms.PlantProfileForm(request.POST, instance=obj)
-        if form.is_valid:
-            obj = form.save(commit=False)
-            obj.save()
+        context["form"] = form
+        if form.is_valid():
+            form.save()
             return redirect("plant-profile-page", pk=obj.pk)
     return render(request, "project/plant-profile-form.html", context)
 

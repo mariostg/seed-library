@@ -1,6 +1,7 @@
 from django.db import models, IntegrityError
 from django.utils.dates import MONTHS
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
 import uuid
 
 
@@ -236,18 +237,30 @@ class PlantProfile(Base):
     class Meta:
         ordering = ["latin_name"]
 
-    def save(self, *args, **kwargs):
+    def compare_heights(self):
+        if self.min_height and self.max_height and self.min_height > self.max_height:
+            raise ValidationError(
+                f"Minimum height ({self.min_height}) must be smaller than maximum height ({self.max_height})"
+            )
+
+    def compare_blooming(self):
         if not self.bloom_start:
             self.bloom_start = 0
         if not self.bloom_end:
             self.bloom_end = 0
             self.bloom_start = 0
+        if self.bloom_start and self.bloom_end and self.bloom_start > self.bloom_end:
+            raise ValidationError("Beginning of blooming period must be before end of blooming period")
+
+    def save(self, *args, **kwargs):
         if not self.harvesting_start:
             self.harvesting_start = 0
         if not self.harvesting_end:
             self.harvesting_end = 0
         if not self.latin_name:
             raise ValueError("Missing Latin Name")
+        self.compare_heights()
+        self.compare_blooming()
         super(PlantProfile, self).save(*args, **kwargs)
 
 
