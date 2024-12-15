@@ -1,4 +1,5 @@
 @import "_mixins.scss";
+@import "_variables";
 .form-container {
   display: flex;
   justify-content: center;
@@ -14,8 +15,8 @@
   }
   &__header {
     border-radius: 8px 8px 0 0;
-    background-color: $primary-bg;
-    color: #bfbfbf;
+    background-color: $middle;
+    color: $lightest;
     text-align: center;
     // font-size: 3rem;
     padding: 0 2rem;

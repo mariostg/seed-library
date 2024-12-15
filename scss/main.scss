@@ -6,7 +6,8 @@
 body {
   font-family: sans-serif;
   line-height: 1.5rem;
-  background-color: $brown;
+  background-color: $darkest;
+  color: $lightest;
 }
 main {
   display: flex;
@@ -16,7 +17,7 @@ main {
   padding: 1rem 0;
 }
 header {
-  background-color: $yellow;
+  background-color: $lightest;
   padding: 0 12px;
 }
 nav {
@@ -70,13 +71,13 @@ img.logo {
 .card {
   display: flex;
   flex-direction: column;
-  background-color: #ccd5ae;
+  background-color: $light;
   border-radius: 1rem;
   max-width: 600px;
   width: 100%;
   gap: 1rem;
   &__header {
-    background: rgba(white, 0.5);
+    background: rgba($lightest, 0.5);
     border-radius: 1rem 1rem 0 0;
     text-align: center;
     font-size: 1.1rem;
@@ -131,17 +132,20 @@ table.editor td:nth-child(2) {
   min-width: 120px;
 }
 thead {
-  background-color: $dark-green;
+  background-color: $middle;
+  color: rgba($lightest, 0.5);
 }
 th {
   text-align: left;
   padding: 0 1rem;
 }
 .odd-row {
-  background-color: $light-green;
+  background-color: $lightest;
+  color: $darkest;
 }
 .even-row {
-  background-color: $yellow;
+  background-color: $light;
+  color: $lightest;
 }
 .table-overflow {
   @include break(xxs) {
@@ -152,10 +156,6 @@ th {
     width: 790px;
     overflow-x: auto;
   }
-}
-.outcome {
-  background-color: $beige;
-  padding: 0.2rem 1rem;
 }
 
 .align-center {

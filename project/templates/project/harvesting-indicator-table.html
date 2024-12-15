@@ -3,17 +3,17 @@
 {% block title %}{{title}}{% endblock title %}
 {% block content %}
 
-    <section class="flex-col form form__fields">
-      <header class=''>
+    <section class="flex-col form">
+      <header class='title'>
         <h2>{{title}} Management</h2>
       </header>
       {% if user.is_authenticated %}
-        <div class='flex-row center'>
+        <div class='center'>
             <a class='btn btn-add' href="{% url 'harvesting-indicator-add' %}"></a>
         </div>
       {% endif %}
 
-    <table class='editor'>
+    <table class='editor panel'>
       <thead>
         <tr>
           <th>{{title}}</th>

@@ -1,3 +1,5 @@
+/*greening theme*/
+/*blue theme*/
 .form-login {
   display: flex;
   flex-direction: column;
@@ -9,7 +11,7 @@
 }
 
 .btn-login {
-  background-color: rgb(29, 48, 48);
+  background-color: #092834;
 }
 
 .btn-forgot {

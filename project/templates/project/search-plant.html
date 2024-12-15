@@ -4,7 +4,7 @@
     {% include "project/search-form.html" %}
 
     {% if object_list %}
-    <div class='outcome'> Search Results {% if object_list.count > 0 %}: Found {{object_list.count}} matches{% endif %} </div>
+    <div> Search Results {% if object_list.count > 0 %}: Found {{object_list.count}} matches{% endif %} </div>
     <div id="search-results" class="table-overflow">
         <table>
             <thead>
