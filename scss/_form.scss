@@ -213,7 +213,8 @@ input[type="checkbox"]:disabled {
 
   &-row {
     display: flex;
-    padding: 1rem;
+    justify-content: center;
+    padding: 5px;
     gap: 1rem;
   }
   &-add {

@@ -522,7 +522,8 @@ input[type=checkbox]:disabled {
 }
 .btn-row {
   display: flex;
-  padding: 1rem;
+  justify-content: center;
+  padding: 5px;
   gap: 1rem;
 }
 .btn-add {
