@@ -638,6 +638,9 @@ header {
 }
 
 body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
   font-family: sans-serif;
   line-height: 1.5rem;
   background-color: #092834;
@@ -647,6 +650,7 @@ body {
 main {
   display: flex;
   flex-direction: column;
+  flex: 1 0 auto;
   align-items: center;
   gap: 0.5rem;
   padding: 1rem 0;
@@ -662,6 +666,15 @@ nav {
   justify-content: center;
   padding: 12px 0;
   gap: 12px;
+}
+
+footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #e4f1f6;
+  color: #092834;
+  flex-shrink: 0;
 }
 
 .page-container {
