@@ -170,7 +170,7 @@ class HarvestingMeanForm(forms.ModelForm):
 class ProjectUserForm(ModelForm):
     class Meta:
         model = models.ProjectUser
-        fields = ["name", "email"]
+        fields = ["username", "email"]
 
     def __init__(self, *args, **kwargs):
         super(ProjectUserForm, self).__init__(*args, **kwargs)

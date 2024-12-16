@@ -7,7 +7,7 @@ from django.db.models import RestrictedError
 from django.contrib import messages
 from django.db import IntegrityError
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.models import User
+from project.models import ProjectUser
 from django.core.exceptions import ValidationError
 
 
@@ -529,8 +529,8 @@ def user_login(request):
         password = request.POST["password"]
 
         try:
-            user = User.objects.get(username=username)
-        except User.DoesNotExist:
+            user = ProjectUser.objects.get(username=username)
+        except ProjectUser.DoesNotExist:
             messages.error(request, "Username does not exist")
 
         user = authenticate(request, username=username, password=password)
@@ -547,6 +547,27 @@ def user_login(request):
 def user_logout(request):
     logout(request)
     return redirect("login")
+
+
+@login_required
+def toggle_user_plant(request, pk):
+    plant = models.PlantProfile.objects.get(pk=pk)
+    user = None
+    if request.user.is_authenticated():
+        user = request.user
+
+    try:
+        user_plant = models.UserPlant.objects.get(user=user, plant=plant)
+        user_plant.delete()
+        user_plant = None
+        is_user_plant = False
+    except user_plant.DoesNotExist:
+        user_plant = models.UserPlant.objects({"user": user, "plant": plant})
+        user_plant.save()
+        is_user_plant = True
+    context = {"is_user_plant": is_user_plant, "plant_pk": plant.pk}
+    print(context)
+    return JsonResponse(context)
 
 
 # @login_required
