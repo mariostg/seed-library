@@ -87,10 +87,14 @@ img.logo {
   display: flex;
   flex-direction: column;
   background-color: $light;
+  color: $darkest;
   border-radius: 1rem;
   max-width: 600px;
   width: 100%;
   gap: 1rem;
+  a {
+    color: $darkest;
+  }
   &__header {
     background: rgba($lightest, 0.5);
     border-radius: 1rem 1rem 0 0;
@@ -147,7 +151,7 @@ table.editor td:nth-child(2) {
   min-width: 120px;
 }
 thead {
-  background-color: $middle;
+  background-color: $dark;
   color: rgba($lightest, 0.5);
 }
 th {
@@ -166,9 +170,9 @@ td {
 }
 .even-row {
   background-color: $light;
-  color: $lightest;
+  color: $darkest;
   a {
-    color: $lightest;
+    color: $darkest;
   }
 }
 .table-overflow {
