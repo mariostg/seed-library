@@ -67,7 +67,6 @@ pre {
    */
 a {
   background-color: transparent;
-  color: #67afcb;
 }
 
 /**
@@ -648,13 +647,17 @@ body {
   color: #e4f1f6;
 }
 
+a {
+  color: #67afcb;
+}
+
 main {
   display: flex;
   flex-direction: column;
   flex: 1 0 auto;
   align-items: center;
   gap: 0.5rem;
-  padding: 1rem 0;
+  padding: 12px;
 }
 
 header {
@@ -804,16 +807,26 @@ thead {
 
 th {
   text-align: left;
-  padding: 0 1rem;
+  padding: 0 8px;
+}
+
+td {
+  padding: 0 8px;
 }
 
 .odd-row {
   background-color: #e4f1f6;
   color: #092834;
 }
+.odd-row a {
+  color: #092834;
+}
 
 .even-row {
   background-color: #67afcb;
+  color: #e4f1f6;
+}
+.even-row a {
   color: #e4f1f6;
 }
 
