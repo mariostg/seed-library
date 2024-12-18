@@ -39,6 +39,7 @@ def search_plants(request):
         "harvesting_start": 0,
         "harvesting_end": 0,
         "germinate_easy": "unknown",
+        "seed_availability": "unknown",
     }
     dataset = PlantProfile.objects.all()
 
