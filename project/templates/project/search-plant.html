@@ -3,8 +3,7 @@
     {% block content %}
     {% include "project/search-form.html" %}
 
-    {% if object_list %}
-    <div> Search Results {% if object_list.count > 0 %}: Found {{object_list.count}} matches{% endif %} </div>
+    <div> Search Results {% if filter %}: Found {{filter.qs.count}} matches{% endif %} </div>
     <div id="search-results" class="table-overflow">
         <table>
             <thead>
@@ -12,7 +11,7 @@
                     <th>Names</th><th>Sun<br> Requirement</th><th>Bloom<br> Period</th><th>Harvesting<br> Period</th><th>Soil<br> Humidity</th><th>Max <br>Height</th><th>Stratification</th><th>Sowing depth</th>
                 </tr>
             </thead>
-            {% for item in object_list  %}
+            {% for item in filter.qs  %}
             <tr class="{% cycle 'even-row' 'odd-row' as rowcolors %}">
 
                 <td><a href="{% url 'plant-profile-page' item.pk %}">{{item.latin_name}}</a>
@@ -34,7 +33,6 @@
                         {% endfor %}
                     </table>
                 </div>
-    {% endif %}
 {% if anchor %}
 <script type='text/javascript'>
     document.addEventListener("DOMContentLoaded", () => {

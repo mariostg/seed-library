@@ -9,6 +9,7 @@ from django.db import IntegrityError
 from django.contrib.auth import authenticate, login, logout
 from project.models import ProjectUser
 from django.core.exceptions import ValidationError
+from project import filters
 
 
 # Create your views here.
@@ -24,7 +25,6 @@ def toggle_availability(request, pk):
     plant.save()
     plant = models.PlantProfile.objects.get(pk=pk)
     context = {"pk": plant.pk, "availability": plant.seed_availability}
-    print(context)
     return JsonResponse(context)
     # return render(request, "project/update-availability.html", context)
 
@@ -39,9 +39,8 @@ def plant_profile_page(request, pk):
         4: "enough",
         None: "",
     }
-
-    context = {"plant": plant, "sharing_css_class": sharing_priority_highlight[plant.sharing_priority_id]}
-    print("H:", plant.soil_humidity_max)
+    ###This index thing is not working.
+    context = {"plant": plant, "sharing_css_class": sharing_priority_highlight.get(plant.sharing_priority_id)}
     return render(request, "project/plant-profile-page.html", context)
 
 
@@ -68,7 +67,6 @@ def plant_profile_add(request):
             except ValueError as e:
                 messages.error(request, e)
         else:
-            print(form.errors)
             messages.error(request, "Plant Profile not valid.")
             context["form"] = form
     else:
@@ -109,10 +107,23 @@ def plant_profile_delete(request, pk):
 
 
 def search_plant(request):
-    plants, initial = utils.search_plants(request)
-    form = forms.SearchPlantForm(initial=initial)
-    context = {"object_list": plants, "form": form, "initial": initial, "anchor": "search-results"}
-    return render(request, "project/search-plant.html", context)
+    has_filter = False
+    if not request.GET:
+        data = models.PlantProfile.objects.none()
+    else:
+        data = models.PlantProfile.objects.all().order_by("latin_name")
+        has_filter = True
+    search_filter = filters.PlantProfileFilter(request.GET, queryset=data)
+    return render(
+        request,
+        "project/search-plant.html",
+        {
+            "filter": search_filter,
+            "has_filter": has_filter,
+            "url_name": "search-plant",
+            "title": "Plant Profile Filter",
+        },
+    )
 
 
 # @login_required
@@ -195,7 +206,6 @@ def color_add(request):
         else:
             messages.error(request, f"Color not valid.")
             context["form"] = form
-            print("DID NOT VALIDATE")
     else:
         context["form"] = forms.ColorForm
 
@@ -549,6 +559,13 @@ def user_logout(request):
     return redirect("login")
 
 
+def plant_collection(request):
+    obj = models.PlantCollection.objects.filter(owner=request.user)
+
+    context = {"object_list": obj}
+    return render(request, "project/plant-collection.html", context)
+
+
 @login_required
 def toggle_user_plant(request, pk):
     plant = models.PlantProfile.objects.get(pk=pk)
@@ -566,7 +583,6 @@ def toggle_user_plant(request, pk):
         user_plant.save()
         is_user_plant = True
     context = {"is_user_plant": is_user_plant, "plant_pk": plant.pk}
-    print(context)
     return JsonResponse(context)
 
 

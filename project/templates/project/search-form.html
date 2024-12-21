@@ -1,64 +1,63 @@
 
 <div class="form-container">
-    <form class='form' action="/search-plant/" method="GET">
+    <form class='form' method="GET">
         <header class="form__header">Input one or many search criterion</header>
         <div class="panel">
         <div class="flex-col">
-            <div class="form-label">Plant Names</div>
+            <div class="title">Plant Names</div>
             <div class="flex-row">
-                <div class="form__field"><label class="form-label">Latin</label> {{form.latin_name}}</div>
-                <div class="form__field"><label class="form-label">English</label> {{form.english_name}}</div>
-                <div class="form__field"><label class="form-label">French</label> {{form.french_name}}</div>
+                <div class="form__field"><label class="form-label">Latin</label> {{filter.form.latin_name}}</div>
+                <div class="form__field"><label class="form-label">English</label> {{filter.form.english_name}}</div>
+                <div class="form__field"><label class="form-label">French</label> {{filter.form.french_name}}</div>
             </div>
         </div>
 
         <div class="flex-row">
             <div class="flex-col">
-                <div class="form-label">Sun Requirement</div>
+                <div class="title">Sun Requirement</div>
                 <div class="light-range__inputs">
-                    <div class="form__field"><label class="form-label">Max</label>{{form.light_from}}</div>
-                    <div class="form__field"><label class="form-label">Min</label>{{form.light_to}}</div>
+                    <div class="form__field"><label class="form-label">Max</label>{{filter.form.light_from}}</div>
+                    <div class="form__field"><label class="form-label">Min</label>{{filter.form.light_to}}</div>
                 </div>
             </div>
             <div class="flex-col">
-                <div class="form-label">Humidity Range</div>
+                <div class="title">Humidity Range</div>
                 <div class="humidity-range__inputs">
-                    <div class="form__field"><label class="form-label">Min</label>{{form.soil_humidity_min}}</div>
-                    <div class="form__field"><label class="form-label">Max</label>{{form.soil_humidity_max}}</div>
+                    <div class="form__field"><label class="form-label">Min</label>{{filter.form.soil_humidity_min}}</div>
+                    <div class="form__field"><label class="form-label">Max</label>{{filter.form.soil_humidity_max}}</div>
                 </div>
             </div>
             <div class="flex-col">
-                <div class="form-label">Bloom Period</div>
+                <div class="title">Bloom Period</div>
                 <div class="humidity-range__inputs">
-                    <div class="form__field"><label class="form-label">Start</label>{{form.bloom_start}}</div>
-                    <div class="form__field"><label class="form-label">End</label>{{form.bloom_end}}</div>
+                    <div class="form__field"><label class="form-label">Start</label>{{filter.form.bloom_start}}</div>
+                    <div class="form__field"><label class="form-label">End</label>{{filter.form.bloom_end}}</div>
                 </div>
             </div>
             <div class="flex-col">
-                <div class="form-label">Harvesting Period</div>
+                <div class="title">Harvesting Period</div>
                 <div class="humidity-range__inputs">
-                    <div class="form__field"><label class="form-label">Start</label>{{form.harvesting_start}}</div>
-                    <div class="form__field"><label class="form-label">End</label>{{form.harvesting_end}}</div>
+                    <div class="form__field"><label class="form-label">Start</label>{{filter.form.harvesting_start}}</div>
+                    <div class="form__field"><label class="form-label">End</label>{{filter.form.harvesting_end}}</div>
                 </div>
             </div>
 
         </div>
 
         <div class="flex-col">
-            <div class="form-label">Growth</div>
+            <div class="title">Growth</div>
             <div class="flex-row">
-                <div class="form__field"><label class="form-label">Germinate Easily</label>{{form.germinate_easy}}</div>
-                <div class="form__field"><label class="form-label">Maximum height</label>{{form.max_height}}</div>
-                <div class="form__field"><label class="form-label">Stratification duration</label>{{form.stratification_duration}}</div>
+                <div class="form__field"><label class="form-label">Germinate Easily</label>{{filter.form.germinate_easy}}</div>
+                <div class="form__field"><label class="form-label">Maximum height</label>{{filter.form.max_height}}</div>
+                <div class="form__field"><label class="form-label">Stratification duration</label>{{filter.form.stratification_duration}}</div>
             </div>
         </div>
 
         <div class="flex-col">
-            <div class="form-label">Seed Sharing</div>
+            <div class="title">Seed Sharing</div>
             <div class="flex-row">
-
-                <div class="form__field">{{form.sharing_priority.label_tag}}{{form.sharing_priority}}</div>
-                <div class="form__field">{{form.seed_availability.label_tag}}{{form.seed_availability}}</div>
+                <div class="form__field">{{filter.form.sharing_priority.label_tag}}{{filter.form.sharing_priority}}</div>
+                <div class="form__field">{{filter.form.seed_availability.label_tag}}{{filter.form.seed_availability}}</div>
             </div>
 
         </div>
