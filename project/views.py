@@ -115,8 +115,10 @@ def search_plant(request):
         data = models.PlantProfile.objects.none()
     else:
         data = models.PlantProfile.objects.all().order_by("latin_name")
+        print("DATA:", data)
         has_filter = True
     search_filter = filters.PlantProfileFilter(request.GET, queryset=data)
+    print("FILTER:", filter)
     object_list = search_filter.qs.annotate(
         is_owner=Coalesce(
             Subquery(
@@ -127,6 +129,7 @@ def search_plant(request):
             Value("No"),
         )
     )
+    print("OBJECT LIST:", object_list)
     return render(
         request,
         "project/search-plant.html",
