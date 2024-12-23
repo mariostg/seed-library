@@ -78,9 +78,10 @@ class PlantProfileForm(forms.ModelForm):
         cleaned_data = super().clean()
         min_height = cleaned_data.get("min_height")
         max_height = cleaned_data.get("max_height")
+        latin_name = cleaned_data.get("latin_name")
         if min_height and max_height and min_height > max_height:
             raise ValidationError(
-                f"Minimum height ({min_height}) must be smaller than maximum height ({max_height})"
+                f"{latin_name}: Minimum height ({min_height}) must be smaller than maximum height ({max_height})"
             )
 
         bloom_start = cleaned_data.get("bloom_start")
@@ -177,3 +178,12 @@ class ProjectUserForm(ModelForm):
 
         for name, field in self.fields.items():
             field.widget.attrs.update({"class": "input"})
+
+
+class PlantCollectionForm(forms.ModelForm):
+    class Meta:
+        model = models.PlantCollection
+        fields = ["details"]
+
+    def __init__(self, *args, **kwargs):
+        super(PlantCollectionForm, self).__init__(*args, **kwargs)

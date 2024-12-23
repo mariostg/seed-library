@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /*greening theme*/
 /*blue theme*/
 /*greening theme*/
@@ -732,10 +733,14 @@ img.logo {
   display: flex;
   flex-direction: column;
   background-color: #67afcb;
+  color: #092834;
   border-radius: 1rem;
   max-width: 600px;
   width: 100%;
   gap: 1rem;
+}
+.card a {
+  color: #092834;
 }
 .card__header {
   background: rgba(228, 241, 246, 0.5);
@@ -781,6 +786,24 @@ img.logo {
   color: #000;
 }
 
+.checkmark::before {
+  content: "✓";
+  display: inline-block;
+  color: green;
+  font-size: 24px;
+}
+
+.crossmark::before {
+  content: "✗";
+  display: inline-block;
+  color: red;
+  font-size: 24px;
+}
+
+.toggler {
+  cursor: pointer;
+}
+
 /*Table*/
 table {
   border-collapse: collapse;
@@ -801,7 +824,7 @@ table.editor td:nth-child(2) {
 }
 
 thead {
-  background-color: #347b98;
+  background-color: #1a3e4c;
   color: rgba(228, 241, 246, 0.5);
 }
 
@@ -824,10 +847,10 @@ td {
 
 .even-row {
   background-color: #67afcb;
-  color: #e4f1f6;
+  color: #092834;
 }
 .even-row a {
-  color: #e4f1f6;
+  color: #092834;
 }
 
 @media screen and (max-width: 480px) {

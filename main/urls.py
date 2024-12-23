@@ -65,6 +65,11 @@ urlpatterns += [
 urlpatterns += [
     path("login/", views.user_login, name="login"),
     path("logout/", views.user_logout, name="logout"),
+    path("user-plant-collection/", views.user_plant_collection, name="user-plant-collection"),
+    path("user-plant-toggle/<int:pk>", views.user_plant_toggle, name="user-plant-toggle"),
+    path("user-plant-update/<int:pk>", views.user_plant_update, name="user-plant-update"),
+    path("user-plant-delete/<int:pk>", views.user_plant_delete, name="user-plant-delete"),
+    path("plant-collection-csv/", views.plant_collection_csv, name="plant-collection-csv"),
     path("site-admin/", views.siteadmin, name="site-admin"),
 ]
 

@@ -136,7 +136,21 @@ img.logo {
   background: lightskyblue;
   color: #000;
 }
-
+.checkmark::before {
+  content: "\2713";
+  display: inline-block;
+  color: green;
+  font-size: 24px;
+}
+.crossmark::before {
+  content: "\2717";
+  display: inline-block;
+  color: red;
+  font-size: 24px;
+}
+.toggler {
+  cursor: pointer;
+}
 /*Table*/
 table {
   border-collapse: collapse;

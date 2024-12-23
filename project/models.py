@@ -1,6 +1,5 @@
-from django.db import models, IntegrityError
+from django.db import models
 from django.utils.dates import MONTHS
-from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.contrib.auth.models import AbstractUser
 
@@ -240,7 +239,7 @@ class PlantProfile(Base):
     def compare_heights(self):
         if self.min_height and self.max_height and self.min_height > self.max_height:
             raise ValidationError(
-                f"Minimum height ({self.min_height}) must be smaller than maximum height ({self.max_height})"
+                f"{self.latin_name}: Minimum height ({self.min_height}) must be smaller than maximum height ({self.max_height})"
             )
 
     def compare_blooming(self):
@@ -265,6 +264,22 @@ class PlantProfile(Base):
 
 
 class ProjectUser(AbstractUser):
+    plants = models.ManyToManyField(PlantProfile, through="PlantCollection")
 
     def __str__(self):
         return str(self.username)
+
+
+class PlantCollection(models.Model):
+    owner = models.ForeignKey(ProjectUser, on_delete=models.CASCADE)
+    plants = models.ForeignKey(PlantProfile, on_delete=models.CASCADE)
+    details = models.CharField(max_length=125, blank=True)
+
+    def __str__(self):
+        return f"{self.owner}, {self.plants}"
+
+    class Meta:
+        ordering = ["plants__latin_name"]
+        constraints = [
+            models.UniqueConstraint(name="unique_plant_owner", fields=["owner", "plants"]),
+        ]

@@ -16,14 +16,3 @@ img {
   height: auto;
   max-width: 100%;
 }
-
-.checkmark::before {
-  content: "\2713";
-  display: inline-block;
-  color: green;
-}
-.crossmark::before {
-  content: "\2717";
-  display: inline-block;
-  color: red;
-}

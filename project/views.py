@@ -1,11 +1,14 @@
+import csv
 from django.shortcuts import render, redirect
 from project import utils, models
 from project import forms
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
-from django.db.models import RestrictedError
+from django.db.models import RestrictedError, OuterRef, Subquery, Value
+from django.db.models.functions import Coalesce
 from django.contrib import messages
 from django.db import IntegrityError
+from django.http import HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from project.models import ProjectUser
 from django.core.exceptions import ValidationError
@@ -114,11 +117,22 @@ def search_plant(request):
         data = models.PlantProfile.objects.all().order_by("latin_name")
         has_filter = True
     search_filter = filters.PlantProfileFilter(request.GET, queryset=data)
+    object_list = search_filter.qs.annotate(
+        is_owner=Coalesce(
+            Subquery(
+                models.PlantCollection.objects.filter(owner=request.user, plants=OuterRef("pk"))
+                .annotate(owns=Value("Yes"))
+                .values("owns")
+            ),
+            Value("No"),
+        )
+    )
     return render(
         request,
         "project/search-plant.html",
         {
             "filter": search_filter,
+            "object_list": object_list,
             "has_filter": has_filter,
             "url_name": "search-plant",
             "title": "Plant Profile Filter",
@@ -559,31 +573,93 @@ def user_logout(request):
     return redirect("login")
 
 
-def plant_collection(request):
+def user_plant_collection(request):
     obj = models.PlantCollection.objects.filter(owner=request.user)
 
     context = {"object_list": obj}
     return render(request, "project/plant-collection.html", context)
 
 
+# @login_required
+def user_plant_update(request, pk):
+    obj = models.PlantCollection.objects.get(id=pk)
+    if obj.owner != request.user:
+        messages.warning(request, "You are not allowed to modify this user plant")
+    form = forms.PlantCollectionForm(instance=obj)
+
+    if request.method == "POST":
+        form = forms.PlantCollectionForm(request.POST, instance=obj)
+        if form.is_valid():
+            form.save()
+            return redirect("user-plant-collection")
+
+    return render(
+        request,
+        "project/simple-form.html",
+        {
+            "form": form,
+            "title": "Color Update",
+            "url_name": "user-plant-collection",
+        },
+    )
+
+
 @login_required
-def toggle_user_plant(request, pk):
+def user_plant_toggle(request, pk):
     plant = models.PlantProfile.objects.get(pk=pk)
     user = None
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         user = request.user
-
-    try:
-        user_plant = models.UserPlant.objects.get(user=user, plant=plant)
-        user_plant.delete()
-        user_plant = None
-        is_user_plant = False
-    except user_plant.DoesNotExist:
-        user_plant = models.UserPlant.objects({"user": user, "plant": plant})
-        user_plant.save()
-        is_user_plant = True
-    context = {"is_user_plant": is_user_plant, "plant_pk": plant.pk}
+        try:
+            user_plant = models.PlantCollection.objects.get(owner=user, plants=plant)
+            user_plant.delete()
+            user_plant = None
+            isowner = "No"
+            td_class = "toggler crossmark"
+        except models.PlantCollection.DoesNotExist:
+            user_plant = models.PlantCollection(owner=user, plants=plant)
+            user_plant.save()
+            isowner = "Yes"
+            td_class = "toggler checkmark"
+    context = {"isowner": isowner, "plant_pk": plant.pk, "td_class": td_class}
     return JsonResponse(context)
+
+
+@login_required
+def user_plant_delete(request, pk):
+    obj: models.PlantCollection = models.PlantCollection.objects.get(id=pk)
+    if obj.owner != request.user:
+        messages.warning(request, "You are not allowed to delete this plant from the user collection")
+        return render(request, "project/user-plant-collection.html")
+    if request.method == "POST":
+        try:
+            obj.delete()
+        except RestrictedError as e:
+            msg = e.args[0].split(":")[0] + " : "
+            fkeys = []
+            for fk in e.restricted_objects:
+                fkeys.append(fk.habit)
+            msg = msg + ", ".join(fkeys)
+            messages.warning(request, msg)
+        return redirect("user-plant-collection")
+    context = {"object": obj, "back": "user-plant-collection"}
+    return render(request, "core/delete-object.html", context)
+
+
+def plant_collection_csv(request):
+    data = models.PlantProfile.objects.filter(plantcollection__owner=request.user)
+
+    fields = [field.name for field in data.model._meta.fields]
+    response = HttpResponse(
+        content_type="text/csv",
+        headers={"Content-Disposition": 'attachment; filename="plant-collection.csv"'},
+    )
+
+    writer = csv.writer(response)
+    writer.writerow(fields)
+    for obj in data:
+        writer.writerow([getattr(obj, field) for field in fields])
+    return response
 
 
 # @login_required

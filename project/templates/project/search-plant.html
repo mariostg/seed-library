@@ -1,4 +1,5 @@
 {% extends "core/base.html" %}
+{% load static %}
 {% load months %}
     {% block content %}
     {% include "project/search-form.html" %}
@@ -8,10 +9,10 @@
         <table>
             <thead>
                 <tr>
-                    <th>Names</th><th>Sun<br> Requirement</th><th>Bloom<br> Period</th><th>Harvesting<br> Period</th><th>Soil<br> Humidity</th><th>Max <br>Height</th><th>Stratification</th><th>Sowing depth</th>
+                    <th>Names</th><th>Sun<br> Requirement</th><th>Bloom<br> Period</th><th>Harvesting<br> Period</th><th>Soil<br> Humidity</th><th>Max <br>Height</th><th>Sowing depth</th><th>My Plant</th>
                 </tr>
             </thead>
-            {% for item in filter.qs  %}
+            {% for item in object_list  %}
             <tr class="{% cycle 'even-row' 'odd-row' as rowcolors %}">
 
                 <td><a href="{% url 'plant-profile-page' item.pk %}">{{item.latin_name}}</a>
@@ -27,8 +28,16 @@
                         <td>{{item.soil_humidity_min.soil_humidity}}
                             {% if item.soil_humidity_max.soil_humidity %} to <br>{{item.soil_humidity_max.soil_humidity}} {% endif %}</td>
                             <td>{{item.max_height}}</td>
-                            <td>{{item.stratification_detail}}</td>
                             <td>{{item.sowing_depth}} {% if item.sowing_detail %}<br>{{intm.sowing_detail}}{% endif %}</td>
+                            <td
+                                data-isowner={{item.is_owner}}
+                                data-pk={{item.pk}}
+                                {% if item.is_owner == 'Yes' %}
+                                    class="toggler checkmark"
+                                {% else %}
+                                    class="toggler crossmark"
+                             {% endif %}>
+                            </td>
                         </tr>
                         {% endfor %}
                     </table>
@@ -40,4 +49,5 @@
     });
 </script>
 {% endif %}
+<script src="{% static 'js/collection-toggler.js' %}"></script>
     {% endblock content %}
