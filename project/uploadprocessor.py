@@ -294,3 +294,53 @@ class PlantProfileProcessor(UploadProcessor):
                 messages.info(request, msg)
             else:
                 print(msg)
+
+
+class CsvProcessor(UploadProcessor):
+    def __init__(self, filepath, header, objmodel) -> None:
+        UploadProcessor.__init__(self, filepath)
+        self.header = header
+        self.objmodel = objmodel
+
+    def _find_duplicate(self, data: pd.DataFrame) -> pd.DataFrame:
+        duplicates = data[data.duplicated(subset=[self.header], keep=False) == True]
+        if duplicates.empty:
+            return pd.DataFrame
+        else:
+            return duplicates
+
+    def main(self, request=None):
+        if not self.header_good():
+            msg = f"{__class__.__name__}: Invalid columns header"
+            logger.error(msg)
+            if request:
+                messages.error(request, msg)
+                return
+        df = self.dataframe()
+
+        duplicates = self._find_duplicate(df)
+        if not duplicates.empty and request:
+            messages.error(
+                request, f"Duplicate {__class__.__name__} have been detected: {duplicates.to_html()}"
+            )
+            return
+
+        _dict = self.as_dict(df)
+        counter = 0
+        for item in _dict:
+            obj = self.objmodel(**item)
+            try:
+                obj.save()
+                counter += 1
+                logger.info(f"Uploaded  {obj}.")
+            except IntegrityError as err:
+                msg = f"Saving {self.header} {item} generates {err}."
+                logger.warning(msg)
+                if request:
+                    messages.error(request, msg)
+        if counter:
+            msg = f"{counter} {self.header} items have been uploaded."
+            if request:
+                messages.info(request, msg)
+            else:
+                print(msg)
