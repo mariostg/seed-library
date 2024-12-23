@@ -28,7 +28,7 @@
                         <td>{{item.soil_humidity_min.soil_humidity}}
                             {% if item.soil_humidity_max.soil_humidity %} to <br>{{item.soil_humidity_max.soil_humidity}} {% endif %}</td>
                             <td>{{item.max_height}}</td>
-                            <td>{{item.sowing_depth}} {% if item.sowing_detail %}<br>{{intm.sowing_detail}}{% endif %}</td>
+                            <td>{{item.sowing_depth}} {% if item.sowing_detail %}<br>{{item.sowing_detail}}{% endif %}</td>
                             <td
                                 data-isowner={{item.is_owner}}
                                 data-pk={{item.pk}}
