@@ -117,16 +117,18 @@ def search_plant(request):
         data = models.PlantProfile.objects.all().order_by("latin_name")
         has_filter = True
     search_filter = filters.PlantProfileFilter(request.GET, queryset=data)
-    object_list = search_filter.qs.annotate(
-        is_owner=Coalesce(
-            Subquery(
-                models.PlantCollection.objects.filter(owner=request.user, plants=OuterRef("pk"))
-                .annotate(owns=Value("Yes"))
-                .values("owns")
-            ),
-            Value("No"),
+    object_list = search_filter.qs
+    if not request.user.is_anonymous:
+        object_list = object_list.annotate(
+            is_owner=Coalesce(
+                Subquery(
+                    models.PlantCollection.objects.filter(owner=request.user, plants=OuterRef("pk"))
+                    .annotate(owns=Value("Yes"))
+                    .values("owns")
+                ),
+                Value("No"),
+            )
         )
-    )
     return render(
         request,
         "project/search-plant.html",

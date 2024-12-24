@@ -9,7 +9,7 @@
         <table>
             <thead>
                 <tr>
-                    <th>Names</th><th>Sun<br> Requirement</th><th>Bloom<br> Period</th><th>Harvesting<br> Period</th><th>Soil<br> Humidity</th><th>Max <br>Height</th><th>Sowing depth</th><th>My Plant</th>
+                    <th>Names</th><th>Sun<br> Requirement</th><th>Bloom<br> Period</th><th>Harvesting<br> Period</th><th>Soil<br> Humidity</th><th>Max <br>Height</th><th>Sowing depth</th> {% if request.user.is_authenticated %}<th>My Plant</th>{% endif %}
                 </tr>
             </thead>
             {% for item in object_list  %}
@@ -29,6 +29,7 @@
                             {% if item.soil_humidity_max.soil_humidity %} to <br>{{item.soil_humidity_max.soil_humidity}} {% endif %}</td>
                             <td>{{item.max_height}}</td>
                             <td>{{item.sowing_depth}} {% if item.sowing_detail %}<br>{{item.sowing_detail}}{% endif %}</td>
+                            {% if request.user.is_authenticated %}
                             <td
                                 data-isowner={{item.is_owner}}
                                 data-pk={{item.pk}}
@@ -36,8 +37,9 @@
                                     class="toggler checkmark"
                                 {% else %}
                                     class="toggler crossmark"
-                             {% endif %}>
+                                {% endif %}>
                             </td>
+                            {% endif %}
                         </tr>
                         {% endfor %}
                     </table>
