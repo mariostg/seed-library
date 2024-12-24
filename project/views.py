@@ -575,6 +575,7 @@ def user_logout(request):
     return redirect("login")
 
 
+@login_required
 def user_plant_collection(request):
     obj = models.PlantCollection.objects.filter(owner=request.user)
 
@@ -648,6 +649,7 @@ def user_plant_delete(request, pk):
     return render(request, "core/delete-object.html", context)
 
 
+@login_required
 def plant_collection_csv(request):
     data = models.PlantProfile.objects.filter(plantcollection__owner=request.user)
 
