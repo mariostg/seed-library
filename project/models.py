@@ -286,6 +286,12 @@ class PlantCollection(models.Model):
         ]
 
 
+class PlantMorphology(models.Model):
+    """Morphological elements of a plant such as leaf, fruit, flower, stem, etc."""
+
+    element = models.CharField(max_length=75, blank=True, unique=True)
+
+
 class PlantImage(models.Model):
     plant_profile = models.ForeignKey(PlantProfile, on_delete=models.CASCADE, related_name="images")
     title = models.CharField(verbose_name="Titre", max_length=125)
