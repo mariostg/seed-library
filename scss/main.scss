@@ -63,7 +63,8 @@ img.logo {
   flex-direction: column;
 }
 .dark-row {
-  background-color: $lightgrey;
+  background-color: light-dark($lightgrey, $lightgrey);
+  color: light-dark($black, $black);
   padding: 0 1rem;
   &:last-child {
     border-radius: 0 0 1rem 1rem;
@@ -97,7 +98,8 @@ img.logo {
     color: $link;
   }
   &__header {
-    background: $lightgrey;
+    background: light-dark($lightgrey, $black);
+    color: light-dark($black, $white);
     border-radius: $border-radius;
     text-align: center;
     font-size: 1.1rem;
