@@ -1,4 +1,4 @@
-import PIL.Image
+from PIL import Image, ImageOps
 from django.db import models
 from django.utils.dates import MONTHS
 from django.core.exceptions import ValidationError
@@ -319,12 +319,13 @@ class PlantImage(models.Model):
         except:
             pass  # when new photo then we do nothing, normal case
         super().save(*args, **kwargs)
-        img = PIL.Image.open(self.image)
+        img = Image.open(self.image)
+        img = ImageOps.exif_transpose(img)
         width, height = img.size
         target_width = 1024
         h_coefficient = width / 1024
         target_height = height / h_coefficient
-        img = img.resize((int(target_width), int(target_height)), PIL.Image.LANCZOS)
+        img = img.resize((int(target_width), int(target_height)), Image.LANCZOS)
         img.save(self.image.path, quality=100)
         img.close()
         self.image.close()
