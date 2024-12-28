@@ -37,3 +37,4 @@ django-browser-reload
 python-dotenv
 django-debug-toolbar
 gunicorn
+Pillow

@@ -1,3 +1,4 @@
+import PIL.Image
 from django.db import models
 from django.utils.dates import MONTHS
 from django.core.exceptions import ValidationError
@@ -283,3 +284,50 @@ class PlantCollection(models.Model):
         constraints = [
             models.UniqueConstraint(name="unique_plant_owner", fields=["owner", "plants"]),
         ]
+
+
+class PlantImage(models.Model):
+    plant_profile = models.ForeignKey(PlantProfile, on_delete=models.CASCADE, related_name="images")
+    title = models.CharField(verbose_name="Titre", max_length=125)
+    description = models.CharField(verbose_name="Description", max_length=55, blank=True)
+    photo_author = models.CharField(verbose_name="Auteur", max_length=125)
+    photo_date = models.DateField(verbose_name="Date photo")
+    image = models.ImageField(upload_to="project/images")
+
+    def __str__(self) -> str:
+        return f"{self.plant_profile.latin_name} - {self.title} - {self.photo_author}"
+
+    def save(self, *args, **kwargs):
+        try:  # Delete plant if it exists
+            this = PlantImage.objects.get(id=self.id)
+            if this.image != self.image:
+                this.image.delete(save=False)
+        except:
+            pass  # when new photo then we do nothing, normal case
+        super().save(*args, **kwargs)
+        img = PIL.Image.open(self.image)
+        width, height = img.size
+        target_width = 1024
+        h_coefficient = width / 1024
+        target_height = height / h_coefficient
+        img = img.resize((int(target_width), int(target_height)), PIL.Image.LANCZOS)
+        img.save(self.image.path, quality=100)
+        img.close()
+        self.image.close()
+
+    def get_size(self):
+        try:
+            img = PIL.Image.open(self.image)
+        except FileNotFoundError:
+            return 0
+        width, height = img.size
+        img.close()
+        size = {"width": width, "height": height}
+        return size
+
+    def delete(self, *args, **kwargs):
+        try:
+            self.image.delete()
+        except ValueError:
+            pass
+        super(PlantImage, self).delete(*args, **kwargs)
