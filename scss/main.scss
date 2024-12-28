@@ -3,14 +3,17 @@
 @import "_form";
 @import "_layout";
 @import "_alerts";
+html {
+  color-scheme: light dark;
+}
 body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
   font-family: sans-serif;
   line-height: 1.5rem;
-  background-color: $darkest;
-  color: $lightest;
+  background-color: $background;
+  color: $text;
 }
 a {
   color: $light;
@@ -23,10 +26,7 @@ main {
   gap: 0.5rem;
   padding: 12px;
 }
-header {
-  background-color: $lightest;
-  padding: 0 12px;
-}
+
 nav {
   display: flex;
   justify-content: center;
@@ -37,8 +37,8 @@ footer {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: $lightest;
-  color: $darkest;
+  background-color: $background;
+  color: $foreground;
   flex-shrink: 0;
 }
 .page-container {
@@ -63,7 +63,7 @@ img.logo {
   flex-direction: column;
 }
 .dark-row {
-  background-color: rgba(white, 0.7);
+  background-color: $lightgrey;
   padding: 0 1rem;
   &:last-child {
     border-radius: 0 0 1rem 1rem;
@@ -86,18 +86,19 @@ img.logo {
 .card {
   display: flex;
   flex-direction: column;
-  background-color: $light;
-  color: $darkest;
-  border-radius: 1rem;
+  background-color: light-dark($white, $black);
+  color: light-dark($black, $white);
+  border-radius: $border-radius;
+  border: $border;
   max-width: 600px;
   width: 100%;
   gap: 1rem;
   a {
-    color: $darkest;
+    color: $link;
   }
   &__header {
-    background: rgba($lightest, 0.5);
-    border-radius: 1rem 1rem 0 0;
+    background: $lightgrey;
+    border-radius: $border-radius;
     text-align: center;
     font-size: 1.1rem;
     font-weight: 700;
@@ -106,7 +107,7 @@ img.logo {
     justify-content: space-around;
   }
   &__detail {
-    border-radius: 0 0 1rem 1rem;
+    border-radius: $border-radius;
     div {
       display: flex;
       justify-content: space-between;
@@ -165,8 +166,12 @@ table.editor td:nth-child(2) {
   min-width: 120px;
 }
 thead {
-  background-color: $dark;
-  color: rgba($lightest, 0.5);
+  border-top: $border;
+  border-bottom: $border;
+  background-color: $background;
+  color: $foreground;
+  border-top: 1px solid $border;
+  border-bottom: 1px solid $border;
 }
 th {
   text-align: left;
@@ -175,18 +180,21 @@ th {
 td {
   padding: 0 8px;
 }
+tr {
+  border-bottom: $border;
+}
 .odd-row {
-  background-color: $lightest;
-  color: $darkest;
+  background-color: $lightgrey;
+  color: $text;
   a {
-    color: $darkest;
+    color: $text;
   }
 }
 .even-row {
-  background-color: $light;
-  color: $darkest;
+  background-color: $background;
+  color: $text;
   a {
-    color: $darkest;
+    color: $text;
   }
 }
 .table-overflow {

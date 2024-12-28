@@ -1,19 +1,16 @@
-/*greening theme*/
+/*0 3px 5px rgba(75, 85, 68, 0.8);*/
+/*Wildflower theme colors*/
 /*blue theme*/
 .form-login {
   display: flex;
   flex-direction: column;
   max-width: 330px;
   padding: 1rem;
-  border-radius: 0.375rem;
-  background-color: #67afcb;
+  border-radius: 0rem;
+  background-color: #79ac78;
   text-align: center;
 }
 
 .btn-login {
-  background-color: #092834;
-}
-
-.btn-forgot {
-  background-color: #8fbcbc;
+  background-color: #79ac78;
 }

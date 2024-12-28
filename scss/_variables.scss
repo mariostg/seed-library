@@ -1,18 +1,32 @@
-$submit: green;
-$form: #a5b9d2;
-$border-radius: 0.375rem;
+$green: #79ac78;
+$white: #fff;
+$lightgrey: #f7f7f7;
+$black: #333;
+
+$submit: $green;
+$form: $white;
+$border: $green;
+$hover: #618264;
+$box-shadow: None; /*0 3px 5px rgba(75, 85, 68, 0.8);*/
+$border-radius: 0rem;
+$border: 1px solid light-dark($green, $green);
 $small: 0.5rem;
 
-/*greening theme*/
-// $darkest: #1b3509;
-// $dark: #3a631c;
-// $middle: #67b132;
-// $light: #9dd874;
-// $lightest: #eef8e7;
+/*Wildflower theme colors*/
+$dark: $green;
+$middle: $lightgrey;
+$light: $green;
+$lightest: #fff;
+$darkest: $white;
+$background: light-dark($white, $black);
+$foreground: light-dark($black, $white);
+$header-text: $black;
+$text: $foreground;
+$link: light-dark($green, $lightest);
 
 /*blue theme*/
-$darkest: #092834;
-$dark: #1a3e4c;
-$middle: #347b98;
-$light: #67afcb;
-$lightest: #e4f1f6;
+// $darkest: #092834;
+// $dark: #1a3e4c;
+// $middle: #347b98;
+// $light: #67afcb;
+// $lightest: #e4f1f6;
