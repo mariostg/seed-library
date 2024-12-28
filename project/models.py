@@ -301,6 +301,7 @@ class PlantMorphology(models.Model):
 
 class PlantImage(models.Model):
     plant_profile = models.ForeignKey(PlantProfile, on_delete=models.CASCADE, related_name="images")
+    morphology_aspect = models.ForeignKey(PlantMorphology, on_delete=models.CASCADE)
     title = models.CharField(verbose_name="Titre", max_length=125)
     description = models.CharField(verbose_name="Description", max_length=55, blank=True)
     photo_author = models.CharField(verbose_name="Auteur", max_length=125)
