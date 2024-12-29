@@ -1,18 +1,18 @@
-.show {
-  display: block;
-}
-.hide {
-  display: none;
-  div {
-    display: flex;
-    justify-content: space-between;
-    span {
-      padding: 0 0.75rem;
-    }
-  }
-}
-
+@import "_variables";
 img {
   height: auto;
   max-width: 100%;
+}
+
+.plant-image {
+  display: flex;
+  flex-direction: column;
+  max-width: 600px;
+  width: 100%;
+  gap: 1px;
+}
+.image-title {
+  background-color: $green; // $lightgrey;
+  color: $white;
+  text-align: center;
 }

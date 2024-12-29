@@ -1,19 +1,21 @@
-.show {
-  display: block;
-}
-
-.hide {
-  display: none;
-}
-.hide div {
-  display: flex;
-  justify-content: space-between;
-}
-.hide div span {
-  padding: 0 0.75rem;
-}
-
+/*0 3px 5px rgba(75, 85, 68, 0.8);*/
+/*Wildflower theme colors*/
+/*blue theme*/
 img {
   height: auto;
   max-width: 100%;
+}
+
+.plant-image {
+  display: flex;
+  flex-direction: column;
+  max-width: 600px;
+  width: 100%;
+  gap: 1px;
+}
+
+.image-title {
+  background-color: #79ac78;
+  color: #fff;
+  text-align: center;
 }

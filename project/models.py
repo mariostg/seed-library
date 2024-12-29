@@ -322,8 +322,8 @@ class PlantImage(models.Model):
         img = Image.open(self.image)
         img = ImageOps.exif_transpose(img)
         width, height = img.size
-        target_width = 1024
-        h_coefficient = width / 1024
+        target_width = 720
+        h_coefficient = width / target_width
         target_height = height / h_coefficient
         img = img.resize((int(target_width), int(target_height)), Image.LANCZOS)
         img.save(self.image.path, quality=100)

@@ -24,7 +24,7 @@
 
     <div class="card">
         <div class='card__header'>Growth Characteristics</div>
-        <div class='show card__detail'>
+        <div class='card__detail'>
             <div class="{% cycle 'dark-row' 'normal-row' as rowcolors %}">
                 <span>Light Requirement</span>
                 <span title="{{plant.light_from.definition}}">{{plant.light_from}}
@@ -56,7 +56,7 @@
     </div>
     <div class="card">
         <div class='card__header'>Sowing</div>
-        <div class='show card__detail'>
+        <div class='card__detail'>
             <div class="{% cycle 'dark-row' 'normal-row' as rowcolors %}">
                 <span>Stratification</span>
                 <span>{% if plant.stratification_detail %}{{plant.stratification_detail}}{% else %}No stratification needed{% endif %}</span>
@@ -143,7 +143,7 @@
     {% endif %}
     <div class="card">
         <div class='card__header'>Harvesting</div>
-        <div class='show card__detail'>
+        <div class='card__detail'>
             <div class="{% cycle 'dark-row' 'normal-row' as rowcolors %}">
                 <span>Period</span><span>{{plant.harvesting_start}} {% if plant.harvesting_end %}to {{plant.harvesting_end}}{% endif %} </span>
             </div>
@@ -191,6 +191,15 @@
             </div>{% endif %}
         </div>
     </div>
+    {% if plant.images %}
+    {% for image in plant.images.all %}
+    <div class='plant-image'>
+        <div class='image-title'>{{image.title}} - {{image.morphology_aspect}}</div>
+        <img src="/media/{{image.image}}" alt="">
+        <div class='image-title'>{{image.description}} - {{image.photo_author}}, {{image.photo_date}}</div>
+    </div>
+    {% endfor %}
+    {% endif %}
 </section>
 <script src="{% static 'js/utils.js' %}"></script>
 
