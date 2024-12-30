@@ -27,16 +27,16 @@
         <div class='card__detail'>
             <div class="{% cycle 'dark-row' 'normal-row' as rowcolors %}">
                 <span>Light Requirement</span>
-                <span title="{{plant.light_from.definition}}">{{plant.light_from}}
+                <span title="{{plant.light_from.definition}}">{{plant.light_from.lighting}}
                     {% if plant.light_to.lighting %}
-                        <span title="{{plant.light_to.definition}}">to {% endif %}{{plant.light_to}}</span>
+                        <span title="{{plant.light_to.definition}}">to {% endif %}{{plant.light_to.lighting}}</span>
                 </span>
             </div>
             <div class="{% cycle rowcolors %}">
                 <span>Soil Humidity</span>
-                <span title="{{plant.soil_humidity_min.definition}}">{{plant.soil_humidity_min}}
+                <span title="{{plant.soil_humidity_min.definition}}">{{plant.soil_humidity_min.soil_humidity}}
                     {% if plant.soil_humidity_max.soil_humidity != "" %}
-                        <span title="{{plant.soil_humidity_max.definition}}">to {{plant.soil_humidity_max}}</span>
+                        <span title="{{plant.soil_humidity_max.definition}}">to {{plant.soil_humidity_max.soil_humidity}}</span>
                     {% endif %}
                 </span>
             </div>
