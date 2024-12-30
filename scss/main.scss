@@ -69,9 +69,6 @@ img.logo {
   background-color: light-dark($lightgrey, $lightgrey);
   color: light-dark($black, $black);
   padding: 0 1rem;
-  &:last-child {
-    border-radius: 0 0 1rem 1rem;
-  }
 }
 .normal-row {
   padding: 0 1rem;

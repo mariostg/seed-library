@@ -736,9 +736,6 @@ img.logo {
   color: light-dark(#333, #333);
   padding: 0 1rem;
 }
-.dark-row:last-child {
-  border-radius: 0 0 1rem 1rem;
-}
 
 .normal-row {
   padding: 0 1rem;
