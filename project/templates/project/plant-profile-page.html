@@ -18,7 +18,7 @@
             <div class="card__detail">
                 <div class='align-center'><span class="priority {{sharing_css_class}}">{{plant.sharing_priority|default:"Sharing Priority Undefined"}}</span></div>
                 {% if plant.notes %}<div> <span>{{plant.notes}}</span></div>{% endif %}
-                {% if plant.url %}<div><span><a target='blank' href="{{plant.url}}">{{plant.url}}</a></span></div>{% endif %}
+                {% if plant.url %}<div class='align-center'><span><a target='blank' href="{{plant.url}}">View at Prairemoon</a></span></div>{% endif %}
             </div>
         </div>
 
@@ -175,19 +175,19 @@
                 <span>Seed preparation</span> <span>{{plant.seed_preparation}}</span>
             </div> {% endif %}
             {% if plant.envelope_label_link %}<div class="{% cycle rowcolors %}">
-                <span>Envelope Label</span><span><a target='blank' href="{{plant.envelope_label_link}}">{{plant.envelope_label_link}}</a></span>
+                <span>Envelope Label</span><span><a target='blank' href="{{plant.envelope_label_link}}">Open in new tab</a></span>
             </div>{% endif %}
             {% if plant.harvesting_video_link %}<div class="{% cycle rowcolors %}">
-                <span>Harvesting video</span><span><a target='blank' href="{{plant.harvesting_video_link}}">{{plant.harvesting_video_link}}</a></span>
+                <span>Harvesting video</span><span><a target='blank' href="{{plant.harvesting_video_link}}">Open in new tab</a></span>
             </div>{% endif %}
             {% if plant.seed_picture_link %}<div class="{% cycle rowcolors %}">
-                <span>Seed Picture</span><span><a target='blank' href="{{plant.seed_picture_link}}">{{plant.seed_picture_link}}</a></span>
+                <span>Seed Picture</span><span><a target='blank' href="{{plant.seed_picture_link}}">Open in new tab</a></span>
             </div>{% endif %}
             {% if plant.pods_seed_head_picture_link %}<div class="{% cycle rowcolors %}">
-                <span>Pods, seed, head picture</span><span><a target='blank' href="{{plant.pods_seed_head_picture_link}}">{{plant.pods_seed_head_picture_link}}</a></span>
+                <span>Pods, seed, head picture</span><span><a target='blank' href="{{plant.pods_seed_head_picture_link}}">Open in new tab</a></span>
             </div>{% endif %}
             {% if plant.seed_storage_label_info|length > 0 %}<div class="{% cycle rowcolors %}">
-                <span>Seed Storage Label</span><span><a target='blank' href="{{plant.seed_storage_label_info}}">{{plant.seed_storage_label_info}}</a></span>
+                <span>Seed Storage Label</span><span><a target='blank' href="{{plant.seed_storage_label_info}}">Open in new tab</a></span>
             </div>{% endif %}
         </div>
     </div>
