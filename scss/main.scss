@@ -32,6 +32,9 @@ nav {
   justify-content: center;
   padding: 12px 0;
   gap: 12px;
+  @include break(sm) {
+    flex-direction: column;
+  }
 }
 footer {
   display: flex;

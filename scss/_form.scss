@@ -15,6 +15,11 @@
     flex-direction: column;
     padding: 4px;
   }
+
+  @include break(sm) {
+    width: 350px;
+  }
+
   &__header {
     border-top: $border;
     border-bottom: $border;
@@ -219,6 +224,9 @@ input[type="checkbox"]:disabled {
     justify-content: center;
     padding: 5px;
     gap: 1rem;
+    @include break(sm) {
+      flex-direction: column;
+    }
   }
   &-add {
     background: url(../images/icon-btn-add.svg) 5px 1px no-repeat;

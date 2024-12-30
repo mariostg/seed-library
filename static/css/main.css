@@ -320,6 +320,11 @@ summary {
   flex-direction: column;
   padding: 4px;
 }
+@media screen and (max-width: 991px) {
+  .form {
+    width: 350px;
+  }
+}
 .form__header {
   border-top: 1px solid light-dark(#79ac78, #79ac78);
   border-bottom: 1px solid light-dark(#79ac78, #79ac78);
@@ -532,6 +537,11 @@ input[type=checkbox]:disabled {
   padding: 5px;
   gap: 1rem;
 }
+@media screen and (max-width: 991px) {
+  .btn-row {
+    flex-direction: column;
+  }
+}
 .btn-add {
   background: url(../images/icon-btn-add.svg) 5px 1px no-repeat;
   background-color: #404040;
@@ -681,6 +691,11 @@ nav {
   justify-content: center;
   padding: 12px 0;
   gap: 12px;
+}
+@media screen and (max-width: 991px) {
+  nav {
+    flex-direction: column;
+  }
 }
 
 footer {
