@@ -28,7 +28,7 @@ class PlantProfileFilter(django_filters.FilterSet):
         method="filter_gte",
     )
     soil_humidity_max = django_filters.ModelChoiceFilter(
-        queryset=models.Lighting.objects.all(),
+        queryset=models.SoilHumidity.objects.all(),
         method="filter_lte",
     )
 
