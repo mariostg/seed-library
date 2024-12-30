@@ -766,6 +766,11 @@ img.logo {
   width: 100%;
   gap: 1rem;
 }
+@media screen and (max-width: 991px) {
+  .card {
+    width: 350px;
+  }
+}
 .card a {
   color: light-dark(#79ac78, #79ac78);
 }

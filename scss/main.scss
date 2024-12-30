@@ -97,6 +97,9 @@ img.logo {
   max-width: 600px;
   width: 100%;
   gap: 1rem;
+  @include break(sm) {
+    width: 350px;
+  }
   a {
     color: $link;
   }
