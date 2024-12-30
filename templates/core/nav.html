@@ -1,6 +1,6 @@
     <nav>
         {% if request.path != '/' %}
-        <a class='btn' href="{% url 'index' %}">Home</a>
+        <a class='btn' href="{% url 'index' %}">Catalogue Home</a>
         {% endif %}
         <a class='btn' href="{% url 'search-plant' %}">New Search</a>
         {% if request.user.is_authenticated %}
