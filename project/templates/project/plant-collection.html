@@ -1,44 +1,44 @@
 {% extends "core/base.html" %}
 {% load static %}
 {% load months %}
-    {% block content %}
-    {% if object_list %}
+{% block content %}
+  {% if object_list %}
     <div id="search-results" class="table-overflow">
-        <p><a href="{% url 'plant-collection-csv' %}">Export to CSV</a> Lots of columns</p>
-        <table>
-            <thead>
-                <tr>
-                    <th>Names</th><th>Sun<br> Requirement</th><th>Bloom<br> Period</th><th>Harvesting<br> Period</th><th>Soil<br> Humidity</th><th>Max <br>Height</th><th>Stratification</th><th>Sowing depth</th><th>Details</th><th>Action</th>
-                </tr>
-            </thead>
-            {% for item in object_list  %}
-            <tr class="{% cycle 'even-row' 'odd-row' as rowcolors %}">
+      <p><a href="{% url 'plant-collection-csv' %}">Export to CSV</a> Lots of columns</p>
+      <table>
+        <thead>
+          <tr>
+            <th>Names</th><th>Sun<br> Requirement</th><th>Bloom<br> Period</th><th>Harvesting<br> Period</th><th>Soil<br> Humidity</th><th>Max <br>Height</th><th>Stratification</th><th>Sowing depth</th><th>Details</th><th>Action</th>
+          </tr>
+        </thead>
+        {% for item in object_list  %}
+          <tr class="{% cycle 'even-row' 'odd-row' as rowcolors %}">
 
-                <td><a href="{% url 'plant-profile-page' item.pk %}">{{item.plants.latin_name}}</a>
-                    <br>{{item.plants.english_name}}<br>{{item.plants.french_name}}</td>
-                    <td>{{item.plants.light_from.lighting}}
-                        {% if item.plants.light_to.lighting %} to<br> {{item.plants.light_to.lighting}} {% endif %}
-                    </td>
-                    <td>{{item.plants.bloom_start|month_name}}
-                        {% if item.plants.bloom_end != 0 %}to<br> {{item.plants.bloom_end|month_name}} {% endif %}
-                    </td>
-                    <td>{{item.plants.harvesting_start|month_name}}
-                    {% if item.plants.harvesting_end != 0 %}to<br> {{item.plants.harvesting_end|month_name}} {% endif %} </td>
-                    <td>{{item.plants.soil_humidity_min.soil_humidity}}
-                    {% if item.plants.soil_humidity_max.soil_humidity %} to <br>{{item.plants.soil_humidity_max.soil_humidity}} {% endif %}</td>
-                    <td>{{item.plants.max_height}}</td>
-                    <td>{{item.plants.stratification_detail}}</td>
-                    <td>{{item.plants.sowing_depth}} {% if item.plants.sowing_detail %}<br>{{item.plants.sowing_detail}}{% endif %}</td>
-                    <td>{{item.details}}</td>
-                    <td>
-                        <a class='btn btn-delete' href="{% url 'user-plant-delete' pk=item.pk %}"></a>
-                        <a class='btn btn-edit' href="{% url 'user-plant-update' pk=item.pk %}"></a>
-                    </td>
+            <td><a href="{% url 'plant-profile-page' item.pk %}">{{item.plants.latin_name}}</a>
+              <br>{{item.plants.english_name}}<br>{{item.plants.french_name}}</td>
+            <td>{{item.plants.light_from.lighting}}
+              {% if item.plants.light_to.lighting %} to<br> {{item.plants.light_to.lighting}} {% endif %}
+            </td>
+            <td>{{item.plants.bloom_start|month_name}}
+              {% if item.plants.bloom_end != 0 %}to<br> {{item.plants.bloom_end|month_name}} {% endif %}
+            </td>
+            <td>{{item.plants.harvesting_start|month_name}}
+              {% if item.plants.harvesting_end != 0 %}to<br> {{item.plants.harvesting_end|month_name}} {% endif %} </td>
+            <td>{{item.plants.soil_humidity_min.soil_humidity}}
+              {% if item.plants.soil_humidity_max.soil_humidity %} to <br>{{item.plants.soil_humidity_max.soil_humidity}} {% endif %}</td>
+            <td>{{item.plants.max_height}}</td>
+            <td>{{item.plants.stratification_detail}}</td>
+            <td>{{item.plants.sowing_depth}} {% if item.plants.sowing_detail %}<br>{{item.plants.sowing_detail}}{% endif %}</td>
+            <td>{{item.details}}</td>
+            <td>
+              <a class='btn btn-delete' href="{% url 'user-plant-delete' pk=item.pk %}"></a>
+              <a class='btn btn-edit' href="{% url 'user-plant-update' pk=item.pk %}"></a>
+            </td>
 
-            </tr>
-            {% endfor %}
-                    </table>
-                </div>
-    {% endif %}
-    <script src="{% static 'js/collection-toggler.js' %}"></script>
-    {% endblock content %}
+          </tr>
+        {% endfor %}
+      </table>
+    </div>
+  {% endif %}
+  <script src="{% static 'js/collection-toggler.js' %}"></script>
+{% endblock content %}

@@ -790,10 +790,35 @@ img.logo {
   justify-content: space-between;
 }
 .card__detail div span {
-  padding: 0.25rem 0.75rem;
+  padding: 2px 5px;
 }
 .card__detail div span > span {
   padding: 0;
+}
+.card__detail .tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted #79ac78;
+}
+.card__detail .tooltip + .tooltip {
+  padding-left: 0;
+}
+.card__detail .tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #79ac78;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+  top: -5px;
+  right: 105%;
+}
+.card__detail .tooltip:hover .tooltiptext {
+  visibility: visible;
 }
 
 .ok {

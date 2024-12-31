@@ -1,8 +1,9 @@
 from django import forms
-from django.forms import ModelForm
-from project import models
 from django.core.exceptions import ValidationError
+from django.forms import ModelForm
 from django.utils.dates import MONTHS
+
+from project import models
 
 
 class PlantProfileForm(forms.ModelForm):
@@ -68,9 +69,9 @@ class PlantProfileForm(forms.ModelForm):
         ]
 
     def __init__(self, *args, **kwargs):
-        super(PlantProfileForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
-        for name, field in self.fields.items():
+        for _, field in self.fields.items():
             field.widget.attrs.update({"class": "input"})
             field.required = False
 
@@ -116,9 +117,9 @@ class SearchPlantForm(forms.ModelForm):
         ]
 
     def __init__(self, *args, **kwargs):
-        super(SearchPlantForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
-        for name, field in self.fields.items():
+        for _, field in self.fields.items():
             field.widget.attrs.update({"class": "input"})
             field.required = False
 
@@ -129,7 +130,7 @@ class ColorForm(forms.ModelForm):
         fields = ["color"]
 
     def __init__(self, *args, **kwargs):
-        super(ColorForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
 
 class DormancyForm(forms.ModelForm):
@@ -138,7 +139,7 @@ class DormancyForm(forms.ModelForm):
         fields = ["dormancy"]
 
     def __init__(self, *args, **kwargs):
-        super(DormancyForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
 
 class HabitForm(forms.ModelForm):
@@ -147,7 +148,7 @@ class HabitForm(forms.ModelForm):
         fields = ["habit"]
 
     def __init__(self, *args, **kwargs):
-        super(HabitForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
 
 class HarvestingIndicatorForm(forms.ModelForm):
@@ -156,7 +157,7 @@ class HarvestingIndicatorForm(forms.ModelForm):
         fields = ["harvesting_indicator"]
 
     def __init__(self, *args, **kwargs):
-        super(HarvestingIndicatorForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
 
 class HarvestingMeanForm(forms.ModelForm):
@@ -165,7 +166,7 @@ class HarvestingMeanForm(forms.ModelForm):
         fields = ["harvesting_mean"]
 
     def __init__(self, *args, **kwargs):
-        super(HarvestingMeanForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
 
 class ProjectUserForm(ModelForm):
@@ -174,9 +175,9 @@ class ProjectUserForm(ModelForm):
         fields = ["username", "email"]
 
     def __init__(self, *args, **kwargs):
-        super(ProjectUserForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
-        for name, field in self.fields.items():
+        for _, field in self.fields.items():
             field.widget.attrs.update({"class": "input"})
 
 
@@ -186,4 +187,4 @@ class PlantCollectionForm(forms.ModelForm):
         fields = ["details"]
 
     def __init__(self, *args, **kwargs):
-        super(PlantCollectionForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)

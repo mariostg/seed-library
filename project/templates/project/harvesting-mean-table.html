@@ -3,15 +3,15 @@
 {% block title %}{{title}}{% endblock title %}
 {% block content %}
 
-    <section class="flex-col form">
-      <header class='title'>
-        <h2>{{title}} Management</h2>
-      </header>
-      {% if user.is_authenticated %}
-        <div class='center'>
-            <a class='btn btn-add' href="{% url 'harvesting-mean-add' %}"></a>
-        </div>
-      {% endif %}
+  <section class="flex-col form">
+    <header class='title'>
+      <h2>{{title}} Management</h2>
+    </header>
+    {% if user.is_authenticated %}
+      <div class='center'>
+        <a class='btn btn-add' href="{% url 'harvesting-mean-add' %}"></a>
+      </div>
+    {% endif %}
 
     <table class='editor panel'>
       <thead>

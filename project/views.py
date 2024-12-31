@@ -1,18 +1,16 @@
 import csv
-from django.shortcuts import render, redirect
-from project import utils, models
-from project import forms
-from django.http import JsonResponse
-from django.contrib.auth.decorators import login_required
-from django.db.models import RestrictedError, OuterRef, Subquery, Value
-from django.db.models.functions import Coalesce
+
 from django.contrib import messages
-from django.db import IntegrityError
-from django.http import HttpResponse
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+from django.db import IntegrityError
+from django.db.models import OuterRef, RestrictedError, Subquery, Value
+from django.db.models.functions import Coalesce
+from django.http import HttpResponse, JsonResponse
+from django.shortcuts import redirect, render
+
+from project import filters, forms, models, utils
 from project.models import ProjectUser
-from django.core.exceptions import ValidationError
-from project import filters
 
 
 # Create your views here.
@@ -23,7 +21,6 @@ def index(request):
 @login_required
 def toggle_availability(request, pk):
     plant = models.PlantProfile.objects.get(pk=pk)
-    print(plant)
     plant.seed_availability = not plant.seed_availability
     plant.save()
     plant = models.PlantProfile.objects.get(pk=pk)
@@ -42,7 +39,7 @@ def plant_profile_page(request, pk):
         4: "enough",
         None: "",
     }
-    ###This index thing is not working.
+    # This index thing is not working.
     context = {"plant": plant, "sharing_css_class": sharing_priority_highlight.get(plant.sharing_priority_id)}
     return render(request, "project/plant-profile-page.html", context)
 
@@ -101,9 +98,7 @@ def plant_profile_delete(request, pk):
         try:
             data.delete()
         except RestrictedError:
-            messages.info(
-                request, f"Plant Profile {data} ne peut-être effacée car il existe des éléments associés."
-            )
+            messages.info(request, f"Plant Profile {data} ne peut-être effacée car il existe des éléments associés.")
         return redirect("plant-profile-page", pk=pk)
     context = {"data": data, "back": f"plant-profile-page/{pk}"}
     return render(request, "siteornitho/delete_template.html", context)
@@ -220,7 +215,7 @@ def color_add(request):
                     context,
                 )
         else:
-            messages.error(request, f"Color not valid.")
+            messages.error(request, "Color not valid.")
             context["form"] = form
     else:
         context["form"] = forms.ColorForm
@@ -249,7 +244,7 @@ def dormancy_add(request):
                     context,
                 )
         else:
-            messages.error(request, f"Dormancy not valid.")
+            messages.error(request, "Dormancy not valid.")
             context["form"] = form
     else:
         context["form"] = forms.DormancyForm

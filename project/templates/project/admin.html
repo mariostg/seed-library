@@ -1,24 +1,24 @@
 {% extends "core/base.html" %}
 {% block content %}
 
-{% if request.user.is_authenticated %}
-<div>
-    <div><a href="{% url 'update-availability' %}">Update Availability</a></div>
-    <div><a href="{% url 'plant-profile-add' %}">Create Plant Profile</a></div>
-</div>
-<div>
-    <div><a href="{% url 'color-add' %}">Add Color</a></div>
-    <div><a href="{% url 'habit-add' %}">Add Habit</a></div>
-    <div><a href="{% url 'dormancy-add' %}">Add Dormancy</a></div>
-    <div><a href="{% url 'harvesting-indicator-add' %}">Add Harvesting Indicator</a></div>
-    <div><a href="{% url 'harvesting-mean-add' %}">Add Harvesting Mean</a></div>
-</div>
-<div>
-    <div><a href="{% url 'color-table' %}">View Colors</a></div>
-    <div><a href="{% url 'habit-table' %}">View Habits</a></div>
-    <div><a href="{% url 'dormancy-table' %}">View Dormancies</a></div>
-    <div><a href="{% url 'harvesting-indicator-table' %}">View Harvesting Indicator</a></div>
-    <div><a href="{% url 'harvesting-mean-table' %}">View Harvesting Mean</a></div>
-</div>
-{% endif %}
+  {% if request.user.is_authenticated %}
+    <div>
+      <div><a href="{% url 'update-availability' %}">Update Availability</a></div>
+      <div><a href="{% url 'plant-profile-add' %}">Create Plant Profile</a></div>
+    </div>
+    <div>
+      <div><a href="{% url 'color-add' %}">Add Color</a></div>
+      <div><a href="{% url 'habit-add' %}">Add Habit</a></div>
+      <div><a href="{% url 'dormancy-add' %}">Add Dormancy</a></div>
+      <div><a href="{% url 'harvesting-indicator-add' %}">Add Harvesting Indicator</a></div>
+      <div><a href="{% url 'harvesting-mean-add' %}">Add Harvesting Mean</a></div>
+    </div>
+    <div>
+      <div><a href="{% url 'color-table' %}">View Colors</a></div>
+      <div><a href="{% url 'habit-table' %}">View Habits</a></div>
+      <div><a href="{% url 'dormancy-table' %}">View Dormancies</a></div>
+      <div><a href="{% url 'harvesting-indicator-table' %}">View Harvesting Indicator</a></div>
+      <div><a href="{% url 'harvesting-mean-table' %}">View Harvesting Mean</a></div>
+    </div>
+  {% endif %}
 {% endblock content %}

@@ -1,6 +1,5 @@
 import pytest
 from django.test import Client
-from project import models
 
 
 @pytest.mark.django_db

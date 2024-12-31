@@ -1,6 +1,6 @@
 from django.contrib import admin
-from project import models
 
+from project import models
 
 # class HarvestingPeriodFilter(admin.SimpleListFilter):
 #     # Human-readable title which will be displayed in the

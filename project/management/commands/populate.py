@@ -9,12 +9,12 @@ Populate command uses the data available from the test-data folder.  This folder
 
 """
 
-from django.core.management.base import BaseCommand
-from main.settings import DEBUG
 from pathlib import Path
-from project import models
-from project import uploadprocessor
-import os
+
+from django.core.management.base import BaseCommand
+
+from main.settings import DEBUG
+from project import models, uploadprocessor
 
 
 class Command(BaseCommand):
@@ -61,7 +61,7 @@ class Command(BaseCommand):
 
             self.set_seed_library()
         else:
-            print("This capability is only available when DEBUG is True")
+            raise ValueError("This capability is only available when DEBUG is True")
 
     def set_seed_library(self):
         filepath = self.filepath / "seed-library.csv"

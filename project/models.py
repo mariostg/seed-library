@@ -1,8 +1,8 @@
-from PIL import Image, ImageOps
+from django.contrib.auth.models import AbstractUser
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.dates import MONTHS
-from django.core.exceptions import ValidationError
-from django.contrib.auth.models import AbstractUser
+from PIL import Image, ImageOps
 
 
 class Base(models.Model):
@@ -140,7 +140,7 @@ class Color(Base):
 
     def save(self, *args, **kwargs):
         self.color = self.color.capitalize()
-        super(Color, self).save(*args, **kwargs)
+        super().save(*args, **kwargs)
 
 
 class Habit(Base):
@@ -169,9 +169,7 @@ class PlantProfile(Base):
     light_from = models.ForeignKey(
         Lighting, related_name="light_from", on_delete=models.RESTRICT, blank=True, null=True
     )
-    light_to = models.ForeignKey(
-        Lighting, related_name="light_to", on_delete=models.RESTRICT, blank=True, null=True
-    )
+    light_to = models.ForeignKey(Lighting, related_name="light_to", on_delete=models.RESTRICT, blank=True, null=True)
     bloom_start = models.SmallIntegerField(choices=MONTHS.items(), blank=True, default=0)
     bloom_end = models.SmallIntegerField(choices=MONTHS.items(), blank=True, default=0)
     soil_humidity_min = models.ForeignKey(
@@ -190,9 +188,7 @@ class PlantProfile(Base):
     sharing_priority = models.ForeignKey(SharingPriority, on_delete=models.RESTRICT, blank=True, null=True)
     harvesting_start = models.SmallIntegerField(choices=MONTHS.items(), blank=True, default=0)
     harvesting_end = models.SmallIntegerField(choices=MONTHS.items(), blank=True, default=0)
-    harvesting_indicator = models.ForeignKey(
-        HarvestingIndicator, on_delete=models.RESTRICT, null=True, blank=True
-    )
+    harvesting_indicator = models.ForeignKey(HarvestingIndicator, on_delete=models.RESTRICT, null=True, blank=True)
     harvesting_mean = models.ForeignKey(HarvestingMean, on_delete=models.RESTRICT, null=True, blank=True)
     seed_head = models.ForeignKey(SeedHead, on_delete=models.RESTRICT, null=True, blank=True)
     remove_non_seed_material = models.BooleanField(default=False, null=True, blank=True)
@@ -207,9 +203,7 @@ class PlantProfile(Base):
     harvesting_video_link = models.CharField(max_length=200, blank=True)
     seed_picture_link = models.CharField(max_length=200, blank=True)
     pods_seed_head_picture_link = models.CharField(max_length=200, blank=True)
-    seed_storage_label_info = models.ForeignKey(
-        SeedStorageLabelInfo, on_delete=models.RESTRICT, null=True, blank=True
-    )
+    seed_storage_label_info = models.ForeignKey(SeedStorageLabelInfo, on_delete=models.RESTRICT, null=True, blank=True)
     notes = models.CharField(max_length=450, blank=True)
     germinate_easy = models.BooleanField(default=False, null=True, blank=True)
     rock_garden = models.BooleanField(default=False, null=True, blank=True)
@@ -261,7 +255,7 @@ class PlantProfile(Base):
             raise ValueError("Missing Latin Name")
         self.compare_heights()
         self.compare_blooming()
-        super(PlantProfile, self).save(*args, **kwargs)
+        super().save(*args, **kwargs)
 
 
 class ProjectUser(AbstractUser):
@@ -316,7 +310,7 @@ class PlantImage(models.Model):
             this = PlantImage.objects.get(id=self.id)
             if this.image != self.image:
                 this.image.delete(save=False)
-        except:
+        except PlantImage.DoesNotExist:
             pass  # when new photo then we do nothing, normal case
         super().save(*args, **kwargs)
         img = Image.open(self.image)
@@ -332,7 +326,7 @@ class PlantImage(models.Model):
 
     def get_size(self):
         try:
-            img = PIL.Image.open(self.image)
+            img = Image.open(self.image)
         except FileNotFoundError:
             return 0
         width, height = img.size
@@ -345,4 +339,4 @@ class PlantImage(models.Model):
             self.image.delete()
         except ValueError:
             pass
-        super(PlantImage, self).delete(*args, **kwargs)
+        super().delete(*args, **kwargs)

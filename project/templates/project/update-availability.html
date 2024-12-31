@@ -1,26 +1,26 @@
 {% extends "core/base.html" %}
 {% load static %}
 {% block content %}
-{% if object_list %}
-<section class='wrapper'>
-    <p class='container'>Use this table to prepare a list of available plants for the next give away event.  Click on the plant to toggle its availailability.  Plants highlighted in green are marked available. View <a target='blank' href="/search-plant/?seed_availability=true#search-results">available plants</a> in a new tab. From there, you can drill down further to refine the research.</p>
-    <table>
+  {% if object_list %}
+    <section class='wrapper'>
+      <p class='container'>Use this table to prepare a list of available plants for the next give away event.  Click on the plant to toggle its availailability.  Plants highlighted in green are marked available. View <a target='blank' href="/search-plant/?seed_availability=true#search-results">available plants</a> in a new tab. From there, you can drill down further to refine the research.</p>
+      <table>
         <thead>
-            <tr>
-                <th colspan='3'>Names</th>
-            </tr>
+          <tr>
+            <th colspan='3'>Names</th>
+          </tr>
         </thead>
         {% for item in object_list  %}
 
-        <tr data-availability={{item.seed_availability}} data-pk={{item.pk}}
-        class="toggler {% if item.seed_availability %}ok {% endif %}">
+          <tr data-availability={{item.seed_availability}} data-pk={{item.pk}}
+              class="toggler {% if item.seed_availability %}ok {% endif %}">
             <td>{{item.latin_name}}</td>
             <td> {{item.english_name}}</td>
             <td>{{item.french_name}}</td>
             <td><a href="{% url 'plant-profile-update' item.pk%}">Edit</a></td>
         {% endfor %}
-    </table>
-</section>
-{% endif %}
-<script src="{% static 'js/availability-toggler.js' %}"></script>
+      </table>
+    </section>
+  {% endif %}
+  <script src="{% static 'js/availability-toggler.js' %}"></script>
 {% endblock content %}
