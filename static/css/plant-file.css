@@ -19,3 +19,21 @@ img {
   color: #fff;
   text-align: center;
 }
+
+.low {
+  background-color: firebrick;
+  color: #fff;
+}
+
+.none {
+  background-color: grey;
+}
+
+.medium {
+  background-color: orange;
+}
+
+.high {
+  background-color: green;
+  color: #fff;
+}

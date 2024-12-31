@@ -14,7 +14,14 @@ class Base(models.Model):
 
 
 class SharingPriority(Base):
+    LEVELS = {
+        "none": "None",
+        "low": "Low",
+        "medium": "Medium",
+        "high": "High",
+    }
     sharing_priority = models.CharField(max_length=75, blank=True)
+    level = models.CharField(choices=LEVELS, blank=True, default="None", max_length=10)
 
     def __str__(self) -> str:
         return self.sharing_priority

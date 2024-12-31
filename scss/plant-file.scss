@@ -16,3 +16,18 @@ img {
   color: $white;
   text-align: center;
 }
+
+.low {
+  background-color: $low;
+  color: $white;
+}
+.none {
+  background-color: $none;
+}
+.medium {
+  background-color: $medium;
+}
+.high {
+  background-color: $high;
+  color: $white;
+}

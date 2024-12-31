@@ -16,7 +16,7 @@
         <div>{{plant.french_name}}</div>
       </div>
       <div class="card__detail">
-        <div class='align-center'><span class="priority {{sharing_css_class}}">{{plant.sharing_priority|default:"Sharing Priority Undefined"}}</span></div>
+        <div class='align-center'><span class="priority {{plant.sharing_priority.level}}">{{plant.sharing_priority|default:"Sharing Priority Undefined"}}</span></div>
         {% if plant.notes %}<div> <span>{{plant.notes}}</span></div>{% endif %}
         {% if plant.url %}<div class='align-center'><span><a target='blank' href="{{plant.url}}">View at Prairemoon</a></span></div>{% endif %}
       </div>

@@ -30,17 +30,9 @@ def toggle_availability(request, pk):
 
 
 def plant_profile_page(request, pk):
-    plant = utils.single_plant(pk)
+    plant: models.PlantProfile = utils.single_plant(pk)
 
-    sharing_priority_highlight = {
-        1: "ok",
-        2: "maybe",
-        3: "no",
-        4: "enough",
-        None: "",
-    }
-    # This index thing is not working.
-    context = {"plant": plant, "sharing_css_class": sharing_priority_highlight.get(plant.sharing_priority_id)}
+    context = {"plant": plant}
     return render(request, "project/plant-profile-page.html", context)
 
 
