@@ -216,10 +216,10 @@ tr {
   border-bottom: $border;
 }
 .odd-row {
-  background-color: $lightgrey;
-  color: $text;
+  background-color: light-dark($lightgrey, $lightgrey);
+  color: $black;
   a {
-    color: $text;
+    color: $black;
   }
 }
 .even-row {

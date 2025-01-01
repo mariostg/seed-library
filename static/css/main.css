@@ -901,11 +901,11 @@ tr {
 }
 
 .odd-row {
-  background-color: #f7f7f7;
-  color: light-dark(#333, #fff);
+  background-color: light-dark(#f7f7f7, #f7f7f7);
+  color: #333;
 }
 .odd-row a {
-  color: light-dark(#333, #fff);
+  color: #333;
 }
 
 .even-row {
