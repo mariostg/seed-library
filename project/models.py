@@ -231,6 +231,7 @@ class PlantProfile(Base):
     easy_to_contain = models.BooleanField(default=False, null=True, blank=True)
     flower_color = models.ForeignKey(Color, on_delete=models.RESTRICT, null=True, blank=True)
     habit = models.ForeignKey(Habit, on_delete=models.RESTRICT, null=True, blank=True)
+    taxon = models.CharField(max_length=5, blank=True)
 
     def __str__(self) -> str:
         return f"{self.latin_name} | {self.english_name} | {self.french_name}| {self.soil_humidity_max}"
