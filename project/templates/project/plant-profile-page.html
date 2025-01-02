@@ -31,8 +31,8 @@
             <span class='tooltip'>{{plant.light_from.lighting}}
               <span class="tooltiptext">{{plant.light_from.definition}}</span>
             </span>
-            {% if plant.soil_humidity_max %}
-              <span class='tooltip'>to {{plant.light_to.lighting}}
+            {% if plant.light_to.lighting%}
+              <span class='tooltip'>to [{{plant.light_to.lighting}}]
                 <span class="tooltiptext">{{plant.light_to.definition}}</span>
               </span>
             {% endif %}
@@ -46,7 +46,7 @@
             <span class='tooltip'>{{plant.soil_humidity_min.soil_humidity}}
               <span class="tooltiptext">{{plant.soil_humidity_min.definition}}</span>
             </span>
-            {% if plant.soil_humidity_max %}
+            {% if plant.soil_humidity_max.soil_humidity %}
               <span class='tooltip'>to {{plant.soil_humidity_max.soil_humidity}}
                 <span class="tooltiptext">{{plant.soil_humidity_max.definition}}</span>
               </span>
