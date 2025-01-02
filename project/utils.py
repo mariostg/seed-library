@@ -23,8 +23,8 @@ def all_plants(request):
 
 def single_plant(pk):
     plant = PlantProfile.objects.get(pk=pk)
-    plant.bloom_start = MONTHS[plant.bloom_start]
-    plant.bloom_end = MONTHS[plant.bloom_end]
+    plant.bloom_start = MONTHS.get(plant.bloom_start, "")
+    plant.bloom_end = MONTHS.get(plant.bloom_end, "")
     if plant.harvesting_end == plant.harvesting_start:
         plant.harvesting_end = None
 
