@@ -732,12 +732,14 @@ img.logo {
 }
 
 .dark-row {
-  background-color: light-dark(#f7f7f7, #f7f7f7);
-  color: light-dark(#333, #333);
+  background-color: light-dark(#f7f7f7, #333);
+  color: light-dark(#333, #f7f7f7);
   padding: 0 1rem;
 }
 
 .normal-row {
+  background-color: #f7f7f7;
+  color: #333;
   padding: 0 1rem;
 }
 

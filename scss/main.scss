@@ -66,11 +66,13 @@ img.logo {
   flex-direction: column;
 }
 .dark-row {
-  background-color: light-dark($lightgrey, $lightgrey);
-  color: light-dark($black, $black);
+  background-color: light-dark($lightgrey, $black);
+  color: light-dark($black, $lightgrey);
   padding: 0 1rem;
 }
 .normal-row {
+  background-color: $lightgrey;
+  color: $black;
   padding: 0 1rem;
 }
 

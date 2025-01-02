@@ -75,7 +75,7 @@
   <div class="card">
     <div class='card__header'>Sowing</div>
     <div class='card__detail'>
-      <div class="{% cycle 'dark-row' 'normal-row' as rowcolors %}">
+      <div class="{% cycle 'normal-row' 'dark-row' as rowcolors %}">
         <span>Stratification</span>
         <span>{% if plant.stratification_detail %}{{plant.stratification_detail}}{% else %}No stratification needed{% endif %}</span>
       </div>
@@ -162,7 +162,7 @@
   <div class="card">
     <div class='card__header'>Harvesting</div>
     <div class='card__detail'>
-      <div class="{% cycle 'dark-row' 'normal-row' as rowcolors %}">
+      <div class="{% cycle 'normal-row' 'dark-row' as rowcolors %}">
         <span>Period</span><span>{{plant.harvesting_start}} {% if plant.harvesting_end %}to {{plant.harvesting_end}}{% endif %} </span>
       </div>
       {% if plant.harvesting_indicator %} <div class="{% cycle rowcolors %}">
