@@ -93,7 +93,7 @@ img.logo {
   border: $border;
   max-width: 600px;
   width: 100%;
-  gap: 1rem;
+  gap: 1px;
   @include break(sm) {
     width: 350px;
   }

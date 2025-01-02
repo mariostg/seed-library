@@ -761,7 +761,7 @@ img.logo {
   border: 1px solid light-dark(#79ac78, #79ac78);
   max-width: 600px;
   width: 100%;
-  gap: 1rem;
+  gap: 1px;
 }
 @media screen and (max-width: 991px) {
   .card {
