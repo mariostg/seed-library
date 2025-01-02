@@ -529,7 +529,7 @@ class PlantProfile(Base):
     taxon = models.CharField(max_length=5, blank=True)
 
     def __str__(self) -> str:
-        return f"{self.latin_name} | {self.english_name} | {self.french_name}| {self.soil_humidity_max}"
+        return f"{self.pk} | {self.latin_name} | {self.english_name} | {self.french_name}| {self.soil_humidity_max}"
 
     class Meta:
         ordering = ["latin_name"]
