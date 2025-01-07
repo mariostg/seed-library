@@ -455,7 +455,7 @@ class PlantProfile(Base):
         various boolean flags: Multiple boolean indicators for plant characteristics
         flower_color (Color): Color of flowers
         habit (Habit): Growth habit
-        taxon (str): Taxonomic classification (max 5 chars) as per VASCAN web site
+        taxon (str): Taxonomic classification (max 5 chars) as per VASCAN web site.  Required for VASCAN map presentation
 
     Methods:
         __str__(): Returns formatted string with plant names and max soil humidity

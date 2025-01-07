@@ -74,6 +74,9 @@ urlpatterns += [
     path("site-admin/", views.siteadmin, name="site-admin"),
 ]
 
+urlpatterns += [
+    path("plant-label-pdf/<int:pk>", views.plant_label_pdf, name="plant-label-pdf"),
+]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

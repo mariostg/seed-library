@@ -193,7 +193,7 @@
         <span>Seed preparation</span> <span>{{plant.seed_preparation}}</span>
       </div> {% endif %}
       {% if plant.envelope_label_link %}<div class="{% cycle rowcolors %}">
-        <span>Envelope Label</span><span><a target='blank' href="{{plant.envelope_label_link}}">Open in new tab</a></span>
+        <span><a target="blank" href="{% url 'plant-label-pdf' pk=plant.pk %}">Envelope Label</a></span><span><a target='blank' href="{{plant.envelope_label_link}}">Open in new tab</a></span>
       </div>{% endif %}
       {% if plant.harvesting_video_link %}<div class="{% cycle rowcolors %}">
         <span>Harvesting video</span><span><a target='blank' href="{{plant.harvesting_video_link}}">Open in new tab</a></span>

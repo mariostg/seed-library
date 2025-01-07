@@ -1,4 +1,5 @@
 import csv
+import io
 
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
@@ -6,8 +7,12 @@ from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
 from django.db.models import OuterRef, RestrictedError, Subquery, Value
 from django.db.models.functions import Coalesce
-from django.http import HttpResponse, JsonResponse
+from django.http import FileResponse, HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
+from reportlab.lib.colors import black, pink, red
+from reportlab.lib.pagesizes import landscape, letter
+from reportlab.lib.units import inch
+from reportlab.pdfgen import canvas
 
 from project import filters, forms, models, utils
 from project.models import ProjectUser
@@ -656,3 +661,42 @@ def plant_collection_csv(request):
 # @login_required
 def siteadmin(request):
     return render(request, "project/admin.html")
+
+
+def plant_label_pdf(request, pk):
+    plant_info = utils.plant_label_info(pk)
+    buffer = io.BytesIO()
+
+    c = canvas.Canvas(buffer, pagesize=landscape(letter))
+    c.setStrokeColor(pink)
+    xw = 1.52
+    xm = 0.1
+    yh = 1.65
+    ym = 0.1
+    line_spacing = 0.155
+
+    x = [(x_ + xm) * inch * xw for x_ in range(8)]
+    y = [(y_ + ym) * inch * yh for y_ in range(6)]
+    c.grid(x, y)
+    c.setStrokeColor(black)
+    c.setFont("Times-Roman", 10)
+
+    def draw_plant_info(c, x, y, xm, ym, line_spacing, info):
+        for idx, text in enumerate(info):
+            c.drawString(x + xm * inch, y + (ym + line_spacing * idx) * inch, text)
+
+    for i in range(7):
+        for j in range(5):
+            draw_plant_info(c, x[i], y[j], xm, ym, line_spacing, plant_info)
+
+    for i in range(7):
+        for j in range(5):
+            for k, text in enumerate(plant_info):
+                c.drawString(x[i] + xm * inch, y[j] + (ym + line_spacing * k) * inch, text)
+    c.setFillColor(red)
+
+    c.showPage()
+    c.save()
+
+    buffer.seek(0)
+    return FileResponse(buffer, as_attachment=True, filename="hello.pdf")

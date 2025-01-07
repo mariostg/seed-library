@@ -31,3 +31,25 @@ def single_plant(pk):
     plant.harvesting_start = MONTHS[plant.harvesting_start]
     plant.harvesting_end = MONTHS[plant.harvesting_end]
     return plant
+
+
+def plant_label_info(pk):
+    plant = single_plant(pk)
+    if not plant.stratification_detail:
+        plant.stratification_detail = "No Stratification"
+    if plant.dormancy.dormancy:
+        detail = plant.dormancy.dormancy
+    label_info = [
+        plant.latin_name,
+        plant.english_name,
+        plant.french_name,
+        f"{plant.light_from.lighting} - {plant.light_to.lighting}",
+        f"Moisture: {plant.soil_humidity_min.soil_humidity} - {plant.soil_humidity_max.soil_humidity}",
+        plant.size,
+        f"Bloom: {plant.bloom_start} - {plant.bloom_end}",
+        plant.stratification_detail,
+        plant.sowing_depth.sowing_depth,
+        detail,
+    ]
+    label_info.reverse()
+    return label_info
