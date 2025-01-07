@@ -397,6 +397,7 @@ summary {
   border: 1px solid #4b5544;
   font-family: inherit;
   transition: 180ms box-shadow ease-in-out;
+  color: #333;
 }
 
 .form-input:focus,
@@ -612,7 +613,7 @@ input[type=checkbox]:disabled {
   border-bottom: 1px solid light-dark(#79ac78, #79ac78);
   font-weight: 300;
   font-size: 1.2rem;
-  color: light-dark(#333, #fff);
+  color: #333;
   background-color: #f7f7f7;
   text-align: center;
 }
