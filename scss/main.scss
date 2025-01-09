@@ -311,3 +311,9 @@ and also iPads specifically.
     content: "Sowing Depth";
   }
 }
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+}
