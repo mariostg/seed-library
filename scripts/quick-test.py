@@ -9,8 +9,6 @@ from pathlib import Path
 import django
 import pandas as pd
 
-from project.models import Habit, PlantProfile
-
 PWD = os.getenv("PWD")
 BASE_DIR = Path(PWD).resolve()
 if BASE_DIR not in sys.path:
@@ -18,6 +16,8 @@ if BASE_DIR not in sys.path:
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "main.settings")
 os.environ["DJANGO_ALLOW_ASYNC_UNSAFE"] = "true"
 django.setup()
+
+from project.models import Habit, PlantProfile
 
 # latin_name,english_name,french_name,url,light_from,light_to,bloom_start,bloom_end,soil_humidity_min,soil_humidity_max,min_height,max_height,size,stratification_detail,stratification_duration,sowing_depth,sowing_period,sharing_priority,harvesting_start,harvesting_end,harvesting_indicator,harvesting_mean,seed_head,remove_non_seed_material,viability_test,seed_storage,one_cultivar,packaging_measure,dormancy,seed_preparation,hyperlink,envelope_label_link,harvesting_video_link,seed_picture_link,pods_seed_head_picture_link
 # url = "http://data.canadensys.net/vascan/api/0.1/search.json?q=Actaea%20racemosa"
@@ -71,7 +71,20 @@ def habit_to_db():
             pass
 
 
+def inaturalist_taxon_to_db():
+    """Read inaturalist data and update plant profiles"""
+    df_inaturalist = pd.read_csv(
+        "/Users/mariost-gelais/Documents/datasets/native plants/seed-library-with-inat-taxon.csv", sep="\t"
+    )
+    df_inaturalist["inat_taxon"] = df_inaturalist["inat_taxon"].astype("string").str.split(".").str[0]
+    for _, row in df_inaturalist.iterrows():
+        plant = PlantProfile.objects.get(latin_name=row["latin_name"].lower())
+        plant.inaturalist_taxon = row["inat_taxon"]
+        plant.save()
+
+
 if __name__ == "__main__":
-    habit_to_db()
+    inaturalist_taxon_to_db()
+    # habit_to_db()
     # taxon_to_db()
     # taxon_to_csv()

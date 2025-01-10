@@ -207,6 +207,9 @@
       {% if plant.seed_storage_label_info|length > 0 %}<div class="{% cycle rowcolors %}">
         <span>Seed Storage Label</span><span><a target='blank' href="{{plant.seed_storage_label_info}}">Open in new tab</a></span>
       </div>{% endif %}
+      {% if plant.inaturalist_taxon|length > 0 %}<div class="{% cycle rowcolors %}">
+        <span>Where seen on iNaturalist</span><span><a target='blank' href="https://www.inaturalist.org/taxa/{{plant.inaturalist_taxon}}">Open in new tab</a></span>
+      </div>{% endif %}
     </div>
   </div>
   {% if plant.images %}

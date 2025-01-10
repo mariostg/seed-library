@@ -456,6 +456,7 @@ class PlantProfile(Base):
         flower_color (Color): Color of flowers
         habit (Habit): Growth habit
         taxon (str): Taxonomic classification (max 5 chars) as per VASCAN web site.  Required for VASCAN map presentation
+        inaturalist_taxon (str): Taxonomic classification (max 10 chars) as per iNaturalist web site.  Required for iNaturalist map presentation of where the plant is found.
 
     Methods:
         __str__(): Returns formatted string with plant names and max soil humidity
@@ -527,6 +528,7 @@ class PlantProfile(Base):
     flower_color = models.ForeignKey(Color, on_delete=models.RESTRICT, null=True, blank=True)
     habit = models.ForeignKey(Habit, on_delete=models.RESTRICT, null=True, blank=True)
     taxon = models.CharField(max_length=5, blank=True)
+    inaturalist_taxon = models.CharField(max_length=10, blank=True)
 
     def __str__(self) -> str:
         return f"{self.pk} | {self.latin_name} | {self.english_name} | {self.french_name}| {self.soil_humidity_max}"
