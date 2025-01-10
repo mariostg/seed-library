@@ -31,3 +31,9 @@ img {
   background-color: $high;
   color: $white;
 }
+.inaturalist-legend {
+  span {
+    padding: 4px;
+    font-size: 80%;
+  }
+}

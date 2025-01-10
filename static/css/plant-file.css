@@ -37,3 +37,8 @@ img {
   background-color: green;
   color: #fff;
 }
+
+.inaturalist-legend span {
+  padding: 4px;
+  font-size: 80%;
+}
