@@ -34,6 +34,7 @@ def single_plant(pk):
 
 
 def plant_label_info(pk):
+    detail = None
     plant = single_plant(pk)
     if not plant.stratification_detail:
         plant.stratification_detail = "No Stratification"
@@ -49,7 +50,8 @@ def plant_label_info(pk):
         f"Bloom: {plant.bloom_start} - {plant.bloom_end}",
         plant.stratification_detail,
         plant.sowing_depth.sowing_depth,
-        detail,
     ]
+    if detail:
+        label_info.append(detail)
     label_info.reverse()
     return label_info
