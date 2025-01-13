@@ -24,7 +24,7 @@
       </thead>
       <tbody>
         {% for item in data %}
-          <tr>
+          <tr class="{% cycle 'odd-row' 'even-row' %}">
             <td>{{item.color}}</td>
             {% if user.is_authenticated %}
               <td>
