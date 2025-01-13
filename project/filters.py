@@ -49,6 +49,7 @@ class PlantProfileFilter(django_filters.FilterSet):
         method="filter_lte",
     )
     germinate_easy = django_filters.BooleanFilter(
+        field_name="germinate_easy",
         method="filter_bool",
     )
     max_height = django_filters.NumberFilter(
@@ -61,6 +62,7 @@ class PlantProfileFilter(django_filters.FilterSet):
         queryset=models.SharingPriority.objects.all(),
     )
     seed_availability = django_filters.BooleanFilter(
+        field_name="seed_availability",
         method="filter_bool",
     )
 
@@ -80,7 +82,7 @@ class PlantProfileFilter(django_filters.FilterSet):
         return queryset.filter(**{"latin_name": value})
 
     def filter_bool(self, queryset, name, value):
-        return queryset.filter(**{"germinate_easy": value})
+        return queryset.filter(**{name: value})
 
     class Meta:
         model = models.PlantProfile
