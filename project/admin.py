@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin
 
 from project import models
 
@@ -57,7 +58,7 @@ admin.site.register(models.SoilHumidity)
 admin.site.register(models.Color)
 admin.site.register(models.Habit)
 admin.site.register(models.SowingDepth)
-admin.site.register(models.ProjectUser)
+admin.site.register(models.ProjectUser, UserAdmin)
 admin.site.register(models.PlantCollection)
 admin.site.register(models.PlantImage)
 admin.site.register(models.PlantMorphology)
