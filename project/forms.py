@@ -60,9 +60,9 @@ class PlantProfileForm(forms.ModelForm):
             "erosion_control",  #
             "seed_availability",  #
             "keystones_species",  #
-            "draught_tolerent",  #
-            "salt_tolerent",  #
-            "deer_tolerent",  #
+            "drought_tolerant",  #
+            "salt_tolerant",  #
+            "deer_tolerant",  #
             "easy_to_contain",  #
             "flower_color",
             "habit",  #
