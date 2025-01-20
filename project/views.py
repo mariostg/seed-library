@@ -117,11 +117,11 @@ def search_plant_name(request):
         "title": "Plant Profile Filter",
     }
 
-    template = "project/search-plant-results.html" if request.htmx else "project/index.html"
+    template = "project/plant-search-results.html" if request.htmx else "project/index.html"
     return render(request, template, context)
 
 
-def search_plant(request):
+def advanced_search_plant(request):
     has_filter = False
     if not request.GET:
         data = models.PlantProfile.objects.none()
@@ -143,7 +143,7 @@ def search_plant(request):
         )
     return render(
         request,
-        "project/search-plant.html",
+        "project/plant-search-advanced.html",
         {
             "filter": search_filter,
             "object_list": object_list,
