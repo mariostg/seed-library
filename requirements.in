@@ -2,6 +2,7 @@ django
 django-upgrade
 pandas
 django-filter
+django-htmx
 mkdocs
 mkdocs-autorefs
 mkdocs-material

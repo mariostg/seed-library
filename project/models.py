@@ -407,6 +407,31 @@ class SoilHumidity(Base):
         return f"{self.soil_humidity} - {self.definition}"
 
 
+class PlantProfileQuerySet(models.QuerySet):
+    def plant_name(self, query):
+        """
+        Filter plants based on a search query across multiple name fields.
+
+        This method searches for plants where the query string matches partially
+        (case-insensitive) with either the Latin, English, or French name.
+
+        Args:
+            query (str): The search string to filter plant names.
+
+        Returns:
+            QuerySet: A filtered queryset containing plants matching the search criteria.
+
+        Example:
+            >>> Plant.objects.plant_name("rose")
+            <QuerySet [<Plant: Rosa gallica>, <Plant: Garden rose>, <Plant: Rose trémière>]>
+        """
+        return self.filter(
+            models.Q(latin_name__icontains=query)
+            | models.Q(english_name__icontains=query)
+            | models.Q(french_name__icontains=query)
+        )
+
+
 class PlantProfile(Base):
     """A model representing detailed botanical information for a plant species.
 
@@ -529,6 +554,9 @@ class PlantProfile(Base):
     habit = models.ForeignKey(Habit, on_delete=models.RESTRICT, null=True, blank=True)
     taxon = models.CharField(max_length=5, blank=True)
     inaturalist_taxon = models.CharField(max_length=10, blank=True)
+
+    search_plant = PlantProfileQuerySet.as_manager()
+    objects = models.Manager()
 
     def __str__(self) -> str:
         return f"{self.pk} | {self.latin_name} | {self.english_name} | {self.french_name}| {self.soil_humidity_max}"

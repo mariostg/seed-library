@@ -1,59 +1,7 @@
 {% extends "core/base.html" %}
 {% load static %}
-{% load months %}
+
 {% block content %}
   {% include "project/search-form.html" %}
 
-  <div> Search Results {% if filter %}: Found {{filter.qs.count}} matches{% endif %} </div>
-  <div id="search-results" class="table-overflow">
-    <table>
-      <thead>
-        <tr>
-          <th>Names</th><th>Sun<br> Requirement</th><th>Bloom<br> Period</th><th>Harvesting<br> Period</th><th>Soil<br> Humidity</th><th>Max <br>Height</th><th>Sowing depth</th> {% if request.user.is_authenticated %}<th>My Plant</th>{% endif %}
-        </tr>
-      </thead>
-      {% for item in object_list  %}
-        <tr class="{% cycle 'even-row' 'odd-row' as rowcolors %}">
-
-          <td><a href="{% url 'plant-profile-page' item.pk %}">{{item.latin_name}}</a>
-            <br>{{item.english_name}}<br>{{item.french_name}}</td>
-          <td>{{item.light_from.lighting}}
-            {% if item.light_to.lighting %} to<br> {{item.light_to.lighting}} {% endif %}
-          </td>
-          <td>{{item.bloom_start|month_name}}
-            {% if item.bloom_end != 0 %}to<br> {{item.bloom_end|month_name}} {% endif %}
-          </td>
-          <td>{{item.harvesting_start|month_name}}
-
-            {% if item.harvesting_end != 0 and item.harvesting_start != item.harvesting_end%}
-              to<br> {{item.harvesting_end|month_name}}
-            {% endif %}
-          </td>
-          <td>{{item.soil_humidity_min.soil_humidity}}
-            {% if item.soil_humidity_max.soil_humidity %} to <br>{{item.soil_humidity_max.soil_humidity}} {% endif %}</td>
-          <td>{{item.max_height}}</td>
-          <td>{{item.sowing_depth}} {% if item.sowing_detail %}<br>{{item.sowing_detail}}{% endif %}</td>
-          {% if request.user.is_authenticated %}
-            <td
-              data-isowner={{item.is_owner}}
-              data-pk={{item.pk}}
-              {% if item.is_owner == 'Yes' %}
-                class="toggler checkmark"
-              {% else %}
-                class="toggler crossmark"
-              {% endif %}>
-            </td>
-          {% endif %}
-        </tr>
-      {% endfor %}
-    </table>
-  </div>
-  {% if anchor %}
-    <script type='text/javascript'>
-      document.addEventListener("DOMContentLoaded", () => {
-        window.location = '#{{ anchor }}'
-      });
-    </script>
-  {% endif %}
-  <script src="{% static 'js/collection-toggler.js' %}"></script>
 {% endblock content %}

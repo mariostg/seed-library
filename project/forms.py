@@ -93,6 +93,10 @@ class PlantProfileForm(forms.ModelForm):
             )
 
 
+class PlantProfileSearchForm(forms.Form):
+    plant_name = forms.CharField(max_length=100)
+
+
 class SearchPlantForm(forms.ModelForm):
     class Meta:
         model = models.PlantProfile

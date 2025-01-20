@@ -1,7 +1,10 @@
 {% extends "core/base.html" %}
-{% load static %}
+
 
 {% block content %}
+  {% include "project/search-plant-name-form.html" %}
+
+  {% include "project/search-plant-results.html" %}
 
   <div class="page-container">
     <img src="/media/IMG_5567.JPG" alt="">

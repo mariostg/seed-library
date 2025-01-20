@@ -1,5 +1,6 @@
 import csv
 import io
+import urllib
 
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
@@ -99,6 +100,25 @@ def plant_profile_delete(request, pk):
         return redirect("plant-profile-page", pk=pk)
     context = {"data": data, "back": f"plant-profile-page/{pk}"}
     return render(request, "siteornitho/delete_template.html", context)
+
+
+def search_plant_name(request):
+    # search plant across fields latin_name, english_name, french_name
+    plant_name = request.GET.get("plant_name", "")
+    plant_name = urllib.parse.unquote(plant_name)
+
+    plants = None
+    if plant_name:
+        plants: models.PlantProfile = models.PlantProfile.search_plant.plant_name(plant_name)
+    context = {
+        "plant_name": plant_name,
+        "object_list": plants,
+        "url_name": "index",
+        "title": "Plant Profile Filter",
+    }
+
+    template = "project/search-plant-results.html" if request.htmx else "project/index.html"
+    return render(request, template, context)
 
 
 def search_plant(request):

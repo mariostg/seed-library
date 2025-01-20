@@ -16,3 +16,4 @@ requirements.txt
 
 staticfiles/
 media/*
+*.min.js

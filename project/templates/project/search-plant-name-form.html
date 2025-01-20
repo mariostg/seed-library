@@ -1,0 +1,15 @@
+<form method='GET'>
+  <div class="form__field">
+    <label class="form-label">Plant Name</label>
+    <input
+      name="plant_name"
+      hx-get="/search-plant-name"
+      hx-trigger="keyup, changed, delay:500ms"
+      hx-target="#search-results"
+      hx-push-url="true"
+      type="text"
+      value="{{ plant_name }}"
+      class="form-input"
+      placeholder="latin, english or french name">
+  </div>
+</form>
