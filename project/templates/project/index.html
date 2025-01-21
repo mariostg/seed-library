@@ -2,11 +2,11 @@
 
 
 {% block content %}
-  {% include "project/plant-search-name-form.html" %}
-
-  {% include "project/plant-search-results.html" %}
-
   <div class="page-container">
+    {% include "project/plant-search-name-form.html" %}
+
+    {% include "project/plant-search-results.html" %}
+
     <img src="/media/IMG_5567.JPG" alt="">
     <p>Welcome to the native plant database of the Ottawa Wildflower Seed Library. To get started, move ahead to the <a href="{% url 'search-plant' %}">search page</a>.  From there, you can search the database using a wide variety of search criteria.</p>
     <p>The purpose of this database is to provide a one stop place to provide all information to grow, harvest and pack seeds.  It will allow you to enjoy the growth and blooming of indigenous species in your garden while giving you the opportunity to share the seeds you patiently harvested. Visit the <a target='blank' href="https://wildflowerseedlibrary.ca/plan-your-garden/">Plan your garden</a> page for more inspiration and resources.</p>
