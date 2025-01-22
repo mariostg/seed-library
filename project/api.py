@@ -79,9 +79,20 @@ def plant_profiles(request):
 
 @router.get("/seeds-available/", response=list[PlantProfileSchema], auth=api_key)
 def seeds_available(request):
+    """Usage example:
+    curl -X 'GET' \
+    'http://127.0.0.1:8000/api/v1/seeds-available/' \
+    -H 'accept: application/json' \
+    -H 'X-API-Key: test'
+    """
     return PlantProfile.objects.filter(seed_availability=True)
 
 
 @router.get("/plant-profile/{pk}/", response=PlantProfileSchema)
 def plant_profile(request, pk: int):
+    """Usage exmple:
+    curl -X 'GET' \
+    'http://127.0.0.1:8000/api/v1/plant-profiles/' \
+    -H 'accept: application/json'
+    """
     return get_object_or_404(PlantProfile, pk=pk)
