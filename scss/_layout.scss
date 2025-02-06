@@ -47,6 +47,10 @@
   }
 }
 
+.flex-col-center {
+  @extend .flex-col;
+  align-items: center;
+}
 header {
   background-color: $lightest;
   padding: 0 12px;

@@ -603,12 +603,12 @@ input[type=checkbox]:disabled {
   gap: 0.75rem;
 }
 
-.flex-col {
+.flex-col, .flex-col-center {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
 }
-.flex-col .title {
+.flex-col .title, .flex-col-center .title {
   border-top: 1px solid light-dark(#79ac78, #79ac78);
   border-bottom: 1px solid light-dark(#79ac78, #79ac78);
   font-weight: 300;
@@ -625,6 +625,10 @@ input[type=checkbox]:disabled {
   .flex-col__inputs {
     flex-direction: column;
   }
+}
+
+.flex-col-center {
+  align-items: center;
 }
 
 header {
