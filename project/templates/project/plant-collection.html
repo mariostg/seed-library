@@ -22,8 +22,7 @@
             <td>{{item.plants.bloom_start|month_name}}
               {% if item.plants.bloom_end != 0 %}to<br> {{item.plants.bloom_end|month_name}} {% endif %}
             </td>
-            <td>{{item.plants.harvesting_start|month_name}}
-              {% if item.plants.harvesting_end != 0 %}to<br> {{item.plants.harvesting_end|month_name}} {% endif %} </td>
+            <td>{{item.plants.harvesting_start|month_name}} </td>
             <td>{{item.plants.soil_humidity_min.soil_humidity}}
               {% if item.plants.soil_humidity_max.soil_humidity %} to <br>{{item.plants.soil_humidity_max.soil_humidity}} {% endif %}</td>
             <td>{{item.plants.max_height}}</td>

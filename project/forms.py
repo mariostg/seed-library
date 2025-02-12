@@ -29,7 +29,6 @@ class PlantProfileForm(forms.ModelForm):
             "sowing_period",
             "sharing_priority",  #
             "harvesting_start",  #
-            "harvesting_end",  #
             "harvesting_indicator",  #
             "harvesting_mean",  #
             "seed_head",  #

@@ -453,61 +453,71 @@ class SpreadRate(Base):
 
 
 class PlantProfile(Base):
-    """A model representing detailed botanical information for a plant species.
+    """A Django model representing a plant profile with comprehensive botanical and horticultural information.
 
-    This class stores comprehensive information about plants, including nomenclature,
-    physical characteristics, growing conditions, harvesting details, and various
-    botanical flags and classifications.
+    This model stores detailed information about plants including their taxonomic names, physical characteristics,
+    growing requirements, ecological roles, and cultivation instructions. It supports multilingual plant names
+    and includes extensive metadata about seed collection, storage, and propagation.
 
     Attributes:
-        latin_name (str): Scientific name of the plant (required, unique, max 75 chars)
-        english_name (str): Common English name (optional, max 75 chars)
-        french_name (str): Common French name (optional, max 75 chars)
-        url (str): Reference URL (optional, max 250 chars)
-        light_from (Lighting): Minimum light requirement
-        light_to (Lighting): Maximum light requirement
-        bloom_start (int): Blooming period start month (0-12)
-        bloom_end (int): Blooming period end month (0-12)
-        soil_humidity_min (SoilHumidity): Minimum soil moisture requirement
-        soil_humidity_max (SoilHumidity): Maximum soil moisture requirement
-        min_height (int): Minimum plant height in inches
-        max_height (int): Maximum plant height in inches
-        size (str): Size category (max 35 chars)
-        stratification_detail (str): Stratification process details (max 55 chars)
-        stratification_duration (int): Duration of stratification in days
-        sowing_depth (SowingDepth): Recommended planting depth
-        sowing_period (str): Optimal sowing timeframe (max 55 chars)
-        sharing_priority (SharingPriority): Priority level for seed sharing
-        harvesting_start (int): Harvest period start month (0-12)
-        harvesting_end (int): Harvest period end month (0-12)
-        harvesting_indicator (HarvestingIndicator): Indicators for harvest readiness
-        harvesting_mean (HarvestingMean): Method of harvest
-        seed_head (SeedHead): Type of seed head
-        remove_non_seed_material (bool): Whether non-seed material should be removed
-        viability_test (ViablityTest): Method for testing seed viability
-        seed_storage (SeedStorage): Storage method for seeds
-        one_cultivar (OneCultivar): Single cultivar information
-        packaging_measure (PackagingMeasure): Packaging size specifications
-        dormancy (Dormancy): Seed dormancy duration in days
-        seed_preparation (SeedPreparation): Seed preparation method
-        hyperlink (str): Related resource link (max 200 chars)
-        envelope_label_link (str): Label template link (max 200 chars)
-        harvesting_video_link (str): Harvesting instruction video link (max 200 chars)
-        seed_picture_link (str): Seed image link (max 200 chars)
-        pods_seed_head_picture_link (str): Seed pod image link (max 200 chars)
-        seed_storage_label_info (SeedStorageLabelInfo): Storage label information
-        notes (str): Additional information (max 450 chars)
-        various boolean flags: Multiple boolean indicators for plant characteristics
-        flower_color (Color): Color of flowers
-        habit (Habit): Growth habit
-        taxon (str): Taxonomic classification (max 5 chars) as per VASCAN web site.  Required for VASCAN map presentation
-        inaturalist_taxon (str): Taxonomic classification (max 10 chars) as per iNaturalist web site.  Required for iNaturalist map presentation of where the plant is found.
+        latin_name (str): Scientific/Latin name of the plant (max 75 chars, unique)
+        english_name (str): Common English name of the plant (max 75 chars)
+        french_name (str): Common French name of the plant (max 75 chars)
+        url (str): URL related to the plant (max 250 chars)
+        light_from (FK): Minimum light requirement (references Lighting model)
+        light_to (FK): Maximum light requirement (references Lighting model)
+        bloom_start (int): Start month of blooming period (0-12)
+        bloom_end (int): End month of blooming period (0-12)
+        soil_humidity_min (FK): Minimum soil moisture requirement
+        soil_humidity_max (FK): Maximum soil moisture requirement
+        min_height (float): Minimum plant height
+        max_height (float): Maximum plant height
+        min_width (float): Minimum plant width
+        max_width (float): Maximum plant width
+        size (str): Size category description (max 35 chars)
+        lifespan (str): Plant lifecycle category (Annual, Biennial, or Perennial)
+
+        # Seed and Propagation Fields
+        stratification_detail (str): Details about seed stratification
+        stratification_duration (int): Duration of stratification period
+        sowing_depth (FK): Required sowing depth
+        sowing_period (str): Optimal sowing timeframe
+
+        # Various Boolean Flags for Plant Characteristics
+        germinate_easy (bool): Easy to germinate indicator
+        drought_tolerant (bool): Drought tolerance indicator
+        salt_tolerant (bool): Salt tolerance indicator
+        deer_tolerant (bool): Deer resistance indicator
+        nitrogen_fixer (bool): Nitrogen fixing capability
+
+        # Garden Use and Ecological Function
+        rock_garden (bool): Suitable for rock gardens
+        rain_garden (bool): Suitable for rain gardens
+        pond_edge (bool): Suitable for pond edges
+        container_suitable (bool): Suitable for container growing
+
+        # Wildlife Interaction
+        hummingbird_friendly (bool): Attracts hummingbirds
+        butterfly_friendly (bool): Attracts butterflies
+        bee_friendly (bool): Attracts bees
+
+        # Additional Characteristics
+        flower_color (FK): Color of flowers
+        habit (FK): Growth habit
+        taxon (str): Taxonomic classification
+        inaturalist_taxon (str): iNaturalist taxonomy ID
 
     Methods:
-        __str__(): Returns formatted string with plant names and max soil humidity
-        compare_heights(): Validates that min_height is less than max_height
-        compare_blooming(): Validates blooming period start/end dates
-        save(): Overridden save method with custom validation logic
+        compare_heights(): Validates min_height is less than max_height
+        compare_blooming(): Validates bloom_start occurs before bloom_end
+        save(): Custom save method with validation logic
+
+    Meta:
+        ordering: Ordered by latin_name
+
+        This model uses multiple foreign key relationships to other models for detailed
+        categorization and classification of plant characteristics. Many fields are optional
+        (blank=True) to accommodate varying levels of available information.
     """
 
     LIFESPAN = [
@@ -548,7 +558,6 @@ class PlantProfile(Base):
     sowing_period = models.CharField(max_length=55, blank=True)
     sharing_priority = models.ForeignKey(SharingPriority, on_delete=models.RESTRICT, blank=True, null=True)
     harvesting_start = models.SmallIntegerField(choices=MONTHS.items(), blank=True, default=0)
-    harvesting_end = models.SmallIntegerField(choices=MONTHS.items(), blank=True, default=0)
     harvesting_indicator = models.ForeignKey(HarvestingIndicator, on_delete=models.RESTRICT, null=True, blank=True)
     harvesting_mean = models.ForeignKey(HarvestingMean, on_delete=models.RESTRICT, null=True, blank=True)
     seed_head = models.ForeignKey(SeedHead, on_delete=models.RESTRICT, null=True, blank=True)
@@ -665,13 +674,11 @@ class PlantProfile(Base):
             ValueError: If latin_name field is not provided
 
         Note:
-            - Sets default value of 0 for harvesting_start and harvesting_end if not provided
+            - Sets default value of 0 for harvesting_start if not provided
             - Validates height and blooming period relationships via compare_heights() and compare_blooming()
         """
         if not self.harvesting_start:
             self.harvesting_start = 0
-        if not self.harvesting_end:
-            self.harvesting_end = 0
         if not self.latin_name:
             raise ValueError("Missing Latin Name")
         self.compare_heights()

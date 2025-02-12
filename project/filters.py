@@ -44,10 +44,6 @@ class PlantProfileFilter(django_filters.FilterSet):
         choices=utils.MONTHS,
         method="filter_gte",
     )
-    harvesting_end = django_filters.ChoiceFilter(
-        choices=utils.MONTHS,
-        method="filter_lte",
-    )
     germinate_easy = django_filters.BooleanFilter(
         field_name="germinate_easy",
         method="filter_bool",

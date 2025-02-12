@@ -52,7 +52,6 @@ class PlantProfileSchema(ModelSchema):
             "bloom_start",
             "bloom_end",
             "harvesting_start",
-            "harvesting_end",
             "germinate_easy",
             "max_height",
             "stratification_duration",

@@ -163,7 +163,7 @@
     <div class='card__header'>Harvesting</div>
     <div class='card__detail'>
       <div class="{% cycle 'normal-row' 'dark-row' as rowcolors %}">
-        <span>Period</span><span>{{plant.harvesting_start}} {% if plant.harvesting_end %}to {{plant.harvesting_end}}{% endif %} </span>
+        <span>Period</span><span>{{plant.harvesting_start}}</span>
       </div>
       {% if plant.harvesting_indicator %} <div class="{% cycle rowcolors %}">
         <span>Indicator</span> <span>{{plant.harvesting_indicator}}</span>

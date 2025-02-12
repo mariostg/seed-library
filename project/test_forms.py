@@ -55,7 +55,6 @@ class TestForms:
             "sowing_period": "Spring",
             "sharing_priority": 1,
             "harvesting_start": 1,
-            "harvesting_end": 12,
             "harvesting_indicator": 1,
             "harvesting_mean": 1,
             "seed_head": 1,
@@ -136,7 +135,6 @@ class TestForms:
             "stratification_duration": 30,
             "sharing_priority": 1,
             "harvesting_start": 1,
-            "harvesting_end": 12,
             "germinate_easy": True,
             "seed_availability": True,
         }

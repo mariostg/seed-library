@@ -25,11 +25,8 @@ def single_plant(pk):
     plant = PlantProfile.objects.get(pk=pk)
     plant.bloom_start = MONTHS.get(plant.bloom_start, "")
     plant.bloom_end = MONTHS.get(plant.bloom_end, "")
-    if plant.harvesting_end == plant.harvesting_start:
-        plant.harvesting_end = None
 
     plant.harvesting_start = MONTHS[plant.harvesting_start]
-    plant.harvesting_end = MONTHS[plant.harvesting_end]
     return plant
 
 
