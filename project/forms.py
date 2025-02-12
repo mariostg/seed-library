@@ -40,11 +40,8 @@ class PlantProfileForm(forms.ModelForm):
             "packaging_measure",  #
             "dormancy",  #
             "seed_preparation",  #
-            "hyperlink",  #
             "envelope_label_link",  #
             "harvesting_video_link",  #
-            "seed_picture_link",  #
-            "pods_seed_head_picture_link",  #
             "seed_storage_label_info",  #
             "notes",  #
             "germinate_easy",  #
@@ -115,7 +112,6 @@ class SearchPlantForm(forms.ModelForm):
             "stratification_duration",
             "sharing_priority",
             "harvesting_start",
-            "harvesting_end",
             "germinate_easy",
             "seed_availability",
         ]

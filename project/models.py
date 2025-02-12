@@ -432,6 +432,26 @@ class PlantProfileQuerySet(models.QuerySet):
         )
 
 
+class SpreadRate(Base):
+    """A model representing the spread rate of fire.
+
+    This class defines a spreading rate category used in fire behavior analysis,
+    typically using standard fire behavior descriptors.
+
+    Attributes:
+        spreading_rate (str): A string field up to 15 characters describing the
+            rate of fire spread (e.g., 'Low', 'Moderate', 'High').
+
+    Returns:
+        str: The spreading rate value when the object is converted to string.
+    """
+
+    spreading_rate = models.CharField(max_length=15, blank=True)
+
+    def __str__(self) -> str:
+        return self.spreading_rate
+
+
 class PlantProfile(Base):
     """A model representing detailed botanical information for a plant species.
 
@@ -490,6 +510,11 @@ class PlantProfile(Base):
         save(): Overridden save method with custom validation logic
     """
 
+    LIFESPAN = [
+        ("A", "Annual"),
+        ("B", "Biennial"),
+        ("P", "Perennial"),
+    ]
     latin_name = models.CharField(max_length=75, unique=True)
     english_name = models.CharField(max_length=75, blank=True)
     french_name = models.CharField(max_length=75, blank=True)
@@ -502,13 +527,21 @@ class PlantProfile(Base):
     bloom_end = models.SmallIntegerField(choices=MONTHS.items(), blank=True, default=0)
     soil_humidity_min = models.ForeignKey(
         SoilHumidity, related_name="soil_humidity_min", on_delete=models.RESTRICT, blank=True, null=True
-    )
+    )  # must be less than soil_humidity_max if soil_humidity_max is not null
     soil_humidity_max = models.ForeignKey(
         SoilHumidity, related_name="soil_humidity_max", on_delete=models.RESTRICT, blank=True, null=True
-    )
-    min_height = models.SmallIntegerField(blank=True, null=True, default=0)
-    max_height = models.SmallIntegerField(blank=True, null=True, default=0)
+    )  # must be greater than soil_humidity_min if soil_humidity_min is not null
+    min_height = models.FloatField(blank=True, null=True, default=0)
+    max_height = models.FloatField(
+        blank=True, null=True, default=0
+    )  # must be greater than min_height if min_height is not 0
+    min_width = models.FloatField(blank=True, null=True, default=0)
+    max_width = models.FloatField(
+        blank=True, null=True, default=0
+    )  # must be greater than min_width if min_width is not 0
     size = models.CharField(max_length=35, blank=True)
+    lifespan = models.CharField(max_length=1, choices=LIFESPAN, blank=True)
+
     stratification_detail = models.CharField(max_length=55, blank=True)
     stratification_duration = models.SmallIntegerField(blank=True, null=True, default=0)
     sowing_depth = models.ForeignKey(SowingDepth, on_delete=models.RESTRICT, blank=True, null=True)
@@ -526,14 +559,20 @@ class PlantProfile(Base):
     packaging_measure = models.ForeignKey(PackagingMeasure, on_delete=models.RESTRICT, null=True, blank=True)
     dormancy = models.ForeignKey(Dormancy, on_delete=models.RESTRICT, null=True, blank=True)
     seed_preparation = models.ForeignKey(SeedPreparation, on_delete=models.RESTRICT, null=True, blank=True)
-    hyperlink = models.CharField(max_length=200, blank=True)
+    seed_cleaning_notes = models.CharField(max_length=70, blank=True)
+    sowing_label_instructions = models.CharField(max_length=40, blank=True)
+    sowing_notes = models.CharField(max_length=450, blank=True)
     envelope_label_link = models.CharField(max_length=200, blank=True)
     harvesting_video_link = models.CharField(max_length=200, blank=True)
-    seed_picture_link = models.CharField(max_length=200, blank=True)
-    pods_seed_head_picture_link = models.CharField(max_length=200, blank=True)
     seed_storage_label_info = models.ForeignKey(SeedStorageLabelInfo, on_delete=models.RESTRICT, null=True, blank=True)
     notes = models.CharField(max_length=450, blank=True)
+    harvesting_notes = models.CharField(max_length=450, blank=True)
+    toxicity_notes = models.CharField(max_length=450, blank=True)
+    transplanting_notes = models.CharField(max_length=450, blank=True)
+    alternative_to_notes = models.CharField(max_length=450, blank=True)
+
     germinate_easy = models.BooleanField(default=False, null=True, blank=True)
+    spreading_rate = models.ForeignKey(SpreadRate, on_delete=models.RESTRICT, null=True, blank=True)
     rock_garden = models.BooleanField(default=False, null=True, blank=True)
     rain_garden = models.BooleanField(default=False, null=True, blank=True)
     pond_edge = models.BooleanField(default=False, null=True, blank=True)
@@ -545,10 +584,24 @@ class PlantProfile(Base):
     wind_break_hedge = models.BooleanField(default=False, null=True, blank=True)
     erosion_control = models.BooleanField(default=False, null=True, blank=True)
     seed_availability = models.BooleanField(default=False, null=True, blank=True)
+
+    accepting_donations = models.BooleanField(default=False, null=True, blank=True)
     keystones_species = models.BooleanField(default=False, null=True, blank=True)
+
     drought_tolerant = models.BooleanField(default=False, null=True, blank=True)
     salt_tolerant = models.BooleanField(default=False, null=True, blank=True)
     deer_tolerant = models.BooleanField(default=False, null=True, blank=True)
+    rabbit_tolerant = models.BooleanField(default=False, null=True, blank=True)
+    foot_traffic_tolerant = models.BooleanField(default=False, null=True, blank=True)
+    limestone_tolerant = models.BooleanField(default=False, null=True, blank=True)
+    sand_tolerant = models.BooleanField(default=False, null=True, blank=True)
+    acidic_soil_tolerant = models.BooleanField(default=False, null=True, blank=True)
+
+    hummingbird_friendly = models.BooleanField(default=False, null=True, blank=True)
+    butterfly_friendly = models.BooleanField(default=False, null=True, blank=True)
+    bee_friendly = models.BooleanField(default=False, null=True, blank=True)
+
+    nitrogen_fixer = models.BooleanField(default=False, null=True, blank=True)
     easy_to_contain = models.BooleanField(default=False, null=True, blank=True)
     flower_color = models.ForeignKey(Color, on_delete=models.RESTRICT, null=True, blank=True)
     habit = models.ForeignKey(Habit, on_delete=models.RESTRICT, null=True, blank=True)
