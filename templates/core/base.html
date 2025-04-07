@@ -12,25 +12,25 @@
   </head>
   <body>
 
-    <header class='form-container'>
-      <a target='blank'href="https://wildflowerseedlibrary.ca/">
-        <img class='logo' src="{% static 'images/logo.png' %}" alt="Login System Logo" />
-      </a>
+    <header class="site-header">
+      <div class="logo">
+        <a target='blank'href="https://wildflowerseedlibrary.ca/">
+          <img class='logo' src="{% static 'images/logo.png' %}" alt="Login System Logo" />
+        </a>
+      </div>
 
+      {% include "core/nav.html" %}
     </header>
-    {% include "core/nav.html" %}
-    <main>
-      {% if messages %}
-        {% for message in messages %}
-          <div class="container alert  alert--{{message.tags}}">
-            <div class="alert__message">{{message|safe}}</div>
-          </div>
-        {% endfor %}
-      {% endif %}
-      {% block content %}
+    {% if messages %}
+      {% for message in messages %}
+        <div class="container alert  alert--{{message.tags}}">
+          <div class="alert__message">{{message|safe}}</div>
+        </div>
+      {% endfor %}
+    {% endif %}
+    {% block content %}
 
-      {% endblock content %}
-    </main>
+    {% endblock content %}
   </body>
   <footer>
     <div>

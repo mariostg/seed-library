@@ -1,15 +1,35 @@
-<nav class='no-print'>
-  {% if request.path != '/' %}
-    <a class='btn' href="{% url 'index' %}">Catalogue Home</a>
-  {% endif %}
-  {% if request.user.is_authenticated %}
-    <a class='btn' href="{% url 'user-plant-collection' %}">My Collection</a>
-    <a class='btn' href="{% url 'logout' %}">Logout</a>
-    {% if request.path != '/site-admin/' %}
-      <a class='btn' href="{% url 'site-admin' %}">Admin</a>
-    {% endif %}
-  {% else %}
+<nav class='nav no-print'>
 
-            {% comment %} <a class='btn' href="{% url 'login' %}">Login</a> {% endcomment %}
-  {% endif %}
+  <ul class="nav-links">
+    <li>
+      <a href="#">Home</a>
+    </li>
+    <li>
+      {% if request.path != '/' %}
+        <a class='btn' href="{% url 'plant-catalog' %}">Catalogue</a>
+      {% endif %}
+    </li>
+    <li>
+      <a href="#">Resources</a>
+    </li>
+    <li>
+      <a href="#">Support the library</a>
+    </li>
+    <li>
+      <a href="#">Events</a>
+    </li>
+    <li>
+      <a href="#">About Us</a>
+    </li>
+
+    {% if request.user.is_authenticated %}
+      <li><a class='btn' href="{% url 'user-plant-collection' %}">My Collection</a></li>
+      <li><a class='btn' href="{% url 'logout' %}">Logout</a></li>
+      {% if request.path != '/site-admin/' %}
+        <li><a class='btn' href="{% url 'site-admin' %}">Admin</a></li>
+      {% endif %}
+    {% else %}
+    {% comment %} <a class='btn' href="{% url 'login' %}">Login</a> {% endcomment %}
+    {% endif %}
+  </ul>
 </nav>

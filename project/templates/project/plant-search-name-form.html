@@ -2,18 +2,16 @@
 
   <form method='GET'>
     <div class="form__field">
-      <label class="form-label">Plant Name</label>
-      <input
-        name="plant_name"
-        hx-get="/search-plant-name"
-        hx-trigger="keyup[target.value.length >= 4] changed delay:500ms"
-        hx-target="#search-results"
-        hx-push-url="true"
-        type="text"
-        value="{{ plant_name }}"
-        class="form-input"
-        placeholder="Enter 4 letters or more of latin, english, or french name">
+      <input class="name-search-input"
+             name="plant_name"
+             hx-get="/search-plant-name"
+             hx-trigger="keyup[target.value.length >= 4] changed delay:500ms"
+             hx-target="#search-results"
+             hx-push-url="true"
+             type="text"
+             value="{{ plant_name }}"
+             class="form-input"
+             placeholder="4 letters or more of latin, english, or french name">
     </div>
   </form>
-  <a class='btn' href="{% url 'search-plant' %}">Advanced Search</a>
 </div>

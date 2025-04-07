@@ -19,6 +19,7 @@ urlpatterns = [
     path("search-plant-name/", views.search_plant_name, name="search-plant-name"),
     path("update-availability/", views.update_availability, name="update-availability"),
     path("toggle-availability/<int:pk>", views.toggle_availability, name="toggle-availability"),
+    path("plant-catalog/", views.plant_catalog, name="plant-catalog"),
 ]
 urlpatterns += [
     path("plant-profile-page/<int:pk>", views.plant_profile_page, name="plant-profile-page"),

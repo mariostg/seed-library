@@ -1,0 +1,519 @@
+{% extends "core/base.html" %}
+{% load static %}
+{% block content %}
+
+  <div id="aside-toggler">
+    <button onclick="toggleFilterWrapper()">Hide Filters</button>
+  </div>
+  <section class="main-content">
+            <!-- filter-wrapper -->
+    <aside id="filter-wrapper" class="filter-wrapper">
+                <!--Add a reset filter button-->
+      <button>Reset Filters</button>
+      <span>Filter by:</span>
+                <!--Sun Exposure-->
+      <div class="filter">
+        <div class="collapser" onclick="toggleFilter('#sun-exposure')">Sun Exposure</div>
+        <div id="sun-exposure" class="collapsed">
+          <input type="checkbox" id="full-sun" name="full-sun" value="Full Sun" />
+          <label for="full-sun" class="tooltip"
+          >Full sun
+            <span class="tooltiptext">More than 6 hours of direct sun a day </span></label
+            ><br />
+            <input type="checkbox" id="part-sun" name="part-sun" value="Part Sun" />
+            <label for="part-sun" class="tooltip"
+            >Part sun
+              <span class="tooltiptext"
+              >More than 2 or 3 hours but less than 6 hours of direct sun a day
+              </span></label
+              ><br />
+              <input type="checkbox" id="full-shade" name="full-shade" value="Full Shade" />
+              <label for="full-shade" class="tooltip"
+              >Full shade
+                <span class="tooltiptext"
+                >Less than 2 or 3 hours of direct sun a day
+                </span></label
+                ><br />
+              </div>
+            </div>
+
+                <!--Moisture-->
+            <div class="filter">
+              <div class="collapser" onclick="toggleFilter('#moisture')">Moisture</div>
+              <div id="moisture" class="collapsed">
+                <input type="checkbox" id="dry" name="dry" value="Dry" />
+                <label for="dry" class="tooltip"
+                >Dry<span class="tooltiptext">Water runs through after rainfall</span></label
+                  ><br />
+                  <input type="checkbox" id="medium" name="medium" value="Medium" />
+                  <label for="medium" class="tooltip"
+                  >Medium<span class="tooltiptext"
+                    >Sometimes holds water but for short periods of time</span
+                      ></label
+                      ><br />
+                      <input type="checkbox" id="wet" name="wet" value="Wet" />
+                      <label for="wet" class="tooltip"
+                      >Wet<span class="tooltiptext">Stays damp all year</span></label
+                        ><br />
+                      </div>
+                    </div>
+
+                <!--Plant types-->
+                    <div class="filter">
+                      <div class="collapser" onclick="toggleFilter('#plant-types')">Plant Types</div>
+                      <div id="plant-types" class="collapsed">
+                        <input
+                          type="checkbox"
+                          id="id-checkbox-flower"
+                          name="checkbox-flower"
+                          value="Flower"
+                        />
+                        <label for="id-checkbox-flower">Flower</label><br />
+                        <input
+                          type="checkbox"
+                          id="id-checkbox-grass-sedge-rush"
+                          name="checkbox-grass-sedge-rush"
+                          value="Grass/sedge/rush"
+                        />
+                        <label for="id-checkbox-grass-sedge-rush">Grass/sedge/rush</label><br />
+                        <input type="checkbox" id="id-checkbox-shrub" name="checkbox-shrub" value="Shrub" />
+                        <label for="id-checkbox-shrub">Shrub</label><br />
+                        <input type="checkbox" id="id-checkbox-tree" name="checkbox-tree" value="Tree" />
+                        <label for="id-checkbox-tree">Tree</label><br />
+                        <input type="checkbox" id="id-checkbox-vines" name="checkbox-vines" value="Vines" />
+                        <label for="id-checkbox-vines">Vines</label><br />
+                      </div>
+                    </div>
+
+                <!--Colours of the flower-->
+                    <div class="filter">
+                      <div class="collapser" onclick="toggleFilter('#colours')">Colours</div>
+                      <div id="colours" class="collapsed">
+                        <input type="checkbox" id="Blue" name="Blue" value="Blue" />
+                        <label for="Blue"
+                        ><div class="square blue"></div>
+                          Blue</label
+                          ><br />
+                          <input type="checkbox" id="Brown" name="Brown" value="Brown" />
+                          <label for="Brown"
+                          ><div class="square brown"></div>
+                            Brown</label
+                            ><br />
+                            <input type="checkbox" id="Green" name="Green" value="Green" />
+                            <label for="Green">
+                              <div class="square green"></div>
+                              Green</label
+                              ><br />
+                              <input type="checkbox" id="Orange" name="Orange" value="Orange" />
+                              <label for="Orange"
+                              ><div class="square orange"></div>
+                                Orange</label
+                                ><br />
+                                <input type="checkbox" id="Pink" name="Pink" value="Pink" />
+                                <label for="Pink"
+                                ><div class="square pink"></div>
+                                  Pink</label
+                                  ><br />
+                                  <input type="checkbox" id="Purple" name="Purple" value="Purple" />
+                                  <label for="Purple"
+                                  ><div class="square purple"></div>
+                                    Purple</label
+                                    ><br />
+                                    <input type="checkbox" id="Red" name="Red" value="Red" />
+                                    <label for="Red"
+                                    ><div class="square red"></div>
+                                      Red</label
+                                      ><br />
+                                      <input type="checkbox" id="White" name="White" value="white" />
+                                      <label for="White"
+                                      ><div class="square white"></div>
+                                        White</label
+                                        ><br />
+                                        <input type="checkbox" id="Yellow" name="Yellow" value="Yellow" />
+                                        <label for="Yellow"
+                                        ><div class="square yellow"></div>
+                                          Yellow</label
+                                          ><br />
+                                        </div>
+                                      </div>
+
+                <!--Bloom Period-->
+                                      <div class="filter">
+                                        <div class="collapser" onclick="toggleFilter('#bloomperiod')">Bloom Period</div>
+                                        <div id="bloomperiod" class="slider-wrapper collapsed">
+                                          <div class="slider-values">
+                                            <span id="rangeFromBloomPeriod"> 0 </span>
+                                            <span> &dash; </span>
+                                            <span id="rangeToBloomPeriod"> 12 </span>
+                                          </div>
+                                          <div class="slider-container">
+                                            <div class="slider-track-bloom-period"></div>
+                                            <input
+                                              type="range"
+                                              min="0"
+                                              max="11"
+                                              value="0"
+                                              id="sliderFromBloomPeriod"
+                                              oninput="slideFromBloomPeriod()"
+                                            />
+                                            <input
+                                              type="range"
+                                              min="0"
+                                              max="11"
+                                              value="11"
+                                              id="sliderToBloomPeriod"
+                                              oninput="slideToBloomPeriod()"
+                                            />
+                                          </div>
+                                        </div>
+                                      </div>
+
+                <!--Plant Height-->
+                                      <div class="filter">
+                                        <div class="collapser" onclick="toggleFilter('#plantheight')">Height</div>
+                                        <div id="plantheight" class="slider-wrapper collapsed">
+                                          <div class="slider-values">
+                                            <span id="rangeFromPlantHeight"> 0 </span>
+                                            <span> &dash; </span>
+                                            <span id="rangeToPlantHeight"> 120 </span>
+                                          </div>
+                                          <div class="slider-container">
+                                            <div class="slider-track-plant-height"></div>
+                                            <input
+                                              type="range"
+                                              min="0"
+                                              max="120"
+                                              value="0"
+                                              id="sliderFromPlantHeight"
+                                              oninput="slideFromPlantHeight()"
+                                            />
+                                            <input
+                                              type="range"
+                                              min="0"
+                                              max="120"
+                                              value="120"
+                                              id="sliderToPlantHeight"
+                                              oninput="slideToPlantHeight()"
+                                            />
+                                          </div>
+                                        </div>
+                                      </div>
+
+                <!--Plant Width-->
+                                      <div class="filter">
+                                        <div class="collapser" onclick="toggleFilter('#plantwidth')">Width</div>
+                                        <div id="plantwidth" class="slider-wrapper collapsed">
+                                          <div class="slider-values">
+                                            <span id="rangeFromPlantWidth"> 0 </span>
+                                            <span> &dash; </span>
+                                            <span id="rangeToPlantWidth"> 120 </span>
+                                          </div>
+                                          <div class="slider-container">
+                                            <div class="slider-track-plant-width"></div>
+                                            <input
+                                              type="range"
+                                              min="0"
+                                              max="120"
+                                              value="0"
+                                              id="sliderFromPlantWidth"
+                                              oninput="slideFromPlantWidth()"
+                                            />
+                                            <input
+                                              type="range"
+                                              min="0"
+                                              max="120"
+                                              value="120"
+                                              id="sliderToPlantWidth"
+                                              oninput="slideToPlantWidth()"
+                                            />
+                                          </div>
+                                        </div>
+                                      </div>
+
+                <!--Provincial range distribution filter class checkbox options-->
+                                      <div class="filter">
+                                        <div class="collapser" onclick="toggleFilter('#provincial-range-distribution')">
+                                          Range Distribution
+                                        </div>
+                                        <div id="provincial-range-distribution" class="collapsed">
+                                          <input type="checkbox" id="AB" name="AB" value="AB" />
+                                          <label for="AB">Alberta</label><br />
+                                          <input type="checkbox" id="BC" name="BC" value="BC" />
+                                          <label for="BC">British Columbia</label><br />
+                                          <input type="checkbox" id="MB" name="MB" value="MB" />
+                                          <label for="MB">Manitoba</label><br />
+                                          <input type="checkbox" id="NB" name="NB" value="NB" />
+                                          <label for="NB">New Brunswick</label><br />
+                                          <input type="checkbox" id="NL" name="NL" value="NL" />
+                                          <label for="NL">Newfoundland and Labrador</label><br />
+                                          <input type="checkbox" id="NS" name="NS" value="NS" />
+                                          <label for="NS">Nova Scotia</label><br />
+                                          <input type="checkbox" id="NT" name="NT" value="NT" />
+                                          <label for="NT">North West Territories</label><br />
+                                          <input type="checkbox" id="NU" name="NU" value="NU" />
+                                          <label for="NU">Nunavut</label><br />
+                                          <input type="checkbox" id="ON" name="ON" value="ON" />
+                                          <label for="ON">Ontario</label><br />
+                                          <input type="checkbox" id="PE" name="PE" value="PE" />
+                                          <label for="PE">Prince Edward Island</label><br />
+                                          <input type="checkbox" id="QC" name="QC" value="QC" />
+                                          <label for="QC">Québec</label><br />
+                                          <input type="checkbox" id="SK" name="SK" value="SK" />
+                                          <label for="SK">Saskatchewan</label><br />
+                                          <input type="checkbox" id="YT" name="YT" value="YT" />
+                                          <label for="YT">Yukon</label><br />
+                                        </div>
+                                      </div>
+
+                <!--Recommended For-->
+                                      <div class="filter">
+                                        <div class="collapser" onclick="toggleFilter('#recommended-for')">Recommended For</div>
+                                        <div id="recommended-for" class="collapsed">
+                                          <input type="checkbox" id="birding" name="birding" value="Birding" />
+                                          <label for="birding">Birding</label><br />
+                                          <input
+                                            type="checkbox"
+                                            id="boulevard-garden"
+                                            name="boulevard-garden"
+                                            value="Boulevard-garden"
+                                          />
+                                          <label for="boulevard-garden">Boulevard garden</label><br />
+                                          <input
+                                            type="checkbox"
+                                            id="butterfly-pollinator-garden"
+                                            name="butterfly-pollinator-garden"
+                                            value="Butterfly/Pollinator Garden"
+                                          />
+                                          <label for="butterfly-pollinator-garden">Butterfly/pollinator garden</label><br />
+                                          <input
+                                            type="checkbox"
+                                            id="container-gardening"
+                                            name="container-gardening"
+                                            value="Container Gardening"
+                                          />
+                                          <label for="container-gardening">Container gardening</label><br />
+                                          <input type="checkbox" id="ground-cover" name="ground-cover" value="Groundcover" />
+                                          <label for="ground-cover">Groundcover/lawn replacement </label><br />
+                                          <input type="checkbox" id="rain-garden" name="rain-garden" value="Rain Garden" />
+                                          <label for="rain-garden">Rain garden</label><br />
+                                          <input type="checkbox" id="restauration" name="restauration" value="Restauration" />
+                                          <label for="restauration">Restauration</label><br />
+                                          <input type="checkbox" id="schools" name="schools" value="Schools" />
+                                          <label for="schools">Schools</label><br />
+                                        </div>
+                                      </div>
+
+                <!--Suitable For-->
+                                      <div class="filter">
+                                        <div class="collapser" onclick="toggleFilter('#suitable-for')">Suitable for</div>
+                                        <div id="suitable-for" class="collapsed">
+                                          <input type="checkbox" id="hedge" name="hedge" value="Hedge" />
+                                          <label for="hedge">Hedge</label><br />
+                                          <input type="checkbox" id="rocky" name="rocky" value="Rocky" />
+                                          <label for="rocky">Rocky</label><br />
+                                          <input type="checkbox" id="septic-tank" name="septic-tank" value="Septic Tank" />
+                                          <label for="septic-tank">Septic tank</label><br />
+                                          <input type="checkbox" id="shoreline" name="shoreline" value="Shoreline" />
+                                          <label for="shoreline">Shoreline</label><br />
+                                          <input type="checkbox" id="wetlands" name="wetlands" value="Wetlands" />
+                                          <label for="wetlands">Wetlands</label><br />
+                                        </div>
+                                      </div>
+
+                <!--Plant Characteristics-->
+                                      <div class="filter">
+                                        <div class="collapser" onclick="toggleFilter('#plant-characteristics')">
+                                          Characteristics
+                                        </div>
+                                        <div id="plant-characteristics" class="collapsed">
+                                          <input
+                                            type="checkbox"
+                                            id="does-not-spread"
+                                            name="does-not-spread"
+                                            value="Does not spread"
+                                          />
+                                          <label for="does-not-spread">Does not spread</label><br />
+                                          <input
+                                            type="checkbox"
+                                            id="easy-to-germinate"
+                                            name="easy-to-germinate"
+                                            value="Easy to Germinate"
+                                          />
+                                          <label for="easy-to-germinate">Easy to germinate</label><br />
+                                          <input type="checkbox" id="endangered" name="endangered" value="Endangered" />
+                                          <label for="endangered">Endangered</label><br />
+                                          <input type="checkbox" id="host-plant" name="host-plant" value="Host Plant" />
+                                          <label for="host-plant">Host plant</label><br />
+                                          <input
+                                            type="checkbox"
+                                            id="keystone-species"
+                                            name="keystone-species"
+                                            value="Keystone Species"
+                                          />
+                                          <label for="keystone-species">Keystone species</label><br />
+                                          <input
+                                            type="checkbox"
+                                            id="nitrogen-fixer"
+                                            name="nitrogen-fixer"
+                                            value="Nitrogen Fixer"
+                                          />
+                                          <label for="nitrogen-fixer">Nitrogen fixer</label><br />
+                                        </div>
+                                      </div>
+
+                <!--Tolerances-->
+                                      <div class="filter">
+                                        <div class="collapser" onclick="toggleFilter('#tolerates')">Tolerates</div>
+                                        <div id="tolerates" class="collapsed">
+                                          <input type="checkbox" id="acidic" name="acidic" value="Acidic" />
+                                          <label for="acidic">Acidic conditions</label><br />
+                                          <input type="checkbox" id="deer" name="deer" value="Deer" />
+                                          <label for="deer">Deer</label><br />
+                                          <input type="checkbox" id="drought" name="drought" value="Drought" />
+                                          <label for="drought">Drought</label><br />
+                                          <input type="checkbox" id="foot traffic" name="foot-traffic" value="Foot traffic" />
+                                          <label for="foot traffic">Foot traffic</label><br />
+                                          <input type="checkbox" id="limestone" name="limestone" value="Limestone" />
+                                          <label for="limestone">Limestone</label><br />
+                                          <input type="checkbox" id="rabbits" name="rabbits" value="Rabbits" />
+                                          <label for="rabbits">Rabbits</label><br />
+                                          <input type="checkbox" id="salt" name="salt" value="Salt" />
+                                          <label for="salt">Salt</label><br />
+                                          <input type="checkbox" id="sand" name="sand" value="Sand" />
+                                          <label for="sand">Sand</label><br />
+                                          <input
+                                            type="checkbox"
+                                            id="transplanting"
+                                            name="transplanting"
+                                            value="Transplanting"
+                                          />
+                                          <label for="transplanting">Transplanting</label><br />
+                                        </div>
+                                      </div>
+
+                <!--class filter to exclude plant known to be toxic-->
+                                      <div class="filter">
+                                        <div class="collapser" onclick="toggleFilter('#toxicity')">Toxicity</div>
+                                        <div id="toxicity" class="collapsed">
+                                          <input
+                                            type="checkbox"
+                                            id="Exclude-toxic"
+                                            name="Exclude-toxic"
+                                            value="Exclude-Toxic"
+                                          />
+                                          <label for="toxic">Exclude plants known to be toxic</label><br />
+                                        </div>
+                                      </div>
+
+                <!--class filter to exclude plants with burs-->
+                                      <div class="filter">
+                                        <div class="collapser" onclick="toggleFilter('#exclude-burs')">Burs</div>
+                                        <div id="exclude-burs" class="collapsed">
+                                          <input type="checkbox" id="Exclude-burs" name="Exclude-burs" value="Exclude-Burs" />
+                                          <label for="burs">Exclude plants with burs</label><br />
+                                        </div>
+                                      </div>
+
+                <!--Winter Sowing Requirements-->
+                                      <div class="filter">
+                                        <div class="collapser" onclick="toggleFilter('#winter-sowing-requirements')">
+                                          Winter Sowing Requirements
+                                        </div>
+                                        <div id="winter-sowing-requirements" class="slider-wrapper collapsed">
+                                          <div class="slider-values">
+                                            <span id="winter-sowing-value"> 60 days</span>
+                                          </div>
+                                          <div class="slider-container">
+                                            <div class="slider-track-winter-sowing-requirements"></div>
+                                            <input
+                                              type="range"
+                                              min="0"
+                                              max="6"
+                                              value="3"
+                                              id="sliderWinterSowingRequirements"
+                                              oninput="updateWinterSowingValue(this.value)"
+                                            />
+                                          </div>
+                                        </div>
+                                      </div>
+
+                <!--Harvesting period start-->
+                                      <div class="filter">
+                                        <div class="collapser" onclick="toggleFilter('#harvesting-period-start')">
+                                          Harvesting Period Start
+                                        </div>
+                                        <div id="harvesting-period-start" class="slider-wrapper collapsed">
+                                          <div class="slider-values">
+                                            <span id="harvesting-period-start-value"> Sept</span>
+                                          </div>
+                                          <div class="slider-container">
+                                            <div class="slider-track-harvesting-period-start"></div>
+                                            <input
+                                              type="range"
+                                              min="0"
+                                              max="9"
+                                              value="7"
+                                              id="sliderHarvestingPeriodStart"
+                                              oninput="updateHarvestingPeriodStart(this.value)"
+                                            />
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </aside>
+                                    <main>
+                                      <div class="search-plants">
+                    <!--input text box for seraching plant name-->
+                                        {% include "project/plant-search-name-form.html" %}
+                                        <div class="flex-row">
+                    <!--Input checkbox for accepting donations-->
+                                          <div>
+                                            <input type="checkbox" id="seed-wanted" name="seed-wanted" value="seed-wanted" />
+                                            <label for="seed-wanted">Show seeds accepted for donations</label>
+                                          </div>
+                                          <div>
+                        <!--Input checkbox for seeds available-->
+                                            <input
+                                              type="checkbox"
+                                              id="available-seeds"
+                                              name="available-seeds"
+                                              value="available-seeds"
+                                            />
+                                            <label for="available-seeds">Show available seeds only</label>
+                                          </div>
+                                          <div class="sort-plants">
+                                            <span>Sort:</span>
+                                            <span>Ascending</span>
+                                            <input type="radio" id="sort-asc" name="sort" value="sort-asc" />
+                                            <span>Descending</span>
+                                            <input type="radio" id="sort-desc" name="sort" value="sort-desc" />
+                                          </div>
+                                        </div>
+                                      </div>
+                <!--Plant cards-->
+                                      {% include "project/plant-search-results.html" %}
+                                    </main>
+                                  </section>
+                                  <script>
+                                    function toggleFilterWrapper() {
+                                      const filterWrapper = document.getElementById("filter-wrapper");
+                                      const buttonText = document.querySelector("#aside-toggler button");
+                                      if (filterWrapper.style.display === "none") {
+                                        filterWrapper.style.display = "flex";
+                                        buttonText.innerHTML = "Hide Filters";
+                                      } else {
+                                        filterWrapper.style.display = "none";
+                                        buttonText.innerHTML = "Show Filters";
+                                      }
+                                    }
+                                    function toggleFilter(toggleId) {
+                                      const toggleMe = document.querySelector(toggleId);
+                                      toggleMe.classList.toggle("collapsed");
+                                    }
+
+                                    function updateStratValue(value) {
+                                      document.getElementById("strat-value").innerHTML = value;
+                                    }
+                                  </script>
+                                  <script src="{% static 'js/dualslider2.js' %}"></script>
+
+{% endblock content %}

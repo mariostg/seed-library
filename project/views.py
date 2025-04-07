@@ -117,7 +117,7 @@ def search_plant_name(request):
         "title": "Plant Profile Filter",
     }
 
-    template = "project/plant-search-results.html" if request.htmx else "project/index.html"
+    template = "project/plant-search-results.html" if request.htmx else "project/plant-catalog.html"
     return render(request, template, context)
 
 
@@ -720,3 +720,13 @@ def plant_label_pdf(request, pk):
 
     buffer.seek(0)
     return FileResponse(buffer, as_attachment=True, filename="hello.pdf")
+
+
+def plant_catalog(request):
+    plants = models.PlantProfile.objects.all()
+    context = {
+        "title": "Plant Catalog",
+        "object_list": plants,
+        "url_name": "plant-catalog",
+    }
+    return render(request, "project/plant-catalog.html", context)
