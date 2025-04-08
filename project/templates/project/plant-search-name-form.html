@@ -2,16 +2,58 @@
 
   <form method='GET'>
     <div class="form__field">
-      <input class="name-search-input"
-             name="plant_name"
+      <input id="plant-name" class="name-search-input"
+             name="plant-name"
              hx-get="/search-plant-name"
              hx-trigger="keyup[target.value.length >= 4] changed delay:500ms"
              hx-target="#search-results"
              hx-push-url="true"
+             hx-include="#available-seeds,#seed-wanted"
              type="text"
              value="{{ plant_name }}"
              class="form-input"
              placeholder="4 letters or more of latin, english, or french name">
     </div>
+    <!--Input checkbox for accepting donations-->
+    <div>
+      <input type="checkbox"
+             id="seed-wanted"
+             name="seed-wanted"
+             value="seed-wanted"
+             hx-get="/search-plant-name"
+             hx-trigger="click"
+             hx-target="#search-results"
+             hx-push-url="true"
+             hx-include="#plant-name,#available-seeds"
+             {% if seed_wanted %} checked {% endif %}
+      >
+      <label for="seed-wanted">Show seeds accepted for donations</label>
+    </div>
+
+    <div>
+      <!--Input checkbox for seeds available-->
+      <input
+        type="checkbox"
+        id="available-seed"
+        name="available-seed"
+        value="available-seed"
+        hx-get="/search-plant-name"
+        hx-trigger="click"
+        hx-target="#search-results"
+        hx-push-url="true"
+        hx-include="#plant-name,#seed-wanted"
+        {% if available_seed %} checked {% endif %}
+      />
+      <label for="available-seed">Show available seeds only</label>
+    </div>
+
+    {% comment %} <div class="sort-plants">
+      <span>Sort:</span>
+      <span>Ascending</span>
+      <input type="radio" id="sort-asc" name="sort" value="sort-asc" />
+      <span>Descending</span>
+      <input type="radio" id="sort-desc" name="sort" value="sort-desc" />
+  </div> {% endcomment %}
+
   </form>
 </div>

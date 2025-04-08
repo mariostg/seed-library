@@ -103,13 +103,29 @@ def plant_profile_delete(request, pk):
 
 
 def search_plant_name(request):
-    # search plant across fields latin_name, english_name, french_name
-    plant_name = request.GET.get("plant_name", "")
-    plant_name = urllib.parse.unquote(plant_name)
+    plants = models.PlantProfile.objects.all()
+    results = False
 
-    plants = None
-    if plant_name:
-        plants: models.PlantProfile = models.PlantProfile.search_plant.plant_name(plant_name)
+    plant_name = request.GET.get("plant-name", "")
+    plant_name = urllib.parse.unquote(plant_name)
+    seed_wanted = request.GET.get("seed-wanted", False)
+    available_seed = request.GET.get("available-seed", False)
+
+    if plant_name != "":
+        plants = models.PlantProfile.search_plant.plant_name(plant_name)
+        results = True
+    if seed_wanted:
+        plants = plants.filter(accepting_donations=True)
+        results = True
+    if available_seed:
+        plants = plants.filter(seed_availability=True)
+        results = True
+
+    if not results:
+        plants = None
+    else:
+        plants = plants.order_by("latin_name")
+
     context = {
         "plant_name": plant_name,
         "object_list": plants,
@@ -723,7 +739,7 @@ def plant_label_pdf(request, pk):
 
 
 def plant_catalog(request):
-    plants = models.PlantProfile.objects.all()
+    plants = models.PlantProfile.objects.none()
     context = {
         "title": "Plant Catalog",
         "object_list": plants,
