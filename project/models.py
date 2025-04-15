@@ -594,7 +594,7 @@ class PlantProfile(Base):
     erosion_control = models.BooleanField(default=False, null=True, blank=True)
     seed_availability = models.BooleanField(default=False, null=True, blank=True)
 
-    accepting_donations = models.BooleanField(default=False, null=True, blank=True)
+    accepting_seed = models.BooleanField(default=False, null=True, blank=True)
     keystones_species = models.BooleanField(default=False, null=True, blank=True)
 
     drought_tolerant = models.BooleanField(default=False, null=True, blank=True)

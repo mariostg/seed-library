@@ -1,59 +1,70 @@
-<div class="flex-row">
-
+{% load static %}
+<div class="search-plants">
   <form method='GET'>
+
+    <!--Input text box for searching plant name-->
     <div class="form__field">
-      <input id="plant-name" class="name-search-input"
-             name="plant-name"
+      <input id="any_name" class="name-search-input"
+             name="any_name"
              hx-get="/search-plant-name"
-             hx-trigger="keyup[target.value.length >= 4] changed delay:500ms"
+             {% comment %} hx-trigger="keyup[target.value.length >= 4] changed delay:500ms" {% endcomment %}
+             hx-trigger="input changed delay:500ms, keyup[key=='Enter'], load"
              hx-target="#search-results"
              hx-push-url="true"
-             hx-include="#available-seeds,#seed-wanted"
+             hx-include="#seed_availability,#accepting_seed"
+             hx-indicator=".htmx-indicator"
              type="text"
-             value="{{ plant_name }}"
+             value="{{ any_name }}"
              class="form-input"
              placeholder="4 letters or more of latin, english, or french name">
+
+      <span class="htmx-indicator">
+        <img src="{% static 'images/searching.svg' %}"/> Searching...
+      </span>
     </div>
-    <!--Input checkbox for accepting donations-->
-    <div>
+
+    <!--Input checkbox for accepting seeds-->
+    <div class="form__field">
       <input type="checkbox"
-             id="seed-wanted"
-             name="seed-wanted"
-             value="seed-wanted"
+             id="accepting_seed"
+             name="accepting_seed"
+             value="accepting_seed"
              hx-get="/search-plant-name"
              hx-trigger="click"
              hx-target="#search-results"
              hx-push-url="true"
-             hx-include="#plant-name,#available-seeds"
-             {% if seed_wanted %} checked {% endif %}
+             hx-include="#any_name,#seed_availability"
+             {% if accepting_seed %} checked {% endif %}
       >
       <label for="seed-wanted">Show seeds accepted for donations</label>
     </div>
 
-    <div>
-      <!--Input checkbox for seeds available-->
+    <!--Input checkbox for seeds available-->
+    <div class="form__field">
       <input
         type="checkbox"
-        id="available-seed"
-        name="available-seed"
+        id="seed_availability"
+        name="seed_availability"
         value="available-seed"
         hx-get="/search-plant-name"
         hx-trigger="click"
         hx-target="#search-results"
         hx-push-url="true"
-        hx-include="#plant-name,#seed-wanted"
-        {% if available_seed %} checked {% endif %}
+        hx-include="#any_name,#accepting_seed"
+        {% if seed_availability %} checked {% endif %}
       />
-      <label for="available-seed">Show available seeds only</label>
+      <label for="seed_availability">Show available seeds only</label>
     </div>
 
-    {% comment %} <div class="sort-plants">
-      <span>Sort:</span>
-      <span>Ascending</span>
-      <input type="radio" id="sort-asc" name="sort" value="sort-asc" />
-      <span>Descending</span>
-      <input type="radio" id="sort-desc" name="sort" value="sort-desc" />
-  </div> {% endcomment %}
+    <div class="flex-row">
+      <div class="sort-plants">
+        <span>Sort:</span>
+        <span>Ascending</span>
+        <input type="radio" id="sort-asc" name="sort" value="sort-asc" />
+        <span>Descending</span>
+        <input type="radio" id="sort-desc" name="sort" value="sort-desc" />
+      </div>
+    </div>
 
   </form>
 </div>

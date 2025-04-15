@@ -1,10 +1,23 @@
 import django_filters
+from django.db.models import Q
 
 from project import models, utils
 
 
 class PlantProfileFilter(django_filters.FilterSet):
     """Filters used on plant profile search form"""
+
+    any_name = django_filters.CharFilter(
+        method="filter_any_name",
+    )
+
+    seed_availability = django_filters.CharFilter(
+        method="filter_seed_availability",
+    )
+
+    accepting_seed = django_filters.CharFilter(
+        method="filter_accepting_seed",
+    )
 
     latin_name = django_filters.CharFilter(
         method="filter_icontains",
@@ -57,10 +70,25 @@ class PlantProfileFilter(django_filters.FilterSet):
     sharing_priority = django_filters.ModelChoiceFilter(
         queryset=models.SharingPriority.objects.all(),
     )
-    seed_availability = django_filters.BooleanFilter(
-        field_name="seed_availability",
-        method="filter_bool",
-    )
+
+    def filter_any_name(self, queryset, name, value):
+        return queryset.filter(
+            Q(**{"latin_name__icontains": value})
+            | Q(**{"english_name__icontains": value})
+            | Q(**{"french_name__icontains": value})
+        )
+
+    def filter_seed_availability(self, queryset, name, value):
+        if value:
+            return queryset.filter(**{name: True})
+        else:
+            return queryset.exclude(**{name: True})
+
+    def filter_accepting_seed(self, queryset, name, value):
+        if value:
+            return queryset.filter(**{name: True})
+        else:
+            return queryset.exclude(**{name: True})
 
     def filter_icontains(self, queryset, name, value):
         lookup = "__".join([name, "icontains"])
@@ -82,4 +110,4 @@ class PlantProfileFilter(django_filters.FilterSet):
 
     class Meta:
         model = models.PlantProfile
-        fields = ["latin_name", "bloom_start", "bloom_end"]
+        fields = ["latin_name", "bloom_start", "bloom_end", "seed_availability"]

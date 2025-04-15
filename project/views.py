@@ -1,6 +1,5 @@
 import csv
 import io
-import urllib
 
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
@@ -103,32 +102,17 @@ def plant_profile_delete(request, pk):
 
 
 def search_plant_name(request):
-    plants = models.PlantProfile.objects.all()
-    results = False
 
-    plant_name = request.GET.get("plant-name", "")
-    plant_name = urllib.parse.unquote(plant_name)
-    seed_wanted = request.GET.get("seed-wanted", False)
-    available_seed = request.GET.get("available-seed", False)
-
-    if plant_name != "":
-        plants = models.PlantProfile.search_plant.plant_name(plant_name)
-        results = True
-    if seed_wanted:
-        plants = plants.filter(accepting_donations=True)
-        results = True
-    if available_seed:
-        plants = plants.filter(seed_availability=True)
-        results = True
-
-    if not results:
-        plants = None
+    if not request.GET:
+        data = models.PlantProfile.objects.none()
     else:
-        plants = plants.order_by("latin_name")
+        data = models.PlantProfile.objects.all().order_by("latin_name")
+    search_filter = filters.PlantProfileFilter(request.GET, queryset=data)
+    object_list = search_filter.qs
 
     context = {
-        "plant_name": plant_name,
-        "object_list": plants,
+        "search_filter": search_filter,
+        "object_list": object_list,
         "url_name": "index",
         "title": "Plant Profile Filter",
     }
