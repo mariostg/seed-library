@@ -3,13 +3,17 @@
 <div style="display: flex; flex-direction: column; align-items: center; ">
 
   {% if object_list %}
-    <div class='flex-col-center'> Search Results: Found {{object_list.count}} matches </div>
+    <div class='flex-col-center'> Search Results: Found {{item_count}} matches, page</div>
   {% endif %}
   <div id='search-results' class="plant-cards">
 
     {% for item in object_list  %}
       <div class="plant-card">
-        <span class="plant-card-is-favourite"></span>
+        {% if item.is_favorite %}
+          <span class="plant-card-is-favourite"></span>
+        {% else %}
+          <span class="plant-card-is-not-favourite"></span>
+        {% endif %}
         {% if item.image_thumbnail %}
           <img src="#" alt="image for {{item.latin_name}}" />
         {% else %}
@@ -28,19 +32,18 @@
         </div>
         <button>Add to cart</button>
       </div>
+      {% if object_list.has_next and forloop.last %}
+        <span
+          hx-get="{% url 'search-plant-name' %}?page={{ page_obj.next_page_number }}"
+          hx-swap="beforeend"
+          hx-target="#search-results"
+          hx-select=".plant-card"
+          hx-trigger="revealed"
+        >
+        </span>
+      {% endif %}
     {% endfor %}
-
-    <div class="plant-card">
-      <img src="{% static 'images/donation-200x290.png' %}" alt="Make a donation" />
-      <div class="plant-card-caption">
-        <div class="plant-type-icon"></div>
-        <div class="plant-names">
-          <span>Donate 5$</span>
-        </div>
-      </div>
-      <button>Add to cart</button>
-    </div>
 
   </div>
 
-  </div
+</div>

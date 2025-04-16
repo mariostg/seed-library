@@ -4,6 +4,7 @@ import io
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 from django.db import IntegrityError
 from django.db.models import OuterRef, RestrictedError, Subquery, Value
 from django.db.models.functions import Coalesce
@@ -108,15 +109,18 @@ def search_plant_name(request):
     else:
         data = models.PlantProfile.objects.all().order_by("latin_name")
     search_filter = filters.PlantProfileFilter(request.GET, queryset=data)
-    object_list = search_filter.qs
+    # object_list = search_filter.qs
+    page_number = request.GET.get("page", 1)
+    paginator = Paginator(search_filter.qs, 10)
+    object_list = paginator.get_page(page_number)
 
     context = {
         "search_filter": search_filter,
         "object_list": object_list,
         "url_name": "index",
         "title": "Plant Profile Filter",
+        "item_count": paginator.count,
     }
-
     template = "project/plant-search-results.html" if request.htmx else "project/plant-catalog.html"
     return render(request, template, context)
 

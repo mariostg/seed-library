@@ -8,7 +8,7 @@
              name="any_name"
              hx-get="/search-plant-name"
              {% comment %} hx-trigger="keyup[target.value.length >= 4] changed delay:500ms" {% endcomment %}
-             hx-trigger="input changed delay:500ms, keyup[key=='Enter'], load"
+             hx-trigger="input changed delay:500ms, keyup[key=='Enter']"
              hx-target="#search-results"
              hx-push-url="true"
              hx-include="#seed_availability,#accepting_seed"
