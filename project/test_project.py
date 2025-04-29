@@ -11,8 +11,6 @@ class TestPostAddPlantProfile:
             "french_name": "",
             "latin_name": "",
             "url": "",
-            "light_from": "",
-            "light_to": "",
             "bloom_start": "",
             "bloom_end": "",
             "soil_humidity_min": "",

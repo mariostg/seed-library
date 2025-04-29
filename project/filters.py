@@ -28,14 +28,6 @@ class PlantProfileFilter(django_filters.FilterSet):
     french_name = django_filters.CharFilter(
         method="filter_icontains",
     )
-    light_from = django_filters.ModelChoiceFilter(
-        queryset=models.Lighting.objects.all(),
-        method="filter_gte",
-    )
-    light_to = django_filters.ModelChoiceFilter(
-        queryset=models.Lighting.objects.all(),
-        method="filter_lte",
-    )
     soil_humidity_min = django_filters.ModelChoiceFilter(
         queryset=models.SoilHumidity.objects.all(),
         method="filter_gte",

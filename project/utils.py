@@ -41,7 +41,6 @@ def plant_label_info(pk):
         plant.latin_name,
         plant.english_name,
         plant.french_name,
-        f"{plant.light_from.lighting} - {plant.light_to.lighting}",
         f"Moisture: {plant.soil_humidity_min.soil_humidity} - {plant.soil_humidity_max.soil_humidity}",
         plant.size,
         f"Bloom: {plant.bloom_start} - {plant.bloom_end}",

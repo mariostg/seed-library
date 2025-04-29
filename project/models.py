@@ -464,8 +464,9 @@ class PlantProfile(Base):
         english_name (str): Common English name of the plant (max 75 chars)
         french_name (str): Common French name of the plant (max 75 chars)
         url (str): URL related to the plant (max 250 chars)
-        light_from (FK): Minimum light requirement (references Lighting model)
-        light_to (FK): Maximum light requirement (references Lighting model)
+        full_sun (bool): Indicates if the plant requires full sun
+        partial_sun (bool): Indicates if the plant requires partial sun
+        full_shade (bool): Indicates if the plant requires full shade
         bloom_start (int): Start month of blooming period (0-12)
         bloom_end (int): End month of blooming period (0-12)
         soil_humidity_min (FK): Minimum soil moisture requirement
@@ -529,10 +530,12 @@ class PlantProfile(Base):
     english_name = models.CharField(max_length=75, blank=True)
     french_name = models.CharField(max_length=75, blank=True)
     url = models.CharField(max_length=250, blank=True)
-    light_from = models.ForeignKey(
-        Lighting, related_name="light_from", on_delete=models.RESTRICT, blank=True, null=True
-    )
-    light_to = models.ForeignKey(Lighting, related_name="light_to", on_delete=models.RESTRICT, blank=True, null=True)
+
+    # We use 3 levels of light to define the light requirement of the plant
+    full_sun = models.BooleanField(default=False, null=True, blank=True)
+    partial_sun = models.BooleanField(default=False, null=True, blank=True)
+    full_shade = models.BooleanField(default=False, null=True, blank=True)
+
     bloom_start = models.SmallIntegerField(choices=MONTHS.items(), blank=True, default=0)
     bloom_end = models.SmallIntegerField(choices=MONTHS.items(), blank=True, default=0)
     soil_humidity_min = models.ForeignKey(
@@ -681,6 +684,8 @@ class PlantProfile(Base):
             self.harvesting_start = 0
         if not self.latin_name:
             raise ValueError("Missing Latin Name")
+        if not self.full_sun and not self.partial_sun and not self.full_shade:
+            raise ValueError("Missing light requirement")
         self.compare_heights()
         self.compare_blooming()
         super().save(*args, **kwargs)

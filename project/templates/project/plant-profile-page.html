@@ -28,14 +28,6 @@
         <div class="{% cycle 'normal-row' 'dark-row' as rowcolors %}">
           <span>Light Requirement</span>
           <div>
-            <span class='tooltip'>{{plant.light_from.lighting}}
-              <span class="tooltiptext">{{plant.light_from.definition}}</span>
-            </span>
-            {% if plant.light_to.lighting%}
-              <span class='tooltip'>to [{{plant.light_to.lighting}}]
-                <span class="tooltiptext">{{plant.light_to.definition}}</span>
-              </span>
-            {% endif %}
           </div>
 
 

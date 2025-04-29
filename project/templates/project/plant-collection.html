@@ -16,9 +16,6 @@
 
             <td><a href="{% url 'plant-profile-page' item.plants.pk %}">{{item.plants.latin_name}}</a>
               <br>{{item.plants.english_name}}<br>{{item.plants.french_name}}</td>
-            <td>{{item.plants.light_from.lighting}}
-              {% if item.plants.light_to.lighting %} to<br> {{item.plants.light_to.lighting}} {% endif %}
-            </td>
             <td>{{item.plants.bloom_start|month_name}}
               {% if item.plants.bloom_end != 0 %}to<br> {{item.plants.bloom_end|month_name}} {% endif %}
             </td>
