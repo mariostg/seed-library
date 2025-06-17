@@ -613,9 +613,10 @@ class PlantProfile(Base):
     bee_friendly = models.BooleanField(default=False, null=True, blank=True)
     bird_friendly = models.BooleanField(default=False, null=True, blank=True)
     boulevard_tolerant = models.BooleanField(default=False, null=True, blank=True)
-
     nitrogen_fixer = models.BooleanField(default=False, null=True, blank=True)
     easy_to_contain = models.BooleanField(default=False, null=True, blank=True)
+    cedar_hedge_replacement = models.BooleanField(default=False, null=True, blank=True)
+
     flower_color = models.ForeignKey(Color, on_delete=models.RESTRICT, null=True, blank=True)
     habit = models.ForeignKey(Habit, on_delete=models.RESTRICT, null=True, blank=True)
     taxon = models.CharField(max_length=5, blank=True)
