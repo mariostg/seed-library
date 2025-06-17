@@ -608,10 +608,10 @@ class PlantProfile(Base):
     limestone_tolerant = models.BooleanField(default=False, null=True, blank=True)
     sand_tolerant = models.BooleanField(default=False, null=True, blank=True)
     acidic_soil_tolerant = models.BooleanField(default=False, null=True, blank=True)
-
     hummingbird_friendly = models.BooleanField(default=False, null=True, blank=True)
     butterfly_friendly = models.BooleanField(default=False, null=True, blank=True)
     bee_friendly = models.BooleanField(default=False, null=True, blank=True)
+    boulevard_tolerant = models.BooleanField(default=False, null=True, blank=True)
 
     nitrogen_fixer = models.BooleanField(default=False, null=True, blank=True)
     easy_to_contain = models.BooleanField(default=False, null=True, blank=True)
@@ -684,8 +684,6 @@ class PlantProfile(Base):
             self.harvesting_start = 0
         if not self.latin_name:
             raise ValueError("Missing Latin Name")
-        if not self.full_sun and not self.partial_sun and not self.full_shade:
-            raise ValueError("Missing light requirement")
         self.compare_heights()
         self.compare_blooming()
         super().save(*args, **kwargs)
