@@ -615,6 +615,7 @@ class PlantProfile(Base):
     bird_friendly = models.BooleanField(default=False, null=True, blank=True)
     boulevard_tolerant = models.BooleanField(default=False, null=True, blank=True)
     juglone_tolerant = models.BooleanField(default=False, null=True, blank=True)
+    transplantation_tolerant = models.BooleanField(default=False, null=True, blank=True)
     nitrogen_fixer = models.BooleanField(default=False, null=True, blank=True)
     easy_to_contain = models.BooleanField(default=False, null=True, blank=True)
     cedar_hedge_replacement = models.BooleanField(default=False, null=True, blank=True)
