@@ -365,8 +365,8 @@ class Color(Base):
         super().save(*args, **kwargs)
 
 
-class Habit(Base):
-    """A model representing a habit that characterize the plant.
+class GrowthHabit(Base):
+    """A model representing a growth habit that characterize the plant.
 
     This class defines a habit with a unique name that can be tracked or associated with other entities.
 
@@ -380,13 +380,13 @@ class Habit(Base):
         str: String representation of the habit (the habit name).
     """
 
-    habit = models.CharField(unique=True, max_length=30, blank=True)
+    growth_habit = models.CharField(unique=True, max_length=30, blank=True)
 
     def __str__(self) -> str:
-        return self.habit
+        return self.growth_habit
 
     class Meta:
-        ordering = ["habit"]
+        ordering = ["growth_habit"]
 
 
 class SoilHumidity(Base):
@@ -405,6 +405,42 @@ class SoilHumidity(Base):
 
     def __str__(self) -> str:
         return f"{self.soil_humidity} - {self.definition}"
+
+
+class PlantLifespan(Base):
+    """A model representing the lifespan of a plant.
+
+    This class defines the lifecycle of a plant, which can be annual, biennial, or perennial.
+
+    Attributes:
+        lifespan (str): The lifespan category of the plant (max 15 chars).
+
+    Returns:
+        str: String representation of the lifespan value.
+    """
+
+    lifespan = models.CharField(max_length=15, blank=True)
+
+    def __str__(self) -> str:
+        return self.lifespan
+
+
+class ConservationStatus(Base):
+    """A model representing the conservation status of a plant.
+
+    This class defines the conservation status of a plant, which can be endangered, threatened, or stable.
+
+    Attributes:
+        conservation_status (str): The conservation status of the plant (max 50 chars).
+
+    Returns:
+        str: String representation of the conservation status value.
+    """
+
+    conservation_status = models.CharField(max_length=50, blank=True)
+
+    def __str__(self) -> str:
+        return self.conservation_status
 
 
 class PlantProfileQuerySet(models.QuerySet):
@@ -521,11 +557,6 @@ class PlantProfile(Base):
         (blank=True) to accommodate varying levels of available information.
     """
 
-    LIFESPAN = [
-        ("A", "Annual"),
-        ("B", "Biennial"),
-        ("P", "Perennial"),
-    ]
     latin_name = models.CharField(max_length=75, unique=True)
     english_name = models.CharField(max_length=75, blank=True)
     french_name = models.CharField(max_length=75, blank=True)
@@ -553,7 +584,7 @@ class PlantProfile(Base):
         blank=True, null=True, default=0
     )  # must be greater than min_width if min_width is not 0
     size = models.CharField(max_length=35, blank=True)
-    lifespan = models.CharField(max_length=1, choices=LIFESPAN, blank=True)
+    lifespan = models.ForeignKey(PlantLifespan, on_delete=models.RESTRICT, blank=True, null=True)
 
     stratification_detail = models.CharField(max_length=55, blank=True)
     stratification_duration = models.SmallIntegerField(blank=True, null=True, default=0)
@@ -623,8 +654,9 @@ class PlantProfile(Base):
     produces_burs = models.BooleanField(default=False, null=True, blank=True)
 
     flower_color = models.ForeignKey(Color, on_delete=models.RESTRICT, null=True, blank=True)
-    habit = models.ForeignKey(Habit, on_delete=models.RESTRICT, null=True, blank=True)
+    growth_habit = models.ForeignKey(GrowthHabit, on_delete=models.RESTRICT, null=True, blank=True)
     taxon = models.CharField(max_length=5, blank=True)
+    conservation_status = models.ForeignKey(ConservationStatus, on_delete=models.RESTRICT, null=True, blank=True)
     inaturalist_taxon = models.CharField(max_length=10, blank=True)
 
     search_plant = PlantProfileQuerySet.as_manager()

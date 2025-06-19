@@ -179,7 +179,7 @@ def dormancy_table(request):
 
 
 def habit_table(request):
-    data = models.Habit.objects.all().order_by("habit")
+    data = models.GrowthHabit.objects.all().order_by("habit")
     context = {
         "data": data,
         "url_name": "habit-table",
@@ -399,7 +399,7 @@ def dormancy_update(request, pk):
 
 # @login_required
 def habit_update(request, pk):
-    obj = models.Habit.objects.get(id=pk)
+    obj = models.GrowthHabit.objects.get(id=pk)
     form = forms.HabitForm(instance=obj)
 
     if request.method == "POST":
@@ -501,7 +501,7 @@ def dormancy_delete(request, pk):
 
 # @login_required
 def habit_delete(request, pk):
-    obj: models.Habit = models.Habit.objects.get(id=pk)
+    obj: models.GrowthHabit = models.GrowthHabit.objects.get(id=pk)
     if request.method == "POST":
         try:
             obj.delete()

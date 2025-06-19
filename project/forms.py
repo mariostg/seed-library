@@ -59,7 +59,7 @@ class PlantProfileForm(forms.ModelForm):
             "deer_tolerant",  #
             "easy_to_contain",  #
             "flower_color",
-            "habit",  #
+            "growth_habit",  #
         ]
 
     def __init__(self, *args, **kwargs):
@@ -139,8 +139,8 @@ class DormancyForm(forms.ModelForm):
 
 class HabitForm(forms.ModelForm):
     class Meta:
-        model = models.Habit
-        fields = ["habit"]
+        model = models.GrowthHabit
+        fields = ["growth_habit"]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
