@@ -358,10 +358,10 @@ class FlowerColor(Base):
     flower_color = models.CharField(unique=True, max_length=25, blank=True)
 
     def __str__(self) -> str:
-        return self.color
+        return self.flower_color
 
     def save(self, *args, **kwargs):
-        self.color = self.color.capitalize()
+        self.flower_color = self.flower_color.capitalize()
         super().save(*args, **kwargs)
 
 
