@@ -341,7 +341,7 @@ class Lighting(Base):
         return f"{self.lighting} - {self.definition}"
 
 
-class Color(Base):
+class FlowerColor(Base):
     """A Color model representing a color entity to be assigned to the flowers of the plant.
 
     This class inherits from Base and represents a color with a unique name.
@@ -653,7 +653,7 @@ class PlantProfile(Base):
     cause_dermatitis = models.BooleanField(default=False, null=True, blank=True)
     produces_burs = models.BooleanField(default=False, null=True, blank=True)
 
-    flower_color = models.ForeignKey(Color, on_delete=models.RESTRICT, null=True, blank=True)
+    flower_color = models.ForeignKey(FlowerColor, on_delete=models.RESTRICT, null=True, blank=True)
     growth_habit = models.ForeignKey(GrowthHabit, on_delete=models.RESTRICT, null=True, blank=True)
     taxon = models.CharField(max_length=5, blank=True)
     conservation_status = models.ForeignKey(ConservationStatus, on_delete=models.RESTRICT, null=True, blank=True)
