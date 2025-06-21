@@ -355,7 +355,7 @@ class FlowerColor(Base):
         save(*args, **kwargs): Overrides default save to capitalize color name.
     """
 
-    color = models.CharField(unique=True, max_length=25, blank=True)
+    flower_color = models.CharField(unique=True, max_length=25, blank=True)
 
     def __str__(self) -> str:
         return self.color
