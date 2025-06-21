@@ -159,7 +159,7 @@ def update_availability(request):
 
 
 def color_table(request):
-    data = models.Color.objects.all().order_by("color")
+    data = models.FlowerColor.objects.all().order_by("color")
     context = {
         "data": data,
         "url_name": "color-table",
@@ -355,7 +355,7 @@ def harvesting_mean_add(request):
 
 # @login_required
 def color_update(request, pk):
-    color = models.Color.objects.get(id=pk)
+    color = models.FlowerColor.objects.get(id=pk)
     form = forms.ColorForm(instance=color)
 
     if request.method == "POST":
@@ -465,7 +465,7 @@ def harvesting_mean_update(request, pk):
 
 # @login_required
 def color_delete(request, pk):
-    obj = models.Color.objects.get(id=pk)
+    obj = models.FlowerColor.objects.get(id=pk)
     if request.method == "POST":
         try:
             obj.delete()
