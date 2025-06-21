@@ -121,8 +121,8 @@ class SearchPlantForm(forms.ModelForm):
 
 class ColorForm(forms.ModelForm):
     class Meta:
-        model = models.Color
-        fields = ["color"]
+        model = models.FlowerColor
+        fields = ["flower_color"]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
