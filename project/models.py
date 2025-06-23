@@ -615,6 +615,7 @@ class PlantProfile(Base):
     alternative_to_notes = models.CharField(max_length=450, blank=True)
 
     germinate_easy = models.BooleanField(default=False, null=True, blank=True)
+    beginner_friendly = models.BooleanField(default=False, null=True, blank=True)
     spreading_rate = models.ForeignKey(SpreadRate, on_delete=models.RESTRICT, null=True, blank=True)
     rock_garden = models.BooleanField(default=False, null=True, blank=True)
     rain_garden = models.BooleanField(default=False, null=True, blank=True)
