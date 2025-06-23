@@ -14,35 +14,36 @@
         {% else %}
           <span class="plant-card-is-not-favourite"></span>
         {% endif %}
-        {% if item.image_thumbnail %}
-          <img src="#" alt="image for {{item.latin_name}}" />
-        {% else %}
-          <img src="{% static 'images/plant-placeholder.png' %}"/>
-
-        {% endif %}
-        <div class="plant-card-caption">
-          <div class="plant-type-icon">
-            <img src="{% static 'images/' %}{{ item.growth_habit }}.png" alt="image of {{item.growth_habit}}" />
+        <a href="{% url 'plant-profile-page' item.id %}" class="plant-card-link">
+          {% if item.image_thumbnail %}
+            <img src="#" alt="image for {{item.latin_name}}" />
+          {% else %}
+            <img src="{% static 'images/plant-placeholder.png' %}"/>
+            </a>
+          {% endif %}
+          <div class="plant-card-caption">
+            <div class="plant-type-icon">
+              <img src="{% static 'images/' %}{{ item.growth_habit }}.png" alt="image of {{item.growth_habit}}" />
+            </div>
+            <div class="plant-names">
+              <span>{{item.english_name}}</span>
+              <span>{{item.latin_name}}</span>
+              <span>{{item.french_name}}</span>
+            </div>
           </div>
-          <div class="plant-names">
-            <span>{{item.english_name}}</span>
-            <span>{{item.latin_name}}</span>
-            <span>{{item.french_name}}</span>
-          </div>
+          <button>Add to cart</button>
         </div>
-        <button>Add to cart</button>
-      </div>
-      {% if object_list.has_next and forloop.last %}
-        <span
-          hx-get="{% url 'search-plant-name' %}?page={{ page_obj.next_page_number }}"
-          hx-swap="beforeend"
-          hx-target="#search-results"
-          hx-select=".plant-card"
-          hx-push-url="true"
-          hx-trigger="revealed"
-        >
-        </span>
-      {% endif %}
+        {% if object_list.has_next and forloop.last %}
+          <span
+            hx-get="{% url 'search-plant-name' %}?page={{ page_obj.next_page_number }}"
+            hx-swap="beforeend"
+            hx-target="#search-results"
+            hx-select=".plant-card"
+            hx-push-url="true"
+            hx-trigger="revealed"
+          >
+          </span>
+        {% endif %}
     {% endfor %}
 
   </div>

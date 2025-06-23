@@ -1,0 +1,85 @@
+/*0 3px 5px rgba(75, 85, 68, 0.8);*/
+/*Wildflower theme colors*/
+/*blue theme*/
+.plant-profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  background-color: #f7f7f7;
+}
+.plant-profile-header {
+  display: flex;
+  flex-direction: row;
+  padding: 1rem;
+  background-color: #79ac78;
+  color: #fff;
+}
+.plant-profile-latin-name {
+  font-style: italic;
+  font-weight: regular;
+  margin-right: 1rem;
+  font-size: 1rem;
+}
+.plant-profile-english-name {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+.plant-profile-names {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+}
+.plant-profile-description {
+  padding: 1rem;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+img {
+  height: auto;
+  max-width: 100%;
+}
+
+.plant-image {
+  display: flex;
+  flex-direction: column;
+  max-width: 600px;
+  width: 100%;
+  gap: 1px;
+}
+
+.image-title {
+  background-color: #79ac78;
+  color: #fff;
+  text-align: center;
+}
+
+.icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-right: 0.5rem;
+}
+
+.low {
+  background-color: firebrick;
+  color: #fff;
+}
+
+.none {
+  background-color: grey;
+}
+
+.medium {
+  background-color: orange;
+}
+
+.high {
+  background-color: green;
+  color: #fff;
+}
+
+.inaturalist-legend span {
+  padding: 4px;
+  font-size: 80%;
+}

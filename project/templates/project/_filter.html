@@ -571,6 +571,22 @@
                           Characteristics
                         </div>
                         <div id="plant-characteristics" class="collapsed">
+
+      <!--Input box for beginner friendly-->
+                          <input
+                            type="checkbox"
+                            id="beginner_friendly"
+                            name="beginner_friendly"
+                            value="Beginner Friendly"
+                            hx-get="/search-plant-name"
+                            hx-trigger="click"
+                            hx-target="#search-results"
+                            hx-push-url="true"
+                            hx-include="#bird_friendly,#boulevard_tolerant,#butterfly_friendly,#cedar_hedge_replacement,#container_suitable,#drought_tolerant,#germinate_easy,#juglone_tolerant,#keystones_species,#nitrogen_fixer,#produces_burs,#sand_tolerant"
+                            {% if beginner_friendly %} checked {% endif %}
+                          />
+                          <label for="beginner_friendly">Beginner friendly ✔</label><br />
+
                           <input
                             type="checkbox"
                             id="does-not-spread"

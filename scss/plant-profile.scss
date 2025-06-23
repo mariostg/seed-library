@@ -1,0 +1,77 @@
+@import "_variables";
+.plant-profile {
+  &-header {
+    display: flex;
+    flex-direction: row;
+    padding: 1rem;
+    background-color: $green;
+    color: $white;
+  }
+  &-latin-name {
+    font-style: italic;
+    font-weight: regular;
+    margin-right: 1rem;
+    font-size: 1rem;
+  }
+  &-english-name {
+    font-weight: bold;
+    font-size: 1.2rem;
+  }
+  &-names {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+  }
+  &-description {
+    padding: 1rem;
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  background-color: $lightgrey;
+}
+img {
+  height: auto;
+  max-width: 100%;
+}
+
+.plant-image {
+  display: flex;
+  flex-direction: column;
+  max-width: 600px;
+  width: 100%;
+  gap: 1px;
+}
+.image-title {
+  background-color: $green; // $lightgrey;
+  color: $white;
+  text-align: center;
+}
+.icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-right: 0.5rem;
+}
+.low {
+  background-color: $low;
+  color: $white;
+}
+.none {
+  background-color: $none;
+}
+.medium {
+  background-color: $medium;
+}
+.high {
+  background-color: $high;
+  color: $white;
+}
+.inaturalist-legend {
+  span {
+    padding: 4px;
+    font-size: 80%;
+  }
+}
