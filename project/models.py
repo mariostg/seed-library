@@ -389,24 +389,6 @@ class GrowthHabit(Base):
         ordering = ["growth_habit"]
 
 
-class SoilHumidity(Base):
-    """A model representing soil humidity requirement that the plant will thrive in.
-
-    This class defines a model for storing soil humidity information, including
-    the humidity level category and its corresponding definition.
-
-    Attributes:
-        soil_humidity (str): The soil humidity category name (max 45 chars).
-        definition (str): Description/definition of the soil humidity category (max 75 chars).
-    """
-
-    soil_humidity = models.CharField(max_length=45, blank=True)
-    definition = models.CharField(max_length=75, blank=True)
-
-    def __str__(self) -> str:
-        return f"{self.soil_humidity} - {self.definition}"
-
-
 class PlantLifespan(Base):
     """A model representing the lifespan of a plant.
 
@@ -489,73 +471,141 @@ class SpreadRate(Base):
 
 
 class PlantProfile(Base):
-    """A Django model representing a plant profile with comprehensive botanical and horticultural information.
+    """The PlantProfile model represents a comprehensive plant profile with botanical, horticultural,
+    and ecological information used for plant management and classification.
 
-    This model stores detailed information about plants including their taxonomic names, physical characteristics,
-    growing requirements, ecological roles, and cultivation instructions. It supports multilingual plant names
-    and includes extensive metadata about seed collection, storage, and propagation.
+    This model stores detailed plant characteristics including:
+    - Basic identification (botanical and common names)
+    - Growing conditions (light, soil, moisture requirements)
+    - Physical attributes (height, width, growth habit)
+    - Seasonal information (blooming and harvesting periods)
+    - Propagation data (seed collection, storage, sowing instructions)
+    - Environmental tolerances and adaptations
+    - Wildlife interactions (bee/bird/butterfly friendly)
+    - Garden use cases (rock garden, shoreline, etc.)
+    - Conservation information
 
     Attributes:
-        latin_name (str): Scientific/Latin name of the plant (max 75 chars, unique)
-        english_name (str): Common English name of the plant (max 75 chars)
-        french_name (str): Common French name of the plant (max 75 chars)
-        url (str): URL related to the plant (max 250 chars)
-        full_sun (bool): Indicates if the plant requires full sun
-        partial_sun (bool): Indicates if the plant requires partial sun
-        full_shade (bool): Indicates if the plant requires full shade
-        bloom_start (int): Start month of blooming period (0-12)
-        bloom_end (int): End month of blooming period (0-12)
-        soil_humidity_min (FK): Minimum soil moisture requirement
-        soil_humidity_max (FK): Maximum soil moisture requirement
-        min_height (float): Minimum plant height
-        max_height (float): Maximum plant height
-        min_width (float): Minimum plant width
-        max_width (float): Maximum plant width
-        size (str): Size category description (max 35 chars)
-        lifespan (str): Plant lifecycle category (Annual, Biennial, or Perennial)
+        latin_name (CharField): Botanical name of the plant (required, unique)
+        english_name (CharField): Common English name (optional)
+        french_name (CharField): Common French name (optional)
+        url (CharField): Reference URL for the plant
 
-        # Seed and Propagation Fields
-        stratification_detail (str): Details about seed stratification
-        stratification_duration (int): Duration of stratification period
-        sowing_depth (FK): Required sowing depth
-        sowing_period (str): Optimal sowing timeframe
+        # Light requirements
+        full_sun (BooleanField): Whether plant thrives in full sun
+        partial_sun (BooleanField): Whether plant thrives in partial sun
+        full_shade (BooleanField): Whether plant thrives in full shade
 
-        # Various Boolean Flags for Plant Characteristics
-        germinate_easy (bool): Easy to germinate indicator
-        drought_tolerant (bool): Drought tolerance indicator
-        salt_tolerant (bool): Salt tolerance indicator
-        deer_tolerant (bool): Deer resistance indicator
-        nitrogen_fixer (bool): Nitrogen fixing capability
+        # Seasonal information
+        bloom_start (SmallIntegerField): Month when blooming begins
+        bloom_end (SmallIntegerField): Month when blooming ends
+        harvesting_start (SmallIntegerField): Month when harvesting begins
 
-        # Garden Use and Ecological Function
-        rock_garden (bool): Suitable for rock gardens
-        rain_garden (bool): Suitable for rain gardens
-        pond_edge (bool): Suitable for pond edges
-        container_suitable (bool): Suitable for container growing
+        # Soil and moisture requirements
 
-        # Wildlife Interaction
-        hummingbird_friendly (bool): Attracts hummingbirds
-        butterfly_friendly (bool): Attracts butterflies
-        bee_friendly (bool): Attracts bees
+        # Physical characteristics
+        min_height (FloatField): Minimum plant height
+        max_height (FloatField): Maximum plant height
+        min_width (FloatField): Minimum plant width
+        max_width (FloatField): Maximum plant width
+        size (CharField): Size category description
 
-        # Additional Characteristics
-        flower_color (FK): Color of flowers
-        habit (FK): Growth habit
-        taxon (str): Taxonomic classification
-        inaturalist_taxon (str): iNaturalist taxonomy ID
+        # Plant lifecycle
+        lifespan (ForeignKey): Plant lifespan category (annual, perennial, etc.)
+
+        # Seed and propagation information
+        stratification_detail (CharField): Details about seed stratification
+        stratification_duration (SmallIntegerField): Duration of stratification in days
+        sowing_depth (ForeignKey): Recommended sowing depth
+        sowing_period (CharField): Recommended sowing period
+        sharing_priority (ForeignKey): Priority for seed sharing program
+        harvesting_indicator (ForeignKey): Indicators for harvest timing
+        harvesting_mean (ForeignKey): Methods for harvesting seeds
+        seed_head (ForeignKey): Type of seed head
+        remove_non_seed_material (BooleanField): Whether non-seed material should be removed
+        viability_test (ForeignKey): Method to test seed viability
+        seed_storage (ForeignKey): Recommended seed storage conditions
+        one_cultivar (ForeignKey): Cultivar information
+        packaging_measure (ForeignKey): Seed packaging measurement unit
+        dormancy (ForeignKey): Seed dormancy information
+        seed_preparation (ForeignKey): Seed preparation methods
+
+        # Notes and instructions
+        seed_cleaning_notes (CharField): Notes on seed cleaning
+        sowing_label_instructions (CharField): Instructions for sowing labels
+        sowing_notes (CharField): Additional notes on sowing
+        notes (CharField): General notes about the plant
+        harvesting_notes (CharField): Notes about harvesting
+        toxicity_notes (CharField): Information about plant toxicity
+        transplanting_notes (CharField): Information about transplanting
+        alternative_to_notes (CharField): Notes about alternatives to this plant
+
+        # References and links
+        envelope_label_link (CharField): Link to envelope label template
+        harvesting_video_link (CharField): Link to harvesting instructional video
+        seed_storage_label_info (ForeignKey): Information for seed storage labels
+
+        # Garden use and characteristics
+        germinate_easy (BooleanField): Whether the plant germinates easily
+        beginner_friendly (BooleanField): Whether suitable for beginner gardeners
+        spreading_rate (ForeignKey): Rate at which plant spreads
+        rock_garden (BooleanField): Suitable for rock gardens
+        rain_garden (BooleanField): Suitable for rain gardens
+        pond_edge (BooleanField): Suitable for pond edges
+        shoreline_rehab (BooleanField): Suitable for shoreline rehabilitation
+        container_suitable (BooleanField): Suitable for container gardening
+        school_garden_suitable (BooleanField): Suitable for school gardens
+        ground_cover (BooleanField): Functions as ground cover
+        garden_edge (BooleanField): Suitable for garden edges
+        woodland_garden (BooleanField): Suitable for woodland gardens
+        wind_break_hedge (BooleanField): Suitable as windbreak or hedge
+        erosion_control (BooleanField): Useful for erosion control
+
+        # Availability
+        seed_availability (BooleanField): Whether seeds are available
+        accepting_seed (BooleanField): Whether accepting seed donations
+
+        # Ecological importance
+        keystones_species (BooleanField): Whether considered a keystone species
+
+        # Tolerances
+        drought_tolerant (BooleanField): Tolerant of drought conditions
+        salt_tolerant (BooleanField): Tolerant of salty conditions
+        deer_tolerant (BooleanField): Resistant to deer damage
+        rabbit_tolerant (BooleanField): Resistant to rabbit damage
+        foot_traffic_tolerant (BooleanField): Tolerant of foot traffic
+        limestone_tolerant (BooleanField): Tolerant of limestone soils
+        sand_tolerant (BooleanField): Tolerant of sandy soils
+        acidic_soil_tolerant (BooleanField): Tolerant of acidic soils
+        boulevard_tolerant (BooleanField): Suitable for boulevard planting
+        juglone_tolerant (BooleanField): Tolerant of juglone (walnut toxin)
+        transplantation_tolerant (BooleanField): Tolerant of transplantation
+
+        # Wildlife interactions
+        hummingbird_friendly (BooleanField): Attractive to hummingbirds
+        butterfly_friendly (BooleanField): Attractive to butterflies
+        bee_friendly (BooleanField): Attractive to bees
+        bird_friendly (BooleanField): Attractive to birds
+
+        # Other characteristics
+        nitrogen_fixer (BooleanField): Plant fixes nitrogen
+        easy_to_contain (BooleanField): Easy to contain (non-invasive)
+        cedar_hedge_replacement (BooleanField): Suitable as cedar hedge replacement
+        cause_dermatitis (BooleanField): Can cause skin irritation
+        produces_burs (BooleanField): Produces burs
+
+        # Classification and status
+        flower_color (ForeignKey): Color of flowers
+        growth_habit (ForeignKey): Growth habit type
+        taxon (CharField): Taxonomic classification
+        conservation_status (ForeignKey): Conservation status
+        inaturalist_taxon (CharField): iNaturalist taxon identifier
 
     Methods:
-        compare_heights(): Validates min_height is less than max_height
-        compare_blooming(): Validates bloom_start occurs before bloom_end
-        save(): Custom save method with validation logic
-
-    Meta:
-        ordering: Ordered by latin_name
-
-        This model uses multiple foreign key relationships to other models for detailed
-        categorization and classification of plant characteristics. Many fields are optional
-        (blank=True) to accommodate varying levels of available information.
-    """
+        __str__(): Returns string representation with ID, Latin name, English name, French name, and max soil humidity
+        compare_heights(): Validates that min_height is smaller than max_height
+        compare_blooming(): Validates that bloom_start occurs before bloom_end
+        save(): Custom save method with validation"""
 
     latin_name = models.CharField(max_length=75, unique=True)
     english_name = models.CharField(max_length=75, blank=True)
@@ -569,12 +619,9 @@ class PlantProfile(Base):
 
     bloom_start = models.SmallIntegerField(choices=MONTHS.items(), blank=True, default=0)
     bloom_end = models.SmallIntegerField(choices=MONTHS.items(), blank=True, default=0)
-    soil_humidity_min = models.ForeignKey(
-        SoilHumidity, related_name="soil_humidity_min", on_delete=models.RESTRICT, blank=True, null=True
-    )  # must be less than soil_humidity_max if soil_humidity_max is not null
-    soil_humidity_max = models.ForeignKey(
-        SoilHumidity, related_name="soil_humidity_max", on_delete=models.RESTRICT, blank=True, null=True
-    )  # must be greater than soil_humidity_min if soil_humidity_min is not null
+    moisture_dry = models.BooleanField(default=False, null=True, blank=True)
+    moisture_wet = models.BooleanField(default=False, null=True, blank=True)
+    moisture_medium = models.BooleanField(default=False, null=True, blank=True)
     min_height = models.FloatField(blank=True, null=True, default=0)
     max_height = models.FloatField(
         blank=True, null=True, default=0
@@ -664,7 +711,7 @@ class PlantProfile(Base):
     objects = models.Manager()
 
     def __str__(self) -> str:
-        return f"{self.pk} | {self.latin_name} | {self.english_name} | {self.french_name}| {self.soil_humidity_max}"
+        return f"{self.pk} | {self.latin_name} | {self.english_name} | {self.french_name}"
 
     class Meta:
         ordering = ["latin_name"]

@@ -23,10 +23,11 @@ def all_plants(request):
 
 def single_plant(pk):
     plant = PlantProfile.objects.get(pk=pk)
-    plant.bloom_start = MONTHS.get(plant.bloom_start, "")
-    plant.bloom_end = MONTHS.get(plant.bloom_end, "")
 
-    plant.harvesting_start = MONTHS[plant.harvesting_start]
+    # plant.bloom_start = MONTHS.get(plant.bloom_start, "")
+    # plant.bloom_end = MONTHS.get(plant.bloom_end, "")
+
+    # plant.harvesting_start = MONTHS[plant.harvesting_start]
     return plant
 
 
@@ -41,7 +42,6 @@ def plant_label_info(pk):
         plant.latin_name,
         plant.english_name,
         plant.french_name,
-        f"Moisture: {plant.soil_humidity_min.soil_humidity} - {plant.soil_humidity_max.soil_humidity}",
         plant.size,
         f"Bloom: {plant.bloom_start} - {plant.bloom_end}",
         plant.stratification_detail,

@@ -8,7 +8,7 @@
       <table>
         <thead>
           <tr>
-            <th>Names</th><th>Sun<br> Requirement</th><th>Bloom<br> Period</th><th>Harvesting<br> Period</th><th>Soil<br> Humidity</th><th>Max <br>Height</th><th>Stratification</th><th>Sowing depth</th><th>Details</th><th>Action</th>
+            <th>Names</th><th>Sun<br> Requirement</th><th>Bloom<br> Period</th><th>Harvesting<br> Period</th><th>Max <br>Height</th><th>Stratification</th><th>Sowing depth</th><th>Details</th><th>Action</th>
           </tr>
         </thead>
         {% for item in object_list  %}
@@ -20,8 +20,6 @@
               {% if item.plants.bloom_end != 0 %}to<br> {{item.plants.bloom_end|month_name}} {% endif %}
             </td>
             <td>{{item.plants.harvesting_start|month_name}} </td>
-            <td>{{item.plants.soil_humidity_min.soil_humidity}}
-              {% if item.plants.soil_humidity_max.soil_humidity %} to <br>{{item.plants.soil_humidity_max.soil_humidity}} {% endif %}</td>
             <td>{{item.plants.max_height}}</td>
             <td>{{item.plants.stratification_detail}}</td>
             <td>{{item.plants.sowing_depth}} {% if item.plants.sowing_detail %}<br>{{item.plants.sowing_detail}}{% endif %}</td>

@@ -17,8 +17,6 @@ class PlantProfileForm(forms.ModelForm):
             "url",  #
             "bloom_start",  #
             "bloom_end",  #
-            "soil_humidity_min",  #
-            "soil_humidity_max",  #
             "min_height",  #
             "max_height",  #
             "stratification_detail",  #
@@ -101,8 +99,6 @@ class SearchPlantForm(forms.ModelForm):
             "latin_name",
             "bloom_start",
             "bloom_end",
-            "soil_humidity_min",
-            "soil_humidity_max",
             "max_height",
             "stratification_duration",
             "sharing_priority",

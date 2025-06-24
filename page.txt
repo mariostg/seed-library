@@ -11,8 +11,6 @@ Growing conditions
 full_sun
 partial_sun
 full_shade
-soil_humidity_min
-soil_humidity_max
 
 bloom_start
 bloom_end

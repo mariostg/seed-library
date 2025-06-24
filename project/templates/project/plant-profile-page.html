@@ -57,15 +57,20 @@
             <div>Tolerates:</div>
             <div>Toxicity:</div>
             <div>Recommended for:
-              {% if plant.bird_friendly %}<img class='icon' src="{% static 'images/bird-friendly.svg'  %}">{% endif %}
-              {% if plant.hummingbird_friendly %}<img class='icon' src="{% static 'images/hummingbird-friendly.svg'  %}">{% endif %}
-              {% if plant.butterfly_friendly %}<img class='icon' src="{% static 'images/butterfly-friendly.svg'  %}">{% endif %}
-              {% if plant.boulevard_tolerant %}<img class='icon' src="{% static 'images/boulevard-tolerant.svg'  %}">{% endif %}
-              {% if plant.cedar_hedge_replacement %}<img class='icon' src="{% static 'images/cedar-hedge-replacement.svg'  %}">{% endif %}
+              {% if plant.bird_friendly %}<img alt="Bird friendly" class='icon' src="{% static 'images/bird-friendly.svg'  %}">{% endif %}
+              {% if plant.hummingbird_friendly %}<img alt="Hummingbird friendly" class='icon' src="{% static 'images/hummingbird-friendly.svg'  %}">{% endif %}
+              {% if plant.butterfly_friendly %}<img alt="Butterfly friendly" class='icon' src="{% static 'images/butterfly-friendly.svg'  %}">{% endif %}
+              {% if plant.boulevard_tolerant %}<img alt="Boulevard garden" class='icon' src="{% static 'images/boulevard-tolerant.svg'  %}">{% endif %}
+              {% if plant.cedar_hedge_replacement %}<img alt="Cedar hedge replacement" class='icon' src="{% static 'images/cedar-hedge-replacement.svg'  %}">{% endif %}
               {% if plant.container_suitable %}<img class='icon' src="{% static 'images/container-suitable.svg'  %}">{% endif %}
               {% if plant.ground_cover %}<img class='icon' src="{% static 'images/ground-cover.svg'  %}">{% endif %}
             </div>
             <div>Suitable for:</div>
+            <div>Characteristics:
+              {% if plant.beginner_friendly %}<img alt='Beginner friendly' class='icon' src="{% static 'images/beginner_friendly.svg'%}" >{% endif %}
+              {% if plant.germinate_easy %}<img alt='Germinate easy' class='icon' src="{% static 'images/germinate_easy.svg'%}" >{% endif %}
+            </div>
+
           </div>
         </div>
       </main>

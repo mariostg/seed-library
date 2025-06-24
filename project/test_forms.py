@@ -28,8 +28,6 @@ class TestForms:
         models.HarvestingMean.objects.create(harvesting_mean="Mean")
         models.Lighting.objects.create(lighting="Lighting 1")
         models.Lighting.objects.create(lighting="Lighting 2")
-        models.SoilHumidity.objects.create(soil_humidity="Humidity 1")
-        models.SoilHumidity.objects.create(soil_humidity="Humidity 2")
         models.PackagingMeasure.objects.create(packaging_measure="Measure")
         models.OneCultivar.objects.create(one_cultivar="One cultivar")
         models.ViablityTest.objects.create(viability_test="Testme")
@@ -43,8 +41,6 @@ class TestForms:
             "url": "http://example.com",
             "bloom_start": 1,
             "bloom_end": 12,
-            "soil_humidity_min": 1,
-            "soil_humidity_max": 2,
             "min_height": 10,
             "max_height": 100,
             "stratification_detail": "Detail",
@@ -112,11 +108,8 @@ class TestForms:
         )
 
     def test_search_plant_form_valid(self):
-        models.SoilHumidity.objects.create(soil_humidity="Humidity 1")
         models.Lighting.objects.create(lighting="Lighting 1")
         models.Lighting.objects.create(lighting="Lighting 2")
-        models.SoilHumidity.objects.create(soil_humidity="Humidity 1")
-        models.SoilHumidity.objects.create(soil_humidity="Humidity 2")
         models.SharingPriority.objects.create(sharing_priority="Priority")
 
         data = {
@@ -125,8 +118,6 @@ class TestForms:
             "latin_name": "Rosa",
             "bloom_start": 1,
             "bloom_end": 12,
-            "soil_humidity_min": 1,
-            "soil_humidity_max": 2,
             "max_height": 100,
             "stratification_duration": 30,
             "sharing_priority": 1,

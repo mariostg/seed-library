@@ -1,0 +1,233 @@
+{% extends "core/base.html" %}
+{% load static %}
+{% block content %}
+  <section class="sheet">
+
+    {% if request.user.is_authenticated %}
+      <div class="button-row frame">
+        <a class='btn btn-edit' href="{% url 'plant-profile-update' pk=plant.pk %}"></a>
+        <a class='btn btn-delete' href="{% url 'plant-profile-delete' pk=plant.pk %}"></a>
+      </div>
+    {% endif %}
+    <div class="card">
+      <div class="card__header title">
+        <div><a target="blank" href="{{plant.url}}">{{plant.latin_name}}</a></div>
+        <div>{{plant.english_name}}</div>
+        <div>{{plant.french_name}}</div>
+      </div>
+      <div class="card__detail">
+        <div class='align-center'><span class="priority {{plant.sharing_priority.level}}">{{plant.sharing_priority|default:"Sharing Priority Undefined"}}</span></div>
+        {% if plant.notes %}<div> <span>{{plant.notes}}</span></div>{% endif %}
+        {% if plant.url %}<div class='align-center'><span><a target='blank' href="{{plant.url}}">View at Prairemoon</a></span></div>{% endif %}
+      </div>
+    </div>
+
+    <div class="card">
+      <div class='card__header'>Growth Characteristics</div>
+      <div class='card__detail'>
+        <div class="{% cycle 'normal-row' 'dark-row' as rowcolors %}">
+          <span>Light Requirement</span>
+          <div>
+          </div>
+
+
+        </div>
+        <div class="{% cycle rowcolors %}">
+          <span>Soil Humidity</span>
+          <div>
+            <span class='tooltip'>{{plant.soil_humidity_min.soil_humidity}}
+              <span class="tooltiptext">{{plant.soil_humidity_min.definition}}</span>
+            </span>
+            {% if plant.soil_humidity_max.soil_humidity %}
+              <span class='tooltip'>to {{plant.soil_humidity_max.soil_humidity}}
+                <span class="tooltiptext">{{plant.soil_humidity_max.definition}}</span>
+              </span>
+            {% endif %}
+          </div>
+        </div>
+        <div class="{% cycle rowcolors %}">
+          <span>Blooming Period</span>
+          <span>{{plant.bloom_start}}{% if plant.bloom_end %} to {% endif %}{{plant.bloom_end}}</span>
+        </div>
+        <div class="{% cycle rowcolors %}">
+          <span>Size</span>
+          <span>{{plant.min_height}} to {{plant.max_height}}</span>
+        </div>
+        <div class="{% cycle rowcolors %}">
+          <span>Flower Color</span>
+          <span>{{plant.flower_color}}</span>
+        </div>
+        <div class="{% cycle rowcolors %}">
+          <span>Habit</span>
+          <span>{{plant.habit}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class='card__header'>Sowing</div>
+    <div class='card__detail'>
+      <div class="{% cycle 'normal-row' 'dark-row' as rowcolors %}">
+        <span>Stratification</span>
+        <span>{% if plant.stratification_detail %}{{plant.stratification_detail}}{% else %}No stratification needed{% endif %}</span>
+      </div>
+      <div class="{% cycle rowcolors %}"><span>Sowing Depth</span> <span>{{plant.sowing_depth}}</span></div>
+      <div class="{% cycle rowcolors %}"><span>Sowing Period</span> <span>{{plant.sowing_period}}</span></div>
+      {% if plant.dormancy %} <div class="{% cycle rowcolors %}"><span>Dormancy need</span> <span>{{plant.dormancy}}</span></div> {% endif %}
+    </div>
+  </div>
+  {% if plant.germinate_easy or plant.rock_garden or plant.rain_garden or plant.pond_edge or plant.shoreline_rehab or plant.container_suitable or plant.ground_cover or plant.garden_edge or plant.woodland_garden or plant.wind_break_hedge or plant.erosion_control %}
+    <div class="card">
+      <div class="card__header">
+        Ideal For
+      </div>
+      <div class="card__detail">
+        <div class="{% cycle 'dark-row' 'normal-row' as rowcolors %}">
+          {% if plant.germinate_easy %}
+            <span>Easy to germinate</span>
+            <span class='checkmark'></span>
+          {% endif %}
+        </div>
+        {% if plant.rock_garden %}
+          <div class="{% cycle rowcolors %}">
+            <span>Rock Garden</span>
+            <span class='checkmark'></span>
+          </div>
+        {% endif %}
+        {% if plant.rain_garden %}
+          <div class="{% cycle rowcolors %}">
+            <span>Rain Garden</span>
+            <span class='checkmark'></span>
+          </div>
+        {% endif %}
+        {% if plant.pond_edge %}
+          <div class="{% cycle rowcolors %}">
+            <span>Pond Edge </span>
+            <span class='checkmark'></span>
+          </div>
+        {% endif %}
+        {% if plant.shoreline_rehab %}
+          <div class="{% cycle rowcolors %}">
+            <span>Shoreline Rehabilitation </span>
+            <span class='checkmark'></span>
+          </div>
+        {% endif %}
+        {% if plant.container_suitable %}
+          <div class="{% cycle rowcolors %}">
+            <span>Suitable for container </span>
+            <span class='checkmark'></span>
+          </div>
+        {% endif %}
+        {% if plant.ground_cover %}
+          <div class="{% cycle rowcolors %}">
+            <span>Ground Cover </span>
+            <span class='checkmark'></span>
+          </div>
+        {% endif %}
+        {% if plant.garden_edge %}
+          <div class="{% cycle rowcolors %}">
+            <span>Garden Edge </span>
+            <span class='checkmark'></span>
+          </div>
+        {% endif %}
+        {% if plant.woodland_garden %}
+          <div class="{% cycle rowcolors %}">
+            <span>Woodland Garden</span>
+            <span class='checkmark'></span>
+          </div>
+        {% endif %}
+        {% if plant.wind_break_hedge %}
+          <div class="{% cycle rowcolors %}">
+            <span>Windbreak or Hedge</span>
+            <span class='checkmark'></span>
+          </div>
+        {% endif %}
+        {% if plant.erosion_control %}
+          <div class="{% cycle rowcolors %}">
+            <span>Erosion control</span>
+            <span class='crossmark'></span>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  {% endif %}
+  <div class="card">
+    <div class='card__header'>Harvesting</div>
+    <div class='card__detail'>
+      <div class="{% cycle 'normal-row' 'dark-row' as rowcolors %}">
+        <span>Period</span><span>{{plant.harvesting_start}}</span>
+      </div>
+      {% if plant.harvesting_indicator %} <div class="{% cycle rowcolors %}">
+        <span>Indicator</span> <span>{{plant.harvesting_indicator}}</span>
+      </div> {% endif %}
+      {% if plant.harvesting_mean %} <div class="{% cycle rowcolors %}">
+        <span>Harvesting mean</span> <span>{{plant.harvesting_mean}}</span>
+      </div> {% endif %}
+      {% if plant.seed_head %} <div class="{% cycle rowcolors %}">
+        <span>Seed Head</span> <span>{{plant.seed_head}}</span>
+      </div> {% endif %}
+      {% if plant.remove_non_seed_material %} <div class="{% cycle rowcolors %}">
+        <span>Remove Non Seed Material</span> <span>{{plant.remove_non_seed_material}}</span>
+      </div> {% endif %}
+      {% if plant.viability_test %} <div class="{% cycle rowcolors %}">
+        <span>Viability Test</span> <span>{{plant.viability_test}}</span>
+      </div> {% endif %}
+      {% if plant.seed_storage %} <div class="{% cycle rowcolors %}">
+        <span>Seed Storage</span> <span>{{plant.seed_storage}}</span>
+      </div> {% endif %}
+      {% if plant.one_cultivar %} <div class="{% cycle rowcolors %}".>
+        <span>One cultivar</span> <span>{{plant.one_cultivar}}</span>
+      </div> {% endif %}
+      {% if plant.packaging_measure %} <div class="{% cycle rowcolors %}">
+        <span>Packaging measure</span> <span>{{plant.packaging_measure}}</span>
+      </div> {% endif %}
+      {% if plant.seed_preparation|length > 0 %} <div class="{% cycle rowcolors %}">
+        <span>Seed preparation</span> <span>{{plant.seed_preparation}}</span>
+      </div> {% endif %}
+      {% if plant.envelope_label_link %}<div class="{% cycle rowcolors %}">
+        <span><a target="blank" href="{% url 'plant-label-pdf' pk=plant.pk %}">Envelope Label</a></span><span><a target='blank' href="{{plant.envelope_label_link}}">Open in new tab</a></span>
+      </div>{% endif %}
+      {% if plant.harvesting_video_link %}<div class="{% cycle rowcolors %}">
+        <span>Harvesting video</span><span><a target='blank' href="{{plant.harvesting_video_link}}">Open in new tab</a></span>
+      </div>{% endif %}
+      {% if plant.seed_picture_link %}<div class="{% cycle rowcolors %}">
+        <span>Seed Picture</span><span><a target='blank' href="{{plant.seed_picture_link}}">Open in new tab</a></span>
+      </div>{% endif %}
+      {% if plant.pods_seed_head_picture_link %}<div class="{% cycle rowcolors %}">
+        <span>Pods, seed, head picture</span><span><a target='blank' href="{{plant.pods_seed_head_picture_link}}">Open in new tab</a></span>
+      </div>{% endif %}
+      {% if plant.seed_storage_label_info|length > 0 %}<div class="{% cycle rowcolors %}">
+        <span>Seed Storage Label</span><span><a target='blank' href="{{plant.seed_storage_label_info}}">Open in new tab</a></span>
+      </div>{% endif %}
+      {% if plant.inaturalist_taxon|length > 0 %}<div class="{% cycle rowcolors %}">
+        <span>Where seen on iNaturalist</span><span><a target='blank' href="https://www.inaturalist.org/taxa/{{plant.inaturalist_taxon}}">Open in new tab</a></span>
+      </div>{% endif %}
+    </div>
+  </div>
+  {% if plant.images %}
+    {% for image in plant.images.all %}
+      <div class='plant-image'>
+        <div class='image-title'>{{image.title}} - {{image.morphology_aspect}}</div>
+        <img src="/media/{{image.image}}" alt="">
+        <div class='image-title'>{{image.description}} - {{image.photo_author}}, {{image.photo_date}}</div>
+      </div>
+    {% endfor %}
+  {% endif %}
+  </section>
+  <div class='wrapper'>
+    <img src="https://data.canadensys.net/vascan/images/distribution/{{plant.taxon}}.png" width="400" height="400" alt="Distribution: Asclepias syriaca Linnaeus" id="png">
+    <div class='inaturalist-legend'>
+      <span style='background-color:#77BB2B;color:#000'>Native</span>
+      <span style='background-color:#E98C1F;color:#000;'>Introduced</span>
+      <span style='background-color:#6E6E6E;'>Excluded</span>
+      <span style='background-color:#000;'>Extirpated</span>
+      <span style='background-color:#AFAFAF;color:#000'>Doubtful</span>
+      <span style='background-color:#D3D3D3;color:#000;'>Absent</span>
+    </div>
+    <a target="blank" href="https://data.canadensys.net/vascan/taxon/{{plant.taxon}}?lang=en">
+      <span class="navbar-logo_text">View taxonomy on Canadensys</span>
+    </a>
+  </div>
+  <script src="{% static 'js/utils.js' %}"></script>
+
+{% endblock content %}

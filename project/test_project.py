@@ -13,8 +13,6 @@ class TestPostAddPlantProfile:
             "url": "",
             "bloom_start": "",
             "bloom_end": "",
-            "soil_humidity_min": "",
-            "soil_humidity_max": "",
             "min_height": "",
             "max_height": "",
             "stratification_detail": "",

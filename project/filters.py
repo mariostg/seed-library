@@ -122,14 +122,6 @@ class PlantProfileFilter(django_filters.FilterSet):
     french_name = django_filters.CharFilter(
         method="filter_icontains",
     )
-    soil_humidity_min = django_filters.ModelChoiceFilter(
-        queryset=models.SoilHumidity.objects.all(),
-        method="filter_gte",
-    )
-    soil_humidity_max = django_filters.ModelChoiceFilter(
-        queryset=models.SoilHumidity.objects.all(),
-        method="filter_lte",
-    )
 
     bloom_start = django_filters.ChoiceFilter(
         choices=utils.MONTHS,
