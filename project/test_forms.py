@@ -83,7 +83,7 @@ class TestForms:
             "salt_tolerant": True,
             "deer_tolerant": True,
             "easy_to_contain": True,
-            "flower_color": 1,
+            "bloom_color": 1,
             "habit": 1,
         }
 

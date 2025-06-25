@@ -355,13 +355,13 @@ class FlowerColor(Base):
         save(*args, **kwargs): Overrides default save to capitalize color name.
     """
 
-    flower_color = models.CharField(unique=True, max_length=25, blank=True)
+    bloom_color = models.CharField(unique=True, max_length=25, blank=True)
 
     def __str__(self) -> str:
-        return self.flower_color
+        return self.bloom_color
 
     def save(self, *args, **kwargs):
-        self.flower_color = self.flower_color.capitalize()
+        self.bloom_color = self.bloom_color.capitalize()
         super().save(*args, **kwargs)
 
 
@@ -501,6 +501,7 @@ class PlantProfile(Base):
         # Blooming information
         bloom_start (SmallIntegerField): Month when blooming begins (choices from MONTHS)
         bloom_end (SmallIntegerField): Month when blooming ends (choices from MONTHS)
+        bloom_color (ForeignKey): Reference to FlowerColor model
 
         # Moisture preferences
         moisture_dry (BooleanField): Whether plant tolerates dry conditions
@@ -510,12 +511,12 @@ class PlantProfile(Base):
         # Plant dimensions
         max_height (FloatField): Maximum mature height
         max_width (FloatField): Maximum mature width/spread
-        size (CharField): Descriptive size category
 
         # Life cycle and growth characteristics
         lifespan (ForeignKey): Reference to PlantLifespan model
         spread_by_rhizome (BooleanField): Whether plant spreads via rhizomes
         dioecious (BooleanField): Whether plant has separate male and female plants
+        growth_habit (ForeignKey): Reference to GrowthHabit model
 
         # Propagation information
         stratification_detail (CharField): Details about cold stratification requirements
@@ -600,8 +601,6 @@ class PlantProfile(Base):
         produces_burs (BooleanField): Produces burrs that stick to clothing/fur
 
         # Taxonomic and visual characteristics
-        flower_color (ForeignKey): Reference to FlowerColor model
-        growth_habit (ForeignKey): Reference to GrowthHabit model
         taxon (CharField): Taxonomic classification code
         conservation_status (ForeignKey): Reference to ConservationStatus model
         inaturalist_taxon (CharField): iNaturalist taxonomic identifier
@@ -622,13 +621,8 @@ class PlantProfile(Base):
     moisture_dry = models.BooleanField(default=False, null=True, blank=True)
     moisture_wet = models.BooleanField(default=False, null=True, blank=True)
     moisture_medium = models.BooleanField(default=False, null=True, blank=True)
-    max_height = models.FloatField(
-        blank=True, null=True, default=0
-    )  # must be greater than min_height if min_height is not 0
-    max_width = models.FloatField(
-        blank=True, null=True, default=0
-    )  # must be greater than min_width if min_width is not 0
-    size = models.CharField(max_length=35, blank=True)
+    max_height = models.FloatField(blank=True, null=True, default=0)
+    max_width = models.FloatField(blank=True, null=True, default=0)
     lifespan = models.ForeignKey(PlantLifespan, on_delete=models.RESTRICT, blank=True, null=True)
     spread_by_rhizome = models.BooleanField(default=False, null=True, blank=True)
     dioecious = models.BooleanField(default=False, null=True, blank=True)
@@ -701,7 +695,7 @@ class PlantProfile(Base):
     cause_dermatitis = models.BooleanField(default=False, null=True, blank=True)
     produces_burs = models.BooleanField(default=False, null=True, blank=True)
 
-    flower_color = models.ForeignKey(FlowerColor, on_delete=models.RESTRICT, null=True, blank=True)
+    bloom_color = models.ForeignKey(FlowerColor, on_delete=models.RESTRICT, null=True, blank=True)
     growth_habit = models.ForeignKey(GrowthHabit, on_delete=models.RESTRICT, null=True, blank=True)
     taxon = models.CharField(max_length=5, blank=True)
     conservation_status = models.ForeignKey(ConservationStatus, on_delete=models.RESTRICT, null=True, blank=True)
