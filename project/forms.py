@@ -17,7 +17,6 @@ class PlantProfileForm(forms.ModelForm):
             "url",  #
             "bloom_start",  #
             "bloom_end",  #
-            "min_height",  #
             "max_height",  #
             "stratification_detail",  #
             "stratification_duration",  #

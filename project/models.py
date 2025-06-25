@@ -471,84 +471,93 @@ class SpreadRate(Base):
 
 
 class PlantProfile(Base):
-    """The PlantProfile model represents a comprehensive plant profile with botanical, horticultural,
-    and ecological information used for plant management and classification.
+    """
+    A Django model representing a comprehensive plant profile with botanical, horticultural and ecological attributes.
 
-    This model stores detailed plant characteristics including:
-    - Basic identification (botanical and common names)
-    - Growing conditions (light, soil, moisture requirements)
-    - Physical attributes (height, width, growth habit)
-    - Seasonal information (blooming and harvesting periods)
-    - Propagation data (seed collection, storage, sowing instructions)
-    - Environmental tolerances and adaptations
-    - Wildlife interactions (bee/bird/butterfly friendly)
-    - Garden use cases (rock garden, shoreline, etc.)
-    - Conservation information
+    This model stores detailed information about plants including:
+    - Identification (botanical and common names)
+    - Growth characteristics (height, width, habit)
+    - Environmental requirements (light, moisture, soil preferences)
+    - Cultivation details (blooming periods, harvesting information)
+    - Propagation information (seed collection, storage, stratification)
+    - Ecological attributes (wildlife benefits, conservation status)
+    - Landscape uses (ground cover, container suitability, garden compatibility)
+    - Tolerances (drought, salt, wildlife resistance)
+
+    The model implements custom validation for height comparisons and blooming periods,
+    and includes specialized query capabilities through a custom manager.
 
     Attributes:
         latin_name (CharField): Botanical name of the plant (required, unique)
-        english_name (CharField): Common English name (optional)
-        french_name (CharField): Common French name (optional)
-        url (CharField): Reference URL for the plant
+        english_name (CharField): Common name in English (optional)
+        french_name (CharField): Common name in French (optional)
+        url (CharField): Web reference URL (optional)
 
         # Light requirements
-        full_sun (BooleanField): Whether plant thrives in full sun
-        partial_sun (BooleanField): Whether plant thrives in partial sun
-        full_shade (BooleanField): Whether plant thrives in full shade
+        full_sun (BooleanField): Whether plant thrives in full sun conditions
+        partial_sun (BooleanField): Whether plant thrives in partial sun conditions
+        full_shade (BooleanField): Whether plant thrives in full shade conditions
 
-        # Seasonal information
-        bloom_start (SmallIntegerField): Month when blooming begins
-        bloom_end (SmallIntegerField): Month when blooming ends
-        harvesting_start (SmallIntegerField): Month when harvesting begins
+        # Blooming information
+        bloom_start (SmallIntegerField): Month when blooming begins (choices from MONTHS)
+        bloom_end (SmallIntegerField): Month when blooming ends (choices from MONTHS)
 
-        # Soil and moisture requirements
+        # Moisture preferences
+        moisture_dry (BooleanField): Whether plant tolerates dry conditions
+        moisture_wet (BooleanField): Whether plant tolerates wet conditions
+        moisture_medium (BooleanField): Whether plant prefers medium moisture conditions
 
-        # Physical characteristics
-        min_height (FloatField): Minimum plant height
-        max_height (FloatField): Maximum plant height
-        min_width (FloatField): Minimum plant width
-        max_width (FloatField): Maximum plant width
-        size (CharField): Size category description
+        # Plant dimensions
+        max_height (FloatField): Maximum mature height
+        max_width (FloatField): Maximum mature width/spread
+        size (CharField): Descriptive size category
 
-        # Plant lifecycle
-        lifespan (ForeignKey): Plant lifespan category (annual, perennial, etc.)
+        # Life cycle and growth characteristics
+        lifespan (ForeignKey): Reference to PlantLifespan model
+        spread_by_rhizome (BooleanField): Whether plant spreads via rhizomes
+        dioecious (BooleanField): Whether plant has separate male and female plants
 
-        # Seed and propagation information
-        stratification_detail (CharField): Details about seed stratification
+        # Propagation information
+        stratification_detail (CharField): Details about cold stratification requirements
         stratification_duration (SmallIntegerField): Duration of stratification in days
-        sowing_depth (ForeignKey): Recommended sowing depth
-        sowing_period (CharField): Recommended sowing period
-        sharing_priority (ForeignKey): Priority for seed sharing program
-        harvesting_indicator (ForeignKey): Indicators for harvest timing
-        harvesting_mean (ForeignKey): Methods for harvesting seeds
-        seed_head (ForeignKey): Type of seed head
-        remove_non_seed_material (BooleanField): Whether non-seed material should be removed
-        viability_test (ForeignKey): Method to test seed viability
-        seed_storage (ForeignKey): Recommended seed storage conditions
-        one_cultivar (ForeignKey): Cultivar information
-        packaging_measure (ForeignKey): Seed packaging measurement unit
-        dormancy (ForeignKey): Seed dormancy information
-        seed_preparation (ForeignKey): Seed preparation methods
+        sowing_depth (ForeignKey): Reference to SowingDepth model
+        sowing_period (CharField): Description of optimal sowing period
+        sharing_priority (ForeignKey): Reference to SharingPriority model
 
-        # Notes and instructions
-        seed_cleaning_notes (CharField): Notes on seed cleaning
+        # Harvesting information
+        harvesting_start (SmallIntegerField): Month when harvesting begins (choices from MONTHS)
+        harvesting_indicator (ForeignKey): Reference to HarvestingIndicator model
+        harvesting_mean (ForeignKey): Reference to HarvestingMean model
+        seed_head (ForeignKey): Reference to SeedHead model
+        remove_non_seed_material (BooleanField): Whether to remove non-seed material
+
+        # Seed handling
+        viability_test (ForeignKey): Reference to ViablityTest model
+        seed_storage (ForeignKey): Reference to SeedStorage model
+        one_cultivar (ForeignKey): Reference to OneCultivar model
+        packaging_measure (ForeignKey): Reference to PackagingMeasure model
+        dormancy (ForeignKey): Reference to Dormancy model
+        seed_preparation (ForeignKey): Reference to SeedPreparation model
+
+        # Additional cultivation notes
+        seed_cleaning_notes (CharField): Notes on seed cleaning process
         sowing_label_instructions (CharField): Instructions for sowing labels
-        sowing_notes (CharField): Additional notes on sowing
-        notes (CharField): General notes about the plant
-        harvesting_notes (CharField): Notes about harvesting
-        toxicity_notes (CharField): Information about plant toxicity
-        transplanting_notes (CharField): Information about transplanting
-        alternative_to_notes (CharField): Notes about alternatives to this plant
-
-        # References and links
-        envelope_label_link (CharField): Link to envelope label template
+        sowing_notes (CharField): Detailed notes on sowing process
+        envelope_label_link (CharField): Link to envelope label resource
         harvesting_video_link (CharField): Link to harvesting instructional video
-        seed_storage_label_info (ForeignKey): Information for seed storage labels
+        seed_storage_label_info (ForeignKey): Reference to SeedStorageLabelInfo model
+        notes (CharField): General notes about the plant
+        harvesting_notes (CharField): Detailed notes on harvesting
+        toxicity_notes (CharField): Information about plant toxicity
+        transplanting_notes (CharField): Notes on transplanting techniques
+        alternative_to_notes (CharField): Notes on plants this can replace
 
-        # Garden use and characteristics
-        germinate_easy (BooleanField): Whether the plant germinates easily
+        # Gardener-friendly attributes
+        germinate_easy (BooleanField): Whether seeds germinate easily
         beginner_friendly (BooleanField): Whether suitable for beginner gardeners
-        spreading_rate (ForeignKey): Rate at which plant spreads
+        spreading_rate (ForeignKey): Reference to SpreadRate model
+
+        # Landscape uses
         rock_garden (BooleanField): Suitable for rock gardens
         rain_garden (BooleanField): Suitable for rain gardens
         pond_edge (BooleanField): Suitable for pond edges
@@ -559,13 +568,9 @@ class PlantProfile(Base):
         garden_edge (BooleanField): Suitable for garden edges
         woodland_garden (BooleanField): Suitable for woodland gardens
         wind_break_hedge (BooleanField): Suitable as windbreak or hedge
-        erosion_control (BooleanField): Useful for erosion control
-
-        # Availability
-        seed_availability (BooleanField): Whether seeds are available
-        accepting_seed (BooleanField): Whether accepting seed donations
-
-        # Ecological importance
+        erosion_control (BooleanField): Helps with erosion control
+        seed_availability (BooleanField): Seeds are readily available
+        accepting_seed (BooleanField): Whether accepting seeds for this plant
         keystones_species (BooleanField): Whether considered a keystone species
 
         # Tolerances
@@ -577,35 +582,30 @@ class PlantProfile(Base):
         limestone_tolerant (BooleanField): Tolerant of limestone soils
         sand_tolerant (BooleanField): Tolerant of sandy soils
         acidic_soil_tolerant (BooleanField): Tolerant of acidic soils
-        boulevard_tolerant (BooleanField): Suitable for boulevard planting
+        boulevard_tolerant (BooleanField): Suitable for boulevard plantings
         juglone_tolerant (BooleanField): Tolerant of juglone (walnut toxin)
-        transplantation_tolerant (BooleanField): Tolerant of transplantation
+        transplantation_tolerant (BooleanField): Tolerates transplanting well
 
-        # Wildlife interactions
-        hummingbird_friendly (BooleanField): Attractive to hummingbirds
-        butterfly_friendly (BooleanField): Attractive to butterflies
-        bee_friendly (BooleanField): Attractive to bees
-        bird_friendly (BooleanField): Attractive to birds
+        # Ecological benefits
+        hummingbird_friendly (BooleanField): Attracts hummingbirds
+        butterfly_friendly (BooleanField): Attracts butterflies
+        bee_friendly (BooleanField): Beneficial for bees
+        bird_friendly (BooleanField): Beneficial for birds
+        nitrogen_fixer (BooleanField): Plant fixes nitrogen in soil
+        easy_to_contain (BooleanField): Plant is easy to contain/not invasive
+        cedar_hedge_replacement (BooleanField): Can replace cedar hedges
 
-        # Other characteristics
-        nitrogen_fixer (BooleanField): Plant fixes nitrogen
-        easy_to_contain (BooleanField): Easy to contain (non-invasive)
-        cedar_hedge_replacement (BooleanField): Suitable as cedar hedge replacement
+        # Caution attributes
         cause_dermatitis (BooleanField): Can cause skin irritation
-        produces_burs (BooleanField): Produces burs
+        produces_burs (BooleanField): Produces burrs that stick to clothing/fur
 
-        # Classification and status
-        flower_color (ForeignKey): Color of flowers
-        growth_habit (ForeignKey): Growth habit type
-        taxon (CharField): Taxonomic classification
-        conservation_status (ForeignKey): Conservation status
-        inaturalist_taxon (CharField): iNaturalist taxon identifier
-
-    Methods:
-        __str__(): Returns string representation with ID, Latin name, English name, French name, and max soil humidity
-        compare_heights(): Validates that min_height is smaller than max_height
-        compare_blooming(): Validates that bloom_start occurs before bloom_end
-        save(): Custom save method with validation"""
+        # Taxonomic and visual characteristics
+        flower_color (ForeignKey): Reference to FlowerColor model
+        growth_habit (ForeignKey): Reference to GrowthHabit model
+        taxon (CharField): Taxonomic classification code
+        conservation_status (ForeignKey): Reference to ConservationStatus model
+        inaturalist_taxon (CharField): iNaturalist taxonomic identifier
+    """
 
     latin_name = models.CharField(max_length=75, unique=True)
     english_name = models.CharField(max_length=75, blank=True)
@@ -622,11 +622,9 @@ class PlantProfile(Base):
     moisture_dry = models.BooleanField(default=False, null=True, blank=True)
     moisture_wet = models.BooleanField(default=False, null=True, blank=True)
     moisture_medium = models.BooleanField(default=False, null=True, blank=True)
-    min_height = models.FloatField(blank=True, null=True, default=0)
     max_height = models.FloatField(
         blank=True, null=True, default=0
     )  # must be greater than min_height if min_height is not 0
-    min_width = models.FloatField(blank=True, null=True, default=0)
     max_width = models.FloatField(
         blank=True, null=True, default=0
     )  # must be greater than min_width if min_width is not 0
