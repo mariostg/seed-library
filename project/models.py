@@ -633,6 +633,7 @@ class PlantProfile(Base):
     size = models.CharField(max_length=35, blank=True)
     lifespan = models.ForeignKey(PlantLifespan, on_delete=models.RESTRICT, blank=True, null=True)
     spread_by_rhizome = models.BooleanField(default=False, null=True, blank=True)
+    dioecious = models.BooleanField(default=False, null=True, blank=True)
 
     stratification_detail = models.CharField(max_length=55, blank=True)
     stratification_duration = models.SmallIntegerField(blank=True, null=True, default=0)
