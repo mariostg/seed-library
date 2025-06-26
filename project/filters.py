@@ -83,6 +83,9 @@ class PlantProfileFilter(django_filters.FilterSet):
     tree = django_filters.CharFilter(
         method="filter_growth_habit",
     )
+    vine = django_filters.CharFilter(
+        method="filter_growth_habit",
+    )
     hummingbird_friendly = django_filters.CharFilter(
         method="filter_boolean",
     )
