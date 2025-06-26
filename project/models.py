@@ -46,6 +46,30 @@ class SharingPriority(Base):
         return self.sharing_priority
 
 
+class SeedEventTable(Base):
+    """
+    A model representing a table name where it is possible to find the seeds for a given plant at giveaway events.
+
+    Attributes:
+        event_table (CharField): A character field to store the name of the event_table with a maximum length of 100 characters.
+            This field is optional (can be blank).
+
+    Methods:
+        __str__(): Returns the string representation of the Seed Event Table.
+
+    Meta:
+        ordering (list): Specifies the default ordering for the model, which is by 'event_table'.
+    """
+
+    seed_event_table = models.CharField(max_length=100, blank=True)
+
+    def __str__(self) -> str:
+        return self.seed_event_table
+
+    class Meta:
+        ordering = ["seed_event_table"]
+
+
 class HarvestingIndicator(Base):
     """
     Model representing a Harvesting Indicator. This indicator provides a clue as to when the seeds are ready for harvesting.
@@ -451,17 +475,17 @@ class PlantProfileQuerySet(models.QuerySet):
 
 
 class SpreadRate(Base):
-    """A model representing the spread rate of fire.
+    """
+    A model representing the spreading rate of a plant.
 
-    This class defines a spreading rate category used in fire behavior analysis,
-    typically using standard fire behavior descriptors.
+    The SpreadRate class stores information about how quickly a plant grows
+    or spreads in the garden or landscape. This helps in planning proper
+    spacing and maintenance requirements for plants.
 
     Attributes:
-        spreading_rate (str): A string field up to 15 characters describing the
-            rate of fire spread (e.g., 'Low', 'Moderate', 'High').
-
-    Returns:
-        str: The spreading rate value when the object is converted to string.
+        spreading_rate (models.CharField): A string representation of how fast
+            a plant spreads, limited to 15 characters. Examples might include
+            "Fast", "Moderate", "Slow", etc.
     """
 
     spreading_rate = models.CharField(max_length=15, blank=True)
@@ -539,6 +563,7 @@ class PlantProfile(Base):
         packaging_measure (ForeignKey): Reference to PackagingMeasure model
         dormancy (ForeignKey): Reference to Dormancy model
         seed_preparation (ForeignKey): Reference to SeedPreparation model
+        seed_event_table (ForeignKey): Reference to SeedEventTable model
 
         # Additional cultivation notes
         seed_cleaning_notes (CharField): Notes on seed cleaning process
@@ -649,6 +674,7 @@ class PlantProfile(Base):
     envelope_label_link = models.CharField(max_length=200, blank=True)
     harvesting_video_link = models.CharField(max_length=200, blank=True)
     seed_storage_label_info = models.ForeignKey(SeedStorageLabelInfo, on_delete=models.RESTRICT, null=True, blank=True)
+    seed_event_table = models.ForeignKey(SeedEventTable, on_delete=models.RESTRICT, null=True, blank=True)
     notes = models.CharField(max_length=450, blank=True)
     harvesting_notes = models.CharField(max_length=450, blank=True)
     toxicity_notes = models.CharField(max_length=450, blank=True)
@@ -710,19 +736,6 @@ class PlantProfile(Base):
     class Meta:
         ordering = ["latin_name"]
 
-    def compare_heights(self):
-        """
-        Validates that min_height is smaller than max_height for this plant instance.
-
-        Raises:
-            ValidationError: If min_height is greater than max_height, raises error with
-                            Latin name and height values in message.
-        """
-        if self.min_height and self.max_height and self.min_height > self.max_height:
-            raise ValidationError(
-                f"{self.latin_name}: Minimum height ({self.min_height}) must be smaller than maximum height ({self.max_height})"
-            )
-
     def compare_blooming(self):
         """
         Validates blooming period by comparing bloom_start and bloom_end dates.
@@ -765,7 +778,6 @@ class PlantProfile(Base):
             self.harvesting_start = 0
         if not self.latin_name:
             raise ValueError("Missing Latin Name")
-        self.compare_heights()
         self.compare_blooming()
         super().save(*args, **kwargs)
 
