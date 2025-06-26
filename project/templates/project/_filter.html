@@ -126,7 +126,7 @@
       <!--Input checkbox for tree-->
                       <input
                         type="checkbox"
-                        id="tree"
+                        id="id_checkbox_tree"
                         name="tree"
                         value="Tree"
                         hx-get="/search-plant-name"
@@ -136,13 +136,13 @@
                         hx-include="#bird_friendly,#boulevard_tolerant,#butterfly_friendly,#cedar_hedge_replacement,#container_suitable,#drought_tolerant,#germinate_easy,#juglone_tolerant,#keystones_species,#nitrogen_fixer,#produces_burs,#sand_tolerant"
                         {% if tree %} checked {% endif %}
                       />
-                      <label for="tree">Tree ✔</label><br />
+                      <label for="id_checkbox_tree">Tree ✔</label><br />
 
 
       <!--Input checkbox for vine-->
                       <input
                         type="checkbox"
-                        id="growth_habit_vine"
+                        id="id_checkbox_vine"
                         name="vine"
                         value="Vine"
                         hx-get="/search-plant-name"
@@ -150,9 +150,9 @@
                         hx-target="#search-results"
                         hx-push-url="true"
                         hx-include="#bird_friendly,#boulevard_tolerant,#butterfly_friendly,#cedar_hedge_replacement,#container_suitable,#drought_tolerant,#germinate_easy,#juglone_tolerant,#keystones_species,#nitrogen_fixer,#produces_burs,#sand_tolerant"
-                        {% if growth_habit_vine %} checked {% endif %}
+                        {% if id_checkbox_vine %} checked {% endif %}
                       />
-                      <label for="growth_habit_vine">Vine ✔</label><br />
+                      <label for="id_checkbox_vine">Vine ✔</label><br />
 
 
                     </div>
