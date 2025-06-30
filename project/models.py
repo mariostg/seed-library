@@ -365,7 +365,7 @@ class Lighting(Base):
         return f"{self.lighting} - {self.definition}"
 
 
-class FlowerColor(Base):
+class BloomColor(Base):
     """A Color model representing a color entity to be assigned to the flowers of the plant.
 
     This class inherits from Base and represents a color with a unique name.
@@ -525,7 +525,7 @@ class PlantProfile(Base):
         # Blooming information
         bloom_start (SmallIntegerField): Month when blooming begins (choices from MONTHS)
         bloom_end (SmallIntegerField): Month when blooming ends (choices from MONTHS)
-        bloom_color (ForeignKey): Reference to FlowerColor model
+        bloom_color (ForeignKey): Reference to BloomColor model
 
         # Moisture preferences
         moisture_dry (BooleanField): Whether plant tolerates dry conditions
@@ -557,6 +557,8 @@ class PlantProfile(Base):
         remove_non_seed_material (BooleanField): Whether to remove non-seed material
 
         # Seed handling
+        seed_availability (BooleanField): Seeds are readily available
+        accepting_seed (BooleanField): Whether accepting seeds for this plant
         viability_test (ForeignKey): Reference to ViablityTest model
         seed_storage (ForeignKey): Reference to SeedStorage model
         one_cultivar (ForeignKey): Reference to OneCultivar model
@@ -595,8 +597,6 @@ class PlantProfile(Base):
         woodland_garden (BooleanField): Suitable for woodland gardens
         wind_break_hedge (BooleanField): Suitable as windbreak or hedge
         erosion_control (BooleanField): Helps with erosion control
-        seed_availability (BooleanField): Seeds are readily available
-        accepting_seed (BooleanField): Whether accepting seeds for this plant
         keystones_species (BooleanField): Whether considered a keystone species
 
         # Tolerances
@@ -721,7 +721,7 @@ class PlantProfile(Base):
     cause_dermatitis = models.BooleanField(default=False, null=True, blank=True)
     produces_burs = models.BooleanField(default=False, null=True, blank=True)
 
-    bloom_color = models.ForeignKey(FlowerColor, on_delete=models.RESTRICT, null=True, blank=True)
+    bloom_color = models.ForeignKey(BloomColor, on_delete=models.RESTRICT, null=True, blank=True)
     growth_habit = models.ForeignKey(GrowthHabit, on_delete=models.RESTRICT, null=True, blank=True)
     taxon = models.CharField(max_length=5, blank=True)
     conservation_status = models.ForeignKey(ConservationStatus, on_delete=models.RESTRICT, null=True, blank=True)

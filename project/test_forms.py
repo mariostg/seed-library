@@ -19,7 +19,7 @@ class TestForms:
     @pytest.fixture
     def plant_profile_data(self):
         models.GrowthHabit.objects.create(habit="Habiter")
-        models.FlowerColor.objects.create(color="Red")
+        models.BloomColor.objects.create(color="Red")
         models.SeedStorage.objects.create(seed_storage="Storage")
         models.SeedStorageLabelInfo.objects.create(seed_storage_label_info="Info")
         models.SeedPreparation.objects.create(seed_preparation="Preparation")
