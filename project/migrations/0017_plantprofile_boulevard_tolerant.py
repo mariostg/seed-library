@@ -12,7 +12,7 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AddField(
             model_name="plantprofile",
-            name="boulevard_tolerant",
+            name="boulevard_garden_tolerant",
             field=models.BooleanField(blank=True, default=False, null=True),
         ),
     ]

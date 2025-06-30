@@ -712,7 +712,7 @@ class PlantProfile(Base):
     butterfly_friendly = models.BooleanField(default=False, null=True, blank=True)
     bee_friendly = models.BooleanField(default=False, null=True, blank=True)
     bird_friendly = models.BooleanField(default=False, null=True, blank=True)
-    boulevard_tolerant = models.BooleanField(default=False, null=True, blank=True)
+    boulevard_garden_tolerant = models.BooleanField(default=False, null=True, blank=True)
     juglone_tolerant = models.BooleanField(default=False, null=True, blank=True)
     transplantation_tolerant = models.BooleanField(default=False, null=True, blank=True)
     nitrogen_fixer = models.BooleanField(default=False, null=True, blank=True)
