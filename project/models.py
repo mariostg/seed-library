@@ -598,6 +598,7 @@ class PlantProfile(Base):
         wind_break_hedge (BooleanField): Suitable as windbreak or hedge
         erosion_control (BooleanField): Helps with erosion control
         keystones_species (BooleanField): Whether considered a keystone species
+        septic_tank_safe (BooleanField): Whether safe to plant near septic systems
 
         # Tolerances
         drought_tolerant (BooleanField): Tolerant of drought conditions
@@ -608,7 +609,7 @@ class PlantProfile(Base):
         limestone_tolerant (BooleanField): Tolerant of limestone soils
         sand_tolerant (BooleanField): Tolerant of sandy soils
         acidic_soil_tolerant (BooleanField): Tolerant of acidic soils
-        boulevard_tolerant (BooleanField): Suitable for boulevard plantings
+        boulevard_garden_tolerant (BooleanField): Suitable for boulevard plantings
         juglone_tolerant (BooleanField): Tolerant of juglone (walnut toxin)
         transplantation_tolerant (BooleanField): Tolerates transplanting well
 
@@ -696,6 +697,7 @@ class PlantProfile(Base):
     wind_break_hedge = models.BooleanField(default=False, null=True, blank=True)
     erosion_control = models.BooleanField(default=False, null=True, blank=True)
     seed_availability = models.BooleanField(default=False, null=True, blank=True)
+    septic_tank_safe = models.BooleanField(default=False, null=True, blank=True)
 
     accepting_seed = models.BooleanField(default=False, null=True, blank=True)
     keystones_species = models.BooleanField(default=False, null=True, blank=True)

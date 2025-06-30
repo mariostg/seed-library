@@ -25,7 +25,7 @@ class PlantProfileFilter(django_filters.FilterSet):
     butterfly_friendly = django_filters.CharFilter(
         method="filter_boolean",
     )
-    boulevard_tolerant = django_filters.CharFilter(
+    boulevard_garden_tolerant = django_filters.CharFilter(
         method="filter_boolean",
     )
     cedar_hedge_replacement = django_filters.CharFilter(
@@ -43,7 +43,12 @@ class PlantProfileFilter(django_filters.FilterSet):
     ground_cover = django_filters.CharFilter(
         method="filter_boolean",
     )
-
+    rock_garden = django_filters.CharFilter(
+        method="filter_boolean",
+    )
+    septic_tank_safe = django_filters.CharFilter(
+        method="filter_boolean",
+    )
     color_blue = django_filters.CharFilter(
         method="filter_color",
     )
