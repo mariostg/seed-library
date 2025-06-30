@@ -599,6 +599,10 @@ class PlantProfile(Base):
         erosion_control (BooleanField): Helps with erosion control
         keystones_species (BooleanField): Whether considered a keystone species
         septic_tank_safe (BooleanField): Whether safe to plant near septic systems
+        wetland_garden (BooleanField): Suitable for wetland gardens
+
+        # Conservation and special status
+        grasp_candidate (BooleanField): Whether plant is a candidate for GRASP (Gathering Rare And Special Plants) program
 
         # Tolerances
         drought_tolerant (BooleanField): Tolerant of drought conditions
@@ -698,9 +702,11 @@ class PlantProfile(Base):
     erosion_control = models.BooleanField(default=False, null=True, blank=True)
     seed_availability = models.BooleanField(default=False, null=True, blank=True)
     septic_tank_safe = models.BooleanField(default=False, null=True, blank=True)
+    wetland_garden = models.BooleanField(default=False, null=True, blank=True)
 
     accepting_seed = models.BooleanField(default=False, null=True, blank=True)
     keystones_species = models.BooleanField(default=False, null=True, blank=True)
+    grasp_candidate = models.BooleanField(default=False, null=True, blank=True)
 
     drought_tolerant = models.BooleanField(default=False, null=True, blank=True)
     salt_tolerant = models.BooleanField(default=False, null=True, blank=True)
