@@ -49,6 +49,12 @@ class PlantProfileFilter(django_filters.FilterSet):
     septic_tank_safe = django_filters.CharFilter(
         method="filter_boolean",
     )
+    wetland_garden = django_filters.CharFilter(
+        method="filter_boolean",
+    )
+    grasp_candidate = django_filters.CharFilter(
+        method="filter_boolean",
+    )
     color_blue = django_filters.CharFilter(
         method="filter_color",
     )
