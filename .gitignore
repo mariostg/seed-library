@@ -17,3 +17,4 @@ requirements.txt
 staticfiles/
 media/*
 *.min.js
+static/images/plants/
