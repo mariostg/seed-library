@@ -14,7 +14,6 @@ class PlantProfileForm(forms.ModelForm):
             "english_name",  #
             "french_name",  #
             "latin_name",  #
-            "url",  #
             "bloom_start",  #
             "bloom_end",  #
             "max_height",  #

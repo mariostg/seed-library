@@ -514,7 +514,6 @@ class PlantProfile(Base):
         latin_name (CharField): Botanical name of the plant (required, unique)
         english_name (CharField): Common name in English (optional)
         french_name (CharField): Common name in French (optional)
-        url (CharField): Web reference URL (optional)
         taxon (CharField): Taxonomic classification code
         inaturalist_taxon (CharField): iNaturalist taxonomic identifier
         conservation_status (ForeignKey): Reference to ConservationStatus model
@@ -650,7 +649,6 @@ class PlantProfile(Base):
     latin_name = models.CharField(max_length=75, unique=True)
     english_name = models.CharField(max_length=75, blank=True)
     french_name = models.CharField(max_length=75, blank=True)
-    url = models.CharField(max_length=250, blank=True)
 
     # We use 3 levels of light to define the light requirement of the plant
     full_sun = models.BooleanField(default=False, null=True, blank=True)
