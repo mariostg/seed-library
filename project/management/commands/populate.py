@@ -87,6 +87,7 @@ class Command(BaseCommand):
                 "septic-tank-safe": "plant-septic-tank-safe - csv.csv",
                 "wetland-garden": "plant-wetland-garden - csv.csv",
                 "grasp-candidate": "plant-grasp-candidate - csv.csv",
+                "toxicity_indicator": "plant-toxicity-indicator - csv.csv",
             }
 
             # Clear existing data in the database
@@ -110,6 +111,7 @@ class Command(BaseCommand):
             models.SowingDepth.objects.all().delete()
             models.ViablityTest.objects.all().delete()
             models.SeedEventTable.objects.all().delete()
+            models.ToxicityIndicator.objects.all().delete()
 
             # we start by inserting the latin names of plants.
             # This is a unique key and must be done first.
@@ -129,6 +131,7 @@ class Command(BaseCommand):
             self.import_taxon()
             self.import_width()
             self.import_seed_event_table()
+            self.import_toxixity_indicator()
 
             # Insert the boolean fields.
 
@@ -465,6 +468,15 @@ class Command(BaseCommand):
             field_name="seed_event_table",
             model_class=models.SeedEventTable,
             display_name="Seed event table",
+        )
+
+    def import_toxixity_indicator(self):
+        """Read the toxicity indicator CSV file and update the PlantProfile model with toxicity values."""
+        self.import_foreign_key_relation(
+            csv_file=self.csv_files["toxicity_indicator"],
+            field_name="toxicity_indicator",
+            model_class=models.ToxicityIndicator,
+            display_name="Toxicity indicator",
         )
 
     def import_foreign_key_relation(self, csv_file, field_name, model_class, display_name=None):
