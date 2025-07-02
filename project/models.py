@@ -494,6 +494,27 @@ class SpreadRate(Base):
         return self.spreading_rate
 
 
+class ToxicityIndicator(Base):
+    """
+    A model representing toxicity indicators for plants.
+
+    This class defines various toxicity indicators that can be associated with plants,
+    indicating whether they are toxic to humans or animals.
+
+    Attributes:
+        toxicity_indicator (CharField): A string field to store the toxicity indicator,
+            with a maximum length of 50 characters. Can be left blank.
+
+    Returns:
+        str: String representation of the toxicity indicator.
+    """
+
+    toxicity_indicator = models.CharField(max_length=50, blank=True)
+
+    def __str__(self) -> str:
+        return self.toxicity_indicator
+
+
 class PlantProfile(Base):
     """
     A Django model representing a comprehensive plant profile with botanical, horticultural and ecological attributes.
@@ -692,6 +713,7 @@ class PlantProfile(Base):
     notes = models.CharField(max_length=450, blank=True)
     harvesting_notes = models.CharField(max_length=450, blank=True)
     toxicity_notes = models.CharField(max_length=450, blank=True)
+    toxicity_indicator = models.ForeignKey(ToxicityIndicator, on_delete=models.RESTRICT, null=True, blank=True)
     transplanting_notes = models.CharField(max_length=450, blank=True)
     alternative_to_notes = models.CharField(max_length=450, blank=True)
 
