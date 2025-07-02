@@ -100,6 +100,9 @@ class PlantProfileFilter(django_filters.FilterSet):
     hummingbird_friendly = django_filters.CharFilter(
         method="filter_boolean",
     )
+    acidic_soil_tolerant = django_filters.CharFilter(
+        method="filter_boolean",
+    )
     juglone_tolerant = django_filters.CharFilter(
         method="filter_boolean",
     )
