@@ -36,13 +36,13 @@ def plant_label_info(pk):
     plant = single_plant(pk)
     if not plant.stratification_detail:
         plant.stratification_detail = "No Stratification"
-    if plant.dormancy.dormancy:
+    if plant.dormancy:
         detail = plant.dormancy.dormancy
     label_info = [
         plant.latin_name,
         plant.english_name,
         plant.french_name,
-        plant.size,
+        str(plant.max_height) + " feet",
         f"Bloom: {plant.bloom_start} - {plant.bloom_end}",
         plant.stratification_detail,
         plant.sowing_depth.sowing_depth,
