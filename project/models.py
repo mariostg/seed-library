@@ -655,6 +655,7 @@ class PlantProfile(Base):
     # Special Features and Considerations
         ## Conservation Status
             grasp_candidate (BooleanField): Whether plant is a candidate for GRASP program
+            grasp_candidate_notes (CharField): Notes on GRASP candidacy
 
         ## Safety and Compatibility
             septic_tank_safe (BooleanField): Whether safe to plant near septic systems
@@ -774,6 +775,7 @@ class PlantProfile(Base):
     accepting_seed = models.BooleanField(default=False, null=True, blank=True)
     keystones_species = models.BooleanField(default=False, null=True, blank=True)
     grasp_candidate = models.BooleanField(default=False, null=True, blank=True)
+    grasp_candidate_notes = models.CharField(max_length=450, blank=True)
 
     drought_tolerant = models.BooleanField(default=False, null=True, blank=True)
     salt_tolerant = models.BooleanField(default=False, null=True, blank=True)
