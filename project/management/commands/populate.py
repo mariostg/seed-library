@@ -28,13 +28,19 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args, filepath, **options):
-        if DEBUG:  # because with don't want to populate the database in production except for initial deployment.
+        if (
+            DEBUG
+        ):  # because with don't want to populate the database in production except for initial deployment.
             self.filepath = Path(filepath)
 
             if not self.filepath.exists():
-                raise FileNotFoundError(f"The specified filepath does not exist: {self.filepath}")
+                raise FileNotFoundError(
+                    f"The specified filepath does not exist: {self.filepath}"
+                )
             if not self.filepath.is_dir():
-                raise NotADirectoryError(f"The specified filepath is not a directory: {self.filepath}")
+                raise NotADirectoryError(
+                    f"The specified filepath is not a directory: {self.filepath}"
+                )
 
             # this is the list of csv files that will be used to populate the database.
             self.csv_files = {
@@ -88,6 +94,7 @@ class Command(BaseCommand):
                 "wetland-garden": "plant-wetland-garden - csv.csv",
                 "grasp-candidate": "plant-grasp-candidate - csv.csv",
                 "toxicity_indicator": "plant-toxicity-indicator - csv.csv",
+                "acidic_soil_tolerant": "plant-acidic-soil-tolerant - csv.csv",
             }
 
             # Clear existing data in the database
@@ -150,7 +157,9 @@ class Command(BaseCommand):
                 "container_suitable",
                 self.csv_files["container_suitable"],
             )
-            self.update_boolean_field(models.PlantProfile, "ground_cover", self.csv_files["ground_cover"])
+            self.update_boolean_field(
+                models.PlantProfile, "ground_cover", self.csv_files["ground_cover"]
+            )
             self.update_boolean_field(
                 models.PlantProfile,
                 "shoreline_rehab",
@@ -161,21 +170,31 @@ class Command(BaseCommand):
                 "drought_tolerant",
                 self.csv_files["drought_tolerant"],
             )
-            self.update_boolean_field(models.PlantProfile, "salt_tolerant", self.csv_files["salt_tolerant"])
-            self.update_boolean_field(models.PlantProfile, "sand_tolerant", self.csv_files["sand_tolerant"])
+            self.update_boolean_field(
+                models.PlantProfile, "salt_tolerant", self.csv_files["salt_tolerant"]
+            )
+            self.update_boolean_field(
+                models.PlantProfile, "sand_tolerant", self.csv_files["sand_tolerant"]
+            )
             self.update_boolean_field(
                 models.PlantProfile,
                 "keystones_species",
                 self.csv_files["keystones_species"],
             )
-            self.update_boolean_field(models.PlantProfile, "nitrogen_fixer", self.csv_files["nitrogen_fixer"])
-            self.update_boolean_field(models.PlantProfile, "germinate_easy", self.csv_files["germinate_easy"])
+            self.update_boolean_field(
+                models.PlantProfile, "nitrogen_fixer", self.csv_files["nitrogen_fixer"]
+            )
+            self.update_boolean_field(
+                models.PlantProfile, "germinate_easy", self.csv_files["germinate_easy"]
+            )
             self.update_boolean_field(
                 models.PlantProfile,
                 "boulevard_garden_tolerant",
                 self.csv_files["boulevard_garden_tolerant"],
             )
-            self.update_boolean_field(models.PlantProfile, "bird_friendly", self.csv_files["bird_friendly"])
+            self.update_boolean_field(
+                models.PlantProfile, "bird_friendly", self.csv_files["bird_friendly"]
+            )
             self.update_boolean_field(
                 models.PlantProfile,
                 "cedar_hedge_replacement",
@@ -191,7 +210,9 @@ class Command(BaseCommand):
                 "cause_dermatitis",
                 self.csv_files["cause_dermatitis"],
             )
-            self.update_boolean_field(models.PlantProfile, "produces_burs", self.csv_files["produces-burs"])
+            self.update_boolean_field(
+                models.PlantProfile, "produces_burs", self.csv_files["produces-burs"]
+            )
             self.update_boolean_field(
                 models.PlantProfile,
                 "transplantation_tolerant",
@@ -212,34 +233,55 @@ class Command(BaseCommand):
                 "beginner_friendly",
                 self.csv_files["beginner_friendly"],
             )
-            self.update_boolean_field(models.PlantProfile, "moisture_dry", self.csv_files["moisture-dry"])
+            self.update_boolean_field(
+                models.PlantProfile, "moisture_dry", self.csv_files["moisture-dry"]
+            )
             self.update_boolean_field(
                 models.PlantProfile,
                 "moisture_medium",
                 self.csv_files["moisture-medium"],
             )
-            self.update_boolean_field(models.PlantProfile, "moisture_wet", self.csv_files["moisture-wet"])
+            self.update_boolean_field(
+                models.PlantProfile, "moisture_wet", self.csv_files["moisture-wet"]
+            )
 
-            self.update_boolean_field(models.PlantProfile, "full_sun", self.csv_files["full-sun"])
-            self.update_boolean_field(models.PlantProfile, "partial_sun", self.csv_files["partial-sun"])
-            self.update_boolean_field(models.PlantProfile, "full_shade", self.csv_files["full-shade"])
+            self.update_boolean_field(
+                models.PlantProfile, "full_sun", self.csv_files["full-sun"]
+            )
+            self.update_boolean_field(
+                models.PlantProfile, "partial_sun", self.csv_files["partial-sun"]
+            )
+            self.update_boolean_field(
+                models.PlantProfile, "full_shade", self.csv_files["full-shade"]
+            )
             self.update_boolean_field(
                 models.PlantProfile,
                 "spread_by_rhizome",
                 self.csv_files["spread-by-rhizome"],
             )
-            self.update_boolean_field(models.PlantProfile, "dioecious", self.csv_files["dioecious"])
-            self.update_boolean_field(models.PlantProfile, "rock_garden", self.csv_files["rock-garden"])
+            self.update_boolean_field(
+                models.PlantProfile, "dioecious", self.csv_files["dioecious"]
+            )
+            self.update_boolean_field(
+                models.PlantProfile, "rock_garden", self.csv_files["rock-garden"]
+            )
             self.update_boolean_field(
                 models.PlantProfile,
                 "septic_tank_safe",
                 self.csv_files["septic-tank-safe"],
             )
-            self.update_boolean_field(models.PlantProfile, "wetland_garden", self.csv_files["wetland-garden"])
+            self.update_boolean_field(
+                models.PlantProfile, "wetland_garden", self.csv_files["wetland-garden"]
+            )
             self.update_boolean_field(
                 models.PlantProfile,
                 "grasp_candidate",
                 self.csv_files["grasp-candidate"],
+            )
+            self.update_boolean_field(
+                models.PlantProfile,
+                "acidic_soil_tolerant",
+                self.csv_files["acidic_soil_tolerant"],
             )
 
         else:
@@ -259,13 +301,19 @@ class Command(BaseCommand):
         existing_names = []
         missing_names = []
 
-        self.stdout.write(self.style.SUCCESS(f"\nChecking latin names in {filename}..."))
+        self.stdout.write(
+            self.style.SUCCESS(f"\nChecking latin names in {filename}...")
+        )
         try:
             with open(filepath, encoding="utf-8") as f:
                 reader = csv.DictReader(f)
                 for row in reader:
                     if "latin_name" not in row:
-                        self.stdout.write(self.style.WARNING(f"Row missing 'latin_name' field in {filename}"))
+                        self.stdout.write(
+                            self.style.WARNING(
+                                f"Row missing 'latin_name' field in {filename}"
+                            )
+                        )
                         continue
 
                     latin_name = row["latin_name"]
@@ -278,7 +326,8 @@ class Command(BaseCommand):
                 self.stdout.write(
                     self.style.WARNING(
                         f"Found {len(missing_names)} latin names in {filename} that don't exist in the database: "
-                        f"{', '.join(missing_names[:5])}" + ("..." if len(missing_names) > 5 else "")
+                        f"{', '.join(missing_names[:5])}"
+                        + ("..." if len(missing_names) > 5 else "")
                     )
                 )
 
@@ -288,7 +337,9 @@ class Command(BaseCommand):
             self.stdout.write(self.style.ERROR(f"CSV file not found: {filepath}"))
             return [], []
         except Exception as e:
-            self.stdout.write(self.style.ERROR(f"Error checking latin names in {filename}: {str(e)}"))
+            self.stdout.write(
+                self.style.ERROR(f"Error checking latin names in {filename}: {str(e)}")
+            )
             return [], []
 
     def unique_values(self, filename, field_name):
@@ -308,10 +359,14 @@ class Command(BaseCommand):
             self.stdout.write(self.style.ERROR(f"CSV file not found: {filepath}"))
             return set()
         except Exception as e:
-            self.stdout.write(self.style.ERROR(f"Error processing {filename}: {str(e)}"))
+            self.stdout.write(
+                self.style.ERROR(f"Error processing {filename}: {str(e)}")
+            )
             return set()
 
-    def insert_unique_values(self, model_class: models, field_name: str, unique_values_set: set):
+    def insert_unique_values(
+        self, model_class: models, field_name: str, unique_values_set: set
+    ):
         """Insert unique values into a specified model field.
 
         Returns:
@@ -321,14 +376,24 @@ class Command(BaseCommand):
         for value in unique_values_set:
             if value:
                 try:
-                    obj, created = model_class.objects.get_or_create(**{field_name: value})
+                    obj, created = model_class.objects.get_or_create(
+                        **{field_name: value}
+                    )
                     if created:
                         inserted_count += 1
-                        self.stdout.write(self.style.SUCCESS(f"Inserted {field_name}: {value}"))
+                        self.stdout.write(
+                            self.style.SUCCESS(f"Inserted {field_name}: {value}")
+                        )
                     else:
-                        self.stdout.write(self.style.WARNING(f"{field_name} already exists: {value}"))
+                        self.stdout.write(
+                            self.style.WARNING(f"{field_name} already exists: {value}")
+                        )
                 except Exception as e:
-                    self.stdout.write(self.style.ERROR(f"Error inserting {field_name} '{value}': {str(e)}"))
+                    self.stdout.write(
+                        self.style.ERROR(
+                            f"Error inserting {field_name} '{value}': {str(e)}"
+                        )
+                    )
         return inserted_count
 
     def _update_vernacular_plant_name(self, filename, field_name, model_class=None):
@@ -373,7 +438,9 @@ class Command(BaseCommand):
 
                 for row in reader:
                     if "latin_name" not in row or field_name not in row:
-                        self.stdout.write(self.style.WARNING(f"Row missing required fields: {row}"))
+                        self.stdout.write(
+                            self.style.WARNING(f"Row missing required fields: {row}")
+                        )
                         continue
 
                     latin_name = row["latin_name"]
@@ -384,7 +451,11 @@ class Command(BaseCommand):
                         plant.save()
                         updated_count += 1
                     except model_class.DoesNotExist:
-                        self.stdout.write(self.style.WARNING(f"Plant with latin name '{latin_name}' does not exist"))
+                        self.stdout.write(
+                            self.style.WARNING(
+                                f"Plant with latin name '{latin_name}' does not exist"
+                            )
+                        )
                         missing_count += 1
 
                 self.stdout.write(
@@ -395,10 +466,14 @@ class Command(BaseCommand):
         except FileNotFoundError:
             self.stdout.write(self.style.ERROR(f"CSV file not found: {filepath}"))
         except Exception as e:
-            self.stdout.write(self.style.ERROR(f"Error processing {filename}: {str(e)}"))
+            self.stdout.write(
+                self.style.ERROR(f"Error processing {filename}: {str(e)}")
+            )
 
     def import_latin_names(self):
-        self.stdout.write(self.style.SUCCESS("Starting to populate the database with plant data..."))
+        self.stdout.write(
+            self.style.SUCCESS("Starting to populate the database with plant data...")
+        )
         """read csv file and insert latin names into the PlantProfile model."""
         filepath = self.filepath / self.csv_files["latin_names"]
         with open(filepath, encoding="utf-8") as f:
@@ -406,45 +481,75 @@ class Command(BaseCommand):
             for row in reader:
                 latin_name = row.get("latin_name")
                 if latin_name:
-                    plant, created = models.PlantProfile.objects.get_or_create(latin_name=latin_name)
+                    plant, created = models.PlantProfile.objects.get_or_create(
+                        latin_name=latin_name
+                    )
                     if not created:
-                        self.stdout.write(self.style.WARNING(f"Latin name already exists: {latin_name}"))
+                        self.stdout.write(
+                            self.style.WARNING(
+                                f"Latin name already exists: {latin_name}"
+                            )
+                        )
                 else:
-                    self.stdout.write(self.style.ERROR("Row missing 'latin_name' field"))
-        self.latin_names = models.PlantProfile.objects.values_list("latin_name", flat=True)
-        self.stdout.write(self.style.SUCCESS(f"Inserted {len(self.latin_names)} latin names in database from file ."))
+                    self.stdout.write(
+                        self.style.ERROR("Row missing 'latin_name' field")
+                    )
+        self.latin_names = models.PlantProfile.objects.values_list(
+            "latin_name", flat=True
+        )
+        self.stdout.write(
+            self.style.SUCCESS(
+                f"Inserted {len(self.latin_names)} latin names in database from file ."
+            )
+        )
 
     def import_english_names(self):
         """Read the english names CSV file and update the PlantProfile model with english names."""
-        eng_exist, eng_missing = self.check_latin_names_in_csv(self.csv_files["english_names"])
-        self._update_vernacular_plant_name(self.csv_files["english_names"], "english_name")
+        eng_exist, eng_missing = self.check_latin_names_in_csv(
+            self.csv_files["english_names"]
+        )
+        self._update_vernacular_plant_name(
+            self.csv_files["english_names"], "english_name"
+        )
 
     def import_french_names(self):
         """Read the french names CSV file and update the PlantProfile model with french names."""
-        fr_exist, fr_missing = self.check_latin_names_in_csv(self.csv_files["french_names"])
-        self._update_vernacular_plant_name(self.csv_files["french_names"], "french_name")
+        fr_exist, fr_missing = self.check_latin_names_in_csv(
+            self.csv_files["french_names"]
+        )
+        self._update_vernacular_plant_name(
+            self.csv_files["french_names"], "french_name"
+        )
 
     def import_taxon(self):
         """Read the plant taxon CSV file and update the PlantProfile model with taxon values."""
-        taxon_exist, taxon_missing = self.check_latin_names_in_csv(self.csv_files["plant-taxon"])
+        taxon_exist, taxon_missing = self.check_latin_names_in_csv(
+            self.csv_files["plant-taxon"]
+        )
         self._update_vernacular_plant_name(self.csv_files["plant-taxon"], "taxon")
 
     def import_height(self):
         """Read the plant max height CSV file and update the PlantProfile model with height values."""
-        height_exist, height_missing = self.check_latin_names_in_csv(self.csv_files["max-height"])
+        height_exist, height_missing = self.check_latin_names_in_csv(
+            self.csv_files["max-height"]
+        )
         self._update_vernacular_plant_name(self.csv_files["max-height"], "max_height")
 
     def import_width(self):
         """Read the plant max width CSV file and update the PlantProfile model with width values."""
-        width_exist, width_missing = self.check_latin_names_in_csv(self.csv_files["max-width"])
+        width_exist, width_missing = self.check_latin_names_in_csv(
+            self.csv_files["max-width"]
+        )
         self._update_vernacular_plant_name(self.csv_files["max-width"], "max_width")
 
     def import_stratification_duration(self):
         """Read the plant max stratification_duertion CSV file and update the PlantProfile model with width values."""
-        stratification_duration_exist, stratification_duration_missing = self.check_latin_names_in_csv(
-            self.csv_files["stratification_duration"]
+        stratification_duration_exist, stratification_duration_missing = (
+            self.check_latin_names_in_csv(self.csv_files["stratification_duration"])
         )
-        self._update_vernacular_plant_name(self.csv_files["stratification_duration"], "stratification_duration")
+        self._update_vernacular_plant_name(
+            self.csv_files["stratification_duration"], "stratification_duration"
+        )
 
     def import_seed_head(self):
         """Read the plant seed head CSV file and update the SeedHead model with seed head values."""
@@ -541,7 +646,9 @@ class Command(BaseCommand):
             display_name="Toxicity indicator",
         )
 
-    def import_foreign_key_relation(self, csv_file, field_name, model_class, display_name=None):
+    def import_foreign_key_relation(
+        self, csv_file, field_name, model_class, display_name=None
+    ):
         """
         Generic method to import values for a foreign key relation from a CSV file.
 
@@ -559,8 +666,12 @@ class Command(BaseCommand):
 
         # Get unique values and insert them into the related model
         unique_values = self.unique_values(csv_file, field_name)
-        inserted_count = self.insert_unique_values(model_class, field_name, unique_values)
-        self.stdout.write(self.style.SUCCESS(f"{display_name} values inserted successfully.\n"))
+        inserted_count = self.insert_unique_values(
+            model_class, field_name, unique_values
+        )
+        self.stdout.write(
+            self.style.SUCCESS(f"{display_name} values inserted successfully.\n")
+        )
 
         if inserted_count > 0:
             filepath = self.filepath / csv_file
@@ -572,21 +683,31 @@ class Command(BaseCommand):
 
                     for row in reader:
                         if "latin_name" not in row or field_name not in row:
-                            self.stdout.write(self.style.WARNING(f"Row missing required fields: {row}"))
+                            self.stdout.write(
+                                self.style.WARNING(
+                                    f"Row missing required fields: {row}"
+                                )
+                            )
                             continue
 
                         latin_name = row["latin_name"]
                         relation_value = row[field_name].strip()
 
                         try:
-                            plant = models.PlantProfile.objects.get(latin_name=latin_name)
-                            relation_instance = model_class.objects.get(**{field_name: relation_value})
+                            plant = models.PlantProfile.objects.get(
+                                latin_name=latin_name
+                            )
+                            relation_instance = model_class.objects.get(
+                                **{field_name: relation_value}
+                            )
                             setattr(plant, field_name, relation_instance)
                             plant.save()
                             updated_count += 1
                         except models.PlantProfile.DoesNotExist:
                             self.stdout.write(
-                                self.style.WARNING(f"Plant with latin name '{latin_name}' does not exist")
+                                self.style.WARNING(
+                                    f"Plant with latin name '{latin_name}' does not exist"
+                                )
                             )
                             missing_count += 1
                         except model_class.DoesNotExist:
@@ -605,9 +726,15 @@ class Command(BaseCommand):
             except FileNotFoundError:
                 self.stdout.write(self.style.ERROR(f"CSV file not found: {filepath}"))
             except Exception as e:
-                self.stdout.write(self.style.ERROR(f"Error processing {display_name.lower()} CSV file: {str(e)}"))
+                self.stdout.write(
+                    self.style.ERROR(
+                        f"Error processing {display_name.lower()} CSV file: {str(e)}"
+                    )
+                )
 
-            self.stdout.write(self.style.SUCCESS(f"{display_name} values set successfully.\n"))
+            self.stdout.write(
+                self.style.SUCCESS(f"{display_name} values set successfully.\n")
+            )
 
     def update_boolean_field(self, model_class, field_name, csv_file):
         """
@@ -629,7 +756,9 @@ class Command(BaseCommand):
 
                 for row in reader:
                     if "latin_name" not in row or field_name not in row:
-                        self.stdout.write(self.style.WARNING(f"Row missing required fields: {row}"))
+                        self.stdout.write(
+                            self.style.WARNING(f"Row missing required fields: {row}")
+                        )
                         continue
 
                     latin_name = row["latin_name"]
@@ -643,7 +772,11 @@ class Command(BaseCommand):
                         plant.save()
                         updated_count += 1
                     except model_class.DoesNotExist:
-                        self.stdout.write(self.style.WARNING(f"Plant with latin name '{latin_name}' does not exist"))
+                        self.stdout.write(
+                            self.style.WARNING(
+                                f"Plant with latin name '{latin_name}' does not exist"
+                            )
+                        )
                         missing_count += 1
 
                 self.stdout.write(
@@ -665,4 +798,6 @@ class Command(BaseCommand):
         except FileNotFoundError:
             self.stdout.write(self.style.ERROR(f"CSV file not found: {filepath}"))
         except Exception as e:
-            self.stdout.write(self.style.ERROR(f"Error processing {field_name} CSV file: {str(e)}"))
+            self.stdout.write(
+                self.style.ERROR(f"Error processing {field_name} CSV file: {str(e)}")
+            )
