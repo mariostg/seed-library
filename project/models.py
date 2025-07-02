@@ -676,50 +676,86 @@ class PlantProfile(Base):
     partial_sun = models.BooleanField(default=False, null=True, blank=True)
     full_shade = models.BooleanField(default=False, null=True, blank=True)
 
-    bloom_start = models.SmallIntegerField(choices=MONTHS.items(), blank=True, default=0)
+    bloom_start = models.SmallIntegerField(
+        choices=MONTHS.items(), blank=True, default=0
+    )
     bloom_end = models.SmallIntegerField(choices=MONTHS.items(), blank=True, default=0)
     moisture_dry = models.BooleanField(default=False, null=True, blank=True)
     moisture_wet = models.BooleanField(default=False, null=True, blank=True)
     moisture_medium = models.BooleanField(default=False, null=True, blank=True)
     max_height = models.FloatField(blank=True, null=True, default=0)
     max_width = models.FloatField(blank=True, null=True, default=0)
-    lifespan = models.ForeignKey(PlantLifespan, on_delete=models.RESTRICT, blank=True, null=True)
+    lifespan = models.ForeignKey(
+        PlantLifespan, on_delete=models.RESTRICT, blank=True, null=True
+    )
     spread_by_rhizome = models.BooleanField(default=False, null=True, blank=True)
     dioecious = models.BooleanField(default=False, null=True, blank=True)
 
     stratification_detail = models.CharField(max_length=55, blank=True)
     stratification_duration = models.SmallIntegerField(blank=True, null=True, default=0)
-    sowing_depth = models.ForeignKey(SowingDepth, on_delete=models.RESTRICT, blank=True, null=True)
+    sowing_depth = models.ForeignKey(
+        SowingDepth, on_delete=models.RESTRICT, blank=True, null=True
+    )
     sowing_period = models.CharField(max_length=55, blank=True)
-    sharing_priority = models.ForeignKey(SharingPriority, on_delete=models.RESTRICT, blank=True, null=True)
-    harvesting_start = models.SmallIntegerField(choices=MONTHS.items(), blank=True, default=0)
-    harvesting_indicator = models.ForeignKey(HarvestingIndicator, on_delete=models.RESTRICT, null=True, blank=True)
-    harvesting_mean = models.ForeignKey(HarvestingMean, on_delete=models.RESTRICT, null=True, blank=True)
-    seed_head = models.ForeignKey(SeedHead, on_delete=models.RESTRICT, null=True, blank=True)
+    sharing_priority = models.ForeignKey(
+        SharingPriority, on_delete=models.RESTRICT, blank=True, null=True
+    )
+    harvesting_start = models.SmallIntegerField(
+        choices=MONTHS.items(), blank=True, default=0
+    )
+    harvesting_indicator = models.ForeignKey(
+        HarvestingIndicator, on_delete=models.RESTRICT, null=True, blank=True
+    )
+    harvesting_mean = models.ForeignKey(
+        HarvestingMean, on_delete=models.RESTRICT, null=True, blank=True
+    )
+    seed_head = models.ForeignKey(
+        SeedHead, on_delete=models.RESTRICT, null=True, blank=True
+    )
     remove_non_seed_material = models.BooleanField(default=False, null=True, blank=True)
-    viability_test = models.ForeignKey(ViablityTest, on_delete=models.RESTRICT, null=True, blank=True)
-    seed_storage = models.ForeignKey(SeedStorage, on_delete=models.RESTRICT, null=True, blank=True)
-    one_cultivar = models.ForeignKey(OneCultivar, on_delete=models.RESTRICT, null=True, blank=True)
-    packaging_measure = models.ForeignKey(PackagingMeasure, on_delete=models.RESTRICT, null=True, blank=True)
-    dormancy = models.ForeignKey(Dormancy, on_delete=models.RESTRICT, null=True, blank=True)
-    seed_preparation = models.ForeignKey(SeedPreparation, on_delete=models.RESTRICT, null=True, blank=True)
+    viability_test = models.ForeignKey(
+        ViablityTest, on_delete=models.RESTRICT, null=True, blank=True
+    )
+    seed_storage = models.ForeignKey(
+        SeedStorage, on_delete=models.RESTRICT, null=True, blank=True
+    )
+    one_cultivar = models.ForeignKey(
+        OneCultivar, on_delete=models.RESTRICT, null=True, blank=True
+    )
+    packaging_measure = models.ForeignKey(
+        PackagingMeasure, on_delete=models.RESTRICT, null=True, blank=True
+    )
+    dormancy = models.ForeignKey(
+        Dormancy, on_delete=models.RESTRICT, null=True, blank=True
+    )
+    seed_preparation = models.ForeignKey(
+        SeedPreparation, on_delete=models.RESTRICT, null=True, blank=True
+    )
     seed_cleaning_notes = models.CharField(max_length=70, blank=True)
     sowing_label_instructions = models.CharField(max_length=40, blank=True)
     sowing_notes = models.CharField(max_length=450, blank=True)
     envelope_label_link = models.CharField(max_length=200, blank=True)
     harvesting_video_link = models.CharField(max_length=200, blank=True)
-    seed_storage_label_info = models.ForeignKey(SeedStorageLabelInfo, on_delete=models.RESTRICT, null=True, blank=True)
-    seed_event_table = models.ForeignKey(SeedEventTable, on_delete=models.RESTRICT, null=True, blank=True)
+    seed_storage_label_info = models.ForeignKey(
+        SeedStorageLabelInfo, on_delete=models.RESTRICT, null=True, blank=True
+    )
+    seed_event_table = models.ForeignKey(
+        SeedEventTable, on_delete=models.RESTRICT, null=True, blank=True
+    )
     notes = models.CharField(max_length=450, blank=True)
     harvesting_notes = models.CharField(max_length=450, blank=True)
     toxicity_notes = models.CharField(max_length=450, blank=True)
-    toxicity_indicator = models.ForeignKey(ToxicityIndicator, on_delete=models.RESTRICT, null=True, blank=True)
+    toxicity_indicator = models.ForeignKey(
+        ToxicityIndicator, on_delete=models.RESTRICT, null=True, blank=True
+    )
     transplanting_notes = models.CharField(max_length=450, blank=True)
     alternative_to_notes = models.CharField(max_length=450, blank=True)
 
     germinate_easy = models.BooleanField(default=False, null=True, blank=True)
     beginner_friendly = models.BooleanField(default=False, null=True, blank=True)
-    spreading_rate = models.ForeignKey(SpreadRate, on_delete=models.RESTRICT, null=True, blank=True)
+    spreading_rate = models.ForeignKey(
+        SpreadRate, on_delete=models.RESTRICT, null=True, blank=True
+    )
     rock_garden = models.BooleanField(default=False, null=True, blank=True)
     rain_garden = models.BooleanField(default=False, null=True, blank=True)
     pond_edge = models.BooleanField(default=False, null=True, blank=True)
@@ -751,7 +787,9 @@ class PlantProfile(Base):
     butterfly_friendly = models.BooleanField(default=False, null=True, blank=True)
     bee_friendly = models.BooleanField(default=False, null=True, blank=True)
     bird_friendly = models.BooleanField(default=False, null=True, blank=True)
-    boulevard_garden_tolerant = models.BooleanField(default=False, null=True, blank=True)
+    boulevard_garden_tolerant = models.BooleanField(
+        default=False, null=True, blank=True
+    )
     juglone_tolerant = models.BooleanField(default=False, null=True, blank=True)
     transplantation_tolerant = models.BooleanField(default=False, null=True, blank=True)
     nitrogen_fixer = models.BooleanField(default=False, null=True, blank=True)
@@ -760,17 +798,25 @@ class PlantProfile(Base):
     cause_dermatitis = models.BooleanField(default=False, null=True, blank=True)
     produces_burs = models.BooleanField(default=False, null=True, blank=True)
 
-    bloom_color = models.ForeignKey(BloomColor, on_delete=models.RESTRICT, null=True, blank=True)
-    growth_habit = models.ForeignKey(GrowthHabit, on_delete=models.RESTRICT, null=True, blank=True)
+    bloom_color = models.ForeignKey(
+        BloomColor, on_delete=models.RESTRICT, null=True, blank=True
+    )
+    growth_habit = models.ForeignKey(
+        GrowthHabit, on_delete=models.RESTRICT, null=True, blank=True
+    )
     taxon = models.CharField(max_length=5, blank=True)
-    conservation_status = models.ForeignKey(ConservationStatus, on_delete=models.RESTRICT, null=True, blank=True)
+    conservation_status = models.ForeignKey(
+        ConservationStatus, on_delete=models.RESTRICT, null=True, blank=True
+    )
     inaturalist_taxon = models.CharField(max_length=10, blank=True)
 
     search_plant = PlantProfileQuerySet.as_manager()
     objects = models.Manager()
 
     def __str__(self) -> str:
-        return f"{self.pk} | {self.latin_name} | {self.english_name} | {self.french_name}"
+        return (
+            f"{self.pk} | {self.latin_name} | {self.english_name} | {self.french_name}"
+        )
 
     class Meta:
         ordering = ["latin_name"]
@@ -793,7 +839,9 @@ class PlantProfile(Base):
             self.bloom_end = 0
             self.bloom_start = 0
         if self.bloom_start and self.bloom_end and self.bloom_start > self.bloom_end:
-            raise ValidationError("Beginning of blooming period must be before end of blooming period")
+            raise ValidationError(
+                "Beginning of blooming period must be before end of blooming period"
+            )
 
     def save(self, *args, **kwargs):
         """
@@ -872,7 +920,9 @@ class PlantCollection(models.Model):
     class Meta:
         ordering = ["plants__latin_name"]
         constraints = [
-            models.UniqueConstraint(name="unique_plant_owner", fields=["owner", "plants"]),
+            models.UniqueConstraint(
+                name="unique_plant_owner", fields=["owner", "plants"]
+            ),
         ]
 
 
@@ -934,10 +984,14 @@ class PlantImage(models.Model):
             proper cleanup of the image file before deleting the model instance
     """
 
-    plant_profile = models.ForeignKey(PlantProfile, on_delete=models.CASCADE, related_name="images")
+    plant_profile = models.ForeignKey(
+        PlantProfile, on_delete=models.CASCADE, related_name="images"
+    )
     morphology_aspect = models.ForeignKey(PlantMorphology, on_delete=models.CASCADE)
     title = models.CharField(verbose_name="Titre", max_length=125)
-    description = models.CharField(verbose_name="Description", max_length=55, blank=True)
+    description = models.CharField(
+        verbose_name="Description", max_length=55, blank=True
+    )
     photo_author = models.CharField(verbose_name="Auteur", max_length=125)
     photo_date = models.DateField(verbose_name="Date photo")
     image = models.ImageField(upload_to="project/images")
