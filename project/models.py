@@ -661,7 +661,8 @@ class PlantProfile(Base):
             septic_tank_safe (BooleanField): Whether safe to plant near septic systems
             cause_dermatitis (BooleanField): Can cause skin irritation
             produces_burs (BooleanField): Produces burrs that stick to clothing/fur
-            toxicity_notes (CharField): Information about plant toxicity
+            toxicity_indicator (ForeignKey): Reference to ToxicityIndicator model
+            toxicity_indicator_notes (CharField): Information about plant toxicity
 
         ## Additional Information
             notes (CharField): General notes about the plant
@@ -745,7 +746,7 @@ class PlantProfile(Base):
     )
     notes = models.CharField(max_length=450, blank=True)
     harvesting_notes = models.CharField(max_length=450, blank=True)
-    toxicity_notes = models.CharField(max_length=450, blank=True)
+    toxicity_indicator_notes = models.CharField(max_length=450, blank=True)
     toxicity_indicator = models.ForeignKey(
         ToxicityIndicator, on_delete=models.RESTRICT, null=True, blank=True
     )
