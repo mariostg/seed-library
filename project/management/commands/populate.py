@@ -97,6 +97,7 @@ class Command(BaseCommand):
                 "toxicity_indicator_notes": "plant-toxicity-indicator-notes - csv.csv",
                 "acidic_soil_tolerant": "plant-acidic-soil-tolerant - csv.csv",
                 "grasp_candidate_notes": "plant-grasp-candidate-notes - csv.csv",
+                "self_seeding": "plant-self-seeding - csv.csv",
             }
 
             # Clear existing data in the database
@@ -286,6 +287,11 @@ class Command(BaseCommand):
                 models.PlantProfile,
                 "acidic_soil_tolerant",
                 self.csv_files["acidic_soil_tolerant"],
+            )
+            self.update_boolean_field(
+                models.PlantProfile,
+                "self_seeding",
+                self.csv_files["self_seeding"],
             )
 
         else:
