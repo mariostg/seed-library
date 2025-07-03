@@ -98,6 +98,7 @@ class Command(BaseCommand):
                 "acidic_soil_tolerant": "plant-acidic-soil-tolerant - csv.csv",
                 "grasp_candidate_notes": "plant-grasp-candidate-notes - csv.csv",
                 "self_seeding": "plant-self-seeding - csv.csv",
+                "does_not_spread": "plant-does-not-spread - csv.csv",
             }
 
             # Clear existing data in the database
@@ -146,153 +147,52 @@ class Command(BaseCommand):
             self.import_grasp_candidate_notes()
 
             # Insert the boolean fields.
+            # Define a mapping of model field names to CSV filenames
+            boolean_fields = {
+                "butterfly_friendly": "butterfly_friendly",
+                "hummingbird_friendly": "hummingbird_friendly",
+                "container_suitable": "container_suitable",
+                "ground_cover": "ground_cover",
+                "shoreline_rehab": "shoreline_rehab",
+                "drought_tolerant": "drought_tolerant",
+                "salt_tolerant": "salt_tolerant",
+                "sand_tolerant": "sand_tolerant",
+                "keystones_species": "keystones_species",
+                "nitrogen_fixer": "nitrogen_fixer",
+                "germinate_easy": "germinate_easy",
+                "boulevard_garden_tolerant": "boulevard_garden_tolerant",
+                "bird_friendly": "bird_friendly",
+                "cedar_hedge_replacement": "cedar-hedge-replacemenmt",
+                "juglone_tolerant": "juglone_tolerant",
+                "cause_dermatitis": "cause_dermatitis",
+                "produces_burs": "produces-burs",
+                "transplantation_tolerant": "transplantation_tolerant",
+                "limestone_tolerant": "limestone_tolerant",
+                "school_garden_suitable": "school_garden_suitable",
+                "beginner_friendly": "beginner_friendly",
+                "moisture_dry": "moisture-dry",
+                "moisture_medium": "moisture-medium",
+                "moisture_wet": "moisture-wet",
+                "full_sun": "full-sun",
+                "partial_sun": "partial-sun",
+                "full_shade": "full-shade",
+                "spread_by_rhizome": "spread-by-rhizome",
+                "dioecious": "dioecious",
+                "rock_garden": "rock-garden",
+                "septic_tank_safe": "septic-tank-safe",
+                "wetland_garden": "wetland-garden",
+                "grasp_candidate": "grasp-candidate",
+                "acidic_soil_tolerant": "acidic_soil_tolerant",
+                "self_seeding": "self_seeding",
+                "does_not_spread": "does_not_spread",
+            }
 
-            self.update_boolean_field(
-                models.PlantProfile,
-                "butterfly_friendly",
-                self.csv_files["butterfly_friendly"],
-            )
-            self.update_boolean_field(
-                models.PlantProfile,
-                "hummingbird_friendly",
-                self.csv_files["hummingbird_friendly"],
-            )
-            self.update_boolean_field(
-                models.PlantProfile,
-                "container_suitable",
-                self.csv_files["container_suitable"],
-            )
-            self.update_boolean_field(
-                models.PlantProfile, "ground_cover", self.csv_files["ground_cover"]
-            )
-            self.update_boolean_field(
-                models.PlantProfile,
-                "shoreline_rehab",
-                self.csv_files["shoreline_rehab"],
-            )
-            self.update_boolean_field(
-                models.PlantProfile,
-                "drought_tolerant",
-                self.csv_files["drought_tolerant"],
-            )
-            self.update_boolean_field(
-                models.PlantProfile, "salt_tolerant", self.csv_files["salt_tolerant"]
-            )
-            self.update_boolean_field(
-                models.PlantProfile, "sand_tolerant", self.csv_files["sand_tolerant"]
-            )
-            self.update_boolean_field(
-                models.PlantProfile,
-                "keystones_species",
-                self.csv_files["keystones_species"],
-            )
-            self.update_boolean_field(
-                models.PlantProfile, "nitrogen_fixer", self.csv_files["nitrogen_fixer"]
-            )
-            self.update_boolean_field(
-                models.PlantProfile, "germinate_easy", self.csv_files["germinate_easy"]
-            )
-            self.update_boolean_field(
-                models.PlantProfile,
-                "boulevard_garden_tolerant",
-                self.csv_files["boulevard_garden_tolerant"],
-            )
-            self.update_boolean_field(
-                models.PlantProfile, "bird_friendly", self.csv_files["bird_friendly"]
-            )
-            self.update_boolean_field(
-                models.PlantProfile,
-                "cedar_hedge_replacement",
-                self.csv_files["cedar-hedge-replacemenmt"],
-            )
-            self.update_boolean_field(
-                models.PlantProfile,
-                "juglone_tolerant",
-                self.csv_files["juglone_tolerant"],
-            )
-            self.update_boolean_field(
-                models.PlantProfile,
-                "cause_dermatitis",
-                self.csv_files["cause_dermatitis"],
-            )
-            self.update_boolean_field(
-                models.PlantProfile, "produces_burs", self.csv_files["produces-burs"]
-            )
-            self.update_boolean_field(
-                models.PlantProfile,
-                "transplantation_tolerant",
-                self.csv_files["transplantation_tolerant"],
-            )
-            self.update_boolean_field(
-                models.PlantProfile,
-                "limestone_tolerant",
-                self.csv_files["limestone_tolerant"],
-            )
-            self.update_boolean_field(
-                models.PlantProfile,
-                "school_garden_suitable",
-                self.csv_files["school_garden_suitable"],
-            )
-            self.update_boolean_field(
-                models.PlantProfile,
-                "beginner_friendly",
-                self.csv_files["beginner_friendly"],
-            )
-            self.update_boolean_field(
-                models.PlantProfile, "moisture_dry", self.csv_files["moisture-dry"]
-            )
-            self.update_boolean_field(
-                models.PlantProfile,
-                "moisture_medium",
-                self.csv_files["moisture-medium"],
-            )
-            self.update_boolean_field(
-                models.PlantProfile, "moisture_wet", self.csv_files["moisture-wet"]
-            )
-
-            self.update_boolean_field(
-                models.PlantProfile, "full_sun", self.csv_files["full-sun"]
-            )
-            self.update_boolean_field(
-                models.PlantProfile, "partial_sun", self.csv_files["partial-sun"]
-            )
-            self.update_boolean_field(
-                models.PlantProfile, "full_shade", self.csv_files["full-shade"]
-            )
-            self.update_boolean_field(
-                models.PlantProfile,
-                "spread_by_rhizome",
-                self.csv_files["spread-by-rhizome"],
-            )
-            self.update_boolean_field(
-                models.PlantProfile, "dioecious", self.csv_files["dioecious"]
-            )
-            self.update_boolean_field(
-                models.PlantProfile, "rock_garden", self.csv_files["rock-garden"]
-            )
-            self.update_boolean_field(
-                models.PlantProfile,
-                "septic_tank_safe",
-                self.csv_files["septic-tank-safe"],
-            )
-            self.update_boolean_field(
-                models.PlantProfile, "wetland_garden", self.csv_files["wetland-garden"]
-            )
-            self.update_boolean_field(
-                models.PlantProfile,
-                "grasp_candidate",
-                self.csv_files["grasp-candidate"],
-            )
-            self.update_boolean_field(
-                models.PlantProfile,
-                "acidic_soil_tolerant",
-                self.csv_files["acidic_soil_tolerant"],
-            )
-            self.update_boolean_field(
-                models.PlantProfile,
-                "self_seeding",
-                self.csv_files["self_seeding"],
-            )
+            # Update all boolean fields using a loop
+            for field_name, csv_filename in boolean_fields.items():
+                self.stdout.write(self.style.SUCCESS(f"Processing {field_name}..."))
+                self.update_boolean_field(
+                    models.PlantProfile, field_name, self.csv_files[csv_filename]
+                )
 
         else:
             raise ValueError("This capability is only available when DEBUG is True")
