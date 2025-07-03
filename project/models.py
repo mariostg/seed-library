@@ -474,26 +474,6 @@ class PlantProfileQuerySet(models.QuerySet):
         )
 
 
-class SpreadRate(Base):
-    """
-    A model representing the spreading rate of a plant.
-
-    The SpreadRate class stores information about how quickly a plant grows
-    or spreads in the garden or landscape. This helps in planning proper
-    spacing and maintenance requirements for plants.
-
-    Attributes:
-        spreading_rate (models.CharField): A string representation of how fast
-            a plant spreads, limited to 15 characters. Examples might include
-            "Fast", "Moderate", "Slow", etc.
-    """
-
-    spreading_rate = models.CharField(max_length=15, blank=True)
-
-    def __str__(self) -> str:
-        return self.spreading_rate
-
-
 class ToxicityIndicator(Base):
     """
     A model representing toxicity indicators for plants.
@@ -544,8 +524,7 @@ class PlantProfile(Base):
             max_height (FloatField): Maximum mature height
             max_width (FloatField): Maximum mature width/spread
             growth_habit (ForeignKey): Reference to GrowthHabit model
-            spread_by_rhizome (BooleanField): Whether plant spreads via rhizomes
-            spreading_rate (ForeignKey): Reference to SpreadRate model
+            does_not_spread (BooleanField): Whether plant does not spread
 
         ## Life Cycle
             lifespan (ForeignKey): Reference to PlantLifespan model
@@ -593,6 +572,7 @@ class PlantProfile(Base):
             sowing_label_instructions (CharField): Instructions for sowing labels
             sowing_notes (CharField): Detailed notes on sowing process
             germinate_easy (BooleanField): Whether seeds germinate easily
+            spread_by_rhizome (BooleanField): Whether plant spreads via rhizomes
             self_seeding (BooleanField): Whether plant self-seeds easily
 
         ## Harvesting
@@ -692,6 +672,7 @@ class PlantProfile(Base):
         PlantLifespan, on_delete=models.RESTRICT, blank=True, null=True
     )
     spread_by_rhizome = models.BooleanField(default=False, null=True, blank=True)
+    does_not_spread = models.BooleanField(default=False, null=True, blank=True)
     dioecious = models.BooleanField(default=False, null=True, blank=True)
 
     stratification_detail = models.CharField(max_length=55, blank=True)
@@ -757,9 +738,7 @@ class PlantProfile(Base):
     germinate_easy = models.BooleanField(default=False, null=True, blank=True)
     self_seeding = models.BooleanField(default=False, null=True, blank=True)
     beginner_friendly = models.BooleanField(default=False, null=True, blank=True)
-    spreading_rate = models.ForeignKey(
-        SpreadRate, on_delete=models.RESTRICT, null=True, blank=True
-    )
+
     rock_garden = models.BooleanField(default=False, null=True, blank=True)
     rain_garden = models.BooleanField(default=False, null=True, blank=True)
     pond_edge = models.BooleanField(default=False, null=True, blank=True)
