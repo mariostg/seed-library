@@ -94,7 +94,9 @@ class Command(BaseCommand):
                 "wetland-garden": "plant-wetland-garden - csv.csv",
                 "grasp-candidate": "plant-grasp-candidate - csv.csv",
                 "toxicity_indicator": "plant-toxicity-indicator - csv.csv",
+                "toxicity_indicator_notes": "plant-toxicity-indicator-notes - csv.csv",
                 "acidic_soil_tolerant": "plant-acidic-soil-tolerant - csv.csv",
+                "grasp_candidate_notes": "plant-grasp-candidate-notes - csv.csv",
             }
 
             # Clear existing data in the database
@@ -139,6 +141,8 @@ class Command(BaseCommand):
             self.import_width()
             self.import_seed_event_table()
             self.import_toxixity_indicator()
+            self.import_toxicity_indicator_notes()
+            self.import_grasp_candidate_notes()
 
             # Insert the boolean fields.
 
@@ -549,6 +553,24 @@ class Command(BaseCommand):
         )
         self._update_vernacular_plant_name(
             self.csv_files["stratification_duration"], "stratification_duration"
+        )
+
+    def import_grasp_candidate_notes(self):
+        grasp_candidate_notes_exist, grasp_candidate_notes_missing = (
+            self.check_latin_names_in_csv(self.csv_files["stratification_duration"])
+        )
+        """Read the plant grasp candidate notes CSV file and update the PlantProfile model with notes."""
+        self._update_vernacular_plant_name(
+            self.csv_files["grasp_candidate_notes"], "grasp_candidate_notes"
+        )
+
+    def import_toxicity_indicator_notes(self):
+        """Read the plant toxicity indicator notes CSV file and update the PlantProfile model with notes."""
+        toxicity_indicator_notes_exist, toxicity_indicator_notes_missing = (
+            self.check_latin_names_in_csv(self.csv_files["toxicity_indicator_notes"])
+        )
+        self._update_vernacular_plant_name(
+            self.csv_files["toxicity_indicator_notes"], "toxicity_indicator_notes"
         )
 
     def import_seed_head(self):
