@@ -163,6 +163,26 @@ class PlantProfileFilter(django_filters.FilterSet):
         queryset=models.SharingPriority.objects.all(),
     )
 
+    full_sun = django_filters.CharFilter(
+        method="filter_boolean",
+    )
+    partial_sun = django_filters.CharFilter(
+        method="filter_boolean",
+    )
+    full_shade = django_filters.CharFilter(
+        method="filter_boolean",
+    )
+
+    moisture_dry = django_filters.CharFilter(
+        method="filter_boolean",
+    )
+    moisture_medium = django_filters.CharFilter(
+        method="filter_boolean",
+    )
+    moisture_wet = django_filters.CharFilter(
+        method="filter_boolean",
+    )
+
     def filter_any_name(self, queryset, name, value):
         return queryset.filter(
             Q(**{"latin_name__icontains": value})

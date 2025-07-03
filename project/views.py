@@ -95,7 +95,10 @@ def plant_profile_delete(request, pk):
         try:
             data.delete()
         except RestrictedError:
-            messages.info(request, f"Plant Profile {data} ne peut-être effacée car il existe des éléments associés.")
+            messages.info(
+                request,
+                f"Plant Profile {data} ne peut-être effacée car il existe des éléments associés.",
+            )
         return redirect("plant-profile-page", pk=pk)
     context = {"data": data, "back": f"plant-profile-page/{pk}"}
     return render(request, "siteornitho/delete_template.html", context)
@@ -107,14 +110,19 @@ def search_plant_name(request):
     else:
         data = models.PlantProfile.objects.all().order_by("latin_name")
     object_list = filters.PlantProfileFilter(request.GET, queryset=data)
-
+    hx_include = "#full_sun,#partial_sun,#full_shade,#moisture_dry,#moisture_medium,#moisture_wet,#flowering_plant,#id-checkbox-grass,#shrub,#id_checkbox_tree,#id_checkbox_vine,#color_blue,#color_green,#color_orange,#color_pink,#color_purple,#color_red,#color_white,#color_yellow,#bird_friendly,#boulevard_garden_tolerant,#butterfly_friendly,#cedar_hedge_replacement,#container_suitable,#drought_tolerant,#ground_cover,#hummingbird_friendly,#rock_garden,#septic_tank_safe,#shoreline_rehab,#wetland_garden,#beginner_friendly,#germinate_easy,#juglone_tolerant,#keystones_species,#nitrogen_fixer,#acidic_soil_tolerant,#limestone_tolerant,#salt_tolerant,#sand_tolerant,#transplantation_tolerant,#grasp_candidate,#produces_burs,#AB,#BC,#MB,#NB,#NL,#NS,#NT,#NU,#ON,#PE,#QC,#SK,#YT,#sliderFromBloomPeriod,#sliderToBloomPeriod,#sliderFromPlantHeight,#sliderToPlantHeight,#sliderFromPlantWidth,#sliderToPlantWidth,#sliderWinterSowingRequirements,#sliderHarvestingPeriodStart"
     context = {
         "object_list": object_list.qs,
         "url_name": "index",
         "title": "Plant Profile Filter",
         "item_count": object_list.qs.count(),
+        "hx_include": hx_include,
     }
-    template = "project/plant-search-results.html" if request.htmx else "project/plant-catalog.html"
+    template = (
+        "project/plant-search-results.html"
+        if request.htmx
+        else "project/plant-catalog.html"
+    )
     return render(request, template, context)
 
 
@@ -131,7 +139,9 @@ def advanced_search_plant(request):
         object_list = object_list.annotate(
             is_owner=Coalesce(
                 Subquery(
-                    models.PlantCollection.objects.filter(owner=request.user, plants=OuterRef("pk"))
+                    models.PlantCollection.objects.filter(
+                        owner=request.user, plants=OuterRef("pk")
+                    )
                     .annotate(owns=Value("Yes"))
                     .values("owns")
                 ),
@@ -309,7 +319,10 @@ def harvesting_indicator_add(request):
             try:
                 form.save()
             except IntegrityError:
-                messages.error(request, f"Harvesting Indicator {obj.harvesting_indicator} exists already.")
+                messages.error(
+                    request,
+                    f"Harvesting Indicator {obj.harvesting_indicator} exists already.",
+                )
                 return render(
                     request,
                     "project/simple-form.html",
@@ -338,7 +351,9 @@ def harvesting_mean_add(request):
             try:
                 form.save()
             except IntegrityError:
-                messages.error(request, f"Harvesting Mean {obj.harvesting_mean} exists already.")
+                messages.error(
+                    request, f"Harvesting Mean {obj.harvesting_mean} exists already."
+                )
                 return render(
                     request,
                     "project/simple-form.html",
@@ -572,7 +587,9 @@ def user_login(request):
 
         if user is not None:
             login(request, user)
-            return redirect(request.GET["next"] if "next" in request.GET else "site-admin")
+            return redirect(
+                request.GET["next"] if "next" in request.GET else "site-admin"
+            )
         else:
             messages.error(request, "Username OR password is incorrect")
 
@@ -641,7 +658,9 @@ def user_plant_toggle(request, pk):
 def user_plant_delete(request, pk):
     obj: models.PlantCollection = models.PlantCollection.objects.get(id=pk)
     if obj.owner != request.user:
-        messages.warning(request, "You are not allowed to delete this plant from the user collection")
+        messages.warning(
+            request, "You are not allowed to delete this plant from the user collection"
+        )
         return render(request, "project/user-plant-collection.html")
     if request.method == "POST":
         try:
@@ -709,7 +728,9 @@ def plant_label_pdf(request, pk):
     for i in range(7):
         for j in range(5):
             for k, text in enumerate(plant_info):
-                c.drawString(x[i] + xm * inch, y[j] + (ym + line_spacing * k) * inch, text)
+                c.drawString(
+                    x[i] + xm * inch, y[j] + (ym + line_spacing * k) * inch, text
+                )
     c.setFillColor(red)
 
     c.showPage()

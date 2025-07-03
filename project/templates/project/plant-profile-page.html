@@ -16,8 +16,9 @@
       '<!-- Plant Profile Header -->
       <div class="plant-profile-header">
         <div class="plant-profile-image">
-          <img src="{% static 'images/plant-placeholder.png' %}" alt="Plant Image" />
+          <img src="{% static 'images/plants/profile/'|add:plant.latin_name|add:'-profile.jpg' %}" alt="image for {{plant.latin_name}}" onerror="this.src='{% static 'images/plant-placeholder.png' %}'" />
         </div>
+
         <div class="plant-profile-characteristics">
           <div class="plant-profile-names">
             <div class="plant-profile-latin-name">{{plant.latin_name}}</div>
@@ -33,43 +34,100 @@
               {% if plant.full_shade %} <img alt="Full shade" class="icon" src="{% static 'images/full-shade.svg' %}"> {% endif %}
             </div>
             <div>Soil conditions:
-              {% if plant.moisture_dry %} <img alt="Moisture dry" class="icon" src="{% static 'images/moisture-dry.svg' %}"> {% endif %}
-              {% if plant.moisture_medium %} <img alt="Moisture medium" class="icon" src="{% static 'images/moisture-medium.svg' %}"> {% endif %}
-              {% if plant.moisture_wet %} <img alt="Moisture wet" class="icon" src="{% static 'images/moisture-wet.svg' %}"> {% endif %}
+              {% if plant.moisture_dry %} <img title="moisture dry" alt="Moisture dry" class="icon" src="{% static 'images/moisture-dry.svg' %}"> {% endif %}
+              {% if plant.moisture_medium %} <img title="moisture medium" alt="Moisture medium" class="icon" src="{% static 'images/moisture-medium.svg' %}"> {% endif %}
+              {% if plant.moisture_wet %} <img title="moisture wet" alt="Moisture wet" class="icon" src="{% static 'images/moisture-wet.svg' %}"> {% endif %}
             </div>
             <div>Max Height: {{plant.max_height}} feet</div>
             <div>Max Width: {{plant.max_width}} feet</div>
-            <div>Characteristics:
-              {% if plant.beginner_friendly %} Beginner friendly | {% endif %}
-              {% if plant.does_not_spread%} Does not spread | {% endif %}
-              {% if plant.germinate_easy %} <img alt="Germinate easy" class="icon" src="{% static 'images/germinate-easy.svg' %}">{% endif %}
-              {% if plant.juglone_tolerant %} Juglone tolerant | {% endif %}
-              {% if plant.host_plant %} <img alt="Host plant" class="icon" src="{% static 'images/host-plant.svg' %}">{% endif %}
-              {% if plant.endangered %} <img alt="Endangered" class="icon" src="{% static 'images/endangered.svg' %}"> {% endif %}
-              {% if plant.keystone_species %} Keystone species | {% endif %}
-              {% if plant.nitrogen_fixer %}<img alt="Nitrogen fixer" class="icon" src="{% static 'images/nitrogen-fixer.svg' %}"> {% endif %}
+            <div><u>Gardener friendly attributes:</u>
+              {% if plant.beginner_friendly %} <img title="beginner friendly" alt="beginner friendly" class='icon' src="{% static 'images/plant-beginner-friendly.svg'  %}"> {% endif %}
+              {% if plant.does_not_spread %} <img title="does not spread" alt="does not spread" class='icon' src="{% static 'images/plant-does-not-spread.svg'  %}"> {% endif %}
+              {% if plant.germinate_easy %} <img title="plant germinate easy" alt="plant germinate easy" class='icon' src="{% static 'images/plant-germinate-easy.svg'  %}"> {% endif %}
+
             </div>
+            <div>Characteristics:
+              {% if plant.host_plant %} <img title="host plant" alt="Host plant" class="icon" src="{% static 'images/host-plant.svg' %}">{% endif %}
+              {% if plant.endangered %} <img title="endangered" alt="Endangered" class="icon" src="{% static 'images/endangered.svg' %}"> {% endif %}
+            </div>
+
             <div>Hosts: </div>
-            <div>Supports:
+            <div><del>Supports:</del>
               {% if plant.butterfly_friendly %}
                 <img class='icon' src="{% static 'images/butterfly-friendly.svg'  %}">
               {% endif %}
             </div>
-            <div>Tolerates:</div>
+            <div><u>Landscape uses:</u>
+              {% if plant.rock_garden %} <img title="rock garden" alt="rock garden" class='icon' src="{% static 'images/plant-rock-garden.svg'  %}"> {% endif %}
+              {% if plant.rain_garden %} <img title="rain garden" alt="rain garden" class='icon' src="{% static 'images/plant-rain-garden.svg'  %}"> {% endif %}
+              {% if plant.pond_edge %} <img title="pond edge" alt="pond edge" class='icon' src="{% static 'images/plant-pond-edge.svg'  %}"> {% endif %}
+              {% if plant.shoreline_rehab %} <img title="shoreline_rehab" alt="shoreline_rehab" class='icon' src="{% static 'images/plant-shoreline_rehab.svg'  %}"> {% endif %}
+              {% if plant.container_suitable %} <img title="container suitable" alt="container suitable" class='icon' src="{% static 'images/plant-container-suitable.svg'  %}"> {% endif %}
+              {% if plant.school_garden_suitable %} <img title="school garden suitable" alt="school garden suitable" class='icon' src="{% static 'images/plant-school-garden-suitable.svg'  %}"> {% endif %}
+              {% if plant.ground_cover %} <img title="ground cover" alt="ground cover" class='icon' src="{% static 'images/plant-ground-cover.svg'  %}"> {% endif %}
+              {% if plant.garden_hedge %} <img title="garden hedge" alt="garden hedge" class='icon' src="{% static 'images/plant-garden-hedge.svg'  %}"> {% endif %}
+              {% if plant.woodland_garden %} <img title="woodland garden" alt="woodland garden" class='icon' src="{% static 'images/plant-woodland-garden.svg'  %}"> {% endif %}
+              {% if plant.wind_break_hedge %} <img title="wind break hedge" alt="wind break hedge" class='icon' src="{% static 'images/plant-wind-break-hedge.svg'  %}"> {% endif %}
+              {% if plant.erosion_control %} <img title="erosion control" alt="erosion control" class='icon' src="{% static 'images/plant-erosion-control.svg'  %}"> {% endif %}
+              {% if plant.keystones_species %} <img title="keystones species" alt="keystones species" class='icon' src="{% static 'images/plant-keystones-species.svg'  %}"> {% endif %}
+            </div>
+
+            <div><u>Ecological Benefits:</u>
+              {% if plant.hummingbird_friendly %} <img title="Hummingbird friendly" alt="Hummingbird friendly" class='icon' src="{% static 'images/plant-hummingbird-friendly.svg'  %}"> {% endif %}
+              {% if plant.butterfly_friendly %} <img title="butterfly friendly" alt="butterfly friendly" class='icon' src="{% static 'images/plant-butterfly-friendly.svg'  %}"> {% endif %}
+              {% if plant.bee_friendly %} <img title="bee friendly" alt="bee friendly" class='icon' src="{% static 'images/plant-bee-friendly.svg'  %}"> {% endif %}
+              {% if plant.nitrogen_fixer %} <img title="nitrogen fixer" alt="nitrogen fixer" class='icon' src="{% static 'images/plant-nitrogen-fixer.svg'  %}"> {% endif %}
+              {% if plant.easy_to_contain %} <img title="easy to contain" alt="easy to contain" class='icon' src="{% static 'images/plant-easy-to-contain.svg'  %}"> {% endif %}
+              {% if plant.cedar_hedge_replacement %} <img title="cedar hedge replacement" alt="cedar hedge replacement" class='icon' src="{% static 'images/plant-cedar-hedge-replacement.svg'  %}"> {% endif %}
+            </div>
+            <div><u>Tolerates:</u>
+              {% if plant.drought_tolerant %} <img title="" alt="drought Tolerant" class='icon' src="{% static 'images/plant-drought-tolerant.svg'  %}"> {% endif %}
+              {% if plant.salt_tolerant %} <img title="" alt="Salt Tolerant" class='icon' src="{% static 'images/plant-salt-tolerant.svg'  %}"> {% endif %}
+              {% if plant.deer_tolerant %} <img title="" alt="deer Tolerant" class='icon' src="{% static 'images/plant-deer-tolerant.svg'  %}"> {% endif %}
+              {% if plant.rabbit_tolerant %} <img title="" alt="rabbit Tolerant" class='icon' src="{% static 'images/plant-rabbit-tolerant.svg'  %}"> {% endif %}
+              {% if plant.foot_traffic_tolerant %} <img title="" alt="foot traffic Tolerant" class='icon' src="{% static 'images/plant-foot-traffic-tolerant.svg'  %}"> {% endif %}
+              {% if plant.limestone_tolerant %} <img title="" alt="limestone Tolerant" class='icon' src="{% static 'images/plant-limestone-tolerant.svg'  %}"> {% endif %}
+              {% if plant.sand_tolerant %} <img title="" alt="sand Tolerant" class='icon' src="{% static 'images/plant-sand-tolerant.svg'  %}"> {% endif %}
+              {% if plant.acidic_soil_tolerant %} <img title="" alt="acidic soil Tolerant" class='icon' src="{% static 'images/plant-acidic-soil-tolerant.svg'  %}"> {% endif %}
+              {% if plant.boulevard_garden_tolerant %} <img title="" alt="boulevard Tolerant" class='icon' src="{% static 'images/plant-boulevard-tolerant.svg'  %}"> {% endif %}
+              {% if plant.juglone_tolerant %} <img title="" alt="juglone Tolerant" class='icon' src="{% static 'images/plant-juglone-tolerant.svg'  %}"> {% endif %}
+              {% if plant.transplantation_tolerant %} <img title="" alt="transplantation Tolerant" class='icon' src="{% static 'images/plant-transplantation-tolerant.svg'  %}"> {% endif %}
+            </div>
+
             <div>Toxicity:</div>
-            <div>Recommended for:
+            <div><del>Recommended for:</del>
               {% if plant.bird_friendly %}<img alt="Bird friendly" class='icon' src="{% static 'images/bird-friendly.svg'  %}">{% endif %}
-              {% if plant.hummingbird_friendly %}<img alt="Hummingbird friendly" class='icon' src="{% static 'images/hummingbird-friendly.svg'  %}">{% endif %}
+              {% if plant.hummingbird_friendly %}<img alt="Hummingbird friendly" class='icon' src="{% static 'images/plant-hummingbird-friendly.svg'  %}">{% endif %}
               {% if plant.butterfly_friendly %}<img alt="Butterfly friendly" class='icon' src="{% static 'images/butterfly-friendly.svg'  %}">{% endif %}
-              {% if plant.boulevard_tolerant %}<img alt="Boulevard garden" class='icon' src="{% static 'images/boulevard-tolerant.svg'  %}">{% endif %}
+              {% if plant.boulevard_garden_tolerant %}<img alt="Boulevard garden" class='icon' src="{% static 'images/boulevard-tolerant.svg'  %}">{% endif %}
               {% if plant.cedar_hedge_replacement %}<img alt="Cedar hedge replacement" class='icon' src="{% static 'images/cedar-hedge-replacement.svg'  %}">{% endif %}
               {% if plant.container_suitable %}<img class='icon' src="{% static 'images/container-suitable.svg'  %}">{% endif %}
               {% if plant.ground_cover %}<img class='icon' src="{% static 'images/ground-cover.svg'  %}">{% endif %}
             </div>
-            <div>Suitable for:</div>
 
+            <div><del>Suitable for:</del></div>
           </div>
         </div>
-      </main>
-    </section>
+
+
+      </div>
+
+
+
+      <div>
+        <img src="https://data.canadensys.net/vascan/images/distribution/{{plant.taxon}}.png" width="400" height="400" alt="Distribution: {{plant.latin_name}}" id="png">
+        <div class='inaturalist-legend'>
+          <span style='background-color:#77BB2B;color:#000'>Native</span>
+          <span style='background-color:#E98C1F;color:#000;'>Introduced</span>
+          <span style='background-color:#6E6E6E;'>Excluded</span>
+          <span style='background-color:#000;'>Extirpated</span>
+          <span style='background-color:#AFAFAF;color:#000'>Doubtful</span>
+          <span style='background-color:#D3D3D3;color:#000;'>Absent</span>
+        </div>
+        <a target="blank" href="https://data.canadensys.net/vascan/taxon/{{plant.taxon}}?lang=en">
+          <span class="navbar-logo_text">View taxonomy on Canadensys</span>
+        </a>
+      </div>
+    </main>
+  </section>
 {% endblock content %}
