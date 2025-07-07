@@ -1,337 +1,533 @@
-{% extends "core/base.html" %}
-
-{% load static %}
-{% block extracss%}
+{% extends "core/base.html" %} {% load static %} {% block extracss%}
   <link rel="stylesheet" href="{% static 'css/plant-profile.css' %}" />
-{% endblock extracss %}
+{% endblock extracss %} {% block title %} {{ plant.english_name }} - Plant
+  Profile {% endblock title %} {% block content %}
 
-{% block title %}
-  {{ plant.english_name }} - Plant Profile
-{% endblock title %}
-{% block content %}
+    <section class="main-content">
+      <main>
+        <!-- Plant Profile Header -->
+        <div class="plant-profile-header">
+          <div class="plant-profile-image">
+            <img
+              src="{% static 'images/plants/profile/'|add:plant.latin_name|add:'-profile.jpg' %}"
+              alt="image for {{plant.latin_name}}"
+              onerror="this.src='{% static 'images/plant-placeholder.png' %}'"
+            />
+          </div>
+      <!-- End of Plant Profile Image -->
 
-  <section class="main-content">
-    <main>
+          <div class="plant-profile-characteristics">
+            <div class="plant-profile-names">
+              <div class="plant-profile-latin-name">{{plant.latin_name}}</div>
+              <div class="plant-profile-english-name">{{plant.english_name}}</div>
+              <div class="plant-profile-french-name">{{plant.french_name}}</div>
+            </div>
+            <div class="plant-profile-description">
+              <div>Bloom color: {{plant.bloom_color}}</div>
+              <div>Bloom period: {{plant.bloom_start}} - {{plant.bloom_end}}</div>
+              <div>
+                Light condition: {% if plant.full_sun %}
+                  <img
+                    alt="Full sun"
+                    class="icon"
+                    src="{% static 'images/full-sun.svg' %}"
+                  />
+                {% endif %} {% if plant.partial_sun %}
+                  <img
+                    alt="Partial sun"
+                    class="icon"
+                    src="{% static 'images/partial-sun.svg' %}"
+                  />
+                {% endif %} {% if plant.full_shade %}
+                  <img
+                    alt="Full shade"
+                    class="icon"
+                    src="{% static 'images/full-shade.svg' %}"
+                  />
+                {% endif %}
+              </div>
+              <div>
+                Soil conditions: {% if plant.moisture_dry %}
+                  <div class="tooltip">
+                    <img
+                      title="moisture dry"
+                      alt="Moisture dry"
+                      class="icon"
+                      src="{% static 'images/moisture-dry.svg' %}"
+                    />
+                    <span class="tooltiptext">Tolerates dry soil condition</span>
+                  </div>
+                {% endif %} {% if plant.moisture_medium %}
+                  <div class="tooltip">
+                    <img
+                      title="moisture medium"
+                      alt="Moisture medium"
+                      class="icon"
+                      src="{% static 'images/moisture-medium.svg' %}"
+                    />
+                    <span class="tooltiptext">Tolerates medium soil condition</span>
+                  </div>
+                {% endif %} {% if plant.moisture_wet %}
+                  <div class="tooltip">
+                    <img
+                      title="moisture wet"
+                      alt="Moisture wet"
+                      class="icon"
+                      src="{% static 'images/moisture-wet.svg' %}"
+                    />
+                    <span class="tooltiptext">Tolerates wet soil condition</span>
+                  </div>
+                {% endif %}
+              </div>
+              <div>Max Height: {{plant.max_height}} feet</div>
+              <div>Max Width: {{plant.max_width}} feet</div>
+              <div>
+                <u>Gardener friendly attributes:</u>
+                {% if plant.beginner_friendly %}
+                  <div class="tooltip">
+                    <img
+                      title="beginner friendly"
+                      alt="beginner friendly"
+                      class="icon"
+                      src="{% static 'images/plant-beginner-friendly.svg'  %}"
+                    />
+                    <span class="tooltiptext">Suitable for beginner gardeners</span>
+                  </div>
+                {% endif %} {% if plant.does_not_spread %}
+                  <img
+                    title="does not spread"
+                    alt="does not spread"
+                    class="icon"
+                    src="{% static 'images/plant-does-not-spread.svg'  %}"
+                  />
+                {% endif %} {% if plant.germinate_easy %}
+                  <div class="tooltip">
+                    <img
+                      title="plant germinate easy"
+                      alt="plant germinate easy"
+                      class="icon"
+                      src="{% static 'images/plant-germinate-easy.svg'  %}"
+                    />
+                    <span class="tooltiptext">Easy to germinate</span>
+                  </div>
+                {% endif %}
+              </div>
+              <div>
+                Characteristics: {% if plant.host_plant %}
+                  <img
+                    title="host plant"
+                    alt="Host plant"
+                    class="icon"
+                    src="{% static 'images/host-plant.svg' %}"
+                  />{% endif %} {% if plant.endangered %}
+                    <img
+                      title="endangered"
+                      alt="Endangered"
+                      class="icon"
+                      src="{% static 'images/endangered.svg' %}"
+                    />
+                  {% endif %}
+              </div>
 
-      '<!-- Plant Profile Header -->
-      <div class="plant-profile-header">
-        <div class="plant-profile-image">
-          <img src="{% static 'images/plants/profile/'|add:plant.latin_name|add:'-profile.jpg' %}" alt="image for {{plant.latin_name}}" onerror="this.src='{% static 'images/plant-placeholder.png' %}'" />
+              <div>Hosts:</div>
+              <div>
+                <del>Supports:</del>
+                {% if plant.butterfly_friendly %}
+                  <img
+                    class="icon"
+                    src="{% static 'images/butterfly-friendly.svg'  %}"
+                  />
+                {% endif %}
+              </div>
+
+              <div class="landscape-uses">
+                <u>Landscape uses:</u>
+
+                {% if plant.rock_garden %}
+                  <div class="tooltip">
+                    <img
+                      title="rock garden"
+                      alt="rock garden"
+                      class="icon"
+                      src="{% static 'images/plant-rock-garden.svg'  %}"
+                    />
+                    <span class="tooltiptext">Suitable for rock gardens</span>
+                  </div>
+                {% endif %} {% if plant.rain_garden %}
+                  <div class="tooltip">
+                    <img
+                      title="rain garden"
+                      alt="rain garden"
+                      class="icon"
+                      src="{% static 'images/plant-rain-garden.svg'  %}"
+                    />
+                    <span class="tooltiptext">Suitable for rain gardens</span>
+                  </div>
+                {% endif %} {% if plant.pond_edge %}
+                  <div class="tooltip">
+                    <img
+                      title="pond edge"
+                      alt="pond edge"
+                      class="icon"
+                      src="{% static 'images/plant-pond-edge.svg'  %}"
+                    />
+                    <span class="tooltiptext">Suitable for pond edges</span>
+                  </div>
+                {% endif %} {% if plant.shoreline_rehab %}
+                  <div class="tooltip">
+                    <img
+                      title="shoreline_rehab"
+                      alt="shoreline_rehab"
+                      class="icon"
+                      src="{% static 'images/plant-shoreline-rehab.svg'  %}"
+                    />
+                    <span class="tooltiptext"
+                    >Suitable for shoreline rehabilitation</span
+                      >
+                    </div>
+                {% endif %} {% if plant.container_suitable %}
+                  <div class="tooltip">
+                    <img
+                      title="container suitable"
+                      alt="container suitable"
+                      class="icon"
+                      src="{% static 'images/plant-container-suitable.svg'  %}"
+                    />
+                    <span class="tooltiptext">Suitable for container gardening</span>
+                  </div>
+                {% endif %} {% if plant.school_garden_suitable %}
+                  <div class="tooltip">
+                    <img
+                      title="school garden suitable"
+                      alt="school garden suitable"
+                      class="icon"
+                      src="{% static 'images/plant-school-garden-suitable.svg'  %}"
+                    />
+                    <span class="tooltiptext">Suitable for school gardens</span>
+                  </div>
+                {% endif %} {% if plant.ground_cover %}
+                  <div class="tooltip">
+                    <img
+                      title="ground cover"
+                      alt="ground cover"
+                      class="icon"
+                      src="{% static 'images/plant-ground-cover.svg'  %}"
+                    />
+                    <span class="tooltiptext">Suitable for ground cover</span>
+                  </div>
+                {% endif %} {% if plant.garden_hedge %}
+                  <div class="tooltip">
+                    <img
+                      title="garden hedge"
+                      alt="garden hedge"
+                      class="icon"
+                      src="{% static 'images/plant-garden-hedge.svg'  %}"
+                    />
+                    <span class="tooltiptext">Suitable for garden hedges</span>
+                  </div>
+                {% endif %} {% if plant.woodland_garden %}
+                  <div class="tooltip">
+                    <img
+                      title="woodland garden"
+                      alt="woodland garden"
+                      class="icon"
+                      src="{% static 'images/plant-woodland-garden.svg'  %}"
+                    />
+                    <span class="tooltiptext">Suitable for woodland gardens</span>
+                  </div>
+                {% endif %} {% if plant.wind_break_hedge %}
+                  <div class="tooltip">
+                    <img
+                      title="wind break hedge"
+                      alt="wind break hedge"
+                      class="icon"
+                      src="{% static 'images/plant-wind-break-hedge.svg'  %}"
+                    />
+                    <span class="tooltiptext">Suitable for wind break hedges</span>
+                  </div>
+                {% endif %} {% if plant.erosion_control %}
+                  <div class="tooltip">
+                    <img
+                      title="erosion control"
+                      alt="erosion control"
+                      class="icon"
+                      src="{% static 'images/plant-erosion-control.svg'  %}"
+                    />
+                    <span class="tooltiptext">Suitable for erosion control</span>
+                  </div>
+                {% endif %} {% if plant.keystones_species %}
+                  <div class="tooltip">
+                    <img
+                      title="keystones species"
+                      alt="keystones species"
+                      class="icon"
+                      src="{% static 'images/plant-keystones-species.svg'  %}"
+                    />
+                    <span class="tooltiptext">Keystone species</span>
+                  </div>
+                {% endif %}
+              </div>
+          <!-- End of Landscape uses -->
+
+              <div>
+                <u>Ecological Benefits:</u>
+                {% if plant.hummingbird_friendly %}
+                  <div class="tooltip">
+                    <img
+                      title="Hummingbird friendly"
+                      alt="Hummingbird friendly"
+                      class="icon"
+                      src="{% static 'images/plant-hummingbird-friendly.svg'  %}"
+                    />
+                    <span class="tooltiptext">Supports hummingbirds</span>
+                  </div>
+                {% endif %} {% if plant.butterfly_friendly %}
+                  <div class="tooltip">
+                    <img
+                      title="butterfly friendly"
+                      alt="butterfly friendly"
+                      class="icon"
+                      src="{% static 'images/plant-butterfly-friendly.svg'  %}"
+                    />
+                    <span class="tooltiptext">Supports butterflies</span>
+                  </div>
+                {% endif %} {% if plant.bee_friendly %}
+                  <div class="tooltip">
+                    <img
+                      title="bee friendly"
+                      alt="bee friendly"
+                      class="icon"
+                      src="{% static 'images/plant-bee-friendly.svg'  %}"
+                    />
+                    <span class="tooltiptext">Supports bees</span>
+                  </div>
+                {% endif %} {% if plant.nitrogen_fixer %}
+                  <div class="tooltip">
+                    <img
+                      title="nitrogen fixer"
+                      alt="nitrogen fixer"
+                      class="icon"
+                      src="{% static 'images/plant-nitrogen-fixer.svg'  %}"
+                    />
+                    <span class="tooltiptext">Fixes nitrogen in the soil</span>
+                  </div>
+                {% endif %} {% if plant.easy_to_contain %}
+                  <div class="tooltip">
+                    <img
+                      title="easy to contain"
+                      alt="easy to contain"
+                      class="icon"
+                      src="{% static 'images/plant-easy-to-contain.svg'  %}"
+                    />
+                    <span class="tooltiptext">Easy to contain and manage</span>
+                  </div>
+                {% endif %} {% if plant.cedar_hedge_replacement %}
+                  <div class="tooltip">
+                    <img
+                      title="cedar hedge replacement"
+                      alt="cedar hedge replacement"
+                      class="icon"
+                      src="{% static 'images/plant-cedar-hedge-replacement.svg'  %}"
+                    />
+                    <span class="tooltiptext"
+                    >Can replace traditional cedar hedges</span
+                      >
+                    </div>
+                {% endif %}
+              </div>
+              <div>
+                <u>Tolerates:</u>
+                {% if plant.drought_tolerant %}
+                  <div class="tooltip">
+                    <img
+                      title=""
+                      alt="drought Tolerant"
+                      class="icon"
+                      src="{% static 'images/plant-drought-tolerant.svg'  %}"
+                    />
+                    <span class="tooltiptext">Tolerates drought conditions</span>
+                  </div>
+                {% endif %} {% if plant.salt_tolerant %}
+                  <div class="tooltip">
+                    <img
+                      title=""
+                      alt="Salt Tolerant"
+                      class="icon"
+                      src="{% static 'images/plant-salt-tolerant.svg'  %}"
+                    />
+                    <span class="tooltiptext">Tolerates salt conditions</span>
+                  </div>
+                {% endif %} {% if plant.deer_tolerant %}
+                  <div class="tooltip">
+                    <img
+                      title=""
+                      alt="Deer Resistant"
+                      class="icon"
+                      src="{% static 'images/plant-deer-tolerant.svg'  %}"
+                    />
+                    <span class="tooltiptext">Deer resistant</span>
+                  </div>
+                {% endif %} {% if plant.rabbit_tolerant %}
+                  <div class="tooltip">
+                    <img
+                      title=""
+                      alt="rabbit resistant"
+                      class="icon"
+                      src="{% static 'images/plant-rabbit-tolerant.svg'  %}"
+                    />
+                    <span class="tooltiptext">Rabbits resistant</span>
+                  </div>
+                {% endif %} {% if plant.foot_traffic_tolerant %}
+                  <div class="tooltip">
+                    <img
+                      title=""
+                      alt="foot traffic Tolerant"
+                      class="icon"
+                      src="{% static 'images/plant-foot-traffic-tolerant.svg'  %}"
+                    />
+                    <span class="tooltiptext">Tolerates foot traffic</span>
+                  </div>
+                {% endif %} {% if plant.limestone_tolerant %}
+                  <div class="tooltip">
+                    <img
+                      title=""
+                      alt="limestone Tolerant"
+                      class="icon"
+                      src="{% static 'images/plant-limestone-tolerant.svg'  %}"
+                    />
+                    <span class="tooltiptext">Tolerates limestone conditions</span>
+                  </div>
+                {% endif %} {% if plant.sand_tolerant %}
+                  <div class="tooltip">
+                    <img
+                      title=""
+                      alt="sand Tolerant"
+                      class="icon"
+                      src="{% static 'images/plant-sand-tolerant.svg'  %}"
+                    />
+                    <span class="tooltiptext">Tolerates sandy conditions</span>
+                  </div>
+                {% endif %} {% if plant.acidic_soil_tolerant %}
+                  <div class="tooltip">
+                    <img
+                      title=""
+                      alt="acidic soil Tolerant"
+                      class="icon"
+                      src="{% static 'images/plant-acidic-soil-tolerant.svg'  %}"
+                    />
+                    <span class="tooltiptext">Tolerates acidic soil conditions</span>
+                  </div>
+                {% endif %} {% if plant.boulevard_garden_tolerant %}
+                  <div class="tooltip">
+                    <img
+                      title=""
+                      alt="boulevard garden tolerant"
+                      class="icon"
+                      src="{% static 'images/plant-boulevard-garden-tolerant.svg'  %}"
+                    />
+                    <span class="tooltiptext"
+                    >Tolerates boulevard garden conditions</span
+                      >
+                    </div>
+                {% endif %} {% if plant.juglone_tolerant %}
+                  <div class="tooltip">
+                    <img
+                      title=""
+                      alt="juglone Tolerant"
+                      class="icon"
+                      src="{% static 'images/plant-juglone-tolerant.svg'  %}"
+                    />
+                    <span class="tooltiptext">Tolerates juglone conditions</span>
+                  </div>
+                {% endif %} {% if plant.transplantation_tolerant %}
+                  <div class="tooltip">
+                    <img
+                      title=""
+                      alt="transplantation Tolerant"
+                      class="icon"
+                      src="{% static 'images/plant-transplantation-tolerant.svg'  %}"
+                    />
+                    <span class="tooltiptext">Tolerates transplantation</span>
+                  </div>
+                {% endif %}
+              </div>
+
+              <div>Toxicity:</div>
+              <div>
+                <del>Recommended for:</del> {% if plant.bird_friendly %}<img
+                  alt="Bird friendly"
+                  class="icon"
+                  src="{% static 'images/bird-friendly.svg'  %}"
+                />{% endif %} {% if plant.hummingbird_friendly %}<img
+                  alt="Hummingbird friendly"
+                  class="icon"
+                  src="{% static 'images/plant-hummingbird-friendly.svg'  %}"
+                />{% endif %} {% if plant.butterfly_friendly %}<img
+                  alt="Butterfly friendly"
+                  class="icon"
+                  src="{% static 'images/butterfly-friendly.svg'  %}"
+                />{% endif %} {% if plant.boulevard_garden_tolerant %}<img
+                  alt="Boulevard garden"
+                  class="icon"
+                  src="{% static 'images/boulevard-tolerant.svg'  %}"
+                />{% endif %} {% if plant.cedar_hedge_replacement %}<img
+                  alt="Cedar hedge replacement"
+                  class="icon"
+                  src="{% static 'images/cedar-hedge-replacement.svg'  %}"
+                />{% endif %} {% if plant.container_suitable %}<img
+                  class="icon"
+                  src="{% static 'images/container-suitable.svg'  %}"
+                />{% endif %} {% if plant.ground_cover %}<img
+                  class="icon"
+                  src="{% static 'images/ground-cover.svg'  %}"
+                />{% endif %}
+              </div>
+
+              <div><del>Suitable for:</del></div>
+            </div>
+          </div>
+      <!-- End of Plant Profile Characteristics -->
+
+          <div class="plant-giveaway">
+            {% if plant.seed_availability %}
+              <p>Seeds available at table {{plant.seed_event_table}}</p>
+            {% else %}
+              <p>No seeds available for this plant.</p>
+            {% endif %}
+            {% if plant.accepting_seed %}
+              <p>We currently accept seeds for this plant</p>
+              <p>{{plant.sharing_priority|default:"No priority assigned"}}</p>
+            {% else %}
+              <p>We are not accepting seeds for this plant at the moment.</p>
+            {% endif %}
+          </div>
         </div>
+    <!-- End of Plant Profile Header -->
 
-        <div class="plant-profile-characteristics">
-          <div class="plant-profile-names">
-            <div class="plant-profile-latin-name">{{plant.latin_name}}</div>
-            <div class="plant-profile-english-name">{{plant.english_name}}</div>
-            <div class="plant-profile-french-name">{{plant.french_name}}</div>
+        <div class='inaturalist-distribution'>
+          <img
+            src="https://data.canadensys.net/vascan/images/distribution/{{plant.taxon}}.png"
+            width="400"
+            height="400"
+            alt="Distribution: {{plant.latin_name}}"
+            id="png"
+          />
+          <div class="inaturalist-legend">
+            <span style="background-color: #77bb2b; color: #000">Native</span>
+            <span style="background-color: #e98c1f; color: #000">Introduced</span>
+            <span style="background-color: #6e6e6e">Excluded</span>
+            <span style="background-color: #000">Extirpated</span>
+            <span style="background-color: #afafaf; color: #000">Doubtful</span>
+            <span style="background-color: #d3d3d3; color: #000">Absent</span>
           </div>
-          <div class="plant-profile-description">
-            <div>Bloom color: {{plant.bloom_color}}</div>
-            <div>Bloom period: {{plant.bloom_start}} - {{plant.bloom_end}}</div>
-            <div>Light condition:
-              {% if plant.full_sun %} <img alt="Full sun" class="icon" src="{% static 'images/full-sun.svg' %}"> {% endif %}
-              {% if plant.partial_sun %} <img alt="Partial sun" class="icon" src="{% static 'images/partial-sun.svg' %}"> {% endif %}
-              {% if plant.full_shade %} <img alt="Full shade" class="icon" src="{% static 'images/full-shade.svg' %}"> {% endif %}
-            </div>
-            <div>Soil conditions:
-
-              {% if plant.moisture_dry %}
-                <div class="tooltip">
-                  <img title="moisture dry" alt="Moisture dry" class="icon" src="{% static 'images/moisture-dry.svg' %}" >
-                  <span class="tooltiptext">Tolerates dry soil condition</span>
-                </div>
-              {% endif %}
-
-              {% if plant.moisture_medium %}
-                <div class="tooltip">
-                  <img title="moisture medium" alt="Moisture medium" class="icon" src="{% static 'images/moisture-medium.svg' %}">
-                  <span class="tooltiptext">Tolerates medium soil condition</span>
-                </div>
-              {% endif %}
-
-              {% if plant.moisture_wet %}
-                <div class="tooltip">
-                  <img title="moisture wet" alt="Moisture wet" class="icon" src="{% static 'images/moisture-wet.svg' %}">
-                  <span class="tooltiptext">Tolerates wet soil condition</span>
-                </div>
-              {% endif %}
-            </div>
-            <div>Max Height: {{plant.max_height}} feet</div>
-            <div>Max Width: {{plant.max_width}} feet</div>
-            <div><u>Gardener friendly attributes:</u>
-              {% if plant.beginner_friendly %}
-                <div class="tooltip">
-                  <img title="beginner friendly" alt="beginner friendly" class='icon' src="{% static 'images/plant-beginner-friendly.svg'  %}">
-                  <span class="tooltiptext">Suitable for beginner gardeners</span>
-                </div>
-              {% endif %}
-
-              {% if plant.does_not_spread %} <img title="does not spread" alt="does not spread" class='icon' src="{% static 'images/plant-does-not-spread.svg'  %}"> {% endif %}
-
-
-              {% if plant.germinate_easy %}
-                <div class="tooltip">
-                  <img title="plant germinate easy" alt="plant germinate easy" class='icon' src="{% static 'images/plant-germinate-easy.svg'  %}">
-                  <span class="tooltiptext">Easy to germinate</span>
-                </div>
-              {% endif %}
-
-            </div>
-            <div>Characteristics:
-              {% if plant.host_plant %} <img title="host plant" alt="Host plant" class="icon" src="{% static 'images/host-plant.svg' %}">{% endif %}
-              {% if plant.endangered %} <img title="endangered" alt="Endangered" class="icon" src="{% static 'images/endangered.svg' %}"> {% endif %}
-            </div>
-
-            <div>Hosts: </div>
-            <div><del>Supports:</del>
-              {% if plant.butterfly_friendly %}
-                <img class='icon' src="{% static 'images/butterfly-friendly.svg'  %}">
-              {% endif %}
-            </div>
-            {% if plant.rock_garden %}
-              <div><u>Landscape uses:</u>
-                <div class="tooltip">
-                  <img title="rock garden" alt="rock garden" class='icon' src="{% static 'images/plant-rock-garden.svg'  %}">
-                  <span class="tooltiptext">Suitable for rock gardens</span>
-                </div>
-            {% endif %}
-
-            {% if plant.rain_garden %}
-              <div class="tooltip">
-                <img title="rain garden" alt="rain garden" class='icon' src="{% static 'images/plant-rain-garden.svg'  %}">
-                <span class="tooltiptext">Suitable for rain gardens</span>
-              </div>
-            {% endif %}
-
-            {% if plant.pond_edge %}
-              <div class="tooltip">
-                <img title="pond edge" alt="pond edge" class='icon' src="{% static 'images/plant-pond-edge.svg'  %}">
-                <span class="tooltiptext">Suitable for pond edges</span>
-              </div>
-            {% endif %}
-
-            {% if plant.shoreline_rehab %}
-              <div class="tooltip">
-                <img title="shoreline_rehab" alt="shoreline_rehab" class='icon' src="{% static 'images/plant-shoreline-rehab.svg'  %}">
-                <span class="tooltiptext">Suitable for shoreline rehabilitation</span>
-              </div>
-            {% endif %}
-
-            {% if plant.container_suitable %}
-              <div class="tooltip">
-                <img title="container suitable" alt="container suitable" class='icon' src="{% static 'images/plant-container-suitable.svg'  %}">
-                <span class="tooltiptext">Suitable for container gardening</span>
-              </div>
-            {% endif %}
-
-            {% if plant.school_garden_suitable %}
-              <div class="tooltip">
-                <img title="school garden suitable" alt="school garden suitable" class='icon' src="{% static 'images/plant-school-garden-suitable.svg'  %}">
-                <span class="tooltiptext">Suitable for school gardens</span>
-              </div>
-            {% endif %}
-
-            {% if plant.ground_cover %}
-              <div class="tooltip">
-                <img title="ground cover" alt="ground cover" class='icon' src="{% static 'images/plant-ground-cover.svg'  %}">
-                <span class="tooltiptext">Suitable for ground cover</span>
-              </div>
-            {% endif %}
-
-            {% if plant.garden_hedge %}
-              <div class="tooltip">
-                <img title="garden hedge" alt="garden hedge" class='icon' src="{% static 'images/plant-garden-hedge.svg'  %}">
-                <span class="tooltiptext">Suitable for garden hedges</span>
-              </div>
-            {% endif %}
-
-            {% if plant.woodland_garden %}
-              <div class="tooltip">
-                <img title="woodland garden" alt="woodland garden" class='icon' src="{% static 'images/plant-woodland-garden.svg'  %}">
-                <span class="tooltiptext">Suitable for woodland gardens</span>
-              </div>
-            {% endif %}
-
-            {% if plant.wind_break_hedge %}
-              <div class="tooltip">
-                <img title="wind break hedge" alt="wind break hedge" class='icon' src="{% static 'images/plant-wind-break-hedge.svg'  %}">
-                <span class="tooltiptext">Suitable for wind break hedges</span>
-              </div>
-            {% endif %}
-
-            {% if plant.erosion_control %}
-              <div class="tooltip">
-                <img title="erosion control" alt="erosion control" class='icon' src="{% static 'images/plant-erosion-control.svg'  %}">
-                <span class="tooltiptext">Suitable for erosion control</span>
-              </div>
-            {% endif %}
-
-            {% if plant.keystones_species %}
-              <div class="tooltip">
-                <img title="keystones species" alt="keystones species" class='icon' src="{% static 'images/plant-keystones-species.svg'  %}">
-                <span class="tooltiptext">Keystone species</span>
-              </div>
-            {% endif %}
-
-          </div>
-
-          <div><u>Ecological Benefits:</u>
-            {% if plant.hummingbird_friendly %}
-              <div class="tooltip">
-                <img title="Hummingbird friendly" alt="Hummingbird friendly" class='icon' src="{% static 'images/plant-hummingbird-friendly.svg'  %}">
-                <span class="tooltiptext">Supports hummingbirds</span>
-              </div>
-            {% endif %}
-
-            {% if plant.butterfly_friendly %}
-              <div class="tooltip">
-                <img title="butterfly friendly" alt="butterfly friendly" class='icon' src="{% static 'images/plant-butterfly-friendly.svg'  %}">
-                <span class="tooltiptext">Supports butterflies</span>
-              </div>
-            {% endif %}
-
-            {% if plant.bee_friendly %}
-              <div class="tooltip">
-                <img title="bee friendly" alt="bee friendly" class='icon' src="{% static 'images/plant-bee-friendly.svg'  %}">
-                <span class="tooltiptext">Supports bees</span>
-              </div>
-            {% endif %}
-
-            {% if plant.nitrogen_fixer %}
-              <div class="tooltip">
-                <img title="nitrogen fixer" alt="nitrogen fixer" class='icon' src="{% static 'images/plant-nitrogen-fixer.svg'  %}">
-                <span class="tooltiptext">Fixes nitrogen in the soil</span>
-              </div>
-            {% endif %}
-
-            {% if plant.easy_to_contain %}
-              <div class="tooltip">
-                <img title="easy to contain" alt="easy to contain" class='icon' src="{% static 'images/plant-easy-to-contain.svg'  %}">
-                <span class="tooltiptext">Easy to contain and manage</span>
-              </div>
-            {% endif %}
-
-            {% if plant.cedar_hedge_replacement %}
-              <div class="tooltip">
-                <img title="cedar hedge replacement" alt="cedar hedge replacement" class='icon' src="{% static 'images/plant-cedar-hedge-replacement.svg'  %}">
-                <span class="tooltiptext">Can replace traditional cedar hedges</span>
-              </div>
-            {% endif %}
-
-          </div>
-          <div><u>Tolerates:</u>
-            {% if plant.drought_tolerant %}
-              <div class="tooltip">
-                <img title="" alt="drought Tolerant" class='icon' src="{% static 'images/plant-drought-tolerant.svg'  %}">
-                <span class="tooltiptext">Tolerates drought conditions</span>
-              </div>
-            {% endif %}
-
-            {% if plant.salt_tolerant %}
-              <div class="tooltip">
-                <img title="" alt="Salt Tolerant" class='icon' src="{% static 'images/plant-salt-tolerant.svg'  %}">
-                <span class="tooltiptext">Tolerates salt conditions</span>
-              </div>
-            {% endif %}
-
-            {% if plant.deer_tolerant %}
-              <div class="tooltip">
-                <img title="" alt="Deer Resistant" class='icon' src="{% static 'images/plant-deer-tolerant.svg'  %}">
-                <span class="tooltiptext">Deer resistant</span>
-              </div>
-            {% endif %}
-
-            {% if plant.rabbit_tolerant %}
-              <div class="tooltip">
-                <img title="" alt="rabbit resistant" class='icon' src="{% static 'images/plant-rabbit-tolerant.svg'  %}">
-                <span class="tooltiptext">Rabbits resistant</span>
-              </div>
-            {% endif %}
-
-            {% if plant.foot_traffic_tolerant %}
-              <div class="tooltip">
-                <img title="" alt="foot traffic Tolerant" class='icon' src="{% static 'images/plant-foot-traffic-tolerant.svg'  %}">
-                <span class="tooltiptext">Tolerates foot traffic</span>
-              </div>
-            {% endif %}
-
-            {% if plant.limestone_tolerant %}
-              <div class="tooltip">
-                <img title="" alt="limestone Tolerant" class='icon' src="{% static 'images/plant-limestone-tolerant.svg'  %}">
-                <span class="tooltiptext">Tolerates limestone conditions</span>
-              </div>
-            {% endif %}
-
-            {% if plant.sand_tolerant %}
-              <div class="tooltip">
-                <img title="" alt="sand Tolerant" class='icon' src="{% static 'images/plant-sand-tolerant.svg'  %}">
-                <span class="tooltiptext">Tolerates sandy conditions</span>
-              </div>
-            {% endif %}
-
-            {% if plant.acidic_soil_tolerant %}
-              <div class="tooltip">
-                <img title="" alt="acidic soil Tolerant" class='icon' src="{% static 'images/plant-acidic-soil-tolerant.svg'  %}">
-                <span class="tooltiptext">Tolerates acidic soil conditions</span>
-              </div>
-            {% endif %}
-
-            {% if plant.boulevard_garden_tolerant %}
-              <div class="tooltip">
-                <img title="" alt="boulevard garden tolerant" class='icon' src="{% static 'images/plant-boulevard-garden-tolerant.svg'  %}">
-                <span class="tooltiptext">Tolerates boulevard garden conditions</span>
-              </div>
-            {% endif %}
-
-            {% if plant.juglone_tolerant %}
-              <div class="tooltip">
-                <img title="" alt="juglone Tolerant" class='icon' src="{% static 'images/plant-juglone-tolerant.svg'  %}">
-                <span class="tooltiptext">Tolerates juglone conditions</span>
-              </div>
-            {% endif %}
-
-            {% if plant.transplantation_tolerant %}
-              <div class="tooltip">
-                <img title="" alt="transplantation Tolerant" class='icon' src="{% static 'images/plant-transplantation-tolerant.svg'  %}">
-                <span class="tooltiptext">Tolerates transplantation</span>
-              </div>
-            {% endif %}
-
-          </div>
-
-          <div>Toxicity:</div>
-          <div><del>Recommended for:</del>
-            {% if plant.bird_friendly %}<img alt="Bird friendly" class='icon' src="{% static 'images/bird-friendly.svg'  %}">{% endif %}
-            {% if plant.hummingbird_friendly %}<img alt="Hummingbird friendly" class='icon' src="{% static 'images/plant-hummingbird-friendly.svg'  %}">{% endif %}
-            {% if plant.butterfly_friendly %}<img alt="Butterfly friendly" class='icon' src="{% static 'images/butterfly-friendly.svg'  %}">{% endif %}
-            {% if plant.boulevard_garden_tolerant %}<img alt="Boulevard garden" class='icon' src="{% static 'images/boulevard-tolerant.svg'  %}">{% endif %}
-            {% if plant.cedar_hedge_replacement %}<img alt="Cedar hedge replacement" class='icon' src="{% static 'images/cedar-hedge-replacement.svg'  %}">{% endif %}
-            {% if plant.container_suitable %}<img class='icon' src="{% static 'images/container-suitable.svg'  %}">{% endif %}
-            {% if plant.ground_cover %}<img class='icon' src="{% static 'images/ground-cover.svg'  %}">{% endif %}
-          </div>
-
-          <div><del>Suitable for:</del></div>
+          <a
+            target="blank"
+            href="https://data.canadensys.net/vascan/taxon/{{plant.taxon}}?lang=en"
+          >
+            <span class="navbar-logo_text">View taxonomy on Canadensys</span>
+          </a>
         </div>
-      </div> <!-- End of Plant Profile Characteristics -->
-
-    </div> <!-- End of Plant Profile Header -->
-
-
-
-    <div>
-      <img src="https://data.canadensys.net/vascan/images/distribution/{{plant.taxon}}.png" width="400" height="400" alt="Distribution: {{plant.latin_name}}" id="png">
-      <div class='inaturalist-legend'>
-        <span style='background-color:#77BB2B;color:#000'>Native</span>
-        <span style='background-color:#E98C1F;color:#000;'>Introduced</span>
-        <span style='background-color:#6E6E6E;'>Excluded</span>
-        <span style='background-color:#000;'>Extirpated</span>
-        <span style='background-color:#AFAFAF;color:#000'>Doubtful</span>
-        <span style='background-color:#D3D3D3;color:#000;'>Absent</span>
-      </div>
-      <a target="blank" href="https://data.canadensys.net/vascan/taxon/{{plant.taxon}}?lang=en">
-        <span class="navbar-logo_text">View taxonomy on Canadensys</span>
-      </a>
-    </div>
-  </main>
-  </section>
-{% endblock content %}
+    <!-- End of inaturalist distribution -->
+      </main>
+    </section>
+  {% endblock content %}
