@@ -19,6 +19,9 @@ class PlantProfileFilter(django_filters.FilterSet):
         method="filter_accepting_seed",
     )
 
+    beginner_friendly = django_filters.CharFilter(
+        method="filter_boolean",
+    )
     bird_friendly = django_filters.CharFilter(
         method="filter_boolean",
     )
