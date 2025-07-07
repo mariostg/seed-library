@@ -794,6 +794,9 @@ class PlantProfile(Base):
     )
     inaturalist_taxon = models.CharField(max_length=10, blank=True)
 
+    # !Image releated fields such as has_profile_image, has_bloom_image, has_seed_image etc.
+    has_image_profile = models.BooleanField(default=False, null=True, blank=True)
+
     search_plant = PlantProfileQuerySet.as_manager()
     objects = models.Manager()
 
