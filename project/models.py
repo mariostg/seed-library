@@ -663,7 +663,13 @@ class PlantProfile(Base):
         choices=MONTHS.items(), blank=True, default=0
     )
     bloom_end = models.SmallIntegerField(choices=MONTHS.items(), blank=True, default=0)
-    moisture_dry = models.BooleanField(default=False, null=True, blank=True)
+    moisture_dry = models.BooleanField(
+        default=False,
+        null=True,
+        blank=True,
+        help_text="Does the plant tolerate dry conditions?",
+        name="moisture_dry",
+    )
     moisture_wet = models.BooleanField(default=False, null=True, blank=True)
     moisture_medium = models.BooleanField(default=False, null=True, blank=True)
     max_height = models.FloatField(blank=True, null=True, default=0)
@@ -1067,3 +1073,28 @@ class PlantImage(models.Model):
         except ValueError:
             pass
         super().delete(*args, **kwargs)
+
+
+class ButterflySpecies(models.Model):
+    """A model representing butterfly species that can interact with plants.
+
+    This model stores the name of the butterfly species and provides a string representation.
+    Attributes:
+        latin_name (CharField): The scientific name of the butterfly species, max length 75 characters, unique.
+        english_name (CharField): The common name of the butterfly species in English, max length 75 characters, can be blank.
+    Returns:
+        str: String representation of the butterfly species, which is its Latin name.
+    Meta:
+        verbose_name_plural: "Butterfly Species"
+        ordering: Alphabetically by Latin name
+    """
+
+    latin_name = models.CharField(max_length=75, blank=True, unique=True)
+    english_name = models.CharField(max_length=75, blank=True)
+
+    def __str__(self) -> str:
+        return self.latin_name
+
+    class Meta:
+        verbose_name_plural = "Butterfly Species"
+        ordering = ["latin_name"]
