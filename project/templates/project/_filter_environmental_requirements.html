@@ -1,0 +1,103 @@
+<!--Input checkbox for full sun-->
+<div class='filter__sub-header'>Light preferences</div>
+<input
+  type="checkbox"
+  id="full_sun"
+  name="full_sun"
+  value="Full Sun"
+  hx-get="/search-plant-name"
+  hx-trigger="click"
+  hx-target="#search-results"
+  hx-push-url="true"
+  hx-include="{{hx_include}}"
+  {% if full_sun %} checked {% endif %}
+/>
+<label for="full_sun" class="tooltip">Full Sun ✔ <span class="tooltiptext"
+  >More than 6 hours of direct sun a day
+  </span></label><br />
+
+      <!--Input checkbox for partial sun-->
+<input
+  type="checkbox"
+  id="partial_sun"
+  name="partial_sun"
+  value="Partial Sun"
+  hx-get="/search-plant-name"
+  hx-trigger="click"
+  hx-target="#search-results"
+  hx-push-url="true"
+  hx-include="{{hx_include}}"
+  {% if partial_sun %} checked {% endif %}
+/>
+<label for="partial_sun" class="tooltip"
+>Part Sun ✔
+  <span class="tooltiptext"
+  >More than 2 or 3 hours but less than 6 hours of direct sun a day
+  </span></label
+  ><br />
+
+      <!--Input checkbox for full shade-->
+  <input
+    type="checkbox"
+    id="full_shade"
+    name="full_shade"
+    value="Full Shade"
+    hx-get="/search-plant-name"
+    hx-trigger="click"
+    hx-target="#search-results"
+    hx-push-url="true"
+    hx-include="{{hx_include}}"
+    {% if full_shade %} checked {% endif %}
+  />
+  <label for="full_shade" class="tooltip">Full Shade ✔ <span class="tooltiptext"
+    >Less than 2 or 3 hours of direct sun a day</span></label><br />
+
+  <div class='filter__sub-header'>Moisture preferences</div>
+<!--Input checkbox for moisture dry-->
+  <input
+    type="checkbox"
+    id="moisture_dry"
+    name="moisture_dry"
+    value="Moisture Dry"
+    hx-get="/search-plant-name"
+    hx-trigger="click"
+    hx-target="#search-results"
+    hx-push-url="true"
+    hx-include="{{hx_include}}"
+    {% if moisture_dry %} checked {% endif %}
+  />
+  <label for="moisture_dry" class="tooltip">Dry ✔ <span class="tooltiptext"
+    >Water runs through after rainfall
+    </span></label><br />
+
+      <!--Input checkbox for moisture medium-->
+  <input
+    type="checkbox"
+    id="moisture_medium"
+    name="moisture_medium"
+    value="Moisture Medium"
+    hx-get="/search-plant-name"
+    hx-trigger="click"
+    hx-target="#search-results"
+    hx-push-url="true"
+    hx-include="{{hx_include}}"
+    {% if moisture_medium %} checked {% endif %}
+  />
+  <label for="moisture_medium" class="tooltip">Medium ✔ <span class="tooltiptext"
+    >Sometimes holds water but for short periods of time</span></label><br />
+
+      <!--Input checkbox for moisture wet-->
+  <input
+    type="checkbox"
+    id="moisture_wet"
+    name="moisture_wet"
+    value="Moisture Wet"
+    hx-get="/search-plant-name"
+    hx-trigger="click"
+    hx-target="#search-results"
+    hx-push-url="true"
+    hx-include="{{hx_include}}"
+    {% if moisture_wet %} checked {% endif %}
+  />
+  <label for="moisture_wet" class="tooltip">Wet ✔ <span class="tooltiptext"
+    >Stays damp all year</span></label><br />

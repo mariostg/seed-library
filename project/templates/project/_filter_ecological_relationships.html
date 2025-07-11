@@ -1,0 +1,202 @@
+<div class='filter__sub-header'>Wildlife Interactions</div>
+<!--Input checkbox for hummingbird friendly-->
+<input
+  type="checkbox"
+  id="hummingbird_friendly"
+  name="hummingbird_friendly"
+  value="Hummingbird Friendly"
+  hx-get="/search-plant-name"
+  hx-trigger="click"
+  hx-target="#search-results"
+  hx-push-url="true"
+  hx-include="{{hx_include}}"
+  {% if hummingbird_friendly %} checked {% endif %}
+/>
+<label for="hummingbird_friendly">Hummingbird friendly ✔</label><br />
+
+<!--Input checkbox for pollinator friendly-->
+<input
+  type="checkbox"
+  id="butterfly_friendly"
+  name="butterfly_friendly"
+  value="Butterfly Friendly"
+  hx-get="/search-plant-name"
+  hx-trigger="click"
+  hx-target="#search-results"
+  hx-push-url="true"
+  hx-include="{{hx_include}}"
+  {% if butterfly_friendly %} checked {% endif %}
+/>
+<label for="butterfly_friendly">Butterfly/pollinators garden ✔</label
+  ><br />
+
+
+<!--Input checkbox for bee friendly-->
+  <input
+    type="checkbox"
+    id="bee_friendly"
+    name="bee_friendly"
+    value="Bee Friendly"
+    hx-get="/search-plant-name"
+    hx-trigger="click"
+    hx-target="#search-results"
+    hx-push-url="true"
+    hx-include="{{hx_include}}"
+    {% if bee_friendly %} checked {% endif %}
+  />
+  <label for="bee_friendly">Bee friendly</label><br />
+
+<!--Input checkbox for bird friendly-->
+  <input
+    type="checkbox"
+    id="bird_friendly"
+    name="bird_friendly"
+    value="Bird Friendly"
+    hx-get="/search-plant-name"
+    hx-trigger="click"
+    hx-target="#search-results"
+    hx-push-url="true"
+    hx-include="{{hx_include}}"
+    {% if bird_friendly %} checked {% endif %}
+  />
+  <label for="bird_friendly">Bird friendly ✔</label><br />
+
+<!--Input checkbox for deer tolerant-->
+  <input
+    type="checkbox"
+    id="deer_tolerant"
+    name="deer_tolerant"
+    value="Deer Tolerant"
+    hx-get="/search-plant-name"
+    hx-trigger="click"
+    hx-target="#search-results"
+    hx-push-url="true"
+    hx-include="{{hx_include}}"
+    {% if deer_tolerant %} checked {% endif %}
+  />
+  <label for="deer_tolerant">Deer tolerant ✔</label><br />
+
+<!--Input for rabbit tolerant-->
+  <input
+    type="checkbox"
+    id="rabbit_tolerant"
+    name="rabbit_tolerant"
+    value="Rabbit Tolerant"
+    hx-get="/search-plant-name"
+    hx-trigger="click"
+    hx-target="#search-results"
+    hx-push-url="true"
+    hx-include="{{hx_include}}"
+    {% if rabbit_tolerant %} checked {% endif %}
+  />
+  <label for="rabbit_tolerant">Rabbit tolerant ✔</label><br />
+
+  <div class='filter__sub-header'>Environmental Stress Tolerance</div>
+
+<!--Input checkbox for drought tolerant-->
+  <input
+    type="checkbox"
+    id="drought_tolerant"
+    name="drought_tolerant"
+    value="Drought Tolerant"
+    hx-get="/search-plant-name"
+    hx-trigger="click"
+    hx-target="#search-results"
+    hx-push-url="true"
+    hx-include="{{hx_include}}"
+    {% if drought_tolerant %} checked {% endif %}
+  />
+  <label for="drought_tolerant">Drought tolerant ✔</label><br />
+
+
+<!--Input checkbox for salt toretant-->
+  <input
+    type="checkbox"
+    id="salt_tolerant"
+    name="salt_tolerant"
+    value="Salt Tolerant"
+    hx-get="/search-plant-name"
+    hx-trigger="click"
+    hx-target="#search-results"
+    hx-push-url="true"
+    hx-include="{{hx_include}}"
+    {% if salt_tolerant %} checked {% endif %}
+  />
+  <label for="salt_tolerant">Road Salt tolerant✔</label><br />
+
+<!--Input checkbox for foot traffic tolerant-->
+  <input
+    type="checkbox"
+    id="foot_traffic_tolerant"
+    name="foot_traffic_tolerant"
+    value="Foot Traffic Tolerant"
+    hx-get="/search-plant-name"
+    hx-trigger="click"
+    hx-target="#search-results"
+    hx-push-url="true"
+    hx-include="{{hx_include}}"
+    {% if foot_traffic_tolerant %} checked {% endif %}
+  />
+  <label for="foot_traffic_tolerant">Foot traffic tolerant</label><br />
+<!--Input checkbox for juglone tolerant-->
+  <input
+    type="checkbox"
+    id="juglone_tolerant"
+    name="juglone_tolerant"
+    value="Juglone Tolerant"
+    hx-get="/search-plant-name"
+    hx-trigger="click"
+    hx-target="#search-results"
+    hx-push-url="true"
+    hx-include="{{hx_include}}"
+    {% if juglone_tolerant %} checked {% endif %}
+  />
+  <label for="juglone_tolerant">Juglone tolerant ✔</label><br />
+
+
+  <div class='filter__sub-header'>Ecosystem Services</div>
+
+<!--Input checkbox for nitrogen_fixer-->
+  <input
+    type="checkbox"
+    id="nitrogen_fixer"
+    name="nitrogen_fixer"
+    value="Nitrogen Fixer"
+    hx-get="/search-plant-name"
+    hx-trigger="click"
+    hx-target="#search-results"
+    hx-push-url="true"
+    hx-include="{{hx_include}}"
+    {% if nitrogen_fixer %} checked {% endif %}
+  />
+  <label for="nitrogen_fixer">Nitrogen fixer✔</label><br />
+
+<!--Input checkbox for keystones species-->
+  <input
+    type="checkbox"
+    id="keystones_species"
+    name="keystones_species"
+    value="Keystones Species"
+    hx-get="/search-plant-name"
+    hx-trigger="click"
+    hx-target="#search-results"
+    hx-push-url="true"
+    hx-include="{{hx_include}}"
+    {% if keystones_species %} checked {% endif %}
+  />
+  <label for="keystones_species">Keystone species ✔</label><br />
+
+<!--Input checkbox for host plant-->
+  <input
+    type="checkbox"
+    id="host_plant"
+    name="host_plant"
+    value="Host Plant"
+    hx-get="/search-plant-name"
+    hx-trigger="click"
+    hx-target="#search-results"
+    hx-push-url="true"
+    hx-include="{{hx_include}}"
+    {% if host_plant %} checked {% endif %}
+  />
+  <label for="host_plant">Host plant</label><br />

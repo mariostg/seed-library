@@ -1,0 +1,293 @@
+<div class='filter__sub-header'>Garden Suitability</div>
+<!--Input checkbox for rock garden-->
+<input
+  type="checkbox"
+  id="rock_garden"
+  name="rock_garden"
+  value="Rock Garden"
+  hx-get="/search-plant-name"
+  hx-trigger="click"
+  hx-target="#search-results"
+  hx-push-url="true"
+  hx-include="{{hx_include}}"
+  {% if rock_garden %} checked {% endif %}
+/>
+<label for="rock_garden">Rock garden ✔</label><br />
+
+<!--Input checkbox for rain garden-->
+<input
+  type="checkbox"
+  id="rain_garden"
+  name="rain_garden"
+  value="Rain Garden"
+  hx-get="/search-plant-name"
+  hx-trigger="click"
+  hx-target="#search-results"
+  hx-push-url="true"
+  hx-include="{{hx_include}}"
+  {% if rain_garden %} checked {% endif %}
+/>
+<label for="rain_garden">Rain garden</label><br />
+
+<!--Input checkbox for pond edge-->
+<input
+  type="checkbox"
+  id="pond_edge"
+  name="pond_edge"
+  value="Pond Edge"
+  hx-get="/search-plant-name"
+  hx-trigger="click"
+  hx-target="#search-results"
+  hx-push-url="true"
+  hx-include="{{hx_include}}"
+  {% if pond_edge %} checked {% endif %}
+/>
+<label for="pond_edge">Pond edge</label><br />
+
+
+<!--Input checkbox for shoreline_rehab-->
+<input
+  type="checkbox"
+  id="shoreline_rehab"
+  name="shoreline_rehab"
+  value="Shoreline restauration"
+  hx-get="/search-plant-name"
+  hx-trigger="click"
+  hx-target="#search-results"
+  hx-push-url="true"
+  hx-include="{{hx_include}}"
+  {% if shoreline_rehab %} checked {% endif %}
+/>
+<label for="shoreline_rehab">Shoreline restoration ✔</label><br />
+
+<!--Input checkbox for container suitable-->
+<div class="form__field">
+  <input
+    type="checkbox"
+    id="container_suitable"
+    name="container_suitable"
+    value="container_suitable"
+    hx-get="/search-plant-name"
+    hx-trigger="click"
+    hx-target="#search-results"
+    hx-push-url="true"
+    hx-include="{{hx_include}}"
+    {% if container_suitable %} checked {% endif %}
+  />
+  <label for="container_suitable">Container gardening ✔</label>
+</div>
+<!--Input checkbox for school garden suitable-->
+<div class="form__field">
+  <input
+    type="checkbox"
+    id="school_garden_suitable"
+    name="school_garden_suitable"
+    value="School Garden Suitable"
+    hx-get="/search-plant-name"
+    hx-trigger="click"
+    hx-target="#search-results"
+    hx-push-url="true"
+    hx-include="{{hx_include}}"
+    {% if school_garden_suitable %} checked {% endif %}
+  />
+  <label for="school_garden_suitable">School garden suitable</label>
+</div>
+<!--Input checkbox for garden edge-->
+<div class="form__field">
+  <input
+    type="checkbox"
+    id="garden_edge"
+    name="garden_edge"
+    value="Garden Edge"
+    hx-get="/search-plant-name"
+    hx-trigger="click"
+    hx-target="#search-results"
+    hx-push-url="true"
+    hx-include="{{hx_include}}"
+    {% if garden_edge %} checked {% endif %}
+  />
+  <label for="garden_edge">Garden edge</label>
+</div>
+<!--Input checkbox for woodland garden-->
+<div class="form__field">
+  <input
+    type="checkbox"
+    id="woodland_garden"
+    name="woodland_garden"
+    value="Woodland Garden"
+    hx-get="/search-plant-name"
+    hx-trigger="click"
+    hx-target="#search-results"
+    hx-push-url="true"
+    hx-include="{{hx_include}}"
+    {% if woodland_garden %} checked {% endif %}
+  />
+  <label for="woodland_garden">Woodland garden</label>
+</div>
+
+<!--Input checkbox for wetland garden-->
+<input
+  type="checkbox"
+  id="wetland_garden"
+  name="wetland_garden"
+  value="Wetland Garden"
+  hx-get="/search-plant-name"
+  hx-trigger="click"
+  hx-target="#search-results"
+  hx-push-url="true"
+  hx-include="{{hx_include}}"
+  {% if wetland_garden %} checked {% endif %}
+/>
+<label for="wetland_garden">Wetland garden ✔</label><br />
+
+<!--Input checkbox for boulevard garden tolerant-->
+<input
+  type="checkbox"
+  id="boulevard_garden_tolerant"
+  name="boulevard_garden_tolerant"
+  value="boulevard_garden_tolerant"
+  hx-get="/search-plant-name"
+  hx-trigger="click"
+  hx-target="#search-results"
+  hx-push-url="true"
+  hx-include="{{hx_include}}"
+  {% if boulevard_garden_tolerant %} checked {% endif %}
+/>
+<label for="boulevard_garden_tolerant">Boulevard garden ✔</label><br />
+
+<div class='filter__sub-header'>Functional Uses</div>
+
+<!--Input checkbox for ground cover-->
+<input
+  type="checkbox"
+  id="ground_cover"
+  name="ground_cover"
+  value="Ground Cover"
+  hx-get="/search-plant-name"
+  hx-trigger="click"
+  hx-target="#search-results"
+  hx-push-url="true"
+  hx-include="{{hx_include}}"
+  {% if ground_cover %} checked {% endif %}
+/>
+<label for="ground_cover">Groundcover/lawn replacement ✔</label><br />
+<!--Input checkbox for Wind Break Hedge-->
+<input
+  type="checkbox"
+  id="wind_break_hedge"
+  name="wind_break_hedge"
+  value="Wind Break Hedge"
+  hx-get="/search-plant-name"
+  hx-trigger="click"
+  hx-target="#search-results"
+  hx-push-url="true"
+  hx-include="{{hx_include}}"
+  {% if wind_break_hedge %} checked {% endif %}
+/>
+<label for="wind_break_hedge">Wind break hedge</label><br />
+<!--Input checkbox for Erosion Control-->
+<input
+  type="checkbox"
+  id="erosion_control"
+  name="erosion_control"
+  value="Erosion Control"
+  hx-get="/search-plant-name"
+  hx-trigger="click"
+  hx-target="#search-results"
+  hx-push-url="true"
+  hx-include="{{hx_include}}"
+  {% if erosion_control %} checked {% endif %}
+/>
+<label for="erosion_control">Erosion control</label><br />
+<!--Input checkbox for cedar hedge replacement-->
+<input
+  type="checkbox"
+  id="cedar_hedge_replacement"
+  name="cedar_hedge_replacement"
+  value="Cedar Hedge Replacement"
+  hx-get="/search-plant-name"
+  hx-trigger="click"
+  hx-target="#search-results"
+  hx-push-url="true"
+  hx-include="{{hx_include}}"
+  {% if cedar_hedge_replacement %} checked {% endif %}
+/>
+<label for="cedar_hedge_replacement">Cedar hedge replacement ✔</label
+  ><br />
+
+  <div class='filter__sub-header'>Gardener Experience</div>
+<!--Input box for beginner friendly-->
+  <input
+    type="checkbox"
+    id="beginner_friendly"
+    name="beginner_friendly"
+    value="Beginner Friendly"
+    hx-get="/search-plant-name"
+    hx-trigger="click"
+    hx-target="#search-results"
+    hx-push-url="true"
+    hx-include="{{hx_include}}"
+    {% if beginner_friendly %} checked {% endif %}
+  />
+  <label for="beginner_friendly">Beginner friendly ✔</label><br />
+
+<!--Input checkbox for Easy to contain-->
+  <input
+    type="checkbox"
+    id="easy_to_contain"
+    name="easy_to_contain"
+    value="Easy to Contain"
+    hx-get="/search-plant-name"
+    hx-trigger="click"
+    hx-target="#search-results"
+    hx-push-url="true"
+    hx-include="{{hx_include}}"
+    {% if easy_to_contain %} checked {% endif %}
+  />
+  <label for="easy_to_contain">Easy to contain</label><br />
+<!--Input checkbox for Does not spread-->
+  <input
+    type="checkbox"
+    id="does_not_spread"
+    name="does_not_spread"
+    value="Does Not Spread"
+    hx-get="/search-plant-name"
+    hx-trigger="click"
+    hx-target="#search-results"
+    hx-push-url="true"
+    hx-include="{{hx_include}}"
+    {% if does_not_spread %} checked {% endif %}
+  />
+  <label for="does_not_spread">Does not spread</label><br />
+
+
+<!--Input checkbox for transplantation_tolerant-->
+  <input
+    type="checkbox"
+    id="transplantation_tolerant"
+    name="transplantation_tolerant"
+    value="Transplantation Tolerant"
+    hx-get="/search-plant-name"
+    hx-trigger="click"
+    hx-target="#search-results"
+    hx-push-url="true"
+    hx-include="{{hx_include}}"
+    {% if transplantation_tolerant %} checked {% endif %}
+  />
+  <label for="transplantation_tolerant">Transplants well ✔</label><br />
+
+
+<!--Input checkbox for germinate_easy-->
+  <input
+    type="checkbox"
+    id="germinate_easy"
+    name="germinate_easy"
+    value="Germinate Easy"
+    hx-get="/search-plant-name"
+    hx-trigger="click"
+    hx-target="#search-results"
+    hx-push-url="true"
+    hx-include="{{hx_include}}"
+    {% if germinate_easy %} checked {% endif %}
+  />
+  <label for="germinate_easy">Easy to germinate ✔</label><br />

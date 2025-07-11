@@ -1,0 +1,73 @@
+<div class='filter__sub-header'>Harvesting and Propagation</div>
+
+<!--Winter Sowing Requirements-->
+<div>Winter Sowing Requirements</div>
+<div id="winter-sowing-requirements" class="slider-wrapper">
+  <div class="slider-values">
+    <span id="winter-sowing-value"> 60 days</span>
+  </div>
+  <div class="slider-container">
+    <div class="slider-track-winter-sowing-requirements"></div>
+    <input
+      type="range"
+      min="0"
+      max="6"
+      value="3"
+      id="sliderWinterSowingRequirements"
+      oninput="updateWinterSowingValue(this.value)"
+    />
+  </div>
+</div>
+
+<!-- Harvesting period start-->
+<div>Harvesting Period Start</div>
+<div id="harvesting-period-start" class="slider-wrapper collapsed">
+  <div class="slider-values">
+    <span id="harvesting-period-start-value"> Sept</span>
+  </div>
+  <div class="slider-container">
+    <div class="slider-track-harvesting-period-start"></div>
+    <input
+      type="range"
+      min="0"
+      max="9"
+      value="7"
+      id="sliderHarvestingPeriodStart"
+      oninput="updateHarvestingPeriodStart(this.value)"
+    />
+  </div>
+</div>
+
+<div class='filter__sub-header'>Seed Sharing</div>
+    <!--Input checkbox for seeds available-->
+<div class="form__field">
+  <input
+    type="checkbox"
+    id="seed_availability"
+    name="seed_availability"
+    value="available-seed"
+    hx-get="/search-plant-name"
+    hx-trigger="click"
+    hx-target="#search-results"
+    hx-push-url="true"
+    hx-include="#any_name,#accepting_seed"
+    {% if seed_availability %} checked {% endif %}
+  />
+  <label for="seed_availability">Show available seeds only ✔</label>
+</div>
+
+        <!--Input checkbox for accepting seeds-->
+<div class="form__field">
+  <input type="checkbox"
+         id="accepting_seed"
+         name="accepting_seed"
+         value="accepting_seed"
+         hx-get="/search-plant-name"
+         hx-trigger="click"
+         hx-target="#search-results"
+         hx-push-url="true"
+         hx-include="#any_name,#seed_availability"
+         {% if accepting_seed %} checked {% endif %}
+  >
+  <label for="seed-wanted">Show seeds accepted for donations ✔</label>
+</div>

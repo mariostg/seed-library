@@ -1,0 +1,377 @@
+<div class='filter__sub-header'>Physical Attributes</div>
+<div class="slider-values">Height (Feet)
+  <span id="rangeFromPlantHeight"> 0 </span>
+  <span> &dash; </span>
+  <span id="rangeToPlantHeight"> 12 </span>
+</div>
+<div class="slider-container">
+  <div class="slider-track-plant-height"></div>
+  <input
+    type="range"
+    min="0"
+    max="12"
+    value="0"
+    id="sliderFromPlantHeight"
+    oninput="slideFromPlantHeight()"
+  />
+  <input
+    type="range"
+    min="0"
+    max="12"
+    value="12"
+    id="sliderToPlantHeight"
+    oninput="slideToPlantHeight()"
+  />
+</div>
+
+<div id="plantwidth" class="slider-wrapper collapsed">
+  <div class="slider-values">Width (Feet)
+    <span id="rangeFromPlantWidth"> 0 </span>
+    <span> &dash; </span>
+    <span id="rangeToPlantWidth"> 10 </span>
+  </div>
+  <div class="slider-container">
+    <div class="slider-track-plant-width"></div>
+    <input
+      type="range"
+      min="0"
+      max="10"
+      value="0"
+      id="sliderFromPlantWidth"
+      oninput="slideFromPlantWidth()"
+    />
+    <input
+      type="range"
+      min="0"
+      max="10"
+      value="10"
+      id="sliderToPlantWidth"
+      oninput="slideToPlantWidth()"
+    />
+  </div>
+</div>
+
+<div class='filter__sub-header'>Lifespan</div>
+<div class="filter">
+  <input
+    type="checkbox"
+    id="annual"
+    name="annual"
+    value="Annual"
+    hx-get="/search-plant-name"
+    hx-trigger="click"
+    hx-target="#search-results"
+    hx-push-url="true"
+    hx-include="{{hx_include}}"
+    {% if annual %} checked {% endif %}
+  />
+  <label for="annual" class="tooltip">Annual <span class="tooltiptext">Lives for one year</span></label><br />
+  <input
+    type="checkbox"
+    id="biennial"
+    name="biennial"
+    value="Biennial"
+    hx-get="/search-plant-name"
+    hx-trigger="click"
+    hx-target="#search-results"
+    hx-push-url="true"
+    hx-include="{{hx_include}}"
+    {% if biennial %} checked {% endif %}
+  />
+  <label for="biennial" class="tooltip">Biennial <span class="tooltiptext">Lives for two years</span></label><br />
+  <input
+    type="checkbox"
+    id="perennial"
+    name="perennial"
+    value="Perennial"
+    hx-get="/search-plant-name"
+    hx-trigger="click"
+    hx-target="#search-results"
+    hx-push-url="true"
+    hx-include="{{hx_include}}"
+    {% if perennial %} checked {% endif %}
+  />
+  <label for="perennial" class="tooltip">Perennial <span class="tooltiptext">Lives for three or more years</span></label><br />
+</div>
+
+<div class='filter__sub-header'>Flowering and Appearance</div>
+<div>Bloom period</div>
+<div id="bloomperiod" class="slider-wrapper">
+  <div class="slider-values">
+    <span id="rangeFromBloomPeriod"> 0 </span>
+    <span> &dash; </span>
+    <span id="rangeToBloomPeriod"> 12 </span>
+  </div>
+  <div class="slider-container">
+    <div class="slider-track-bloom-period"></div>
+    <input
+      type="range"
+      min="0"
+      max="11"
+      value="0"
+      id="sliderFromBloomPeriod"
+      oninput="slideFromBloomPeriod()"
+    />
+    <input
+      type="range"
+      min="0"
+      max="11"
+      value="11"
+      id="sliderToBloomPeriod"
+      oninput="slideToBloomPeriod()"
+    />
+  </div>
+</div>
+
+<div>Bloom colors</div>
+<div id="colours" class="">
+      <!--Input checkbox for color blue-->
+  <input
+    type="checkbox"
+    id="color_blue"
+    name="color_blue"
+    value="Blue"
+    hx-get="/search-plant-name"
+    hx-trigger="click"
+    hx-target="#search-results"
+    hx-push-url="true"
+    hx-include="{{hx_include}}"
+    {% if color_blue %} checked {% endif %}
+  />
+  <label for="color_blue">Blue ✔</label><br />
+      <!--Input checkbox for color green-->
+  <input
+    type="checkbox"
+    id="color_green"
+    name="color_green"
+    value="Green"
+    hx-get="/search-plant-name"
+    hx-trigger="click"
+    hx-target="#search-results"
+    hx-push-url="true"
+    hx-include="{{hx_include}}"
+    {% if color_green %} checked {% endif %}
+  />
+  <label for="color_green">Green ✔</label><br />
+      <!--Input checkbox for color orange-->
+  <input
+    type="checkbox"
+    id="color_orange"
+    name="color_orange"
+    value="Orange"
+    hx-get="/search-plant-name"
+    hx-trigger="click"
+    hx-target="#search-results"
+    hx-push-url="true"
+    hx-include="{{hx_include}}"
+    {% if color_orange %} checked {% endif %}
+  />
+  <label for="color_orange">Orange ✔</label><br />
+      <!--Input checkbox for color pink-->
+  <input
+    type="checkbox"
+    id="color_pink"
+    name="color_pink"
+    value="Pink"
+    hx-get="/search-plant-name"
+    hx-trigger="click"
+    hx-target="#search-results"
+    hx-push-url="true"
+    hx-include="{{hx_include}}"
+    {% if color_pink %} checked {% endif %}
+  />
+  <label for="color_pink">Pink ✔</label><br />
+      <!--Input checkbox for color purple-->
+  <input
+    type="checkbox"
+    id="color_purple"
+    name="color_purple"
+    value="Purple"
+    hx-get="/search-plant-name"
+    hx-trigger="click"
+    hx-target="#search-results"
+    hx-push-url="true"
+    hx-include="{{hx_include}}"
+    {% if color_purple %} checked {% endif %}
+  />
+  <label for="color_purple">Purple ✔</label><br />
+      <!--Input checkbox for color red-->
+  <input
+    type="checkbox"
+    id="color_red"
+    name="color_red"
+    value="Red"
+    hx-get="/search-plant-name"
+    hx-trigger="click"
+    hx-target="#search-results"
+    hx-push-url="true"
+    hx-include="{{hx_include}}"
+    {% if color_red %} checked {% endif %}
+  />
+  <label for="color_red">Red ✔</label><br />
+      <!--Input checkbox for color white-->
+  <input
+    type="checkbox"
+    id="color_white"
+    name="color_white"
+    value="White"
+    hx-get="/search-plant-name"
+    hx-trigger="click"
+    hx-target="#search-results"
+    hx-push-url="true"
+    hx-include="{{hx_include}}"
+    {% if color_white %} checked {% endif %}
+  />
+  <label for="color_white">White ✔</label><br />
+      <!--Input checkbox for color yellow-->
+  <input
+    type="checkbox"
+    id="color_yellow"
+    name="color_yellow"
+    value="Yellow"
+    hx-get="/search-plant-name"
+    hx-trigger="click"
+    hx-target="#search-results"
+    hx-push-url="true"
+    hx-include="{{hx_include}}"
+    {% if color_yellow %} checked {% endif %}
+  />
+  <label for="color_yellow">Yellow ✔</label><br />
+</div>
+
+<div>Plant Type</div>
+<div id="plant-types" class="">
+      <!--Input checkbox for flowering plant-->
+  <input
+    type="checkbox"
+    id="flowering_plant"
+    name="flowering_plant"
+    value="Flowering plant"
+    hx-get="/search-plant-name"
+    hx-trigger="click"
+    hx-target="#search-results"
+    hx-push-url="true"
+    hx-include="{{hx_include}}"
+    {% if flowering_plant %} checked {% endif %}
+  />
+  <label for="flowering_plant">Flowering Plant ✔</label><br />
+
+      <!--Input checkbox for grass-->
+  <input
+    type="checkbox"
+    id="id-checkbox-grass"
+    name="grass"
+    value="Grass"
+    hx-get="/search-plant-name"
+    hx-trigger="click"
+    hx-target="#search-results"
+    hx-push-url="true"
+    hx-include="{{hx_include}}"
+    {% if checkbox_grass_sedge_rush %} checked {% endif %}
+  />
+  <label for="id-checkbox-grass">Grass/sedge/rush ✔</label><br />
+
+      <!--Input checkbox for shrub-->
+  <input
+    type="checkbox"
+    id="shrub"
+    name="shrub"
+    value="Shrub"
+    hx-get="/search-plant-name"
+    hx-trigger="click"
+    hx-target="#search-results"
+    hx-push-url="true"
+    hx-include="{{hx_include}}"
+    {% if shrub %} checked {% endif %}
+  />
+  <label for="shrub">Shrub ✔</label><br />
+
+      <!--Input checkbox for decideous tree-->
+  <input
+    type="checkbox"
+    id="deciduous_tree"
+    name="deciduous_tree"
+    value="Deciduous Tree"
+    hx-get="/search-plant-name"
+    hx-trigger="click"
+    hx-target="#search-results"
+    hx-push-url="true"
+    hx-include="{{hx_include}}"
+    {% if tree %} checked {% endif %}
+  />
+  <label for="id_checkbox_tree">Deciduous tree ✔</label><br />
+
+      <!--Input checkbox for connifer tree-->
+  <input
+    type="checkbox"
+    id="connifer_tree"
+    name="connifer_tree"
+    value="Connifer Tree"
+    hx-get="/search-plant-name"
+    hx-trigger="click"
+    hx-target="#search-results"
+    hx-push-url="true"
+    hx-include="{{hx_include}}"
+    {% if connifer_tree %} checked {% endif %}
+  />
+  <label for="connifer_tree">Connifer tree ✔</label><br />
+
+      <!--Input checkbox for vine-->
+  <input
+    type="checkbox"
+    id="id_checkbox_vine"
+    name="vine"
+    value="Vine"
+    hx-get="/search-plant-name"
+    hx-trigger="click"
+    hx-target="#search-results"
+    hx-push-url="true"
+    hx-include="{{hx_include}}"
+    {% if id_checkbox_vine %} checked {% endif %}
+  />
+  <label for="id_checkbox_vine">Vine ✔</label><br />
+</div>
+
+<div class='filter__sub-header'>Soil Tolerances</div>
+      <!--Input checkbox for limestone tolerant-->
+<input
+  type="checkbox"
+  id="limestone_tolerant"
+  name="limestone_tolerant"
+  value="Limestone Tolerant"
+  hx-get="/search-plant-name"
+  hx-trigger="click"
+  hx-target="#search-results"
+  hx-push-url="true"
+  hx-include="{{hx_include}}"
+  {% if limestone_tolerant %} checked {% endif %}
+/>
+<label for="limestone_tolerant">Limestone ✔</label><br />
+      <!--Input checkbox for sand tolerant-->
+<input
+  type="checkbox"
+  id="sand_tolerant"
+  name="sand_tolerant"
+  value="Sand Tolerant"
+  hx-get="/search-plant-name"
+  hx-trigger="click"
+  hx-target="#search-results"
+  hx-push-url="true"
+  hx-include="{{hx_include}}"
+  {% if sand_tolerant %} checked {% endif %}
+/>
+<label for="sand_tolerant">Sand ✔</label><br />
+      <!--Input checkbox for acidic soil tolerant-->
+<input
+  type="checkbox"
+  id="acidic_soil_tolerant"
+  name="acidic_soil_tolerant"
+  value="Acidic Soil Tolerant"
+  hx-get="/search-plant-name"
+  hx-trigger="click"
+  hx-target="#search-results"
+  hx-push-url="true"
+  hx-include="{{hx_include}}"
+  {% if acidic_soil_tolerant %} checked {% endif %}
+/>
+<label for="acidic_soil_tolerant">Acidic soil ✔</label><br />
