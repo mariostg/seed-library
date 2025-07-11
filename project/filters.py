@@ -94,13 +94,22 @@ class PlantProfileFilter(django_filters.FilterSet):
     shrub = django_filters.CharFilter(
         method="filter_growth_habit",
     )
-    tree = django_filters.CharFilter(
+    deciduous_tree = django_filters.CharFilter(
+        method="filter_growth_habit",
+    )
+    connifer_tree = django_filters.CharFilter(
         method="filter_growth_habit",
     )
     vine = django_filters.CharFilter(
         method="filter_growth_habit",
     )
     hummingbird_friendly = django_filters.CharFilter(
+        method="filter_boolean",
+    )
+    rabbit_tolerant = django_filters.CharFilter(
+        method="filter_boolean",
+    )
+    deer_tolerant = django_filters.CharFilter(
         method="filter_boolean",
     )
     acidic_soil_tolerant = django_filters.CharFilter(
