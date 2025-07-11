@@ -826,14 +826,13 @@ class PlantProfile(Base):
         Raises:
             ValidationError: If bloom_start date is later than bloom_end date
         """
-        if not self.bloom_start:
-            self.bloom_start = 0
-        if not self.bloom_end:
-            self.bloom_end = 0
-            self.bloom_start = 0
-        if self.bloom_start and self.bloom_end and self.bloom_start > self.bloom_end:
+        if (
+            self.bloom_start
+            and self.bloom_end
+            and int(self.bloom_start) > int(self.bloom_end)
+        ):
             raise ValidationError(
-                "Beginning of blooming period must be before end of blooming period"
+                f"{self.latin_name} bloom start month ({self.bloom_start}) cannot be later than bloom end month ({self.bloom_end})."
             )
 
     def save(self, *args, **kwargs):
