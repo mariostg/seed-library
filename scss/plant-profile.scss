@@ -4,8 +4,8 @@
     display: flex;
     flex-direction: row;
     padding: 1rem;
-    background-color: $green;
-    color: $white;
+    background-color: $light_green;
+    color: $black;
   }
   &-latin-name {
     font-style: italic;
@@ -51,8 +51,8 @@ img {
   text-align: center;
 }
 .icon {
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 2.5rem;
+  height: 2.5rem;
   margin-right: 0.5rem;
 }
 .low {

@@ -18,6 +18,7 @@ $small: 0.5rem;
 
 /*Wildflower theme colors*/
 $dark: $green;
+$light_green: rgba(53, 76, 53, 0.1);
 $middle: $lightgrey;
 $light: $green;
 $lightest: #fff;
@@ -27,6 +28,7 @@ $foreground: light-dark($black, $white);
 $header-text: $black;
 $text: $foreground;
 $link: light-dark($green, $green);
+$filter-header: rgba($green, 0.4);
 
 /*blue theme*/
 // $darkest: #092834;

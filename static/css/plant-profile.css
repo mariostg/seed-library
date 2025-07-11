@@ -12,8 +12,8 @@
   display: flex;
   flex-direction: row;
   padding: 1rem;
-  background-color: #79ac78;
-  color: #fff;
+  background-color: rgba(53, 76, 53, 0.1);
+  color: #333;
 }
 .plant-profile-latin-name {
   font-style: italic;
@@ -56,8 +56,8 @@ img {
 }
 
 .icon {
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 2.5rem;
+  height: 2.5rem;
   margin-right: 0.5rem;
 }
 

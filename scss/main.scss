@@ -83,22 +83,12 @@ ul.nav-links {
 }
 
 #filter-wrapper.collapsed,
-#sun-exposure.collapsed,
-#moisture.collapsed,
-#colours.collapsed,
-#bloomperiod.collapsed,
-#plantheight.collapsed,
-#plantwidth.collapsed,
-#recommended-for.collapsed,
-#suitable-for.collapsed,
-#tolerates.collapsed,
-#seed-types.collapsed,
-#winter-sowing-requirements.collapsed,
-#plant-characteristics.collapsed,
-#plant-types.collapsed,
-#provincial-range-distribution.collapsed,
-#harvesting-period-start.collapsed,
-#toxicity.collapsed,
+#environmental-requirements-filter.collapsed,
+#growth-characteristics-filter.collapsed,
+#propagation-and-cultivation-filter.collapsed,
+#landscape-uses-and-applications-filter.collapsed,
+#ecological-relationships-filter.collapsed,
+#special-features-and-considerations-filter.collapsed,
 #exclude-burs.collapsed {
   display: none;
 }
@@ -120,6 +110,15 @@ ul.nav-links {
   border-radius: 4px;
 }
 
+.filter {
+  &__header {
+    background-color: $filter-header;
+  }
+  &__sub-header {
+    font-weight: bold;
+    margin-top: 0.5rem;
+  }
+}
 .tooltip {
   position: relative;
   display: inline-block;
@@ -185,5 +184,25 @@ ul.nav-links {
   }
   &.yellow {
     background-color: yellow;
+  }
+}
+
+.ok {
+  background: green;
+  color: #fff;
+}
+
+.btn {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background-color: #007bff;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+  text-align: center;
+
+  &:hover {
+    background-color: #0056b3;
   }
 }
