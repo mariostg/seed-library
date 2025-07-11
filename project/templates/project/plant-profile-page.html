@@ -17,11 +17,30 @@
       <!-- End of Plant Profile Image -->
 
           <div class="plant-profile-characteristics">
-            <div class="plant-profile-names">
-              <div class="plant-profile-latin-name">{{plant.latin_name}}</div>
-              <div class="plant-profile-english-name">{{plant.english_name}}</div>
-              <div class="plant-profile-french-name">{{plant.french_name}}</div>
+
+            <div class='flex-row'>
+              <div class="plant-profile-names">
+                <div class="plant-profile-latin-name">{{plant.latin_name}}</div>
+                <div class="plant-profile-english-name">{{plant.english_name}}</div>
+                <div class="plant-profile-french-name">{{plant.french_name}}</div>
+              </div>
+
+              <div class="plant-giveaway">
+                {% if plant.seed_availability %}
+                  <div>Seeds available at table {{plant.seed_event_table}}</div>
+                {% else %}
+                  <div>No seeds available for this plant.</div>
+                {% endif %}
+                {% if plant.accepting_seed %}
+                  <div>We currently accept seeds for this plant</div>
+                  <div>{{plant.sharing_priority|default:"No priority assigned"}}</div>
+                {% else %}
+                  <p>We are not accepting seeds for this plant at the moment.</p>
+                {% endif %}
+              </div>
+
             </div>
+
             <div class="plant-profile-description">
               <div>Bloom color: {{plant.bloom_color}}</div>
               <div>Bloom period: {{plant.bloom_start}} - {{plant.bloom_end}}</div>
@@ -82,7 +101,7 @@
               <div>Max Height: {{plant.max_height}} feet</div>
               <div>Max Width: {{plant.max_width}} feet</div>
               <div>
-                <u>Gardener friendly attributes:</u>
+                Gardener friendly attributes:
                 {% if plant.beginner_friendly %}
                   <div class="tooltip">
                     <img
@@ -93,14 +112,20 @@
                     />
                     <span class="tooltiptext">Suitable for beginner gardeners</span>
                   </div>
-                {% endif %} {% if plant.does_not_spread %}
-                  <img
-                    title="does not spread"
-                    alt="does not spread"
-                    class="icon"
-                    src="{% static 'images/plant-does-not-spread.svg'  %}"
-                  />
-                {% endif %} {% if plant.germinate_easy %}
+                {% endif %}
+
+                {% if plant.does_not_spread %}
+                  <div class="tooltip">
+                    <img
+                      alt="does not spread"
+                      class="icon"
+                      src="{% static 'images/plant-does-not-spread.svg'  %}"
+                    />
+                    <span class="tooltiptext">Does not spread uncontrollably</span>
+                  </div>
+                {% endif %}
+
+                {% if plant.germinate_easy %}
                   <div class="tooltip">
                     <img
                       title="plant germinate easy"
@@ -112,36 +137,9 @@
                   </div>
                 {% endif %}
               </div>
-              <div>
-                Characteristics: {% if plant.host_plant %}
-                  <img
-                    title="host plant"
-                    alt="Host plant"
-                    class="icon"
-                    src="{% static 'images/host-plant.svg' %}"
-                  />{% endif %} {% if plant.endangered %}
-                    <img
-                      title="endangered"
-                      alt="Endangered"
-                      class="icon"
-                      src="{% static 'images/endangered.svg' %}"
-                    />
-                  {% endif %}
-              </div>
-
-              <div>Hosts:</div>
-              <div>
-                <del>Supports:</del>
-                {% if plant.butterfly_friendly %}
-                  <img
-                    class="icon"
-                    src="{% static 'images/butterfly-friendly.svg'  %}"
-                  />
-                {% endif %}
-              </div>
 
               <div class="landscape-uses">
-                <u>Landscape uses:</u>
+                Landscape uses:
 
                 {% if plant.rock_garden %}
                   <div class="tooltip">
@@ -153,7 +151,22 @@
                     />
                     <span class="tooltiptext">Suitable for rock gardens</span>
                   </div>
-                {% endif %} {% if plant.rain_garden %}
+                {% endif %}
+
+
+                {% if plant.wetland_garden %}
+                  <div class="tooltip">
+                    <img
+                      title="wetland garden"
+                      alt="wetland garden"
+                      class="icon"
+                      src="{% static 'images/plant-wetland-garden.svg'  %}"
+                    />
+                    <span class="tooltiptext">Suitable for wetland garden</span>
+                  </div>
+                {% endif %}
+
+                {% if plant.rain_garden %}
                   <div class="tooltip">
                     <img
                       title="rain garden"
@@ -235,16 +248,6 @@
                     />
                     <span class="tooltiptext">Suitable for woodland gardens</span>
                   </div>
-                {% endif %} {% if plant.wind_break_hedge %}
-                  <div class="tooltip">
-                    <img
-                      title="wind break hedge"
-                      alt="wind break hedge"
-                      class="icon"
-                      src="{% static 'images/plant-wind-break-hedge.svg'  %}"
-                    />
-                    <span class="tooltiptext">Suitable for wind break hedges</span>
-                  </div>
                 {% endif %} {% if plant.erosion_control %}
                   <div class="tooltip">
                     <img
@@ -270,7 +273,7 @@
           <!-- End of Landscape uses -->
 
               <div>
-                <u>Ecological Benefits:</u>
+                Ecological Benefits:
                 {% if plant.hummingbird_friendly %}
                   <div class="tooltip">
                     <img
@@ -311,17 +314,9 @@
                     />
                     <span class="tooltiptext">Fixes nitrogen in the soil</span>
                   </div>
-                {% endif %} {% if plant.easy_to_contain %}
-                  <div class="tooltip">
-                    <img
-                      title="easy to contain"
-                      alt="easy to contain"
-                      class="icon"
-                      src="{% static 'images/plant-easy-to-contain.svg'  %}"
-                    />
-                    <span class="tooltiptext">Easy to contain and manage</span>
-                  </div>
-                {% endif %} {% if plant.cedar_hedge_replacement %}
+                {% endif %}
+
+                {% if plant.cedar_hedge_replacement %}
                   <div class="tooltip">
                     <img
                       title="cedar hedge replacement"
@@ -336,7 +331,7 @@
                 {% endif %}
               </div>
               <div>
-                <u>Tolerates:</u>
+                Tolerates:
                 {% if plant.drought_tolerant %}
                   <div class="tooltip">
                     <img
@@ -452,55 +447,10 @@
                 {% endif %}
               </div>
 
-              <div>Toxicity:</div>
-              <div>
-                <del>Recommended for:</del> {% if plant.bird_friendly %}<img
-                  alt="Bird friendly"
-                  class="icon"
-                  src="{% static 'images/bird-friendly.svg'  %}"
-                />{% endif %} {% if plant.hummingbird_friendly %}<img
-                  alt="Hummingbird friendly"
-                  class="icon"
-                  src="{% static 'images/plant-hummingbird-friendly.svg'  %}"
-                />{% endif %} {% if plant.butterfly_friendly %}<img
-                  alt="Butterfly friendly"
-                  class="icon"
-                  src="{% static 'images/butterfly-friendly.svg'  %}"
-                />{% endif %} {% if plant.boulevard_garden_tolerant %}<img
-                  alt="Boulevard garden"
-                  class="icon"
-                  src="{% static 'images/boulevard-tolerant.svg'  %}"
-                />{% endif %} {% if plant.cedar_hedge_replacement %}<img
-                  alt="Cedar hedge replacement"
-                  class="icon"
-                  src="{% static 'images/cedar-hedge-replacement.svg'  %}"
-                />{% endif %} {% if plant.container_suitable %}<img
-                  class="icon"
-                  src="{% static 'images/container-suitable.svg'  %}"
-                />{% endif %} {% if plant.ground_cover %}<img
-                  class="icon"
-                  src="{% static 'images/ground-cover.svg'  %}"
-                />{% endif %}
-              </div>
-
-              <div><del>Suitable for:</del></div>
             </div>
           </div>
       <!-- End of Plant Profile Characteristics -->
 
-          <div class="plant-giveaway">
-            {% if plant.seed_availability %}
-              <p>Seeds available at table {{plant.seed_event_table}}</p>
-            {% else %}
-              <p>No seeds available for this plant.</p>
-            {% endif %}
-            {% if plant.accepting_seed %}
-              <p>We currently accept seeds for this plant</p>
-              <p>{{plant.sharing_priority|default:"No priority assigned"}}</p>
-            {% else %}
-              <p>We are not accepting seeds for this plant at the moment.</p>
-            {% endif %}
-          </div>
         </div>
     <!-- End of Plant Profile Header -->
 

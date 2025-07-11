@@ -15,36 +15,38 @@
           <span class="plant-card-is-not-favourite"></span>
         {% endif %}
         <a href="{% url 'plant-profile-page' item.id %}" class="plant-card-link">
-          {% if item.image_thumbnail %}
-            <img src="#" alt="image for {{item.latin_name}}" />
+          {% if item.has_image_profile %}
+            <img src="{% static 'images/plants/profile/'|add:item.latin_name|add:'-profile.jpg' %}" alt="image for {{item.latin_name}}" />
           {% else %}
-            {% comment %} <img src="{% static 'images/plants/profile/'|add:item.latin_name|add:'-profile.jpg' %}" alt="image for {{item.latin_name}}" onerror="this.src='{% static 'images/plant-placeholder.png' %}'" />
-            </a> {% endcomment %}
             <img src="{% static 'images/plant-placeholder.png' %}" alt="xxx">
           {% endif %}
-          <div class="plant-card-caption">
-            <div class="plant-type-icon">
-              <img src="{% static 'images/' %}plant-type-{{ item.growth_habit }}.svg" alt="image of {{item.growth_habit}}" />
-            </div>
-            <div class="plant-names">
-              <span>{{item.english_name}}</span>
-              <span>{{item.latin_name}}</span>
-              <span>{{item.french_name}}</span>
-            </div>
+        </a>
+        <div class="plant-card-caption">
+          <div class="plant-type-icon">
+            <img src="{% static 'images/' %}plant-type-{{ item.growth_habit }}.svg" alt="image of {{item.growth_habit}}" />
           </div>
-          <button>Add to cart</button>
+          <div class="plant-names">
+            <span>{{item.english_name}}</span>
+            <span>{{item.latin_name}}</span>
+            <span>{{item.french_name}}</span>
+          </div>
         </div>
-        {% if object_list.has_next and forloop.last %}
-          <span
-            hx-get="{% url 'search-plant-name' %}?page={{ page_obj.next_page_number }}"
-            hx-swap="beforeend"
-            hx-target="#search-results"
-            hx-select=".plant-card"
-            hx-push-url="true"
-            hx-trigger="revealed"
-          >
-          </span>
-        {% endif %}
+        <div class="flex-row wide">
+          <a class='btn' target="#">Add to cart</a>
+          <a class='btn' target="blank" href="{% url 'plant-label-pdf' item.pk%}">labels</a>
+        </div>
+      </div>
+      {% if object_list.has_next and forloop.last %}
+        <span
+          hx-get="{% url 'search-plant-name' %}?page={{ page_obj.next_page_number }}"
+          hx-swap="beforeend"
+          hx-target="#search-results"
+          hx-select=".plant-card"
+          hx-push-url="true"
+          hx-trigger="revealed"
+        >
+        </span>
+      {% endif %}
     {% endfor %}
 
   </div>
