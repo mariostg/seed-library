@@ -12,6 +12,7 @@ Populate command uses the data available from the test-data folder.  This folder
 import csv
 from pathlib import Path
 
+from django.conf import settings
 from django.core.management.base import BaseCommand
 
 from main.settings import DEBUG
@@ -99,6 +100,12 @@ class Command(BaseCommand):
                 "grasp_candidate_notes": "plant-grasp-candidate-notes - csv.csv",
                 "self_seeding": "plant-self-seeding - csv.csv",
                 "does_not_spread": "plant-does-not-spread - csv.csv",
+                "sharing_priority": "plant-sharing-priority - csv.csv",
+                "butterfly_species": "plant-butterfly-species - csv.csv",
+                "bloom_start": "plant-bloom-start - csv.csv",
+                "bloom_end": "plant-bloom-end - csv.csv",
+                "rabbit_tolerant": "plant-rabbit-tolerant - csv.csv",
+                "deer_tolerant": "plant-deer-tolerant - csv.csv",
             }
 
             # Clear existing data in the database
@@ -123,6 +130,7 @@ class Command(BaseCommand):
             models.ViablityTest.objects.all().delete()
             models.SeedEventTable.objects.all().delete()
             models.ToxicityIndicator.objects.all().delete()
+            models.ButterflySpecies.objects.all().delete()
 
             # we start by inserting the latin names of plants.
             # This is a unique key and must be done first.
@@ -145,6 +153,11 @@ class Command(BaseCommand):
             self.import_toxixity_indicator()
             self.import_toxicity_indicator_notes()
             self.import_grasp_candidate_notes()
+            self.import_sharing_priority()
+
+            self.import_butterfly_species()
+            self.import_bloom_start()
+            self.imoort_bloom_end()
 
             # Insert the boolean fields.
             # Define a mapping of model field names to CSV filenames
@@ -185,14 +198,29 @@ class Command(BaseCommand):
                 "acidic_soil_tolerant": "acidic_soil_tolerant",
                 "self_seeding": "self_seeding",
                 "does_not_spread": "does_not_spread",
+                "rabbit_tolerant": "rabbit_tolerant",
+                "deer_tolerant": "deer_tolerant",
             }
 
             # Update all boolean fields using a loop
             for field_name, csv_filename in boolean_fields.items():
-                self.stdout.write(self.style.SUCCESS(f"Processing {field_name}..."))
+                self.stdout.write(
+                    self.style.SUCCESS(f"\n>>>Processing {field_name}...")
+                )
                 self.update_boolean_field(
                     models.PlantProfile, field_name, self.csv_files[csv_filename]
                 )
+
+            plants = models.PlantProfile.objects.all()
+            if plants.exists():
+                self.stdout.write(
+                    self.style.SUCCESS(
+                        f"Successfully populated the database with {plants.count()} plant profiles."
+                    )
+                )
+                # Set has_image_profile for each plant profile
+                for plant in plants:
+                    self.set_image_profile(plant)
 
         else:
             raise ValueError("This capability is only available when DEBUG is True")
@@ -211,9 +239,7 @@ class Command(BaseCommand):
         existing_names = []
         missing_names = []
 
-        self.stdout.write(
-            self.style.SUCCESS(f"\nChecking latin names in {filename}...")
-        )
+        self.stdout.write(self.style.SUCCESS(f"Checking latin names in {filename}..."))
         try:
             with open(filepath, encoding="utf-8") as f:
                 reader = csv.DictReader(f)
@@ -337,7 +363,9 @@ class Command(BaseCommand):
         if model_class is None:
             model_class = models.PlantProfile
         else:
-            self.insert_unique_values(filename, model_class, field_name)
+            self.insert_unique_values(
+                model_class, field_name, self.unique_values(filename, field_name)
+            )
 
         filepath = self.filepath / filename
         try:
@@ -451,6 +479,28 @@ class Command(BaseCommand):
             self.csv_files["max-width"]
         )
         self._update_vernacular_plant_name(self.csv_files["max-width"], "max_width")
+
+    def import_bloom_start(self):
+        """Read the plant bloom start CSV file and update the PlantProfile model with bloom start values."""
+        bloom_start_exist, bloom_start_missing = self.check_latin_names_in_csv(
+            self.csv_files["bloom_start"]
+        )
+        self._update_vernacular_plant_name(self.csv_files["bloom_start"], "bloom_start")
+
+    def imoort_bloom_end(self):
+        """Read the plant bloom end CSV file and update the PlantProfile model with bloom end values."""
+        bloom_end_exist, bloom_end_missing = self.check_latin_names_in_csv(
+            self.csv_files["bloom_end"]
+        )
+        self._update_vernacular_plant_name(self.csv_files["bloom_end"], "bloom_end")
+
+    def import_sharing_priority(self):
+        """Read the plant sharing priority CSV file and update the PlantProfile model with sharing priority values."""
+        self._update_vernacular_plant_name(
+            self.csv_files["sharing_priority"],
+            "sharing_priority",
+            models.SharingPriority,
+        )
 
     def import_stratification_duration(self):
         """Read the plant max stratification_duertion CSV file and update the PlantProfile model with width values."""
@@ -729,3 +779,78 @@ class Command(BaseCommand):
             self.stdout.write(
                 self.style.ERROR(f"Error processing {field_name} CSV file: {str(e)}")
             )
+
+    def set_image_profile(self, plant_profile):
+        """
+        Check if a profile image exists for the plant and update has_image_profile field.
+
+        Args:
+            plant_profile: A PlantProfile model instance
+        """
+        latin_name = plant_profile.latin_name
+        if not latin_name:
+            return
+
+        # Convert spaces to underscores and normalize the name for file matching
+        normalized_name = latin_name  # .replace(" ", "_")
+
+        # Define the directory to search in
+        image_dir = Path(settings.BASE_DIR) / Path("static/images/plants/profile")
+
+        # Check if directory exists
+        if not image_dir.exists():
+            self.stdout.write(
+                self.style.WARNING(f"Image directory {image_dir} does not exist")
+            )
+            return
+
+        # Check for any files that start with the plant's latin name
+        matching_files = list(image_dir.glob(f"{normalized_name}*"))
+
+        # Update has_image_profile based on whether matching files were found
+        plant_profile.has_image_profile = len(matching_files) > 0
+        plant_profile.save()
+
+        status = "Found" if plant_profile.has_image_profile else "No"
+        self.stdout.write(
+            self.style.SUCCESS(f"{status} profile image for {latin_name}")
+        )
+
+    def import_butterfly_species(self):
+        """Read the butterfly species CSV file and inserts butterfly species into the ButterflySpecies model.
+        The csv files contains two columns: latin_name and english_name. latin_name must be unique.
+        """
+
+        self.stdout.write(
+            self.style.SUCCESS(
+                "Starting to populate the database with butterfly species..."
+            )
+        )
+        filepath = self.filepath / self.csv_files["butterfly_species"]
+        with open(filepath, encoding="utf-8") as f:
+            reader = csv.DictReader(f)
+            for row in reader:
+                latin_name = row.get("latin_name")
+                english_name = row.get("english_name", "")
+                if latin_name:
+                    butterfly_species, created = (
+                        models.ButterflySpecies.objects.get_or_create(
+                            latin_name=latin_name
+                        )
+                    )
+                    if not created:
+                        self.stdout.write(
+                            self.style.WARNING(
+                                f"Butterfly species already exists: {latin_name}"
+                            )
+                        )
+                    else:
+                        butterfly_species.english_name = english_name
+                        butterfly_species.save()
+                else:
+                    self.stdout.write(
+                        self.style.ERROR("Row missing 'latin_name' field")
+                    )
+        self.stdout.write(
+            self.style.SUCCESS(f"Inserted butterfly species from file {filepath}.")
+        )
