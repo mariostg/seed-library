@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="Layer_1"
+   data-name="Layer 1"
+   viewBox="0 0 122.88 122.88"
+   version="1.1"
+   sodipodi:docname="no-water-icon.svg"
+   inkscape:version="0.92.1 r15371">
+  <metadata
+     id="metadata4520">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1366"
+     inkscape:window-height="705"
+     id="namedview4518"
+     showgrid="false"
+     inkscape:zoom="1.920573"
+     inkscape:cx="-3.3844067"
+     inkscape:cy="61.439999"
+     inkscape:window-x="1358"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="Layer_1" />
+  <defs
+     id="defs4509">
+    <style
+       id="style4507">.cls-1{fill:#d92d27;}.cls-2{fill:#42a5f5;fill-rule:evenodd;}</style>
+  </defs>
+  <title
+     id="title4511">no-water</title>
+  <path
+     class="cls-1"
+     d="M61.44,0A61.31,61.31,0,1,1,38,4.66,61.29,61.29,0,0,1,61.44,0Zm40.24,32.93-18,18Q82.32,49,80.9,47C79.49,45,78,43,76.62,40.84L93.5,24A49.32,49.32,0,0,0,24,93.5l8-8,.11.25a31.38,31.38,0,0,0,6.81,10l-6,6A49.44,49.44,0,0,0,80.31,107,49.53,49.53,0,0,0,107,80.3a49,49,0,0,0,3.73-18.86h0a48.93,48.93,0,0,0-9.08-28.51Z"
+     id="path4513"
+     style="fill:#000000;fill-opacity:1" />
+  <path
+     class="cls-2"
+     d="M61.42,20.53c5.43,23.2,26.21,37.41,26.21,52.57a24.85,24.85,0,0,1-7.71,18.31,25.42,25.42,0,0,1-18.49,7.64A25.39,25.39,0,0,1,43,91.41,24.82,24.82,0,0,1,35.25,73.1c0-15.21,20.79-29.24,26.17-52.57ZM46.48,66.4a2.64,2.64,0,0,1,2.88,2.4,25.56,25.56,0,0,0,2.58,9.59,16.94,16.94,0,0,0,6.61,6.83,2.65,2.65,0,1,1-2.68,4.58,22.11,22.11,0,0,1-8.63-8.94,31,31,0,0,1-3.17-11.58,2.67,2.67,0,0,1,2.41-2.88Z"
+     id="path4515"
+     style="fill:#000000;fill-opacity:1" />
+</svg>
