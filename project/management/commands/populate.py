@@ -229,6 +229,8 @@ class Command(BaseCommand):
         else:
             raise ValueError("This capability is only available when DEBUG is True")
 
+        self.set_actaea_racemosa_boolean_fields()
+
     def check_latin_names_in_csv(self, filename):
         """
         Check if the latin names in the CSV file exist in the database.
@@ -858,3 +860,71 @@ class Command(BaseCommand):
         self.stdout.write(
             self.style.SUCCESS(f"Inserted butterfly species from file {filepath}.")
         )
+
+    # a function to set to true the boolean fields of the plant profile of actaea racemosa.
+    # refer to boolean_fields dictionary
+    # in the populate.py file for the list of fields to set.
+    # This shall not be used in production, but only for testing purposes.
+    def set_actaea_racemosa_boolean_fields(self):
+        """
+        Set specific boolean fields for the Actaea racemosa plant profile.
+        This function is used to set the boolean fields for the Actaea racemosa plant profile.
+        """
+        try:
+            plant = models.PlantProfile.objects.get(latin_name="Actaea racemosa")
+            plant.butterfly_friendly = True
+            plant.bee_host = True
+            plant.hummingbird_friendly = True
+            plant.ground_cover = True
+            plant.drought_tolerant = True
+            plant.salt_tolerant = True
+            plant.keystones_species = True
+            plant.nitrogen_fixer = True
+            plant.germinate_easy = True
+            plant.boulevard_garden_tolerant = True
+            plant.bird_friendly = True
+            plant.cedar_hedge_replacement = True
+            plant.juglone_tolerant = True
+            plant.cause_dermatitis = True  # This is false in the CSV file
+            plant.produces_burs = True  # This is false in the CSV file
+            plant.transplantation_tolerant = True
+            plant.limestone_tolerant = True
+            plant.school_garden_suitable = True
+            plant.beginner_friendly = True  # This is false in the CSV file
+            plant.moisture_dry = True  # This is false in the CSV file
+            plant.moisture_medium = True  # This is false in the CSV file
+            plant.moisture_wet = True  # This is true in the CSV file
+            plant.full_sun = True  # This is false in the CSV file
+            plant.partial_sun = True  # This is false in the CSV file
+            plant.full_shade = True  # This is true in the CSV file
+            plant.spread_by_rhizome = True  # This is false in the CSV file
+            plant.dioecious = True  # This is false in the CSV file
+            plant.rock_garden = True  # This is false in the CSV file
+            plant.septic_tank_safe = True  # This is false in the CSV file
+            plant.wetland_garden = True  # This is false in the CSV file
+            plant.grasp_candidate = True  # This is false in the CSV file
+            plant.acidic_soil_tolerant = True  # This is true in the CSV file
+            plant.self_seeding = True  # This is false in the CSV file
+            plant.does_not_spread = True  # This is true in the CSV file
+            plant.rabbit_tolerant = True  # This is true in the CSV file
+            plant.deer_tolerant = True  # This is true in the CSV file
+            plant.save()
+            self.stdout.write(
+                self.style.SUCCESS(
+                    "Successfully set boolean fields for Actaea racemosa plant profile."
+                )
+            )
+        except models.PlantProfile.DoesNotExist:
+            self.stdout.write(
+                self.style.ERROR("Actaea racemosa plant profile does not exist.")
+            )
+            raise models.PlantProfile.DoesNotExist(
+                "Actaea racemosa plant profile does not exist."
+            )
+        except Exception as e:
+            self.stdout.write(
+                self.style.ERROR(
+                    f"An error occurred while setting boolean fields for Actaea racemosa: {str(e)}"
+                )
+            )
+            raise e
