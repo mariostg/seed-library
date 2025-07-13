@@ -36,8 +36,14 @@ def toggle_availability(request, pk):
 
 def plant_profile_page(request, pk):
     plant: models.PlantProfile = utils.single_plant(pk)
-
-    context = {"plant": plant}
+    bloom_start = utils.MONTHS[plant.bloom_start]
+    bloom_end = utils.MONTHS[plant.bloom_end]
+    context = {
+        "plant": plant,
+        "title": plant.latin_name,
+        "bloom_start": bloom_start,
+        "bloom_end": bloom_end,
+    }
     return render(request, "project/plant-profile-page.html", context)
 
 

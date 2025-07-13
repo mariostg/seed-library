@@ -1,7 +1,7 @@
 {% extends "core/base.html" %} {% load static %} {% block extracss%}
   <link rel="stylesheet" href="{% static 'css/plant-profile.css' %}" />
 {% endblock extracss %} {% block title %} {{ plant.english_name }} - Plant
-  Profile {% endblock title %} {% block content %}
+  Profile {% endblock title %}{{title}} {% block content %}
 
     <section class="main-content">
       <main>
@@ -43,7 +43,7 @@
 
             <div class="plant-profile-description">
               <div>Bloom color: {{plant.bloom_color}}</div>
-              <div>Bloom period: {{plant.bloom_start}} - {{plant.bloom_end}}</div>
+              <div>Bloom period: {{bloom_start}} - {{bloom_end}}</div>
               <div>
                 Light condition: {% if plant.full_sun %}
                   <img
