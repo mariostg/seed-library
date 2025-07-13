@@ -51,6 +51,8 @@ class Command(BaseCommand):
                 "bird_friendly": "plant-bird-friendly - csv.csv",
                 "boulevard_garden_tolerant": "plant-boulevard-garden-tolerant - csv.csv",
                 "butterfly_friendly": "plant-butterfly-friendly - csv.csv",
+                "butterfly_host": "plant-butterfly-host - csv.csv",
+                "bee_host": "plant-bee-host - csv.csv",
                 "cause_dermatitis": "plant-cause-dermatitis - csv.csv",
                 "cedar-hedge-replacemenmt": "plant-cedar-hedge-replacement - csv.csv",
                 "bloom_color": "plant-bloom-color - csv.csv",
@@ -162,7 +164,9 @@ class Command(BaseCommand):
             # Insert the boolean fields.
             # Define a mapping of model field names to CSV filenames
             boolean_fields = {
+                "bee_host": "bee_host",
                 "butterfly_friendly": "butterfly_friendly",
+                "butterfly_host": "butterfly_host",
                 "hummingbird_friendly": "hummingbird_friendly",
                 "container_suitable": "container_suitable",
                 "ground_cover": "ground_cover",
