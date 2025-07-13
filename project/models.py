@@ -775,7 +775,9 @@ class PlantProfile(Base):
     acidic_soil_tolerant = models.BooleanField(default=False, null=True, blank=True)
     hummingbird_friendly = models.BooleanField(default=False, null=True, blank=True)
     butterfly_friendly = models.BooleanField(default=False, null=True, blank=True)
+    butterfly_host = models.BooleanField(default=False, null=True, blank=True)
     bee_friendly = models.BooleanField(default=False, null=True, blank=True)
+    bee_host = models.BooleanField(default=False, null=True, blank=True)
     bird_friendly = models.BooleanField(default=False, null=True, blank=True)
     boulevard_garden_tolerant = models.BooleanField(
         default=False, null=True, blank=True
