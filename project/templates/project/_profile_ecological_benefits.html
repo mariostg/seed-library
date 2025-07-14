@@ -1,0 +1,54 @@
+{% load static %}
+<div class="plant-profile-characteristics-item">
+  <span>Ecological Benefits:</span> {% if plant.hummingbird_friendly %}
+    <div class="tooltip">
+      <img
+        title="Hummingbird friendly"
+        alt="Hummingbird friendly"
+        class="icon"
+        src="{% static 'images/plant-hummingbird-friendly.svg'  %}"
+      />
+      <span class="tooltiptext">Supports hummingbirds</span>
+    </div>
+  {% endif %} {% if plant.butterfly_friendly %}
+    <div class="tooltip">
+      <img
+        title="butterfly friendly"
+        alt="butterfly friendly"
+        class="icon"
+        src="{% static 'images/plant-butterfly-friendly.svg'  %}"
+      />
+      <span class="tooltiptext">Supports butterflies</span>
+    </div>
+  {% endif %} {% if plant.bee_friendly %}
+    <div class="tooltip">
+      <img
+        title="bee friendly"
+        alt="bee friendly"
+        class="icon"
+        src="{% static 'images/plant-bee-friendly.svg'  %}"
+      />
+      <span class="tooltiptext">Supports bees</span>
+    </div>
+  {% endif %} {% if plant.nitrogen_fixer %}
+    <div class="tooltip">
+      <img
+        title="nitrogen fixer"
+        alt="nitrogen fixer"
+        class="icon"
+        src="{% static 'images/plant-nitrogen-fixer.svg'  %}"
+      />
+      <span class="tooltiptext">Fixes nitrogen in the soil</span>
+    </div>
+  {% endif %} {% if plant.cedar_hedge_replacement %}
+    <div class="tooltip">
+      <img
+        title="cedar hedge replacement"
+        alt="cedar hedge replacement"
+        class="icon"
+        src="{% static 'images/plant-cedar-hedge-replacement.svg'  %}"
+      />
+      <span class="tooltiptext">Can replace traditional cedar hedges</span>
+    </div>
+  {% endif %}
+</div>

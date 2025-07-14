@@ -1,0 +1,81 @@
+{% load static %}
+<div class="flex-row row-spacer">
+  <span>Bloom color: {{plant.bloom_color}}</span>
+  <span>Bloom period: {{bloom_start}} - {{bloom_end}}</span>
+</div>
+
+<div class="flex-row row-spacer">
+  <div>Max Height: {{plant.max_height}} feet</div>
+  <div>Max Width: {{plant.max_width}} feet</div>
+</div>
+
+<div class="flex-row row-spacer">
+  <span>
+    Light condition: {% if plant.full_sun %}
+      <div class="tooltip">
+        <img
+          alt="Full sun"
+          class="icon"
+          src="{% static 'images/plant-full-sun.svg' %}"
+        />
+        <span class="tooltiptext">More than 6 hours of direct sun a day</span>
+      </div>
+    {% endif %} {% if plant.partial_sun %}
+      <div class="tooltip">
+        <img
+          alt="Partial sun"
+          class="icon"
+          src="{% static 'images/plant-partial-sun.svg' %}"
+        />
+        <span class="tooltiptext"
+        >More than 2 or 3 hours but less than 6 hours of direct sun a day</span
+          >
+        </div>
+    {% endif %} {% if plant.full_shade %}
+      <div class="tooltip">
+        <img
+          alt="Full shade"
+          class="icon"
+          src="{% static 'images/plant-full-shade.svg' %}"
+        />
+        <span class="tooltiptext"
+        >Less than 2 or 3 hours of direct sun a day</span
+          >
+        </div>
+    {% endif %}
+  </span>
+
+  <span>
+    Soil conditions: {% if plant.moisture_dry %}
+      <div class="tooltip">
+        <img
+          title="moisture dry"
+          alt="Moisture dry"
+          class="icon"
+          src="{% static 'images/plant-moisture-dry.svg' %}"
+        />
+        <span class="tooltiptext">Tolerates dry soil condition</span>
+      </div>
+    {% endif %} {% if plant.moisture_medium %}
+      <div class="tooltip">
+        <img
+          title="moisture medium"
+          alt="Moisture medium"
+          class="icon"
+          src="{% static 'images/plant-moisture-medium.svg' %}"
+        />
+        <span class="tooltiptext">Tolerates medium soil condition</span>
+      </div>
+    {% endif %} {% if plant.moisture_wet %}
+      <div class="tooltip">
+        <img
+          title="moisture wet"
+          alt="Moisture wet"
+          class="icon"
+          src="{% static 'images/plant-moisture-wet.svg' %}"
+        />
+        <span class="tooltiptext">Tolerates wet soil condition</span>
+      </div>
+    {% endif %}
+  </span>
+</div>

@@ -1,0 +1,124 @@
+{% load static %}
+<div class="plant-profile-characteristics-item">
+  <span>Landscape uses:</span> {% if plant.rock_garden %}
+    <div class="tooltip">
+      <img
+        title="rock garden"
+        alt="rock garden"
+        class="icon"
+        src="{% static 'images/plant-rock-garden.svg'  %}"
+      />
+      <span class="tooltiptext">Suitable for rock gardens</span>
+    </div>
+  {% endif %} {% if plant.wetland_garden %}
+    <div class="tooltip">
+      <img
+        title="wetland garden"
+        alt="wetland garden"
+        class="icon"
+        src="{% static 'images/plant-wetland-garden.svg'  %}"
+      />
+      <span class="tooltiptext">Suitable for wetland garden</span>
+    </div>
+  {% endif %} {% if plant.rain_garden %}
+    <div class="tooltip">
+      <img
+        title="rain garden"
+        alt="rain garden"
+        class="icon"
+        src="{% static 'images/plant-rain-garden.svg'  %}"
+      />
+      <span class="tooltiptext">Suitable for rain gardens</span>
+    </div>
+  {% endif %} {% if plant.pond_edge %}
+    <div class="tooltip">
+      <img
+        title="pond edge"
+        alt="pond edge"
+        class="icon"
+        src="{% static 'images/plant-pond-edge.svg'  %}"
+      />
+      <span class="tooltiptext">Suitable for pond edges</span>
+    </div>
+  {% endif %} {% if plant.shoreline_rehab %}
+    <div class="tooltip">
+      <img
+        title="shoreline_rehab"
+        alt="shoreline_rehab"
+        class="icon"
+        src="{% static 'images/plant-shoreline-rehab.svg'  %}"
+      />
+      <span class="tooltiptext">Suitable for shoreline rehabilitation</span>
+    </div>
+  {% endif %} {% if plant.container_suitable %}
+    <div class="tooltip">
+      <img
+        title="container suitable"
+        alt="container suitable"
+        class="icon"
+        src="{% static 'images/plant-container-suitable.svg'  %}"
+      />
+      <span class="tooltiptext">Suitable for container gardening</span>
+    </div>
+  {% endif %} {% if plant.school_garden_suitable %}
+    <div class="tooltip">
+      <img
+        title="school garden suitable"
+        alt="school garden suitable"
+        class="icon"
+        src="{% static 'images/plant-school-garden-suitable.svg'  %}"
+      />
+      <span class="tooltiptext">Suitable for school gardens</span>
+    </div>
+  {% endif %} {% if plant.ground_cover %}
+    <div class="tooltip">
+      <img
+        title="ground cover"
+        alt="ground cover"
+        class="icon"
+        src="{% static 'images/plant-ground-cover.svg'  %}"
+      />
+      <span class="tooltiptext">Suitable for ground cover</span>
+    </div>
+  {% endif %} {% if plant.garden_hedge %}
+    <div class="tooltip">
+      <img
+        title="garden hedge"
+        alt="garden hedge"
+        class="icon"
+        src="{% static 'images/plant-garden-hedge.svg'  %}"
+      />
+      <span class="tooltiptext">Suitable for garden hedges</span>
+    </div>
+  {% endif %} {% if plant.woodland_garden %}
+    <div class="tooltip">
+      <img
+        title="woodland garden"
+        alt="woodland garden"
+        class="icon"
+        src="{% static 'images/plant-woodland-garden.svg'  %}"
+      />
+      <span class="tooltiptext">Suitable for woodland gardens</span>
+    </div>
+  {% endif %} {% if plant.erosion_control %}
+    <div class="tooltip">
+      <img
+        title="erosion control"
+        alt="erosion control"
+        class="icon"
+        src="{% static 'images/plant-erosion-control.svg'  %}"
+      />
+      <span class="tooltiptext">Suitable for erosion control</span>
+    </div>
+  {% endif %} {% if plant.keystones_species %}
+    <div class="tooltip">
+      <img
+        title="keystones species"
+        alt="keystones species"
+        class="icon"
+        src="{% static 'images/plant-keystones-species.svg'  %}"
+      />
+      <span class="tooltiptext">Keystone species</span>
+    </div>
+  {% endif %}
+</div>

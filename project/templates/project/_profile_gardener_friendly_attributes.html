@@ -1,0 +1,39 @@
+{% load static %}
+
+<div class="plant-profile-characteristics-item">
+  <span>Gardener friendly attributes:</span>
+  {% if plant.beginner_friendly %}
+    <div class="tooltip">
+      <img
+        title="beginner friendly"
+        alt="beginner friendly"
+        class="icon"
+        src="{% static 'images/plant-beginner-friendly.svg'  %}"
+      />
+      <span class="tooltiptext">Suitable for beginner gardeners</span>
+    </div>
+  {% endif %}
+
+  {% if plant.does_not_spread %}
+    <div class="tooltip">
+      <img
+        alt="does not spread"
+        class="icon"
+        src="{% static 'images/plant-does-not-spread.svg'  %}"
+      />
+      <span class="tooltiptext">Does not spread uncontrollably</span>
+    </div>
+  {% endif %}
+
+  {% if plant.germinate_easy %}
+    <div class="tooltip">
+      <img
+        title="plant germinate easy"
+        alt="plant germinate easy"
+        class="icon"
+        src="{% static 'images/plant-germinate-easy.svg'  %}"
+      />
+      <span class="tooltiptext">Easy to germinate</span>
+    </div>
+  {% endif %}
+</div>

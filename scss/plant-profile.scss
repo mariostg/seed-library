@@ -1,11 +1,24 @@
 @import "_variables";
+@import "_mixins";
+
 .plant-profile {
+  &-characteristics-item {
+    display: flex;
+    align-items: center;
+    padding: 1rem 0;
+    & > span {
+      padding-right: 0.5rem;
+    }
+  }
   &-header {
     display: flex;
     flex-direction: row;
-    padding: 1rem;
+    gap: 1rem;
     background-color: $light_green;
     color: $black;
+    @include break(sm) {
+      flex-direction: column;
+    }
   }
   &-latin-name {
     font-style: italic;

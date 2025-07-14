@@ -8,12 +8,25 @@
   padding: 1rem;
   background-color: #f7f7f7;
 }
+.plant-profile-characteristics-item {
+  display: flex;
+  align-items: center;
+  padding: 1rem 0;
+}
+.plant-profile-characteristics-item > span {
+  padding-right: 0.5rem;
+}
 .plant-profile-header {
   display: flex;
   flex-direction: row;
-  padding: 1rem;
+  gap: 1rem;
   background-color: rgba(53, 76, 53, 0.1);
   color: #333;
+}
+@media screen and (max-width: 991px) {
+  .plant-profile-header {
+    flex-direction: column;
+  }
 }
 .plant-profile-latin-name {
   font-style: italic;
