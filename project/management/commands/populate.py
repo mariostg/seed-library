@@ -855,7 +855,9 @@ class Command(BaseCommand):
                         butterfly_species.save()
                 else:
                     self.stdout.write(
-                        self.style.ERROR("Row missing 'latin_name' field")
+                        self.style.ERROR(
+                            f"Row missing 'latin_name' field for {english_name}"
+                        )
                     )
         self.stdout.write(
             self.style.SUCCESS(f"Inserted butterfly species from file {filepath}.")
