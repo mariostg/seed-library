@@ -216,15 +216,20 @@ class Command(BaseCommand):
                 )
 
             plants = models.PlantProfile.objects.all()
-            if plants.exists():
-                self.stdout.write(
-                    self.style.SUCCESS(
-                        f"Successfully populated the database with {plants.count()} plant profiles."
-                    )
+            self.stdout.write(
+                self.style.SUCCESS(
+                    "\n\nUpdating image profile for each plant profile..."
                 )
+            )
+            if plants.exists():
                 # Set has_image_profile for each plant profile
                 for plant in plants:
                     self.set_image_profile(plant)
+            else:
+                self.stdout.write(
+                    self.style.ERROR("No plant profiles found to update image profile.")
+                )
+                exit(1)
 
         else:
             raise ValueError("This capability is only available when DEBUG is True")
