@@ -822,10 +822,12 @@ class Command(BaseCommand):
         plant_profile.has_image_profile = len(matching_files) > 0
         plant_profile.save()
 
-        status = "Found" if plant_profile.has_image_profile else "No"
-        self.stdout.write(
-            self.style.SUCCESS(f"{status} profile image for {latin_name}")
-        )
+        if plant_profile.has_image_profile:
+            self.stdout.write(
+                self.style.SUCCESS(f"Found profile image for {latin_name}")
+            )
+        else:
+            self.stdout.write(self.style.WARNING(f"No profile image for {latin_name}"))
 
     def import_butterfly_species(self):
         """Read the butterfly species CSV file and inserts butterfly species into the ButterflySpecies model.
