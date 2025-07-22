@@ -108,6 +108,8 @@ class Command(BaseCommand):
                 "bloom_end": "plant-bloom-end - csv.csv",
                 "rabbit_tolerant": "plant-rabbit-tolerant - csv.csv",
                 "deer_tolerant": "plant-deer-tolerant - csv.csv",
+                "rain_garden": "plant-rain-garden - csv.csv",
+                "woodland_garden": "plant-woodland-garden - csv.csv",
             }
 
             # Clear existing data in the database
@@ -204,6 +206,8 @@ class Command(BaseCommand):
                 "does_not_spread": "does_not_spread",
                 "rabbit_tolerant": "rabbit_tolerant",
                 "deer_tolerant": "deer_tolerant",
+                "rain_garden": "rain_garden",
+                "woodland_garden": "woodland_garden",
             }
 
             # Update all boolean fields using a loop
