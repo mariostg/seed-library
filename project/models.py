@@ -495,6 +495,31 @@ class ToxicityIndicator(Base):
         return self.toxicity_indicator
 
 
+class ButterflySpecies(models.Model):
+    """A model representing butterfly species that can interact with plants.
+
+    This model stores the name of the butterfly species and provides a string representation.
+    Attributes:
+        latin_name (CharField): The scientific name of the butterfly species, max length 75 characters, unique.
+        english_name (CharField): The common name of the butterfly species in English, max length 75 characters, can be blank.
+    Returns:
+        str: String representation of the butterfly species, which is its Latin name.
+    Meta:
+        verbose_name_plural: "Butterfly Species"
+        ordering: Alphabetically by Latin name
+    """
+
+    latin_name = models.CharField(max_length=75, blank=True, unique=True)
+    english_name = models.CharField(max_length=75, blank=True)
+
+    def __str__(self) -> str:
+        return self.latin_name
+
+    class Meta:
+        verbose_name_plural = "Butterfly Species"
+        ordering = ["latin_name"]
+
+
 class PlantProfile(Base):
     """
     A Django model representing a comprehensive plant profile with botanical, horticultural and ecological attributes.
@@ -802,6 +827,11 @@ class PlantProfile(Base):
     )
     inaturalist_taxon = models.CharField(max_length=10, blank=True)
 
+    # Butterfly relationship
+    butterflies = models.ManyToManyField(
+        ButterflySpecies, blank=True, related_name="plants"
+    )
+
     # !Image releated fields such as has_profile_image, has_bloom_image, has_seed_image etc.
     has_image_profile = models.BooleanField(default=False, null=True, blank=True)
 
@@ -1074,28 +1104,3 @@ class PlantImage(models.Model):
         except ValueError:
             pass
         super().delete(*args, **kwargs)
-
-
-class ButterflySpecies(models.Model):
-    """A model representing butterfly species that can interact with plants.
-
-    This model stores the name of the butterfly species and provides a string representation.
-    Attributes:
-        latin_name (CharField): The scientific name of the butterfly species, max length 75 characters, unique.
-        english_name (CharField): The common name of the butterfly species in English, max length 75 characters, can be blank.
-    Returns:
-        str: String representation of the butterfly species, which is its Latin name.
-    Meta:
-        verbose_name_plural: "Butterfly Species"
-        ordering: Alphabetically by Latin name
-    """
-
-    latin_name = models.CharField(max_length=75, blank=True, unique=True)
-    english_name = models.CharField(max_length=75, blank=True)
-
-    def __str__(self) -> str:
-        return self.latin_name
-
-    class Meta:
-        verbose_name_plural = "Butterfly Species"
-        ordering = ["latin_name"]
