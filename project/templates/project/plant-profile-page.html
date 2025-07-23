@@ -52,30 +52,13 @@
         </div>
     <!-- End of Plant Profile Header -->
 
-        <div class='inaturalist-distribution'>
-          <img
-            src="https://data.canadensys.net/vascan/images/distribution/{{plant.taxon}}.png"
-            width="400"
-            height="400"
-            alt="Distribution: {{plant.latin_name}}"
-            id="png"
-          />
-          <div class="inaturalist-legend">
-            <span style="background-color: #77bb2b; color: #000">Native</span>
-            <span style="background-color: #e98c1f; color: #000">Introduced</span>
-            <span style="background-color: #6e6e6e">Excluded</span>
-            <span style="background-color: #000">Extirpated</span>
-            <span style="background-color: #afafaf; color: #000">Doubtful</span>
-            <span style="background-color: #d3d3d3; color: #000">Absent</span>
-          </div>
-          <a
-            target="blank"
-            href="https://data.canadensys.net/vascan/taxon/{{plant.taxon}}?lang=en"
-          >
-            <span class="navbar-logo_text">View taxonomy on Canadensys</span>
-          </a>
+        <div class="flex-row">
+          {% include "project/_profile_vascan_map.html" %}
+      <!-- End of inaturalist distribution -->
+          {% include "project/_profile_butterflies_supported.html" %}
         </div>
-    <!-- End of inaturalist distribution -->
+
+
       </main>
     </section>
   {% endblock content %}

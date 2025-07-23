@@ -1,0 +1,18 @@
+<div class="butterfly-list">
+  <h3>Butterflies Supported by {{ plant.latin_name }}</h3>
+  {% if plant.butterflies.all %}
+    <ul class="list-unstyled">
+      {% for butterfly in plant.butterflies.all %}
+        <li class="mb-2">
+          <i class="fas fa-butterfly text-primary me-2"></i>
+          {{ butterfly.latin_name }}
+          {% if butterfly.english_name %}
+            <span class="text-muted fst-italic">({{ butterfly.english_name }})</span>
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p class="text-muted">No butterfly data available for this plant.</p>
+  {% endif %}
+</div>
