@@ -1,7 +1,7 @@
 from project.models import PlantProfile
 
 MONTHS = {
-    None: "",
+    0: "",
     1: "January",
     2: "February",
     3: "March",
