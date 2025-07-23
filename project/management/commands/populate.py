@@ -110,6 +110,7 @@ class Command(BaseCommand):
                 "deer_tolerant": "plant-deer-tolerant - csv.csv",
                 "rain_garden": "plant-rain-garden - csv.csv",
                 "woodland_garden": "plant-woodland-garden - csv.csv",
+                "plant-butterfly-matrix": "plant-butterfly-matrix - csv.csv",
             }
 
             # Clear existing data in the database
@@ -162,6 +163,9 @@ class Command(BaseCommand):
             self.import_butterfly_species()
             self.import_bloom_start()
             self.imoort_bloom_end()
+
+            self.import_butterfly_species()
+            self.set_plant_butterfly_friendly_relationship()
 
             # Insert the boolean fields.
             # Define a mapping of model field names to CSV filenames
@@ -873,6 +877,217 @@ class Command(BaseCommand):
         self.stdout.write(
             self.style.SUCCESS(f"Inserted butterfly species from file {filepath}.")
         )
+
+    def set_plant_butterfly_friendly_relationship(self):
+        # Read the csv file that contains plant latin names in the first column and butterfly species as column headers.
+        # the plant latin names must exist in the PlantProfile model.
+        # Intersection of the two will create a many-to-many relationship between PlantProfile and ButterflySpecies.
+        # A yes in the csv file means that the plant is butterfly friendly for that species.
+        # The butterfly names columns contains both latin and english names of the butterfly species.
+        # The latin names are between parentheses and must be extracted.
+        # The extracted latin names must exist in the ButterflySpecies model.
+
+        def check_plant_butterfly_matrix(self):
+            """
+            Validates that all plant Latin names in the plant-butterfly matrix CSV exist in the database.
+
+            The function reads the plant-butterfly matrix CSV file and checks if every plant
+            mentioned in the matrix exists as a PlantProfile in the database. If any plant
+            is missing, it raises a ValueError with details about the missing plants.
+
+            Raises:
+                FileNotFoundError: If the plant-butterfly matrix CSV file cannot be found.
+                ValueError: If plants in the matrix are not found in the database.
+                Exception: For any other errors during processing.
+
+            Note:
+                This function currently only validates plants. It should also check that all
+                butterfly species from the columns exist in the ButterflySpecies model.
+            """
+            filepath = self.filepath / self.csv_files["plant-butterfly-matrix"]
+            existing_plants = models.PlantProfile.objects.values_list(
+                "latin_name", flat=True
+            )
+            missing_plants = []
+
+            try:
+                with open(filepath, encoding="utf-8") as f:
+                    reader = csv.DictReader(f)
+                    for row in reader:
+                        latin_name = row.get("latin_name")
+                        if latin_name and latin_name not in existing_plants:
+                            missing_plants.append(latin_name)
+
+                if missing_plants:
+                    self.stdout.write(
+                        self.style.WARNING(
+                            f"Missing plants in database: {', '.join(missing_plants)}"
+                        )
+                    )
+                    raise ValueError(
+                        "Some plants in the matrix do not exist in the database. Please check the CSV file."
+                    )
+                else:
+                    self.stdout.write(
+                        self.style.SUCCESS("All plants found in the database.")
+                    )
+
+            except FileNotFoundError:
+                self.stdout.write(self.style.ERROR(f"CSV file not found: {filepath}"))
+                raise FileNotFoundError("Plant-butterfly matrix CSV file not found.")
+            except Exception as e:
+                self.stdout.write(
+                    self.style.ERROR(
+                        f"Error processing plant-butterfly matrix: {str(e)}"
+                    )
+                )
+                raise Exception(
+                    "Error processing plant-butterfly matrix. Please check the CSV file."
+                )
+            # this function reads the plant-butterfly-matrix csv file and confirm that all butterfly species from the columns exists in the ButterflySpecies model.
+
+        def check_butterfly_species_in_matrix(self):
+            """
+            Validates that all butterfly species referenced in the plant-butterfly matrix CSV file
+            exist in the database.
+
+            The function reads the plant-butterfly-matrix CSV file and checks if each butterfly species
+            (extracted from column headers) exists in the database. If any butterfly species is missing,
+            it raises a ValueError with details about the missing species.
+
+            Raises:
+                FileNotFoundError: If the plant-butterfly matrix CSV file doesn't exist.
+                ValueError: If butterfly species in the matrix are not in the database.
+                Exception: For any other errors during processing.
+
+            Returns:
+                None: Outputs success message to stdout if all butterfly species are found.
+            """
+            filepath = self.filepath / self.csv_files["plant-butterfly-matrix"]
+            existing_butterflies = models.ButterflySpecies.objects.values_list(
+                "latin_name", flat=True
+            )
+
+            missing_butterfly = []
+            try:
+                with open(filepath, encoding="utf-8") as f:
+                    reader = csv.DictReader(f)
+                    for row in reader:
+                        for key in row.keys():
+                            if key == "latin_name":  # Skip the latin_name column
+                                continue
+                            # Extract latin name which is between parentheses
+                            latin_name = key.strip().split("(")[-1].strip(")")
+                            if latin_name and latin_name not in existing_butterflies:
+                                missing_butterfly.append(latin_name)
+                                self.stdout.write(
+                                    self.style.WARNING(
+                                        f"Missing butterfly species: {', '.join(missing_butterfly)}"
+                                    )
+                                )
+                                raise ValueError(
+                                    "Some butterfly species in the matrix do not exist in the database. Please check the CSV file."
+                                )
+
+                    self.stdout.write(
+                        self.style.SUCCESS("All butterflies found in the database.")
+                    )
+
+            except FileNotFoundError:
+                self.stdout.write(self.style.ERROR(f"CSV file not found: {filepath}"))
+                raise FileNotFoundError("Plant-butterfly matrix CSV file not found.")
+            except Exception as e:
+                self.stdout.write(
+                    self.style.ERROR(
+                        f"Error processing butterfly species matrix: {str(e)}"
+                    )
+                )
+                raise Exception(
+                    "Error processing butterfly species matrix. Please check the CSV file."
+                )
+            # this function reads the plant-butterfly-matrix csv file and creates a many-to-many relationship between PlantProfile and ButterflySpecies.
+
+        def create_plant_butterfly_relationship(self):
+            """
+            Establishes relationships between plants and butterflies based on a CSV matrix file.
+
+            The function reads a plant-butterfly matrix CSV file where:
+            - Each row represents a plant with its latin name in the 'latin_name' column
+            - Each column (except 'latin_name') represents a butterfly species
+            - Cell values of 'yes' indicate the plant supports that butterfly species
+
+            The function:
+            1. Reads the CSV file specified in self.csv_files["plant-butterfly-matrix"]
+            2. For each plant in the file, tries to find a matching PlantProfile object
+            3. For each butterfly column with a 'yes' value, tries to find a matching ButterflySpecies object
+            4. Creates a many-to-many relationship between matching plants and butterflies
+
+            If a column header contains text in parentheses, the function extracts the text inside
+            the parentheses to use as the butterfly's latin name.
+
+            Outputs status messages using self.stdout.write with appropriate styling.
+
+            Raises:
+                FileNotFoundError: If the CSV file cannot be found
+                Exception: For any other errors during processing
+            """
+            # Read the plant-butterfly-m
+            filepath = self.filepath / self.csv_files["plant-butterfly-matrix"]
+            try:
+                with open(filepath, encoding="utf-8") as f:
+                    reader = csv.DictReader(f)
+                    for row in reader:
+                        plant_latin_name = row.get("latin_name")
+                        if not plant_latin_name:
+                            continue
+                        try:
+                            plant = models.PlantProfile.objects.get(
+                                latin_name=plant_latin_name
+                            )
+                        except models.PlantProfile.DoesNotExist:
+                            self.stdout.write(
+                                self.style.WARNING(
+                                    f"Plant not found: {plant_latin_name}"
+                                )
+                            )
+                            continue
+
+                        for key, value in row.items():
+                            # extract latin name from the key if it contains parentheses
+                            if "(" in key and ")" in key:
+                                key = key.strip().split("(")[-1].strip(")")
+                            if key == "latin_name" or not value:
+                                continue
+                            try:
+                                butterfly = models.ButterflySpecies.objects.get(
+                                    latin_name=key
+                                )
+                                if value.lower() == "yes":
+                                    plant.butterflies.add(butterfly)
+                                    self.stdout.write(
+                                        self.style.SUCCESS(
+                                            f"Added {butterfly.latin_name} to {plant.latin_name}"
+                                        )
+                                    )
+                            except models.ButterflySpecies.DoesNotExist:
+                                self.stdout.write(
+                                    self.style.WARNING(f"Butterfly not found: {key}")
+                                )
+
+            except FileNotFoundError:
+                self.stdout.write(self.style.ERROR(f"CSV file not found: {filepath}"))
+            except Exception as e:
+                self.stdout.write(
+                    self.style.ERROR(
+                        f"Error creating plant-butterfly relationships: {str(e)}"
+                    )
+                )
+                raise
+            # Run the three functions in order
+
+        check_plant_butterfly_matrix(self)
+        check_butterfly_species_in_matrix(self)
+        create_plant_butterfly_relationship(self)
 
     # a function to set to true the boolean fields of the plant profile of actaea racemosa.
     # refer to boolean_fields dictionary
