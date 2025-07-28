@@ -513,6 +513,15 @@ class Command(BaseCommand):
         )
         self._update_vernacular_plant_name(self.csv_files["bloom_end"], "bloom_end")
 
+    def import_harvesting_start(self):
+        """Read the plant harvesting start CSV file and update the PlantProfile model with harvesting start values."""
+        harvesting_start_exist, harvesting_start_missing = (
+            self.check_latin_names_in_csv(self.csv_files["harvesting_start"])
+        )
+        self._update_vernacular_plant_name(
+            self.csv_files["harvesting_start"], "harvesting_start"
+        )
+
     def import_sharing_priority(self):
         """Read the plant sharing priority CSV file and update the PlantProfile model with sharing priority values."""
         self._update_vernacular_plant_name(
