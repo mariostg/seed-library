@@ -1,0 +1,21 @@
+@import "_mixins.scss";
+@import "_variables";
+
+.name-search-input {
+  min-width: 360px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  .inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .input-text {
+    display: flex;
+    flex-direction: column;
+  }
+}

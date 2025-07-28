@@ -754,3 +754,91 @@ def plant_catalog(request):
         "url_name": "plant-catalog",
     }
     return render(request, "project/plant-catalog.html", context)
+
+
+# View to update plant profile characteristics
+
+
+@login_required
+# update the environmental requirements of a plant profile if there is a post request
+def plant_environmental_requirement_update(request, pk):
+    plant = models.PlantProfile.objects.get(pk=pk)
+    if request.method == "POST":
+        plant.full_sun = request.POST.get("full_sun") == "on"
+        plant.partial_sun = request.POST.get("partial_sun") == "on"
+        plant.full_shade = request.POST.get("full_shade") == "on"
+        plant.moisture_dry = request.POST.get("moisture_dry") == "on"
+        plant.moisture_medium = request.POST.get("moisture_medium") == "on"
+        plant.moisture_wet = request.POST.get("moisture_wet") == "on"
+        plant.limestone_tolerant = request.POST.get("limestone_tolerant") == "on"
+        plant.sand_tolerant = request.POST.get("sand_tolerant") == "on"
+        plant.acidic_soil_tolerant = request.POST.get("acidic_soil_tolerant") == "on"
+        plant.save()
+        messages.success(request, "Environmental requirements updated successfully.")
+        return redirect("plant-profile-page", pk=plant.pk)
+    context = {
+        "title": f"{plant.latin_name} - Environmental Requirements",
+        "plant": plant,
+    }
+    return render(
+        request, "project/plant-environmental-requirement-update.html", context
+    )
+
+
+def plant_identification_information_update(request, pk):
+    plant = models.PlantProfile.objects.get(pk=pk)
+    if request.method == "POST":
+        plant.latin_name = request.POST.get("latin_name")
+        plant.english_name = request.POST.get("english_name")
+        plant.french_name = request.POST.get("french_name")
+        plant.taxon = request.POST.get("taxon")
+        plant.inaturalist_taxon = request.POST.get("inaturalist_taxon")
+        plant.save()
+        messages.success(request, "Identification information updated successfully.")
+        return redirect("plant-profile-page", pk=plant.pk)
+
+    context = {
+        "title": f"{plant.latin_name} - Identification Information",
+        "plant": plant,
+    }
+    return render(
+        request, "project/plant-identification-information-update.html", context
+    )
+
+
+def plant_growth_characteristics_update(request, pk):
+    plant = models.PlantProfile.objects.get(pk=pk)
+    growth_habits = models.GrowthHabit.objects.all().order_by("growth_habit")
+    lifespan_choices = models.PlantLifespan.objects.all().order_by("lifespan")
+    bloom_colors = models.BloomColor.objects.all().order_by("bloom_color")
+    bloom_starts = bloom_ends = utils.MONTHS
+    if request.method == "POST":
+        plant.max_height = request.POST.get("max_height")
+        plant.max_width = request.POST.get("max_width")
+        plant.growth_habit = models.GrowthHabit.objects.get(
+            pk=request.POST.get("growth_habit")
+        )
+        plant.does_not_spread = request.POST.get("does_not_spread") == "on"
+        plant.lifespan = models.PlantLifespan.objects.get(
+            pk=request.POST.get("lifespan")
+        )
+        plant.dioecious = request.POST.get("dioecious") == "on"
+        plant.bloom_start = request.POST.get("bloom_start")
+        plant.bloom_end = request.POST.get("bloom_end")
+        plant.bloom_color = models.BloomColor.objects.get(
+            pk=request.POST.get("bloom_color")
+        )
+        plant.save()
+        messages.success(request, "Growth characteristics updated successfully.")
+        return redirect("plant-profile-page", pk=plant.pk)
+
+    context = {
+        "title": f"{plant.latin_name} - Growth Characteristics",
+        "plant": plant,
+        "growth_habits": growth_habits,
+        "bloom_colors": bloom_colors,
+        "bloom_starts": bloom_starts,
+        "bloom_ends": bloom_ends,
+        "lifespan_choices": lifespan_choices,
+    }
+    return render(request, "project/plant-growth-characteristics-update.html", context)

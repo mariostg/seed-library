@@ -122,6 +122,22 @@ class ColorForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
 
 
+class EnvironmentalRequirementsForm(forms.ModelForm):
+    class Meta:
+        model = models.PlantProfile
+        fields = [
+            "full_sun",
+            "partial_sun",
+            "full_shade",
+            "moisture_dry",
+            "moisture_medium",
+            "moisture_wet",
+        ]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+
 class DormancyForm(forms.ModelForm):
     class Meta:
         model = models.Dormancy

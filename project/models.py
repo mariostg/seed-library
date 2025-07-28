@@ -542,7 +542,7 @@ class PlantProfile(Base):
         french_name (CharField): Common name in French (optional)
         taxon (CharField): Taxonomic classification code
         inaturalist_taxon (CharField): iNaturalist taxonomic identifier
-        conservation_status (ForeignKey): Reference to ConservationStatus model
+
 
     # Growth Characteristics
         ## Physical Attributes
@@ -663,6 +663,7 @@ class PlantProfile(Base):
             grasp_candidate (BooleanField): Whether plant is a candidate for GRASP program
             grasp_candidate_notes (CharField): Notes on GRASP candidacy
             native_to_ottawa_region (BooleanField): Whether plant is native to the Ottawa region
+            conservation_status (ForeignKey): Reference to ConservationStatus model
 
         ## Safety and Compatibility
             septic_tank_safe (BooleanField): Whether safe to plant near septic systems

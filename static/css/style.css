@@ -309,7 +309,7 @@ header button.mis.show_mis {
   }
 }
 header button.exc {
-  background: #f7f7f7;
+  background: rgb(246.5, 246.5, 246.5);
 }
 @media (prefers-color-scheme: dark) {
   header button.exc {
@@ -327,7 +327,7 @@ header button.exc.show_exc {
   }
 }
 header button.par {
-  background: #ffffd5;
+  background: rgb(255, 255, 212.5);
 }
 @media (prefers-color-scheme: dark) {
   header button.par {
@@ -473,11 +473,11 @@ kbd {
   }
 }
 #source p .t:hover {
-  background: #f2f2f2;
+  background: rgb(242.25, 242.25, 242.25);
 }
 @media (prefers-color-scheme: dark) {
   #source p .t:hover {
-    background: #282828;
+    background: rgb(40.4, 40.4, 40.4);
   }
 }
 #source p .t:hover ~ .r .annotate.long {
@@ -517,11 +517,11 @@ kbd {
   }
 }
 #source p.mis.show_mis .t:hover {
-  background: #f2d2d2;
+  background: rgb(242.25, 209.95, 209.95);
 }
 @media (prefers-color-scheme: dark) {
   #source p.mis.show_mis .t:hover {
-    background: #532323;
+    background: rgb(83.15, 34.7, 34.7);
   }
 }
 #source p.run .t {
@@ -536,11 +536,11 @@ kbd {
   }
 }
 #source p.run.show_run .t:hover {
-  background: #d2f2d2;
+  background: rgb(209.95, 242.25, 209.95);
 }
 @media (prefers-color-scheme: dark) {
   #source p.run.show_run .t:hover {
-    background: #404633;
+    background: rgb(64.15, 69.85, 50.85);
   }
 }
 #source p.exc .t {
@@ -555,11 +555,11 @@ kbd {
   }
 }
 #source p.exc.show_exc .t:hover {
-  background: #e2e2e2;
+  background: rgb(226.1, 226.1, 226.1);
 }
 @media (prefers-color-scheme: dark) {
   #source p.exc.show_exc .t:hover {
-    background: #3c3c3c;
+    background: rgb(60.35, 60.35, 60.35);
   }
 }
 #source p.par .t {
@@ -574,11 +574,11 @@ kbd {
   }
 }
 #source p.par.show_par .t:hover {
-  background: #f2f2a2;
+  background: rgb(242.25, 242.25, 161.5);
 }
 @media (prefers-color-scheme: dark) {
   #source p.par.show_par .t:hover {
-    background: #6d5d0c;
+    background: rgb(108.8, 92.65, 11.9);
   }
 }
 #source p .r {
@@ -615,12 +615,12 @@ kbd {
   content: "▶ ";
 }
 #source p input ~ .r label.ctx:hover {
-  background: #e8f4ff;
+  background: rgb(231.5, 243.5, 255);
   color: #666;
 }
 @media (prefers-color-scheme: dark) {
   #source p input ~ .r label.ctx:hover {
-    background: #0f3a42;
+    background: rgb(15, 57.5, 66);
   }
 }
 @media (prefers-color-scheme: dark) {

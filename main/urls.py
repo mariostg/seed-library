@@ -18,14 +18,30 @@ urlpatterns = [
     path("search-plant/", views.advanced_search_plant, name="search-plant"),
     path("search-plant-name/", views.search_plant_name, name="search-plant-name"),
     path("update-availability/", views.update_availability, name="update-availability"),
-    path("toggle-availability/<int:pk>", views.toggle_availability, name="toggle-availability"),
+    path(
+        "toggle-availability/<int:pk>",
+        views.toggle_availability,
+        name="toggle-availability",
+    ),
     path("plant-catalog/", views.plant_catalog, name="plant-catalog"),
 ]
 urlpatterns += [
-    path("plant-profile-page/<int:pk>", views.plant_profile_page, name="plant-profile-page"),
+    path(
+        "plant-profile-page/<int:pk>",
+        views.plant_profile_page,
+        name="plant-profile-page",
+    ),
     path("plant-profile-add/", views.plant_profile_add, name="plant-profile-add"),
-    path("plant-profile-delete/<int:pk>", views.plant_profile_delete, name="plant-profile-delete"),
-    path("plant-profile-update/<int:pk>", views.plant_profile_update, name="plant-profile-update"),
+    path(
+        "plant-profile-delete/<int:pk>",
+        views.plant_profile_delete,
+        name="plant-profile-delete",
+    ),
+    path(
+        "plant-profile-update/<int:pk>",
+        views.plant_profile_update,
+        name="plant-profile-update",
+    ),
 ]
 urlpatterns += [
     path("color-add/", views.color_add, name="color-add"),
@@ -49,8 +65,16 @@ urlpatterns += [
 ]
 
 urlpatterns += [
-    path("harvesting-indicator-add/", views.harvesting_indicator_add, name="harvesting-indicator-add"),
-    path("harvesting-indicator-table/", views.harvesting_indicator_table, name="harvesting-indicator-table"),
+    path(
+        "harvesting-indicator-add/",
+        views.harvesting_indicator_add,
+        name="harvesting-indicator-add",
+    ),
+    path(
+        "harvesting-indicator-table/",
+        views.harvesting_indicator_table,
+        name="harvesting-indicator-table",
+    ),
     path(
         "harvesting-indicator-delete/<int:pk>",
         views.harvesting_indicator_delete,
@@ -65,24 +89,65 @@ urlpatterns += [
 
 urlpatterns += [
     path("harvesting-mean-add/", views.harvesting_mean_add, name="harvesting-mean-add"),
-    path("harvesting-mean-table/", views.harvesting_mean_table, name="harvesting-mean-table"),
-    path("harvesting-mean-delete/<int:pk>", views.harvesting_mean_delete, name="harvesting-mean-delete"),
-    path("harvesting-mean-update/<int:pk>/", views.harvesting_mean_update, name="harvesting-mean-update"),
+    path(
+        "harvesting-mean-table/",
+        views.harvesting_mean_table,
+        name="harvesting-mean-table",
+    ),
+    path(
+        "harvesting-mean-delete/<int:pk>",
+        views.harvesting_mean_delete,
+        name="harvesting-mean-delete",
+    ),
+    path(
+        "harvesting-mean-update/<int:pk>/",
+        views.harvesting_mean_update,
+        name="harvesting-mean-update",
+    ),
 ]
 
 urlpatterns += [
     path("login/", views.user_login, name="login"),
     path("logout/", views.user_logout, name="logout"),
-    path("user-plant-collection/", views.user_plant_collection, name="user-plant-collection"),
-    path("user-plant-toggle/<int:pk>", views.user_plant_toggle, name="user-plant-toggle"),
-    path("user-plant-update/<int:pk>", views.user_plant_update, name="user-plant-update"),
-    path("user-plant-delete/<int:pk>", views.user_plant_delete, name="user-plant-delete"),
-    path("plant-collection-csv/", views.plant_collection_csv, name="plant-collection-csv"),
+    path(
+        "user-plant-collection/",
+        views.user_plant_collection,
+        name="user-plant-collection",
+    ),
+    path(
+        "user-plant-toggle/<int:pk>", views.user_plant_toggle, name="user-plant-toggle"
+    ),
+    path(
+        "user-plant-update/<int:pk>", views.user_plant_update, name="user-plant-update"
+    ),
+    path(
+        "user-plant-delete/<int:pk>", views.user_plant_delete, name="user-plant-delete"
+    ),
+    path(
+        "plant-collection-csv/", views.plant_collection_csv, name="plant-collection-csv"
+    ),
     path("site-admin/", views.siteadmin, name="site-admin"),
 ]
 
 urlpatterns += [
     path("plant-label-pdf/<int:pk>", views.plant_label_pdf, name="plant-label-pdf"),
+]
+urlpatterns += [
+    path(
+        "plant-environmental-requirement-update/<int:pk>",
+        views.plant_environmental_requirement_update,
+        name="plant-environmental-requirement-update",
+    ),
+    path(
+        "plant-identification-information-update/<int:pk>",
+        views.plant_identification_information_update,
+        name="plant-identification-information-update",
+    ),
+    path(
+        "plant-growth-characteristics-update/<int:pk>",
+        views.plant_growth_characteristics_update,
+        name="plant-growth-characteristics-update",
+    ),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
