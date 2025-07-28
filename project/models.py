@@ -662,6 +662,7 @@ class PlantProfile(Base):
         ## Conservation Status
             grasp_candidate (BooleanField): Whether plant is a candidate for GRASP program
             grasp_candidate_notes (CharField): Notes on GRASP candidacy
+            native_to_ottawa_region (BooleanField): Whether plant is native to the Ottawa region
 
         ## Safety and Compatibility
             septic_tank_safe (BooleanField): Whether safe to plant near septic systems
@@ -824,6 +825,12 @@ class PlantProfile(Base):
     taxon = models.CharField(max_length=5, blank=True)
     conservation_status = models.ForeignKey(
         ConservationStatus, on_delete=models.RESTRICT, null=True, blank=True
+    )
+    native_to_ottawa_region = models.BooleanField(
+        default=False,
+        null=True,
+        blank=True,
+        help_text="Is the plant native to the Ottawa region?",
     )
     inaturalist_taxon = models.CharField(max_length=10, blank=True)
 
