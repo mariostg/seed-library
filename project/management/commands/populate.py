@@ -285,7 +285,6 @@ class Command(BaseCommand):
                         + ("..." if len(missing_names) > 5 else "")
                     )
                 )
-
             return existing_names, missing_names
 
         except FileNotFoundError:
