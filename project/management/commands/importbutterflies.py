@@ -83,7 +83,6 @@ class Command(BaseCommand):
             self.stderr.write(f"File '{file_path}' is not an xlsx or csv file.")
             return
 
-        self.stdout.write(f"Processing file: {file_path}")
         self.main()
 
     def validate_plants(self, reader):
@@ -172,7 +171,7 @@ class Command(BaseCommand):
         self.stdout.write(
             #  Write a success message to stdout indicating the conversion indicating only the file names
             self.style.SUCCESS(
-                f"From {self.butterfly_xlsx_file_path.parent}\nconverted\t{self.butterfly_xlsx_file_path.name}\nto\t\t{self.butterfly_csv_file_path.name}"
+                f"\nFrom {self.butterfly_xlsx_file_path.parent}\nconverted\t{self.butterfly_xlsx_file_path.name}\nto\t\t{self.butterfly_csv_file_path.name}"
             )
         )
 
