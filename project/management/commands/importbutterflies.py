@@ -43,19 +43,47 @@ class Command(BaseCommand):
         parser.add_argument(
             "butterfly_file_path", type=str, help="Path to the butterfly file"
         )
+        # add argument to process a directory of files instead of a single file
+        parser.add_argument(
+            "--directory",
+            action="store_true",
+            help="Process all files in the specified directory",
+        )
 
     def handle(self, *args, **options):
-        butterfly_file_path = options["butterfly_file_path"]
+        path = options["butterfly_file_path"]
+        is_directory = options["directory"]
+
+        if is_directory:
+            # Process all files in directory
+            dir_path = Path(path)
+            if not dir_path.is_dir():
+                self.stderr.write(f"'{path}' is not a directory.")
+                return
+
+            # Process all xlsx and csv files in the directory
+            for file_path in dir_path.glob("*.xlsx"):
+                self.process_file(file_path)
+        else:
+            # Process single file
+            self.process_file(Path(path))
+
+    def process_file(self, file_path):
+        """Process a single butterfly file."""
         self.butterfly_xlsx_file_path = None
         self.butterfly_csv_file_path = None
-        if butterfly_file_path.endswith(".xlsx"):
-            self.butterfly_xlsx_file_path = Path(butterfly_file_path)
-            self.butterfly_csv_file_path = self.butterfly_xlsx_file_path.with_suffix(
-                ".csv"
-            )
-        elif butterfly_file_path.endswith(".csv"):
-            self.butterfly_csv_file_path = Path(butterfly_file_path)
+
+        if file_path.suffix.lower() == ".xlsx":
+            self.butterfly_xlsx_file_path = file_path
+            self.butterfly_csv_file_path = file_path.with_suffix(".csv")
+        elif file_path.suffix.lower() == ".csv":
+            self.butterfly_csv_file_path = file_path
             self.butterfly_xlsx_file_path = None
+        else:
+            self.stderr.write(f"File '{file_path}' is not an xlsx or csv file.")
+            return
+
+        self.stdout.write(f"Processing file: {file_path}")
         self.main()
 
     def validate_plants(self, reader):
@@ -128,8 +156,18 @@ class Command(BaseCommand):
         Returns:
             None: Writes the converted data to the specified csv file.
         """
-
-        df = pd.read_excel(self.butterfly_xlsx_file_path)
+        try:
+            df = pd.read_excel(self.butterfly_xlsx_file_path)
+        except FileNotFoundError:
+            self.stderr.write(
+                f"File '{self.butterfly_xlsx_file_path}' not found. Please provide a valid xlsx file."
+            )
+            return
+        except Exception as e:
+            self.stderr.write(
+                f"Error reading the xlsx file: {e}. Please ensure the file is a valid Excel file."
+            )
+            return
         df.to_csv(self.butterfly_csv_file_path, index=False)
         self.stdout.write(
             #  Write a success message to stdout indicating the conversion indicating only the file names
