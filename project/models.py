@@ -580,7 +580,7 @@ class PlantProfile(Base):
         ## Seed Handling
             seed_availability (BooleanField): Seeds are readily available
             accepting_seed (BooleanField): Whether accepting seeds for this plant
-            viability_test (ForeignKey): Reference to ViablityTest model
+            seed_viability_test (ForeignKey): Reference to SeedViablityTest model
             seed_storage (ForeignKey): Reference to SeedStorage model
             one_cultivar (ForeignKey): Reference to OneCultivar model
             packaging_measure (ForeignKey): Reference to PackagingMeasure model
