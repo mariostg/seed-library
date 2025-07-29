@@ -148,7 +148,7 @@ class SeedHead(Base):
         ordering = ["seed_head"]
 
 
-class ViablityTest(Base):
+class ViabilityTest(Base):
     """A model representing a viability test.
 
     This model stores information about various viability tests that can be performed to determine if the seed is likely to germinate.
@@ -731,7 +731,7 @@ class PlantProfile(Base):
     )
     remove_non_seed_material = models.BooleanField(default=False, null=True, blank=True)
     viability_test = models.ForeignKey(
-        ViablityTest, on_delete=models.RESTRICT, null=True, blank=True
+        ViabilityTest, on_delete=models.RESTRICT, null=True, blank=True
     )
     seed_storage = models.ForeignKey(
         SeedStorage, on_delete=models.RESTRICT, null=True, blank=True
