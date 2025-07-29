@@ -149,26 +149,26 @@ class SeedHead(Base):
 
 
 class SeedViabilityTest(Base):
-    """A model representing a viability test.
+    """A model representing a seed viability test.
 
-    This model stores information about various viability tests that can be performed to determine if the seed is likely to germinate.
+    This model stores information about various seed viability tests that can be performed to determine if the seed is likely to germinate.
     The test name is stored as a character field with a maximum length of 150 characters.
 
     Attributes:
-        viability_test (CharField): The name or description of the viability test,
+        seed_viability_test (CharField): The name or description of the viability test,
             limited to 150 characters. Can be blank.
 
     Meta:
-        ordering: Ordered alphabetically by viability_test field
+        ordering: Ordered alphabetically by seed_viability_test field
     """
 
-    viability_test = models.CharField(max_length=150, blank=True)
+    seed_viability_test = models.CharField(max_length=150, blank=True)
 
     def __str__(self) -> str:
-        return self.viability_test
+        return self.seed_viability_test
 
     class Meta:
-        ordering = ["viability_test"]
+        ordering = ["seed_viability_test"]
 
 
 class SeedStorage(Base):
