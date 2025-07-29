@@ -27,7 +27,7 @@ class PlantProfileForm(forms.ModelForm):
             "harvesting_mean",  #
             "seed_head",  #
             "remove_non_seed_material",  #
-            "viability_test",  #
+            "seed_viability_test",  #
             "seed_storage",  #
             "one_cultivar",  #
             "packaging_measure",  #

@@ -730,7 +730,7 @@ class PlantProfile(Base):
         SeedHead, on_delete=models.RESTRICT, null=True, blank=True
     )
     remove_non_seed_material = models.BooleanField(default=False, null=True, blank=True)
-    viability_test = models.ForeignKey(
+    seed_viability_test = models.ForeignKey(
         SeedViabilityTest, on_delete=models.RESTRICT, null=True, blank=True
     )
     seed_storage = models.ForeignKey(
