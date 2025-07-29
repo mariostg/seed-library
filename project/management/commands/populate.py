@@ -30,217 +30,215 @@ class Command(BaseCommand):
 
     def handle(self, *args, filepath, **options):
         if (
-            DEBUG
-        ):  # because with don't want to populate the database in production except for initial deployment.
-            self.filepath = Path(filepath)
-
-            if not self.filepath.exists():
-                raise FileNotFoundError(
-                    f"The specified filepath does not exist: {self.filepath}"
-                )
-            if not self.filepath.is_dir():
-                raise NotADirectoryError(
-                    f"The specified filepath is not a directory: {self.filepath}"
-                )
-
-            # this is the list of csv files that will be used to populate the database.
-            self.csv_files = {
-                "latin_names": "plant-names-latin - csv.csv",
-                "english_names": "plant-names-english - csv.csv",
-                "french_names": "plant-names-french - csv.csv",
-                "bird_friendly": "plant-bird-friendly - csv.csv",
-                "boulevard_garden_tolerant": "plant-boulevard-garden-tolerant - csv.csv",
-                "butterfly_friendly": "plant-butterfly-friendly - csv.csv",
-                "butterfly_host": "plant-butterfly-host - csv.csv",
-                "bee_host": "plant-bee-host - csv.csv",
-                "cause_dermatitis": "plant-cause-dermatitis - csv.csv",
-                "cedar-hedge-replacemenmt": "plant-cedar-hedge-replacement - csv.csv",
-                "bloom_color": "plant-bloom-color - csv.csv",
-                "conservation_status": "plant-conservation-status - csv.csv",
-                "container_suitable": "plant-container-suitable - csv.csv",
-                "drought_tolerant": "plant-drought-tolerant - csv.csv",
-                "germinate_easy": "plant-germinate-easy - csv.csv",
-                "ground_cover": "plant-ground-cover - csv.csv",
-                "growth_habit": "plant-growth-habit - csv.csv",
-                "hummingbird_friendly": "plant-hummingbird-friendly - csv.csv",
-                "juglone_tolerant": "plant-juglone-tolerant - csv.csv",
-                "keystones_species": "plant-keystones-species - csv.csv",
-                "lifespan": "plant-lifespan - csv.csv",
-                "limestone_tolerant": "plant-limestone-tolerant - csv.csv",
-                "max-height": "plant-max-height - csv.csv",
-                "max-width": "plant-max-width - csv.csv",
-                "nitrogen_fixer": "plant-nitrogen-fixer - csv.csv",
-                "one_cultivar": "plant-one-cultivar - csv.csv",
-                "packaging_measure": "plant-packaging-measure - csv.csv",
-                "plant-taxon": "plant-taxon - csv.csv",
-                "produces-burs": "plant-produces-burs - csv.csv",
-                "salt_tolerant": "plant-salt-tolerant - csv.csv",
-                "sand_tolerant": "plant-sand-tolerant - csv.csv",
-                "school_garden_suitable": "plant-school-garden-suitable - csv.csv",
-                "seed_head": "plant-seed-head - csv.csv",
-                "shoreline_rehab": "plant-shoreline-rehab - csv.csv",
-                "sowing-depth": "plant-sowing-depth - csv.csv",
-                "stratification_duration": "plant-stratification-duration - csv.csv",
-                "transplantation_tolerant": "plant-transplantation-tolerant - csv.csv",
-                "beginner_friendly": "plant-beginner-friendly - csv.csv",
-                "moisture-dry": "plant-moisture-dry - csv.csv",
-                "moisture-medium": "plant-moisture-medium - csv.csv",
-                "moisture-wet": "plant-moisture-wet - csv.csv",
-                "full-sun": "plant-full-sun - csv.csv",
-                "partial-sun": "plant-partial-sun - csv.csv",
-                "full-shade": "plant-full-shade - csv.csv",
-                "spread-by-rhizome": "plant-spread-by-rhizome - csv.csv",
-                "dioecious": "plant-dioecious - csv.csv",
-                "seed-event-table": "plant-seed-event-table - csv.csv",
-                "rock-garden": "plant-rock-garden - csv.csv",
-                "septic-tank-safe": "plant-septic-tank-safe - csv.csv",
-                "wetland-garden": "plant-wetland-garden - csv.csv",
-                "grasp-candidate": "plant-grasp-candidate - csv.csv",
-                "toxicity_indicator": "plant-toxicity-indicator - csv.csv",
-                "toxicity_indicator_notes": "plant-toxicity-indicator-notes - csv.csv",
-                "acidic_soil_tolerant": "plant-acidic-soil-tolerant - csv.csv",
-                "grasp_candidate_notes": "plant-grasp-candidate-notes - csv.csv",
-                "self_seeding": "plant-self-seeding - csv.csv",
-                "does_not_spread": "plant-does-not-spread - csv.csv",
-                "sharing_priority": "plant-sharing-priority - csv.csv",
-                "butterfly_species": "plant-butterfly-species - csv.csv",
-                "bloom_start": "plant-bloom-start - csv.csv",
-                "bloom_end": "plant-bloom-end - csv.csv",
-                "rabbit_tolerant": "plant-rabbit-tolerant - csv.csv",
-                "deer_tolerant": "plant-deer-tolerant - csv.csv",
-                "rain_garden": "plant-rain-garden - csv.csv",
-                "woodland_garden": "plant-woodland-garden - csv.csv",
-                "plant-butterfly-matrix": "plant-butterfly-matrix - csv.csv",
-            }
-
-            # Clear existing data in the database
-            models.PlantProfile.objects.all().delete()
-            models.BloomColor.objects.all().delete()
-            models.ConservationStatus.objects.all().delete()
-            models.ConservationStatus.objects.all().delete()
-            models.Dormancy.objects.all().delete()
-            models.GrowthHabit.objects.all().delete()
-            models.HarvestingIndicator.objects.all().delete()
-            models.HarvestingMean.objects.all().delete()
-            models.Lighting.objects.all().delete()
-            models.OneCultivar.objects.all().delete()
-            models.PackagingMeasure.objects.all().delete()
-            models.PlantLifespan.objects.all().delete()
-            models.SeedHead.objects.all().delete()
-            models.SeedPreparation.objects.all().delete()
-            models.SeedStorage.objects.all().delete()
-            models.SeedStorageLabelInfo.objects.all().delete()
-            models.SharingPriority.objects.all().delete()
-            models.SowingDepth.objects.all().delete()
-            models.ViablityTest.objects.all().delete()
-            models.SeedEventTable.objects.all().delete()
-            models.ToxicityIndicator.objects.all().delete()
-            models.ButterflySpecies.objects.all().delete()
-
-            # we start by inserting the latin names of plants.
-            # This is a unique key and must be done first.
-            self.import_latin_names()
-            self.import_english_names()
-            self.import_french_names()
-            self.import_bloom_color()
-            self.import_conservation_status()
-            self.import_growth_habit()
-            self.import_height()
-            self.import_lifespan()
-            self.import_one_cultivar()
-            self.import_packaging_measure()
-            self.import_seed_head()
-            self.import_sowing_depth()
-            self.import_stratification_duration()
-            self.import_taxon()
-            self.import_width()
-            self.import_seed_event_table()
-            self.import_toxixity_indicator()
-            self.import_toxicity_indicator_notes()
-            self.import_grasp_candidate_notes()
-            self.import_sharing_priority()
-
-            self.import_butterfly_species()
-            self.import_bloom_start()
-            self.imoort_bloom_end()
-
-            self.import_butterfly_species()
-            self.set_plant_butterfly_friendly_relationship()
-
-            # Insert the boolean fields.
-            # Define a mapping of model field names to CSV filenames
-            boolean_fields = {
-                "bee_host": "bee_host",
-                "butterfly_friendly": "butterfly_friendly",
-                "butterfly_host": "butterfly_host",
-                "hummingbird_friendly": "hummingbird_friendly",
-                "container_suitable": "container_suitable",
-                "ground_cover": "ground_cover",
-                "shoreline_rehab": "shoreline_rehab",
-                "drought_tolerant": "drought_tolerant",
-                "salt_tolerant": "salt_tolerant",
-                "sand_tolerant": "sand_tolerant",
-                "keystones_species": "keystones_species",
-                "nitrogen_fixer": "nitrogen_fixer",
-                "germinate_easy": "germinate_easy",
-                "boulevard_garden_tolerant": "boulevard_garden_tolerant",
-                "bird_friendly": "bird_friendly",
-                "cedar_hedge_replacement": "cedar-hedge-replacemenmt",
-                "juglone_tolerant": "juglone_tolerant",
-                "cause_dermatitis": "cause_dermatitis",
-                "produces_burs": "produces-burs",
-                "transplantation_tolerant": "transplantation_tolerant",
-                "limestone_tolerant": "limestone_tolerant",
-                "school_garden_suitable": "school_garden_suitable",
-                "beginner_friendly": "beginner_friendly",
-                "moisture_dry": "moisture-dry",
-                "moisture_medium": "moisture-medium",
-                "moisture_wet": "moisture-wet",
-                "full_sun": "full-sun",
-                "partial_sun": "partial-sun",
-                "full_shade": "full-shade",
-                "spread_by_rhizome": "spread-by-rhizome",
-                "dioecious": "dioecious",
-                "rock_garden": "rock-garden",
-                "septic_tank_safe": "septic-tank-safe",
-                "wetland_garden": "wetland-garden",
-                "grasp_candidate": "grasp-candidate",
-                "acidic_soil_tolerant": "acidic_soil_tolerant",
-                "self_seeding": "self_seeding",
-                "does_not_spread": "does_not_spread",
-                "rabbit_tolerant": "rabbit_tolerant",
-                "deer_tolerant": "deer_tolerant",
-                "rain_garden": "rain_garden",
-                "woodland_garden": "woodland_garden",
-            }
-
-            # Update all boolean fields using a loop
-            for field_name, csv_filename in boolean_fields.items():
-                self.stdout.write(
-                    self.style.SUCCESS(f"\n>>>Processing {field_name}...")
-                )
-                self.update_boolean_field(
-                    models.PlantProfile, field_name, self.csv_files[csv_filename]
-                )
-
-            plants = models.PlantProfile.objects.all()
+            not DEBUG
+        ):  # Don't populate the database in production except for initial deployment
             self.stdout.write(
-                self.style.SUCCESS(
-                    "\n\nUpdating image profile for each plant profile..."
-                )
+                self.style.WARNING("This command is only available in DEBUG mode")
             )
-            if plants.exists():
-                # Set has_image_profile for each plant profile
-                for plant in plants:
-                    self.set_image_profile(plant)
-            else:
-                self.stdout.write(
-                    self.style.ERROR("No plant profiles found to update image profile.")
-                )
-                exit(1)
+            return  # Exit early instead of raising an exception
 
+        self.filepath = Path(filepath)
+        self.latin_names = models.PlantProfile.objects.values_list(
+            "latin_name", flat=True
+        )  # Get existing latin names from the database. It will be populated again if import_latin_names is called.
+
+        if not self.filepath.exists():
+            raise FileNotFoundError(
+                f"The specified filepath does not exist: {self.filepath}"
+            )
+        if not self.filepath.is_dir():
+            raise NotADirectoryError(
+                f"The specified filepath is not a directory: {self.filepath}"
+            )
+
+        # this is the list of csv files that will be used to populate the database.
+        self.csv_files = {
+            "latin_names": "plant-names-latin - csv.csv",
+            "english_names": "plant-names-english - csv.csv",
+            "french_names": "plant-names-french - csv.csv",
+            "bird_friendly": "plant-bird-friendly - csv.csv",
+            "boulevard_garden_tolerant": "plant-boulevard-garden-tolerant - csv.csv",
+            "butterfly_friendly": "plant-butterfly-friendly - csv.csv",
+            "butterfly_host": "plant-butterfly-host - csv.csv",
+            "bee_host": "plant-bee-host - csv.csv",
+            "cause_dermatitis": "plant-cause-dermatitis - csv.csv",
+            "cedar-hedge-replacemenmt": "plant-cedar-hedge-replacement - csv.csv",
+            "bloom_color": "plant-bloom-color - csv.csv",
+            "conservation_status": "plant-conservation-status - csv.csv",
+            "container_suitable": "plant-container-suitable - csv.csv",
+            "drought_tolerant": "plant-drought-tolerant - csv.csv",
+            "germinate_easy": "plant-germinate-easy - csv.csv",
+            "ground_cover": "plant-ground-cover - csv.csv",
+            "growth_habit": "plant-growth-habit - csv.csv",
+            "hummingbird_friendly": "plant-hummingbird-friendly - csv.csv",
+            "juglone_tolerant": "plant-juglone-tolerant - csv.csv",
+            "keystones_species": "plant-keystones-species - csv.csv",
+            "lifespan": "plant-lifespan - csv.csv",
+            "limestone_tolerant": "plant-limestone-tolerant - csv.csv",
+            "max-height": "plant-max-height - csv.csv",
+            "max-width": "plant-max-width - csv.csv",
+            "nitrogen_fixer": "plant-nitrogen-fixer - csv.csv",
+            "one_cultivar": "plant-one-cultivar - csv.csv",
+            "packaging_measure": "plant-packaging-measure - csv.csv",
+            "plant-taxon": "plant-taxon - csv.csv",
+            "produces-burs": "plant-produces-burs - csv.csv",
+            "salt_tolerant": "plant-salt-tolerant - csv.csv",
+            "sand_tolerant": "plant-sand-tolerant - csv.csv",
+            "school_garden_suitable": "plant-school-garden-suitable - csv.csv",
+            "seed_head": "plant-seed-head - csv.csv",
+            "shoreline_rehab": "plant-shoreline-rehab - csv.csv",
+            "sowing-depth": "plant-sowing-depth - csv.csv",
+            "stratification_duration": "plant-stratification-duration - csv.csv",
+            "transplantation_tolerant": "plant-transplantation-tolerant - csv.csv",
+            "beginner_friendly": "plant-beginner-friendly - csv.csv",
+            "moisture-dry": "plant-moisture-dry - csv.csv",
+            "moisture-medium": "plant-moisture-medium - csv.csv",
+            "moisture-wet": "plant-moisture-wet - csv.csv",
+            "full-sun": "plant-full-sun - csv.csv",
+            "partial-sun": "plant-partial-sun - csv.csv",
+            "full-shade": "plant-full-shade - csv.csv",
+            "spread-by-rhizome": "plant-spread-by-rhizome - csv.csv",
+            "dioecious": "plant-dioecious - csv.csv",
+            "seed-event-table": "plant-seed-event-table - csv.csv",
+            "rock-garden": "plant-rock-garden - csv.csv",
+            "septic-tank-safe": "plant-septic-tank-safe - csv.csv",
+            "wetland-garden": "plant-wetland-garden - csv.csv",
+            "grasp-candidate": "plant-grasp-candidate - csv.csv",
+            "toxicity_indicator": "plant-toxicity-indicator - csv.csv",
+            "toxicity_indicator_notes": "plant-toxicity-indicator-notes - csv.csv",
+            "acidic_soil_tolerant": "plant-acidic-soil-tolerant - csv.csv",
+            "grasp_candidate_notes": "plant-grasp-candidate-notes - csv.csv",
+            "self_seeding": "plant-self-seeding - csv.csv",
+            "does_not_spread": "plant-does-not-spread - csv.csv",
+            "sharing_priority": "plant-sharing-priority - csv.csv",
+            "bloom_start": "plant-bloom-start - csv.csv",
+            "bloom_end": "plant-bloom-end - csv.csv",
+            "rabbit_tolerant": "plant-rabbit-tolerant - csv.csv",
+            "deer_tolerant": "plant-deer-tolerant - csv.csv",
+            "rain_garden": "plant-rain-garden - csv.csv",
+            "woodland_garden": "plant-woodland-garden - csv.csv",
+            "native-to-ottawa-region": "plant-native-to-ottawa-region - csv.csv",
+            "harvesting_start": "plant-harvesting-start - csv.csv",
+            "seed_viability_test": "plant-seed-viability-test - csv.csv",
+        }
+
+        # Clear existing data in the database
+        models.PlantProfile.objects.all().delete()
+        models.BloomColor.objects.all().delete()
+        models.ConservationStatus.objects.all().delete()
+        models.ConservationStatus.objects.all().delete()
+        models.Dormancy.objects.all().delete()
+        models.GrowthHabit.objects.all().delete()
+        models.HarvestingIndicator.objects.all().delete()
+        models.HarvestingMean.objects.all().delete()
+        models.Lighting.objects.all().delete()
+        models.OneCultivar.objects.all().delete()
+        models.PackagingMeasure.objects.all().delete()
+        models.PlantLifespan.objects.all().delete()
+        models.SeedHead.objects.all().delete()
+        models.SeedPreparation.objects.all().delete()
+        models.SeedStorage.objects.all().delete()
+        models.SeedStorageLabelInfo.objects.all().delete()
+        models.SharingPriority.objects.all().delete()
+        models.SowingDepth.objects.all().delete()
+        models.SeedViabilityTest.objects.all().delete()
+        models.SeedEventTable.objects.all().delete()
+        models.ToxicityIndicator.objects.all().delete()
+        models.ButterflySpecies.objects.all().delete()
+
+        # we start by inserting the latin names of plants.
+        # This is a unique key and must be done first.
+        self.import_latin_names()
+        self.import_english_names()
+        self.import_french_names()
+        self.import_bloom_color()
+        self.import_conservation_status()
+        self.import_growth_habit()
+        self.import_height()
+        self.import_lifespan()
+        self.import_one_cultivar()
+        self.import_packaging_measure()
+        self.import_seed_head()
+        self.import_sowing_depth()
+        self.import_stratification_duration()
+        self.import_taxon()
+        self.import_width()
+        self.import_seed_event_table()
+        self.import_toxixity_indicator()
+        self.import_toxicity_indicator_notes()
+        self.import_grasp_candidate_notes()
+        self.import_sharing_priority()
+
+        self.import_bloom_start()
+        self.imoort_bloom_end()
+
+        # Insert the boolean fields.
+        # Define a mapping of model field names to CSV filenames
+        boolean_fields = {
+            "bee_host": "bee_host",
+            "butterfly_friendly": "butterfly_friendly",
+            "butterfly_host": "butterfly_host",
+            "hummingbird_friendly": "hummingbird_friendly",
+            "container_suitable": "container_suitable",
+            "ground_cover": "ground_cover",
+            "shoreline_rehab": "shoreline_rehab",
+            "drought_tolerant": "drought_tolerant",
+            "salt_tolerant": "salt_tolerant",
+            "sand_tolerant": "sand_tolerant",
+            "keystones_species": "keystones_species",
+            "nitrogen_fixer": "nitrogen_fixer",
+            "germinate_easy": "germinate_easy",
+            "boulevard_garden_tolerant": "boulevard_garden_tolerant",
+            "bird_friendly": "bird_friendly",
+            "cedar_hedge_replacement": "cedar-hedge-replacemenmt",
+            "juglone_tolerant": "juglone_tolerant",
+            "cause_dermatitis": "cause_dermatitis",
+            "produces_burs": "produces-burs",
+            "transplantation_tolerant": "transplantation_tolerant",
+            "limestone_tolerant": "limestone_tolerant",
+            "school_garden_suitable": "school_garden_suitable",
+            "beginner_friendly": "beginner_friendly",
+            "moisture_dry": "moisture-dry",
+            "moisture_medium": "moisture-medium",
+            "moisture_wet": "moisture-wet",
+            "full_sun": "full-sun",
+            "partial_sun": "partial-sun",
+            "full_shade": "full-shade",
+            "spread_by_rhizome": "spread-by-rhizome",
+            "dioecious": "dioecious",
+            "rock_garden": "rock-garden",
+            "septic_tank_safe": "septic-tank-safe",
+            "wetland_garden": "wetland-garden",
+            "grasp_candidate": "grasp-candidate",
+            "acidic_soil_tolerant": "acidic_soil_tolerant",
+            "self_seeding": "self_seeding",
+            "does_not_spread": "does_not_spread",
+            "rabbit_tolerant": "rabbit_tolerant",
+            "deer_tolerant": "deer_tolerant",
+            "rain_garden": "rain_garden",
+            "woodland_garden": "woodland_garden",
+        }
+
+        # Update all boolean fields using a loop
+        for field_name, csv_filename in boolean_fields.items():
+            self.stdout.write(self.style.SUCCESS(f"\n>>>Processing {field_name}..."))
+            self.update_boolean_field(
+                models.PlantProfile, field_name, self.csv_files[csv_filename]
+            )
+
+        plants = models.PlantProfile.objects.all()
+        self.stdout.write(
+            self.style.SUCCESS("\n\nUpdating image profile for each plant profile...")
+        )
+        if plants.exists():
+            # Set has_image_profile for each plant profile
+            for plant in plants:
+                self.set_image_profile(plant)
         else:
-            raise ValueError("This capability is only available when DEBUG is True")
+            self.stdout.write(
+                self.style.ERROR("No plant profiles found to update image profile.")
+            )
+            exit(1)
 
         self.set_actaea_racemosa_boolean_fields()
 
@@ -563,6 +561,15 @@ class Command(BaseCommand):
             field_name="seed_head",
             model_class=models.SeedHead,
             display_name="Seed head",
+        )
+
+    def import_seed_viability_test(self):
+        """Read the plant seed viability test CSV file and update the PlantProfile model with seed viability values."""
+        self.import_foreign_key_relation(
+            csv_file=self.csv_files["seed_viability_test"],
+            field_name="seed_viability_test",
+            model_class=models.SeedViabilityTest,
+            display_name="Seed viability test",
         )
 
     def import_bloom_color(self):
