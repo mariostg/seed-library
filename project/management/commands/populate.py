@@ -120,6 +120,10 @@ class Command(BaseCommand):
             "native-to-ottawa-region": "plant-native-to-ottawa-region - csv.csv",
             "harvesting_start": "plant-harvesting-start - csv.csv",
             "seed_viability_test": "plant-seed-viability-test - csv.csv",
+            "harvesting_indicator": "plant-harvesting-indicator - csv.csv",
+            "seed_preparation": "plant-seed-preparation - csv.csv",
+            "remove_non_seed_material": "plant-remove-non-seed-material - csv.csv",
+            "seed_storage": "plant-seed-storage - csv.csv",
         }
 
         # Clear existing data in the database
@@ -164,13 +168,16 @@ class Command(BaseCommand):
         self.import_taxon()
         self.import_width()
         self.import_seed_event_table()
-        self.import_toxixity_indicator()
+        self.import_toxicity_indicator()
         self.import_toxicity_indicator_notes()
         self.import_grasp_candidate_notes()
         self.import_sharing_priority()
-
+        self.import_seed_viability_test()
+        self.import_harvesting_indicator()
+        self.import_seed_preparation()
+        self.import_seed_storage()
         self.import_bloom_start()
-        self.imoort_bloom_end()
+        self.import_bloom_end()
 
         # Insert the boolean fields.
         # Define a mapping of model field names to CSV filenames
@@ -217,6 +224,7 @@ class Command(BaseCommand):
             "deer_tolerant": "deer_tolerant",
             "rain_garden": "rain_garden",
             "woodland_garden": "woodland_garden",
+            "remove_non_seed_material": "remove_non_seed_material",
         }
 
         # Update all boolean fields using a loop
@@ -503,7 +511,7 @@ class Command(BaseCommand):
         )
         self._update_vernacular_plant_name(self.csv_files["bloom_start"], "bloom_start")
 
-    def imoort_bloom_end(self):
+    def import_bloom_end(self):
         """Read the plant bloom end CSV file and update the PlantProfile model with bloom end values."""
         bloom_end_exist, bloom_end_missing = self.check_latin_names_in_csv(
             self.csv_files["bloom_end"]
@@ -570,6 +578,33 @@ class Command(BaseCommand):
             field_name="seed_viability_test",
             model_class=models.SeedViabilityTest,
             display_name="Seed viability test",
+        )
+
+    def import_harvesting_indicator(self):
+        """Read the plant harvesting indicator CSV file and update the PlantProfile model with harvesting indicator values."""
+        self.import_foreign_key_relation(
+            csv_file=self.csv_files["harvesting_indicator"],
+            field_name="harvesting_indicator",
+            model_class=models.HarvestingIndicator,
+            display_name="Harvesting indicator",
+        )
+
+    def import_seed_preparation(self):
+        """Read the plant seed preparation CSV file and update the PlantProfile model with seed preparation values."""
+        self.import_foreign_key_relation(
+            csv_file=self.csv_files["seed_preparation"],
+            field_name="seed_preparation",
+            model_class=models.SeedPreparation,
+            display_name="Seed preparation",
+        )
+
+    def import_seed_storage(self):
+        """Read the plant seed storage CSV file and update the PlantProfile model with seed storage values."""
+        self.import_foreign_key_relation(
+            csv_file=self.csv_files["seed_storage"],
+            field_name="seed_storage",
+            model_class=models.SeedStorage,
+            display_name="Seed storage",
         )
 
     def import_bloom_color(self):
@@ -649,7 +684,7 @@ class Command(BaseCommand):
             display_name="Seed event table",
         )
 
-    def import_toxixity_indicator(self):
+    def import_toxicity_indicator(self):
         """Read the toxicity indicator CSV file and update the PlantProfile model with toxicity values."""
         self.import_foreign_key_relation(
             csv_file=self.csv_files["toxicity_indicator"],
