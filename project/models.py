@@ -633,7 +633,7 @@ class PlantProfile(Base):
             erosion_control (BooleanField): Helps with erosion control
             cedar_hedge_replacement (BooleanField): Can replace cedar hedges
 
-        ## Gardener Experience
+        ## Gardening Experience
             beginner_friendly (BooleanField): Whether suitable for beginner gardeners
             easy_to_contain (BooleanField): Plant is easy to contain/not invasive
             transplantation_tolerant (BooleanField): Tolerates transplanting well
