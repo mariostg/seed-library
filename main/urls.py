@@ -148,6 +148,11 @@ urlpatterns += [
         views.plant_growth_characteristics_update,
         name="plant-growth-characteristics-update",
     ),
+    path(
+        "plant-propagation-and-cultivation-update/<int:pk>",
+        views.plant_propagation_and_cultivation_update,
+        name="plant-propagation-and-cultivation-update",
+    ),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

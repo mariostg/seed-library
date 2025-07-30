@@ -842,3 +842,143 @@ def plant_growth_characteristics_update(request, pk):
         "lifespan_choices": lifespan_choices,
     }
     return render(request, "project/plant-growth-characteristics-update.html", context)
+
+
+def plant_propagation_and_cultivation_update(request, pk):
+    plant = models.PlantProfile.objects.get(pk=pk)
+
+    # packaging measures
+    packaging_measures = models.PackagingMeasure.objects.all().order_by(
+        "packaging_measure"
+    )
+    if not packaging_measures:
+        messages.warning(
+            request, "No packaging measures available. Please add some first."
+        )
+        return redirect("packaging-measure-table")
+
+    # One Cultivars
+    one_cultivars = models.OneCultivar.objects.all().order_by("one_cultivar")
+    if not one_cultivars:
+        messages.warning(request, "No one cultivars available. Please add some first.")
+        return redirect("one-cultivar-table")
+
+    # Seed Viability Tests
+    seed_viability_tests = models.SeedViabilityTest.objects.all().order_by(
+        "seed_viability_test"
+    )
+    if not seed_viability_tests:
+        messages.warning(
+            request, "No seed viability tests available. Please add some first."
+        )
+        return redirect("seed-viability-test-table")
+
+    # Seed Storage
+    seed_storage = models.SeedStorage.objects.all().order_by("seed_storage")
+    if not seed_storage:
+        messages.warning(
+            request, "No seed storage options available. Please add some first."
+        )
+        return redirect("seed-storage-table")
+
+    # seed preparation
+    seed_preparation = models.SeedPreparation.objects.all().order_by("seed_preparation")
+    if not seed_preparation:
+        messages.warning(
+            request, "No seed preparation available. Please add some first."
+        )
+        return redirect("seed-preparation-table")
+
+    # sowing depth
+    sowing_depth = models.SowingDepth.objects.all().order_by("sowing_depth")
+    if not sowing_depth:
+        messages.warning(request, "No sowing depth available. Please add some first.")
+        return redirect("sowing-depth-table")
+
+    if request.method == "POST":
+        # seed handling related fields
+        plant.seed_availability = request.POST.get("seed_availability") == "on"
+        plant.accepting_seed = request.POST.get("accepting_seed") == "on"
+
+        viability_test_id = request.POST.get("viability_test")
+        if viability_test_id:
+            try:
+                plant.seed_viability_test = models.SeedViabilityTest.objects.get(
+                    pk=viability_test_id
+                )
+            except models.SeedViabilityTest.DoesNotExist:
+                messages.warning(request, "Selected seed viability test not found.")
+        else:
+            plant.seed_viability_test = None
+        plant.seed_storage = request.POST.get("seed_storage")
+
+        one_cultivar_id = request.POST.get("one_cultivar")
+        if one_cultivar_id:
+            try:
+                plant.one_cultivar = models.OneCultivar.objects.get(pk=one_cultivar_id)
+            except models.OneCultivar.DoesNotExist:
+                messages.warning(request, "Selected one cultivar not found.")
+        else:
+            plant.one_cultivar = None
+
+        packaging_measure_id = request.POST.get("packaging_measure")
+        if packaging_measure_id:
+            try:
+                plant.packaging_measure = models.PackagingMeasure.objects.get(
+                    pk=packaging_measure_id
+                )
+            except models.PackagingMeasure.DoesNotExist:
+                messages.warning(request, "Selected packaging measure not found.")
+        else:
+            plant.packaging_measure = None
+
+        dormancy_id = request.POST.get("dormancy")
+        if dormancy_id:
+            try:
+                plant.dormancy = models.Dormancy.objects.get(pk=dormancy_id)
+            except models.Dormancy.DoesNotExist:
+                messages.warning(request, "Selected dormancy not found.")
+        else:
+            plant.dormancy = None
+
+        seed_preparation_id = request.POST.get("seed_preparation")
+        if seed_preparation_id:
+            try:
+                plant.seed_preparation = models.SeedPreparation.objects.get(
+                    pk=seed_preparation_id
+                )
+            except models.SeedPreparation.DoesNotExist:
+                messages.warning(request, "Selected seed preparation not found.")
+        else:
+            plant.seed_preparation = None
+
+        plant.seed_cleaning_notes = request.POST.get("seed_cleaning_notes")
+
+        seed_storage_label_info_id = request.POST.get("seed_storage_label_info")
+        if seed_storage_label_info_id:
+            try:
+                plant.seed_storage_label_info = models.SeedStorageLabelInfo.objects.get(
+                    pk=seed_storage_label_info_id
+                )
+            except models.SeedStorageLabelInfo.DoesNotExist:
+                messages.warning(request, "Selected seed storage label info not found.")
+        else:
+            plant.seed_storage_label_info = None
+
+        plant.save()
+        messages.success(request, "Propagation and cultivation updated successfully.")
+        return redirect("plant-profile-page", pk=plant.pk)
+
+    context = {
+        "title": f"{plant.latin_name} - Propagation and Cultivation",
+        "plant": plant,
+        "packaging_measures": packaging_measures,
+        "one_cultivars": one_cultivars,
+        "seed_viability_tests": seed_viability_tests,
+        "seed_storage": seed_storage,
+        "seed_preparation": seed_preparation,
+        "sowing_depth": sowing_depth,
+    }
+    return render(
+        request, "project/plant-propagation-and-cultivation-update.html", context
+    )
