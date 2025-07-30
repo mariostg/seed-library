@@ -12,8 +12,6 @@ __pycache__
 .coverage
 htmlcov/
 
-requirements.txt
-
 staticfiles/
 media/*
 *.min.js
