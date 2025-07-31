@@ -49,6 +49,18 @@ class PlantProfileFilter(django_filters.FilterSet):
     rock_garden = django_filters.CharFilter(
         method="filter_boolean",
     )
+    rain_garden = django_filters.CharFilter(
+        method="filter_boolean",
+    )
+    school_garden_suitable = django_filters.CharFilter(
+        method="filter_boolean",
+    )
+    woodland_garden = django_filters.CharFilter(
+        method="filter_boolean",
+    )
+    does_not_spread = django_filters.CharFilter(
+        method="filter_boolean",
+    )
     annual = django_filters.CharFilter(
         method="filter_lifespan",
     )
