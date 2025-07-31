@@ -121,7 +121,7 @@ class Command(BaseCommand):
             "harvesting_start": "plant-harvesting-start - csv.csv",
             "seed_viability_test": "plant-seed-viability-test - csv.csv",
             "harvesting_indicator": "plant-harvesting-indicator - csv.csv",
-            "seed_preparation": "plant-seed-preparation - csv.csv",
+            "harvesting_mean": "plant-harvesting-mean - csv.csv",
             "remove_non_seed_material": "plant-remove-non-seed-material - csv.csv",
             "seed_storage": "plant-seed-storage - csv.csv",
         }
@@ -174,7 +174,7 @@ class Command(BaseCommand):
         self.import_sharing_priority()
         self.import_seed_viability_test()
         self.import_harvesting_indicator()
-        self.import_seed_preparation()
+        self.import_harvesting_mean()
         self.import_seed_storage()
         self.import_bloom_start()
         self.import_bloom_end()
@@ -589,13 +589,13 @@ class Command(BaseCommand):
             display_name="Harvesting indicator",
         )
 
-    def import_seed_preparation(self):
-        """Read the plant seed preparation CSV file and update the PlantProfile model with seed preparation values."""
+    def import_harvesting_mean(self):
+        """Read the plant harvesting mean CSV file and update the PlantProfile model with harvesting mean values."""
         self.import_foreign_key_relation(
-            csv_file=self.csv_files["seed_preparation"],
-            field_name="seed_preparation",
-            model_class=models.SeedPreparation,
-            display_name="Seed preparation",
+            csv_file=self.csv_files["harvesting_mean"],
+            field_name="harvesting_mean",
+            model_class=models.HarvestingMean,
+            display_name="Harvesting mean",
         )
 
     def import_seed_storage(self):
