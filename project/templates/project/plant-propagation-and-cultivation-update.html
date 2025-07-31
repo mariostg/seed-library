@@ -31,6 +31,12 @@
             remove_non_seed_material (BooleanField): Whether to remove non-seed material
             harvesting_notes (CharField): Detailed notes on harvesting
             harvesting_video_link (CharField): Link to harvesting instructional video
+
+        ## Distribution
+            sharing_priority (ForeignKey): Reference to SharingPriority model
+            seed_event_table (ForeignKey): Reference to SeedEventTable model
+            envelope_label_link (CharField): Link to envelope label resource
+
 -->
 {% extends "core/base.html" %}
 {% load static %}
@@ -186,7 +192,7 @@
           <div class="input-select">
             <label for="id_harvesting_start">Harvesting Start Month</label>
             <select id="id_harvesting_start" name="harvesting_start">
-              {% for month in months %}
+              {% for month in harvesting_months %}
                 <option value="{{ month }}" {% if plant.harvesting_start == month %}selected{% endif %}>
                   {{ month }}
                 </option>
@@ -236,6 +242,33 @@
             <textarea id="id_harvesting_video_link" name="harvesting_video_link">{{ plant.harvesting_video_link }}</textarea>
           </div>
         </section><!-- End of Harvesting Section -->
+        <section><!--Distribution Section -->
+          <h3>Distribution</h3>
+          <div class="input-select">
+            <label for="id_sharing_priority">Sharing Priority</label>
+            <select id="id_sharing_priority" name="sharing_priority">
+              {% for priority in sharing_priority %}
+                <option value="{{ priority.pk }}" {% if plant.sharing_priority.pk == priority.pk %}selected{% endif %}>
+                  {{ priority }}
+                </option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="input-select">
+            <label for="id_seed_event_table">Seed Event Table</label>
+            <select id="id_seed_event_table" name="seed_event_table">
+              {% for event in seed_event_table %}
+                <option value="{{ event.pk }}" {% if plant.seed_event_table.pk == event.pk %}selected{% endif %}>
+                  {{ event }}
+                </option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="input-textarea">
+            <label for="id_envelope_label_link">Envelope Label Link</label>
+            <textarea id="id_envelope_label_link" name="envelope_label_link">{{ plant.envelope_label_link }}</textarea>
+          </div>
+        </section><!-- End of Distribution Section -->
       </div>
       <button class="btn" type="submit">Update Propagation and Cultivation</button>
     </form>

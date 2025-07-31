@@ -846,7 +846,7 @@ def plant_growth_characteristics_update(request, pk):
 
 def plant_propagation_and_cultivation_update(request, pk):
     plant = models.PlantProfile.objects.get(pk=pk)
-
+    harvesting_months = utils.MONTHS
     # packaging measures
     packaging_measures = models.PackagingMeasure.objects.all().order_by(
         "packaging_measure"
@@ -881,24 +881,59 @@ def plant_propagation_and_cultivation_update(request, pk):
         )
         return redirect("seed-storage-table")
 
-    # seed preparation
-    seed_preparation = models.SeedPreparation.objects.all().order_by("seed_preparation")
-    if not seed_preparation:
-        messages.warning(
-            request, "No seed preparation available. Please add some first."
-        )
-        return redirect("seed-preparation-table")
-
     # sowing depth
     sowing_depth = models.SowingDepth.objects.all().order_by("sowing_depth")
     if not sowing_depth:
         messages.warning(request, "No sowing depth available. Please add some first.")
         return redirect("sowing-depth-table")
 
+    # harvesting indicators
+    harvesting_indicators = models.HarvestingIndicator.objects.all().order_by(
+        "harvesting_indicator"
+    )
+    if not harvesting_indicators:
+        messages.warning(
+            request, "No harvesting indicators available. Please add some first."
+        )
+        return redirect("harvesting-indicator-table")
+    # harvesting means
+    harvesting_means = models.HarvestingMean.objects.all().order_by("harvesting_mean")
+    if not harvesting_means:
+        messages.warning(
+            request, "No harvesting means available. Please add some first."
+        )
+        return redirect("harvesting-mean-table")
+
+    # seed heads
+    seed_heads = models.SeedHead.objects.all().order_by("seed_head")
+    if not seed_heads:
+        messages.warning(request, "No seed heads available. Please add some first.")
+        return redirect("seed-head-table")
+
+    # sharing priority
+    sharing_priority = models.SharingPriority.objects.all().order_by("sharing_priority")
+    if not sharing_priority:
+        messages.warning(
+            request, "No sharing priority available. Please add some first."
+        )
+        return redirect("sharing-priority-table")
+
+    # seed event table
+    seed_event_table = models.SeedEventTable.objects.all().order_by("seed_event_table")
+    if not seed_event_table:
+        messages.warning(
+            request,
+            "No seed event table available for this plant. Please add some first.",
+        )
+        return redirect("seed-event-table-table")
+
     if request.method == "POST":
         # seed handling related fields
         plant.seed_availability = request.POST.get("seed_availability") == "on"
         plant.accepting_seed = request.POST.get("accepting_seed") == "on"
+        plant.remove_non_seed_material = (
+            request.POST.get("remove_non_seed_material") == "on"
+        )
 
         viability_test_id = request.POST.get("viability_test")
         if viability_test_id:
@@ -908,9 +943,15 @@ def plant_propagation_and_cultivation_update(request, pk):
                 )
             except models.SeedViabilityTest.DoesNotExist:
                 messages.warning(request, "Selected seed viability test not found.")
+
+        seed_storage_id = request.POST.get("seed_storage")
+        if seed_storage_id:
+            try:
+                plant.seed_storage = models.SeedStorage.objects.get(pk=seed_storage_id)
+            except models.SeedStorage.DoesNotExist:
+                messages.warning(request, "Selected seed storage not found.")
         else:
-            plant.seed_viability_test = None
-        plant.seed_storage = request.POST.get("seed_storage")
+            plant.seed_storage = None
 
         one_cultivar_id = request.POST.get("one_cultivar")
         if one_cultivar_id:
@@ -965,6 +1006,44 @@ def plant_propagation_and_cultivation_update(request, pk):
         else:
             plant.seed_storage_label_info = None
 
+        plant.harvesting_start = request.POST.get("harvesting_start")
+
+        # harvestting indicators
+
+        harvesting_indicator_id = request.POST.get("harvesting_indicator")
+        if harvesting_indicator_id:
+            try:
+                plant.harvesting_indicator = models.HarvestingIndicator.objects.get(
+                    pk=harvesting_indicator_id
+                )
+            except models.HarvestingIndicator.DoesNotExist:
+                messages.warning(request, "Selected harvesting indicator not found.")
+        else:
+            plant.harvesting_indicator = None
+
+        harvesting_mean_id = request.POST.get("harvesting_mean")
+        if harvesting_mean_id:
+            try:
+                plant.harvesting_mean = models.HarvestingMean.objects.get(
+                    pk=harvesting_mean_id
+                )
+            except models.HarvestingMean.DoesNotExist:
+                messages.warning(request, "Selected harvesting mean not found.")
+        else:
+            plant.harvesting_mean = None
+
+        # seed event table
+        seed_event_table_id = request.POST.get("seed_event_table")
+        if seed_event_table_id:
+            try:
+                plant.seed_event_table = models.SeedEventTable.objects.get(
+                    pk=seed_event_table_id
+                )
+            except models.SeedEventTable.DoesNotExist:
+                messages.warning(request, "Selected seed event table not found.")
+        else:
+            plant.seed_event_table = None
+
         plant.save()
         messages.success(request, "Propagation and cultivation updated successfully.")
         return redirect("plant-profile-page", pk=plant.pk)
@@ -976,8 +1055,13 @@ def plant_propagation_and_cultivation_update(request, pk):
         "one_cultivars": one_cultivars,
         "seed_viability_tests": seed_viability_tests,
         "seed_storage": seed_storage,
-        "seed_preparation": seed_preparation,
         "sowing_depth": sowing_depth,
+        "harvesting_months": harvesting_months,
+        "harvesting_indicators": harvesting_indicators,
+        "harvesting_means": harvesting_means,
+        "seed_heads": seed_heads,
+        "sharing_priority": sharing_priority,
+        "seed_event_table": seed_event_table,
     }
     return render(
         request, "project/plant-propagation-and-cultivation-update.html", context
