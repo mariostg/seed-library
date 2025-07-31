@@ -49,6 +49,15 @@ class PlantProfileFilter(django_filters.FilterSet):
     rock_garden = django_filters.CharFilter(
         method="filter_boolean",
     )
+    annual = django_filters.CharFilter(
+        method="filter_lifespan",
+    )
+    biennial = django_filters.CharFilter(
+        method="filter_lifespan",
+    )
+    perennial = django_filters.CharFilter(
+        method="filter_lifespan",
+    )
     septic_tank_safe = django_filters.CharFilter(
         method="filter_boolean",
     )
@@ -212,6 +221,12 @@ class PlantProfileFilter(django_filters.FilterSet):
     def filter_color(self, queryset, name, value):
         if value:
             return queryset.filter(bloom_color__bloom_color=value)
+        else:
+            return queryset.none()
+
+    def filter_lifespan(self, queryset, name, value):
+        if value:
+            return queryset.filter(lifespan__lifespan=value)
         else:
             return queryset.none()
 
