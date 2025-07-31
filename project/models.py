@@ -748,7 +748,6 @@ class PlantProfile(Base):
     seed_preparation = models.ForeignKey(
         SeedPreparation, on_delete=models.RESTRICT, null=True, blank=True
     )
-    seed_cleaning_notes = models.CharField(max_length=70, blank=True)
     sowing_label_instructions = models.CharField(max_length=40, blank=True)
     sowing_notes = models.CharField(max_length=450, blank=True)
     envelope_label_link = models.CharField(max_length=200, blank=True)
@@ -765,7 +764,6 @@ class PlantProfile(Base):
     toxicity_indicator = models.ForeignKey(
         ToxicityIndicator, on_delete=models.RESTRICT, null=True, blank=True
     )
-    transplanting_notes = models.CharField(max_length=450, blank=True)
     alternative_to_notes = models.CharField(max_length=450, blank=True)
 
     germinate_easy = models.BooleanField(default=False, null=True, blank=True)
