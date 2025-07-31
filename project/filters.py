@@ -28,6 +28,9 @@ class PlantProfileFilter(django_filters.FilterSet):
     butterfly_friendly = django_filters.CharFilter(
         method="filter_boolean",
     )
+    bee_friendly = django_filters.CharFilter(
+        method="filter_boolean",
+    )
     boulevard_garden_tolerant = django_filters.CharFilter(
         method="filter_boolean",
     )
@@ -150,6 +153,9 @@ class PlantProfileFilter(django_filters.FilterSet):
     )
     produces_burs = django_filters.CharFilter(
         method="filter_excludes",
+    )
+    foot_traffic_tolerant = django_filters.CharFilter(
+        method="filter_boolean",
     )
     salt_tolerant = django_filters.CharFilter(
         method="filter_boolean",
