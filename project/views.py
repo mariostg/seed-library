@@ -36,6 +36,20 @@ def toggle_availability(request, pk):
 
 def plant_profile_page(request, pk):
     plant: models.PlantProfile = utils.single_plant(pk)
+    landscape_use = (
+        plant.rock_garden
+        or plant.rain_garden
+        or plant.school_garden_suitable
+        or plant.woodland_garden
+        or plant.shoreline_rehab
+        or plant.wetland_garden
+    )
+    ecological_benefits = (
+        plant.bird_friendly
+        or plant.butterfly_friendly
+        or plant.nitrogen_fixer
+        or plant.cedar_hedge_replacement
+    )
     bloom_start = utils.MONTHS[plant.bloom_start]
     bloom_end = utils.MONTHS[plant.bloom_end]
     context = {
@@ -43,6 +57,8 @@ def plant_profile_page(request, pk):
         "title": plant.latin_name,
         "bloom_start": bloom_start,
         "bloom_end": bloom_end,
+        "landscape_use": landscape_use,
+        "ecological_benefits": ecological_benefits,
     }
     return render(request, "project/plant-profile-page.html", context)
 
