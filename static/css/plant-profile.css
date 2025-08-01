@@ -92,7 +92,9 @@ img {
   color: #fff;
 }
 
-.inaturalist-legend span {
-  padding: 4px;
-  font-size: 80%;
+.inaturalist-legend {
+  display: flex;
+  gap: 4px;
+  flex-flow: wrap;
+  justify-content: center;
 }
