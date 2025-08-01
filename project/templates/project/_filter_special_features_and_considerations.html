@@ -33,6 +33,24 @@
   <span class='tooltiptext'>Gathering Rare and Special Plants</span>
 </div>
 
+<!--Input checkbox for native to Ottawa region-->
+<input
+  type="checkbox"
+  id="native_to_ottawa_region"
+  name="native_to_ottawa_region"
+  value="Native to Ottawa Region"
+  hx-get="/search-plant-name"
+  hx-trigger="click"
+  hx-target="#search-results"
+  hx-push-url="true"
+  hx-include="{{hx_include}}"
+  {% if native_to_ottawa_region %} checked {% endif %}
+/>
+<div class="tooltip">
+  <label for="native_to_ottawa_region">Native to Ottawa Region</label><br />
+  <span class='tooltiptext'>Plants that are native to the Ottawa region</span>
+</div>
+
 <div class='filter__sub-header'>Safety and Compatibility</div>
 
 <!--Input checkbox for septic tank safe-->

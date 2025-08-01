@@ -18,7 +18,9 @@ class PlantProfileFilter(django_filters.FilterSet):
     accepting_seed = django_filters.CharFilter(
         method="filter_accepting_seed",
     )
-
+    native_to_ottawa_region = django_filters.CharFilter(
+        method="filter_boolean",
+    )
     beginner_friendly = django_filters.CharFilter(
         method="filter_boolean",
     )
