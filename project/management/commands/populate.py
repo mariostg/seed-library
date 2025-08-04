@@ -117,7 +117,7 @@ class Command(BaseCommand):
             "deer_tolerant": "plant-deer-tolerant - csv.csv",
             "rain_garden": "plant-rain-garden - csv.csv",
             "woodland_garden": "plant-woodland-garden - csv.csv",
-            "native-to-ottawa-region": "plant-native-to-ottawa-region - csv.csv",
+            "native_to_ottawa_region": "plant-native-to-ottawa-region - csv.csv",
             "harvesting_start": "plant-harvesting-start - csv.csv",
             "seed_viability_test": "plant-seed-viability-test - csv.csv",
             "harvesting_indicator": "plant-harvesting-indicator - csv.csv",
@@ -225,6 +225,7 @@ class Command(BaseCommand):
             "rain_garden": "rain_garden",
             "woodland_garden": "woodland_garden",
             "remove_non_seed_material": "remove_non_seed_material",
+            "native_to_ottawa_region": "native_to_ottawa_region",
         }
 
         # Update all boolean fields using a loop
