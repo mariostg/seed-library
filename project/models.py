@@ -520,6 +520,15 @@ class ButterflySpecies(models.Model):
         ordering = ["latin_name"]
 
 
+class Ecozone(Base):
+    """A model representing ecozones where plants can thrive."""
+
+    ecozone = models.CharField(max_length=100, unique=True, blank=True)
+
+    def __str__(self) -> str:
+        return self.ecozone
+
+
 class PlantProfile(Base):
     """
     A Django model representing a comprehensive plant profile with botanical, horticultural and ecological attributes.
@@ -853,11 +862,11 @@ class PlantProfile(Base):
         blank=True,
         help_text="Is the plant native to the Ottawa region?",
     )
-    ecozone_prairie = models.BooleanField(
-        default=False,
-        null=True,
+    ecozones = models.ManyToManyField(
+        Ecozone,
         blank=True,
-        help_text="Is the plant native to the Prairie Ecozone?",
+        related_name="plants",
+        help_text="Ecozones where the plant thrives.",
     )
 
     # !Image releated fields such as has_profile_image, has_bloom_image, has_seed_image etc.
