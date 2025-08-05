@@ -647,6 +647,7 @@ class PlantProfile(Base):
             bird_friendly (BooleanField): Beneficial for birds
             deer_tolerant (BooleanField): Resistant to deer damage
             rabbit_tolerant (BooleanField): Resistant to rabbit damage
+            butterflies (ManyToManyField): Many-to-many relationship with ButterflySpecies model
 
         ## Environmental Stress Tolerance
             drought_tolerant (BooleanField): Tolerant of drought conditions
@@ -677,19 +678,20 @@ class PlantProfile(Base):
             alternative_to_notes (CharField): Notes on plants this can replace
     """
 
+    # Identification information
     latin_name = models.CharField(max_length=75, unique=True)
     english_name = models.CharField(max_length=75, blank=True)
     french_name = models.CharField(max_length=75, blank=True)
+    taxon = models.CharField(max_length=5, blank=True)
+    inaturalist_taxon = models.CharField(max_length=10, blank=True)
 
-    # We use 3 levels of light to define the light requirement of the plant
+    #
+    # Environmental requirements
+    #
     full_sun = models.BooleanField(default=False, null=True, blank=True)
     partial_sun = models.BooleanField(default=False, null=True, blank=True)
     full_shade = models.BooleanField(default=False, null=True, blank=True)
 
-    bloom_start = models.SmallIntegerField(
-        choices=MONTHS.items(), blank=True, default=0
-    )
-    bloom_end = models.SmallIntegerField(choices=MONTHS.items(), blank=True, default=0)
     moisture_dry = models.BooleanField(
         default=False,
         null=True,
@@ -699,15 +701,32 @@ class PlantProfile(Base):
     )
     moisture_wet = models.BooleanField(default=False, null=True, blank=True)
     moisture_medium = models.BooleanField(default=False, null=True, blank=True)
+
+    #
+    # Growth characteristics
+    #
+    bloom_start = models.SmallIntegerField(
+        choices=MONTHS.items(), blank=True, default=0
+    )
+    bloom_end = models.SmallIntegerField(choices=MONTHS.items(), blank=True, default=0)
+    bloom_color = models.ForeignKey(
+        BloomColor, on_delete=models.RESTRICT, null=True, blank=True
+    )
     max_height = models.FloatField(blank=True, null=True, default=0)
     max_width = models.FloatField(blank=True, null=True, default=0)
     lifespan = models.ForeignKey(
         PlantLifespan, on_delete=models.RESTRICT, blank=True, null=True
     )
+    growth_habit = models.ForeignKey(
+        GrowthHabit, on_delete=models.RESTRICT, null=True, blank=True
+    )
     spread_by_rhizome = models.BooleanField(default=False, null=True, blank=True)
     does_not_spread = models.BooleanField(default=False, null=True, blank=True)
     dioecious = models.BooleanField(default=False, null=True, blank=True)
 
+    #
+    # Propagation and cultivation
+    #
     stratification_detail = models.CharField(max_length=55, blank=True)
     stratification_duration = models.SmallIntegerField(blank=True, null=True, default=0)
     sowing_depth = models.ForeignKey(
@@ -760,16 +779,15 @@ class PlantProfile(Base):
     )
     notes = models.CharField(max_length=450, blank=True)
     harvesting_notes = models.CharField(max_length=450, blank=True)
-    toxicity_indicator_notes = models.CharField(max_length=450, blank=True)
-    toxicity_indicator = models.ForeignKey(
-        ToxicityIndicator, on_delete=models.RESTRICT, null=True, blank=True
-    )
-    alternative_to_notes = models.CharField(max_length=450, blank=True)
-
     germinate_easy = models.BooleanField(default=False, null=True, blank=True)
     self_seeding = models.BooleanField(default=False, null=True, blank=True)
     beginner_friendly = models.BooleanField(default=False, null=True, blank=True)
+    accepting_seed = models.BooleanField(default=False, null=True, blank=True)
+    seed_availability = models.BooleanField(default=False, null=True, blank=True)
 
+    #
+    # Landscape uses and applications
+    #
     rock_garden = models.BooleanField(default=False, null=True, blank=True)
     rain_garden = models.BooleanField(default=False, null=True, blank=True)
     pond_edge = models.BooleanField(default=False, null=True, blank=True)
@@ -781,15 +799,18 @@ class PlantProfile(Base):
     woodland_garden = models.BooleanField(default=False, null=True, blank=True)
     wind_break_hedge = models.BooleanField(default=False, null=True, blank=True)
     erosion_control = models.BooleanField(default=False, null=True, blank=True)
-    seed_availability = models.BooleanField(default=False, null=True, blank=True)
-    septic_tank_safe = models.BooleanField(default=False, null=True, blank=True)
+    boulevard_garden_tolerant = models.BooleanField(
+        default=False, null=True, blank=True
+    )
     wetland_garden = models.BooleanField(default=False, null=True, blank=True)
+    easy_to_contain = models.BooleanField(default=False, null=True, blank=True)
+    cedar_hedge_replacement = models.BooleanField(default=False, null=True, blank=True)
+    transplantation_tolerant = models.BooleanField(default=False, null=True, blank=True)
 
-    accepting_seed = models.BooleanField(default=False, null=True, blank=True)
+    #
+    # Ecological relationships
+    #
     keystones_species = models.BooleanField(default=False, null=True, blank=True)
-    grasp_candidate = models.BooleanField(default=False, null=True, blank=True)
-    grasp_candidate_notes = models.CharField(max_length=450, blank=True)
-
     drought_tolerant = models.BooleanField(default=False, null=True, blank=True)
     salt_tolerant = models.BooleanField(default=False, null=True, blank=True)
     deer_tolerant = models.BooleanField(default=False, null=True, blank=True)
@@ -804,24 +825,25 @@ class PlantProfile(Base):
     bee_friendly = models.BooleanField(default=False, null=True, blank=True)
     bee_host = models.BooleanField(default=False, null=True, blank=True)
     bird_friendly = models.BooleanField(default=False, null=True, blank=True)
-    boulevard_garden_tolerant = models.BooleanField(
-        default=False, null=True, blank=True
-    )
     juglone_tolerant = models.BooleanField(default=False, null=True, blank=True)
-    transplantation_tolerant = models.BooleanField(default=False, null=True, blank=True)
     nitrogen_fixer = models.BooleanField(default=False, null=True, blank=True)
-    easy_to_contain = models.BooleanField(default=False, null=True, blank=True)
-    cedar_hedge_replacement = models.BooleanField(default=False, null=True, blank=True)
+    butterflies = models.ManyToManyField(
+        ButterflySpecies, blank=True, related_name="plants"
+    )
+
+    #
+    # Special features and considerations
+    #
+    septic_tank_safe = models.BooleanField(default=False, null=True, blank=True)
+    toxicity_indicator_notes = models.CharField(max_length=450, blank=True)
+    toxicity_indicator = models.ForeignKey(
+        ToxicityIndicator, on_delete=models.RESTRICT, null=True, blank=True
+    )
+    alternative_to_notes = models.CharField(max_length=450, blank=True)
+    grasp_candidate = models.BooleanField(default=False, null=True, blank=True)
+    grasp_candidate_notes = models.CharField(max_length=450, blank=True)
     cause_dermatitis = models.BooleanField(default=False, null=True, blank=True)
     produces_burs = models.BooleanField(default=False, null=True, blank=True)
-
-    bloom_color = models.ForeignKey(
-        BloomColor, on_delete=models.RESTRICT, null=True, blank=True
-    )
-    growth_habit = models.ForeignKey(
-        GrowthHabit, on_delete=models.RESTRICT, null=True, blank=True
-    )
-    taxon = models.CharField(max_length=5, blank=True)
     conservation_status = models.ForeignKey(
         ConservationStatus, on_delete=models.RESTRICT, null=True, blank=True
     )
@@ -830,12 +852,6 @@ class PlantProfile(Base):
         null=True,
         blank=True,
         help_text="Is the plant native to the Ottawa region?",
-    )
-    inaturalist_taxon = models.CharField(max_length=10, blank=True)
-
-    # Butterfly relationship
-    butterflies = models.ManyToManyField(
-        ButterflySpecies, blank=True, related_name="plants"
     )
 
     # !Image releated fields such as has_profile_image, has_bloom_image, has_seed_image etc.
