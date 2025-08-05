@@ -124,7 +124,6 @@ class Command(BaseCommand):
             "harvesting_mean": "plant-harvesting-mean - csv.csv",
             "remove_non_seed_material": "plant-remove-non-seed-material - csv.csv",
             "seed_storage": "plant-seed-storage - csv.csv",
-            "ecozone_prairie": "plant-ecozone-prairie - csv.csv",
         }
 
         # Clear existing data in the database
@@ -227,7 +226,6 @@ class Command(BaseCommand):
             "woodland_garden": "woodland_garden",
             "remove_non_seed_material": "remove_non_seed_material",
             "native_to_ottawa_region": "native_to_ottawa_region",
-            "ecozone_prairie": "ecozone_prairie",
         }
 
         # Update all boolean fields using a loop
