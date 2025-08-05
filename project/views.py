@@ -126,6 +126,14 @@ def plant_profile_delete(request, pk):
     return render(request, "siteornitho/delete_template.html", context)
 
 
+def catalogue_intro(request):
+    context = {
+        "title": "Catalogue Introduction",
+        "url_name": "catalogue-intro",
+    }
+    return render(request, "project/catalogue_intro.html", context)
+
+
 def search_plant_name(request):
     if not request.GET:
         data = models.PlantProfile.objects.none()

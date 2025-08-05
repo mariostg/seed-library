@@ -1,0 +1,43 @@
+{% extends 'core/base.html' %} {% load static %} {% block extracss %}
+  <link rel="stylesheet" href="{% static 'css/plant-profile.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/catalogue-intro.css' %}" />
+{% endblock extracss %} {% block content %}
+  <div class="container mt-4">
+    <h1>Plant Profile Catalogue</h1>
+
+    <div class="card mb-4">
+      <div class="card-body">
+        <h2 class="card-title">Welcome to our Plant Profile Collection</h2>
+        <p class="lead">
+          Explore our comprehensive database of plant profiles, curated to help
+          you identify and understand various plant species. Each profile provides
+          detailed information about growth characteristics, habitat, and
+          ecological significance.
+        </p>
+        <p>
+          Use the filters and search options to find specific plants or browse
+          through our categories to discover new species.
+        </p>
+        <p>
+          Click on any plant profile to view detailed information, images, and
+          ecological data.
+        </p>
+      </div>
+    </div>
+
+    <div class="card mb-4">
+      <div class="card-header">
+        <h2>Understanding Profile Icons</h2>
+      </div>
+      <div class="card-body">
+        {% include "project/_profile_icons_definition.html" %}
+      </div>
+    </div>
+
+    <div class="text-center mb-4">
+      <a href="{% url 'search-plant-name' %}" class="btn btn-primary btn-lg"
+      >Explore the Catalogue</a
+        >
+      </div>
+    </div>
+{% endblock %}

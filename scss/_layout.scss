@@ -1,5 +1,12 @@
 @import "_variables";
 
+// Generate margin-bottom classes from 1 to 6 rem
+@for $i from 1 through 3 {
+  .mb-#{$i} {
+    margin-bottom: #{$i}rem;
+  }
+}
+
 .flex-row {
   justify-content: space-between;
   display: flex;
