@@ -1,0 +1,16 @@
+{% if plant.ecozones.all %}
+  <div class="plant-ecozones">
+    <h4>Thrives in Ecozones</h4>
+    <ul class="ecozone-list">
+      {% for ecozone in plant.ecozones.all %}
+        <li class="ecozone-item">
+          <span class="ecozone-name">{{ ecozone.ecozone }}</span>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+{% else %}
+  <div class="plant-ecozones plant-ecozones-empty">
+    <p>No ecozone information available for this plant.</p>
+  </div>
+{% endif %}
