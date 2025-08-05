@@ -853,6 +853,12 @@ class PlantProfile(Base):
         blank=True,
         help_text="Is the plant native to the Ottawa region?",
     )
+    ecozone_prairie = models.BooleanField(
+        default=False,
+        null=True,
+        blank=True,
+        help_text="Is the plant native to the Prairie Ecozone?",
+    )
 
     # !Image releated fields such as has_profile_image, has_bloom_image, has_seed_image etc.
     has_image_profile = models.BooleanField(default=False, null=True, blank=True)
