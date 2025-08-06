@@ -12,7 +12,6 @@ Populate command uses the data available from the test-data folder.  This folder
 import csv
 from pathlib import Path
 
-from django.conf import settings
 from django.core.management.base import BaseCommand
 
 from main.settings import DEBUG
@@ -234,20 +233,6 @@ class Command(BaseCommand):
             self.update_boolean_field(
                 models.PlantProfile, field_name, self.csv_files[csv_filename]
             )
-
-        plants = models.PlantProfile.objects.all()
-        self.stdout.write(
-            self.style.SUCCESS("\n\nUpdating image profile for each plant profile...")
-        )
-        if plants.exists():
-            # Set has_image_profile for each plant profile
-            for plant in plants:
-                self.set_image_profile(plant)
-        else:
-            self.stdout.write(
-                self.style.ERROR("No plant profiles found to update image profile.")
-            )
-            exit(1)
 
         self.set_actaea_racemosa_boolean_fields()
 
@@ -849,44 +834,6 @@ class Command(BaseCommand):
             self.stdout.write(
                 self.style.ERROR(f"Error processing {field_name} CSV file: {str(e)}")
             )
-
-    def set_image_profile(self, plant_profile):
-        """
-        Check if a profile image exists for the plant and update has_image_profile field.
-
-        Args:
-            plant_profile: A PlantProfile model instance
-        """
-        latin_name = plant_profile.latin_name
-        if not latin_name:
-            return
-
-        # Convert spaces to underscores and normalize the name for file matching
-        normalized_name = latin_name  # .replace(" ", "_")
-
-        # Define the directory to search in
-        image_dir = Path(settings.BASE_DIR) / Path("static/images/plants/profile")
-
-        # Check if directory exists
-        if not image_dir.exists():
-            self.stdout.write(
-                self.style.WARNING(f"Image directory {image_dir} does not exist")
-            )
-            return
-
-        # Check for any files that start with the plant's latin name
-        matching_files = list(image_dir.glob(f"{normalized_name}*"))
-
-        # Update has_image_profile based on whether matching files were found
-        plant_profile.has_image_profile = len(matching_files) > 0
-        plant_profile.save()
-
-        if plant_profile.has_image_profile:
-            self.stdout.write(
-                self.style.SUCCESS(f"Found profile image for {latin_name}")
-            )
-        else:
-            self.stdout.write(self.style.WARNING(f"No profile image for {latin_name}"))
 
     # a function to set to true the boolean fields of the plant profile of actaea racemosa.
     # refer to boolean_fields dictionary
