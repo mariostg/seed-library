@@ -4,6 +4,7 @@
 
     <!--Input text box for searching plant name-->
     <div class="form__field">
+      <label for="any_name" class="form-label">Search by plant name</label>
       <input id="any_name" class="name-search-input"
              name="any_name"
              hx-get="/search-plant-name"
@@ -22,20 +23,5 @@
         <img src="{% static 'images/searching.svg' %}"/> Searching...
       </span>
     </div>
-
-
-
-
-
-    <div class="flex-row">
-      <div class="sort-plants">
-        <span>Sort:</span>
-        <span>Ascending</span>
-        <input type="radio" id="sort-asc" name="sort" value="sort-asc" />
-        <span>Descending</span>
-        <input type="radio" id="sort-desc" name="sort" value="sort-desc" />
-      </div>
-    </div>
-
   </form>
 </div>
