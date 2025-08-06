@@ -259,7 +259,7 @@
       <!--Input checkbox for grass-->
   <input
     type="checkbox"
-    id="id-checkbox-grass"
+    id="grass_sedge_rush"
     name="grass"
     value="Grass"
     hx-get="/search-plant-name"
@@ -267,9 +267,9 @@
     hx-target="#search-results"
     hx-push-url="true"
     hx-include="{{hx_include}}"
-    {% if checkbox_grass_sedge_rush %} checked {% endif %}
+    {% if grass_sedge_rush %} checked {% endif %}
   />
-  <label for="id-checkbox-grass">Grass/sedge/rush ✔</label><br />
+  <label for="grass_sedge_rush">Grass/sedge/rush ✔</label><br />
 
       <!--Input checkbox for shrub-->
   <input
@@ -297,9 +297,9 @@
     hx-target="#search-results"
     hx-push-url="true"
     hx-include="{{hx_include}}"
-    {% if tree %} checked {% endif %}
+    {% if deciduous_tree %} checked {% endif %}
   />
-  <label for="id_checkbox_tree">Deciduous tree ✔</label><br />
+  <label for="deciduous_tree">Deciduous tree ✔</label><br />
 
       <!--Input checkbox for connifer tree-->
   <input

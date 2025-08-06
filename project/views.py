@@ -151,7 +151,140 @@ def search_plant_name(request):
     else:
         data = models.PlantProfile.objects.all().order_by("latin_name")
     object_list = filters.PlantProfileFilter(request.GET, queryset=data)
-    hx_include = "#full_sun,#partial_sun,#full_shade,#moisture_dry,#moisture_medium,#moisture_wet,#flowering_plant,#id-checkbox-grass,#shrub,#id_checkbox_tree,#id_checkbox_vine,#annual,#biennial,#perennial,#color_blue,#color_green,#color_orange,#color_pink,#color_purple,#color_red,#color_white,#color_yellow,#bird_friendly,#boulevard_garden_tolerant,#butterfly_friendly,#cedar_hedge_replacement,#container_suitable,#deer_toleranbt,#drought_tolerant,#ground_cover,#hummingbird_friendly,#rock_garden,#rain_garden,#school_garden_suitable,#woodland_garden,#septic_tank_safe,#shoreline_rehab,#wetland_garden,#beginner_friendly,#germinate_easy,#juglone_tolerant,#keystones_species,#nitrogen_fixer,#acidic_soil_tolerant,#limestone_tolerant,#salt_tolerant,#sand_tolerant,#transplantation_tolerant,#grasp_candidate,#produces_burs,#rabbit_tolerant,#AB,#BC,#MB,#NB,#NL,#NS,#NT,#NU,#ON,#PE,#QC,#SK,#YT,#native_to_ottawa_region,#sliderFromBloomPeriod,#sliderToBloomPeriod,#sliderFromPlantHeight,#sliderToPlantHeight,#sliderFromPlantWidth,#sliderToPlantWidth,#sliderWinterSowingRequirements,#sliderHarvestingPeriodStart"
+    # Create lists of different filter categories
+    sun_filters = [
+        "#full_sun",
+        "#partial_sun",
+        "#full_shade",
+    ]
+    moisture_filters = [
+        "#moisture_dry",
+        "#moisture_medium",
+        "#moisture_wet",
+    ]
+    plant_type_filters = [
+        "#flowering_plant",
+        "#grass_sedge_rush",
+        "#shrub",
+        "#deciduous_tree",
+        "#connifer_tree",
+        "#vine",
+    ]
+    lifecycle_filters = [
+        "#annual",
+        "#biennial",
+        "#perennial",
+    ]
+    color_filters = [
+        "#color_blue",
+        "#color_green",
+        "#color_orange",
+        "#color_pink",
+        "#color_purple",
+        "#color_red",
+        "#color_white",
+        "#color_yellow",
+    ]
+    soil_tolerance_filters = [
+        "#limestone_tolerant",
+        "#sand_tolerant",
+        "#acidic_soil_tolerant",
+    ]
+
+    seed_sharing_filters = [
+        "#seed_availability",
+        "#accepting_seed",
+    ]
+    garden_suitability_filters = [
+        "#rock_garden",
+        "#rain_garden",
+        "#pond_edge",
+        "#shoreline_rehab",
+        "#container_suitable",
+        "#school_garden_suitable",
+        "#garden_edge",
+        "#woodland_garden",
+        "#wetland_garden",
+        "#boulevard_garden_tolerant",
+    ]
+    functional_use_filters = [
+        "#ground_cover",
+        "#erosion_control",
+        "#cedar_hedge_replacement",
+        "#windbreak_edge",
+    ]
+    gardener_experience_filters = [
+        "#beginner_friendly",
+        "#does_not_spread",
+        "#transplantation_tolerant",
+        "#germinate_easy",
+    ]
+    wildlife_interaction_filters = [
+        "#hummingbird_friendly",
+        "#butterfly_friendly",
+        "#bee_friendly",
+        "#bird_friendly",
+        "#deer_tolerant",
+        "#rabbit_tolerant",
+    ]
+    environmental_stress_tolerance_filters = [
+        "#drought_tolerant",
+        "#salt_tolerant",
+        "#foot_traffic_tolerant",
+        "#juglone_tolerant",
+    ]
+    ecosystem_services_filters = [
+        "#nitrogen_fixer",
+        "#keystones_species",
+        "#host_plant",
+    ]
+    conservation_status_filters = [
+        "#endangered",
+        "#grasp_candidate",
+        "#native_to_ottawa_region",
+    ]
+    safety_and_compatibility_filters = [
+        "#septic_tank_safe",
+        "#cause_dermatitis",
+        "#produces_burs",
+        "#exclude_toxic",
+    ]
+    region_filters = [
+        "#AB",
+        "#BC",
+        "#MB",
+        "#NB",
+        "#NL",
+        "#NS",
+        "#NT",
+        "#NU",
+        "#ON",
+        "#PE",
+        "#QC",
+        "#SK",
+        "#YT",
+        "#native_to_ottawa_region",
+    ]
+
+    # Merge all filter lists and join with commas
+    hx_include = ",".join(
+        sun_filters
+        + moisture_filters
+        + plant_type_filters
+        + lifecycle_filters
+        + color_filters
+        + soil_tolerance_filters
+        + seed_sharing_filters
+        + garden_suitability_filters
+        + functional_use_filters
+        + gardener_experience_filters
+        + wildlife_interaction_filters
+        + environmental_stress_tolerance_filters
+        + ecosystem_services_filters
+        + conservation_status_filters
+        + safety_and_compatibility_filters
+        + region_filters
+    )
     context = {
         "object_list": object_list.qs,
         "url_name": "index",
