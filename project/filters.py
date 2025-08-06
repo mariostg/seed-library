@@ -224,6 +224,10 @@ class PlantProfileFilter(django_filters.FilterSet):
         method="filter_boolean",
     )
 
+    cause_dermatitis = django_filters.CharFilter(
+        method="filter_excludes",
+    )
+
     def filter_any_name(self, queryset, name, value):
         return queryset.filter(
             Q(**{"latin_name__icontains": value})
