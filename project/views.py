@@ -126,12 +126,12 @@ def plant_profile_delete(request, pk):
     return render(request, "siteornitho/delete_template.html", context)
 
 
-def catalogue_intro(request):
+def plant_catalogue_intro(request):
     context = {
-        "title": "Catalogue Introduction",
-        "url_name": "catalogue-intro",
+        "title": "Plant Catalogue Introduction",
+        "url_name": "plant-catalogue-intro",
     }
-    return render(request, "project/catalogue_intro.html", context)
+    return render(request, "project/plant_catalogue_intro.html", context)
 
 
 def butterfly_supporting_plants(request):
