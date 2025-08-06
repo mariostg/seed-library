@@ -134,6 +134,17 @@ def catalogue_intro(request):
     return render(request, "project/catalogue_intro.html", context)
 
 
+def butterfly_supporting_plants(request):
+    # This view is used to display a list of butterflies with the plants that support them
+    butterflies = models.ButterflySpecies.objects.all().order_by("latin_name")
+    context = {
+        "title": "Butterfly Supporting Plants",
+        "url_name": "butterfly-supporting-plants",
+        "butterflies": butterflies,
+    }
+    return render(request, "project/butterfly_supporting_plants.html", context)
+
+
 def search_plant_name(request):
     if not request.GET:
         data = models.PlantProfile.objects.none()

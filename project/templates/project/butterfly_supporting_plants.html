@@ -1,0 +1,41 @@
+<!--Display a list of all butterflies and their supporting plants-->
+<!--First columns shows the latin name of the butterfly species,  the second column shows the common name, and the third column lists the supporting plants-->
+{% extends 'core/base.html' %} {% load static %} {% block extracss %}
+  <link
+    rel="stylesheet"
+    href="{% static 'css/butterfly-supporting-plants.css' %}"
+  />
+{% endblock extracss %} {% block content %}
+  <div class="container mt-4">
+    <h1>Butterflies and Their Supporting Plants</h1>
+
+    <p>
+      This page lists all butterfly species along with their supporting plants
+      that exist in the plant catalogue. Each plant species is linked to its
+      profile page for more detailed information.
+    </p>
+  </div>
+  <section>
+    {% for butterfly in butterflies %}
+      <article>
+        <div>{{ butterfly.latin_name }} - {{ butterfly.english_name }}</div>
+        <div>
+          <ul>
+            {% for plant in butterfly.plants.all %}
+              <li>
+                <a target="_blank" href="{% url 'plant-profile-page' plant.pk %}"
+                >{{ plant.latin_name }}</a
+                  >
+                </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </article>
+    {% endfor %}
+  </section>
+
+  {% if butterflies %}
+    <p>Total Butterflies: {{ butterflies.count }}</p>
+  {% else %}
+    <p>No butterflies found.</p>
+  {% endif %}ß {% endblock %}
