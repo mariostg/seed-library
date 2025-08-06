@@ -231,20 +231,6 @@
   />
   <label for="beginner_friendly">Beginner friendly ✔</label><br />
 
-<!--Input checkbox for Easy to contain-->
-  <input
-    type="checkbox"
-    id="easy_to_contain"
-    name="easy_to_contain"
-    value="Easy to Contain"
-    hx-get="/search-plant-name"
-    hx-trigger="click"
-    hx-target="#search-results"
-    hx-push-url="true"
-    hx-include="{{hx_include}}"
-    {% if easy_to_contain %} checked {% endif %}
-  />
-  <label for="easy_to_contain">Easy to contain</label><br />
 <!--Input checkbox for Does not spread-->
   <input
     type="checkbox"
