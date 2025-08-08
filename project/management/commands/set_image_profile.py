@@ -46,15 +46,25 @@ class Command(BaseCommand):
             )
         )
 
-    def _split_image_name(self, image_path: Path):
+    def _split_image_name(self, image_path: Path) -> tuple[str | None, str | None]:
         # image name is made of the latin name, followed by an underscore and the author name
-        plant_latin_name, author = image_path.stem.split("_")
+        try:
+            plant_latin_name, author = image_path.stem.split("_", 1)
+        except ValueError:
+            self.stdout.write(
+                self.style.ERROR(
+                    f"Image name {image_path.name} is not in the correct format. Skipping."
+                )
+            )
+            return None, None
         plant_latin_name = plant_latin_name.strip()
         author = author.strip()
         return plant_latin_name, author
 
     def process_image(self, image_path: Path):
         plant_latin_name, author = self._split_image_name(image_path)
+        if not plant_latin_name:
+            return
         try:
             plant_profile = models.PlantProfile.objects.get(latin_name=plant_latin_name)
             # if plant_profile exists, set has_image_profile to True and copy the image to the media directory
