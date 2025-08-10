@@ -1,65 +1,19 @@
 <div class='filter__sub-header'>Garden Suitability</div>
-<!--Input checkbox for rock garden-->
+
+<!--Input checkbox for boulevard garden tolerant-->
 <input
   type="checkbox"
-  id="rock_garden"
-  name="rock_garden"
-  value="Rock Garden"
+  id="boulevard_garden_tolerant"
+  name="boulevard_garden_tolerant"
+  value="boulevard_garden_tolerant"
   hx-get="/search-plant-name"
   hx-trigger="click"
   hx-target="#search-results"
   hx-push-url="true"
   hx-include="{{hx_include}}"
-  {% if rock_garden %} checked {% endif %}
+  {% if boulevard_garden_tolerant %} checked {% endif %}
 />
-<label for="rock_garden">Rock garden ✔</label><br />
-
-<!--Input checkbox for rain garden-->
-<input
-  type="checkbox"
-  id="rain_garden"
-  name="rain_garden"
-  value="Rain Garden"
-  hx-get="/search-plant-name"
-  hx-trigger="click"
-  hx-target="#search-results"
-  hx-push-url="true"
-  hx-include="{{hx_include}}"
-  {% if rain_garden %} checked {% endif %}
-/>
-<label for="rain_garden">Rain garden ✔</label><br />
-
-<!--Input checkbox for pond edge-->
-<input
-  type="checkbox"
-  id="pond_edge"
-  name="pond_edge"
-  value="Pond Edge"
-  hx-get="/search-plant-name"
-  hx-trigger="click"
-  hx-target="#search-results"
-  hx-push-url="true"
-  hx-include="{{hx_include}}"
-  {% if pond_edge %} checked {% endif %}
-/>
-<label for="pond_edge">Pond edge</label><br />
-
-
-<!--Input checkbox for shoreline_rehab-->
-<input
-  type="checkbox"
-  id="shoreline_rehab"
-  name="shoreline_rehab"
-  value="Shoreline restauration"
-  hx-get="/search-plant-name"
-  hx-trigger="click"
-  hx-target="#search-results"
-  hx-push-url="true"
-  hx-include="{{hx_include}}"
-  {% if shoreline_rehab %} checked {% endif %}
-/>
-<label for="shoreline_rehab">Shoreline restoration ✔</label><br />
-
+<label for="boulevard_garden_tolerant">Boulevard garden ✔</label><br />
 <!--Input checkbox for container suitable-->
 <div class="form__field">
   <input
@@ -76,22 +30,7 @@
   />
   <label for="container_suitable">Container gardening ✔</label>
 </div>
-<!--Input checkbox for school garden suitable-->
-<div class="form__field">
-  <input
-    type="checkbox"
-    id="school_garden_suitable"
-    name="school_garden_suitable"
-    value="School Garden Suitable"
-    hx-get="/search-plant-name"
-    hx-trigger="click"
-    hx-target="#search-results"
-    hx-push-url="true"
-    hx-include="{{hx_include}}"
-    {% if school_garden_suitable %} checked {% endif %}
-  />
-  <label for="school_garden_suitable">School garden suitable ✔</label>
-</div>
+
 <!--Input checkbox for garden edge-->
 <div class="form__field">
   <input
@@ -108,6 +47,99 @@
   />
   <label for="garden_edge">Garden edge</label>
 </div>
+
+<!--Input checkbox for pond edge-->
+<input
+  type="checkbox"
+  id="pond_edge"
+  name="pond_edge"
+  value="Pond Edge"
+  hx-get="/search-plant-name"
+  hx-trigger="click"
+  hx-target="#search-results"
+  hx-push-url="true"
+  hx-include="{{hx_include}}"
+  {% if pond_edge %} checked {% endif %}
+/>
+<label for="pond_edge">Pond edge</label><br />
+
+<!--Input checkbox for rain garden-->
+<input
+  type="checkbox"
+  id="rain_garden"
+  name="rain_garden"
+  value="Rain Garden"
+  hx-get="/search-plant-name"
+  hx-trigger="click"
+  hx-target="#search-results"
+  hx-push-url="true"
+  hx-include="{{hx_include}}"
+  {% if rain_garden %} checked {% endif %}
+/>
+<label for="rain_garden">Rain garden ✔</label><br />
+
+<!--Input checkbox for rock garden-->
+<input
+  type="checkbox"
+  id="rock_garden"
+  name="rock_garden"
+  value="Rock Garden"
+  hx-get="/search-plant-name"
+  hx-trigger="click"
+  hx-target="#search-results"
+  hx-push-url="true"
+  hx-include="{{hx_include}}"
+  {% if rock_garden %} checked {% endif %}
+/>
+<label for="rock_garden">Rock garden ✔</label><br />
+
+<!--Input checkbox for school garden suitable-->
+<div class="form__field">
+  <input
+    type="checkbox"
+    id="school_garden_suitable"
+    name="school_garden_suitable"
+    value="School Garden Suitable"
+    hx-get="/search-plant-name"
+    hx-trigger="click"
+    hx-target="#search-results"
+    hx-push-url="true"
+    hx-include="{{hx_include}}"
+    {% if school_garden_suitable %} checked {% endif %}
+  />
+  <label for="school_garden_suitable">School garden suitable ✔</label>
+</div>
+
+<!--Input checkbox for shoreline_rehab-->
+<input
+  type="checkbox"
+  id="shoreline_rehab"
+  name="shoreline_rehab"
+  value="Shoreline restauration"
+  hx-get="/search-plant-name"
+  hx-trigger="click"
+  hx-target="#search-results"
+  hx-push-url="true"
+  hx-include="{{hx_include}}"
+  {% if shoreline_rehab %} checked {% endif %}
+/>
+<label for="shoreline_rehab">Shoreline restoration ✔</label><br />
+
+<!--Input checkbox for wetland garden-->
+<input
+  type="checkbox"
+  id="wetland_garden"
+  name="wetland_garden"
+  value="Wetland Garden"
+  hx-get="/search-plant-name"
+  hx-trigger="click"
+  hx-target="#search-results"
+  hx-push-url="true"
+  hx-include="{{hx_include}}"
+  {% if wetland_garden %} checked {% endif %}
+/>
+<label for="wetland_garden">Wetland garden ✔</label><br />
+
 <!--Input checkbox for woodland garden-->
 <div class="form__field">
   <input
@@ -125,35 +157,6 @@
   <label for="woodland_garden">Woodland garden ✔</label>
 </div>
 
-<!--Input checkbox for wetland garden-->
-<input
-  type="checkbox"
-  id="wetland_garden"
-  name="wetland_garden"
-  value="Wetland Garden"
-  hx-get="/search-plant-name"
-  hx-trigger="click"
-  hx-target="#search-results"
-  hx-push-url="true"
-  hx-include="{{hx_include}}"
-  {% if wetland_garden %} checked {% endif %}
-/>
-<label for="wetland_garden">Wetland garden ✔</label><br />
-
-<!--Input checkbox for boulevard garden tolerant-->
-<input
-  type="checkbox"
-  id="boulevard_garden_tolerant"
-  name="boulevard_garden_tolerant"
-  value="boulevard_garden_tolerant"
-  hx-get="/search-plant-name"
-  hx-trigger="click"
-  hx-target="#search-results"
-  hx-push-url="true"
-  hx-include="{{hx_include}}"
-  {% if boulevard_garden_tolerant %} checked {% endif %}
-/>
-<label for="boulevard_garden_tolerant">Boulevard garden ✔</label><br />
 
 <div class='filter__sub-header'>Functional Uses</div>
 
