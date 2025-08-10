@@ -9,11 +9,11 @@
         <!-- Plant Profile Header -->
         <div class="plant-profile-header">
           <div class="plant-profile-image">
-            <img
-              src="{% static 'images/plants/profile/'|add:plant.latin_name|add:'-profile.jpg' %}"
-              alt="image for {{plant.latin_name}}"
-              onerror="this.src='{% static 'images/plant-placeholder.png' %}'"
-            />
+            {% if plant.images.first.image %}
+              <img src="{{ plant.images.first.image.url }}" alt="Image of {{plant.latin_name}}">
+            {% else %}
+              <img src="{% static 'images/plant-placeholder.png' %}" alt="No image available">
+            {% endif %}
           </div>
       <!-- End of Plant Profile Image -->
 

@@ -15,10 +15,10 @@
           <span class="plant-card-is-not-favourite"></span>
         {% endif %}
         <a href="{% url 'plant-profile-page' item.id %}" class="plant-card-link">
-          {% if item.has_image_profile %}
-            <img src="{% static 'images/plants/profile/'|add:item.latin_name|add:'-profile.jpg' %}" alt="image for {{item.latin_name}}" />
+          {% if item.images.first %}
+            <img src="{{item.images.first.image.url}}" alt="image for {{item.latin_name}}">
           {% else %}
-            <img src="{% static 'images/plant-placeholder.png' %}" alt="xxx">
+            <img src="{% static 'images/plant-placeholder.png' %}" alt="No image available">
           {% endif %}
         </a>
         <div class="plant-card-caption">
