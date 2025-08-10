@@ -123,7 +123,7 @@ class PlantProfileFilter(django_filters.FilterSet):
     deciduous_tree = django_filters.CharFilter(
         method="filter_growth_habit",
     )
-    connifer_tree = django_filters.CharFilter(
+    conifer_tree = django_filters.CharFilter(
         method="filter_growth_habit",
     )
     vine = django_filters.CharFilter(

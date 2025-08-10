@@ -167,7 +167,7 @@ def search_plant_name(request):
         "#grass_sedge_rush",
         "#shrub",
         "#deciduous_tree",
-        "#connifer_tree",
+        "#conifer_tree",
         "#vine",
     ]
     lifecycle_filters = [
