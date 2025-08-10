@@ -537,7 +537,7 @@ class PlantProfile(Base):
     - Identification information
     - Growth characteristics
     - Environmental requirements
-    - Propagation and cultivation
+    - Propagation and seed sharing
     - Landscape uses and applications
     - Ecological relationships
     - Special features and considerations
@@ -585,7 +585,7 @@ class PlantProfile(Base):
             sand_tolerant (BooleanField): Tolerant of sandy soils
             acidic_soil_tolerant (BooleanField): Tolerant of acidic soils
 
-    # Propagation and Cultivation
+    # Propagation and seed sharing
         ## Seed Handling
             seed_availability (BooleanField): Seeds are readily available
             accepting_seed (BooleanField): Whether accepting seeds for this plant
@@ -734,7 +734,7 @@ class PlantProfile(Base):
     dioecious = models.BooleanField(default=False, null=True, blank=True)
 
     #
-    # Propagation and cultivation
+    # Propagation and seed sharing
     #
     stratification_detail = models.CharField(max_length=55, blank=True)
     stratification_duration = models.SmallIntegerField(blank=True, null=True, default=0)

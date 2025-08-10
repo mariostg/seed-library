@@ -154,9 +154,9 @@ urlpatterns += [
         name="plant-growth-characteristics-update",
     ),
     path(
-        "plant-propagation-and-cultivation-update/<int:pk>",
-        views.plant_propagation_and_cultivation_update,
-        name="plant-propagation-and-cultivation-update",
+        "plant-propagation-and-seed-sharing-update/<int:pk>",
+        views.plant_propagation_and_seed_sharing_update,
+        name="plant-propagation-and-seed-sharing-update",
     ),
 ]
 

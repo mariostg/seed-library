@@ -1012,7 +1012,7 @@ def plant_growth_characteristics_update(request, pk):
     return render(request, "project/plant-growth-characteristics-update.html", context)
 
 
-def plant_propagation_and_cultivation_update(request, pk):
+def plant_propagation_and_seed_sharing_update(request, pk):
     plant = models.PlantProfile.objects.get(pk=pk)
     harvesting_months = utils.MONTHS
     # packaging measures
@@ -1213,11 +1213,11 @@ def plant_propagation_and_cultivation_update(request, pk):
             plant.seed_event_table = None
 
         plant.save()
-        messages.success(request, "Propagation and cultivation updated successfully.")
+        messages.success(request, "Propagation and seed sharing updated successfully.")
         return redirect("plant-profile-page", pk=plant.pk)
 
     context = {
-        "title": f"{plant.latin_name} - Propagation and Cultivation",
+        "title": f"{plant.latin_name} - Propagation and Seed Sharing",
         "plant": plant,
         "packaging_measures": packaging_measures,
         "one_cultivars": one_cultivars,
@@ -1232,5 +1232,5 @@ def plant_propagation_and_cultivation_update(request, pk):
         "seed_event_table": seed_event_table,
     }
     return render(
-        request, "project/plant-propagation-and-cultivation-update.html", context
+        request, "project/plant-propagation-and-seed-sharing-update.html", context
     )

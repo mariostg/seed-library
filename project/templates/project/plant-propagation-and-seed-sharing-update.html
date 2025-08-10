@@ -1,5 +1,5 @@
 <!--
-    # Propagation and Cultivation
+    # Propagation and seed sharing
         ## Seed Handling
             seed_availability (BooleanField): Seeds are readily available
             accepting_seed (BooleanField): Whether accepting seeds for this plant
@@ -48,11 +48,11 @@
 {% block content %}
   <div class="flex-col-center">
 
-    <h1>Update Plant Propagation and Cultivation</h1>
+    <h1>Update Plant Propagation and seed sharing</h1>
     <h2>{{ plant.latin_name }}</h2>
-    <form method="post" action="{% url 'plant-propagation-and-cultivation-update' plant.pk %}">
+    <form method="post" action="{% url 'plant-propagation-and-seed-sharing-update' plant.pk %}">
       {% csrf_token %}
-      <!-- Add form fields for propagation and cultivation details here -->
+      <!-- Add form fields for propagation and seed sharing details here -->
       <!-- Example: -->
       <div class="inputs">
         <!-- Seed Handling Section -->
@@ -270,7 +270,7 @@
           </div>
         </section><!-- End of Distribution Section -->
       </div>
-      <button class="btn" type="submit">Update Propagation and Cultivation</button>
+      <button class="btn" type="submit">Update Propagation and Seed Sharing</button>
     </form>
   </div>
 {% endblock content %}

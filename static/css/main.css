@@ -13,7 +13,8 @@ html {
 
 body {
   line-height: 1.5;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+               Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
   color: #333;
   background-color: #fff;
 }
@@ -96,7 +97,7 @@ textarea {
   text-align: center;
 }
 
-input[type=range] {
+input[type="range"] {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
@@ -110,22 +111,22 @@ input[type=range] {
   pointer-events: none;
 }
 
-input[type=range]::-webkit-slider-runnable-track {
+input[type="range"]::-webkit-slider-runnable-track {
   -webkit-appearance: none;
   height: 5px;
 }
 
-input[type=range]::-moz-range-track {
+input[type="range"]::-moz-range-track {
   -moz-appearance: none;
   height: 5px;
 }
 
-input[type=range]::-ms-track {
+input[type="range"]::-ms-track {
   appearance: none;
   height: 5px;
 }
 
-input[type=range]::-webkit-slider-thumb {
+input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
   height: 1em;
   width: 1em;
@@ -136,7 +137,7 @@ input[type=range]::-webkit-slider-thumb {
   border-radius: 50%;
 }
 
-input[type=range]::-moz-range-thumb {
+input[type="range"]::-moz-range-thumb {
   -webkit-appearance: none;
   height: 1em;
   width: 1em;
@@ -146,7 +147,7 @@ input[type=range]::-moz-range-thumb {
   pointer-events: auto;
 }
 
-input[type=range]::-ms-thumb {
+input[type="range"]::-ms-thumb {
   appearance: none;
   height: 1em;
   width: 1em;
@@ -156,7 +157,7 @@ input[type=range]::-ms-thumb {
   pointer-events: auto;
 }
 
-input[type=range]:active::-webkit-slider-thumb {
+input[type="range"]:active::-webkit-slider-thumb {
   background-color: #ffffff;
   border: 3px solid #3264fe;
 }
@@ -218,12 +219,14 @@ input[type=range]:active::-webkit-slider-thumb {
   }
 }
 
-.flex-col, .flex-col-center {
+.flex-col,
+.flex-col-center {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
 }
-.flex-col .title, .flex-col-center .title {
+.flex-col .title,
+.flex-col-center .title {
   border-top: 1px solid light-dark(#79ac78, #79ac78);
   border-bottom: 1px solid light-dark(#79ac78, #79ac78);
   font-weight: 300;
@@ -333,7 +336,8 @@ ul.nav-links {
   display: flex;
   gap: 10px;
 }
-.plant-card-is-favourite, .plant-card-is-not-favourite {
+.plant-card-is-favourite,
+.plant-card-is-not-favourite {
   cursor: pointer;
   position: absolute;
   right: 30px;
@@ -359,7 +363,7 @@ ul.nav-links {
 #filter-wrapper.collapsed,
 #environmental-requirements-filter.collapsed,
 #growth-characteristics-filter.collapsed,
-#propagation-and-cultivation-filter.collapsed,
+#propagation-and-seed-sharing-filter.collapsed,
 #landscape-uses-and-applications-filter.collapsed,
 #ecological-relationships-filter.collapsed,
 #special-features-and-considerations-filter.collapsed,
