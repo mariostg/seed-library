@@ -627,7 +627,6 @@ class PlantProfile(Base):
         ## Garden Suitability
             rock_garden (BooleanField): Suitable for rock gardens
             rain_garden (BooleanField): Suitable for rain gardens
-            pond_edge (BooleanField): Suitable for pond edges
             shoreline_rehab (BooleanField): Suitable for shoreline rehabilitation
             container_suitable (BooleanField): Suitable for container gardening
             school_garden_suitable (BooleanField): Suitable for school gardens

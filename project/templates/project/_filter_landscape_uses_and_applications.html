@@ -48,21 +48,6 @@
   <label for="garden_edge">Garden edge</label>
 </div>
 
-<!--Input checkbox for pond edge-->
-<input
-  type="checkbox"
-  id="pond_edge"
-  name="pond_edge"
-  value="Pond Edge"
-  hx-get="/search-plant-name"
-  hx-trigger="click"
-  hx-target="#search-results"
-  hx-push-url="true"
-  hx-include="{{hx_include}}"
-  {% if pond_edge %} checked {% endif %}
-/>
-<label for="pond_edge">Pond edge</label><br />
-
 <!--Input checkbox for rain garden-->
 <input
   type="checkbox"
