@@ -207,7 +207,7 @@ class PlantProfileFilter(django_filters.FilterSet):
     full_sun = django_filters.CharFilter(
         method="filter_boolean",
     )
-    partial_sun = django_filters.CharFilter(
+    part_shade = django_filters.CharFilter(
         method="filter_boolean",
     )
     full_shade = django_filters.CharFilter(

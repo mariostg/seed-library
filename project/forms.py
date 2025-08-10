@@ -127,7 +127,7 @@ class EnvironmentalRequirementsForm(forms.ModelForm):
         model = models.PlantProfile
         fields = [
             "full_sun",
-            "partial_sun",
+            "part_shade",
             "full_shade",
             "moisture_dry",
             "moisture_medium",

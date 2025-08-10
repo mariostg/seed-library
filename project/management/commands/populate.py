@@ -208,7 +208,7 @@ class Command(BaseCommand):
             "moisture_medium": "moisture-medium",
             "moisture_wet": "moisture-wet",
             "full_sun": "full-sun",
-            "partial_sun": "partial-sun",
+            "part_shade": "partial-shade",
             "full_shade": "full-shade",
             "spread_by_rhizome": "spread-by-rhizome",
             "dioecious": "dioecious",
@@ -869,7 +869,7 @@ class Command(BaseCommand):
             plant.moisture_medium = True  # This is false in the CSV file
             plant.moisture_wet = True  # This is true in the CSV file
             plant.full_sun = True  # This is false in the CSV file
-            plant.partial_sun = True  # This is false in the CSV file
+            plant.part_shade = True  # This is false in the CSV file
             plant.full_shade = True  # This is true in the CSV file
             plant.spread_by_rhizome = True  # This is false in the CSV file
             plant.dioecious = True  # This is false in the CSV file

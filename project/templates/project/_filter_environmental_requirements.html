@@ -16,21 +16,21 @@
   >More than 6 hours of direct sun a day
   </span></label><br />
 
-      <!--Input checkbox for partial sun-->
+      <!--Input checkbox for part shade-->
 <input
   type="checkbox"
-  id="partial_sun"
-  name="partial_sun"
-  value="Partial Sun"
+  id="part_shade"
+  name="part_shade"
+  value="Part Shade"
   hx-get="/search-plant-name"
   hx-trigger="click"
   hx-target="#search-results"
   hx-push-url="true"
   hx-include="{{hx_include}}"
-  {% if partial_sun %} checked {% endif %}
+  {% if part_shade %} checked {% endif %}
 />
-<label for="partial_sun" class="tooltip"
->Part Sun ✔
+<label for="part_shade" class="tooltip"
+>Part Shade ✔
   <span class="tooltiptext"
   >More than 2 or 3 hours but less than 6 hours of direct sun a day
   </span></label

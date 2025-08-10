@@ -154,7 +154,7 @@ def search_plant_name(request):
     # Create lists of different filter categories
     sun_filters = [
         "#full_sun",
-        "#partial_sun",
+        "#part_shade",
         "#full_shade",
     ]
     moisture_filters = [
@@ -933,7 +933,7 @@ def plant_environmental_requirement_update(request, pk):
     plant = models.PlantProfile.objects.get(pk=pk)
     if request.method == "POST":
         plant.full_sun = request.POST.get("full_sun") == "on"
-        plant.partial_sun = request.POST.get("partial_sun") == "on"
+        plant.part_shade = request.POST.get("part_shade") == "on"
         plant.full_shade = request.POST.get("full_shade") == "on"
         plant.moisture_dry = request.POST.get("moisture_dry") == "on"
         plant.moisture_medium = request.POST.get("moisture_medium") == "on"

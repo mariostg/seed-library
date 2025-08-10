@@ -572,7 +572,7 @@ class PlantProfile(Base):
     # Environmental Requirements
         ## Light Preferences
             full_sun (BooleanField): Whether plant thrives in full sun conditions
-            partial_sun (BooleanField): Whether plant thrives in partial sun conditions
+            part_shade (BooleanField): Whether plant thrives in part shade conditions
             full_shade (BooleanField): Whether plant thrives in full shade conditions
 
         ## Moisture Preferences
@@ -698,7 +698,7 @@ class PlantProfile(Base):
     # Environmental requirements
     #
     full_sun = models.BooleanField(default=False, null=True, blank=True)
-    partial_sun = models.BooleanField(default=False, null=True, blank=True)
+    part_shade = models.BooleanField(default=False, null=True, blank=True)
     full_shade = models.BooleanField(default=False, null=True, blank=True)
 
     moisture_dry = models.BooleanField(
