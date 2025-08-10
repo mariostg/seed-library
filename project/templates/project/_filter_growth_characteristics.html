@@ -1,54 +1,31 @@
 <div class='filter__sub-header'>Physical Attributes</div>
-<div class="slider-values">Height (Feet)
-  <span id="rangeFromPlantHeight"> 0 </span>
-  <span> &dash; </span>
-  <span id="rangeToPlantHeight"> 12 </span>
-</div>
-<div class="slider-container">
-  <div class="slider-track-plant-height"></div>
+<div class="filter">
   <input
-    type="range"
-    min="0"
-    max="12"
-    value="0"
-    id="sliderFromPlantHeight"
-    oninput="slideFromPlantHeight()"
+    type="number"
+    id="height"
+    name="height"
+    value="Height"
+    hx-get="/search-plant-name"
+    hx-trigger="click"
+    hx-target="#search-results"
+    hx-push-url="true"
+    hx-include="{{hx_include}}"
   />
-  <input
-    type="range"
-    min="0"
-    max="12"
-    value="12"
-    id="sliderToPlantHeight"
-    oninput="slideToPlantHeight()"
-  />
+  <label for="height">Max. Height (Feet)</label><br />
 </div>
-
-<div id="plantwidth" class="slider-wrapper collapsed">
-  <div class="slider-values">Width (Feet)
-    <span id="rangeFromPlantWidth"> 0 </span>
-    <span> &dash; </span>
-    <span id="rangeToPlantWidth"> 10 </span>
-  </div>
-  <div class="slider-container">
-    <div class="slider-track-plant-width"></div>
-    <input
-      type="range"
-      min="0"
-      max="10"
-      value="0"
-      id="sliderFromPlantWidth"
-      oninput="slideFromPlantWidth()"
-    />
-    <input
-      type="range"
-      min="0"
-      max="10"
-      value="10"
-      id="sliderToPlantWidth"
-      oninput="slideToPlantWidth()"
-    />
-  </div>
+<div class="filter">
+  <input
+    type="number"
+    id="width"
+    name="width"
+    value="Width"
+    hx-get="/search-plant-name"
+    hx-trigger="click"
+    hx-target="#search-results"
+    hx-push-url="true"
+    hx-include="{{hx_include}}"
+  />
+  <label for="width">Max. Width (Feet)</label><br />
 </div>
 
 <div class='filter__sub-header'>Lifespan</div>
