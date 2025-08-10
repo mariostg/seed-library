@@ -223,7 +223,8 @@
   <div class='filter__sub-header'>Gardener Experience</div>
 
 
-<!--Input box for beginner friendly-->
+
+  <!--Input box for beginner friendly-->
   <input
     type="checkbox"
     id="beginner_friendly"
@@ -253,6 +254,20 @@
   />
   <label for="does_not_spread">Does not spread ✔</label><br />
 
+<!--Input checkbox for germinate_easy-->
+  <input
+    type="checkbox"
+    id="germinate_easy"
+    name="germinate_easy"
+    value="Germinate Easy"
+    hx-get="/search-plant-name"
+    hx-trigger="click"
+    hx-target="#search-results"
+    hx-push-url="true"
+    hx-include="{{hx_include}}"
+    {% if germinate_easy %} checked {% endif %}
+  />
+  <label for="germinate_easy">Easy to germinate ✔</label><br />
 
 <!--Input checkbox for transplantation_tolerant-->
   <input
@@ -268,19 +283,3 @@
     {% if transplantation_tolerant %} checked {% endif %}
   />
   <label for="transplantation_tolerant">Transplants well ✔</label><br />
-
-
-<!--Input checkbox for germinate_easy-->
-  <input
-    type="checkbox"
-    id="germinate_easy"
-    name="germinate_easy"
-    value="Germinate Easy"
-    hx-get="/search-plant-name"
-    hx-trigger="click"
-    hx-target="#search-results"
-    hx-push-url="true"
-    hx-include="{{hx_include}}"
-    {% if germinate_easy %} checked {% endif %}
-  />
-  <label for="germinate_easy">Easy to germinate ✔</label><br />
