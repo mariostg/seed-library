@@ -157,51 +157,8 @@
   <label for="woodland_garden">Woodland garden ✔</label>
 </div>
 
-
 <div class='filter__sub-header'>Functional Uses</div>
 
-<!--Input checkbox for ground cover-->
-<input
-  type="checkbox"
-  id="ground_cover"
-  name="ground_cover"
-  value="Ground Cover"
-  hx-get="/search-plant-name"
-  hx-trigger="click"
-  hx-target="#search-results"
-  hx-push-url="true"
-  hx-include="{{hx_include}}"
-  {% if ground_cover %} checked {% endif %}
-/>
-<label for="ground_cover">Groundcover/lawn replacement ✔</label><br />
-<!--Input checkbox for Wind Break Hedge-->
-<input
-  type="checkbox"
-  id="wind_break_hedge"
-  name="wind_break_hedge"
-  value="Wind Break Hedge"
-  hx-get="/search-plant-name"
-  hx-trigger="click"
-  hx-target="#search-results"
-  hx-push-url="true"
-  hx-include="{{hx_include}}"
-  {% if wind_break_hedge %} checked {% endif %}
-/>
-<label for="wind_break_hedge">Wind break hedge</label><br />
-<!--Input checkbox for Erosion Control-->
-<input
-  type="checkbox"
-  id="erosion_control"
-  name="erosion_control"
-  value="Erosion Control"
-  hx-get="/search-plant-name"
-  hx-trigger="click"
-  hx-target="#search-results"
-  hx-push-url="true"
-  hx-include="{{hx_include}}"
-  {% if erosion_control %} checked {% endif %}
-/>
-<label for="erosion_control">Erosion control</label><br />
 <!--Input checkbox for cedar hedge replacement-->
 <input
   type="checkbox"
@@ -218,7 +175,54 @@
 <label for="cedar_hedge_replacement">Cedar hedge replacement ✔</label
   ><br />
 
+  <!--Input checkbox for Erosion Control-->
+  <input
+    type="checkbox"
+    id="erosion_control"
+    name="erosion_control"
+    value="Erosion Control"
+    hx-get="/search-plant-name"
+    hx-trigger="click"
+    hx-target="#search-results"
+    hx-push-url="true"
+    hx-include="{{hx_include}}"
+    {% if erosion_control %} checked {% endif %}
+  />
+  <label for="erosion_control">Erosion control</label><br />
+
+<!--Input checkbox for ground cover-->
+  <input
+    type="checkbox"
+    id="ground_cover"
+    name="ground_cover"
+    value="Ground Cover"
+    hx-get="/search-plant-name"
+    hx-trigger="click"
+    hx-target="#search-results"
+    hx-push-url="true"
+    hx-include="{{hx_include}}"
+    {% if ground_cover %} checked {% endif %}
+  />
+  <label for="ground_cover">Groundcover/lawn replacement ✔</label><br />
+<!--Input checkbox for Wind Break Hedge-->
+  <input
+    type="checkbox"
+    id="wind_break_hedge"
+    name="wind_break_hedge"
+    value="Wind Break Hedge"
+    hx-get="/search-plant-name"
+    hx-trigger="click"
+    hx-target="#search-results"
+    hx-push-url="true"
+    hx-include="{{hx_include}}"
+    {% if wind_break_hedge %} checked {% endif %}
+  />
+  <label for="wind_break_hedge">Wind break hedge</label><br />
+
+
   <div class='filter__sub-header'>Gardener Experience</div>
+
+
 <!--Input box for beginner friendly-->
   <input
     type="checkbox"
