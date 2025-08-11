@@ -69,7 +69,6 @@ class TestForms:
             "germinate_easy": True,
             "rock_garden": True,
             "rain_garden": True,
-            "pond_edge": True,
             "shoreline_rehab": True,
             "container_suitable": True,
             "ground_cover": True,
@@ -96,15 +95,18 @@ class TestForms:
         plant_profile_data["min_height"] = 200
         form = PlantProfileForm(data=plant_profile_data)
         assert not form.is_valid()
-        assert "Minimum height (200) must be smaller than maximum height (100)" in str(form.errors)
+        assert "Minimum height (200) must be smaller than maximum height (100)" in str(
+            form.errors
+        )
 
     def test_plant_profile_form_invalid_bloom(self, plant_profile_data):
         plant_profile_data["bloom_start"] = 12
         plant_profile_data["bloom_end"] = 1
         form = PlantProfileForm(data=plant_profile_data)
         assert not form.is_valid()
-        assert "Beginning of blooming period (December) must be before end of blooming period (January)" in str(
-            form.errors
+        assert (
+            "Beginning of blooming period (December) must be before end of blooming period (January)"
+            in str(form.errors)
         )
 
     def test_search_plant_form_valid(self):

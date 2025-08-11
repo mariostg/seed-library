@@ -198,7 +198,6 @@ def search_plant_name(request):
     garden_suitability_filters = [
         "#rock_garden",
         "#rain_garden",
-        "#pond_edge",
         "#shoreline_rehab",
         "#container_suitable",
         "#school_garden_suitable",

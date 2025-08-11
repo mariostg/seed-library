@@ -40,7 +40,6 @@ class PlantProfileForm(forms.ModelForm):
             "germinate_easy",  #
             "rock_garden",  #
             "rain_garden",  #
-            "pond_edge",  #
             "shoreline_rehab",  #
             "container_suitable",  #
             "ground_cover",  #

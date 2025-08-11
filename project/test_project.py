@@ -41,7 +41,6 @@ class TestPostAddPlantProfile:
             "germinate_easy": "",
             "rock_garden": "",
             "rain_garden": "",
-            "pond_edge": "",
             "shoreline_rehab": "",
             "container_suitable": "",
             "ground_cover": "",
@@ -70,4 +69,6 @@ class TestPostAddPlantProfile:
         response = c.post("/plant-profile-add/", self.data)
         assert 200 == response.status_code
         response = c.post("/plant-profile-add/", self.data)
-        assert "Plant profile with this Latin name already exists" in str(response.content)
+        assert "Plant profile with this Latin name already exists" in str(
+            response.content
+        )

@@ -798,7 +798,6 @@ class PlantProfile(Base):
     #
     rock_garden = models.BooleanField(default=False, null=True, blank=True)
     rain_garden = models.BooleanField(default=False, null=True, blank=True)
-    pond_edge = models.BooleanField(default=False, null=True, blank=True)
     shoreline_rehab = models.BooleanField(default=False, null=True, blank=True)
     container_suitable = models.BooleanField(default=False, null=True, blank=True)
     school_garden_suitable = models.BooleanField(default=False, null=True, blank=True)
