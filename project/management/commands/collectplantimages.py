@@ -13,10 +13,8 @@
 # Ensure that the MEDIA_ROOT setting in Django is correctly configured to point to the media directory.
 import logging
 import re
-import shutil
 from pathlib import Path
 
-from django.conf import settings
 from django.core.files import File
 from django.core.management.base import BaseCommand
 from django.utils import timezone
@@ -42,15 +40,14 @@ class Command(BaseCommand):
             help="Directory to scan for plant images.",
         )
         parser.add_argument(
-            "--dest_dir",
-            type=str,
-            default="plants",
-            help="Directory to store processed plant images.",
+            "--force",
+            action="store_true",
+            help="Force the processing of images even if they don't match the expected pattern.",
         )
 
     def handle(self, *args, **options):
         source_dir: Path = Path(options["source_dir"])
-        dest_dir: Path = Path(settings.MEDIA_ROOT) / options["dest_dir"]
+        force = options["force"]
 
         if not source_dir.exists() or not source_dir.is_dir():
             self.stderr.write(
@@ -58,7 +55,12 @@ class Command(BaseCommand):
             )
             return
 
-        dest_dir.mkdir(parents=True, exist_ok=True)
+        if force:
+            self.stdout.write(
+                "Force mode enabled. Data from Plant Images will be deleted first."
+            )
+            # Delete existing PlantImage entries to avoid duplicates
+            PlantImage.objects.all().delete()
 
         image_files: list[Path] = list(source_dir.glob("*.*"))
         if not image_files:
@@ -68,15 +70,15 @@ class Command(BaseCommand):
         processed_count = 0
         skipped_count = 0
 
-        for image_path in image_files:
+        for source_image_path in image_files:
             match = re.match(
                 r"^(?P<latin_name>.+?)_(?P<author>.+?)\.(jpg|jpeg|png|gif)$",
-                image_path.name,
+                source_image_path.name,
                 re.IGNORECASE,
             )
             if not match:
                 self.stderr.write(
-                    f"Filename '{image_path.name}' does not match the expected pattern. Skipping."
+                    f"Filename '{source_image_path.name}' does not match the expected pattern. Skipping."
                 )
                 skipped_count += 1
                 continue
@@ -87,12 +89,10 @@ class Command(BaseCommand):
             plant: PlantProfile = get_plant_by_latin_name(latin_name)
             if not plant:
                 self.stderr.write(
-                    f"No plant found for '{latin_name}' by '{author}'. Skipping '{image_path.name}'."
+                    f"No plant found for '{latin_name}' by '{author}'. Skipping '{source_image_path.name}'."
                 )
                 skipped_count += 1
                 continue
-            plant_image_dir = dest_dir / str(plant.pk)
-            plant_image_dir.mkdir(parents=True, exist_ok=True)
 
             # To be implemented when number field is added to PlantImage.
             # This will be used to ensure unique numbering of images when there are images in one morphology aspect.
@@ -100,15 +100,16 @@ class Command(BaseCommand):
             # new_number = max_number + 1
             new_number = 1
 
-            new_filename = (
-                f"{slugify(plant.latin_name)}_{new_number}{image_path.suffix.lower()}"
-            )
-            new_image_path = plant_image_dir / new_filename
-            shutil.move(str(image_path), new_image_path)
-            with new_image_path.open("rb") as img_file:
+            slugified_filename = f"{slugify(plant.latin_name)}_{new_number}{source_image_path.suffix.lower()}"
+            with source_image_path.open("rb") as img_file:
+                # Define the upload path for the image
+                upload_path = f"plants/{plant.pk}/{slugified_filename}"
                 plant_image = PlantImage(
                     plant_profile=plant,
-                    image=File(img_file, name=new_filename),
+                    image=File(
+                        img_file,
+                        name=upload_path,
+                    ),
                     morphology_aspect=get_morphology_aspect("Plant"),
                     # number=new_number,
                     photo_author=author,
@@ -117,7 +118,7 @@ class Command(BaseCommand):
                 plant_image.save()
             processed_count += 1
             self.stdout.write(
-                f"Processed image '{new_filename}' for plant '{plant.latin_name}'."
+                f"Processed image '{slugified_filename}' for plant '{plant.latin_name}'."
             )
         self.stdout.write(
             f"Processing complete. {processed_count} images processed, {skipped_count} images skipped."

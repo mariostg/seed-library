@@ -2,7 +2,7 @@ from django.contrib.auth.models import AbstractUser
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.dates import MONTHS
-from PIL import Image, ImageOps
+from PIL import Image
 
 
 class Base(models.Model):
@@ -1085,16 +1085,16 @@ class PlantImage(models.Model):
         except PlantImage.DoesNotExist:
             pass  # when new photo then we do nothing, normal case
         super().save(*args, **kwargs)
-        img = Image.open(self.image)
-        img = ImageOps.exif_transpose(img)
-        width, height = img.size
-        target_width = 720
-        h_coefficient = width / target_width
-        target_height = height / h_coefficient
-        img = img.resize((int(target_width), int(target_height)), Image.LANCZOS)
-        img.save(self.image.path, quality=100)
-        img.close()
-        self.image.close()
+        # img = Image.open(self.image)
+        # img = ImageOps.exif_transpose(img)
+        # width, height = img.size
+        # target_width = 450
+        # h_coefficient = width / target_width
+        # target_height = height / h_coefficient
+        # img = img.resize((int(target_width), int(target_height)), Image.LANCZOS)
+        # img.save(self.image.path, quality=100)
+        # img.close()
+        # self.image.close()
 
     def get_size(self):
         """
