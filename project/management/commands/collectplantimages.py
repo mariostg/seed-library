@@ -117,9 +117,6 @@ class Command(BaseCommand):
                 )
                 plant_image.save()
             processed_count += 1
-            self.stdout.write(
-                f"Processed image '{slugified_filename}' for plant '{plant.latin_name}'."
-            )
         self.stdout.write(
             f"Processing complete. {processed_count} images processed, {skipped_count} images skipped."
         )
