@@ -207,7 +207,6 @@ def search_plant_name(request):
     ]
     functional_use_filters = [
         "#ground_cover",
-        "#erosion_control",
         "#cedar_hedge_replacement",
         "#windbreak_edge",
     ]

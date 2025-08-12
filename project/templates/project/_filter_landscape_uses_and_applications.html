@@ -143,21 +143,6 @@
 <label for="cedar_hedge_replacement">Cedar hedge replacement ✔</label
   ><br />
 
-  <!--Input checkbox for Erosion Control-->
-  <input
-    type="checkbox"
-    id="erosion_control"
-    name="erosion_control"
-    value="Erosion Control"
-    hx-get="/search-plant-name"
-    hx-trigger="click"
-    hx-target="#search-results"
-    hx-push-url="true"
-    hx-include="{{hx_include}}"
-    {% if erosion_control %} checked {% endif %}
-  />
-  <label for="erosion_control">Erosion control</label><br />
-
 <!--Input checkbox for ground cover-->
   <input
     type="checkbox"

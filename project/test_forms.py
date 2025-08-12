@@ -73,7 +73,6 @@ class TestForms:
             "container_suitable": True,
             "ground_cover": True,
             "woodland_garden": True,
-            "erosion_control": True,
             "seed_availability": True,
             "keystones_species": True,
             "drought_tolerant": True,

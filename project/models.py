@@ -636,7 +636,6 @@ class PlantProfile(Base):
 
         ## Functional Uses
             ground_cover (BooleanField): Functions as ground cover
-            erosion_control (BooleanField): Helps with erosion control
             cedar_hedge_replacement (BooleanField): Can replace cedar hedges
 
         ## Gardening Experience
@@ -801,7 +800,6 @@ class PlantProfile(Base):
     school_garden = models.BooleanField(default=False, null=True, blank=True)
     ground_cover = models.BooleanField(default=False, null=True, blank=True)
     woodland_garden = models.BooleanField(default=False, null=True, blank=True)
-    erosion_control = models.BooleanField(default=False, null=True, blank=True)
     boulevard_garden_tolerant = models.BooleanField(
         default=False, null=True, blank=True
     )
