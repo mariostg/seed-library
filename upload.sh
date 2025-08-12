@@ -6,7 +6,6 @@ if [ $# -eq 0 ]; then #execute a dry run to dev site
     rsync -avzn \
     --filter 'protect /media/*' \
     --exclude-from=rsync-exclude.txt \
-    --exclude-from=.gitignore \
     --update \
     --delete \
     $SOURCE $DEVSITE
@@ -17,7 +16,6 @@ elif [ $1 = 'sync-test' ];then #push codes to devsite
     rsync -avz \
     --filter 'protect /media/*' \
     --exclude-from=rsync-exclude.txt \
-    --exclude-from=.gitignore \
     --update \
     --delete \
     $SOURCE $DEVSITE
@@ -27,7 +25,6 @@ elif [ $1 = 'sync-test' ];then #push codes to devsite
 elif [ $1 = 'dryrun-prod' ]; then #execute a dry run on production site
     rsync -avzn \
     --exclude-from=rsync-exclude.txt \
-    --exclude-from=.gitignore \
     --update \
     --delete \
     $SOURCE $PRODSITE
@@ -37,7 +34,6 @@ elif [ $1 = 'dryrun-prod' ]; then #execute a dry run on production site
 elif [ $1 = 'sync-prod' ];then #push code to prod site
     rsync -avz \
     --exclude-from=rsync-exclude.txt \
-    --exclude-from=.gitignore \
     --update \
     --delete \
     $SOURCE $PRODSITE
