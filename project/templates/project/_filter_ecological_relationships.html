@@ -171,6 +171,21 @@
   />
   <label for="bee_host">Bee host ✔</label><br />
 
+<!--Input checkbox for butterfly host-->
+  <input
+    type="checkbox"
+    id="butterfly_host"
+    name="butterfly_host"
+    value="Butterfly Host"
+    hx-get="/search-plant-name"
+    hx-trigger="click"
+    hx-target="#search-results"
+    hx-push-url="true"
+    hx-include="{{hx_include}}"
+    {% if butterfly_host %} checked {% endif %}
+  />
+  <label for="butterfly_host">Butterfly host ✔</label><br />
+
 <!--Input checkbox for nitrogen_fixer-->
   <input
     type="checkbox"
