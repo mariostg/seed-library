@@ -539,7 +539,7 @@ class PlantProfile(Base):
     - Environmental requirements
     - Propagation and seed sharing
     - Landscape uses and applications
-    - Ecological relationships
+    - Ecological benefits
     - Special features and considerations
 
     The model implements custom validation for height comparisons and blooming periods,
@@ -644,7 +644,7 @@ class PlantProfile(Base):
             transplantation_tolerant (BooleanField): Tolerates transplanting well
             transplanting_notes (CharField): Notes on transplanting techniques
 
-    # Ecological Relationships
+    # Ecological Benefits
         ## Wildlife Interactions
             hummingbird_friendly (BooleanField): Attracts hummingbirds
             butterfly_friendly (BooleanField): Attracts butterflies
@@ -808,7 +808,7 @@ class PlantProfile(Base):
     transplantation_tolerant = models.BooleanField(default=False, null=True, blank=True)
 
     #
-    # Ecological relationships
+    # Ecological benefits
     #
     keystones_species = models.BooleanField(default=False, null=True, blank=True)
     drought_tolerant = models.BooleanField(default=False, null=True, blank=True)
