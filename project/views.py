@@ -237,6 +237,8 @@ def search_plant_name(request):
         "#juglone_tolerant",
     ]
     ecosystem_services_filters = [
+        "#bee_host",
+        "#butterfly_host",
         "#nitrogen_fixer",
         "#keystones_species",
         "#host_plant",
