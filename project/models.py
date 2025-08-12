@@ -647,7 +647,7 @@ class PlantProfile(Base):
     # Ecological Benefits
         ## Wildlife Interactions
             hummingbird_friendly (BooleanField): Attracts hummingbirds
-            butterfly_friendly (BooleanField): Attracts butterflies
+            pollinator_garden (BooleanField): Attracts pollinators
             bird_friendly (BooleanField): Beneficial for birds
             deer_tolerant (BooleanField): Resistant to deer damage
             rabbit_tolerant (BooleanField): Resistant to rabbit damage
@@ -820,7 +820,7 @@ class PlantProfile(Base):
     sand_tolerant = models.BooleanField(default=False, null=True, blank=True)
     acidic_soil_tolerant = models.BooleanField(default=False, null=True, blank=True)
     hummingbird_friendly = models.BooleanField(default=False, null=True, blank=True)
-    butterfly_friendly = models.BooleanField(default=False, null=True, blank=True)
+    pollinator_garden = models.BooleanField(default=False, null=True, blank=True)
     butterfly_host = models.BooleanField(default=False, null=True, blank=True)
     bee_host = models.BooleanField(default=False, null=True, blank=True)
     bird_friendly = models.BooleanField(default=False, null=True, blank=True)

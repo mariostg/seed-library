@@ -57,7 +57,7 @@ class Command(BaseCommand):
             "french_names": "plant-names-french - csv.csv",
             "bird_friendly": "plant-bird-friendly - csv.csv",
             "boulevard_garden_tolerant": "plant-boulevard-garden-tolerant - csv.csv",
-            "butterfly_friendly": "plant-butterfly-friendly - csv.csv",
+            "pollinator_garden": "plant-pollinator-garden - csv.csv",
             "butterfly_host": "plant-butterfly-host - csv.csv",
             "bee_host": "plant-bee-host - csv.csv",
             "cause_dermatitis": "plant-cause-dermatitis - csv.csv",
@@ -182,7 +182,7 @@ class Command(BaseCommand):
         # Define a mapping of model field names to CSV filenames
         boolean_fields = {
             "bee_host": "bee_host",
-            "butterfly_friendly": "butterfly_friendly",
+            "pollinator_garden": "pollinator_garden",
             "butterfly_host": "butterfly_host",
             "hummingbird_friendly": "hummingbird_friendly",
             "container_suitable": "container_suitable",
@@ -854,7 +854,7 @@ class Command(BaseCommand):
         """
         try:
             plant = models.PlantProfile.objects.get(latin_name="Actaea racemosa")
-            plant.butterfly_friendly = True
+            plant.pollinator_garden = True
             plant.bee_host = True
             plant.hummingbird_friendly = True
             plant.ground_cover = True

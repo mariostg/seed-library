@@ -16,15 +16,37 @@
         />
         <span class="tooltiptext">Supports hummingbirds</span>
       </div>
-    {% endif %} {% if plant.butterfly_friendly %}
+    {% endif %}
+    {% if plant.bird_friendly%}
       <div class="tooltip">
         <img
-          title="butterfly friendly"
-          alt="butterfly friendly"
+          title="Bird friendly"
+          alt="Bird friendly"
           class="icon"
-          src="{% static 'images/plant-butterfly-friendly.svg'  %}"
+          src="{% static 'images/plant-bird-friendly.svg'  %}"
         />
-        <span class="tooltiptext">Supports butterflies</span>
+        <span class="tooltiptext">Supports birds</span>
+      </div>
+    {% endif %}
+    {% if plant.pollinator_garden %}
+      <div class="tooltip">
+        <img
+          title="Pollinator garden"
+          alt="Pollinator garden"
+          class="icon"
+          src="{% static 'images/plant-pollinator-garden.svg'  %}"
+        />
+        <span class="tooltiptext">Supports pollinators</span>
+      </div>
+    {% endif %} {% if plant.butterfly_host %}
+      <div class="tooltip">
+        <img
+          title="butterfly host"
+          alt="butterfly host"
+          class="icon"
+          src="{% static 'images/plant-butterfly-host.svg'  %}"
+        />
+        <span class="tooltiptext">Butterfly host</span>
       </div>
     {% endif %} {% if plant.nitrogen_fixer %}
       <div class="tooltip">

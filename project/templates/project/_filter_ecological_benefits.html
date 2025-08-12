@@ -17,17 +17,17 @@
 <!--Input checkbox for pollinator friendly-->
 <input
   type="checkbox"
-  id="butterfly_friendly"
-  name="butterfly_friendly"
-  value="Butterfly Friendly"
+  id="pollinator_garden"
+  name="pollinator_garden"
+  value="Pollinator Garden"
   hx-get="/search-plant-name"
   hx-trigger="click"
   hx-target="#search-results"
   hx-push-url="true"
   hx-include="{{hx_include}}"
-  {% if butterfly_friendly %} checked {% endif %}
+  {% if pollinator_garden %} checked {% endif %}
 />
-<label for="butterfly_friendly">Pollinator garden ✔</label
+<label for="pollinator_garden">Pollinator garden ✔</label
   ><br />
 
 <!--Input checkbox for bird friendly-->

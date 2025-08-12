@@ -37,18 +37,25 @@ def toggle_availability(request, pk):
 def plant_profile_page(request, pk):
     plant: models.PlantProfile = utils.single_plant(pk)
     landscape_use = (
-        plant.rock_garden
+        # garden_suitability
+        plant.container_suitable
         or plant.rain_garden
+        or plant.rock_garden
         or plant.school_garden
-        or plant.woodland_garden
         or plant.shoreline_rehab
         or plant.wetland_garden
+        or plant.woodland_garden
+        # functional_use
+        or plant.ground_cover
+        or plant.hedge
     )
     ecological_benefits = (
+        # wildlife_interaction
         plant.bird_friendly
-        or plant.butterfly_friendly
+        or plant.bee_host
+        or plant.butterfly_host
         or plant.nitrogen_fixer
-        or plant.hedge
+        or plant.keystones_species
     )
     bloom_start = utils.MONTHS[plant.bloom_start]
     bloom_end = utils.MONTHS[plant.bloom_end]
@@ -218,7 +225,7 @@ def search_plant_name(request):
     ]
     wildlife_interaction_filters = [
         "#hummingbird_friendly",
-        "#butterfly_friendly",
+        "#pollinator_garden",
         "#bird_friendly",
         "#deer_tolerant",
         "#rabbit_tolerant",

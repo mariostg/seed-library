@@ -27,7 +27,7 @@ class PlantProfileFilter(django_filters.FilterSet):
     bird_friendly = django_filters.CharFilter(
         method="filter_boolean",
     )
-    butterfly_friendly = django_filters.CharFilter(
+    pollinator_garden = django_filters.CharFilter(
         method="filter_boolean",
     )
     butterfly_host = django_filters.CharFilter(
