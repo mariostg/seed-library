@@ -36,7 +36,7 @@ class PlantProfileFilter(django_filters.FilterSet):
     boulevard_garden_tolerant = django_filters.CharFilter(
         method="filter_boolean",
     )
-    cedar_hedge_replacement = django_filters.CharFilter(
+    hedge = django_filters.CharFilter(
         method="filter_boolean",
     )
     container_suitable = django_filters.CharFilter(

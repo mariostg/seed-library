@@ -48,7 +48,7 @@ def plant_profile_page(request, pk):
         plant.bird_friendly
         or plant.butterfly_friendly
         or plant.nitrogen_fixer
-        or plant.cedar_hedge_replacement
+        or plant.hedge
     )
     bloom_start = utils.MONTHS[plant.bloom_start]
     bloom_end = utils.MONTHS[plant.bloom_end]
@@ -207,7 +207,7 @@ def search_plant_name(request):
     ]
     functional_use_filters = [
         "#ground_cover",
-        "#cedar_hedge_replacement",
+        "#hedge",
         "#windbreak_edge",
     ]
     gardener_experience_filters = [

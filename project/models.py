@@ -636,7 +636,7 @@ class PlantProfile(Base):
 
         ## Functional Uses
             ground_cover (BooleanField): Functions as ground cover
-            cedar_hedge_replacement (BooleanField): Can replace cedar hedges
+            hedge (BooleanField): Can replace cedar hedges
 
         ## Gardening Experience
             beginner_friendly (BooleanField): Whether suitable for beginner gardeners
@@ -805,7 +805,7 @@ class PlantProfile(Base):
     )
     wetland_garden = models.BooleanField(default=False, null=True, blank=True)
     easy_to_contain = models.BooleanField(default=False, null=True, blank=True)
-    cedar_hedge_replacement = models.BooleanField(default=False, null=True, blank=True)
+    hedge = models.BooleanField(default=False, null=True, blank=True)
     transplantation_tolerant = models.BooleanField(default=False, null=True, blank=True)
 
     #

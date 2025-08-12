@@ -61,7 +61,7 @@ class Command(BaseCommand):
             "butterfly_host": "plant-butterfly-host - csv.csv",
             "bee_host": "plant-bee-host - csv.csv",
             "cause_dermatitis": "plant-cause-dermatitis - csv.csv",
-            "cedar-hedge-replacemenmt": "plant-cedar-hedge-replacement - csv.csv",
+            "hedge": "plant-hedge - csv.csv",
             "bloom_color": "plant-bloom-color - csv.csv",
             "conservation_status": "plant-conservation-status - csv.csv",
             "container_suitable": "plant-container-suitable - csv.csv",
@@ -196,7 +196,7 @@ class Command(BaseCommand):
             "germinate_easy": "germinate_easy",
             "boulevard_garden_tolerant": "boulevard_garden_tolerant",
             "bird_friendly": "bird_friendly",
-            "cedar_hedge_replacement": "cedar-hedge-replacemenmt",
+            "hedge": "cedar-hedge-replacemenmt",
             "juglone_tolerant": "juglone_tolerant",
             "cause_dermatitis": "cause_dermatitis",
             "produces_burs": "produces-burs",
@@ -857,7 +857,7 @@ class Command(BaseCommand):
             plant.germinate_easy = True
             plant.boulevard_garden_tolerant = True
             plant.bird_friendly = True
-            plant.cedar_hedge_replacement = True
+            plant.hedge = True
             plant.juglone_tolerant = True
             plant.cause_dermatitis = True  # This is false in the CSV file
             plant.produces_burs = True  # This is false in the CSV file

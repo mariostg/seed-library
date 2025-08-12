@@ -127,20 +127,20 @@
 
 <div class='filter__sub-header'>Functional Uses</div>
 
-<!--Input checkbox for cedar hedge replacement-->
+<!--Input checkbox for hedge-->
 <input
   type="checkbox"
-  id="cedar_hedge_replacement"
-  name="cedar_hedge_replacement"
-  value="Cedar Hedge Replacement"
+  id="hedge"
+  name="hedge"
+  value="Hedge"
   hx-get="/search-plant-name"
   hx-trigger="click"
   hx-target="#search-results"
   hx-push-url="true"
   hx-include="{{hx_include}}"
-  {% if cedar_hedge_replacement %} checked {% endif %}
+  {% if hedge %} checked {% endif %}
 />
-<label for="cedar_hedge_replacement">Cedar hedge replacement ✔</label
+<label for="hedge">hedge ✔</label
   ><br />
 
 <!--Input checkbox for ground cover-->
