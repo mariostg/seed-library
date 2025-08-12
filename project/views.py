@@ -210,7 +210,7 @@ def search_plant_name(request):
         "#hedge",
         "#windbreak_edge",
     ]
-    gardener_experience_filters = [
+    gardening_experience_filters = [
         "#beginner_friendly",
         "#does_not_spread",
         "#transplantation_tolerant",
@@ -274,7 +274,7 @@ def search_plant_name(request):
         + seed_sharing_filters
         + garden_suitability_filters
         + functional_use_filters
-        + gardener_experience_filters
+        + gardening_experience_filters
         + wildlife_interaction_filters
         + environmental_stress_tolerance_filters
         + ecosystem_services_filters
