@@ -219,7 +219,6 @@ def search_plant_name(request):
     wildlife_interaction_filters = [
         "#hummingbird_friendly",
         "#butterfly_friendly",
-        "#bee_friendly",
         "#bird_friendly",
         "#deer_tolerant",
         "#rabbit_tolerant",

@@ -33,9 +33,6 @@ class PlantProfileFilter(django_filters.FilterSet):
     butterfly_host = django_filters.CharFilter(
         method="filter_boolean",
     )
-    bee_friendly = django_filters.CharFilter(
-        method="filter_boolean",
-    )
     bee_host = django_filters.CharFilter(
         method="filter_boolean",
     )

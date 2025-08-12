@@ -30,22 +30,6 @@
 <label for="butterfly_friendly">Pollinator garden ✔</label
   ><br />
 
-
-<!--Input checkbox for bee friendly-->
-  <input
-    type="checkbox"
-    id="bee_friendly"
-    name="bee_friendly"
-    value="Bee Friendly"
-    hx-get="/search-plant-name"
-    hx-trigger="click"
-    hx-target="#search-results"
-    hx-push-url="true"
-    hx-include="{{hx_include}}"
-    {% if bee_friendly %} checked {% endif %}
-  />
-  <label for="bee_friendly">Bee friendly</label><br />
-
 <!--Input checkbox for bird friendly-->
   <input
     type="checkbox"
