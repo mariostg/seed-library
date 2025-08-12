@@ -170,21 +170,21 @@
   />
   <label for="butterfly_host">Butterfly host ✔</label><br />
 
-<!--Input checkbox for nitrogen_fixer-->
+<!--Input checkbox for host plant-->
   <input
     type="checkbox"
-    id="nitrogen_fixer"
-    name="nitrogen_fixer"
-    value="Nitrogen Fixer"
+    id="host_plant"
+    name="host_plant"
+    value="Host Plant"
     hx-get="/search-plant-name"
     hx-trigger="click"
     hx-target="#search-results"
     hx-push-url="true"
     hx-include="{{hx_include}}"
-    {% if nitrogen_fixer %} checked {% endif %}
+    {% if host_plant %} checked {% endif %}
   />
-  <label for="nitrogen_fixer">Nitrogen fixer✔</label><br />
 
+  <label for="host_plant">Host plant</label><br />
 <!--Input checkbox for keystones species-->
   <input
     type="checkbox"
@@ -200,17 +200,17 @@
   />
   <label for="keystones_species">Keystone species ✔</label><br />
 
-<!--Input checkbox for host plant-->
+<!--Input checkbox for nitrogen_fixer-->
   <input
     type="checkbox"
-    id="host_plant"
-    name="host_plant"
-    value="Host Plant"
+    id="nitrogen_fixer"
+    name="nitrogen_fixer"
+    value="Nitrogen Fixer"
     hx-get="/search-plant-name"
     hx-trigger="click"
     hx-target="#search-results"
     hx-push-url="true"
     hx-include="{{hx_include}}"
-    {% if host_plant %} checked {% endif %}
+    {% if nitrogen_fixer %} checked {% endif %}
   />
-  <label for="host_plant">Host plant</label><br />
+  <label for="nitrogen_fixer">Nitrogen fixer✔</label><br />
