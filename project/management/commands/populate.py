@@ -94,7 +94,7 @@ class Command(BaseCommand):
             "moisture-medium": "plant-moisture-medium - csv.csv",
             "moisture-wet": "plant-moisture-wet - csv.csv",
             "full-sun": "plant-full-sun - csv.csv",
-            "partial-sun": "plant-partial-sun - csv.csv",
+            "part-shade": "plant-part-shade - csv.csv",
             "full-shade": "plant-full-shade - csv.csv",
             "spread-by-rhizome": "plant-spread-by-rhizome - csv.csv",
             "dioecious": "plant-dioecious - csv.csv",
@@ -196,7 +196,7 @@ class Command(BaseCommand):
             "germinate_easy": "germinate_easy",
             "boulevard_garden_tolerant": "boulevard_garden_tolerant",
             "bird_friendly": "bird_friendly",
-            "hedge": "cedar-hedge-replacemenmt",
+            "hedge": "hedge",
             "juglone_tolerant": "juglone_tolerant",
             "cause_dermatitis": "cause_dermatitis",
             "produces_burs": "produces-burs",
@@ -208,7 +208,7 @@ class Command(BaseCommand):
             "moisture_medium": "moisture-medium",
             "moisture_wet": "moisture-wet",
             "full_sun": "full-sun",
-            "part_shade": "partial-shade",
+            "part_shade": "part-shade",
             "full_shade": "full-shade",
             "spread_by_rhizome": "spread-by-rhizome",
             "dioecious": "dioecious",
@@ -230,9 +230,17 @@ class Command(BaseCommand):
         # Update all boolean fields using a loop
         for field_name, csv_filename in boolean_fields.items():
             self.stdout.write(self.style.SUCCESS(f"\n>>>Processing {field_name}..."))
-            self.update_boolean_field(
-                models.PlantProfile, field_name, self.csv_files[csv_filename]
-            )
+            try:
+                self.update_boolean_field(
+                    models.PlantProfile, field_name, self.csv_files[csv_filename]
+                )
+            except KeyError:
+                self.stdout.write(
+                    self.style.ERROR(
+                        f"CSV file not found: {csv_filename} during processing {field_name}"
+                    )
+                )
+                exit(1)
 
         self.set_actaea_racemosa_boolean_fields()
 
