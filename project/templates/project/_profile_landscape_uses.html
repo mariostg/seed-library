@@ -94,6 +94,16 @@
         />
         <span class="tooltiptext">Suitable for woodland gardens</span>
       </div>
+    {% endif %} {% if plant.hedge %}
+      <div class="tooltip">
+        <img
+          title="hedge"
+          alt="hedge"
+          class="icon"
+          src="{% static 'images/plant-hedge.svg'  %}"
+        />
+        <span class="tooltiptext">Can be used as a hedge</span>
+      </div>
     {% endif %}
   {% endif %}
 </div>
