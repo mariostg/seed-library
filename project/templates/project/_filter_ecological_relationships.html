@@ -156,6 +156,21 @@
 
   <div class='filter__sub-header'>Ecosystem Services</div>
 
+<!--Input checkbox for Bee host-->
+  <input
+    type="checkbox"
+    id="bee_host"
+    name="bee_host"
+    value="Bee Host"
+    hx-get="/search-plant-name"
+    hx-trigger="click"
+    hx-target="#search-results"
+    hx-push-url="true"
+    hx-include="{{hx_include}}"
+    {% if bee_host %} checked {% endif %}
+  />
+  <label for="bee_host">Bee host ✔</label><br />
+
 <!--Input checkbox for nitrogen_fixer-->
   <input
     type="checkbox"
