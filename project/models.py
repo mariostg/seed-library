@@ -629,7 +629,7 @@ class PlantProfile(Base):
             rain_garden (BooleanField): Suitable for rain gardens
             shoreline_rehab (BooleanField): Suitable for shoreline rehabilitation
             container_suitable (BooleanField): Suitable for container gardening
-            school_garden_suitable (BooleanField): Suitable for school gardens
+            school_garden (BooleanField): Suitable for school gardens
             woodland_garden (BooleanField): Suitable for woodland gardens
             wetland_garden (BooleanField): Suitable for wetland gardens
             boulevard_garden_tolerant (BooleanField): Suitable for boulevard plantings
@@ -799,7 +799,7 @@ class PlantProfile(Base):
     rain_garden = models.BooleanField(default=False, null=True, blank=True)
     shoreline_rehab = models.BooleanField(default=False, null=True, blank=True)
     container_suitable = models.BooleanField(default=False, null=True, blank=True)
-    school_garden_suitable = models.BooleanField(default=False, null=True, blank=True)
+    school_garden = models.BooleanField(default=False, null=True, blank=True)
     ground_cover = models.BooleanField(default=False, null=True, blank=True)
     woodland_garden = models.BooleanField(default=False, null=True, blank=True)
     wind_break_hedge = models.BooleanField(default=False, null=True, blank=True)

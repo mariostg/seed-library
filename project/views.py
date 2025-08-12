@@ -39,7 +39,7 @@ def plant_profile_page(request, pk):
     landscape_use = (
         plant.rock_garden
         or plant.rain_garden
-        or plant.school_garden_suitable
+        or plant.school_garden
         or plant.woodland_garden
         or plant.shoreline_rehab
         or plant.wetland_garden
@@ -200,7 +200,7 @@ def search_plant_name(request):
         "#rain_garden",
         "#shoreline_rehab",
         "#container_suitable",
-        "#school_garden_suitable",
+        "#school_garden",
         "#woodland_garden",
         "#wetland_garden",
         "#boulevard_garden_tolerant",

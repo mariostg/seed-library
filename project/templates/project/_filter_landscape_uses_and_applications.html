@@ -61,21 +61,21 @@
 />
 <label for="rock_garden">Rock garden ✔</label><br />
 
-<!--Input checkbox for school garden suitable-->
+<!--Input checkbox for school garden-->
 <div class="form__field">
   <input
     type="checkbox"
-    id="school_garden_suitable"
-    name="school_garden_suitable"
-    value="School Garden Suitable"
+    id="school_garden"
+    name="school_garden"
+    value="School Garden"
     hx-get="/search-plant-name"
     hx-trigger="click"
     hx-target="#search-results"
     hx-push-url="true"
     hx-include="{{hx_include}}"
-    {% if school_garden_suitable %} checked {% endif %}
+    {% if school_garden %} checked {% endif %}
   />
-  <label for="school_garden_suitable">School garden suitable ✔</label>
+  <label for="school_garden">School garden ✔</label>
 </div>
 
 <!--Input checkbox for shoreline_rehab-->

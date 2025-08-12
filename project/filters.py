@@ -57,7 +57,7 @@ class PlantProfileFilter(django_filters.FilterSet):
     rain_garden = django_filters.CharFilter(
         method="filter_boolean",
     )
-    school_garden_suitable = django_filters.CharFilter(
+    school_garden = django_filters.CharFilter(
         method="filter_boolean",
     )
     woodland_garden = django_filters.CharFilter(

@@ -83,7 +83,7 @@ class Command(BaseCommand):
             "produces-burs": "plant-produces-burs - csv.csv",
             "salt_tolerant": "plant-salt-tolerant - csv.csv",
             "sand_tolerant": "plant-sand-tolerant - csv.csv",
-            "school_garden_suitable": "plant-school-garden-suitable - csv.csv",
+            "school_garden": "plant-school-garden - csv.csv",
             "seed_head": "plant-seed-head - csv.csv",
             "shoreline_rehab": "plant-shoreline-rehab - csv.csv",
             "sowing-depth": "plant-sowing-depth - csv.csv",
@@ -202,7 +202,7 @@ class Command(BaseCommand):
             "produces_burs": "produces-burs",
             "transplantation_tolerant": "transplantation_tolerant",
             "limestone_tolerant": "limestone_tolerant",
-            "school_garden_suitable": "school_garden_suitable",
+            "school_garden": "school_garden",
             "beginner_friendly": "beginner_friendly",
             "moisture_dry": "moisture-dry",
             "moisture_medium": "moisture-medium",
@@ -863,7 +863,7 @@ class Command(BaseCommand):
             plant.produces_burs = True  # This is false in the CSV file
             plant.transplantation_tolerant = True
             plant.limestone_tolerant = True
-            plant.school_garden_suitable = True
+            plant.school_garden = True
             plant.beginner_friendly = True  # This is false in the CSV file
             plant.moisture_dry = True  # This is false in the CSV file
             plant.moisture_medium = True  # This is false in the CSV file
