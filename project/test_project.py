@@ -45,7 +45,6 @@ class TestPostAddPlantProfile:
             "container_suitable": "",
             "ground_cover": "",
             "woodland_garden": "",
-            "wind_break_hedge": "",
             "erosion_control": "",
             "seed_availability": "",
             "keystones_species": "",

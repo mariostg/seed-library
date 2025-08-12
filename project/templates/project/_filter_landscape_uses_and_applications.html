@@ -172,20 +172,6 @@
     {% if ground_cover %} checked {% endif %}
   />
   <label for="ground_cover">Groundcover/lawn replacement ✔</label><br />
-<!--Input checkbox for Wind Break Hedge-->
-  <input
-    type="checkbox"
-    id="wind_break_hedge"
-    name="wind_break_hedge"
-    value="Wind Break Hedge"
-    hx-get="/search-plant-name"
-    hx-trigger="click"
-    hx-target="#search-results"
-    hx-push-url="true"
-    hx-include="{{hx_include}}"
-    {% if wind_break_hedge %} checked {% endif %}
-  />
-  <label for="wind_break_hedge">Wind break hedge</label><br />
 
 
   <div class='filter__sub-header'>Gardener Experience</div>
