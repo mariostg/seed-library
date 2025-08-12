@@ -44,7 +44,6 @@ class TestPostAddPlantProfile:
             "shoreline_rehab": "",
             "container_suitable": "",
             "ground_cover": "",
-            "garden_edge": "",
             "woodland_garden": "",
             "wind_break_hedge": "",
             "erosion_control": "",

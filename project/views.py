@@ -201,7 +201,6 @@ def search_plant_name(request):
         "#shoreline_rehab",
         "#container_suitable",
         "#school_garden_suitable",
-        "#garden_edge",
         "#woodland_garden",
         "#wetland_garden",
         "#boulevard_garden_tolerant",

@@ -72,7 +72,6 @@ class TestForms:
             "shoreline_rehab": True,
             "container_suitable": True,
             "ground_cover": True,
-            "garden_edge": True,
             "woodland_garden": True,
             "wind_break_hedge": True,
             "erosion_control": True,

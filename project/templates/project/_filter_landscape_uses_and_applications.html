@@ -31,23 +31,6 @@
   <label for="container_suitable">Container gardening ✔</label>
 </div>
 
-<!--Input checkbox for garden edge-->
-<div class="form__field">
-  <input
-    type="checkbox"
-    id="garden_edge"
-    name="garden_edge"
-    value="Garden Edge"
-    hx-get="/search-plant-name"
-    hx-trigger="click"
-    hx-target="#search-results"
-    hx-push-url="true"
-    hx-include="{{hx_include}}"
-    {% if garden_edge %} checked {% endif %}
-  />
-  <label for="garden_edge">Garden edge</label>
-</div>
-
 <!--Input checkbox for rain garden-->
 <input
   type="checkbox"
