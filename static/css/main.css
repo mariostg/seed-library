@@ -356,6 +356,7 @@ ul.nav-links {
   height: 36px;
 }
 
+#location-filter.collapsed,
 #filter-wrapper.collapsed,
 #environmental-requirements-filter.collapsed,
 #gardening-experience-filter.collapsed,
