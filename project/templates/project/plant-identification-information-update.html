@@ -54,6 +54,8 @@
       </div>
 
       <button type="submit" class="btn btn-primary">Update</button>
+      <!--Button to cancel-->
+      <a href="{% url 'plant-identification-information-update' plant.pk %}" class="btn btn-primary">Cancel</a>
     </form>
   </div>
 {% endblock content %}

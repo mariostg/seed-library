@@ -110,6 +110,7 @@ It allows users to update the plant growth characteristics, including:
         </div>
       </div>
       <button type="submit" class="btn btn-primary">Update</button>
+      <a href="{% url 'plant-growth-characteristics-update' plant.pk %}" class="btn btn-primary">Cancel</a>
     </form>
   </div>
 {% endblock content %}
