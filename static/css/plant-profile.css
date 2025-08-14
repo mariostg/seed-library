@@ -41,7 +41,6 @@
 .plant-profile-names {
   display: flex;
   flex-direction: column;
-  padding: 1rem;
 }
 .plant-profile-description {
   padding: 1rem;
