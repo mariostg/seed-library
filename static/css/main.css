@@ -275,6 +275,32 @@ form .input-text {
   flex-direction: column;
 }
 
+.alert {
+  display: flex;
+  padding: 0.5rem;
+  justify-content: space-around;
+}
+
+.alert--info {
+  background-color: #2196f3;
+  color: #f3f3f3;
+}
+
+.alert--success {
+  background-color: #359e64;
+  color: #f3f3f3;
+}
+
+.alert--warning {
+  background-color: #ff5722;
+  color: #f3f3f3;
+}
+
+.alert--error {
+  background-color: firebrick;
+  color: #f3f3f3;
+}
+
 body {
   display: flex;
   flex-direction: column;
@@ -332,6 +358,10 @@ ul.nav-links {
 .plant-card-caption {
   display: flex;
   gap: 10px;
+}
+.plant-card-not-active {
+  background-color: red;
+  color: white;
 }
 .plant-card-is-favourite, .plant-card-is-not-favourite {
   cursor: pointer;

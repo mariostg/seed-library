@@ -6,6 +6,12 @@
     <section class="main-content">
       <main>
         {% include "project/_profile_update_links.html" %}
+        <!--Display message if plant is not active-->
+        {% if not plant.is_active %}
+          <div class="alert alert--warning">
+            This plant profile is not active. Activate it through the Information Identification tab
+          </div>
+        {% endif %}
         <!-- Plant Profile Header -->
         <div class="plant-profile-header">
           <div class="plant-profile-image">

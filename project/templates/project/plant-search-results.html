@@ -8,7 +8,7 @@
   <div id='search-results' class="plant-cards">
 
     {% for item in object_list  %}
-      <div class="plant-card">
+      <div class="plant-card {% if not item.is_active %}plant-card-not-active{% endif %}">
 
         {% comment %} {% if item.is_favorite %}
           <span class="plant-card-is-favourite"></span>

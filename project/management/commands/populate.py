@@ -126,7 +126,7 @@ class Command(BaseCommand):
         }
 
         # Clear existing data in the database
-        models.PlantProfile.objects.all().delete()
+        models.PlantProfile.all_objects.all().delete()
         models.BloomColor.objects.all().delete()
         models.ConservationStatus.objects.all().delete()
         models.ConservationStatus.objects.all().delete()

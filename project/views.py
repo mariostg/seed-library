@@ -25,17 +25,19 @@ def index(request):
 
 @login_required
 def toggle_availability(request, pk):
-    plant = models.PlantProfile.objects.get(pk=pk)
+    plant = utils.single_plant(pk, request)
     plant.seed_availability = not plant.seed_availability
     plant.save()
-    plant = models.PlantProfile.objects.get(pk=pk)
+    plant = utils.single_plant(pk, request)
     context = {"pk": plant.pk, "availability": plant.seed_availability}
     return JsonResponse(context)
     # return render(request, "project/update-availability.html", context)
 
 
 def plant_profile_page(request, pk):
-    plant: models.PlantProfile = utils.single_plant(pk)
+    plant: models.PlantProfile = utils.single_plant(pk, request)
+    if not plant:
+        return render(request, "core/404.html", status=404)
     landscape_use = (
         # garden_suitability
         plant.container_suitable
@@ -106,7 +108,7 @@ def plant_profile_update(request, pk):
         "title": "Update Plant Profile",
         "url_name": "index",
     }
-    obj = models.PlantProfile.objects.get(pk=pk)
+    obj = utils.single_plant(pk, request)
     context["form"] = forms.PlantProfileForm(instance=obj)
     if request.method == "POST":
         form = forms.PlantProfileForm(request.POST, instance=obj)
@@ -119,7 +121,7 @@ def plant_profile_update(request, pk):
 
 # @login_required
 def plant_profile_delete(request, pk):
-    data = models.PlantProfile.objects.get(id=pk)
+    data = utils.single_plant(pk, request)
     if request.method == "POST":
         try:
             data.delete()
@@ -817,7 +819,7 @@ def user_plant_update(request, pk):
 
 @login_required
 def user_plant_toggle(request, pk):
-    plant = models.PlantProfile.objects.get(pk=pk)
+    plant = utils.single_plant(pk, request)
     user = None
     if request.user.is_authenticated:
         user = request.user
@@ -882,7 +884,7 @@ def siteadmin(request):
 
 
 def plant_label_pdf(request, pk):
-    plant_info = utils.plant_label_info(pk)
+    plant_info = utils.plant_label_info(pk, request)
     buffer = io.BytesIO()
 
     c = canvas.Canvas(buffer, pagesize=landscape(letter))
@@ -938,7 +940,7 @@ def plant_catalog(request):
 @login_required
 # update the environmental requirements of a plant profile if there is a post request
 def plant_environmental_requirement_update(request, pk):
-    plant = models.PlantProfile.objects.get(pk=pk)
+    plant = utils.single_plant(pk, request)
     if request.method == "POST":
         plant.full_sun = request.POST.get("full_sun") == "on"
         plant.part_shade = request.POST.get("part_shade") == "on"
@@ -962,8 +964,9 @@ def plant_environmental_requirement_update(request, pk):
 
 
 def plant_identification_information_update(request, pk):
-    plant = models.PlantProfile.objects.get(pk=pk)
+    plant = utils.single_plant(pk, request)
     if request.method == "POST":
+        plant.is_active = request.POST.get("is_active") == "on"
         plant.latin_name = request.POST.get("latin_name")
         plant.english_name = request.POST.get("english_name")
         plant.french_name = request.POST.get("french_name")
@@ -983,7 +986,7 @@ def plant_identification_information_update(request, pk):
 
 
 def plant_growth_characteristics_update(request, pk):
-    plant = models.PlantProfile.objects.get(pk=pk)
+    plant = utils.single_plant(pk, request)
     growth_habits = models.GrowthHabit.objects.all().order_by("growth_habit")
     lifespan_choices = models.PlantLifespan.objects.all().order_by("lifespan")
     bloom_colors = models.BloomColor.objects.all().order_by("bloom_color")
@@ -1021,7 +1024,7 @@ def plant_growth_characteristics_update(request, pk):
 
 
 def plant_propagation_and_seed_sharing_update(request, pk):
-    plant = models.PlantProfile.objects.get(pk=pk)
+    plant = utils.single_plant(pk, request)
     harvesting_months = utils.MONTHS
     # packaging measures
     packaging_measures = models.PackagingMeasure.objects.all().order_by(

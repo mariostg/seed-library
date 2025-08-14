@@ -3,6 +3,7 @@
 @import "_slider";
 @import "_layout";
 @import "_form";
+@import "_alerts";
 body {
   display: flex;
   flex-direction: column;
@@ -55,6 +56,10 @@ ul.nav-links {
     &-caption {
       display: flex;
       gap: 10px;
+    }
+    &-not-active {
+      background-color: red;
+      color: white;
     }
     &-is-favourite,
     &-is-not-favourite {

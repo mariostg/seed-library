@@ -21,6 +21,11 @@
     <form method="post" action="{% url 'plant-identification-information-update' plant.pk %}">
       {% csrf_token %}
       <div class="inputs">
+          <!--is active-->
+        <div class="input-checkbox">
+          <label for="id_is_active">Is Active</label>
+          <input type="checkbox" id="id_is_active" name="is_active" {% if plant.is_active %}checked{% endif %}>
+        </div>
             <!--latin_name-->
         <div class="input-text">
           <label for="id_latin_name">Latin Name</label>

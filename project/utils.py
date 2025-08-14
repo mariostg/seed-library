@@ -1,3 +1,5 @@
+from django.http import HttpRequest
+
 from project.models import PlantProfile
 
 MONTHS = {
@@ -21,8 +23,14 @@ def all_plants(request):
     return PlantProfile.objects.all()
 
 
-def single_plant(pk):
-    plant = PlantProfile.objects.get(pk=pk)
+def single_plant(pk, request: HttpRequest):
+    if request.user.is_authenticated:
+        plant = PlantProfile.all_objects.get(pk=pk)
+    else:
+        try:
+            plant = PlantProfile.objects.get(pk=pk)
+        except PlantProfile.DoesNotExist:
+            plant = None
 
     # plant.bloom_start = MONTHS.get(plant.bloom_start, "")
     # plant.bloom_end = MONTHS.get(plant.bloom_end, "")
@@ -31,9 +39,9 @@ def single_plant(pk):
     return plant
 
 
-def plant_label_info(pk):
+def plant_label_info(pk, request: HttpRequest):
     detail = None
-    plant = single_plant(pk)
+    plant = single_plant(pk, request)
     if not plant.stratification_detail:
         plant.stratification_detail = "No Stratification"
     if plant.dormancy:
