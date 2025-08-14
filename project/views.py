@@ -155,8 +155,11 @@ def butterfly_supporting_plants(request):
 def search_plant_name(request):
     if not request.GET:
         data = models.PlantProfile.objects.none()
+    elif request.user.is_authenticated:
+        data = models.PlantProfile.all_objects.all().order_by("latin_name")
     else:
         data = models.PlantProfile.objects.all().order_by("latin_name")
+
     object_list = filters.PlantProfileFilter(request.GET, queryset=data)
     # Create lists of different filter categories
     sun_filters = [

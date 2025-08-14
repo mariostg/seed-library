@@ -529,6 +529,16 @@ class Ecozone(Base):
         return self.ecozone
 
 
+class PlantProfileManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(is_active=True)
+
+
+class PlantProfileAllManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset()
+
+
 class PlantProfile(Base):
     """
     A Django model representing a comprehensive plant profile with botanical, horticultural and ecological attributes.
@@ -544,6 +554,9 @@ class PlantProfile(Base):
 
     The model implements custom validation for height comparisons and blooming periods,
     and includes specialized query capabilities through a custom manager.
+
+    # Profile status
+    is_active (BooleanField): Whether the profile is active.  For convenience, for admin users, the profile is always considered active and it will be visible even if it is inactive.  A custom manager can be used to filter profiles based on their active status.
 
     # Identification Information
         latin_name (CharField): Botanical name of the plant (required, unique)
@@ -681,6 +694,9 @@ class PlantProfile(Base):
             notes (CharField): General notes about the plant
             alternative_to_notes (CharField): Notes on plants this can replace
     """
+
+    # Profile status
+    is_active = models.BooleanField(default=True)
 
     # Identification information
     latin_name = models.CharField(max_length=75, unique=True)
@@ -863,7 +879,9 @@ class PlantProfile(Base):
     has_image_profile = models.BooleanField(default=False, null=True, blank=True)
 
     search_plant = PlantProfileQuerySet.as_manager()
-    objects = models.Manager()
+
+    objects = PlantProfileManager()
+    all_objects = PlantProfileAllManager()
 
     def __str__(self) -> str:
         return (
