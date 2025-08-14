@@ -9,11 +9,13 @@
 
     {% for item in object_list  %}
       <div class="plant-card">
-        {% if item.is_favorite %}
+
+        {% comment %} {% if item.is_favorite %}
           <span class="plant-card-is-favourite"></span>
         {% else %}
           <span class="plant-card-is-not-favourite"></span>
-        {% endif %}
+        {% endif %} {% endcomment %}
+
         <a href="{% url 'plant-profile-page' item.id %}" class="plant-card-link">
           {% if item.images.first %}
             <img src="{{item.images.first.image.url}}" alt="image for {{item.latin_name}}">
@@ -31,10 +33,12 @@
             <span>{{item.french_name}}</span>
           </div>
         </div>
-        <div class="flex-row wide">
-          <a class='btn' target="#">Add to cart</a>
-          <a class='btn' target="blank" href="{% url 'plant-label-pdf' item.pk%}">Labels</a>
-        </div>
+        {% if user.is_authenticated %}
+          <div class="flex-row wide">
+            <a class='btn' target="#">Add to cart</a>
+            <a class='btn' target="blank" href="{% url 'plant-label-pdf' item.pk%}">Labels</a>
+          </div>
+        {% endif %}
       </div>
       {% if object_list.has_next and forloop.last %}
         <span
