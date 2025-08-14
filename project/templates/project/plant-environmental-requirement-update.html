@@ -9,7 +9,7 @@
   <div class="flex-col-center">
 
     <h1>Update Plant Environmental Requirements</h1>
-    <h2>{{ plant.latin_name }}</h2>
+    <h2><a href="{% url 'plant-profile-page' plant.pk %}">{{ plant.latin_name }}</a></h2>
     <form method="post" action="{% url 'plant-environmental-requirement-update' plant.pk %}">
       {% csrf_token %}
       <div>

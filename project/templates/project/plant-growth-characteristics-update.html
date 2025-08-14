@@ -29,7 +29,7 @@ It allows users to update the plant growth characteristics, including:
   <div class="flex-col-center">
 
     <h1>Update Plant Growth Characteristics</h1>
-    <h2>{{ plant.latin_name }}</h2>
+    <h2><a href="{% url 'plant-profile-page' plant.pk %}">{{ plant.latin_name }}</a></h2>
     <form method="post" action="{% url 'plant-growth-characteristics-update' plant.pk %}">
       {% csrf_token %}
       <div class="inputs">
