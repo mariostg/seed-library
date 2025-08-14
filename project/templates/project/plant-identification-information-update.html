@@ -14,6 +14,7 @@
 {% block title %}{{ plant.english_name }} - Plant Profile{% endblock title %}
 {{ title }}
 {% block content %}
+  {% include "project/_profile_update_links.html" %}
   <div class="flex-col-center">
 
     <h1>Update Plant Identification Information</h1>
