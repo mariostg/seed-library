@@ -965,6 +965,10 @@ def plant_environmental_requirement_update(request, pk):
 
 def plant_identification_information_update(request, pk):
     plant = utils.single_plant(pk, request)
+    context = {
+        "title": f"{plant.latin_name} - Identification Information",
+        "plant": plant,
+    }
     if request.method == "POST":
         plant.is_active = request.POST.get("is_active") == "on"
         plant.latin_name = request.POST.get("latin_name")
@@ -972,14 +976,14 @@ def plant_identification_information_update(request, pk):
         plant.french_name = request.POST.get("french_name")
         plant.taxon = request.POST.get("taxon")
         plant.inaturalist_taxon = request.POST.get("inaturalist_taxon")
-        plant.save()
+        try:
+            plant.save()
+        except IntegrityError as e:
+            messages.error(request, f"Error updating identification information: {e}")
+            return redirect("plant-identification-information-update", pk=plant.pk)
         messages.success(request, "Identification information updated successfully.")
         return redirect("plant-profile-page", pk=plant.pk)
 
-    context = {
-        "title": f"{plant.latin_name} - Identification Information",
-        "plant": plant,
-    }
     return render(
         request, "project/plant-identification-information-update.html", context
     )
