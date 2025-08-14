@@ -934,6 +934,7 @@ class PlantProfile(Base):
             self.harvesting_start = 0
         if not self.latin_name:
             raise ValueError("Missing Latin Name")
+        self.latin_name = self.latin_name.strip().capitalize()
         self.compare_blooming()
         super().save(*args, **kwargs)
 
