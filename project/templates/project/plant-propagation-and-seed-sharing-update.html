@@ -46,233 +46,234 @@
 {% block title %}{{ plant.latin_name }} - Plant Profile{% endblock title %}
 {{ title }}
 {% block content %}
-  {% include "project/_profile_update_links.html" %}
-  <div class="flex-col-center">
-
-    <h1>Update Plant Propagation and seed sharing</h1>
-    <h2><a href="{% url 'plant-profile-page' plant.pk %}">{{ plant.latin_name }}</a></h2>
-    <form method="post" action="{% url 'plant-propagation-and-seed-sharing-update' plant.pk %}">
-      {% csrf_token %}
-      <!-- Add form fields for propagation and seed sharing details here -->
-      <!-- Example: -->
-      <div class="inputs">
-        <!-- Seed Handling Section -->
-        <section><!-- Seed Handling-->
-          <h3>Seed Handling</h3>
-          <div class="input-checkbox">
-            <label for="id_seed_availability">Seeds Available</label>
-            <input type="checkbox" id="id_seed_availability" name="seed_availability" {% if plant.seed_availability %}checked{% endif %}>
-          </div>
-          <div class="input-checkbox">
-            <label for="id_accepting_seed">Accepting Seeds</label>
-            <input type="checkbox" id="id_accepting_seed" name="accepting_seed" {% if plant.accepting_seed %}checked{% endif %}>
-          </div>
-          <div class="input-select">
-            <label for="id_seed_viability_test">Seed Viability Test</label>
-            <select id="id_seed_viability_test" name="seed_viability_test">
-              {% for test in seed_viability_tests %}
-                <option value="{{ test.pk }}" {% if plant.seed_viability_test.pk == test.pk %}selected{% endif %}>
-                  {{ test }}
-                </option>
-              {% endfor %}
-            </select>
-          </div>
-          <div class="input-select">
-            <label for="id_seed_storage">Seed Storage</label>
-            <select id="id_seed_storage" name="seed_storage">
-              {% for storage in seed_storage %}
-                <option value="{{ storage.pk }}" {% if plant.seed_storage.pk == storage.pk %}selected{% endif %}>
-                  {{ storage }}
-                </option>
-              {% endfor %}
-            </select>
-          </div>
-          <div class="input-select">
-            <label for="id_one_cultivar">One Cultivar</label>
-            <select id="id_one_cultivar" name="one_cultivar">
-              {% for cultivar in one_cultivars %}
-                <option value="{{ cultivar.pk }}" {% if plant.one_cultivar.pk == cultivar.pk %}selected{% endif %}>
-                  {{ cultivar }}
-                </option>
-              {% endfor %}
-            </select>
-          </div>
-          <div class="input-select">
-            <label for="id_packaging_measure">Packaging Measure</label>
-            <select id="id_packaging_measure" name="packaging_measure">
-              {% for measure in packaging_measures %}
-                <option value="{{ measure.pk }}" {% if plant.packaging_measure.pk == measure.pk %}selected{% endif %}>
-                  {{ measure }}
-                </option>
-              {% endfor %}
-            </select>
-          </div>
-          <div class="input-select">
-            <label for="id_dormancy">Dormancy</label>
-            <select id="id_dormancy" name="dormancy">
-              {% for dormancy in dormancies %}
-                <option value="{{ dormancy.pk }}" {% if plant.dormancy.pk == dormancy.pk %}selected{% endif %}>
-                  {{ dormancy }}
-                </option>
-              {% endfor %}
-            </select>
-          </div>
-          <div class="input-select">
-            <label for="id_seed_preparation">Seed Preparation</label>
-            <select id="id_seed_preparation" name="seed_preparation">
-              {% for preparation in seed_preparation %}
-                <option value="{{ preparation.pk }}" {% if plant.seed_preparation.pk == preparation.pk %}selected{% endif %}>
-                  {{ preparation }}
-                </option>
-              {% endfor %}
-            </select>
-          </div>
-          <div class="input-textarea">
-            <label for="id_seed_cleaning_notes">Seed Cleaning Notes</label>
-            <textarea id="id_seed_cleaning_notes" name="seed_cleaning_notes">{{ plant.seed_cleaning_notes }}</textarea>
-          </div>
-          <div class="input-select">
-            <label for="id_seed_storage_label_info">Seed Storage Label Info</label>
-            <select id="id_seed_storage_label_info" name="seed_storage_label_info">
-              {% for label_info in seed_storage_label_infos %}
-                <option value="{{ label_info.pk }}" {% if plant.seed_storage_label_info.pk == label_info.pk %}selected{% endif %}>
-                  {{ label_info }}
-                </option>
-              {% endfor %}
-            </select>
-          </div>
-        </section><!-- End of Seed Handling Section -->
-                <!-- Add more fields as needed -->
-        <section><!-- Sowing and Planting Section -->
-          <h3>Sowing and Planting</h3>
-          <div class="input-textarea">
-            <label for="id_stratification_detail">Stratification Detail</label>
-            <textarea id="id_stratification_detail" name="stratification_detail">{{ plant.stratification_detail }}</textarea>
-          </div>
-          <div class="input-number">
-            <label for="id_stratification_duration">Stratification Duration (days)</label>
-            <input type="number" id="id_stratification_duration" name="stratification_duration" value="{{ plant.stratification_duration }}">
-          </div>
-          <div class="input-select">
-            <label for="id_sowing_depth">Sowing Depth</label>
-            <select id="id_sowing_depth" name="sowing_depth">
-              {% for depth in sowing_depth %}
-                <option value="{{ depth.pk }}" {% if plant.sowing_depth.pk == depth.pk %}selected{% endif %}>
-                  {{ depth }}
-                </option>
-              {% endfor %}
-            </select>
-          </div>
-          <div class="input-textarea">
-            <label for="id_sowing_period">Sowing Period</label>
-            <textarea id="id_sowing_period" name="sowing_period">{{ plant.sowing_period }}</textarea>
-          </div>
-          <div class="input-textarea">
-            <label for="id_sowing_label_instructions">Sowing Label Instructions</label>
-            <textarea id="id_sowing_label_instructions" name="sowing_label_instructions">{{ plant.sowing_label_instructions }}</textarea>
-          </div>
-          <div class="input-textarea">
-            <label for="id_sowing_notes">Sowing Notes</label>
-            <textarea id="id_sowing_notes" name="sowing_notes">{{ plant.sowing_notes }}</textarea>
-          </div>
-          <div class="input-checkbox">
-            <label for="id_germinate_easy">Germinate Easily</label>
-            <input type="checkbox" id="id_germinate_easy" name="germinate_easy" {% if plant.germinate_easy %}checked{% endif %}>
-          </div>
-          <div class="input-checkbox">
-            <label for="id_spread_by_rhizome">Spread by Rhizome</label>
-            <input type="checkbox" id="id_spread_by_rhizome" name="spread_by_rhizome" {% if plant.spread_by_rhizome %}checked{% endif %}>
-          </div>
-          <div class="input-checkbox">
-            <label for="id_self_seeding">Self Seeding</label>
-            <input type="checkbox" id="id_self_seeding" name="self_seeding" {% if plant.self_seeding %}checked{% endif %}>
-          </div>
-        </section><!-- End of Sowing and Planting Section -->
-        <section><!-- Harvesting Section -->
-          <h3>Harvesting</h3>
-          <div class="input-select">
-            <label for="id_harvesting_start">Harvesting Start Month</label>
-            <select id="id_harvesting_start" name="harvesting_start">
-              {% for month in harvesting_months %}
-                <option value="{{ month }}" {% if plant.harvesting_start == month %}selected{% endif %}>
-                  {{ month }}
-                </option>
-              {% endfor %}
-            </select>
-          </div>
-          <div class="input-select">
-            <label for="id_harvesting_indicator">Harvesting Indicator</label>
-            <select id="id_harvesting_indicator" name="harvesting_indicator">
-              {% for indicator in harvesting_indicators %}
-                <option value="{{ indicator.pk }}" {% if plant.harvesting_indicator.pk == indicator.pk %}selected{% endif %}>
-                  {{ indicator }}
-                </option>
-              {% endfor %}
-            </select>
-          </div>
-          <div class="input-select">
-            <label for="id_harvesting_mean">Harvesting Mean</label>
-            <select id="id_harvesting_mean" name="harvesting_mean">
-              {% for mean in harvesting_means %}
-                <option value="{{ mean.pk }}" {% if plant.harvesting_mean.pk == mean.pk %}selected{% endif %}>
-                  {{ mean }}
-                </option>
-              {% endfor %}
-            </select>
-          </div>
-          <div class="input-select">
-            <label for="id_seed_head">Seed Head</label>
-            <select id="id_seed_head" name="seed_head">
-              {% for seed_head in seed_heads %}
-                <option value="{{ seed_head.pk }}" {% if plant.seed_head.pk == seed_head.pk %}selected{% endif %}>
-                  {{ seed_head }}
-                </option>
-              {% endfor %}
-            </select>
-          </div>
-          <div class="input-checkbox">
-            <label for="id_remove_non_seed_material">Remove Non-Seed Material</label>
-            <input type="checkbox" id="id_remove_non_seed_material" name="remove_non_seed_material" {% if plant.remove_non_seed_material %}checked{% endif %}>
-          </div>
-          <div class="input-textarea">
-            <label for="id_harvesting_notes">Harvesting Notes</label>
-            <textarea id="id_harvesting_notes" name="harvesting_notes">{{ plant.harvesting_notes }}</textarea>
-          </div>
-          <div class="input-textarea">
-            <label for="id_harvesting_video_link">Harvesting Video Link</label>
-            <textarea id="id_harvesting_video_link" name="harvesting_video_link">{{ plant.harvesting_video_link }}</textarea>
-          </div>
-        </section><!-- End of Harvesting Section -->
-        <section><!--Distribution Section -->
-          <h3>Distribution</h3>
-          <div class="input-select">
-            <label for="id_sharing_priority">Sharing Priority</label>
-            <select id="id_sharing_priority" name="sharing_priority">
-              {% for priority in sharing_priority %}
-                <option value="{{ priority.pk }}" {% if plant.sharing_priority.pk == priority.pk %}selected{% endif %}>
-                  {{ priority }}
-                </option>
-              {% endfor %}
-            </select>
-          </div>
-          <div class="input-select">
-            <label for="id_seed_event_table">Seed Event Table</label>
-            <select id="id_seed_event_table" name="seed_event_table">
-              {% for event in seed_event_table %}
-                <option value="{{ event.pk }}" {% if plant.seed_event_table.pk == event.pk %}selected{% endif %}>
-                  {{ event }}
-                </option>
-              {% endfor %}
-            </select>
-          </div>
-          <div class="input-textarea">
-            <label for="id_envelope_label_link">Envelope Label Link</label>
-            <textarea id="id_envelope_label_link" name="envelope_label_link">{{ plant.envelope_label_link }}</textarea>
-          </div>
-        </section><!-- End of Distribution Section -->
-      </div>
-      <button class="btn" type="submit">Update Propagation and Seed Sharing</button>
-      <a href="{% url 'plant-propagation-and-seed-sharing-update' plant.pk %}" class="btn btn-primary">Cancel</a>
-    </form>
-  </div>
+  <main class="main-content">
+    {% include "project/_profile_update_links.html" %}
+    <div class="flex-col-center">
+      <h1>Update Plant Propagation and seed sharing</h1>
+      <h2><a href="{% url 'plant-profile-page' plant.pk %}">{{ plant.latin_name }}</a></h2>
+      <form method="post" action="{% url 'plant-propagation-and-seed-sharing-update' plant.pk %}">
+        {% csrf_token %}
+        <!-- Add form fields for propagation and seed sharing details here -->
+        <!-- Example: -->
+        <div class="inputs">
+          <!-- Seed Handling Section -->
+          <section><!-- Seed Handling-->
+            <h3>Seed Handling</h3>
+            <div class="input-checkbox">
+              <label for="id_seed_availability">Seeds Available</label>
+              <input type="checkbox" id="id_seed_availability" name="seed_availability" {% if plant.seed_availability %}checked{% endif %}>
+            </div>
+            <div class="input-checkbox">
+              <label for="id_accepting_seed">Accepting Seeds</label>
+              <input type="checkbox" id="id_accepting_seed" name="accepting_seed" {% if plant.accepting_seed %}checked{% endif %}>
+            </div>
+            <div class="input-select">
+              <label for="id_seed_viability_test">Seed Viability Test</label>
+              <select id="id_seed_viability_test" name="seed_viability_test">
+                {% for test in seed_viability_tests %}
+                  <option value="{{ test.pk }}" {% if plant.seed_viability_test.pk == test.pk %}selected{% endif %}>
+                    {{ test }}
+                  </option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="input-select">
+              <label for="id_seed_storage">Seed Storage</label>
+              <select id="id_seed_storage" name="seed_storage">
+                {% for storage in seed_storage %}
+                  <option value="{{ storage.pk }}" {% if plant.seed_storage.pk == storage.pk %}selected{% endif %}>
+                    {{ storage }}
+                  </option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="input-select">
+              <label for="id_one_cultivar">One Cultivar</label>
+              <select id="id_one_cultivar" name="one_cultivar">
+                {% for cultivar in one_cultivars %}
+                  <option value="{{ cultivar.pk }}" {% if plant.one_cultivar.pk == cultivar.pk %}selected{% endif %}>
+                    {{ cultivar }}
+                  </option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="input-select">
+              <label for="id_packaging_measure">Packaging Measure</label>
+              <select id="id_packaging_measure" name="packaging_measure">
+                {% for measure in packaging_measures %}
+                  <option value="{{ measure.pk }}" {% if plant.packaging_measure.pk == measure.pk %}selected{% endif %}>
+                    {{ measure }}
+                  </option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="input-select">
+              <label for="id_dormancy">Dormancy</label>
+              <select id="id_dormancy" name="dormancy">
+                {% for dormancy in dormancies %}
+                  <option value="{{ dormancy.pk }}" {% if plant.dormancy.pk == dormancy.pk %}selected{% endif %}>
+                    {{ dormancy }}
+                  </option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="input-select">
+              <label for="id_seed_preparation">Seed Preparation</label>
+              <select id="id_seed_preparation" name="seed_preparation">
+                {% for preparation in seed_preparation %}
+                  <option value="{{ preparation.pk }}" {% if plant.seed_preparation.pk == preparation.pk %}selected{% endif %}>
+                    {{ preparation }}
+                  </option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="input-textarea">
+              <label for="id_seed_cleaning_notes">Seed Cleaning Notes</label>
+              <textarea id="id_seed_cleaning_notes" name="seed_cleaning_notes">{{ plant.seed_cleaning_notes }}</textarea>
+            </div>
+            <div class="input-select">
+              <label for="id_seed_storage_label_info">Seed Storage Label Info</label>
+              <select id="id_seed_storage_label_info" name="seed_storage_label_info">
+                {% for label_info in seed_storage_label_infos %}
+                  <option value="{{ label_info.pk }}" {% if plant.seed_storage_label_info.pk == label_info.pk %}selected{% endif %}>
+                    {{ label_info }}
+                  </option>
+                {% endfor %}
+              </select>
+            </div>
+          </section><!-- End of Seed Handling Section -->
+                  <!-- Add more fields as needed -->
+          <section><!-- Sowing and Planting Section -->
+            <h3>Sowing and Planting</h3>
+            <div class="input-textarea">
+              <label for="id_stratification_detail">Stratification Detail</label>
+              <textarea id="id_stratification_detail" name="stratification_detail">{{ plant.stratification_detail }}</textarea>
+            </div>
+            <div class="input-number">
+              <label for="id_stratification_duration">Stratification Duration (days)</label>
+              <input type="number" id="id_stratification_duration" name="stratification_duration" value="{{ plant.stratification_duration }}">
+            </div>
+            <div class="input-select">
+              <label for="id_sowing_depth">Sowing Depth</label>
+              <select id="id_sowing_depth" name="sowing_depth">
+                {% for depth in sowing_depth %}
+                  <option value="{{ depth.pk }}" {% if plant.sowing_depth.pk == depth.pk %}selected{% endif %}>
+                    {{ depth }}
+                  </option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="input-textarea">
+              <label for="id_sowing_period">Sowing Period</label>
+              <textarea id="id_sowing_period" name="sowing_period">{{ plant.sowing_period }}</textarea>
+            </div>
+            <div class="input-textarea">
+              <label for="id_sowing_label_instructions">Sowing Label Instructions</label>
+              <textarea id="id_sowing_label_instructions" name="sowing_label_instructions">{{ plant.sowing_label_instructions }}</textarea>
+            </div>
+            <div class="input-textarea">
+              <label for="id_sowing_notes">Sowing Notes</label>
+              <textarea id="id_sowing_notes" name="sowing_notes">{{ plant.sowing_notes }}</textarea>
+            </div>
+            <div class="input-checkbox">
+              <label for="id_germinate_easy">Germinate Easily</label>
+              <input type="checkbox" id="id_germinate_easy" name="germinate_easy" {% if plant.germinate_easy %}checked{% endif %}>
+            </div>
+            <div class="input-checkbox">
+              <label for="id_spread_by_rhizome">Spread by Rhizome</label>
+              <input type="checkbox" id="id_spread_by_rhizome" name="spread_by_rhizome" {% if plant.spread_by_rhizome %}checked{% endif %}>
+            </div>
+            <div class="input-checkbox">
+              <label for="id_self_seeding">Self Seeding</label>
+              <input type="checkbox" id="id_self_seeding" name="self_seeding" {% if plant.self_seeding %}checked{% endif %}>
+            </div>
+          </section><!-- End of Sowing and Planting Section -->
+          <section><!-- Harvesting Section -->
+            <h3>Harvesting</h3>
+            <div class="input-select">
+              <label for="id_harvesting_start">Harvesting Start Month</label>
+              <select id="id_harvesting_start" name="harvesting_start">
+                {% for month in harvesting_months %}
+                  <option value="{{ month }}" {% if plant.harvesting_start == month %}selected{% endif %}>
+                    {{ month }}
+                  </option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="input-select">
+              <label for="id_harvesting_indicator">Harvesting Indicator</label>
+              <select id="id_harvesting_indicator" name="harvesting_indicator">
+                {% for indicator in harvesting_indicators %}
+                  <option value="{{ indicator.pk }}" {% if plant.harvesting_indicator.pk == indicator.pk %}selected{% endif %}>
+                    {{ indicator }}
+                  </option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="input-select">
+              <label for="id_harvesting_mean">Harvesting Mean</label>
+              <select id="id_harvesting_mean" name="harvesting_mean">
+                {% for mean in harvesting_means %}
+                  <option value="{{ mean.pk }}" {% if plant.harvesting_mean.pk == mean.pk %}selected{% endif %}>
+                    {{ mean }}
+                  </option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="input-select">
+              <label for="id_seed_head">Seed Head</label>
+              <select id="id_seed_head" name="seed_head">
+                {% for seed_head in seed_heads %}
+                  <option value="{{ seed_head.pk }}" {% if plant.seed_head.pk == seed_head.pk %}selected{% endif %}>
+                    {{ seed_head }}
+                  </option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="input-checkbox">
+              <label for="id_remove_non_seed_material">Remove Non-Seed Material</label>
+              <input type="checkbox" id="id_remove_non_seed_material" name="remove_non_seed_material" {% if plant.remove_non_seed_material %}checked{% endif %}>
+            </div>
+            <div class="input-textarea">
+              <label for="id_harvesting_notes">Harvesting Notes</label>
+              <textarea id="id_harvesting_notes" name="harvesting_notes">{{ plant.harvesting_notes }}</textarea>
+            </div>
+            <div class="input-textarea">
+              <label for="id_harvesting_video_link">Harvesting Video Link</label>
+              <textarea id="id_harvesting_video_link" name="harvesting_video_link">{{ plant.harvesting_video_link }}</textarea>
+            </div>
+          </section><!-- End of Harvesting Section -->
+          <section><!--Distribution Section -->
+            <h3>Distribution</h3>
+            <div class="input-select">
+              <label for="id_sharing_priority">Sharing Priority</label>
+              <select id="id_sharing_priority" name="sharing_priority">
+                {% for priority in sharing_priority %}
+                  <option value="{{ priority.pk }}" {% if plant.sharing_priority.pk == priority.pk %}selected{% endif %}>
+                    {{ priority }}
+                  </option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="input-select">
+              <label for="id_seed_event_table">Seed Event Table</label>
+              <select id="id_seed_event_table" name="seed_event_table">
+                {% for event in seed_event_table %}
+                  <option value="{{ event.pk }}" {% if plant.seed_event_table.pk == event.pk %}selected{% endif %}>
+                    {{ event }}
+                  </option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="input-textarea">
+              <label for="id_envelope_label_link">Envelope Label Link</label>
+              <textarea id="id_envelope_label_link" name="envelope_label_link">{{ plant.envelope_label_link }}</textarea>
+            </div>
+          </section><!-- End of Distribution Section -->
+        </div>
+        <button class="btn" type="submit">Update Propagation and Seed Sharing</button>
+        <a href="{% url 'plant-propagation-and-seed-sharing-update' plant.pk %}" class="btn btn-primary">Cancel</a>
+      </form>
+    </div>
+  </main>
 {% endblock content %}
