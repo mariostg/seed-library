@@ -23,7 +23,7 @@
       <div class="inputs">
           <!--is active-->
         <div class="input-checkbox">
-          <label for="id_is_active">Is Active</label>
+          <label class="tooltip" for="id_is_active">Is Active <span class="tooltiptext">When Active is selected, the plant is available for public viewing.</span></label>
           <input type="checkbox" id="id_is_active" name="is_active" {% if plant.is_active %}checked{% endif %}>
         </div>
             <!--latin_name-->
