@@ -310,6 +310,115 @@ def search_plant_name(request):
     return render(request, template, context)
 
 
+def export_plant_search_results(request):
+    """
+    Exports plant search results to a CSV file based on the provided request parameters.
+    This view function handles the export of filtered plant profiles to a CSV format.
+    It uses the request's GET parameters to filter the plant profiles and returns
+    a HttpResponse with the CSV content.
+    If no GET parameters are provided, an empty queryset is used.
+    If the user is authenticated, all plant profiles (including inactive ones) are included.
+    Otherwise, only active plant profiles are included.
+    Parameters:
+        request (HttpRequest): The HTTP request object containing GET parameters for filtering.
+    Returns:
+        HttpResponse: A response object with CSV content and appropriate headers
+                      for the client to download as 'plant_search_results.csv'.
+    CSV Fields Include:
+        - Latin Name
+        - English Name
+        - French Name
+        - Is Active (if user is authenticated)
+        - Max Height(feet)
+        - Max Width(feet)
+        - Bloom Start
+        - Bloom End
+        - Bloom Color
+        - Full Sun
+        - Part Shade
+        - Full Shade
+        - Moisture Dry
+        - Moisture Medium
+        - Moisture Wet
+        - Lifespan
+        - Plant Type
+        - Soil acidic
+        - Soil limestone
+        - Soil sand
+        - Harvesting Start
+    """
+
+    if not request.GET:
+        data = models.PlantProfile.objects.none()
+    elif request.user.is_authenticated:
+        data = models.PlantProfile.all_objects.all().order_by("latin_name")
+    else:
+        data = models.PlantProfile.objects.all().order_by("latin_name")
+
+    plant_profiles = filters.PlantProfileFilter(request.GET, queryset=data)
+    # Create the CSV response
+    response = HttpResponse(content_type="text/csv")
+    response["Content-Disposition"] = 'attachment; filename="plant_search_results.csv"'
+    writer = csv.writer(response)
+    # Write the header row
+    row_header = [
+        "Latin Name",
+        "English Name",
+        "French Name",
+        "Max Height(feet)",
+        "Max Width(feet)",
+        "Bloom Start",
+        "Bloom End",
+        "Bloom Color",
+        "Full Sun",
+        "Part Shade",
+        "Full Shade",
+        "Moisture Dry",
+        "Moisture Medium",
+        "Moisture Wet",
+        "Lifespan",
+        "Plant Type",
+        "Soil acidic",
+        "Soil limestone",
+        "Soil sand",
+        "Harvesting Start",
+    ]
+    if request.user.is_authenticated:
+        row_header.insert(3, "Is Active")
+    writer.writerow(row_header)
+    # Write the data rows
+    for plant in plant_profiles.qs:
+        plant: (
+            models.PlantProfile
+        )  # Type hint for better IDE support and code readability
+        writer.writerow(
+            [
+                plant.latin_name,
+                plant.english_name,
+                plant.french_name,
+                "Yes" if request.user.is_authenticated and plant.is_active else "No",
+                plant.max_height,
+                plant.max_width,
+                plant.bloom_start,
+                plant.bloom_end,
+                plant.bloom_color,
+                "Yes" if plant.full_sun else "No",
+                "Yes" if plant.part_shade else "No",
+                "Yes" if plant.full_shade else "No",
+                "Yes" if plant.moisture_dry else "No",
+                "Yes" if plant.moisture_medium else "No",
+                "Yes" if plant.moisture_wet else "No",
+                plant.lifespan,
+                plant.growth_habit,
+                "Yes" if plant.acidic_soil_tolerant else "No",
+                "Yes" if plant.limestone_tolerant else "No",
+                "Yes" if plant.sand_tolerant else "No",
+                plant.harvesting_start,
+            ]
+        )
+    return response
+
+
 def advanced_search_plant(request):
     has_filter = False
     if not request.GET:

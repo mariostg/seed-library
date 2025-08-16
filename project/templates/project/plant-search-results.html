@@ -4,6 +4,9 @@
 
   {% if object_list %}
     <div class='flex-col-center'> Search Results: Found {{item_count}} matches, page</div>
+    <div class='flex-col-center'>
+      <a href="{% url 'export-plant-search-results' %}?{{ request.GET.urlencode }}" class="btn btn-primary">Export to CSV</a>
+    </div>
   {% endif %}
   <div id='search-results' class="plant-cards">
 
