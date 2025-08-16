@@ -1,0 +1,10 @@
+{% if plant.obsolete_names.exists %}
+  <div class="plant-obsolete-names">
+    <h3>Obsolete Names</h3>
+    <ul>
+      {% for obsolete_name in plant.obsolete_names.all %}
+        <li>{{ obsolete_name.obsolete_name }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+{% endif %}

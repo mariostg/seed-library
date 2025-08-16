@@ -78,6 +78,6 @@ class Command(BaseCommand):
         for latin_name, obsolete_name in to_import:
             plant = models.PlantProfile.all_objects.get(latin_name=latin_name)
             models.ObsoleteNames.objects.create(
-                latin_name=plant, obsolete_name=obsolete_name
+                plant_profile=plant, obsolete_name=obsolete_name
             )
         self.stdout.write(self.style.SUCCESS("Import completed successfully."))
