@@ -1150,3 +1150,26 @@ class PlantImage(models.Model):
         except ValueError:
             pass
         super().delete(*args, **kwargs)
+
+
+class ObsoleteNames(Base):
+    """
+    A model representing obsolete names for plants.
+
+    This model stores names that were previously used for plants but are no longer in use.
+    It can be used to track historical nomenclature changes or synonyms.
+    A latin name can have multiple obsolete names associated with it.
+
+    Attributes:
+        latin_name (ForeignKey): Reference to the PlantProfile this obsolete name belongs to.
+        obsolete_name (CharField): The obsolete name of the plant (max 75 chars).
+
+    Returns:
+        str: String representation of the obsolete name value.
+    """
+
+    latin_name = models.ForeignKey(PlantProfile, on_delete=models.CASCADE)
+    obsolete_name = models.CharField(max_length=75, blank=True)
+
+    def __str__(self) -> str:
+        return f"{self.latin_name} - {self.obsolete_name}"
