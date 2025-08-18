@@ -6,7 +6,7 @@
 
 <div class="flex-row row-spacer">
   <div>Max Height: {{plant.max_height}} feet</div>
-  <div>Max Width: {{plant.max_width}} feet</div>
+  <div>Max Width: {{plant.max_width}} feet {% if plant.spread_by_rhizome %} (spreads by rhizome) {% endif %}</div>
 </div>
 
 <div class="flex-row row-spacer">
