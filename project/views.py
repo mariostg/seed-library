@@ -1098,6 +1098,26 @@ def plant_identification_information_update(request, pk):
     )
 
 
+def plant_identification_information_create(request):
+    if request.method == "POST":
+        form = forms.PlantIdentificationInformationForm(request.POST)
+        if form.is_valid():
+            plant: models.PlantProfile = form.save()
+            messages.success(
+                request, "Plant identification information created successfully."
+            )
+            return redirect("plant-profile-page", pk=plant.pk)
+    else:
+        form = forms.PlantIdentificationInformationForm()
+    context = {
+        "title": "Create Plant Identification Information",
+        "form": form,
+    }
+    return render(
+        request, "project/plant-identification-information-create.html", context
+    )
+
+
 def plant_growth_characteristics_update(request, pk):
     plant = utils.single_plant(pk, request)
     growth_habits = models.GrowthHabit.objects.all().order_by("growth_habit")

@@ -23,6 +23,7 @@
     </li>
 
     {% if request.user.is_authenticated %}
+      <li><a class='btn' href="{% url 'plant-identification-information-create' %}">Record new plant</a></li>
       <li><a class='btn' href="{% url 'user-plant-collection' %}">My Collection</a></li>
       <li><a class='btn' href="{% url 'logout' %}">Logout</a></li>
       {% if request.path != '/site-admin/' %}

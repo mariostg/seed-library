@@ -41,7 +41,6 @@ urlpatterns += [
         views.plant_profile_page,
         name="plant-profile-page",
     ),
-    path("plant-profile-add/", views.plant_profile_add, name="plant-profile-add"),
     path(
         "plant-profile-delete/<int:pk>",
         views.plant_profile_delete,
@@ -152,6 +151,12 @@ urlpatterns += [
         "plant-identification-information-update/<int:pk>",
         views.plant_identification_information_update,
         name="plant-identification-information-update",
+    ),
+    # path for creating a new plant profile
+    path(
+        "plant-identification-information-create/",
+        views.plant_identification_information_create,
+        name="plant-identification-information-create",
     ),
     path(
         "plant-growth-characteristics-update/<int:pk>",

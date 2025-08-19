@@ -189,3 +189,21 @@ class PlantCollectionForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
+
+class PlantIdentificationInformationForm(forms.ModelForm):
+    class Meta:
+        model = models.PlantProfile
+        fields = [
+            "latin_name",
+            "english_name",
+            "french_name",
+            "taxon",
+            "inaturalist_taxon",
+        ]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        # latin_name required
+        self.fields["latin_name"].required = True
