@@ -6,10 +6,10 @@
       <header class="form__header">Delete Action</header>
       <form method="POST">
         {% csrf_token %}
-        <p class='label alert--warning'>Êtes-vous certain de voulor effacer "{{ object }}"</p>
+        <p class='label alert--warning'>Êtes-vous certain de voulor effacer "{{ data }}"</p>
 
         <div class="block block--spaced">
-          <a class='btn btn-back' href="{% url back %}" style='text-decoration:none;'>Retour</a>
+          <a class='btn btn-back' href="{% url back data.pk %}" style='text-decoration:none;'>Retour</a>
 
           <input class='btn' type="submit" value="Confirm" />
         </div>

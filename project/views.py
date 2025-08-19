@@ -121,18 +121,18 @@ def plant_profile_update(request, pk):
 
 # @login_required
 def plant_profile_delete(request, pk):
-    data = utils.single_plant(pk, request)
+    plant: models.PlantProfile = utils.single_plant(pk, request)
     if request.method == "POST":
         try:
-            data.delete()
+            plant.delete()
         except RestrictedError:
             messages.info(
                 request,
-                f"Plant Profile {data} ne peut-être effacée car il existe des éléments associés.",
+                f"Plant Profile {plant.latin_name} ne peut-être effacée car il existe des éléments associés.",
             )
-        return redirect("plant-profile-page", pk=pk)
-    context = {"data": data, "back": f"plant-profile-page/{pk}"}
-    return render(request, "siteornitho/delete_template.html", context)
+        return redirect("search-plant-name")
+    context = {"data": plant, "back": "plant-profile-page"}
+    return render(request, "core/delete-object.html", context)
 
 
 def plant_catalogue_intro(request):
