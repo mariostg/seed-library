@@ -25,10 +25,18 @@
             <label class="tooltip" for="id_is_active">Is Active <span class="tooltiptext">When Active is selected, the plant is available for public viewing.</span></label>
             <input type="checkbox" id="id_is_active" name="is_active" {% if plant.is_active %}checked{% endif %}>
           </div>
-              <!--latin_name-->
+          <!--latin_name-->
+          <!--Input text box to react as an htmx request search-vascan-taxon-id-->
           <div class="input-text">
             <label for="id_latin_name">Latin Name</label>
-            <input type="text" id="id_latin_name" name="latin_name" value="{{ plant.latin_name }}" required>
+            <input type="text"
+                   hx-get="{% url 'search-vascan-taxon-id' %}"
+                   hx-target="#id_taxon, #id_english_name, #id_french_name"    hx-trigger="change delay:500ms"
+                   hx-swap="value"
+                   hx-include="this"
+                   id="id_latin_name"
+                   name="latin_name"
+                   value="{{ plant.latin_name }}" required>
           </div>
               <!--english_name-->
           <div class="input-text">

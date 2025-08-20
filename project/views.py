@@ -14,7 +14,7 @@ from reportlab.lib.pagesizes import landscape, letter
 from reportlab.lib.units import inch
 from reportlab.pdfgen import canvas
 
-from project import filters, forms, models, utils
+from project import filters, forms, models, utils, vascan
 from project.models import ProjectUser
 
 
@@ -82,7 +82,11 @@ def plant_profile_add(request):
         form = forms.PlantProfileForm(request.POST)
         if form.is_valid():
             context["form"] = form
+            vascan_result = utils.vascan_query(form.cleaned_data["latin_name"])
+            taxon_id = utils.extract_taxon_id(vascan_result)
+
             obj: models.PlantProfile = form.save(commit=False)
+            obj.taxon = taxon_id
             try:
                 form.save()
             except IntegrityError:
@@ -308,6 +312,25 @@ def search_plant_name(request):
         else "project/plant-catalog.html"
     )
     return render(request, template, context)
+
+
+def search_vascan_taxon_id(request):
+    # uses vascan.vascan_query and vascan.extract_taxon_id from an htmx request
+    if request.method == "GET" and "latin_name" in request.GET:
+        latin_name = request.GET["latin_name"]
+        vascan_result = vascan.vascan_query(latin_name)
+        taxon_id = vascan.extract_taxon_id(vascan_result)
+        english_name = vascan.extract_english_name(vascan_result)
+        french_name = vascan.extract_french_name(vascan_result)
+        return HttpResponse(
+            f"""
+            <input id="id_taxon" value="{taxon_id}" hx-swap-oob="true">
+            <input id="id_english_name" value="{english_name}" hx-swap-oob="true">
+            <input id="id_french_name" value="{french_name}" hx-swap-oob="true">
+        """
+        )
+
+    return JsonResponse({"error": "Invalid request"}, status=400)
 
 
 def export_plant_search_results(request):
@@ -1099,10 +1122,37 @@ def plant_identification_information_update(request, pk):
 
 
 def plant_identification_information_create(request):
+    context = {
+        "title": "Create Plant Identification Information",
+    }
     if request.method == "POST":
         form = forms.PlantIdentificationInformationForm(request.POST)
         if form.is_valid():
-            plant: models.PlantProfile = form.save()
+            # Check if the plant already exists and if so, return message error
+            latin_name = form.cleaned_data["latin_name"].capitalize()
+
+            if models.PlantProfile.objects.filter(latin_name=latin_name).exists():
+                messages.error(
+                    request,
+                    f"A plant with this Latin name {latin_name} already exists. Please choose a different name.",
+                )
+                return render(
+                    request,
+                    "project/plant-identification-information-create.html",
+                    context,
+                )
+
+            context["form"] = form
+            vascan_result = vascan.vascan_query(form.cleaned_data["latin_name"])
+            taxon_id = vascan.extract_taxon_id(vascan_result)
+            english_name = vascan.extract_english_name(vascan_result)
+            french_name = vascan.extract_french_name(vascan_result)
+
+            plant: models.PlantProfile = form.save(commit=False)
+            plant.taxon = taxon_id
+            plant.english_name = english_name
+            plant.french_name = french_name
+            plant.save()
             messages.success(
                 request, "Plant identification information created successfully."
             )

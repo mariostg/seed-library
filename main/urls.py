@@ -18,6 +18,11 @@ urlpatterns = [
     path("search-plant/", views.advanced_search_plant, name="search-plant"),
     path("search-plant-name/", views.search_plant_name, name="search-plant-name"),
     path(
+        "search-vascan-taxon-id/",
+        views.search_vascan_taxon_id,
+        name="search-vascan-taxon-id",
+    ),
+    path(
         "export-plant-search-results/",
         views.export_plant_search_results,
         name="export-plant-search-results",
