@@ -51,6 +51,9 @@
         }
       }
       function toggleFilter(toggleId) {
+        current_element=event.target;
+        current_element.classList.toggle("expanded");
+        current_element.classList.toggle("collapser");
         const toggleMe = document.querySelector(toggleId);
         toggleMe.classList.toggle("collapsed");
       }

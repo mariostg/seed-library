@@ -99,10 +99,17 @@ ul.nav-links {
 #exclude-burs.collapsed {
   display: none;
 }
+.expanded {
+  &::after {
+    content: "▲";
+    float: right;
+  }
+}
 .collapser {
   cursor: pointer;
   &::after {
     content: "▼";
+    float: right;
   }
 }
 .filter-wrapper {
