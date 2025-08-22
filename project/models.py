@@ -1175,3 +1175,39 @@ class ObsoleteNames(Base):
 
     def __str__(self) -> str:
         return f"{self.plant_profile.latin_name} - {self.obsolete_name}"
+
+
+class PlantCompanion(models.Model):
+    """
+    A model representing plant pairings (companion plants) that grow well together.
+
+    This model allows users to define relationships between different plants
+    that are known to thrive together, enhancing companion planting strategies.
+
+    Attributes:
+        plant_profile (ForeignKey): Reference to the PlantProfile this pairing belongs to.
+        companion (ForeignKey): Reference to another PlantProfile that pairs well with the first.
+
+    Returns:
+        str: String representation of the plant pairing in the format "Plant - Companion".
+    """
+
+    plant_profile = models.ForeignKey(
+        PlantProfile, on_delete=models.CASCADE, related_name="plant"
+    )
+    companion = models.ForeignKey(
+        PlantProfile, on_delete=models.CASCADE, related_name="companion"
+    )
+
+    def __str__(self) -> str:
+        return f"{self.plant_profile.latin_name} - {self.companion.latin_name}"
+
+    class Meta:
+        unique_together = ("plant_profile", "companion")
+        constraints = [
+            models.CheckConstraint(
+                check=~models.Q(plant_profile=models.F("companion")),
+                name="different_plants",
+            )
+        ]
+        ordering = ["plant_profile__latin_name", "companion__latin_name"]
