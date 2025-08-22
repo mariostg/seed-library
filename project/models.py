@@ -1200,7 +1200,7 @@ class PlantCompanion(models.Model):
     )
 
     def __str__(self) -> str:
-        return f"{self.plant_profile.latin_name} - {self.companion.latin_name}"
+        return f"{self.plant_profile.latin_name} "
 
     class Meta:
         unique_together = ("plant_profile", "companion")
