@@ -271,7 +271,7 @@ class Command(BaseCommand):
                         )
                         continue
 
-                    latin_name = row["latin_name"]
+                    latin_name = row["latin_name"].capitalize()
                     if latin_name in self.latin_names:
                         existing_names.append(latin_name)
                     else:
@@ -399,7 +399,7 @@ class Command(BaseCommand):
                         )
                         continue
 
-                    latin_name = row["latin_name"]
+                    latin_name = row["latin_name"].capitalize()
                     name_value = row[field_name]
                     try:
                         plant = models.PlantProfile.objects.get(latin_name=latin_name)
@@ -731,7 +731,7 @@ class Command(BaseCommand):
                             )
                             continue
 
-                        latin_name = row["latin_name"]
+                        latin_name = row["latin_name"].capitalize()
                         relation_value = row[field_name].strip()
 
                         try:
@@ -802,7 +802,7 @@ class Command(BaseCommand):
                         )
                         continue
 
-                    latin_name = row["latin_name"]
+                    latin_name = row["latin_name"].capitalize()
                     field_value = row[field_name]
 
                     # Convert string values to boolean
