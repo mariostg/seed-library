@@ -4,11 +4,12 @@
 
     <!--Input text box for searching plant name-->
     <div class="form__field">
-      <label for="any_name" class="form-label">Search by plant name</label>
+      <label for="any_name" class="form-label tooltip">Search by plant name
+        <span class="tooltiptext">Enter 4 or more letters of the plant's latin, english, or french name</span>
+      </label>
       <input id="any_name" class="name-search-input"
              name="any_name"
              hx-get="/search-plant-name"
-             {% comment %} hx-trigger="keyup[target.value.length >= 4] changed delay:500ms" {% endcomment %}
              hx-trigger="keyup[target.value.length >= 4] changed delay:500ms, keyup[key=='Enter']"
              hx-target="#search-results"
              hx-push-url="true"
@@ -17,7 +18,7 @@
              type="text"
              value="{{ any_name }}"
              class="form-input"
-             placeholder="4 letters or more of latin, english, or french name">
+      >
 
       <span class="htmx-indicator">
         <img src="{% static 'images/searching.svg' %}"/> Searching...

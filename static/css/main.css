@@ -256,10 +256,6 @@ header {
 /*0 3px 5px rgba(75, 85, 68, 0.8);*/
 /*Wildflower theme colors*/
 /*blue theme*/
-.name-search-input {
-  min-width: 360px;
-}
-
 form {
   display: flex;
   flex-direction: column;
