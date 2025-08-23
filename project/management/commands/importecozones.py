@@ -64,9 +64,24 @@ class Command(BaseCommand):
             # Process all xlsx and csv files in the directory
             for file_path in dir_path.glob("*.xlsx"):
                 self.process_file(file_path)
+            self.report_plants_without_ecozones()
         else:
             # Process single file
             self.process_file(Path(path))
+
+    def report_plants_without_ecozones(self):
+        """Report plants that do not have associated ecozones."""
+        plants_without_ecozones = PlantProfile.objects.filter(ecozones__isnull=True)
+        if plants_without_ecozones.exists():
+            self.stdout.write(
+                self.style.WARNING(
+                    f"Number of plants without ecozones: {plants_without_ecozones.count()}"
+                )
+            )
+            for plant in plants_without_ecozones:
+                self.stdout.write(f" - {plant.latin_name}")
+        else:
+            self.stdout.write(self.style.SUCCESS("All plants have ecozones."))
 
     def process_file(self, file_path):
         """Process a single ecozone file."""
@@ -105,7 +120,7 @@ class Command(BaseCommand):
             None: Outputs a success message if all plants are validated successfully.
         """
         for row in reader:
-            latin_name = row["latin_name"]
+            latin_name = row["latin_name"].strip().capitalize()
             if not PlantProfile.objects.filter(latin_name=latin_name).exists():
                 raise ValueError(
                     f"Plant with latin name '{latin_name}' does not exist in the database."
@@ -194,15 +209,14 @@ class Command(BaseCommand):
 
         if "latin_name" not in row:
             raise ValueError("CSV row must contain a 'latin_name' key.")
-        latin_name = row["latin_name"]  # the latin name of the plant
+        latin_name = (
+            row["latin_name"].strip().capitalize()
+        )  # the latin name of the plant
         # then second key of row is the english name and latin name of the ecozone separated by a hyphen
-        ecozone_info = list(row.keys())[1]  # the second key of the row
-        is_supported = row[ecozone_info].strip().lower() == "yes"
-        _, ecozone_english_name = ecozone_info.split(
-            "-"
-        )  # split the string into english name and latin name
+        ecozone = list(row.keys())[1]  # the second key of the row
+        is_supported = row[ecozone].strip().lower() == "yes"
 
-        return latin_name, ecozone_english_name, is_supported
+        return latin_name, ecozone, is_supported
 
     def _get_or_create_ecozone(self, ecozone_english_name) -> Ecozone:
         """
@@ -269,22 +283,6 @@ class Command(BaseCommand):
                 )
         plant_profile.save()
 
-    # Function that prints to stdout the latin names from the PlantProfile model of the plants that are not found in any ecozone.
-    def print_missing_plants(self):
-        missing_plants = PlantProfile.objects.filter(ecozones__isnull=True)
-        if not missing_plants:
-            self.stdout.write(
-                self.style.SUCCESS("All plants are assigned to ecozones.")
-            )
-            return
-
-        self.stdout.write(self.style.WARNING("Plants not found in any ecozone:"))
-        for plant in missing_plants:
-            self.stdout.write(f" - {plant.latin_name}")
-        self.stdout.write(
-            "Number of plants not found in any ecozone: " f"{missing_plants.count()}"
-        )
-
     # Open the csv file and read the latin names of the plants and verifies that they exist in the database.
     def main(self):
         self._convert_xlsx_to_csv()
@@ -299,4 +297,3 @@ class Command(BaseCommand):
             self.stderr.write(str(e))
             return
         self.import_ecozones()
-        self.print_missing_plants()
