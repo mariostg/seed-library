@@ -335,6 +335,11 @@ ul.nav-links {
   display: flex;
   margin: 1rem;
 }
+@media (max-width: 768px) {
+  .main-content {
+    flex-direction: column;
+  }
+}
 
 .plant-cards {
   display: flex;

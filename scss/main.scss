@@ -33,6 +33,10 @@ ul.nav-links {
 .main-content {
   display: flex;
   margin: 1rem;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 }
 .plant {
   &-cards {
