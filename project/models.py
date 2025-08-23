@@ -495,6 +495,29 @@ class ToxicityIndicator(Base):
         return self.toxicity_indicator
 
 
+class BeeSpecies(models.Model):
+    """A model representing bee species that can interact with plants.
+
+    This model stores the name of the bee species and provides a string representation.
+    Attributes:
+        latin_name (CharField): The scientific name of the bee species, max length 75 characters, unique.
+    Returns:
+        str: String representation of the bee species, which is its Latin name.
+    Meta:
+        verbose_name_plural: "Bee Species"
+        ordering: Alphabetically by Latin name
+    """
+
+    latin_name = models.CharField(max_length=75, blank=True, unique=True)
+
+    def __str__(self) -> str:
+        return self.latin_name
+
+    class Meta:
+        verbose_name_plural = "Bee Species"
+        ordering = ["latin_name"]
+
+
 class ButterflySpecies(models.Model):
     """A model representing butterfly species that can interact with plants.
 
@@ -845,7 +868,7 @@ class PlantProfile(Base):
     butterflies = models.ManyToManyField(
         ButterflySpecies, blank=True, related_name="plants"
     )
-
+    bees = models.ManyToManyField(BeeSpecies, blank=True, related_name="plants")
     #
     # Special features and considerations
     #

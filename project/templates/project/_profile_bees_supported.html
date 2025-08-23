@@ -1,0 +1,12 @@
+<div class="bee-list">
+  <h3>Bees Supported by {{ plant.latin_name }}</h3>
+  {% if plant.bees.all %}
+    <ul>
+      {% for bee in plant.bees.all %}
+        <li>{{ bee.latin_name }}</li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p class="text-muted">No bee data available for this plant.</p>
+  {% endif %}
+</div>
