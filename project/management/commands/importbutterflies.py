@@ -105,7 +105,7 @@ class Command(BaseCommand):
             None: Outputs a success message if all plants are validated successfully.
         """
         for row in reader:
-            latin_name = row["latin_name"]
+            latin_name = row["latin_name"].strip().capitalize()
             if not PlantProfile.objects.filter(latin_name=latin_name).exists():
                 raise ValueError(
                     f"Plant with latin name '{latin_name}' does not exist in the database."
@@ -144,6 +144,7 @@ class Command(BaseCommand):
                 butterfly = self._get_or_create_butterfly(
                     butterfly_latin_name, butterfly_english_name
                 )
+                latin_name = latin_name
                 plant_profile = PlantProfile.objects.get(latin_name=latin_name)
                 self._update_plant_profile(plant_profile, butterfly, is_supported)
 
@@ -199,7 +200,9 @@ class Command(BaseCommand):
 
         if "latin_name" not in row:
             raise ValueError("CSV row must contain a 'latin_name' key.")
-        latin_name = row["latin_name"]  # the latin name of the plant
+        latin_name = (
+            row["latin_name"].strip().capitalize()
+        )  # the latin name of the plant
         # then second key of row is the english name and latin name of the butterfly separated by a hyphen
         butterfliy_info = list(row.keys())[1]  # the second key of the row
         is_supported = row[butterfliy_info].strip().lower() == "yes"
