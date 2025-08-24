@@ -1,0 +1,11 @@
+<!-- Complementary Plants Section -->
+<section id="complementary-plants">
+  <h2>Complementary Plants</h2>
+  <ul>
+    {% for complementaryplant in plant.plant.all %}
+      <li><a target='_blank' href="{% url 'plant-profile-page' complementaryplant.complement.id %}">{{complementaryplant.complement.latin_name}}</a><br>{{ complementaryplant.complement.english_name }}<br> {{ complementaryplant.complement.french_name }}</li>
+    {% empty %}
+      <li>No complementary plants found.</li>
+    {% endfor %}
+  </ul>
+</section>
