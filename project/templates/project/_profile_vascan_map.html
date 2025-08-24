@@ -1,13 +1,17 @@
-<div class="inaturalist-distribution">
-  <p>Native to Ottawa region: {% if plant.native_to_ottawa_region %}Yes{% else %}No{% endif %}</p>
-  <img
-    src="https://data.canadensys.net/vascan/images/distribution/{{plant.taxon}}.png"
-    width="400"
-    height="400"
-    alt="Distribution: {{plant.latin_name}}"
-    id="png"
-  />
-  <div class="inaturalist-legend">
+<h3>Native to Ottawa region: {% if plant.native_to_ottawa_region %}Yes{% else %}No{% endif %}</h3>
+
+<div class="vascan-distribution">
+  <h3>Distribution according to VASCAN</h3>
+  <div class="vascan-map">
+    <img
+      src="https://data.canadensys.net/vascan/images/distribution/{{plant.taxon}}.png"
+      width="400"
+      height="400"
+      alt="Distribution: {{plant.latin_name}}"
+      id="png"
+    />
+  </div>
+  <div class="vascan-legend">
     <span style="background-color: #f2df0c; color: #000">Ephemeral</span>
     <span style="background-color: #77bb2b; color: #000">Native</span>
     <span style="background-color: #e98c1f; color: #000">Introduced</span>

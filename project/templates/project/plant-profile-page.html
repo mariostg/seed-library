@@ -31,6 +31,8 @@
                 <div class="plant-profile-english-name">{{plant.english_name}}</div>
                 <div class="plant-profile-french-name">{{plant.french_name}}</div>
               </div>
+                        <!-- Obsolete Names -->
+              {% include "project/_profile_obsolete_names.html" %}
 
               <div class="plant-giveaway">
                 {% if plant.seed_availability %}
@@ -60,21 +62,30 @@
     <!-- End of Plant Profile Header -->
 
         <div class="flex-row">
-          {% include "project/_profile_vascan_map.html" %}
-          {% include "project/_profile_inaturalist_link.html" %}
+
+          <div>
+            <h2>Plant Distribution</h2>
+            {% include "project/_profile_vascan_map.html" %}
+            {% include "project/_profile_inaturalist_link.html" %}
+            {% include "project/_profile_ecozone.html" %}
+          </div>
+
       <!-- End of inaturalist distribution -->
-          {% include "project/_profile_butterflies_supported.html" %}
-          {% include "project/_profile_bees_supported.html" %}
-          <!-- Ecozones -->
-          {% include "project/_profile_ecozone.html" %}
-          <!-- Obsolete Names -->
-          {% include "project/_profile_obsolete_names.html" %}
-          <!-- Sowing Information -->
-          {% include "project/_profile_sowing.html" %}
-          <!-- Harvesting Information -->
-          {% include "project/_profile_harvesting.html" %}
-          <!-- Complementary Plants -->
-          {% include "project/_profile_complementary_plants.html" %}
+
+          <div>
+            {% include "project/_profile_butterflies_supported.html" %}
+            {% include "project/_profile_bees_supported.html" %}
+            <!-- Complementary Plants -->
+            {% include "project/_profile_complementary_plants.html" %}
+          </div>
+
+          <div>
+            <!-- Sowing Information -->
+            {% include "project/_profile_sowing.html" %}
+            <!-- Harvesting Information -->
+            {% include "project/_profile_harvesting.html" %}
+          </div>
+
         </div>
 
 
