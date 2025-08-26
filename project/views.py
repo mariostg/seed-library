@@ -186,6 +186,10 @@ def search_plant_name(request):
         "#conifer_tree",
         "#vine",
     ]
+    physical_attributes_filters = [
+        "#max_height",
+        "#max_width",
+    ]
     lifecycle_filters = [
         "#annual",
         "#biennial",
@@ -285,6 +289,7 @@ def search_plant_name(request):
         sun_filters
         + moisture_filters
         + plant_type_filters
+        + physical_attributes_filters
         + lifecycle_filters
         + color_filters
         + soil_tolerance_filters
