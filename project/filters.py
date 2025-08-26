@@ -200,6 +200,9 @@ class PlantProfileFilter(django_filters.FilterSet):
     max_height = django_filters.NumberFilter(
         method="filter_lte",
     )
+    max_width = django_filters.NumberFilter(
+        method="filter_lte",
+    )
     stratification_duration = django_filters.NumberFilter(
         method="filter_lte",
     )
@@ -275,7 +278,8 @@ class PlantProfileFilter(django_filters.FilterSet):
 
     def filter_lte(self, queryset, name, value):
         lookup = "__".join([name, "lte"])
-        return queryset.filter(**{lookup: value})
+        d = queryset.filter(**{lookup: value})
+        return d
 
     def filter_gte(self, queryset, name, value):
         lookup = "__".join([name, "gte"])

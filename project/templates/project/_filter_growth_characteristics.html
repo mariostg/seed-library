@@ -2,30 +2,30 @@
 <div class="filter">
   <input
     type="number"
-    id="height"
-    name="height"
+    id="max_height"
+    name="max_height"
     value="Height"
     hx-get="/search-plant-name"
-    hx-trigger="click"
+    hx-trigger="change delay:500ms, keyup"
     hx-target="#search-results"
     hx-push-url="true"
     hx-include="{{hx_include}}"
   />
-  <label for="height">Max. Height (Feet)</label><br />
+  <label for="height">Max. Height (Feet) ✔</label><br />
 </div>
 <div class="filter">
   <input
     type="number"
-    id="width"
-    name="width"
+    id="max_width"
+    name="max_width"
     value="Width"
     hx-get="/search-plant-name"
-    hx-trigger="click"
+    hx-trigger="change delay:500ms, keyup"
     hx-target="#search-results"
     hx-push-url="true"
     hx-include="{{hx_include}}"
   />
-  <label for="width">Max. Width (Feet)</label><br />
+  <label for="width">Max. Width (Feet) ✔</label><br />
 </div>
 
 <div class='filter__sub-header'>Lifespan</div>
