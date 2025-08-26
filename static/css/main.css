@@ -1,4 +1,7 @@
 @charset "UTF-8";
+/*0 3px 5px rgba(75, 85, 68, 0.8);*/
+/*Wildflower theme colors*/
+/*blue theme*/
 * {
   margin: 0;
   padding: 0;
@@ -34,7 +37,7 @@ p {
 }
 
 a {
-  color: #0066cc;
+  color: #79ac78;
   text-decoration: none;
 }
 a:hover {
@@ -320,11 +323,26 @@ main {
   background-color: #f9f9f9;
   border-bottom: 1px solid #e5e5e5;
 }
+@media (max-width: 768px) {
+  .site-header {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
 
-ul.nav-links {
+.nav ul.nav-links {
   display: flex;
   gap: 1rem;
   list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+@media (max-width: 768px) {
+  .nav ul.nav-links {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+  }
 }
 
 .main-content {
@@ -507,7 +525,7 @@ ul.nav-links {
 .btn {
   display: inline-block;
   padding: 0.5rem 1rem;
-  background-color: #007bff;
+  background-color: #79ac78;
   color: #fff;
   text-decoration: none;
   border-radius: 4px;
