@@ -15,3 +15,8 @@ form {
     flex-direction: column;
   }
 }
+
+input#height,
+input#width {
+  width: 100px;
+}

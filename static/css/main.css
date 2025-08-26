@@ -274,6 +274,11 @@ form .input-text {
   flex-direction: column;
 }
 
+input#height,
+input#width {
+  width: 100px;
+}
+
 .alert {
   display: flex;
   padding: 0.5rem;
