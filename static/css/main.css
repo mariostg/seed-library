@@ -274,8 +274,8 @@ form .input-text {
   flex-direction: column;
 }
 
-input#height,
-input#width {
+input#max_height,
+input#max_width {
   width: 100px;
 }
 
