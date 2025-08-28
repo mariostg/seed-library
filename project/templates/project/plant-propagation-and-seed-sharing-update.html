@@ -202,13 +202,14 @@
             </div>
             <div class="input-select">
               <label for="id_harvesting_indicator">Harvesting Indicator</label>
-              <select id="id_harvesting_indicator" name="harvesting_indicator">
+              <div class="radio-group">
                 {% for indicator in harvesting_indicators %}
-                  <option value="{{ indicator.pk }}" {% if plant.harvesting_indicator.pk == indicator.pk %}selected{% endif %}>
-                    {{ indicator }}
-                  </option>
+                  <div class="radio-option">
+                    <input type="radio" id="id_harvesting_indicator_{{ indicator.pk }}" name="harvesting_indicator" value="{{ indicator.pk }}" {% if plant.harvesting_indicator.pk == indicator.pk %}checked{% endif %}>
+                    <label for="id_harvesting_indicator_{{ indicator.pk }}">{{ indicator }}</label>
+                  </div>
                 {% endfor %}
-              </select>
+              </div>
             </div>
             <div class="input-select">
               <label for="id_harvesting_mean">Harvesting Mean</label>
