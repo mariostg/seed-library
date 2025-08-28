@@ -78,6 +78,9 @@ class PlantProfileFilter(django_filters.FilterSet):
     perennial = django_filters.CharFilter(
         method="filter_lifespan",
     )
+    spring_ephemeral = django_filters.CharFilter(
+        method="filter_boolean",
+    )
     septic_tank_safe = django_filters.CharFilter(
         method="filter_boolean",
     )

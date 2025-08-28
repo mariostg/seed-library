@@ -194,6 +194,7 @@ def search_plant_name(request):
         "#annual",
         "#biennial",
         "#perennial",
+        "#spring_ephemeral",
     ]
     color_filters = [
         "#color_blue",

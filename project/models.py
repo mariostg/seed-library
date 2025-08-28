@@ -760,6 +760,7 @@ class PlantProfile(Base):
     lifespan = models.ForeignKey(
         PlantLifespan, on_delete=models.RESTRICT, blank=True, null=True
     )
+    spring_ephemeral = models.BooleanField(default=False, null=True, blank=True)
     growth_habit = models.ForeignKey(
         GrowthHabit, on_delete=models.RESTRICT, null=True, blank=True
     )

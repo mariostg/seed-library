@@ -69,6 +69,19 @@
     {% if perennial %} checked {% endif %}
   />
   <label for="perennial" class="tooltip">Perennial ✔<span class="tooltiptext">Lives for three or more years</span></label><br />
+  <input
+    type="checkbox"
+    id="spring_ephemeral"
+    name="spring_ephemeral"
+    value="Spring Ephemeral"
+    hx-get="/search-plant-name"
+    hx-trigger="click"
+    hx-target="#search-results"
+    hx-push-url="true"
+    hx-include="{{hx_include}}"
+    {% if spring_ephemeral %} checked {% endif %}
+  />
+  <label for="spring_ephemeral" class="tooltip">Spring Ephemeral ✔<span class="tooltiptext">Lives for a short period in spring</span></label><br />
 </div>
 
 <div class='filter__sub-header'>Flowering and Appearance</div>
