@@ -10,9 +10,12 @@ form {
     flex-direction: column;
     gap: 1rem;
   }
-  .input-text {
-    display: flex;
-    flex-direction: column;
+  .input {
+    &-text,
+    &-select {
+      display: flex;
+      flex-direction: column;
+    }
   }
 }
 
