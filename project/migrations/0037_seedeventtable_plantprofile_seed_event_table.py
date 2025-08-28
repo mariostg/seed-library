@@ -14,7 +14,15 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name="SeedEventTable",
             fields=[
-                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
                 ("created", models.DateTimeField(auto_now_add=True)),
                 ("modified", models.DateTimeField(auto_now=True)),
                 ("event_table", models.CharField(blank=True, max_length=100)),
@@ -27,7 +35,10 @@ class Migration(migrations.Migration):
             model_name="plantprofile",
             name="seed_event_table",
             field=models.ForeignKey(
-                blank=True, null=True, on_delete=django.db.models.deletion.RESTRICT, to="project.seedeventtable"
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.RESTRICT,
+                to="project.seedeventtable",
             ),
         ),
     ]

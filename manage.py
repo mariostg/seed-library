@@ -20,7 +20,10 @@ def main():
     try:
         import pip_lock  # isort: skip
     except ModuleNotFoundError:
-        raise ModuleNotFoundError("Couldn't import pip-lock. Are you on the right virtualenv and up " + "to date?")
+        raise ModuleNotFoundError(
+            "Couldn't import pip-lock. Are you on the right virtualenv and up "
+            + "to date?"
+        )
     requirements_path = str(Path(__file__).parent / "requirements.txt")
     pip_lock.check_requirements(
         requirements_path,
@@ -28,7 +31,9 @@ def main():
     )
 
     if not Path(".env").is_file():
-        raise FileExistsError(".env file not found.  Use .env-exemple as a starting point.")
+        raise FileExistsError(
+            ".env file not found.  Use .env-exemple as a starting point."
+        )
 
     execute_from_command_line(sys.argv)
 

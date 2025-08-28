@@ -15,7 +15,15 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name="SpreadRate",
             fields=[
-                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
                 ("created", models.DateTimeField(auto_now_add=True)),
                 ("modified", models.DateTimeField(auto_now=True)),
                 ("spreading_rate", models.CharField(blank=True, max_length=15)),
@@ -86,7 +94,9 @@ class Migration(migrations.Migration):
             model_name="plantprofile",
             name="lifespan",
             field=models.CharField(
-                blank=True, choices=[("A", "Annual"), ("B", "Biennial"), ("P", "Perennial")], max_length=1
+                blank=True,
+                choices=[("A", "Annual"), ("B", "Biennial"), ("P", "Perennial")],
+                max_length=1,
             ),
         ),
         migrations.AddField(
@@ -158,7 +168,10 @@ class Migration(migrations.Migration):
             model_name="plantprofile",
             name="spreading_rate",
             field=models.ForeignKey(
-                blank=True, null=True, on_delete=django.db.models.deletion.RESTRICT, to="project.spreadrate"
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.RESTRICT,
+                to="project.spreadrate",
             ),
         ),
     ]

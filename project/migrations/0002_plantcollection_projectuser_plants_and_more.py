@@ -15,19 +15,43 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name="PlantCollection",
             fields=[
-                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
                 ("details", models.CharField(blank=True, max_length=125)),
-                ("owner", models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
-                ("plants", models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="project.plantprofile")),
+                (
+                    "owner",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
+                (
+                    "plants",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="project.plantprofile",
+                    ),
+                ),
             ],
         ),
         migrations.AddField(
             model_name="projectuser",
             name="plants",
-            field=models.ManyToManyField(through="project.PlantCollection", to="project.plantprofile"),
+            field=models.ManyToManyField(
+                through="project.PlantCollection", to="project.plantprofile"
+            ),
         ),
         migrations.AddConstraint(
             model_name="plantcollection",
-            constraint=models.UniqueConstraint(fields=("owner", "plants"), name="unique_plant_owner"),
+            constraint=models.UniqueConstraint(
+                fields=("owner", "plants"), name="unique_plant_owner"
+            ),
         ),
     ]

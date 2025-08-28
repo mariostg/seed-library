@@ -13,13 +13,18 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AlterModelOptions(
             name="plantmorphology",
-            options={"ordering": ["element"], "verbose_name_plural": "plant morphology"},
+            options={
+                "ordering": ["element"],
+                "verbose_name_plural": "plant morphology",
+            },
         ),
         migrations.AddField(
             model_name="plantimage",
             name="morphology_aspect",
             field=models.ForeignKey(
-                default=0, on_delete=django.db.models.deletion.CASCADE, to="project.plantmorphology"
+                default=0,
+                on_delete=django.db.models.deletion.CASCADE,
+                to="project.plantmorphology",
             ),
             preserve_default=False,
         ),

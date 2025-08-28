@@ -15,7 +15,12 @@ class Migration(migrations.Migration):
             name="level",
             field=models.CharField(
                 blank=True,
-                choices=[("none", "None"), ("low", "Low"), ("medium", "Medium"), ("high", "High")],
+                choices=[
+                    ("none", "None"),
+                    ("low", "Low"),
+                    ("medium", "Medium"),
+                    ("high", "High"),
+                ],
                 default="None",
                 max_length=10,
             ),

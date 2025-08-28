@@ -18,16 +18,34 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name="PlantImage",
             fields=[
-                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
                 ("title", models.CharField(max_length=125, verbose_name="Titre")),
-                ("description", models.CharField(blank=True, max_length=55, verbose_name="Description")),
-                ("photo_author", models.CharField(max_length=125, verbose_name="Auteur")),
+                (
+                    "description",
+                    models.CharField(
+                        blank=True, max_length=55, verbose_name="Description"
+                    ),
+                ),
+                (
+                    "photo_author",
+                    models.CharField(max_length=125, verbose_name="Auteur"),
+                ),
                 ("photo_date", models.DateField(verbose_name="Date photo")),
                 ("image", models.ImageField(upload_to="project/images")),
                 (
                     "plant_profile",
                     models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE, related_name="images", to="project.plantprofile"
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="images",
+                        to="project.plantprofile",
                     ),
                 ),
             ],

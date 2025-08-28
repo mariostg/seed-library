@@ -11,10 +11,19 @@ form {
     gap: 1rem;
   }
   .input {
+    &-radio-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
     &-text,
     &-select {
       display: flex;
       flex-direction: column;
+      gap: 0.5rem;
+      label {
+        font-weight: bold;
+      }
     }
   }
 }

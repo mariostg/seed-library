@@ -14,7 +14,15 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name="ToxicityIndicator",
             fields=[
-                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
                 ("created", models.DateTimeField(auto_now_add=True)),
                 ("modified", models.DateTimeField(auto_now=True)),
                 ("toxicity_indicator", models.CharField(blank=True, max_length=50)),
@@ -27,7 +35,10 @@ class Migration(migrations.Migration):
             model_name="plantprofile",
             name="toxicity_indicator",
             field=models.ForeignKey(
-                blank=True, null=True, on_delete=django.db.models.deletion.RESTRICT, to="project.toxicityindicator"
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.RESTRICT,
+                to="project.toxicityindicator",
             ),
         ),
     ]

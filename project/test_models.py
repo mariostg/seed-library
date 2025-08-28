@@ -107,13 +107,19 @@ class PlantProfileSearchTest(TestCase):
     def setUp(self):
         """Set up test data with sample plant profiles."""
         self.plant1 = PlantProfile.objects.create(
-            latin_name="Acer rubrum", english_name="Red Maple", french_name="Érable rouge"
+            latin_name="Acer rubrum",
+            english_name="Red Maple",
+            french_name="Érable rouge",
         )
         self.plant2 = PlantProfile.objects.create(
-            latin_name="Quercus alba", english_name="White Oak", french_name="Chêne blanc"
+            latin_name="Quercus alba",
+            english_name="White Oak",
+            french_name="Chêne blanc",
         )
         self.plant3 = PlantProfile.objects.create(
-            latin_name="Acer saccharum", english_name="Sugar Maple", french_name="Érable à sucre"
+            latin_name="Acer saccharum",
+            english_name="Sugar Maple",
+            french_name="Érable à sucre",
         )
 
     def test_search_by_latin_name(self):

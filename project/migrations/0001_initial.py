@@ -19,7 +19,15 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name="Color",
             fields=[
-                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
                 ("created", models.DateTimeField(auto_now_add=True)),
                 ("modified", models.DateTimeField(auto_now=True)),
                 ("color", models.CharField(blank=True, max_length=25, unique=True)),
@@ -31,7 +39,15 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name="Dormancy",
             fields=[
-                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
                 ("created", models.DateTimeField(auto_now_add=True)),
                 ("modified", models.DateTimeField(auto_now=True)),
                 ("dormancy", models.CharField(blank=True, max_length=50)),
@@ -43,7 +59,15 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name="Habit",
             fields=[
-                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
                 ("created", models.DateTimeField(auto_now_add=True)),
                 ("modified", models.DateTimeField(auto_now=True)),
                 ("habit", models.CharField(blank=True, max_length=30, unique=True)),
@@ -55,7 +79,15 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name="HarvestingIndicator",
             fields=[
-                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
                 ("created", models.DateTimeField(auto_now_add=True)),
                 ("modified", models.DateTimeField(auto_now=True)),
                 ("harvesting_indicator", models.CharField(blank=True, max_length=255)),
@@ -67,7 +99,15 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name="HarvestingMean",
             fields=[
-                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
                 ("created", models.DateTimeField(auto_now_add=True)),
                 ("modified", models.DateTimeField(auto_now=True)),
                 ("harvesting_mean", models.CharField(blank=True, max_length=100)),
@@ -79,7 +119,15 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name="Lighting",
             fields=[
-                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
                 ("created", models.DateTimeField(auto_now_add=True)),
                 ("modified", models.DateTimeField(auto_now=True)),
                 ("lighting", models.CharField(blank=True, max_length=45, unique=True)),
@@ -92,7 +140,15 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name="OneCultivar",
             fields=[
-                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
                 ("created", models.DateTimeField(auto_now_add=True)),
                 ("modified", models.DateTimeField(auto_now=True)),
                 ("one_cultivar", models.CharField(blank=True, max_length=125)),
@@ -104,7 +160,15 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name="PackagingMeasure",
             fields=[
-                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
                 ("created", models.DateTimeField(auto_now_add=True)),
                 ("modified", models.DateTimeField(auto_now=True)),
                 ("packaging_measure", models.CharField(blank=True, max_length=35)),
@@ -116,7 +180,15 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name="SeedHead",
             fields=[
-                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
                 ("created", models.DateTimeField(auto_now_add=True)),
                 ("modified", models.DateTimeField(auto_now=True)),
                 ("seed_head", models.CharField(blank=True, max_length=20)),
@@ -128,7 +200,15 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name="SeedPreparation",
             fields=[
-                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
                 ("created", models.DateTimeField(auto_now_add=True)),
                 ("modified", models.DateTimeField(auto_now=True)),
                 ("seed_preparation", models.CharField(blank=True, max_length=100)),
@@ -140,7 +220,15 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name="SeedStorage",
             fields=[
-                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
                 ("created", models.DateTimeField(auto_now_add=True)),
                 ("modified", models.DateTimeField(auto_now=True)),
                 ("seed_storage", models.CharField(blank=True, max_length=150)),
@@ -152,10 +240,21 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name="SeedStorageLabelInfo",
             fields=[
-                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
                 ("created", models.DateTimeField(auto_now_add=True)),
                 ("modified", models.DateTimeField(auto_now=True)),
-                ("seed_storage_label_info", models.CharField(blank=True, max_length=50)),
+                (
+                    "seed_storage_label_info",
+                    models.CharField(blank=True, max_length=50),
+                ),
             ],
             options={
                 "ordering": ["seed_storage_label_info"],
@@ -164,7 +263,15 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name="SharingPriority",
             fields=[
-                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
                 ("created", models.DateTimeField(auto_now_add=True)),
                 ("modified", models.DateTimeField(auto_now=True)),
                 ("sharing_priority", models.CharField(blank=True, max_length=75)),
@@ -176,7 +283,15 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name="SoilHumidity",
             fields=[
-                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
                 ("created", models.DateTimeField(auto_now_add=True)),
                 ("modified", models.DateTimeField(auto_now=True)),
                 ("soil_humidity", models.CharField(blank=True, max_length=45)),
@@ -189,7 +304,15 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name="SowingDepth",
             fields=[
-                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
                 ("created", models.DateTimeField(auto_now_add=True)),
                 ("modified", models.DateTimeField(auto_now=True)),
                 ("sowing_depth", models.CharField(blank=True, max_length=25)),
@@ -201,7 +324,15 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name="ViablityTest",
             fields=[
-                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
                 ("created", models.DateTimeField(auto_now_add=True)),
                 ("modified", models.DateTimeField(auto_now=True)),
                 ("viability_test", models.CharField(blank=True, max_length=150)),
@@ -213,9 +344,22 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name="ProjectUser",
             fields=[
-                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
                 ("password", models.CharField(max_length=128, verbose_name="password")),
-                ("last_login", models.DateTimeField(blank=True, null=True, verbose_name="last login")),
+                (
+                    "last_login",
+                    models.DateTimeField(
+                        blank=True, null=True, verbose_name="last login"
+                    ),
+                ),
                 (
                     "is_superuser",
                     models.BooleanField(
@@ -227,17 +371,36 @@ class Migration(migrations.Migration):
                 (
                     "username",
                     models.CharField(
-                        error_messages={"unique": "A user with that username already exists."},
+                        error_messages={
+                            "unique": "A user with that username already exists."
+                        },
                         help_text="Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.",
                         max_length=150,
                         unique=True,
-                        validators=[django.contrib.auth.validators.UnicodeUsernameValidator()],
+                        validators=[
+                            django.contrib.auth.validators.UnicodeUsernameValidator()
+                        ],
                         verbose_name="username",
                     ),
                 ),
-                ("first_name", models.CharField(blank=True, max_length=150, verbose_name="first name")),
-                ("last_name", models.CharField(blank=True, max_length=150, verbose_name="last name")),
-                ("email", models.EmailField(blank=True, max_length=254, verbose_name="email address")),
+                (
+                    "first_name",
+                    models.CharField(
+                        blank=True, max_length=150, verbose_name="first name"
+                    ),
+                ),
+                (
+                    "last_name",
+                    models.CharField(
+                        blank=True, max_length=150, verbose_name="last name"
+                    ),
+                ),
+                (
+                    "email",
+                    models.EmailField(
+                        blank=True, max_length=254, verbose_name="email address"
+                    ),
+                ),
                 (
                     "is_staff",
                     models.BooleanField(
@@ -254,7 +417,12 @@ class Migration(migrations.Migration):
                         verbose_name="active",
                     ),
                 ),
-                ("date_joined", models.DateTimeField(default=django.utils.timezone.now, verbose_name="date joined")),
+                (
+                    "date_joined",
+                    models.DateTimeField(
+                        default=django.utils.timezone.now, verbose_name="date joined"
+                    ),
+                ),
                 (
                     "groups",
                     models.ManyToManyField(
@@ -290,7 +458,15 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name="PlantProfile",
             fields=[
-                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
                 ("created", models.DateTimeField(auto_now_add=True)),
                 ("modified", models.DateTimeField(auto_now=True)),
                 ("latin_name", models.CharField(max_length=75, unique=True)),
@@ -339,11 +515,20 @@ class Migration(migrations.Migration):
                         default=0,
                     ),
                 ),
-                ("min_height", models.SmallIntegerField(blank=True, default=0, null=True)),
-                ("max_height", models.SmallIntegerField(blank=True, default=0, null=True)),
+                (
+                    "min_height",
+                    models.SmallIntegerField(blank=True, default=0, null=True),
+                ),
+                (
+                    "max_height",
+                    models.SmallIntegerField(blank=True, default=0, null=True),
+                ),
                 ("size", models.CharField(blank=True, max_length=35)),
                 ("stratification_detail", models.CharField(blank=True, max_length=55)),
-                ("stratification_duration", models.SmallIntegerField(blank=True, default=0, null=True)),
+                (
+                    "stratification_duration",
+                    models.SmallIntegerField(blank=True, default=0, null=True),
+                ),
                 ("sowing_period", models.CharField(blank=True, max_length=55)),
                 (
                     "harvesting_start",
@@ -387,46 +572,112 @@ class Migration(migrations.Migration):
                         default=0,
                     ),
                 ),
-                ("remove_non_seed_material", models.BooleanField(blank=True, default=False, null=True)),
+                (
+                    "remove_non_seed_material",
+                    models.BooleanField(blank=True, default=False, null=True),
+                ),
                 ("hyperlink", models.CharField(blank=True, max_length=200)),
                 ("envelope_label_link", models.CharField(blank=True, max_length=200)),
                 ("harvesting_video_link", models.CharField(blank=True, max_length=200)),
                 ("seed_picture_link", models.CharField(blank=True, max_length=200)),
-                ("pods_seed_head_picture_link", models.CharField(blank=True, max_length=200)),
+                (
+                    "pods_seed_head_picture_link",
+                    models.CharField(blank=True, max_length=200),
+                ),
                 ("notes", models.CharField(blank=True, max_length=450)),
-                ("germinate_easy", models.BooleanField(blank=True, default=False, null=True)),
-                ("rock_garden", models.BooleanField(blank=True, default=False, null=True)),
-                ("rain_garden", models.BooleanField(blank=True, default=False, null=True)),
-                ("pond_edge", models.BooleanField(blank=True, default=False, null=True)),
-                ("shoreline_rehab", models.BooleanField(blank=True, default=False, null=True)),
-                ("container_suitable", models.BooleanField(blank=True, default=False, null=True)),
-                ("ground_cover", models.BooleanField(blank=True, default=False, null=True)),
-                ("garden_edge", models.BooleanField(blank=True, default=False, null=True)),
-                ("woodland_garden", models.BooleanField(blank=True, default=False, null=True)),
-                ("wind_break_hedge", models.BooleanField(blank=True, default=False, null=True)),
-                ("erosion_control", models.BooleanField(blank=True, default=False, null=True)),
-                ("seed_availability", models.BooleanField(blank=True, default=False, null=True)),
-                ("keystones_species", models.BooleanField(blank=True, default=False, null=True)),
-                ("draught_tolerent", models.BooleanField(blank=True, default=False, null=True)),
-                ("salt_tolerent", models.BooleanField(blank=True, default=False, null=True)),
-                ("deer_tolerent", models.BooleanField(blank=True, default=False, null=True)),
-                ("easy_to_contain", models.BooleanField(blank=True, default=False, null=True)),
+                (
+                    "germinate_easy",
+                    models.BooleanField(blank=True, default=False, null=True),
+                ),
+                (
+                    "rock_garden",
+                    models.BooleanField(blank=True, default=False, null=True),
+                ),
+                (
+                    "rain_garden",
+                    models.BooleanField(blank=True, default=False, null=True),
+                ),
+                (
+                    "pond_edge",
+                    models.BooleanField(blank=True, default=False, null=True),
+                ),
+                (
+                    "shoreline_rehab",
+                    models.BooleanField(blank=True, default=False, null=True),
+                ),
+                (
+                    "container_suitable",
+                    models.BooleanField(blank=True, default=False, null=True),
+                ),
+                (
+                    "ground_cover",
+                    models.BooleanField(blank=True, default=False, null=True),
+                ),
+                (
+                    "garden_edge",
+                    models.BooleanField(blank=True, default=False, null=True),
+                ),
+                (
+                    "woodland_garden",
+                    models.BooleanField(blank=True, default=False, null=True),
+                ),
+                (
+                    "wind_break_hedge",
+                    models.BooleanField(blank=True, default=False, null=True),
+                ),
+                (
+                    "erosion_control",
+                    models.BooleanField(blank=True, default=False, null=True),
+                ),
+                (
+                    "seed_availability",
+                    models.BooleanField(blank=True, default=False, null=True),
+                ),
+                (
+                    "keystones_species",
+                    models.BooleanField(blank=True, default=False, null=True),
+                ),
+                (
+                    "draught_tolerent",
+                    models.BooleanField(blank=True, default=False, null=True),
+                ),
+                (
+                    "salt_tolerent",
+                    models.BooleanField(blank=True, default=False, null=True),
+                ),
+                (
+                    "deer_tolerent",
+                    models.BooleanField(blank=True, default=False, null=True),
+                ),
+                (
+                    "easy_to_contain",
+                    models.BooleanField(blank=True, default=False, null=True),
+                ),
                 (
                     "dormancy",
                     models.ForeignKey(
-                        blank=True, null=True, on_delete=django.db.models.deletion.RESTRICT, to="project.dormancy"
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.RESTRICT,
+                        to="project.dormancy",
                     ),
                 ),
                 (
                     "flower_color",
                     models.ForeignKey(
-                        blank=True, null=True, on_delete=django.db.models.deletion.RESTRICT, to="project.color"
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.RESTRICT,
+                        to="project.color",
                     ),
                 ),
                 (
                     "habit",
                     models.ForeignKey(
-                        blank=True, null=True, on_delete=django.db.models.deletion.RESTRICT, to="project.habit"
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.RESTRICT,
+                        to="project.habit",
                     ),
                 ),
                 (
@@ -470,7 +721,10 @@ class Migration(migrations.Migration):
                 (
                     "one_cultivar",
                     models.ForeignKey(
-                        blank=True, null=True, on_delete=django.db.models.deletion.RESTRICT, to="project.onecultivar"
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.RESTRICT,
+                        to="project.onecultivar",
                     ),
                 ),
                 (
@@ -485,7 +739,10 @@ class Migration(migrations.Migration):
                 (
                     "seed_head",
                     models.ForeignKey(
-                        blank=True, null=True, on_delete=django.db.models.deletion.RESTRICT, to="project.seedhead"
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.RESTRICT,
+                        to="project.seedhead",
                     ),
                 ),
                 (
@@ -500,7 +757,10 @@ class Migration(migrations.Migration):
                 (
                     "seed_storage",
                     models.ForeignKey(
-                        blank=True, null=True, on_delete=django.db.models.deletion.RESTRICT, to="project.seedstorage"
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.RESTRICT,
+                        to="project.seedstorage",
                     ),
                 ),
                 (
@@ -544,13 +804,19 @@ class Migration(migrations.Migration):
                 (
                     "sowing_depth",
                     models.ForeignKey(
-                        blank=True, null=True, on_delete=django.db.models.deletion.RESTRICT, to="project.sowingdepth"
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.RESTRICT,
+                        to="project.sowingdepth",
                     ),
                 ),
                 (
                     "viability_test",
                     models.ForeignKey(
-                        blank=True, null=True, on_delete=django.db.models.deletion.RESTRICT, to="project.viablitytest"
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.RESTRICT,
+                        to="project.viablitytest",
                     ),
                 ),
             ],

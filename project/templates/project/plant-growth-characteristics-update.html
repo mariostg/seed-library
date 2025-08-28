@@ -45,20 +45,22 @@ It allows users to update the plant growth characteristics, including:
             <input type="number" id="id_max_width" name="max_width" value="{{ plant.max_width }}" step="0.01" required>
           </div>
               <!--growth_habit-->
-          <div class="input-select">
-            <label for="id_growth_habit">Growth Habit</label>
-            <select id="id_growth_habit" name="growth_habit" required>
+          <div class="input-radio-group">
+            <span class="radio-group-label">Growth Habit</span>
+            <div class="radio-options">
               {% for habit in growth_habits %}
-                <option value="{{ habit.pk }}" {% if plant.growth_habit.pk == habit.pk %}selected{% endif %}>
-                  {{ habit }}
-                </option>
+                <div class="radio-option">
+                  <input type="radio" id="id_growth_habit_{{ habit.pk }}" name="growth_habit" value="{{ habit.pk }}"
+                         {% if plant.growth_habit.pk == habit.pk %}checked{% endif %} required>
+                  <label for="id_growth_habit_{{ habit.pk }}">{{ habit }}</label>
+                </div>
               {% endfor %}
-            </select>
+            </div>
           </div>
               <!--does_not_spread-->
           <div class="input-checkbox">
-            <label for="id_does_not_spread">Does Not Spread</label>
             <input type="checkbox" id="id_does_not_spread" name="does_not_spread" {% if plant.does_not_spread %}checked{% endif %}>
+            <label for="id_does_not_spread">Does Not Spread</label>
           </div>
               <!--lifespan-->
           <div class="input-select">
@@ -71,10 +73,15 @@ It allows users to update the plant growth characteristics, including:
               {% endfor %}
             </select>
           </div>
+          <!--spring_ephemeral-->
+          <div class="input-checkbox">
+            <input type="checkbox" id="id_spring_ephemeral" name="spring_ephemeral" {% if plant.spring_ephemeral %}checked{% endif %}>
+            <label for="id_spring_ephemeral">Spring Ephemeral</label>
+          </div>
               <!--dioecious-->
           <div class="input-checkbox">
-            <label for="id_dioecious">Dioecious</label>
             <input type="checkbox" id="id_dioecious" name="dioecious" {% if plant.dioecious %}checked{% endif %}>
+            <label for="id_dioecious">Dioecious</label>
           </div>
               <!--bloom_start-->
           <div class="input-select">

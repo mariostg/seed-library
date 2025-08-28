@@ -14,10 +14,21 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name="FlowerColor",
             fields=[
-                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
                 ("created", models.DateTimeField(auto_now_add=True)),
                 ("modified", models.DateTimeField(auto_now=True)),
-                ("flower_color", models.CharField(blank=True, max_length=25, unique=True)),
+                (
+                    "flower_color",
+                    models.CharField(blank=True, max_length=25, unique=True),
+                ),
             ],
             options={
                 "abstract": False,
@@ -27,7 +38,10 @@ class Migration(migrations.Migration):
             model_name="plantprofile",
             name="flower_color",
             field=models.ForeignKey(
-                blank=True, null=True, on_delete=django.db.models.deletion.RESTRICT, to="project.flowercolor"
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.RESTRICT,
+                to="project.flowercolor",
             ),
         ),
         migrations.DeleteModel(
