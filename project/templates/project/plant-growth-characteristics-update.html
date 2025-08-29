@@ -62,6 +62,11 @@ It allows users to update the plant growth characteristics, including:
             <input type="checkbox" id="id_does_not_spread" name="does_not_spread" {% if plant.does_not_spread %}checked{% endif %}>
             <label for="id_does_not_spread">Does Not Spread</label>
           </div>
+          <!--Spread by rhizome-->
+          <div class="input-checkbox">
+            <input type="checkbox" id="id_spread_by_rhizome" name="spread_by_rhizome" {% if plant.spread_by_rhizome %}checked{% endif %}>
+            <label for="id_spread_by_rhizome">Spread by Rhizome</label>
+          </div>
               <!--lifespan-->
           <div class="input-select">
             <label for="id_lifespan">Lifespan</label>

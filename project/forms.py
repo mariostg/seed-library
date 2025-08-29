@@ -195,6 +195,7 @@ class PlantIdentificationInformationForm(forms.ModelForm):
     class Meta:
         model = models.PlantProfile
         fields = [
+            "is_active",
             "latin_name",
             "english_name",
             "french_name",
@@ -207,3 +208,24 @@ class PlantIdentificationInformationForm(forms.ModelForm):
 
         # latin_name required
         self.fields["latin_name"].required = True
+
+
+class PlantGrowthCharacteristicsForm(forms.ModelForm):
+    class Meta:
+        model = models.PlantProfile
+        fields = [
+            "bloom_start",
+            "bloom_end",
+            "bloom_color",
+            "max_height",
+            "max_width",
+            "lifespan",
+            "spring_ephemeral",
+            "growth_habit",
+            "spread_by_rhizome",
+            "does_not_spread",
+            "dioecious",
+        ]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)

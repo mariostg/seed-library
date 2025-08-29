@@ -760,13 +760,13 @@ class PlantProfile(Base):
     lifespan = models.ForeignKey(
         PlantLifespan, on_delete=models.RESTRICT, blank=True, null=True
     )
-    spring_ephemeral = models.BooleanField(default=False, null=True, blank=True)
+    spring_ephemeral = models.BooleanField(default=False)
     growth_habit = models.ForeignKey(
         GrowthHabit, on_delete=models.RESTRICT, null=True, blank=True
     )
-    spread_by_rhizome = models.BooleanField(default=False, null=True, blank=True)
-    does_not_spread = models.BooleanField(default=False, null=True, blank=True)
-    dioecious = models.BooleanField(default=False, null=True, blank=True)
+    spread_by_rhizome = models.BooleanField(default=False)
+    does_not_spread = models.BooleanField(default=False)
+    dioecious = models.BooleanField(default=False)
 
     #
     # Propagation and seed sharing

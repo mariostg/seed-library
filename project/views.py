@@ -1101,6 +1101,7 @@ def plant_environmental_requirement_update(request, pk):
     )
 
 
+@login_required
 def plant_identification_information_update(request, pk):
     plant = utils.single_plant(pk, request)
     context = {
@@ -1108,20 +1109,15 @@ def plant_identification_information_update(request, pk):
         "plant": plant,
     }
     if request.method == "POST":
-        plant.is_active = request.POST.get("is_active") == "on"
-        plant.latin_name = request.POST.get("latin_name")
-        plant.english_name = request.POST.get("english_name")
-        plant.french_name = request.POST.get("french_name")
-        plant.taxon = request.POST.get("taxon")
-        plant.inaturalist_taxon = request.POST.get("inaturalist_taxon")
-        try:
-            plant.save()
-        except IntegrityError as e:
-            messages.error(request, f"Error updating identification information: {e}")
-            return redirect("plant-identification-information-update", pk=plant.pk)
-        messages.success(request, "Identification information updated successfully.")
-        return redirect("plant-profile-page", pk=plant.pk)
-
+        form = forms.PlantIdentificationInformationForm(request.POST, instance=plant)
+        if form.is_valid():
+            form.save()
+            messages.success(
+                request, "Identification information updated successfully."
+            )
+            return redirect("plant-profile-page", pk=plant.pk)
+        else:
+            messages.error(request, "Error updating identification information.")
     return render(
         request, "project/plant-identification-information-update.html", context
     )
@@ -1180,26 +1176,6 @@ def plant_growth_characteristics_update(request, pk):
     lifespan_choices = models.PlantLifespan.objects.all().order_by("lifespan")
     bloom_colors = models.BloomColor.objects.all().order_by("bloom_color")
     bloom_starts = bloom_ends = utils.MONTHS
-    if request.method == "POST":
-        plant.max_height = request.POST.get("max_height")
-        plant.max_width = request.POST.get("max_width")
-        plant.growth_habit = models.GrowthHabit.objects.get(
-            pk=request.POST.get("growth_habit")
-        )
-        plant.does_not_spread = request.POST.get("does_not_spread") == "on"
-        plant.lifespan = models.PlantLifespan.objects.get(
-            pk=request.POST.get("lifespan")
-        )
-        plant.dioecious = request.POST.get("dioecious") == "on"
-        plant.bloom_start = request.POST.get("bloom_start")
-        plant.bloom_end = request.POST.get("bloom_end")
-        plant.bloom_color = models.BloomColor.objects.get(
-            pk=request.POST.get("bloom_color")
-        )
-        plant.save()
-        messages.success(request, "Growth characteristics updated successfully.")
-        return redirect("plant-profile-page", pk=plant.pk)
-
     context = {
         "title": f"{plant.latin_name} - Growth Characteristics",
         "plant": plant,
@@ -1209,6 +1185,16 @@ def plant_growth_characteristics_update(request, pk):
         "bloom_ends": bloom_ends,
         "lifespan_choices": lifespan_choices,
     }
+
+    if request.method == "POST":
+        form = forms.PlantGrowthCharacteristicsForm(request.POST, instance=plant)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Growth characteristics updated successfully.")
+            return redirect("plant-profile-page", pk=plant.pk)
+    else:
+        form = forms.PlantGrowthCharacteristicsForm(instance=plant)
+    # context["form"] = form
     return render(request, "project/plant-growth-characteristics-update.html", context)
 
 
