@@ -20,9 +20,6 @@ It allows users to update the plant growth characteristics, including:
 
 {% extends "core/base.html" %}
 {% load static %}
-{% block extracss %}
-  <link rel="stylesheet" href="{% static 'css/form.css' %}" />
-{% endblock extracss %}
 {% block title %}{{ plant.latin_name }} - Plant Profile{% endblock title %}
 {{ title }}
 {% block content %}
@@ -34,19 +31,21 @@ It allows users to update the plant growth characteristics, including:
       <form method="post" action="{% url 'plant-growth-characteristics-update' plant.pk %}">
         {% csrf_token %}
         <div class="inputs">
-              <!--max_height-->
-          <div class="input-text">
-            <label for="id_max_height">Maximum Height (feet)</label>
-            <input type="number" id="id_max_height" name="max_height" value="{{ plant.max_height }}" step="0.01" required>
-          </div>
-              <!--max_width-->
-          <div class="input-text">
-            <label for="id_max_width">Maximum Width (feet)</label>
-            <input type="number" id="id_max_width" name="max_width" value="{{ plant.max_width }}" step="0.01" required>
-          </div>
+              <!--Physical Dimensions-->
+          <fieldset class="form-group">
+            <legend>Physical Dimensions</legend>
+            <div class="input-text">
+              <label for="id_max_height">Maximum Height (feet)</label>
+              <input type="number" id="id_max_height" name="max_height" value="{{ plant.max_height }}" step="0.01" required>
+            </div>
+            <div class="input-text">
+              <label for="id_max_width">Maximum Width (feet)</label>
+              <input type="number" id="id_max_width" name="max_width" value="{{ plant.max_width }}" step="0.01" required>
+            </div>
+          </fieldset>
               <!--growth_habit-->
-          <div class="input-radio-group">
-            <span class="radio-group-label">Growth Habit</span>
+          <fieldset class="form-group">
+            <legend>Growth Habit</legend>
             <div class="radio-options">
               {% for habit in growth_habits %}
                 <div class="radio-option">
@@ -56,71 +55,80 @@ It allows users to update the plant growth characteristics, including:
                 </div>
               {% endfor %}
             </div>
-          </div>
-              <!--does_not_spread-->
-          <div class="input-checkbox">
-            <input type="checkbox" id="id_does_not_spread" name="does_not_spread" {% if plant.does_not_spread %}checked{% endif %}>
-            <label for="id_does_not_spread">Does Not Spread</label>
-          </div>
-          <!--Spread by rhizome-->
-          <div class="input-checkbox">
-            <input type="checkbox" id="id_spread_by_rhizome" name="spread_by_rhizome" {% if plant.spread_by_rhizome %}checked{% endif %}>
-            <label for="id_spread_by_rhizome">Spread by Rhizome</label>
-          </div>
-              <!--lifespan-->
-          <div class="input-select">
-            <label for="id_lifespan">Lifespan</label>
-            <select id="id_lifespan" name="lifespan" required>
+          </fieldset>
+
+            <!--Plant Spread Characteristics-->
+          <fieldset class="form-group">
+            <legend>Spread Characteristics</legend>
+            <div class="input-checkbox">
+              <input type="checkbox" id="id_does_not_spread" name="does_not_spread" {% if plant.does_not_spread %}checked{% endif %}>
+              <label for="id_does_not_spread">Does Not Spread</label>
+            </div>
+            <div class="input-checkbox">
+              <input type="checkbox" id="id_spread_by_rhizome" name="spread_by_rhizome" {% if plant.spread_by_rhizome %}checked{% endif %}>
+              <label for="id_spread_by_rhizome">Spread by Rhizome</label>
+            </div>
+          </fieldset>
+
+            <!--Plant Life Cycle Characteristics-->
+          <fieldset class="form-group">
+            <legend>Life Cycle Characteristics</legend>
+            <div class="input-checkbox">
+              <input type="checkbox" id="id_spring_ephemeral" name="spring_ephemeral" {% if plant.spring_ephemeral %}checked{% endif %}>
+              <label for="id_spring_ephemeral">Spring Ephemeral</label>
+            </div>
+            <div class="input-checkbox">
+              <input type="checkbox" id="id_dioecious" name="dioecious" {% if plant.dioecious %}checked{% endif %}>
+              <label for="id_dioecious">Dioecious</label>
+            </div>
+          </fieldset>
+          <fieldset class="form-group">
+            <legend>Lifespan</legend>
+            <div class="radio-options">
               {% for lifespan in lifespan_choices %}
-                <option value="{{ lifespan.pk }}" {% if plant.lifespan.pk == lifespan.pk %}selected{% endif %}>
-                  {{ lifespan }}
-                </option>
+                <div class="radio-option">
+                  <input type="radio" id="id_lifespan_{{ lifespan.pk }}" name="lifespan" value="{{ lifespan.pk }}"
+                         {% if plant.lifespan.pk == lifespan.pk %}checked{% endif %} required>
+                  <label for="id_lifespan_{{ lifespan.pk }}">{{ lifespan }}</label>
+                </div>
               {% endfor %}
-            </select>
-          </div>
-          <!--spring_ephemeral-->
-          <div class="input-checkbox">
-            <input type="checkbox" id="id_spring_ephemeral" name="spring_ephemeral" {% if plant.spring_ephemeral %}checked{% endif %}>
-            <label for="id_spring_ephemeral">Spring Ephemeral</label>
-          </div>
-              <!--dioecious-->
-          <div class="input-checkbox">
-            <input type="checkbox" id="id_dioecious" name="dioecious" {% if plant.dioecious %}checked{% endif %}>
-            <label for="id_dioecious">Dioecious</label>
-          </div>
-              <!--bloom_start-->
-          <div class="input-select">
-            <label for="id_bloom_start">Bloom Start Month</label>
-            <select id="id_bloom_start" name="bloom_start" required>
-              {% for month in bloom_starts %}
-                <option value="{{ month }}" {% if plant.bloom_start == month %}selected{% endif %}>
-                  {{ month }}
-                </option>
-              {% endfor %}
-            </select>
-          </div>
-              <!--bloom_end-->
-          <div class="input-select">
-            <label for="id_bloom_end">Bloom End Month</label>
-            <select id="id_bloom_end" name="bloom_end" required>
-              {% for month in bloom_ends %}
-                <option value="{{ month }}" {% if plant.bloom_end == month %}selected{% endif %}>
-                  {{ month }}
-                </option>
-              {% endfor %}
-            </select>
-          </div>
-              <!--bloom_color-->
-          <div class="input-select">
-            <label for="id_bloom_color">Bloom Color</label>
-            <select id="id_bloom_color" name="bloom_color" required>
-              {% for color in bloom_colors %}
-                <option value="{{ color.pk }}" {% if plant.bloom_color.pk == color.pk %}selected{% endif %}>
-                  {{ color }}
-                </option>
-              {% endfor %}
-            </select>
-          </div>
+            </div>
+          </fieldset>
+
+            <!--Flowering and Appearance-->
+          <fieldset class="form-group">
+            <legend>Bloom characteristics</legend>
+            <div class="input-select">
+              <label for="id_bloom_start">Bloom Start Month</label>
+              <select id="id_bloom_start" name="bloom_start" required>
+                {% for month in bloom_starts %}
+                  <option value="{{ month }}" {% if plant.bloom_start == month %}selected{% endif %}>
+                    {{ month }}
+                  </option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="input-select">
+              <label for="id_bloom_end">Bloom End Month</label>
+              <select id="id_bloom_end" name="bloom_end" required>
+                {% for month in bloom_ends %}
+                  <option value="{{ month }}" {% if plant.bloom_end == month %}selected{% endif %}>
+                    {{ month }}
+                  </option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="input-select">
+              <label for="id_bloom_color">Bloom Color</label>
+              <select id="id_bloom_color" name="bloom_color" required>
+                {% for color in bloom_colors %}
+                  <option value="{{ color.pk }}" {% if plant.bloom_color.pk == color.pk %}selected{% endif %}>
+                    {{ color }}
+                  </option>
+                {% endfor %}
+              </select>
+            </div>
+          </fieldset>
         </div>
         <button type="submit" class="btn btn-primary">Update</button>
         <a href="{% url 'plant-growth-characteristics-update' plant.pk %}" class="btn btn-primary">Cancel</a>

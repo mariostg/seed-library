@@ -266,8 +266,15 @@ form {
 }
 form .inputs {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: normal;
   gap: 1rem;
+}
+@media (max-width: 768px) {
+  form .inputs {
+    flex-direction: column;
+  }
 }
 form .input-radio-group {
   display: flex;
@@ -281,6 +288,26 @@ form .input-text, form .input-select {
 }
 form .input-text label, form .input-select label {
   font-weight: bold;
+}
+
+fieldset {
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+legend {
+  background-color: #79ac78;
+  color: white;
+  padding: 3px 6px;
+}
+
+input {
+  font-size: 1rem;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
 input#max_height,
