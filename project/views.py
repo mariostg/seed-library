@@ -1201,6 +1201,30 @@ def plant_growth_characteristics_update(request, pk):
     return render(request, "project/plant-growth-characteristics-update.html", context)
 
 
+def plant_landscape_use_and_application_update(request, pk):
+    plant = utils.single_plant(pk, request)
+    context = {
+        "title": f"{plant.latin_name} - Landscape Use and Application",
+        "plant": plant,
+    }
+    if request.method == "POST":
+        form = forms.PlantLandscapeUseAndApplicationForm(request.POST, instance=plant)
+        if form.is_valid():
+            form.save()
+            messages.success(
+                request, "Landscape use and application updated successfully."
+            )
+            return redirect("plant-profile-page", pk=plant.pk)
+        else:
+            messages.error(request, "Error updating landscape use and application.")
+    else:
+        form = forms.PlantLandscapeUseAndApplicationForm(instance=plant)
+    context["form"] = form
+    return render(
+        request, "project/plant-landscape-use-and-application-update.html", context
+    )
+
+
 def plant_propagation_and_seed_sharing_update(request, pk):
     plant = utils.single_plant(pk, request)
     harvesting_months = utils.MONTHS

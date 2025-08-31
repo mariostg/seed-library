@@ -229,3 +229,25 @@ class PlantGrowthCharacteristicsForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
+
+class PlantLandscapeUseAndApplicationForm(forms.ModelForm):
+    class Meta:
+        model = models.PlantProfile
+        fields = [
+            "rock_garden",
+            "rain_garden",
+            "shoreline_rehab",
+            "container_suitable",
+            "school_garden",
+            "ground_cover",
+            "woodland_garden",
+            "boulevard_garden_tolerant",
+            "wetland_garden",
+            "easy_to_contain",
+            "hedge",
+            "transplantation_tolerant",
+        ]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)

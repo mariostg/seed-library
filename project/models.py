@@ -834,20 +834,19 @@ class PlantProfile(Base):
     #
     # Landscape uses and applications
     #
-    rock_garden = models.BooleanField(default=False, null=True, blank=True)
-    rain_garden = models.BooleanField(default=False, null=True, blank=True)
-    shoreline_rehab = models.BooleanField(default=False, null=True, blank=True)
-    container_suitable = models.BooleanField(default=False, null=True, blank=True)
-    school_garden = models.BooleanField(default=False, null=True, blank=True)
-    ground_cover = models.BooleanField(default=False, null=True, blank=True)
-    woodland_garden = models.BooleanField(default=False, null=True, blank=True)
-    boulevard_garden_tolerant = models.BooleanField(
-        default=False, null=True, blank=True
-    )
-    wetland_garden = models.BooleanField(default=False, null=True, blank=True)
-    easy_to_contain = models.BooleanField(default=False, null=True, blank=True)
-    hedge = models.BooleanField(default=False, null=True, blank=True)
-    transplantation_tolerant = models.BooleanField(default=False, null=True, blank=True)
+    rock_garden = models.BooleanField(default=False)
+    rain_garden = models.BooleanField(default=False)
+    school_garden = models.BooleanField(default=False)
+    wetland_garden = models.BooleanField(default=False)
+    woodland_garden = models.BooleanField(default=False)
+    boulevard_garden_tolerant = models.BooleanField(default=False)
+
+    shoreline_rehab = models.BooleanField(default=False)
+    container_suitable = models.BooleanField(default=False)
+    ground_cover = models.BooleanField(default=False)
+    easy_to_contain = models.BooleanField(default=False)
+    hedge = models.BooleanField(default=False)
+    transplantation_tolerant = models.BooleanField(default=False)
 
     #
     # Ecological benefits

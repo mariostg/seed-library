@@ -1,0 +1,82 @@
+{% extends "core/base.html" %}
+{% load static %}
+{% block extracss %}
+  <link rel="stylesheet" href="{% static 'css/plant-profile.css' %}" />
+{% endblock extracss %}
+{% block title %}{{ plant.english_name }} - Plant Profile{% endblock title %}
+{{ title }}
+{% block content %}
+  <main class="main-content">
+    {% include "project/_profile_update_links.html" %}
+    <div class="flex-col-center">
+      <h1>Update Plant Landscape Use and Application</h1>
+      <h2><a href="{% url 'plant-profile-page' plant.pk %}">{{ plant.latin_name }}</a></h2>
+      <form method="post" action="{% url 'plant-landscape-use-and-application-update' plant.pk %}">
+        {% csrf_token %}
+        <div class="form inputs">
+          <fieldset>
+            <legend>Landscape Use</legend>
+            <div class="form-group">
+              <input type="checkbox" id="id_rock_garden" name="rock_garden" {% if plant.rock_garden %}checked{% endif %}>
+              <label for="id_rock_garden">Rock Garden</label>
+            </div>
+            <!--input checkbox for Rain Garden-->
+            <div class="form-group">
+              <input type="checkbox" id="id_rain_garden" name="rain_garden" {% if plant.rain_garden %}checked{% endif %}>
+              <label for="id_rain_garden">Rain Garden</label>
+            </div>
+            <div class="form-group">
+              <input type="checkbox" id="id_school_garden" name="school_garden" {% if plant.school_garden %}checked{% endif %}>
+              <label for="id_school_garden">School Garden</label>
+            </div>
+            <!--input checkbox for wetland garden-->
+            <div class="form-group">
+              <input type="checkbox" id="id_wetland_garden" name="wetland_garden" {% if plant.wetland_garden %}checked{% endif %}>
+              <label for="id_wetland_garden">Wetland Garden</label>
+            </div>
+            <!--input checkbox for woodland garden-->
+            <div class="form-group">
+              <input type="checkbox" id="id_woodland_garden" name="woodland_garden" {% if plant.woodland_garden %}checked{% endif %}>
+              <label for="id_woodland_garden">Woodland Garden</label>
+            </div>
+            <!--input checkbox for boulevard garden tolerant-->
+            <div class="form-group">
+              <input type="checkbox" id="id_boulevard_garden_tolerant" name="boulevard_garden_tolerant" {% if plant.boulevard_garden_tolerant %}checked{% endif %}>
+              <label for="id_boulevard_garden_tolerant">Boulevard Garden Tolerant</label>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>Applications</legend>
+            <!--Input checkbox for container suitable-->
+            <div class="form-group">
+              <input type="checkbox" id="id_container_suitable" name="container_suitable" {% if plant.container_suitable %}checked{% endif %}>
+              <label for="id_container_suitable">Container Suitable</label>
+            </div>
+            <!--input checkbox for easy to contain-->
+            <div class="form-group">
+              <input type="checkbox" id="id_easy_to_contain" name="easy_to_contain" {% if plant.easy_to_contain %}checked{% endif %}>
+              <label for="id_easy_to_contain">Easy to Contain</label>
+            </div>
+            <!--input checkbox for ground cover-->
+            <div class="form-group">
+              <input type="checkbox" id="id_ground_cover" name="ground_cover" {% if plant.ground_cover %}checked{% endif %}>
+              <label for="id_ground_cover">Ground Cover</label>
+            </div>
+            <!--input checkbox for hedge-->
+            <div class="form-group">
+              <input type="checkbox" id="id_hedge" name="hedge" {% if plant.hedge %}checked{% endif %}>
+              <label for="id_hedge">Hedge</label>
+            </div>
+            <!--input checkbox for shoreline rehab-->
+            <div class="form-group">
+              <input type="checkbox" id="id_shoreline_rehab" name="shoreline_rehab" {% if plant.shoreline_rehab %}checked{% endif %}>
+              <label for="id_shoreline_rehab">Shoreline Rehabilitation</label>
+            </div>
+          </fieldset>
+        </div>
+        <button type="submit" class="btn btn-primary">Update</button>
+        <a href="{% url 'plant-landscape-use-and-application-update' plant.pk %}" class="btn btn-primary">Cancel</a>
+      </form>
+    </div>
+  </main>
+{% endblock content %}
