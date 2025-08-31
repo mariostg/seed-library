@@ -13,53 +13,52 @@
       <h2><a href="{% url 'plant-profile-page' plant.pk %}">{{ plant.latin_name }}</a></h2>
       <form method="post" action="{% url 'plant-environmental-requirement-update' plant.pk %}">
         {% csrf_token %}
-        <div>
-              <!--Input checkbox for full_sun-->
-          <div class="form-group">
-            <input type="checkbox" id="id_full_sun" name="full_sun" {% if plant.full_sun %}checked{% endif %}>
-            <label for="id_full_sun">Full Sun</label>
-          </div>
-              <!--Input checkbox for part_shade-->
-          <div class="form-group">
-            <input type="checkbox" id="id_part_shade" name="part_shade" {% if plant.part_shade %}checked{% endif %}>
-            <label for="id_part_shade">Part Shade</label>
-          </div>
-              <!--Input checkbox for full_shade-->
-          <div class="form-group">
-            <input type="checkbox" id="id_full_shade" name="full_shade" {% if plant.full_shade %}checked{% endif %}>
-            <label for="id_full_shade">Full Shade</label>
-          </div>
-              <!--Input checkbox for moisture_dry-->
-          <div class="form-group">
-            <input type="checkbox" id="id_moisture_dry" name="moisture_dry" {% if plant.moisture_dry %}checked{% endif %}>
-            <label for="id_moisture_dry">Dry</label>
-          </div>
-              <!--Input checkbox for moisture_medium-->
-          <div class="form-group">
-            <input type="checkbox" id="id_moisture_medium" name="moisture_medium" {% if plant.moisture_medium %}checked{% endif %}>
-            <label for="id_moisture_medium">Medium</label>
-          </div>
-              <!--Input checkbox for moisture_wet-->
-          <div class="form-group">
-            <input type="checkbox" id="id_moisture_wet" name="moisture_wet" {% if plant.moisture_wet %}checked{% endif %}>
-            <label for="id_moisture_wet">Wet</label>
-          </div>
-              <!--Input checkbox for soil tolerances :
-              limestone_tolerant (BooleanField): Tolerant of limestone soils
-              sand_tolerant (BooleanField): Tolerant of sandy soils
-              acidic_soil_tolerant (BooleanField): Tolerant of acidic soils-->
-          <div class="form-group">
-            <input type="checkbox" id="id_limestone_tolerant" name="limestone_tolerant" {% if plant.limestone_tolerant %}checked{% endif %}>
-            <label for="id_limestone_tolerant">Limestone Tolerant</label>
-          </div>
-          <div class="form-group">
-            <input type="checkbox" id="id_sand_tolerant" name="sand_tolerant" {% if plant.sand_tolerant %}checked{% endif %}>
-            <label for="id_sand_tolerant">Sand Tolerant</label>
-          </div>
-          <div class="form-group">
-            <input type="checkbox" id="id_acidic_soil_tolerant" name="acidic_soil_tolerant" {% if plant.acidic_soil_tolerant %}checked{% endif %}>
-            <label for="id_acidic_soil_tolerant">Acidic Soil Tolerant</label>
-          </div>
+        <div class="form inputs">
+          <fieldset>
+            <legend>Sunlight Requirements</legend>
+            <div class="form-group">
+              <input type="checkbox" id="id_full_sun" name="full_sun" {% if plant.full_sun %}checked{% endif %}>
+              <label for="id_full_sun">Full Sun</label>
+            </div>
+            <div class="form-group">
+              <input type="checkbox" id="id_part_shade" name="part_shade" {% if plant.part_shade %}checked{% endif %}>
+              <label for="id_part_shade">Part Shade</label>
+            </div>
+            <div class="form-group">
+              <input type="checkbox" id="id_full_shade" name="full_shade" {% if plant.full_shade %}checked{% endif %}>
+              <label for="id_full_shade">Full Shade</label>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>Moisture Requirements</legend>
+            <div class="form-group">
+              <input type="checkbox" id="id_moisture_dry" name="moisture_dry" {% if plant.moisture_dry %}checked{% endif %}>
+              <label for="id_moisture_dry">Dry</label>
+            </div>
+            <div class="form-group">
+              <input type="checkbox" id="id_moisture_medium" name="moisture_medium" {% if plant.moisture_medium %}checked{% endif %}>
+              <label for="id_moisture_medium">Medium</label>
+            </div>
+            <div class="form-group">
+              <input type="checkbox" id="id_moisture_wet" name="moisture_wet" {% if plant.moisture_wet %}checked{% endif %}>
+              <label for="id_moisture_wet">Wet</label>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>Soil Preferences</legend>
+            <div class="form-group">
+              <input type="checkbox" id="id_limestone_tolerant" name="limestone_tolerant" {% if plant.limestone_tolerant %}checked{% endif %}>
+              <label for="id_limestone_tolerant">Limestone Tolerant</label>
+            </div>
+            <div class="form-group">
+              <input type="checkbox" id="id_sand_tolerant" name="sand_tolerant" {% if plant.sand_tolerant %}checked{% endif %}>
+              <label for="id_sand_tolerant">Sand Tolerant</label>
+            </div>
+            <div class="form-group">
+              <input type="checkbox" id="id_acidic_soil_tolerant" name="acidic_soil_tolerant" {% if plant.acidic_soil_tolerant %}checked{% endif %}>
+              <label for="id_acidic_soil_tolerant">Acidic Soil Tolerant</label>
+            </div>
+          </fieldset>
         </div>
         <button type="submit" class="btn btn-primary">Update</button>
         <a href="{% url 'plant-environmental-requirement-update' plant.pk %}" class="btn btn-primary">Cancel</a>
