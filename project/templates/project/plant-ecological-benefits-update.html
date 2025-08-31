@@ -1,0 +1,96 @@
+{% extends "core/base.html" %}
+{% load static %}
+{% block extracss %}
+  <link rel="stylesheet" href="{% static 'project/css/plant-ecological-benefits.css' %}">
+{% endblock extracss %}
+{% block title %}{{ plant_profile.latin_name }} - Ecological Benefits{% endblock title %}
+{{ title }}
+{% block content %}
+  <main class="main-content">
+    {% include "project/_profile_update_links.html" %}
+    <div class="flex-col-center">
+      <h1>Update Plant Ecological Benefits</h1>
+      <h2><a href="{% url 'plant-profile-page' plant.pk %}">{{ plant.latin_name }}</a></h2>
+      <form action="{% url 'plant-ecological-benefits-update' plant.pk %}" method="post">
+        {% csrf_token %}
+        <div class="form inputs">
+          <fieldset class="form-group">
+            <legend>Bee Interactions </legend>
+                    <!--input checkbox for bee host-->
+            <div class="input-checkbox">
+              {{ form.bee_host }}
+              <label for="{{ form.bee_host.id_for_label }}">{{ form.bee_host.label }}</label>
+            </div>
+                    <!--Multi selct lilst for bees supported-->
+            <div class="input-select">
+              <label for="{{ form.bees.id_for_label }}">Bees supported</label>
+              {{ form.bees }}
+            </div>
+          </fieldset>
+          <fieldset class="form-group">
+            <legend>Butterfly Interactions</legend>
+            <div class="input-checkbox">
+              {{ form.butterfly_host }}
+              <label for="{{ form.butterfly_host.id_for_label }}">{{ form.butterfly_host.label }}</label>
+            </div>
+            <div class="input-select">
+              <label for="{{ form.butterflies.id_for_label }}">Butterflies supported</label>
+              {{ form.butterflies }}
+            </div>
+          </fieldset>
+          <fieldset class="form-group">
+            <legend>Bird Interactions</legend>
+                    <!--Input checkbox for bird friendly-->
+            <div class="input-checkbox">
+              {{ form.bird_friendly }}
+              <label for="{{ form.bird_friendly.id_for_label }}">{{ form.bird_friendly.label }}</label>
+            </div>
+                    <!--Input checkbox for hummingbird friendly-->
+            <div class="input-checkbox">
+              {{ form.hummingbird_friendly }}
+              <label for="{{ form.hummingbird_friendly.id_for_label }}">{{ form.hummingbird_friendly.label }}</label>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>Other Wildlife Interactions</legend>
+                    <!--Input checkbox for deer resistant-->
+            <div class="input-checkbox">
+              {{ form.deer_tolerant }}
+              <label for="{{ form.deer_tolerant.id_for_label }}">{{ form.deer_tolerant.label }}</label>
+            </div>
+                    <!--Input checkbox for rabbit resistant-->
+            <div class="input-checkbox">
+              {{ form.rabbit_tolerant }}
+              <label for="{{ form.rabbit_tolerant.id_for_label }}">{{ form.rabbit_tolerant.label }}</label>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>Other Tolerances</legend>
+            <div class="input-checkbox">
+              {{ form.drought_tolerant }}
+              <label for="{{ form.drought_tolerant.id_for_label }}">{{ form.drought_tolerant.label }}</label>
+            </div>
+            <div class="input-checkbox">
+              {{ form.salt_tolerant }}
+              <label for="{{ form.salt_tolerant.id_for_label }}">{{ form.salt_tolerant.label }}</label>
+            </div>
+            <div class="input-checkbox">
+              {{ form.juglone_tolerant }}
+              <label for="{{ form.juglone_tolerant.id_for_label }}">{{ form.juglone_tolerant.label }}</label>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>Soil Improvement</legend>
+            <div class="input-checkbox">
+              {{ form.nitrogen_fixer }}
+              <label for="{{ form.nitrogen_fixer.id_for_label }}">{{ form.nitrogen_fixer.label }}</label>
+            </div>
+
+          </fieldset>
+        </div>
+        <button type="submit" class="btn btn-primary">Update</button>
+        <a href="{% url 'plant-ecological-benefits-update' plant.pk %}" class="btn btn-primary">Cancel</a>
+      </form>
+    </div>
+  </main>
+{% endblock content %}

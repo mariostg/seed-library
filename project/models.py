@@ -825,15 +825,17 @@ class PlantProfile(Base):
     )
     notes = models.CharField(max_length=450, blank=True)
     harvesting_notes = models.CharField(max_length=450, blank=True)
-    germinate_easy = models.BooleanField(default=False, null=True, blank=True)
-    self_seeding = models.BooleanField(default=False, null=True, blank=True)
-    beginner_friendly = models.BooleanField(default=False, null=True, blank=True)
-    accepting_seed = models.BooleanField(default=False, null=True, blank=True)
-    seed_availability = models.BooleanField(default=False, null=True, blank=True)
+    germinate_easy = models.BooleanField(default=False)
+    self_seeding = models.BooleanField(default=False)
+    beginner_friendly = models.BooleanField(default=False)
+    transplantation_tolerant = models.BooleanField(default=False)
+    accepting_seed = models.BooleanField(default=False)
+    seed_availability = models.BooleanField(default=False)
 
     #
     # Landscape uses and applications
     #
+    pollinator_garden = models.BooleanField(default=False)
     rock_garden = models.BooleanField(default=False)
     rain_garden = models.BooleanField(default=False)
     school_garden = models.BooleanField(default=False)
@@ -846,30 +848,29 @@ class PlantProfile(Base):
     ground_cover = models.BooleanField(default=False)
     easy_to_contain = models.BooleanField(default=False)
     hedge = models.BooleanField(default=False)
-    transplantation_tolerant = models.BooleanField(default=False)
+    foot_traffic_tolerant = models.BooleanField(default=False)
 
     #
     # Ecological benefits
     #
     bees = models.ManyToManyField(BeeSpecies, blank=True, related_name="plants")
-    bee_host = models.BooleanField(default=False, null=True, blank=True)
-    bird_friendly = models.BooleanField(default=False, null=True, blank=True)
+    bee_host = models.BooleanField(default=False)
+    bird_friendly = models.BooleanField(default=False)
     butterflies = models.ManyToManyField(
         ButterflySpecies, blank=True, related_name="plants"
     )
-    butterfly_host = models.BooleanField(default=False, null=True, blank=True)
-    hummingbird_friendly = models.BooleanField(default=False, null=True, blank=True)
-    keystones_species = models.BooleanField(default=False, null=True, blank=True)
-    pollinator_garden = models.BooleanField(default=False, null=True, blank=True)
+    butterfly_host = models.BooleanField(default=False)
+    hummingbird_friendly = models.BooleanField(default=False)
 
-    deer_tolerant = models.BooleanField(default=False, null=True, blank=True)
-    rabbit_tolerant = models.BooleanField(default=False, null=True, blank=True)
+    keystones_species = models.BooleanField(default=False)
 
-    drought_tolerant = models.BooleanField(default=False, null=True, blank=True)
-    foot_traffic_tolerant = models.BooleanField(default=False, null=True, blank=True)
-    juglone_tolerant = models.BooleanField(default=False, null=True, blank=True)
-    nitrogen_fixer = models.BooleanField(default=False, null=True, blank=True)
-    salt_tolerant = models.BooleanField(default=False, null=True, blank=True)
+    deer_tolerant = models.BooleanField(default=False)
+    rabbit_tolerant = models.BooleanField(default=False)
+
+    drought_tolerant = models.BooleanField(default=False)
+    salt_tolerant = models.BooleanField(default=False)
+    juglone_tolerant = models.BooleanField(default=False)
+    nitrogen_fixer = models.BooleanField(default=False)
 
     #
     # Special features and considerations

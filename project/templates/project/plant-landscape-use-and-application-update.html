@@ -16,6 +16,12 @@
         <div class="form inputs">
           <fieldset>
             <legend>Landscape Use</legend>
+            <!--input checkbox for Pollinator Garden-->
+            <div class="form-group">
+              <input type="checkbox" id="id_pollinator_garden" name="pollinator_garden" {% if plant.pollinator_garden %}checked{% endif %}>
+              <label for="id_pollinator_garden">Pollinator Garden</label>
+            </div>
+            <!--input checkbox for Rock Garden-->
             <div class="form-group">
               <input type="checkbox" id="id_rock_garden" name="rock_garden" {% if plant.rock_garden %}checked{% endif %}>
               <label for="id_rock_garden">Rock Garden</label>
@@ -42,7 +48,7 @@
             <!--input checkbox for boulevard garden tolerant-->
             <div class="form-group">
               <input type="checkbox" id="id_boulevard_garden_tolerant" name="boulevard_garden_tolerant" {% if plant.boulevard_garden_tolerant %}checked{% endif %}>
-              <label for="id_boulevard_garden_tolerant">Boulevard Garden Tolerant</label>
+              <label for="id_boulevard_garden_tolerant">Boulevard Garden</label>
             </div>
           </fieldset>
           <fieldset>
@@ -71,6 +77,11 @@
             <div class="form-group">
               <input type="checkbox" id="id_shoreline_rehab" name="shoreline_rehab" {% if plant.shoreline_rehab %}checked{% endif %}>
               <label for="id_shoreline_rehab">Shoreline Rehabilitation</label>
+            </div>
+            <!--input checkbox for foot traffic tolerant-->
+            <div class="form-group">
+              <input type="checkbox" id="id_foot_traffic_tolerant" name="foot_traffic_tolerant" {% if plant.foot_traffic_tolerant %}checked{% endif %}>
+              <label for="id_foot_traffic_tolerant">Foot Traffic Tolerant</label>
             </div>
           </fieldset>
         </div>

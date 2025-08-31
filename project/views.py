@@ -1225,6 +1225,26 @@ def plant_landscape_use_and_application_update(request, pk):
     )
 
 
+def plant_ecological_benefits_update(request, pk):
+    plant = utils.single_plant(pk, request)
+    context = {
+        "title": f"{plant.latin_name} - Ecological Benefits",
+        "plant": plant,
+    }
+    if request.method == "POST":
+        form = forms.PlantEcologicalBenefitsForm(request.POST, instance=plant)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Ecological benefits updated successfully.")
+            return redirect("plant-profile-page", pk=plant.pk)
+        else:
+            messages.error(request, "Error updating ecological benefits.")
+    else:
+        form = forms.PlantEcologicalBenefitsForm(instance=plant)
+    context["form"] = form
+    return render(request, "project/plant-ecological-benefits-update.html", context)
+
+
 def plant_propagation_and_seed_sharing_update(request, pk):
     plant = utils.single_plant(pk, request)
     harvesting_months = utils.MONTHS
