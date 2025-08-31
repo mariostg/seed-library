@@ -4,6 +4,7 @@ import io
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import ValidationError
 from django.db import IntegrityError
 from django.db.models import OuterRef, RestrictedError, Subquery, Value
 from django.db.models.functions import Coalesce
@@ -1188,10 +1189,12 @@ def plant_growth_characteristics_update(request, pk):
 
     if request.method == "POST":
         form = forms.PlantGrowthCharacteristicsForm(request.POST, instance=plant)
-        if form.is_valid():
+        try:
             form.save()
             messages.success(request, "Growth characteristics updated successfully.")
             return redirect("plant-profile-page", pk=plant.pk)
+        except ValidationError as e:
+            messages.error(request, f"Error updating growth characteristics: {e}")
     else:
         form = forms.PlantGrowthCharacteristicsForm(instance=plant)
     # context["form"] = form
