@@ -851,23 +851,26 @@ class PlantProfile(Base):
     #
     # Ecological benefits
     #
-    keystones_species = models.BooleanField(default=False, null=True, blank=True)
-    drought_tolerant = models.BooleanField(default=False, null=True, blank=True)
-    salt_tolerant = models.BooleanField(default=False, null=True, blank=True)
-    deer_tolerant = models.BooleanField(default=False, null=True, blank=True)
-    rabbit_tolerant = models.BooleanField(default=False, null=True, blank=True)
-    foot_traffic_tolerant = models.BooleanField(default=False, null=True, blank=True)
-    hummingbird_friendly = models.BooleanField(default=False, null=True, blank=True)
-    pollinator_garden = models.BooleanField(default=False, null=True, blank=True)
-    butterfly_host = models.BooleanField(default=False, null=True, blank=True)
+    bees = models.ManyToManyField(BeeSpecies, blank=True, related_name="plants")
     bee_host = models.BooleanField(default=False, null=True, blank=True)
     bird_friendly = models.BooleanField(default=False, null=True, blank=True)
-    juglone_tolerant = models.BooleanField(default=False, null=True, blank=True)
-    nitrogen_fixer = models.BooleanField(default=False, null=True, blank=True)
     butterflies = models.ManyToManyField(
         ButterflySpecies, blank=True, related_name="plants"
     )
-    bees = models.ManyToManyField(BeeSpecies, blank=True, related_name="plants")
+    butterfly_host = models.BooleanField(default=False, null=True, blank=True)
+    hummingbird_friendly = models.BooleanField(default=False, null=True, blank=True)
+    keystones_species = models.BooleanField(default=False, null=True, blank=True)
+    pollinator_garden = models.BooleanField(default=False, null=True, blank=True)
+
+    deer_tolerant = models.BooleanField(default=False, null=True, blank=True)
+    rabbit_tolerant = models.BooleanField(default=False, null=True, blank=True)
+
+    drought_tolerant = models.BooleanField(default=False, null=True, blank=True)
+    foot_traffic_tolerant = models.BooleanField(default=False, null=True, blank=True)
+    juglone_tolerant = models.BooleanField(default=False, null=True, blank=True)
+    nitrogen_fixer = models.BooleanField(default=False, null=True, blank=True)
+    salt_tolerant = models.BooleanField(default=False, null=True, blank=True)
+
     #
     # Special features and considerations
     #
