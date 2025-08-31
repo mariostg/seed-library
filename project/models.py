@@ -744,7 +744,9 @@ class PlantProfile(Base):
     )
     moisture_wet = models.BooleanField(default=False, null=True, blank=True)
     moisture_medium = models.BooleanField(default=False, null=True, blank=True)
-
+    limestone_tolerant = models.BooleanField(default=False, null=True, blank=True)
+    sand_tolerant = models.BooleanField(default=False, null=True, blank=True)
+    acidic_soil_tolerant = models.BooleanField(default=False, null=True, blank=True)
     #
     # Growth characteristics
     #
@@ -856,9 +858,6 @@ class PlantProfile(Base):
     deer_tolerant = models.BooleanField(default=False, null=True, blank=True)
     rabbit_tolerant = models.BooleanField(default=False, null=True, blank=True)
     foot_traffic_tolerant = models.BooleanField(default=False, null=True, blank=True)
-    limestone_tolerant = models.BooleanField(default=False, null=True, blank=True)
-    sand_tolerant = models.BooleanField(default=False, null=True, blank=True)
-    acidic_soil_tolerant = models.BooleanField(default=False, null=True, blank=True)
     hummingbird_friendly = models.BooleanField(default=False, null=True, blank=True)
     pollinator_garden = models.BooleanField(default=False, null=True, blank=True)
     butterfly_host = models.BooleanField(default=False, null=True, blank=True)
