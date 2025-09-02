@@ -875,16 +875,16 @@ class PlantProfile(Base):
     #
     # Special features and considerations
     #
-    septic_tank_safe = models.BooleanField(default=False, null=True, blank=True)
+    septic_tank_safe = models.BooleanField(default=False)
     toxicity_indicator_notes = models.CharField(max_length=450, blank=True)
     toxicity_indicator = models.ForeignKey(
         ToxicityIndicator, on_delete=models.RESTRICT, null=True, blank=True
     )
     alternative_to_notes = models.CharField(max_length=450, blank=True)
-    grasp_candidate = models.BooleanField(default=False, null=True, blank=True)
+    grasp_candidate = models.BooleanField(default=False)
     grasp_candidate_notes = models.CharField(max_length=450, blank=True)
-    cause_dermatitis = models.BooleanField(default=False, null=True, blank=True)
-    produces_burs = models.BooleanField(default=False, null=True, blank=True)
+    cause_dermatitis = models.BooleanField(default=False)
+    produces_burs = models.BooleanField(default=False)
     conservation_status = models.ForeignKey(
         ConservationStatus, on_delete=models.RESTRICT, null=True, blank=True
     )
