@@ -179,6 +179,11 @@ urlpatterns += [
         name="plant-ecological-benefits-update",
     ),
     path(
+        "plant-special-features-and-considerations-update/<int:pk>",
+        views.plant_special_features_and_consideration_update,
+        name="plant-special-features-and-considerations-update",
+    ),
+    path(
         "plant-propagation-and-seed-sharing-update/<int:pk>",
         views.plant_propagation_and_seed_sharing_update,
         name="plant-propagation-and-seed-sharing-update",

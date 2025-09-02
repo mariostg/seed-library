@@ -894,8 +894,6 @@ class PlantProfile(Base):
     )
     native_to_ottawa_region = models.BooleanField(
         default=False,
-        null=True,
-        blank=True,
         help_text="Is the plant native to the Ottawa region?",
     )
     ecozones = models.ManyToManyField(

@@ -1245,6 +1245,36 @@ def plant_ecological_benefits_update(request, pk):
     return render(request, "project/plant-ecological-benefits-update.html", context)
 
 
+def plant_special_features_and_consideration_update(request, pk):
+    plant = utils.single_plant(pk, request)
+    context = {
+        "title": f"{plant.latin_name} - Special Features and Considerations",
+        "plant": plant,
+    }
+    if request.method == "POST":
+        form = forms.PlantSpecialFeaturesAndConsiderationForm(
+            request.POST, instance=plant
+        )
+        if form.is_valid():
+            form.save()
+            messages.success(
+                request, "Special features and considerations updated successfully."
+            )
+            return redirect("plant-profile-page", pk=plant.pk)
+        else:
+            messages.error(
+                request, "Error updating special features and considerations."
+            )
+    else:
+        form = forms.PlantSpecialFeaturesAndConsiderationForm(instance=plant)
+    context["form"] = form
+    return render(
+        request,
+        "project/plant-special-features-and-considerations-update.html",
+        context,
+    )
+
+
 def plant_propagation_and_seed_sharing_update(request, pk):
     plant = utils.single_plant(pk, request)
     harvesting_months = utils.MONTHS

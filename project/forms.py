@@ -276,3 +276,24 @@ class PlantEcologicalBenefitsForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
+
+class PlantSpecialFeaturesAndConsiderationForm(forms.ModelForm):
+    class Meta:
+        model = models.PlantProfile
+        fields = [
+            "septic_tank_safe",
+            "produces_burs",
+            "cause_dermatitis",
+            "toxicity_indicator",
+            "toxicity_indicator_notes",
+            "alternative_to_notes",
+            "grasp_candidate",
+            "grasp_candidate_notes",
+            "conservation_status",
+            "native_to_ottawa_region",
+            "ecozones",
+        ]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)

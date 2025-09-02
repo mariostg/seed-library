@@ -7,6 +7,7 @@
     <a href="{% url 'plant-environmental-requirement-update' plant.pk %}">Environmental Requirements</a> |
     <a href="{% url 'plant-landscape-use-and-application-update' plant.pk %}">Landscape Use and Application</a> |
     <a href="{% url 'plant-ecological-benefits-update' plant.pk %}">Ecological Benefits</a> |
+    <a href="{% url 'plant-special-features-and-considerations-update' plant.pk %}">Special Features and Considerations</a> |
     <a href="{% url 'plant-propagation-and-seed-sharing-update' plant.pk %}">Propagation and Seed Sharing</a> |
     <a class="alert alert--warning" href="{% url 'plant-profile-delete' plant.pk %}">Delete {{ plant.latin_name }}</a>
   {% endif %}
