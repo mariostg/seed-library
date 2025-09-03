@@ -769,19 +769,16 @@ class PlantProfile(Base):
     spread_by_rhizome = models.BooleanField(default=False)
     does_not_spread = models.BooleanField(default=False)
     dioecious = models.BooleanField(default=False)
+    germinate_easy = models.BooleanField(default=False)
+    self_seeding = models.BooleanField(default=False)
+    beginner_friendly = models.BooleanField(default=False)
+    transplantation_tolerant = models.BooleanField(default=False)
 
     #
     # Propagation and seed sharing
     #
-    stratification_detail = models.CharField(max_length=55, blank=True)
-    stratification_duration = models.SmallIntegerField(blank=True, null=True, default=0)
-    sowing_depth = models.ForeignKey(
-        SowingDepth, on_delete=models.RESTRICT, blank=True, null=True
-    )
-    sowing_period = models.CharField(max_length=55, blank=True)
-    sharing_priority = models.ForeignKey(
-        SharingPriority, on_delete=models.RESTRICT, blank=True, null=True
-    )
+
+    # Harvesting information
     harvesting_start = models.SmallIntegerField(
         choices=MONTHS.items(), blank=True, default=0
     )
@@ -804,11 +801,28 @@ class PlantProfile(Base):
     on_cultivar = models.ForeignKey(
         OneCultivar, on_delete=models.RESTRICT, null=True, blank=True
     )
-    packaging_measure = models.ForeignKey(
-        PackagingMeasure, on_delete=models.RESTRICT, null=True, blank=True
-    )
+    harvesting_video_link = models.CharField(max_length=200, blank=True)
+    harvesting_notes = models.CharField(max_length=450, blank=True)
+
+    # Sowing information
+    stratification_detail = models.CharField(max_length=55, blank=True)
+    stratification_duration = models.SmallIntegerField(blank=True, null=True, default=0)
     dormancy = models.ForeignKey(
         Dormancy, on_delete=models.RESTRICT, null=True, blank=True
+    )
+
+    sowing_depth = models.ForeignKey(
+        SowingDepth, on_delete=models.RESTRICT, blank=True, null=True
+    )
+    sowing_period = models.CharField(max_length=55, blank=True)
+
+    sharing_priority = models.ForeignKey(
+        SharingPriority, on_delete=models.RESTRICT, blank=True, null=True
+    )
+
+    # Seed distribution
+    packaging_measure = models.ForeignKey(
+        PackagingMeasure, on_delete=models.RESTRICT, null=True, blank=True
     )
     seed_preparation = models.ForeignKey(
         SeedPreparation, on_delete=models.RESTRICT, null=True, blank=True
@@ -816,7 +830,6 @@ class PlantProfile(Base):
     sowing_label_instructions = models.CharField(max_length=40, blank=True)
     sowing_notes = models.CharField(max_length=450, blank=True)
     envelope_label_link = models.CharField(max_length=200, blank=True)
-    harvesting_video_link = models.CharField(max_length=200, blank=True)
     seed_storage_label_info = models.ForeignKey(
         SeedStorageLabelInfo, on_delete=models.RESTRICT, null=True, blank=True
     )
@@ -824,11 +837,6 @@ class PlantProfile(Base):
         SeedEventTable, on_delete=models.RESTRICT, null=True, blank=True
     )
     notes = models.CharField(max_length=450, blank=True)
-    harvesting_notes = models.CharField(max_length=450, blank=True)
-    germinate_easy = models.BooleanField(default=False)
-    self_seeding = models.BooleanField(default=False)
-    beginner_friendly = models.BooleanField(default=False)
-    transplantation_tolerant = models.BooleanField(default=False)
     accepting_seed = models.BooleanField(default=False)
     seed_availability = models.BooleanField(default=False)
 
