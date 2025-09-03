@@ -77,7 +77,7 @@ class Command(BaseCommand):
             "max-height": "plant-max-height - csv.csv",
             "max-width": "plant-max-width - csv.csv",
             "nitrogen_fixer": "plant-nitrogen-fixer - csv.csv",
-            "one_cultivar": "plant-one-cultivar - csv.csv",
+            "on_cultivar": "plant-on-cultivar - csv.csv",
             "packaging_measure": "plant-packaging-measure - csv.csv",
             "plant-taxon": "plant-taxon - csv.csv",
             "produces-burs": "plant-produces-burs - csv.csv",
@@ -159,7 +159,7 @@ class Command(BaseCommand):
         self.import_growth_habit()
         self.import_height()
         self.import_lifespan()
-        self.import_one_cultivar()
+        self.import_on_cultivar()
         self.import_packaging_measure()
         self.import_seed_head()
         self.import_sowing_depth()
@@ -610,13 +610,13 @@ class Command(BaseCommand):
             display_name="Color",
         )
 
-    def import_one_cultivar(self):
-        """Read the one cultivar CSV file and update the PlantProfile model with one cultivar values."""
+    def import_on_cultivar(self):
+        """Read the on cultivar CSV file and update the PlantProfile model with on cultivar values."""
         self.import_foreign_key_relation(
-            csv_file=self.csv_files["one_cultivar"],
-            field_name="one_cultivar",
+            csv_file=self.csv_files["on_cultivar"],
+            field_name="on_cultivar",
             model_class=models.OneCultivar,
-            display_name="One cultivar",
+            display_name="On cultivar",
         )
 
     def import_packaging_measure(self):

@@ -1317,11 +1317,11 @@ def plant_propagation_and_seed_sharing_update(request, pk):
         )
         return redirect("packaging-measure-table")
 
-    # One Cultivars
-    one_cultivars = models.OneCultivar.objects.all().order_by("one_cultivar")
-    if not one_cultivars:
-        messages.warning(request, "No one cultivars available. Please add some first.")
-        return redirect("one-cultivar-table")
+    # On Cultivars
+    on_cultivars = models.OneCultivar.objects.all().order_by("on_cultivar")
+    if not on_cultivars:
+        messages.warning(request, "No on cultivars available. Please add some first.")
+        return redirect("on-cultivar-table")
 
     # Seed Viability Tests
     seed_viability_tests = models.SeedViabilityTest.objects.all().order_by(
@@ -1413,14 +1413,14 @@ def plant_propagation_and_seed_sharing_update(request, pk):
         else:
             plant.seed_storage = None
 
-        one_cultivar_id = request.POST.get("one_cultivar")
-        if one_cultivar_id:
+        on_cultivar_id = request.POST.get("on_cultivar")
+        if on_cultivar_id:
             try:
-                plant.one_cultivar = models.OneCultivar.objects.get(pk=one_cultivar_id)
+                plant.on_cultivar = models.OneCultivar.objects.get(pk=on_cultivar_id)
             except models.OneCultivar.DoesNotExist:
-                messages.warning(request, "Selected one cultivar not found.")
+                messages.warning(request, "Selected on cultivar not found.")
         else:
-            plant.one_cultivar = None
+            plant.on_cultivar = None
 
         packaging_measure_id = request.POST.get("packaging_measure")
         if packaging_measure_id:
@@ -1512,7 +1512,7 @@ def plant_propagation_and_seed_sharing_update(request, pk):
         "title": f"{plant.latin_name} - Propagation and Seed Sharing",
         "plant": plant,
         "packaging_measures": packaging_measures,
-        "one_cultivars": one_cultivars,
+        "on_cultivars": on_cultivars,
         "seed_viability_tests": seed_viability_tests,
         "seed_storage": seed_storage,
         "sowing_depth": sowing_depth,

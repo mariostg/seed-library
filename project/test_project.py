@@ -27,7 +27,7 @@ class TestPostAddPlantProfile:
             "remove_non_seed_material": "",
             "viability_test": "",
             "seed_storage": "",
-            "one_cultivar": "",
+            "on_cultivar": "",
             "packaging_measure": "",
             "dormancy": "",
             "seed_preparation": "",

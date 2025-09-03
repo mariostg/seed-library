@@ -29,7 +29,7 @@ class PlantProfileForm(forms.ModelForm):
             "remove_non_seed_material",  #
             "seed_viability_test",  #
             "seed_storage",  #
-            "one_cultivar",  #
+            "on_cultivar",  #
             "packaging_measure",  #
             "dormancy",  #
             "seed_preparation",  #

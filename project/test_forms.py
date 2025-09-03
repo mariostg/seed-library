@@ -29,7 +29,7 @@ class TestForms:
         models.Lighting.objects.create(lighting="Lighting 1")
         models.Lighting.objects.create(lighting="Lighting 2")
         models.PackagingMeasure.objects.create(packaging_measure="Measure")
-        models.OneCultivar.objects.create(one_cultivar="One cultivar")
+        models.OneCultivar.objects.create(on_cultivar="On cultivar")
         models.ViablityTest.objects.create(viability_test="Testme")
         models.SeedHead.objects.create(seed_head="Head")
         models.SharingPriority.objects.create(sharing_priority="Priority")
@@ -55,7 +55,7 @@ class TestForms:
             "remove_non_seed_material": "Material",
             "viability_test": True,
             "seed_storage": 1,
-            "one_cultivar": True,
+            "on_cultivar": True,
             "packaging_measure": 1,
             "dormancy": 1,
             "seed_preparation": 1,

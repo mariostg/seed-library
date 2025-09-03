@@ -5,7 +5,7 @@
             accepting_seed (BooleanField): Whether accepting seeds for this plant
             viability_test (ForeignKey): Reference to ViablityTest model
             seed_storage (ForeignKey): Reference to SeedStorage model
-            one_cultivar (ForeignKey): Reference to OneCultivar model
+            on_cultivar (ForeignKey): Reference to OneCultivar model
             packaging_measure (ForeignKey): Reference to PackagingMeasure model
             dormancy (ForeignKey): Reference to Dormancy model
             seed_preparation (ForeignKey): Reference to SeedPreparation model
@@ -88,10 +88,10 @@
               </select>
             </div>
             <div class="input-select">
-              <label for="id_one_cultivar">One Cultivar</label>
-              <select id="id_one_cultivar" name="one_cultivar">
-                {% for cultivar in one_cultivars %}
-                  <option value="{{ cultivar.pk }}" {% if plant.one_cultivar.pk == cultivar.pk %}selected{% endif %}>
+              <label for="id_on_cultivar">On Cultivar</label>
+              <select id="id_on_cultivar" name="on_cultivar">
+                {% for cultivar in on_cultivars %}
+                  <option value="{{ cultivar.pk }}" {% if plant.on_cultivar.pk == cultivar.pk %}selected{% endif %}>
                     {{ cultivar }}
                   </option>
                 {% endfor %}
