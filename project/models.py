@@ -791,7 +791,7 @@ class PlantProfile(Base):
     seed_head = models.ForeignKey(
         SeedHead, on_delete=models.RESTRICT, null=True, blank=True
     )
-    remove_non_seed_material = models.BooleanField(default=False, null=True, blank=True)
+    remove_non_seed_material = models.BooleanField(default=False)
     seed_viability_test = models.ForeignKey(
         SeedViabilityTest, on_delete=models.RESTRICT, null=True, blank=True
     )
