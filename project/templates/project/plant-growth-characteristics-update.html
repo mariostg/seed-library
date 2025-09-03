@@ -20,6 +20,10 @@ It allows users to update the plant growth characteristics, including:
 
 {% extends "core/base.html" %}
 {% load static %}
+{% block extracss %}
+  <link rel="stylesheet" href="{% static 'css/form.css' %}">
+{% endblock extracss %}
+
 {% block title %}{{ plant.latin_name }} - Plant Profile{% endblock title %}
 {{ title }}
 {% block content %}
