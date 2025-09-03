@@ -1224,11 +1224,11 @@ class PlantComplementary(models.Model):
         PlantProfile, on_delete=models.CASCADE, related_name="plant"
     )
     complement = models.ForeignKey(
-        PlantProfile, on_delete=models.CASCADE, related_name="complement"
+        PlantProfile, on_delete=models.CASCADE, related_name="complements"
     )
 
     def __str__(self) -> str:
-        return f"{self.plant_profile.latin_name} - {self.complement.latin_name}"
+        return f"{self.plant_profile.latin_name}[{self.plant_profile.pk}] - {self.complement.latin_name}[{self.complement.pk}]"
 
     class Meta:
         unique_together = ("plant_profile", "complement")

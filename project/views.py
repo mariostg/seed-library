@@ -4,7 +4,6 @@ import io
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.core.exceptions import ValidationError
 from django.db import IntegrityError
 from django.db.models import OuterRef, RestrictedError, Subquery, Value
 from django.db.models.functions import Coalesce
@@ -1172,7 +1171,11 @@ def plant_identification_information_create(request):
 
 
 def plant_growth_characteristics_update(request, pk):
-    plant = utils.single_plant(pk, request)
+    plant: models.PlantProfile = utils.single_plant(pk, request)
+    plants_complements = models.PlantComplementary.objects.filter(plant_profile_id=pk)
+    plants = models.PlantProfile.all_objects.exclude(
+        pk__in=[p.complement_id for p in plants_complements]
+    )
     growth_habits = models.GrowthHabit.objects.all().order_by("growth_habit")
     lifespan_choices = models.PlantLifespan.objects.all().order_by("lifespan")
     bloom_colors = models.BloomColor.objects.all().order_by("bloom_color")
@@ -1185,19 +1188,45 @@ def plant_growth_characteristics_update(request, pk):
         "bloom_starts": bloom_starts,
         "bloom_ends": bloom_ends,
         "lifespan_choices": lifespan_choices,
+        "plants": plants,
+        "plant_complements": plants_complements,
     }
 
     if request.method == "POST":
         form = forms.PlantGrowthCharacteristicsForm(request.POST, instance=plant)
-        try:
+        if form.is_valid():
+            # Get the plant complements from the form
             form.save()
+
+            # Clear existing complements
+            models.PlantComplementary.objects.filter(plant_profile=plant).delete()
+
+            # Add new complements from the form data
+            complement_ids = request.POST.getlist("complements")
+            if complement_ids:
+                for complement_id in complement_ids:
+                    try:
+                        complement_plant = models.PlantProfile.objects.get(
+                            pk=complement_id
+                        )
+                        try:
+                            models.PlantComplementary.objects.create(
+                                plant_profile=plant, complement=complement_plant
+                            )
+                        except IntegrityError:
+                            messages.warning(
+                                request,
+                                f"Complementary plant ID {complement_id} already exists.",
+                            )
+                    except models.PlantProfile.DoesNotExist:
+                        messages.warning(
+                            request,
+                            f"Complementary plant ID {complement_id} not found.",
+                        )
             messages.success(request, "Growth characteristics updated successfully.")
             return redirect("plant-profile-page", pk=plant.pk)
-        except ValidationError as e:
-            messages.error(request, f"Error updating growth characteristics: {e}")
     else:
         form = forms.PlantGrowthCharacteristicsForm(instance=plant)
-    # context["form"] = form
     return render(request, "project/plant-growth-characteristics-update.html", context)
 
 

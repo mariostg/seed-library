@@ -129,6 +129,29 @@ It allows users to update the plant growth characteristics, including:
               </select>
             </div>
           </fieldset>
+
+          <!--Plant Complementary-->
+          <fieldset>
+            <legend>Plant Complementary</legend>
+            {% for plant in plant_complements  %}
+            <!--input checkbox for plant complementary-->
+              <div class="input-checkbox">
+                <input type="checkbox" id="id_plant_{{ plant.complement.pk }}" name="complements" value="{{ plant.complement.pk }}"checked>
+                <label for="id_plant_{{ plant.complement.pk }}">{{ plant.complement.latin_name }}</label>
+              </div>
+            {% empty %}
+              <p>No complementary plants found.</p>
+            {% endfor %}
+            <div class="input-checkbox">
+              <!--complement element from forms -->
+              {% for plant in plants %}
+                <div class="input-checkbox">
+                  <input type="checkbox" id="id_plant_{{ plant.pk }}" name="complements" value="{{ plant.pk }}">
+                  <label for="id_plant_{{ plant.pk }}">{{ plant.latin_name }}</label>
+                </div>
+              {% endfor %}
+            </div>
+          </fieldset>
         </div>
         <button type="submit" class="btn btn-primary">Update</button>
         <a href="{% url 'plant-growth-characteristics-update' plant.pk %}" class="btn btn-primary">Cancel</a>
