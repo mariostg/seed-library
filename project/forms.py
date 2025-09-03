@@ -225,6 +225,10 @@ class PlantGrowthCharacteristicsForm(forms.ModelForm):
             "spread_by_rhizome",
             "does_not_spread",
             "dioecious",
+            "germinate_easy",
+            "self_seeding",
+            "beginner_friendly",
+            "transplantation_tolerant",
         ]
 
     def __init__(self, *args, **kwargs):

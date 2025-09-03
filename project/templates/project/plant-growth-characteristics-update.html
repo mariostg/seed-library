@@ -68,6 +68,27 @@ It allows users to update the plant growth characteristics, including:
               <input type="checkbox" id="id_spread_by_rhizome" name="spread_by_rhizome" {% if plant.spread_by_rhizome %}checked{% endif %}>
               <label for="id_spread_by_rhizome">Spread by Rhizome</label>
             </div>
+            <!--input checkbox for germinate_easy-->
+            <div class="input-checkbox">
+              <input type="checkbox" id="id_germinate_easy" name="germinate_easy" {% if plant.germinate_easy %}checked{% endif %}>
+              <label for="id_germinate_easy">Germinate Easy</label>
+            </div>
+            <!--input checkbox for self_seeding-->
+            <div class="input-checkbox">
+              <input type="checkbox" id="id_self_seeding" name="self_seeding" {% if plant.self_seeding %}checked{% endif %}>
+              <label for="id_self_seeding">Self Seeding</label>
+            </div>
+            <!--input checkbox for beginner_friendly-->
+            <div class="input-checkbox">
+              <input type="checkbox" id="id_beginner_friendly" name="beginner_friendly" {% if plant.beginner_friendly %}checked{% endif %}>
+              <label for="id_beginner_friendly">Beginner Friendly</label>
+            </div>
+            <!--input checkbox for transplantation_tolerant-->
+            <div class="input-checkbox">
+              <input type="checkbox" id="id_transplantation_tolerant" name="transplantation_tolerant" {% if plant.transplantation_tolerant %}checked{% endif %}>
+              <label for="id_transplantation_tolerant">Transplantation Tolerant</label>
+            </div>
+
           </fieldset>
 
             <!--Plant Life Cycle Characteristics-->
