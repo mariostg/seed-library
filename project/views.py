@@ -1304,18 +1304,18 @@ def plant_special_features_and_consideration_update(request, pk):
     )
 
 
-def plant_propagation_and_seed_sharing_update(request, pk):
+def plant_harvesting_update(request, pk):
     plant = utils.single_plant(pk, request)
     harvesting_months = utils.MONTHS
     # packaging measures
-    packaging_measures = models.PackagingMeasure.objects.all().order_by(
-        "packaging_measure"
-    )
-    if not packaging_measures:
-        messages.warning(
-            request, "No packaging measures available. Please add some first."
-        )
-        return redirect("packaging-measure-table")
+    # packaging_measures = models.PackagingMeasure.objects.all().order_by(
+    #     "packaging_measure"
+    # )
+    # if not packaging_measures:
+    #     messages.warning(
+    #         request, "No packaging measures available. Please add some first."
+    #     )
+    #     return redirect("packaging-measure-table")
 
     # On Cultivars
     on_cultivars = models.OneCultivar.objects.all().order_by("on_cultivar")
@@ -1323,29 +1323,29 @@ def plant_propagation_and_seed_sharing_update(request, pk):
         messages.warning(request, "No on cultivars available. Please add some first.")
         return redirect("on-cultivar-table")
 
-    # Seed Viability Tests
-    seed_viability_tests = models.SeedViabilityTest.objects.all().order_by(
-        "seed_viability_test"
-    )
-    if not seed_viability_tests:
-        messages.warning(
-            request, "No seed viability tests available. Please add some first."
-        )
-        return redirect("seed-viability-test-table")
+    # # Seed Viability Tests
+    # seed_viability_tests = models.SeedViabilityTest.objects.all().order_by(
+    #     "seed_viability_test"
+    # )
+    # if not seed_viability_tests:
+    #     messages.warning(
+    #         request, "No seed viability tests available. Please add some first."
+    #     )
+    #     return redirect("seed-viability-test-table")
 
     # Seed Storage
-    seed_storage = models.SeedStorage.objects.all().order_by("seed_storage")
-    if not seed_storage:
+    seed_storages = models.SeedStorage.objects.all().order_by("seed_storage")
+    if not seed_storages:
         messages.warning(
             request, "No seed storage options available. Please add some first."
         )
         return redirect("seed-storage-table")
 
-    # sowing depth
-    sowing_depth = models.SowingDepth.objects.all().order_by("sowing_depth")
-    if not sowing_depth:
-        messages.warning(request, "No sowing depth available. Please add some first.")
-        return redirect("sowing-depth-table")
+    # # sowing depth
+    # sowing_depth = models.SowingDepth.objects.all().order_by("sowing_depth")
+    # if not sowing_depth:
+    #     messages.warning(request, "No sowing depth available. Please add some first.")
+    #     return redirect("sowing-depth-table")
 
     # harvesting indicators
     harvesting_indicators = models.HarvestingIndicator.objects.all().order_by(
@@ -1356,6 +1356,7 @@ def plant_propagation_and_seed_sharing_update(request, pk):
             request, "No harvesting indicators available. Please add some first."
         )
         return redirect("harvesting-indicator-table")
+
     # harvesting means
     harvesting_means = models.HarvestingMean.objects.all().order_by("harvesting_mean")
     if not harvesting_means:
@@ -1364,165 +1365,55 @@ def plant_propagation_and_seed_sharing_update(request, pk):
         )
         return redirect("harvesting-mean-table")
 
-    # seed heads
+    # # seed heads
     seed_heads = models.SeedHead.objects.all().order_by("seed_head")
     if not seed_heads:
         messages.warning(request, "No seed heads available. Please add some first.")
         return redirect("seed-head-table")
 
-    # sharing priority
-    sharing_priority = models.SharingPriority.objects.all().order_by("sharing_priority")
-    if not sharing_priority:
-        messages.warning(
-            request, "No sharing priority available. Please add some first."
-        )
-        return redirect("sharing-priority-table")
+    # # sharing priority
+    # sharing_priority = models.SharingPriority.objects.all().order_by("sharing_priority")
+    # if not sharing_priority:
+    #     messages.warning(
+    #         request, "No sharing priority available. Please add some first."
+    #     )
+    #     return redirect("sharing-priority-table")
 
-    # seed event table
-    seed_event_table = models.SeedEventTable.objects.all().order_by("seed_event_table")
-    if not seed_event_table:
-        messages.warning(
-            request,
-            "No seed event table available for this plant. Please add some first.",
-        )
-        return redirect("seed-event-table-table")
+    # # seed event table
+    # seed_event_table = models.SeedEventTable.objects.all().order_by("seed_event_table")
+    # if not seed_event_table:
+    #     messages.warning(
+    #         request,
+    #         "No seed event table available for this plant. Please add some first.",
+    #     )
+    #     return redirect("seed-event-table-table")
 
     if request.method == "POST":
-        # seed handling related fields
-        plant.seed_availability = request.POST.get("seed_availability") == "on"
-        plant.accepting_seed = request.POST.get("accepting_seed") == "on"
-        plant.remove_non_seed_material = (
-            request.POST.get("remove_non_seed_material") == "on"
-        )
-
-        viability_test_id = request.POST.get("viability_test")
-        if viability_test_id:
-            try:
-                plant.seed_viability_test = models.SeedViabilityTest.objects.get(
-                    pk=viability_test_id
-                )
-            except models.SeedViabilityTest.DoesNotExist:
-                messages.warning(request, "Selected seed viability test not found.")
-
-        seed_storage_id = request.POST.get("seed_storage")
-        if seed_storage_id:
-            try:
-                plant.seed_storage = models.SeedStorage.objects.get(pk=seed_storage_id)
-            except models.SeedStorage.DoesNotExist:
-                messages.warning(request, "Selected seed storage not found.")
+        form = forms.PlantHarvestingForm(request.POST, instance=plant)
+        if form.is_valid():
+            form.save()
+            messages.success(
+                request, "Propagation and seed sharing updated successfully."
+            )
+            return redirect("plant-profile-page", pk=plant.pk)
         else:
-            plant.seed_storage = None
-
-        on_cultivar_id = request.POST.get("on_cultivar")
-        if on_cultivar_id:
-            try:
-                plant.on_cultivar = models.OneCultivar.objects.get(pk=on_cultivar_id)
-            except models.OneCultivar.DoesNotExist:
-                messages.warning(request, "Selected on cultivar not found.")
-        else:
-            plant.on_cultivar = None
-
-        packaging_measure_id = request.POST.get("packaging_measure")
-        if packaging_measure_id:
-            try:
-                plant.packaging_measure = models.PackagingMeasure.objects.get(
-                    pk=packaging_measure_id
-                )
-            except models.PackagingMeasure.DoesNotExist:
-                messages.warning(request, "Selected packaging measure not found.")
-        else:
-            plant.packaging_measure = None
-
-        dormancy_id = request.POST.get("dormancy")
-        if dormancy_id:
-            try:
-                plant.dormancy = models.Dormancy.objects.get(pk=dormancy_id)
-            except models.Dormancy.DoesNotExist:
-                messages.warning(request, "Selected dormancy not found.")
-        else:
-            plant.dormancy = None
-
-        seed_preparation_id = request.POST.get("seed_preparation")
-        if seed_preparation_id:
-            try:
-                plant.seed_preparation = models.SeedPreparation.objects.get(
-                    pk=seed_preparation_id
-                )
-            except models.SeedPreparation.DoesNotExist:
-                messages.warning(request, "Selected seed preparation not found.")
-        else:
-            plant.seed_preparation = None
-
-        plant.seed_cleaning_notes = request.POST.get("seed_cleaning_notes")
-
-        seed_storage_label_info_id = request.POST.get("seed_storage_label_info")
-        if seed_storage_label_info_id:
-            try:
-                plant.seed_storage_label_info = models.SeedStorageLabelInfo.objects.get(
-                    pk=seed_storage_label_info_id
-                )
-            except models.SeedStorageLabelInfo.DoesNotExist:
-                messages.warning(request, "Selected seed storage label info not found.")
-        else:
-            plant.seed_storage_label_info = None
-
-        plant.harvesting_start = request.POST.get("harvesting_start")
-
-        # harvestting indicators
-
-        harvesting_indicator_id = request.POST.get("harvesting_indicator")
-        if harvesting_indicator_id:
-            try:
-                plant.harvesting_indicator = models.HarvestingIndicator.objects.get(
-                    pk=harvesting_indicator_id
-                )
-            except models.HarvestingIndicator.DoesNotExist:
-                messages.warning(request, "Selected harvesting indicator not found.")
-        else:
-            plant.harvesting_indicator = None
-
-        harvesting_mean_id = request.POST.get("harvesting_mean")
-        if harvesting_mean_id:
-            try:
-                plant.harvesting_mean = models.HarvestingMean.objects.get(
-                    pk=harvesting_mean_id
-                )
-            except models.HarvestingMean.DoesNotExist:
-                messages.warning(request, "Selected harvesting mean not found.")
-        else:
-            plant.harvesting_mean = None
-
-        # seed event table
-        seed_event_table_id = request.POST.get("seed_event_table")
-        if seed_event_table_id:
-            try:
-                plant.seed_event_table = models.SeedEventTable.objects.get(
-                    pk=seed_event_table_id
-                )
-            except models.SeedEventTable.DoesNotExist:
-                messages.warning(request, "Selected seed event table not found.")
-        else:
-            plant.seed_event_table = None
-
-        plant.save()
-        messages.success(request, "Propagation and seed sharing updated successfully.")
-        return redirect("plant-profile-page", pk=plant.pk)
+            messages.error(request, "Error updating propagation and seed sharing.")
+    else:
+        form = forms.PlantHarvestingForm(instance=plant)
 
     context = {
         "title": f"{plant.latin_name} - Propagation and Seed Sharing",
         "plant": plant,
-        "packaging_measures": packaging_measures,
+        # "packaging_measures": packaging_measures,
         "on_cultivars": on_cultivars,
-        "seed_viability_tests": seed_viability_tests,
-        "seed_storage": seed_storage,
-        "sowing_depth": sowing_depth,
+        # "seed_viability_tests": seed_viability_tests,
+        "seed_storages": seed_storages,
+        # "sowing_depth": sowing_depth,
         "harvesting_months": harvesting_months,
         "harvesting_indicators": harvesting_indicators,
         "harvesting_means": harvesting_means,
         "seed_heads": seed_heads,
-        "sharing_priority": sharing_priority,
-        "seed_event_table": seed_event_table,
+        # "sharing_priority": sharing_priority,
+        # "seed_event_table": seed_event_table,
     }
-    return render(
-        request, "project/plant-propagation-and-seed-sharing-update.html", context
-    )
+    return render(request, "project/plant-harvesting-update.html", context)

@@ -1,0 +1,159 @@
+{% extends "core/base.html" %}
+{% load static %}
+{% block extracss %}
+  <link rel="stylesheet" href="{% static 'css/form.css' %}" />
+{% endblock extracss %}
+
+{% block title %}{{ plant.latin_name }} - Harvesting{% endblock title %}
+{{ title }}
+{% block content %}
+  <main class="main-content">
+    {% include "project/_profile_update_links.html" %}
+    <div class="flex-col-center">
+      <h1>Update Plant Harvesting</h1>
+      <h2><a href="{% url 'plant-profile-page' plant.pk %}">{{ plant.latin_name }}</a></h2>
+      <form method="post" action="{% url 'plant-harvesting-update' plant.pk %}">
+        {% csrf_token %}
+        <div class="inputs">
+
+          <fieldset class="form-group">
+            <legend>Harvesting Start Month</legend>
+            <div class="input-select">
+              <select id="id_harvesting_start" name="harvesting_start" class="input">
+                <option value="">---------</option>
+                {% for month_number, month_name in harvesting_months.items %}
+                  <option value="{{ month_number }}" {% if plant.harvesting_start == month_number %}selected{% endif %}>{{ month_name }}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </fieldset>
+
+          <fieldset class="form-group">
+            <legend>Harvesting Indicator</legend>
+            <div class="radio-options">
+              <div class="radio-option">
+                <input type="radio" id="id_harvesting_indicator_none" name="harvesting_indicator" value="" {% if not harvesting_indicator %}checked{% endif %}>
+                <label for="id_harvesting_indicator_none">None</label>
+              </div>
+              {% for harvesting_indicator in harvesting_indicators %}
+                <div class="radio-option">
+                  <input type="radio"
+                         id="id_harvesting_indicator_{{ harvesting_indicator.id }}"
+                         name="harvesting_indicator"
+                         value="{{ harvesting_indicator.id }}"
+                         {% if harvesting_indicator.id == plant.harvesting_indicator.id %}checked{% endif %}>
+                  <label for="id_harvesting_indicator_{{ harvesting_indicator.id }}">{{ harvesting_indicator }}</label>
+              {% endfor %}
+            </div>
+          </div>
+        </fieldset>
+
+          <!--fieldset for harvesting mean-->
+        <fieldset class="form-group">
+          <legend>Harvesting Mean</legend>
+          <div class="radio-options">
+            <div class="radio-option">
+              <input type="radio" id="id_harvesting_mean_none" name="harvesting_mean" value="" {% if not harvesting_mean %}checked{% endif %}>
+              <label for="id_harvesting_mean_none">None</label>
+            </div>
+            {% for harvesting_mean in harvesting_means %}
+              <div class="radio-option">
+                <input type="radio"
+                       id="id_harvesting_mean_{{ harvesting_mean.id }}"
+                       name="harvesting_mean"
+                       value="{{ harvesting_mean.id }}"
+                       {% if harvesting_mean.id == plant.harvesting_mean.id %}checked{% endif %}>
+                <label for="id_harvesting_mean_{{ harvesting_mean.id }}">{{ harvesting_mean }}</label>
+            {% endfor %}
+          </div>
+        </fieldset>
+
+          <!--Fieldset for seed head-->
+        <fieldset class="form-group">
+          <legend>Seed Head</legend>
+          <div class="radio-options">
+            <div class="radio-option">
+              <input type="radio" id="id_seed_head_none" name="seed_head" value="" {% if not seed_head %}checked{% endif %}>
+              <label for="id_seed_head_none">None</label>
+            </div>
+            {% for seed_head in seed_heads %}
+              <div class="radio-option">
+                <input type="radio"
+                       id="id_seed_head_{{ seed_head.id }}"
+                       name="seed_head"
+                       value="{{ seed_head.id }}"
+                       {% if seed_head.id == plant.seed_head.id %}checked{% endif %}>
+                <label for="id_seed_head_{{ seed_head.id }}">{{ seed_head }}</label>
+            {% endfor %}
+          </div>
+        </fieldset>
+      </div>
+
+        <!--fieldset for boolean field remove non seed material-->
+      <fieldset class="form-group">
+        <legend>Remove Non-Seed Material</legend>
+        <div class="checkbox-options">
+          <div class="checkbox-option">
+            <input type="checkbox" id="id_remove_non_seed_material" name="remove_non_seed_material" value="true" {% if plant.remove_non_seed_material %}checked{% endif %}>
+            <label for="id_remove_non_seed_material">Yes</label>
+          </div>
+        </div>
+      </fieldset>
+
+        <!--Fieldset for seed storage-->
+      <fieldset class="form-group">
+        <legend>Seed Storage</legend>
+        <div class="radio-options">
+          <div class="radio-option">
+            <input type="radio" id="id_seed_storage_none" name="seed_storage" value="" {% if not seed_storage %}checked{% endif %}>
+            <label for="id_seed_storage_none">None</label>
+          </div>
+          {% for seed_storage in seed_storages %}
+            <div class="radio-option">
+              <input type="radio"
+                     id="id_seed_storage_{{ seed_storage.id }}"
+                     name="seed_storage"
+                     value="{{ seed_storage.id }}"
+                     {% if seed_storage.id == plant.seed_storage.id %}checked{% endif %}>
+              <label for="id_seed_storage_{{ seed_storage.id }}">{{ seed_storage }}</label>
+          {% endfor %}
+        </div>
+      </fieldset>
+
+        <!--Fieldset for On Cultivars-->
+      <fieldset class="form-group">
+        <legend>On Cultivars</legend>
+        <div class="radio-options">
+          <div class="radio-option">
+            <input type="radio" id="id_on_cultivar_none" name="on_cultivar" value="" {% if not on_cultivar %}checked{% endif %}>
+            <label for="id_on_cultivar_none">None</label>
+          </div>
+          {% for on_cultivar in on_cultivars %}
+            <div class="radio-option">
+              <input type="radio"
+                     id="id_on_cultivar_{{ on_cultivar.id }}"
+                     name="on_cultivar"
+                     value="{{ on_cultivar.id }}"
+                     {% if on_cultivar.id == plant.on_cultivar.id %}checked{% endif %}>
+              <label for="id_on_cultivar_{{ on_cultivar.id }}">{{ on_cultivar }}</label>
+          {% endfor %}
+        </div>
+      </fieldset>
+
+        <!--Fieldset for harvesting video link-->
+      <fieldset class="form-group">
+        <legend>Harvesting Video Link</legend>
+        <input type="url" id="id_harvesting_video_link" name="harvesting_video_link" value="{{ plant.harvesting_video_link }}">
+      </fieldset>
+
+        <!--Fieldset for harvesting notes-->
+      <fieldset class="form-group">
+        <legend>Harvesting Notes</legend>
+        <textarea id="id_harvesting_notes" name="harvesting_notes">{{ plant.harvesting_notes }}</textarea>
+      </fieldset>
+      <button class="btn" type="submit">Update Harvesting</button>
+      <a href="{% url 'plant-harvesting-update' plant.pk %}" class="btn btn-primary">Cancel</a>
+    </form>
+  </div>
+  </main>
+{% endblock content %}

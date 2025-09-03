@@ -184,9 +184,9 @@ urlpatterns += [
         name="plant-special-features-and-considerations-update",
     ),
     path(
-        "plant-propagation-and-seed-sharing-update/<int:pk>",
-        views.plant_propagation_and_seed_sharing_update,
-        name="plant-propagation-and-seed-sharing-update",
+        "plant-harvesting-update/<int:pk>",
+        views.plant_harvesting_update,
+        name="plant-harvesting-update",
     ),
 ]
 

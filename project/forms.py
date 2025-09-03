@@ -301,3 +301,19 @@ class PlantSpecialFeaturesAndConsiderationForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
+
+class PlantHarvestingForm(forms.ModelForm):
+    class Meta:
+        model = models.PlantProfile
+        fields = [
+            "harvesting_start",
+            "harvesting_indicator",
+            "harvesting_mean",
+            "seed_head",
+            "remove_non_seed_material",
+            "seed_storage",
+            "on_cultivar",
+            "harvesting_video_link",
+            "harvesting_notes",
+        ]
