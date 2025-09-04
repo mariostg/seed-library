@@ -332,3 +332,23 @@ class PlantSowingForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
+
+class PlantSeedDistributionForm(forms.ModelForm):
+    class Meta:
+        model = models.PlantProfile
+        fields = [
+            "packaging_measure",
+            "seed_preparation",
+            "sowing_label_instructions",
+            "sowing_notes",
+            "envelope_label_link",
+            "seed_storage_label_info",
+            "seed_event_table",
+            "notes",
+            "accepting_seed",
+            "seed_availability",
+        ]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)

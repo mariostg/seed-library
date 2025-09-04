@@ -193,6 +193,11 @@ urlpatterns += [
         views.plant_sowing_update,
         name="plant-sowing-update",
     ),
+    path(
+        "plant-seed-distribution-update/<int:pk>",
+        views.plant_seed_distribution_update,
+        name="plant-seed-distribution-update",
+    ),
 ]
 
 urlpatterns += [

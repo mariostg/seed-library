@@ -1440,3 +1440,27 @@ def plant_sowing_update(request, pk):
         "form": form,
     }
     return render(request, "project/plant-sowing-update.html", context)
+
+
+def plant_seed_distribution_update(request, pk):
+    plant = utils.single_plant(pk, request)
+
+    if request.method == "POST":
+        form = forms.PlantSeedDistributionForm(request.POST, instance=plant)
+        if form.is_valid():
+            form.save()
+            messages.success(
+                request, "Seed distribution information updated successfully."
+            )
+            return redirect("plant-profile-page", pk=plant.pk)
+        else:
+            messages.error(request, "Error updating seed distribution information.")
+    else:
+        form = forms.PlantSeedDistributionForm(instance=plant)
+
+    context = {
+        "title": f"{plant.latin_name} - Seed Distribution Information",
+        "plant": plant,
+        "form": form,
+    }
+    return render(request, "project/plant-seed-distribution-update.html", context)

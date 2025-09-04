@@ -1,0 +1,97 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block title %}{{plant.latin_name}} - Seed distribution{% endblock title %}
+{{title}}
+{% block content %}
+  <main class="main-content">
+    {% include "project/_profile_update_links.html" %}
+    <div class="flex-col-center">
+      <h1>Update Plant Seed Distribution</h1>
+      <h2><a href="{% url 'plant-profile-page' plant.pk %}">{{ plant.latin_name }}</a></h2>
+      <form method="post" action="{% url 'plant-seed-distribution-update' plant.pk %}">
+        {% csrf_token %}
+        <div class="form inputs">
+          <fieldset>
+            <legend>Collecting Seeds</legend>
+            <!--input checkbox for accepting_seed-->
+            <div class="input-checkbox">
+              <input type="checkbox" id="id_accepting_seed" name="accepting_seed" class="input" {% if form.accepting_seed.value %}checked{% endif %}>
+              <label for="id_accepting_seed">Accepting Seed</label>
+            </div>
+            <!-- input select for packaging_measure-->
+            <div class="input-select">
+              <label for="id_packaging_measure">Packaging Measure</label>
+              <select id="id_packaging_measure" name="packaging_measure" class="input">
+                <option value="">---------</option>
+                {% for choice in form.packaging_measure.field.choices %}
+                  <option value="{{ choice.0 }}" {% if form.packaging_measure.value == choice.0 %}selected{% endif %}>{{ choice.1 }}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>Event Preparation</legend>
+            <!--input select for seed_event_table-->
+            <div class="input-select">
+              <label for="id_seed_event_table">Seed Event Table</label>
+              <select id="id_seed_event_table" name="seed_event_table" class="input">
+                <option value="">---------</option>
+                {% for choice in form.seed_event_table.field.choices %}
+                  <option value="{{ choice.0 }}" {% if form.seed_event_table.value == choice.0 %}selected{% endif %}>{{ choice.1 }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <!--input checkbox for seed_availability-->
+            <div class="input-checkbox">
+              <input type="checkbox" id="id_seed_availability" name="seed_availability" class="input" {% if form.seed_availability.value %}checked{% endif %}>
+              <label for="id_seed_availability">Seed Availability</label>
+            </div>
+          </fieldset>
+          <fieldset class="form-group">
+            <legend>Seed Distribution</legend>
+
+            <!--Input select for seed_preparation-->
+            <div class="input-select">
+              <label for="id_seed_preparation">Seed Preparation</label>
+              <select id="id_seed_preparation" name="seed_preparation" class="input">
+                <option value="">---------</option>
+                {% for choice in form.seed_preparation.field.choices %}
+                  <option value="{{ choice.0 }}" {% if form.seed_preparation.value == choice.0 %}selected{% endif %}>{{ choice.1 }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <!--InPut text for sowing_label_instructions-->
+            <div class="input-text">
+              <label for="id_sowing_label_instructions">Sowing Label Instructions</label>
+              <input type="text" id="id_sowing_label_instructions" name="sowing_label_instructions" class="input" value="{{ form.sowing_label_instructions.value }}">
+            </div>
+            <!--Input text for sowing_notes-->
+            <div class="input-text">
+              <label for="id_sowing_notes">Sowing Notes</label>
+              <input type="text" id="id_sowing_notes" name="sowing_notes" class="input" value="{{ form.sowing_notes.value }}">
+            </div>
+            <!--Input text for envelope_label_link-->
+            <div class="input-text">
+              <label for="id_envelope_label_link">Envelope Label Link</label>
+              <input type="text" id="id_envelope_label_link" name="envelope_label_link" class="input" value="{{ form.envelope_label_link.value }}">
+            </div>
+            <!--Input select for seed_storage_label_info-->
+            <div class="input-select">
+              <label for="id_seed_storage_label_info">Seed Storage Label Info</label>
+              <select id="id_seed_storage_label_info" name="seed_storage_label_info" class="input">
+                <option value="">---------</option>
+                {% for choice in form.seed_storage_label_info.field.choices %}
+                  <option value="{{ choice.0 }}" {% if form.seed_storage_label_info.value == choice.0 %}selected{% endif %}>{{ choice.1 }}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </fieldset>
+        </div>
+        <button type="submit" class="btn btn-primary">Update</button>
+        <a href="{% url 'plant-seed-distribution-update' plant.pk %}" class="btn btn-primary">Cancel</a>
+      </form>
+    </div>
+  </main>
+
+{% endblock content %}
