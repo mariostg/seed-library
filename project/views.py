@@ -255,7 +255,6 @@ def search_plant_name(request):
         "#butterfly_host",
         "#nitrogen_fixer",
         "#keystones_species",
-        "#host_plant",
     ]
     conservation_status_filters = [
         "#endangered",
@@ -362,7 +361,7 @@ def export_plant_search_results(request):
         - Max Width(feet)
         - Bloom Start
         - Bloom End
-        - Bloom Color
+        - Bloom Colour
         - Full Sun
         - Part Shade
         - Full Shade
@@ -398,7 +397,7 @@ def export_plant_search_results(request):
         "Max Width(feet)",
         "Bloom Start",
         "Bloom End",
-        "Bloom Color",
+        "Bloom Colour",
         "Full Sun",
         "Part Shade",
         "Full Shade",
