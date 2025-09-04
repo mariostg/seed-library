@@ -142,7 +142,7 @@ It allows users to update the plant growth characteristics, including:
               </select>
             </div>
             <div class="input-select">
-              <label for="id_bloom_color">Bloom Color</label>
+              <label for="id_bloom_color">Bloom Colour</label>
               <select id="id_bloom_color" name="bloom_color" required>
                 {% for color in bloom_colors %}
                   <option value="{{ color.pk }}" {% if plant.bloom_color.pk == color.pk %}selected{% endif %}>
