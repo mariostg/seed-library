@@ -32,22 +32,6 @@
 <label for="grasp_candidate" class="tooltip">GRASP candidate ✔ <span class='tooltiptext'>Gathering Rare and Special Plants in Ottawa</span></label><br />
 
 
-
-<!--Input checkbox for native to Ottawa region-->
-<input
-  type="checkbox"
-  id="native_to_ottawa_region"
-  name="native_to_ottawa_region"
-  value="Native to Ottawa Region"
-  hx-get="/search-plant-name"
-  hx-trigger="click"
-  hx-target="#search-results"
-  hx-push-url="true"
-  hx-include="{{hx_include}}"
-  {% if native_to_ottawa_region %} checked {% endif %}
-/>
-<label for="native_to_ottawa_region" class="tooltip">Native to Ottawa Region <span class='tooltiptext'>Plants that are native to the Ottawa region</span></label><br />
-
 <div class='filter__sub-header'>Safety and Compatibility</div>
 
 <!--Input checkbox for septic tank safe-->
