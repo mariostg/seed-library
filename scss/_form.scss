@@ -32,6 +32,17 @@ form {
     }
   }
 }
+.checkbox-group {
+  display: flex;
+  flex-wrap: wrap;
+  border: 1px solid #ccc;
+  .input-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: max-content;
+  }
+}
 fieldset {
   border: 2px solid #ccc;
   border-radius: 4px;

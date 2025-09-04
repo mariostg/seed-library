@@ -183,6 +183,7 @@ input[type=range]:active::-webkit-slider-thumb {
   justify-content: space-between;
   display: flex;
   gap: 0.5rem;
+  flex-wrap: wrap;
 }
 .flex-row > * {
   flex: 1;
@@ -288,6 +289,18 @@ form .input-text, form .input-select {
 }
 form .input-text label, form .input-select label {
   font-weight: bold;
+}
+
+.checkbox-group {
+  display: flex;
+  flex-wrap: wrap;
+  border: 1px solid #ccc;
+}
+.checkbox-group .input-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: max-content;
 }
 
 fieldset {

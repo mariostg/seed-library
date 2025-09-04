@@ -20,9 +20,7 @@ It allows users to update the plant growth characteristics, including:
 
 {% extends "core/base.html" %}
 {% load static %}
-{% block extracss %}
-  <link rel="stylesheet" href="{% static 'css/form.css' %}">
-{% endblock extracss %}
+
 
 {% block title %}{{ plant.latin_name }} - Plant Growth Characteristics{% endblock title %}
 {{ title }}
@@ -34,7 +32,7 @@ It allows users to update the plant growth characteristics, including:
       <h2><a href="{% url 'plant-profile-page' plant.pk %}">{{ plant.latin_name }}</a></h2>
       <form method="post" action="{% url 'plant-growth-characteristics-update' plant.pk %}">
         {% csrf_token %}
-        <div class="inputs">
+        <div class="form inputs">
               <!--Physical Dimensions-->
           <fieldset class="form-group">
             <legend>Physical Dimensions</legend>
@@ -167,9 +165,18 @@ It allows users to update the plant growth characteristics, including:
             {% empty %}
               <p>No complementary plants found.</p>
             {% endfor %}
-            <div class="input-checkbox">
-              <!--complement element from forms -->
+          </fieldset>
+        </div>
+        <div class='form inputs'>
+          <!--complement element from forms -->
+          <fieldset class="form-group flex-row">
+            <legend>Add More Complements</legend>
+            <div class="checkbox-group">
               {% for plant in plants %}
+                {% if forloop.counter0|divisibleby:10 and forloop.counter0 > 0 %}
+                  </div><div class="checkbox-group">
+                {% endif %}
+
                 <div class="input-checkbox">
                   <input type="checkbox" id="id_plant_{{ plant.pk }}" name="complements" value="{{ plant.pk }}">
                   <label for="id_plant_{{ plant.pk }}">{{ plant.latin_name }}</label>
