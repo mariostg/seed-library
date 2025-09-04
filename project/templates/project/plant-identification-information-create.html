@@ -18,14 +18,17 @@
         {% csrf_token %}
         <div class="form inputs">
           <fieldset>
-            <legend>Plant definition</legend>
+            <legend>Plant Status</legend>
               <!--is active-->
             <div class="input-checkbox">
               <label class="tooltip" for="id_is_active">Is Active <span class="tooltiptext">When Active is selected, the plant is available for public viewing.</span></label>
               <input type="checkbox" id="id_is_active" name="is_active" {% if plant.is_active %}checked{% endif %}>
             </div>
-                        <!--latin_name-->
-                        <!--Input text box to react as an htmx request search-vascan-taxon-id-->
+          </fieldset>
+          <fieldset>
+            <legend>Plant definition</legend>
+              <!--latin_name-->
+              <!--Input text box to react as an htmx request search-vascan-taxon-id-->
             <div class="input-text">
               <label for="id_latin_name">Latin Name</label>
               <input type="text"
@@ -47,14 +50,17 @@
               <label for="id_french_name">French Name</label>
               <input type="text" id="id_french_name" name="french_name" value="{{ plant.french_name }}">
             </div>
+          </fieldset>
+          <fieldset>
+            <legend>Taxonomy</legend>
                 <!--taxon-->
             <div class="input-text">
-              <label for="id_taxon">Taxon</label>
+              <label for="id_taxon">VASCAN Taxon ID Number</label>
               <input type="text" id="id_taxon" name="taxon" value="{{ plant.taxon }}">
             </div>
                 <!--inaturalist_taxon-->
             <div class="input-text">
-              <label for="id_inaturalist_taxon">iNaturalist Taxon</label>
+              <label for="id_inaturalist_taxon">iNaturalist Taxon ID Number</label>
               <input type="text" id="id_inaturalist_taxon" name="inaturalist_taxon" value="{{ plant.inaturalist_taxon }}">
             </div>
           </fieldset>
