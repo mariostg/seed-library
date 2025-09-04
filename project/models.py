@@ -708,7 +708,7 @@ class PlantProfile(Base):
 
         ## Safety and Compatibility
             septic_tank_safe (BooleanField): Whether safe to plant near septic systems
-            cause_dermatitis (BooleanField): Can cause skin irritation
+            cause_skin_rashes (BooleanField): Can cause skin rashes
             produces_burs (BooleanField): Produces burrs that stick to clothing/fur
             toxicity_indicator (ForeignKey): Reference to ToxicityIndicator model
             toxicity_indicator_notes (CharField): Information about plant toxicity
@@ -885,7 +885,7 @@ class PlantProfile(Base):
     septic_tank_safe = models.BooleanField(default=False)
 
     produces_burs = models.BooleanField(default=False)
-    cause_dermatitis = models.BooleanField(default=False)
+    cause_skin_rashes = models.BooleanField(default=False)
     toxicity_indicator_notes = models.CharField(max_length=450, blank=True)
     toxicity_indicator = models.ForeignKey(
         ToxicityIndicator, on_delete=models.RESTRICT, null=True, blank=True

@@ -288,7 +288,7 @@ class PlantSpecialFeaturesAndConsiderationForm(forms.ModelForm):
         fields = [
             "septic_tank_safe",
             "produces_burs",
-            "cause_dermatitis",
+            "cause_skin_rashes",
             "toxicity_indicator",
             "toxicity_indicator_notes",
             "alternative_to_notes",

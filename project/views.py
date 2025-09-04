@@ -264,7 +264,7 @@ def search_plant_name(request):
     ]
     safety_and_compatibility_filters = [
         "#septic_tank_safe",
-        "#cause_dermatitis",
+        "#cause_skin_rashes",
         "#produces_burs",
         "#exclude_toxic",
     ]

@@ -233,7 +233,7 @@ class PlantProfileFilter(django_filters.FilterSet):
         method="filter_boolean",
     )
 
-    cause_dermatitis = django_filters.CharFilter(
+    cause_skin_rashes = django_filters.CharFilter(
         method="filter_excludes",
     )
 

@@ -49,20 +49,20 @@
 />
 <label for="septic_tank_safe">Septic tank safe ✔</label><br />
 
-<!--Input checkbox for cause dermatitis-->
+<!--Input checkbox for cause skin rashes-->
 <input
   type="checkbox"
-  id="cause_dermatitis"
-  name="cause_dermatitis"
-  value="Cause Dermatitis"
+  id="cause_skin_rashes"
+  name="cause_skin_rashes"
+  value="Cause Skin Rashes"
   hx-get="/search-plant-name"
   hx-trigger="click"
   hx-target="#search-results"
   hx-push-url="true"
   hx-include="{{hx_include}}"
-  {% if cause_dermatitis %} checked {% endif %}
+  {% if cause_skin_rashes %} checked {% endif %}
 />
-<label for="cause_dermatitis">Exclude plants that cause dermatitis ✔</label><br />
+<label for="cause_skin_rashes">Exclude plants that cause skin rashes ✔</label><br />
 
 <!--class filter to exclude plants with burs-->
 <input

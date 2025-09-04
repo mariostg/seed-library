@@ -60,7 +60,7 @@ class Command(BaseCommand):
             "pollinator_garden": "plant-pollinator-garden - csv.csv",
             "butterfly_host": "plant-butterfly-host - csv.csv",
             "bee_host": "plant-bee-host - csv.csv",
-            "cause_dermatitis": "plant-cause-dermatitis - csv.csv",
+            "cause_skin_rashes": "plant-cause-skin_rashes - csv.csv",
             "hedge": "plant-hedge - csv.csv",
             "bloom_color": "plant-bloom-color - csv.csv",
             "conservation_status": "plant-conservation-status - csv.csv",
@@ -198,7 +198,7 @@ class Command(BaseCommand):
             "bird_friendly": "bird_friendly",
             "hedge": "hedge",
             "juglone_tolerant": "juglone_tolerant",
-            "cause_dermatitis": "cause_dermatitis",
+            "cause_skin_rashes": "cause_skin_rashes",
             "produces_burs": "produces-burs",
             "transplantation_tolerant": "transplantation_tolerant",
             "limestone_tolerant": "limestone_tolerant",
@@ -867,7 +867,7 @@ class Command(BaseCommand):
             plant.bird_friendly = True
             plant.hedge = True
             plant.juglone_tolerant = True
-            plant.cause_dermatitis = True  # This is false in the CSV file
+            plant.cause_skin_rashes = True  # This is false in the CSV file
             plant.produces_burs = True  # This is false in the CSV file
             plant.transplantation_tolerant = True
             plant.limestone_tolerant = True
