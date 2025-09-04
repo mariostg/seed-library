@@ -170,21 +170,6 @@
   />
   <label for="butterfly_host">Butterfly host ✔</label><br />
 
-<!--Input checkbox for host plant-->
-  <input
-    type="checkbox"
-    id="host_plant"
-    name="host_plant"
-    value="Host Plant"
-    hx-get="/search-plant-name"
-    hx-trigger="click"
-    hx-target="#search-results"
-    hx-push-url="true"
-    hx-include="{{hx_include}}"
-    {% if host_plant %} checked {% endif %}
-  />
-
-  <label for="host_plant">Host plant</label><br />
 <!--Input checkbox for keystones species-->
   <input
     type="checkbox"
