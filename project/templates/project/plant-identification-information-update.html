@@ -8,9 +8,7 @@
 -->
 {% extends "core/base.html" %}
 {% load static %}
-{% block extracss %}
-  <link rel="stylesheet" href="{% static 'css/form.css' %}" />
-{% endblock extracss %}
+
 {% block title %}{{ plant.english_name }} - Plant Profile{% endblock title %}
 {{ title }}
 {% block content %}
@@ -21,37 +19,47 @@
       <h2><a href="{% url 'plant-profile-page' plant.pk %}">{{ plant.latin_name }}</a></h2>
       <form method="post" action="{% url 'plant-identification-information-update' plant.pk %}">
         {% csrf_token %}
-        <div class="inputs">
-            <!--is active-->
-          <div class="input-checkbox">
-            <label class="tooltip" for="id_is_active">Is Active <span class="tooltiptext">When Active is selected, the plant is available for public viewing.</span></label>
-            <input type="checkbox" id="id_is_active" name="is_active" {% if plant.is_active %}checked{% endif %}>
-          </div>
-              <!--latin_name-->
-          <div class="input-text">
-            <label for="id_latin_name">Latin Name</label>
-            <input type="text" id="id_latin_name" name="latin_name" value="{{ plant.latin_name }}" required>
-          </div>
-              <!--english_name-->
-          <div class="input-text">
-            <label for="id_english_name">English Name</label>
-            <input type="text" id="id_english_name" name="english_name" value="{{ plant.english_name }}">
-          </div>
-              <!--french_name-->
-          <div class="input-text">
-            <label for="id_french_name">French Name</label>
-            <input type="text" id="id_french_name" name="french_name" value="{{ plant.french_name }}">
-          </div>
-              <!--taxon-->
-          <div class="input-text">
-            <label for="id_taxon">Taxon</label>
-            <input type="text" id="id_taxon" name="taxon" value="{{ plant.taxon }}">
-          </div>
-              <!--inaturalist_taxon-->
-          <div class="input-text">
-            <label for="id_inaturalist_taxon">iNaturalist Taxon</label>
-            <input type="text" id="id_inaturalist_taxon" name="inaturalist_taxon" value="{{ plant.inaturalist_taxon }}">
-          </div>
+        <div class="form inputs">
+          <fieldset>
+            <legend>Plant Status</legend>
+                          <!--is active-->
+            <div class="input-checkbox">
+              <label class="tooltip" for="id_is_active">Is Active <span class="tooltiptext">When Active is selected, the plant is available for public viewing.</span></label>
+              <input type="checkbox" id="id_is_active" name="is_active" {% if plant.is_active %}checked{% endif %}>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>Plant Names</legend>
+
+                <!--latin_name-->
+            <div class="input-text">
+              <label for="id_latin_name">Latin Name</label>
+              <input type="text" id="id_latin_name" name="latin_name" value="{{ plant.latin_name }}" required>
+            </div>
+                <!--english_name-->
+            <div class="input-text">
+              <label for="id_english_name">English Name</label>
+              <input type="text" id="id_english_name" name="english_name" value="{{ plant.english_name }}">
+            </div>
+                <!--french_name-->
+            <div class="input-text">
+              <label for="id_french_name">French Name</label>
+              <input type="text" id="id_french_name" name="french_name" value="{{ plant.french_name }}">
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>Taxonomy</legend>
+                <!--taxon-->
+            <div class="input-text">
+              <label for="id_taxon">VASCAN Taxon ID Number</label>
+              <input type="text" id="id_taxon" name="taxon" value="{{ plant.taxon }}">
+            </div>
+                <!--inaturalist_taxon-->
+            <div class="input-text">
+              <label for="id_inaturalist_taxon">iNaturalist Taxon ID Number</label>
+              <input type="text" id="id_inaturalist_taxon" name="inaturalist_taxon" value="{{ plant.inaturalist_taxon }}">
+            </div>
+          </fieldset>
         </div>
         <button type="submit" class="btn btn-primary">Update</button>
         <!--Button to cancel-->
