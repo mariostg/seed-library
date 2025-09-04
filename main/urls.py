@@ -188,6 +188,11 @@ urlpatterns += [
         views.plant_harvesting_update,
         name="plant-harvesting-update",
     ),
+    path(
+        "plant-sowing-update/<int:pk>",
+        views.plant_sowing_update,
+        name="plant-sowing-update",
+    ),
 ]
 
 urlpatterns += [

@@ -1341,12 +1341,6 @@ def plant_harvesting_update(request, pk):
         )
         return redirect("seed-storage-table")
 
-    # # sowing depth
-    # sowing_depth = models.SowingDepth.objects.all().order_by("sowing_depth")
-    # if not sowing_depth:
-    #     messages.warning(request, "No sowing depth available. Please add some first.")
-    #     return redirect("sowing-depth-table")
-
     # harvesting indicators
     harvesting_indicators = models.HarvestingIndicator.objects.all().order_by(
         "harvesting_indicator"
@@ -1417,3 +1411,32 @@ def plant_harvesting_update(request, pk):
         # "seed_event_table": seed_event_table,
     }
     return render(request, "project/plant-harvesting-update.html", context)
+
+
+def plant_sowing_update(request, pk):
+    plant = utils.single_plant(pk, request)
+
+    # sowing depth
+    sowing_depth = models.SowingDepth.objects.all().order_by("sowing_depth")
+    if not sowing_depth:
+        messages.warning(request, "No sowing depth available. Please add some first.")
+        return redirect("sowing-depth-table")
+
+    if request.method == "POST":
+        form = forms.PlantSowingForm(request.POST, instance=plant)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Sowing information updated successfully.")
+            return redirect("plant-profile-page", pk=plant.pk)
+        else:
+            messages.error(request, "Error updating sowing information.")
+    else:
+        form = forms.PlantSowingForm(instance=plant)
+
+    context = {
+        "title": f"{plant.latin_name} - Sowing Information",
+        "plant": plant,
+        "sowing_depth": sowing_depth,
+        "form": form,
+    }
+    return render(request, "project/plant-sowing-update.html", context)

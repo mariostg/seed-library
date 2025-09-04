@@ -317,3 +317,18 @@ class PlantHarvestingForm(forms.ModelForm):
             "harvesting_video_link",
             "harvesting_notes",
         ]
+
+
+class PlantSowingForm(forms.ModelForm):
+    class Meta:
+        model = models.PlantProfile
+        fields = [
+            "sowing_depth",
+            "sowing_period",
+            "stratification_detail",
+            "stratification_duration",
+            "dormancy",
+        ]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)

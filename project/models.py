@@ -816,10 +816,6 @@ class PlantProfile(Base):
     )
     sowing_period = models.CharField(max_length=55, blank=True)
 
-    sharing_priority = models.ForeignKey(
-        SharingPriority, on_delete=models.RESTRICT, blank=True, null=True
-    )
-
     # Seed distribution
     packaging_measure = models.ForeignKey(
         PackagingMeasure, on_delete=models.RESTRICT, null=True, blank=True
@@ -839,6 +835,9 @@ class PlantProfile(Base):
     notes = models.CharField(max_length=450, blank=True)
     accepting_seed = models.BooleanField(default=False)
     seed_availability = models.BooleanField(default=False)
+    sharing_priority = models.ForeignKey(
+        SharingPriority, on_delete=models.RESTRICT, blank=True, null=True
+    )
 
     #
     # Landscape uses and applications

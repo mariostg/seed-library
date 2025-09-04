@@ -1,0 +1,66 @@
+{% extends "core/base.html" %}
+{% load static %}
+{% block extracss %}
+  <link rel="stylesheet" href="{% static '/css/form.css' %}">
+{% endblock extracss %}
+
+{% block title %}{{plant.latin_name}} - Sowing Information{% endblock title %}
+{{title}}
+{% block content %}
+  <main class="main-content">
+    {% include "project/_profile_update_links.html" %}
+    <div class="flex-col-center">
+      <h1>Update Plant Sowing Information</h1>
+      <h2><a href="{% url 'plant-profile-page' plant.pk %}">{{ plant.latin_name }}</a></h2>
+      <form method="post" action="{% url 'plant-sowing-update' plant.pk %}">
+        {% csrf_token %}
+        <div class="form inputs">
+                <!--Sowing-->
+          <fieldset class="form-group">
+            <legend>Sowing</legend>
+                    <!--use input select for sowing depth-->
+            <div class="input-select">
+              <label for="id_sowing_depth">Depth (inches)</label>
+              <select id="id_sowing_depth" name="sowing_depth">
+                <option value="">---------</option>
+                {% for depth in sowing_depth %}
+                  <option value="{{ depth.pk }}" {% if plant.sowing_depth.pk == depth.pk %}selected{% endif %}>{{ depth.sowing_depth }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="input-text">
+              <label for="id_sowing_period">Period</label>
+              <input type="text" id="id_sowing_period" name="sowing_period" value="{{ plant.sowing_period }}">
+            </div>
+          </fieldset>
+                <!--fieldset for stratification and dormancy-->
+          <fieldset class="form-group">
+            <legend>Stratification and Dormancy</legend>
+            <div class="input-text">
+              <label for="id_stratification_detail">Stratification Detail</label>
+              <input type="text" id="id_stratification_detail" name="stratification_detail" value="{{ plant.stratification_detail }}">
+            </div>
+                    <!--input text for stratification duration-->
+            <div class="input-text">
+              <label for="id_stratification_duration">Stratification Duration (days)</label>
+              <input type="number" id="id_stratification_duration" name="stratification_duration" value="{{ plant.stratification_duration }}" step="1" min="0">
+            </div>
+                    <!--input select for dormancy-->
+            <div class="input-select">
+              <label for="id_dormancy">Dormancy</label>
+              <select id="id_dormancy" name="dormancy">
+                <option value="">---------</option>
+                {% for dormancy in dormancy_list %}
+                  <option value="{{ dormancy.pk }}" {% if plant.dormancy.pk == dormancy.pk %}selected{% endif %}>{{ dormancy.dormancy }}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </fieldset>
+        </div>
+        <button type="submit" class="btn btn-primary">Update</button>
+        <a href="{% url 'plant-growth-characteristics-update' plant.pk %}" class="btn btn-primary">Cancel</a>
+      </form>
+    </div>
+  </main>
+
+{% endblock content %}
