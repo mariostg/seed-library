@@ -6,7 +6,7 @@
   flex-direction: column;
   max-width: 330px;
   padding: 1rem;
-  border-radius: 0rem;
+  border-radius: 0.5rem;
   background-color: #79ac78;
   text-align: center;
 }

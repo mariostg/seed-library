@@ -1,16 +1,20 @@
-<div>
-
-  {% if user.is_authenticated %}
-
-    <a href="{% url 'plant-identification-information-update' plant.pk %}">Identification Information</a> |
-    <a href="{% url 'plant-growth-characteristics-update' plant.pk %}">Growth Characteristics</a> |
-    <a href="{% url 'plant-environmental-requirement-update' plant.pk %}">Environmental Requirements</a> |
-    <a href="{% url 'plant-landscape-use-and-application-update' plant.pk %}">Landscape Use and Application</a> |
-    <a href="{% url 'plant-ecological-benefits-update' plant.pk %}">Ecological Benefits</a> |
-    <a href="{% url 'plant-special-features-and-considerations-update' plant.pk %}">Special Features and Considerations</a> |
-    <a href="{% url 'plant-harvesting-update' plant.pk %}">Harvesting</a> |
-    <a href="{% url 'plant-sowing-update' plant.pk %}">Sowing</a> |
-    <a href="{% url 'plant-seed-distribution-update' plant.pk %}">Seed Distribution</a> |
+{% load static %}
+{% block extracss %}
+  <link rel="stylesheet" href="{% static 'css/plant-profile.css' %}">
+{% endblock extracss %}
+{% if user.is_authenticated %}
+  <div class='profile-update-links'>
+    <a href="{% url 'plant-identification-information-update' plant.pk %}">Identification Information</a>
+    <a href="{% url 'plant-growth-characteristics-update' plant.pk %}">Growth Characteristics</a>
+    <a href="{% url 'plant-environmental-requirement-update' plant.pk %}">Environmental Requirements</a>
+    <a href="{% url 'plant-landscape-use-and-application-update' plant.pk %}">Landscape Use and Application</a>
+    <a href="{% url 'plant-ecological-benefits-update' plant.pk %}">Ecological Benefits</a>
+    <a href="{% url 'plant-special-features-and-considerations-update' plant.pk %}">Special Features and Considerations</a>
+    <a href="{% url 'plant-harvesting-update' plant.pk %}">Harvesting</a>
+    <a href="{% url 'plant-sowing-update' plant.pk %}">Sowing</a>
+    <a href="{% url 'plant-seed-distribution-update' plant.pk %}">Seed Distribution</a>
+  </div>
+  <div>
     <a class="alert alert--warning" href="{% url 'plant-profile-delete' plant.pk %}">Delete {{ plant.latin_name }}</a>
-  {% endif %}
-</div>
+  </div>
+{% endif %}

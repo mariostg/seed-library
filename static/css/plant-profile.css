@@ -97,3 +97,26 @@ img {
   flex-flow: wrap;
   justify-content: center;
 }
+
+.profile-update-links {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+.profile-update-links a {
+  padding: 0.5rem 1rem;
+  border: 1px solid 1px solid light-dark(#79ac78, #79ac78);
+  border-radius: 0.5rem;
+  background-color: #fff;
+  color: #79ac78;
+  text-decoration: none;
+}
+.profile-update-links a:hover {
+  background-color: #618264;
+  color: #fff;
+}
+@media (max-width: 768px) {
+  .profile-update-links {
+    flex-direction: column;
+  }
+}

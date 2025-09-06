@@ -87,3 +87,24 @@ img {
   flex-flow: wrap;
   justify-content: center;
 }
+.profile-update-links {
+  display: flex;
+  // flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  a {
+    padding: 0.5rem 1rem;
+    border: 1px solid $border;
+    border-radius: $border-radius;
+    background-color: $form;
+    color: $green;
+    text-decoration: none;
+    &:hover {
+      background-color: $hover;
+      color: $white;
+    }
+  }
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+}

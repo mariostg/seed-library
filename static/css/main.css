@@ -42,6 +42,8 @@ a {
 }
 a:hover {
   text-decoration: underline;
+  color: #ccc;
+  background-color: #618264;
 }
 
 img {
