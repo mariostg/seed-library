@@ -1386,16 +1386,16 @@ def plant_harvesting_update(request, pk):
         if form.is_valid():
             form.save()
             messages.success(
-                request, "Propagation and seed sharing updated successfully."
+                request, "Harvesting and seed sharing updated successfully."
             )
             return redirect("plant-profile-page", pk=plant.pk)
         else:
-            messages.error(request, "Error updating propagation and seed sharing.")
+            messages.error(request, "Error updating harvesting and seed sharing.")
     else:
         form = forms.PlantHarvestingForm(instance=plant)
 
     context = {
-        "title": f"{plant.latin_name} - Propagation and Seed Sharing",
+        "title": f"{plant.latin_name} - Harvesting and Seed Sharing",
         "plant": plant,
         # "packaging_measures": packaging_measures,
         "on_cultivars": on_cultivars,

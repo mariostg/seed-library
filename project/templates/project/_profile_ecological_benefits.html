@@ -48,7 +48,17 @@
         />
         <span class="tooltiptext">Butterfly host</span>
       </div>
-    {% endif %} {% if plant.nitrogen_fixer %}
+    {% endif %}{% if plant.bee_host %}
+      <div class="tooltip">
+        <img
+          title="bee host"
+          alt="bee host"
+          class="icon"
+          src="{% static 'images/plant-bee-host.svg'  %}"
+        />
+        <span class="tooltiptext">Bee host</span>
+      </div>
+    {% endif %}  {% if plant.nitrogen_fixer %}
       <div class="tooltip">
         <img
           title="nitrogen fixer"

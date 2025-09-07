@@ -570,7 +570,7 @@ class PlantProfile(Base):
     - Identification information
     - Growth characteristics
     - Environmental requirements
-    - Propagation and seed sharing
+    - Harvesting and seed sharing
     - Landscape uses and applications
     - Ecological benefits
     - Special features and considerations
@@ -621,7 +621,7 @@ class PlantProfile(Base):
             sand_tolerant (BooleanField): Tolerant of sandy soils
             acidic_soil_tolerant (BooleanField): Tolerant of acidic soils
 
-    # Propagation and seed sharing
+    # Harvesting and seed sharing
         ## Seed Handling
             seed_availability (BooleanField): Seeds are readily available
             accepting_seed (BooleanField): Whether accepting seeds for this plant
@@ -775,7 +775,7 @@ class PlantProfile(Base):
     transplantation_tolerant = models.BooleanField(default=False)
 
     #
-    # Propagation and seed sharing
+    # Harvesting and seed sharing
     #
 
     # Harvesting information
