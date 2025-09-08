@@ -638,7 +638,6 @@ class PlantProfile(Base):
             stratification_detail (CharField): Details about cold stratification requirements
             stratification_duration (SmallIntegerField): Duration of stratification in days
             sowing_depth (ForeignKey): Reference to SowingDepth model
-            sowing_period (CharField): Description of optimal sowing period
             sowing_label_instructions (CharField): Instructions for sowing labels
             sowing_notes (CharField): Detailed notes on sowing process
             germinate_easy (BooleanField): Whether seeds germinate easily
@@ -814,7 +813,6 @@ class PlantProfile(Base):
     sowing_depth = models.ForeignKey(
         SowingDepth, on_delete=models.RESTRICT, blank=True, null=True
     )
-    sowing_period = models.CharField(max_length=55, blank=True)
 
     # Seed distribution
     packaging_measure = models.ForeignKey(

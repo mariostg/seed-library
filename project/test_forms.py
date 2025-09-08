@@ -46,7 +46,6 @@ class TestForms:
             "stratification_detail": "Detail",
             "stratification_duration": 30,
             "sowing_depth": 1,
-            "sowing_period": "Spring",
             "sharing_priority": 1,
             "harvesting_start": 1,
             "harvesting_indicator": 1,

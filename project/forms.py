@@ -20,7 +20,6 @@ class PlantProfileForm(forms.ModelForm):
             "stratification_detail",  #
             "stratification_duration",  #
             "sowing_depth",  #
-            "sowing_period",
             "sharing_priority",  #
             "harvesting_start",  #
             "harvesting_indicator",  #
@@ -324,7 +323,6 @@ class PlantSowingForm(forms.ModelForm):
         model = models.PlantProfile
         fields = [
             "sowing_depth",
-            "sowing_period",
             "stratification_detail",
             "stratification_duration",
             "dormancy",
