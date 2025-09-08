@@ -14,7 +14,7 @@
     <a href="{% url 'plant-sowing-update' plant.pk %}">Sowing</a>
     <a href="{% url 'plant-seed-distribution-update' plant.pk %}">Seed Distribution</a>
   </div>
-  <div>
-    <a class="alert alert--warning" href="{% url 'plant-profile-delete' plant.pk %}">Delete {{ plant.latin_name }}</a>
+  <div class="panel flex-col-center">
+    <a class="btn alert alert--warning" href="{% url 'plant-profile-delete' plant.pk %}">Delete {{ plant.latin_name }}</a>
   </div>
 {% endif %}
