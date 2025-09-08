@@ -24,11 +24,15 @@
     font-style: italic;
     font-weight: regular;
     margin-right: 1rem;
-    font-size: 1rem;
+    font-size: 1.4rem;
   }
   &-english-name {
     font-weight: bold;
-    font-size: 1.2rem;
+    font-size: 1.4rem;
+  }
+  &-french-name {
+    font-weight: regular;
+    font-size: 1.4rem;
   }
   &-names {
     display: flex;
