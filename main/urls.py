@@ -206,6 +206,7 @@ urlpatterns += [
         views.butterfly_supporting_plants,
         name="butterfly-supporting-plants",
     ),
+    path("plant-ecozones/", views.plant_ecozones, name="plant_ecozones"),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

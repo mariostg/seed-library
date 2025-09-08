@@ -1463,3 +1463,29 @@ def plant_seed_distribution_update(request, pk):
         "form": form,
     }
     return render(request, "project/plant-seed-distribution-update.html", context)
+
+
+def plant_ecozones(request):
+    # export a csv file of all plants with their ecozones.
+    # the first row is the header with the ecozone names.
+    # the first column is the latin name.
+    # other columns are the ecozones, with a 1 if the plant is in that ecozone, 0 otherwise.
+    plants = models.PlantProfile.objects.all().order_by("latin_name")
+    ecozones = models.Ecozone.objects.all().order_by("ecozone")
+    response = HttpResponse(
+        content_type="text/csv",
+        headers={"Content-Disposition": 'attachment; filename="plant-ecozones.csv"'},
+    )
+    writer = csv.writer(response)
+    header = ["Latin Name"] + [ecozone.ecozone for ecozone in ecozones]
+    writer.writerow(header)
+    for plant in plants:
+        row = [plant.latin_name]
+        plant_ecozones = plant.ecozones.values_list("ecozone", flat=True)
+        for ecozone in ecozones:
+            if ecozone.ecozone in plant_ecozones:
+                row.append(1)
+            else:
+                row.append(0)
+        writer.writerow(row)
+    return response
