@@ -59,3 +59,18 @@ def plant_label_info(pk, request: HttpRequest):
         label_info.append(detail)
     label_info.reverse()
     return label_info
+
+
+def sow_before(plant: PlantProfile):
+    if not plant.stratification_duration:
+        return "Sow anytime"
+    if plant.stratification_duration == 30:
+        return "Sow before March"
+    elif plant.stratification_duration == 60:
+        return "Sow before February"
+    elif plant.stratification_duration == 90:
+        return "Sow before January"
+    elif plant.stratification_duration == 120:
+        return "Sow before December"
+    elif plant.stratification_duration == 180:
+        return "Sow before November"

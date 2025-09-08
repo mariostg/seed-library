@@ -4,14 +4,14 @@
   <h3>Sowing Information</h3>
   <ul>
     <li>Sowing depth: {{ plant.sowing_depth }}</li>
-    <li>Sowing before: {{ sow_before }}</li>
+    <li>{{ sow_before|default:"Sow anytime" }}</li>
+    <li>Stratification duration: {{ plant.stratification_duration }} days</li>
     {% if plant.self_seeding %}
       <li>Self-seeding</li>
     {% endif %}
     {% if plant.dormancy %}
       <li>Dormancy period: {{ plant.dormancy }}</li>
     {% endif %}
-    <li>Stratification duration: {{ plant.stratification_duration }} days</li>
     {% if plant.stratification_details %}
       <li>Stratification details: {{ plant.stratification_details }}</li>
     {% endif %}
