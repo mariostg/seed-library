@@ -42,7 +42,6 @@ class PlantProfileAdmin(admin.ModelAdmin):
 
 
 admin.site.register(models.PlantProfile, PlantProfileAdmin)
-admin.site.register(models.SharingPriority)
 admin.site.register(models.HarvestingIndicator)
 admin.site.register(models.HarvestingMean)
 admin.site.register(models.SeedHead)

@@ -109,7 +109,6 @@ class Command(BaseCommand):
             "grasp_candidate_notes": "plant-grasp-candidate-notes - csv.csv",
             "self_seeding": "plant-self-seeding - csv.csv",
             "does_not_spread": "plant-does-not-spread - csv.csv",
-            "sharing_priority": "plant-sharing-priority - csv.csv",
             "bloom_start": "plant-bloom-start - csv.csv",
             "bloom_end": "plant-bloom-end - csv.csv",
             "rabbit_tolerant": "plant-rabbit-tolerant - csv.csv",
@@ -142,7 +141,6 @@ class Command(BaseCommand):
         models.SeedPreparation.objects.all().delete()
         models.SeedStorage.objects.all().delete()
         models.SeedStorageLabelInfo.objects.all().delete()
-        models.SharingPriority.objects.all().delete()
         models.SowingDepth.objects.all().delete()
         models.SeedViabilityTest.objects.all().delete()
         models.SeedEventTable.objects.all().delete()
@@ -170,7 +168,6 @@ class Command(BaseCommand):
         self.import_toxicity_indicator()
         self.import_toxicity_indicator_notes()
         self.import_grasp_candidate_notes()
-        self.import_sharing_priority()
         self.import_seed_viability_test()
         self.import_harvesting_indicator()
         self.import_harvesting_mean()
@@ -519,14 +516,6 @@ class Command(BaseCommand):
         )
         self._update_vernacular_plant_name(
             self.csv_files["harvesting_start"], "harvesting_start"
-        )
-
-    def import_sharing_priority(self):
-        """Read the plant sharing priority CSV file and update the PlantProfile model with sharing priority values."""
-        self._update_vernacular_plant_name(
-            self.csv_files["sharing_priority"],
-            "sharing_priority",
-            models.SharingPriority,
         )
 
     def import_stratification_duration(self):

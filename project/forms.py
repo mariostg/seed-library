@@ -20,7 +20,6 @@ class PlantProfileForm(forms.ModelForm):
             "stratification_detail",  #
             "stratification_duration",  #
             "sowing_depth",  #
-            "sharing_priority",  #
             "harvesting_start",  #
             "harvesting_indicator",  #
             "harvesting_mean",  #
@@ -94,7 +93,6 @@ class SearchPlantForm(forms.ModelForm):
             "bloom_end",
             "max_height",
             "stratification_duration",
-            "sharing_priority",
             "harvesting_start",
             "germinate_easy",
             "seed_availability",

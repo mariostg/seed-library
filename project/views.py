@@ -1366,14 +1366,6 @@ def plant_harvesting_update(request, pk):
         messages.warning(request, "No seed heads available. Please add some first.")
         return redirect("seed-head-table")
 
-    # # sharing priority
-    # sharing_priority = models.SharingPriority.objects.all().order_by("sharing_priority")
-    # if not sharing_priority:
-    #     messages.warning(
-    #         request, "No sharing priority available. Please add some first."
-    #     )
-    #     return redirect("sharing-priority-table")
-
     # # seed event table
     # seed_event_table = models.SeedEventTable.objects.all().order_by("seed_event_table")
     # if not seed_event_table:
@@ -1408,7 +1400,6 @@ def plant_harvesting_update(request, pk):
         "harvesting_indicators": harvesting_indicators,
         "harvesting_means": harvesting_means,
         "seed_heads": seed_heads,
-        # "sharing_priority": sharing_priority,
         # "seed_event_table": seed_event_table,
     }
     return render(request, "project/plant-harvesting-update.html", context)

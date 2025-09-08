@@ -209,9 +209,6 @@ class PlantProfileFilter(django_filters.FilterSet):
     stratification_duration = django_filters.NumberFilter(
         method="filter_lte",
     )
-    sharing_priority = django_filters.ModelChoiceFilter(
-        queryset=models.SharingPriority.objects.all(),
-    )
 
     full_sun = django_filters.CharFilter(
         method="filter_boolean",

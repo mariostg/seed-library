@@ -18,7 +18,6 @@ class TestPostAddPlantProfile:
             "stratification_detail": "",
             "stratification_duration": "",
             "sowing_depth": "",
-            "sharing_priority": "",
             "harvesting_start": "",
             "harvesting_indicator": "",
             "harvesting_mean": "",

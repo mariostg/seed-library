@@ -13,39 +13,6 @@ class Base(models.Model):
         abstract = True
 
 
-class SharingPriority(Base):
-    """
-    A model class representing sharing priority levels for the seeds.
-
-    This class defines different levels of sharing priority that can be assigned
-    to Seed Profile, ranging from none to high priority.
-
-    Attributes:
-        LEVELS (dict): Dictionary mapping priority level keys to their display names.
-            Available levels are: none, low, medium, and high.
-        sharing_priority (CharField): A field to store custom sharing priority text (max 75 chars).
-        level (CharField): The actual priority level, chosen from LEVELS dictionary.
-            Defaults to "None" if not specified.
-
-    Example:
-        >>> priority = SharingPriority(sharing_priority="1 Give in Priority", level="high")
-        >>> str(priority)
-        '1 Give in Priority'
-    """
-
-    LEVELS = {
-        "none": "None",
-        "low": "Low",
-        "medium": "Medium",
-        "high": "High",
-    }
-    sharing_priority = models.CharField(max_length=75, blank=True)
-    level = models.CharField(choices=LEVELS, blank=True, default="None", max_length=10)
-
-    def __str__(self) -> str:
-        return self.sharing_priority
-
-
 class SeedEventTable(Base):
     """
     A model representing a table name where it is possible to find the seeds for a given plant at giveaway events.
@@ -654,7 +621,6 @@ class PlantProfile(Base):
             harvesting_video_link (CharField): Link to harvesting instructional video
 
         ## Distribution
-            sharing_priority (ForeignKey): Reference to SharingPriority model
             seed_event_table (ForeignKey): Reference to SeedEventTable model
             envelope_label_link (CharField): Link to envelope label resource
 
@@ -833,9 +799,6 @@ class PlantProfile(Base):
     notes = models.CharField(max_length=450, blank=True)
     accepting_seed = models.BooleanField(default=False)
     seed_availability = models.BooleanField(default=False)
-    sharing_priority = models.ForeignKey(
-        SharingPriority, on_delete=models.RESTRICT, blank=True, null=True
-    )
 
     #
     # Landscape uses and applications

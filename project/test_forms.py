@@ -32,7 +32,6 @@ class TestForms:
         models.OneCultivar.objects.create(on_cultivar="On cultivar")
         models.ViablityTest.objects.create(viability_test="Testme")
         models.SeedHead.objects.create(seed_head="Head")
-        models.SharingPriority.objects.create(sharing_priority="Priority")
         models.SowingDepth.objects.create(sowing_depth="Depth")
         return {
             "english_name": "Rose",
@@ -46,7 +45,6 @@ class TestForms:
             "stratification_detail": "Detail",
             "stratification_duration": 30,
             "sowing_depth": 1,
-            "sharing_priority": 1,
             "harvesting_start": 1,
             "harvesting_indicator": 1,
             "harvesting_mean": 1,
@@ -108,7 +106,6 @@ class TestForms:
     def test_search_plant_form_valid(self):
         models.Lighting.objects.create(lighting="Lighting 1")
         models.Lighting.objects.create(lighting="Lighting 2")
-        models.SharingPriority.objects.create(sharing_priority="Priority")
 
         data = {
             "english_name": "Rose",
@@ -118,7 +115,6 @@ class TestForms:
             "bloom_end": 12,
             "max_height": 100,
             "stratification_duration": 30,
-            "sharing_priority": 1,
             "harvesting_start": 1,
             "germinate_easy": True,
             "seed_availability": True,

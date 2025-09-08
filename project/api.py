@@ -40,7 +40,6 @@ api_key = APIKey()
 # Define a class named PlantProfileSchema that inherits from ModelSchema
 # The PlantProfileSchema class is used to serialize the PlantProfile model
 class PlantProfileSchema(ModelSchema):
-    sharing_priority: str
 
     class Meta:
         model = PlantProfile
@@ -57,15 +56,6 @@ class PlantProfileSchema(ModelSchema):
             "stratification_duration",
             "seed_availability",
         ]
-
-    # define a static method named get_sharing_priority that takes a plant_profile as an argument and return the sharing_priority level
-    @staticmethod
-    def resolve_sharing_priority_level(plant_profile):
-        return plant_profile.sharing_priority.level
-
-    @staticmethod
-    def resolve_sharing_priority(plant_profile):
-        return plant_profile.sharing_priority.sharing_priority
 
 
 # Define a get decorator to the /plant-profiles/ url
