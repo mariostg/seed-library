@@ -57,6 +57,10 @@ ol {
   margin: 0 0 1rem 1.5rem;
 }
 
+button {
+  border: none;
+}
+
 button,
 input,
 select,
@@ -257,6 +261,10 @@ header {
   padding: 0 12px;
   display: flex;
   justify-content: center;
+}
+
+#aside-toggler {
+  margin-left: 1rem;
 }
 
 /*0 3px 5px rgba(75, 85, 68, 0.8);*/
