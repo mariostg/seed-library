@@ -20,7 +20,7 @@ from project.models import ProjectUser
 
 # Create your views here.
 def index(request):
-    return render(request, "project/index.html")
+    return render(request, "project/plant-catalogue-intro.html")
 
 
 @login_required

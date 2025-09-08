@@ -6,10 +6,10 @@
   </button>
   <ul class="nav-links show">
     <li>
-      <a href="#">Home</a>
+      <a href="{% url 'index' %}">Home</a>
     </li>
     <li>
-      {% if request.path != '/' %}
+      {% if request.path != '/search-plant-name/' %}
         <a href="{% url 'search-plant-name' %}">Plant Catalogue</a>
       {% endif %}
     </li>
