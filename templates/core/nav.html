@@ -16,6 +16,9 @@
     <li>
       <a href="{% url 'butterfly-supporting-plants' %}">Butterflies</a>
     </li>
+    <li>
+      <a href="{% url 'bee-supporting-plants' %}">Bees</a>
+    </li>
     {% if request.user.is_authenticated %}
       <li>
         <a href="{% url 'plant_ecozones' %}">Ecozones</a>

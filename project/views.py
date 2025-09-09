@@ -162,6 +162,17 @@ def butterfly_supporting_plants(request):
     return render(request, "project/butterfly_supporting_plants.html", context)
 
 
+def bee_supporting_plants(request):
+    # This view is used to display a list of bees with the plants that support them
+    bees = models.BeeSpecies.objects.all().order_by("latin_name")
+    context = {
+        "title": "Bee Supporting Plants",
+        "url_name": "bee-supporting-plants",
+        "bees": bees,
+    }
+    return render(request, "project/bee_supporting_plants.html", context)
+
+
 def search_plant_name(request):
     if not request.GET:
         data = models.PlantProfile.objects.none()

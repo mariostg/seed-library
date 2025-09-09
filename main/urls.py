@@ -199,6 +199,11 @@ urlpatterns += [
         views.butterfly_supporting_plants,
         name="butterfly-supporting-plants",
     ),
+    path(
+        "bee-supporting-plants/",
+        views.bee_supporting_plants,
+        name="bee-supporting-plants",
+    ),
     path("plant-ecozones/", views.plant_ecozones, name="plant_ecozones"),
 ]
 if settings.DEBUG:
