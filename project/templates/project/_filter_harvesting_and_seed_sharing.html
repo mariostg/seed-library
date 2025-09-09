@@ -49,7 +49,7 @@
          hx-trigger="click"
          hx-target="#search-results"
          hx-push-url="true"
-         hx-include="#any_name,#seed_availability"
+         hx-include="#any_plant_name,#seed_availability"
          {% if accepting_seed %} checked {% endif %}
   >
   <label for="accepting_seed">Show seeds accepted for donations ✔</label>
@@ -66,7 +66,7 @@
     hx-trigger="click"
     hx-target="#search-results"
     hx-push-url="true"
-    hx-include="#any_name,#accepting_seed"
+    hx-include="#any_plant_name,#accepting_seed"
     {% if seed_availability %} checked {% endif %}
   />
   <label for="seed_availability">Show available seeds only ✔</label>

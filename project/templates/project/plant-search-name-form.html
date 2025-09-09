@@ -4,11 +4,11 @@
 
     <!--Input text box for searching plant name-->
     <div class="form__field">
-      <label for="any_name" class="form-label tooltip">Search by plant name
+      <label for="any_plant_name" class="form-label tooltip">Search by plant name
         <span class="tooltiptext">Enter 4 or more letters of the plant's latin, english, or french name</span>
       </label>
-      <input id="any_name" class="name-search-input"
-             name="any_name"
+      <input id="any_plant_name" class="name-search-input"
+             name="any_plant_name"
              hx-get="/search-plant-name"
              hx-trigger="keyup[target.value.length >= 4] changed delay:500ms, keyup[key=='Enter']"
              hx-target="#search-results"
@@ -16,7 +16,7 @@
              hx-include="#seed_availability,#accepting_seed"
              hx-indicator=".htmx-indicator"
              type="text"
-             value="{{ any_name }}"
+             value="{{ any_plant_name }}"
              class="form-input"
       >
 

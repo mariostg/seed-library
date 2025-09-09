@@ -1,3 +1,5 @@
+from unicodedata import normalize
+
 import django_filters
 from django.db.models import Q
 
@@ -7,8 +9,8 @@ from project import models, utils
 class PlantProfileFilter(django_filters.FilterSet):
     """Filters used on plant profile search form"""
 
-    any_name = django_filters.CharFilter(
-        method="filter_any_name",
+    any_plant_name = django_filters.CharFilter(
+        method="filter_normalized_plant_name",
     )
 
     seed_availability = django_filters.CharFilter(
@@ -233,6 +235,55 @@ class PlantProfileFilter(django_filters.FilterSet):
     cause_skin_rashes = django_filters.CharFilter(
         method="filter_excludes",
     )
+
+    def filter_normalized_plant_name(self, queryset, name, value):
+        normalized_value = (
+            normalize("NFKD", value).encode("ASCII", "ignore").decode("ASCII").lower()
+        )
+
+        # Get all plant profiles
+        all_plants = queryset.all()
+        matching_ids = []
+
+        # Filter manually to handle accents in all name fields
+        for plant in all_plants:
+            # Check french_name
+            if plant.french_name:
+                normalized_name = (
+                    normalize("NFKD", plant.french_name)
+                    .encode("ASCII", "ignore")
+                    .decode("ASCII")
+                    .lower()
+                )
+                if normalized_value in normalized_name:
+                    matching_ids.append(plant.id)
+                    continue
+
+            # Check latin_name
+            if plant.latin_name:
+                normalized_name = (
+                    normalize("NFKD", plant.latin_name)
+                    .encode("ASCII", "ignore")
+                    .decode("ASCII")
+                    .lower()
+                )
+                if normalized_value in normalized_name:
+                    matching_ids.append(plant.id)
+                    continue
+
+            # Check english_name
+            if plant.english_name:
+                normalized_name = (
+                    normalize("NFKD", plant.english_name)
+                    .encode("ASCII", "ignore")
+                    .decode("ASCII")
+                    .lower()
+                )
+                if normalized_value in normalized_name:
+                    matching_ids.append(plant.id)
+                    continue
+
+        return queryset.filter(id__in=matching_ids)
 
     def filter_any_name(self, queryset, name, value):
         return queryset.filter(
