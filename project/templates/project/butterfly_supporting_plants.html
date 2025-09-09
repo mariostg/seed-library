@@ -7,7 +7,7 @@
       <h1>Butterflies and Their Supporting Plants</h1>
 
       <p>
-        This page lists all butterfly species along with their supporting plants
+        This page lists all <strong>{{ butterflies.count }}</strong> butterfly species along with their supporting plants
         that exist in the plant catalogue. Each plant species is linked to its
         profile page for more detailed information.
       </p>
@@ -30,10 +30,4 @@
         </article>
       {% endfor %}
     </div>
-  </section>
-
-  {% if butterflies %}
-    <p>Total Butterflies: {{ butterflies.count }}</p>
-  {% else %}
-    <p>No butterflies found.</p>
-  {% endif %}ß {% endblock %}
+  </section>{% endblock %}
