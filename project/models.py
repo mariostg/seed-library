@@ -664,6 +664,20 @@ class PlantProfile(Base):
 
     # Profile status
     is_active = models.BooleanField(default=True)
+    show_bees_supported_info = models.BooleanField(default=True)
+    show_butterflies_supported_info = models.BooleanField(default=True)
+    show_complementary_plants_info = models.BooleanField(default=True)
+    show_ecological_benefits_info = models.BooleanField(default=True)
+    show_ecozones_info = models.BooleanField(default=True)
+    show_env_requirements_info = models.BooleanField(default=True)
+    show_gardener_friendly_info = models.BooleanField(default=True)
+    show_harvesting_info = models.BooleanField(default=True)
+    show_inaturalist_link_info = models.BooleanField(default=True)
+    show_landscape_uses_info = models.BooleanField(default=True)
+    show_obsolete_names_info = models.BooleanField(default=True)
+    show_sowing_info = models.BooleanField(default=True)
+    show_tolerates_info = models.BooleanField(default=True)
+    show_vascan_map_info = models.BooleanField(default=True)
 
     # Identification information
     latin_name = models.CharField(max_length=75, unique=True)

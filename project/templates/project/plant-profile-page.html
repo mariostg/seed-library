@@ -42,8 +42,10 @@
                   <div class="plant-profile-french-name">{{plant.french_name}}</div>
                 </div>
               </div>
-                        <!-- Obsolete Names -->
-              {% include "project/_profile_obsolete_names.html" %}
+              <!-- Obsolete Names -->
+              {% if plant.show_obsolete_names_info %}
+                {% include "project/_profile_obsolete_names.html" %}
+              {% endif %}
 
               <div class="plant-giveaway">
                 {% if plant.seed_availability %}
@@ -60,11 +62,24 @@
 
             </div>
 
-            {% include "project/_profile_env_requirements_growth_characteristics.html" %}
-            {% include "project/_profile_gardener_friendly_attributes.html" %}
-            {% include "project/_profile_landscape_uses.html" %}
-            {% include "project/_profile_ecological_benefits.html" %}
-            {% include "project/_profile_tolerates.html" %}
+            {% if plant.show_env_requirements_info %}
+              {% include "project/_profile_env_requirements_growth_characteristics.html" %}
+            {% endif %}
+
+            {% if plant.show_gardener_friendly_info  %}
+              {% include "project/_profile_gardener_friendly_attributes.html" %}
+            {% endif %}
+
+            {% if plant.show_landscape_uses_info %}
+              {% include "project/_profile_landscape_uses.html" %}
+            {% endif %}
+            {% if plant.show_ecological_benefits_info %}
+              {% include "project/_profile_ecological_benefits.html" %}
+            {% endif %}
+
+            {% if plant.show_tolerates_info %}
+              {% include "project/_profile_tolerates.html" %}
+            {% endif %}
           </div>
       <!-- End of Plant Profile Characteristics -->
 
@@ -75,25 +90,45 @@
 
           <div>
             <h2>Plant Distribution</h2>
-            {% include "project/_profile_vascan_map.html" %}
-            {% include "project/_profile_inaturalist_link.html" %}
-            {% include "project/_profile_ecozone.html" %}
+            {% if plant.show_vascan_map_info %}
+              {% include "project/_profile_vascan_map.html" %}
+            {% endif %}
+
+            {% if plant.show_inaturalist_link_info %}
+              {% include "project/_profile_inaturalist_link.html" %}
+            {% endif %}
+
+            {% if plant.show_ecozones_info %}
+              {% include "project/_profile_ecozone.html" %}
+            {% endif %}
           </div>
 
       <!-- End of inaturalist distribution -->
 
           <div>
-            {% include "project/_profile_butterflies_supported.html" %}
-            {% include "project/_profile_bees_supported.html" %}
+            {% if plant.show_butterflies_supported_info %}
+              {% include "project/_profile_butterflies_supported.html" %}
+            {% endif %}
+            {% if plant.show_bees_supported_info %}
+              {% include "project/_profile_bees_supported.html" %}
+            {% endif %}
+
             <!-- Complementary Plants -->
-            {% include "project/_profile_complementary_plants.html" %}
+            {% if plant.show_complementary_plants_info %}
+              {% include "project/_profile_complementary_plants.html" %}
+            {% endif %}
           </div>
 
           <div>
             <!-- Sowing Information -->
-            {% include "project/_profile_sowing.html" %}
+            {% if plant.show_sowing_info %}
+              {% include "project/_profile_sowing.html" %}
+            {% endif %}
+
             <!-- Harvesting Information -->
-            {% include "project/_profile_harvesting.html" %}
+            {% if plant.show_harvesting_info %}
+              {% include "project/_profile_harvesting.html" %}
+            {% endif %}
           </div>
 
         </div>
