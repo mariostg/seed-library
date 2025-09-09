@@ -12,6 +12,13 @@
             This plant profile is not active. Activate it through the Information Identification tab
           </div>
         {% endif %}
+        <!--Display message if plant is known to be toxic-->
+        {% if is_toxic %}
+          <div class="flex-col-center alert alert--error">
+            <img class='icon square white' src="{% static 'images/plant-toxic.svg' %}" alt="Toxic Plant">
+            {{ plant.toxicity_indicator }} - {{ plant.toxicity_indicator_notes }}
+          </div>
+        {% endif %}
         <!-- Plant Profile Header -->
         <div class="plant-profile-header">
           <div class="plant-profile-image">

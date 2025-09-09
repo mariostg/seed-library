@@ -62,6 +62,7 @@ def plant_profile_page(request, pk):
     bloom_start = utils.MONTHS[plant.bloom_start]
     bloom_end = utils.MONTHS[plant.bloom_end]
     sow_before = utils.sow_before(plant)
+    is_toxic = utils.is_plant_toxic(plant)
     context = {
         "plant": plant,
         "title": plant.latin_name,
@@ -70,6 +71,7 @@ def plant_profile_page(request, pk):
         "landscape_use": landscape_use,
         "ecological_benefits": ecological_benefits,
         "sow_before": sow_before,
+        "is_toxic": is_toxic,
     }
     return render(request, "project/plant-profile-page.html", context)
 
