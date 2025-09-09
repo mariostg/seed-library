@@ -6,32 +6,34 @@
     href="{% static 'css/butterfly-supporting-plants.css' %}"
   />
 {% endblock extracss %} {% block content %}
-  <div class="container mt-4">
-    <h1>Butterflies and Their Supporting Plants</h1>
+  <section class="container">
+    <div>
+      <h1>Butterflies and Their Supporting Plants</h1>
 
-    <p>
-      This page lists all butterfly species along with their supporting plants
-      that exist in the plant catalogue. Each plant species is linked to its
-      profile page for more detailed information.
-    </p>
-  </div>
-  <section>
-    {% for butterfly in butterflies %}
-      <article>
-        <div>{{ butterfly.latin_name }} - {{ butterfly.english_name }}</div>
-        <div>
-          <ul>
-            {% for plant in butterfly.plants.all %}
-              <li>
-                <a target="_blank" href="{% url 'plant-profile-page' plant.pk %}"
-                >{{ plant.latin_name }}</a
-                  >
-                </li>
-            {% endfor %}
-          </ul>
-        </div>
-      </article>
-    {% endfor %}
+      <p>
+        This page lists all butterfly species along with their supporting plants
+        that exist in the plant catalogue. Each plant species is linked to its
+        profile page for more detailed information.
+      </p>
+    </div>
+    <div>
+      {% for butterfly in butterflies %}
+        <article>
+          <div>{{ butterfly.latin_name }} - {{ butterfly.english_name }}</div>
+          <div>
+            <ul>
+              {% for plant in butterfly.plants.all %}
+                <li>
+                  <a target="_blank" href="{% url 'plant-profile-page' plant.pk %}"
+                  >{{ plant.latin_name }}</a
+                    >
+                  </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </article>
+      {% endfor %}
+    </div>
   </section>
 
   {% if butterflies %}

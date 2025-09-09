@@ -185,6 +185,12 @@ input[type=range]:active::-webkit-slider-thumb {
   margin-bottom: 3rem;
 }
 
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
 .flex-row {
   justify-content: space-between;
   display: flex;
