@@ -503,16 +503,6 @@ def color_table(request):
     return render(request, "project/color-table.html", context)
 
 
-def dormancy_table(request):
-    data = models.Dormancy.objects.all().order_by("dormancy")
-    context = {
-        "data": data,
-        "url_name": "dormancy-table",
-        "title": "Dormancies",
-    }
-    return render(request, "project/dormancy-table.html", context)
-
-
 def habit_table(request):
     data = models.GrowthHabit.objects.all().order_by("habit")
     context = {
@@ -568,35 +558,6 @@ def color_add(request):
             context["form"] = form
     else:
         context["form"] = forms.ColorForm
-
-    return render(request, "project/simple-form.html", context)
-
-
-# @login_required
-def dormancy_add(request):
-    context = {
-        "title": "Create Dormancy",
-        "url_name": "dormancy-table",
-    }
-    if request.method == "POST":
-        form = forms.DormancyForm(request.POST)
-        if form.is_valid():
-            context["form"] = form
-            obj = form.save(commit=False)
-            try:
-                form.save()
-            except IntegrityError:
-                messages.error(request, f"Dormancy {obj.dormancy} exists already.")
-                return render(
-                    request,
-                    "project/simple-form.html",
-                    context,
-                )
-        else:
-            messages.error(request, "Dormancy not valid.")
-            context["form"] = form
-    else:
-        context["form"] = forms.DormancyForm
 
     return render(request, "project/simple-form.html", context)
 
@@ -716,28 +677,6 @@ def color_update(request, pk):
 
 
 # @login_required
-def dormancy_update(request, pk):
-    obj = models.Dormancy.objects.get(id=pk)
-    form = forms.DormancyForm(instance=obj)
-
-    if request.method == "POST":
-        form = forms.DormancyForm(request.POST, instance=obj)
-        if form.is_valid():
-            form.save()
-            return redirect("dormancy-table")
-
-    return render(
-        request,
-        "project/simple-form.html",
-        {
-            "form": form,
-            "title": "Dormancy Update",
-            "url_name": "dormancy-table",
-        },
-    )
-
-
-# @login_required
 def habit_update(request, pk):
     obj = models.GrowthHabit.objects.get(id=pk)
     form = forms.HabitForm(instance=obj)
@@ -818,24 +757,6 @@ def color_delete(request, pk):
             messages.warning(request, msg)
         return redirect("color-table")
     context = {"object": obj, "back": "color-table"}
-    return render(request, "core/delete-object.html", context)
-
-
-# @login_required
-def dormancy_delete(request, pk):
-    obj = models.Dormancy.objects.get(id=pk)
-    if request.method == "POST":
-        try:
-            obj.delete()
-        except RestrictedError as e:
-            msg = e.args[0].split(":")[0] + " : "
-            fkeys = []
-            for fk in e.restricted_objects:
-                fkeys.append(fk.obj)
-            msg = msg + ", ".join(fkeys)
-            messages.warning(request, msg)
-        return redirect("dormancy-table")
-    context = {"object": obj, "back": "dormancy-table"}
     return render(request, "core/delete-object.html", context)
 
 

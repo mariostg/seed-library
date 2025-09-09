@@ -129,7 +129,6 @@ class Command(BaseCommand):
         models.BloomColor.objects.all().delete()
         models.ConservationStatus.objects.all().delete()
         models.ConservationStatus.objects.all().delete()
-        models.Dormancy.objects.all().delete()
         models.GrowthHabit.objects.all().delete()
         models.HarvestingIndicator.objects.all().delete()
         models.HarvestingMean.objects.all().delete()

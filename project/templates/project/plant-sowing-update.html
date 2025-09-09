@@ -38,15 +38,10 @@
               <label for="id_stratification_duration">Stratification Duration (days)</label>
               <input type="number" id="id_stratification_duration" name="stratification_duration" value="{{ plant.stratification_duration }}" step="1" min="0">
             </div>
-                    <!--input select for dormancy-->
-            <div class="input-select">
-              <label for="id_dormancy">Dormancy</label>
-              <select id="id_dormancy" name="dormancy">
-                <option value="">---------</option>
-                {% for dormancy in dormancy_list %}
-                  <option value="{{ dormancy.pk }}" {% if plant.dormancy.pk == dormancy.pk %}selected{% endif %}>{{ dormancy.dormancy }}</option>
-                {% endfor %}
-              </select>
+                    <!--input checkbox for double dormancy-->
+            <div class="input-checkbox">
+              <input type="checkbox" id="id_double_dormancy" name="double_dormancy" {% if plant.double_dormancy %}checked{% endif %}>
+              <label for="id_double_dormancy">Double Dormancy Required</label>
             </div>
           </fieldset>
         </div>

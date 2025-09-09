@@ -211,26 +211,6 @@ class PackagingMeasure(Base):
         ordering = ["packaging_measure"]
 
 
-class Dormancy(Base):
-    """A model representing plant dormancy characteristics of the seeds prior germination.
-
-    This class defines a database model for storing information about plant dormancy,
-    which is the period in a plant's life cycle where growth and development slow or stop.
-
-    Attributes:
-        dormancy (str): A CharField storing the dormancy description, max length 50 characters.
-                       Can be left blank.
-
-    Returns:
-        str: String representation of the dormancy instance, returns the dormancy value.
-    """
-
-    dormancy = models.CharField(max_length=50, blank=True)
-
-    def __str__(self) -> str:
-        return self.dormancy
-
-
 class SeedPreparation(Base):
     """
     A model representing seed preparation methods before packing.
@@ -596,7 +576,6 @@ class PlantProfile(Base):
             seed_storage (ForeignKey): Reference to SeedStorage model
             on_cultivar (ForeignKey): Reference to OneCultivar model
             packaging_measure (ForeignKey): Reference to PackagingMeasure model
-            dormancy (ForeignKey): Reference to Dormancy model
             seed_preparation (ForeignKey): Reference to SeedPreparation model
             seed_cleaning_notes (CharField): Notes on seed cleaning process
             seed_storage_label_info (ForeignKey): Reference to SeedStorageLabelInfo model
@@ -772,9 +751,7 @@ class PlantProfile(Base):
     # Sowing information
     stratification_detail = models.CharField(max_length=55, blank=True)
     stratification_duration = models.SmallIntegerField(blank=True, null=True, default=0)
-    dormancy = models.ForeignKey(
-        Dormancy, on_delete=models.RESTRICT, null=True, blank=True
-    )
+    double_dormancy = models.BooleanField(default=False)
 
     sowing_depth = models.ForeignKey(
         SowingDepth, on_delete=models.RESTRICT, blank=True, null=True

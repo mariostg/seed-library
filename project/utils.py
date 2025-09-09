@@ -44,8 +44,8 @@ def plant_label_info(pk, request: HttpRequest):
     plant = single_plant(pk, request)
     if not plant.stratification_detail:
         plant.stratification_detail = "No Stratification"
-    if plant.dormancy:
-        detail = plant.dormancy.dormancy
+    if plant.double_dormancy:
+        detail = "Double Dormancy"
     label_info = [
         plant.latin_name,
         plant.english_name,

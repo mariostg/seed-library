@@ -27,7 +27,6 @@ class TestPostAddPlantProfile:
             "seed_storage": "",
             "on_cultivar": "",
             "packaging_measure": "",
-            "dormancy": "",
             "seed_preparation": "",
             "hyperlink": "",
             "envelope_label_link": "",

@@ -29,7 +29,6 @@ class PlantProfileForm(forms.ModelForm):
             "seed_storage",  #
             "on_cultivar",  #
             "packaging_measure",  #
-            "dormancy",  #
             "seed_preparation",  #
             "envelope_label_link",  #
             "harvesting_video_link",  #
@@ -126,15 +125,6 @@ class EnvironmentalRequirementsForm(forms.ModelForm):
             "moisture_medium",
             "moisture_wet",
         ]
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
-
-class DormancyForm(forms.ModelForm):
-    class Meta:
-        model = models.Dormancy
-        fields = ["dormancy"]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -323,7 +313,7 @@ class PlantSowingForm(forms.ModelForm):
             "sowing_depth",
             "stratification_detail",
             "stratification_duration",
-            "dormancy",
+            "double_dormancy",
         ]
 
     def __init__(self, *args, **kwargs):

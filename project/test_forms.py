@@ -3,7 +3,6 @@ import pytest
 from project import models
 from project.forms import (
     ColorForm,
-    DormancyForm,
     HabitForm,
     HarvestingIndicatorForm,
     HarvestingMeanForm,
@@ -23,7 +22,6 @@ class TestForms:
         models.SeedStorage.objects.create(seed_storage="Storage")
         models.SeedStorageLabelInfo.objects.create(seed_storage_label_info="Info")
         models.SeedPreparation.objects.create(seed_preparation="Preparation")
-        models.Dormancy.objects.create(dormancy="Dormancy")
         models.HarvestingIndicator.objects.create(harvesting_indicator="Indicator")
         models.HarvestingMean.objects.create(harvesting_mean="Mean")
         models.Lighting.objects.create(lighting="Lighting 1")
@@ -54,7 +52,6 @@ class TestForms:
             "seed_storage": 1,
             "on_cultivar": True,
             "packaging_measure": 1,
-            "dormancy": 1,
             "seed_preparation": 1,
             "hyperlink": "http://example.com",
             "envelope_label_link": "http://example.com",
@@ -125,11 +122,6 @@ class TestForms:
     def test_color_form_valid(self):
         data = {"color": "Red"}
         form = ColorForm(data=data)
-        assert form.is_valid()
-
-    def test_dormancy_form_valid(self):
-        data = {"dormancy": "Dormant"}
-        form = DormancyForm(data=data)
         assert form.is_valid()
 
     def test_habit_form_valid(self):
