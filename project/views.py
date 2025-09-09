@@ -1259,9 +1259,13 @@ def plant_landscape_use_and_application_update(request, pk):
 
 def plant_ecological_benefits_update(request, pk):
     plant = utils.single_plant(pk, request)
+    unsupported_butterflies = models.ButterflySpecies.objects.exclude(
+        pk__in=plant.butterflies.all()
+    )
     context = {
         "title": f"{plant.latin_name} - Ecological Benefits",
         "plant": plant,
+        "unsupported_butterflies": unsupported_butterflies,
     }
     if request.method == "POST":
         form = forms.PlantEcologicalBenefitsForm(request.POST, instance=plant)

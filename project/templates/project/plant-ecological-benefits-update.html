@@ -33,11 +33,40 @@
               {{ form.butterfly_host }}
               <label for="{{ form.butterfly_host.id_for_label }}">{{ form.butterfly_host.label }}</label>
             </div>
-            <div class="input-select">
-              <label for="{{ form.butterflies.id_for_label }}">Butterflies supported</label>
-              {{ form.butterflies }}
+
+            {% if plant.butterflies.all %}
+              <fieldset class="form-group">
+                <legend>Butterflies Supported</legend>
+                {% for butterfly in plant.butterflies.all %}
+                  <div class="butterfly-item">
+                    <input type="checkbox" id="butterfly_{{ butterfly.pk }}" name="butterflies" value="{{ butterfly.pk }}" checked>
+                    <label for="butterfly_{{ butterfly.pk }}">{{ butterfly.latin_name }} ({{butterfly.english_name}})</label>
+                  </div>
+                {% endfor %}
+              </fieldset>
+            {% endif %}
+            <!-- input checkboxes for unsupported butterflies -->
+            <div class="form inputs">
+              <fieldset class="form-group flex-row">
+                <legend>Add more supported Butterflies</legend>
+                <div class="checkbox-group">
+                  {% for butterfly in unsupported_butterflies %}
+                    {% if forloop.counter0|divisibleby:10 and forloop.counter0 > 0 %}
+                      </div><div class="checkbox-group">
+                    {% endif %}
+
+                    <div class="input-checkbox">
+                      <input type="checkbox" id="butterfly_{{ butterfly.pk }}" name="butterflies" value="{{ butterfly.pk }}">
+                      <label for="butterfly_{{ butterfly.pk }}">{{ butterfly.latin_name }} ({{butterfly.english_name}})</label>
+                    </div>
+                  {% endfor %}
+                </div>
+              </fieldset>
             </div>
           </fieldset>
+          <div class="butterfly-list">
+          </div>
+
           <fieldset class="form-group">
             <legend>Bird Interactions</legend>
                     <!--Input checkbox for bird friendly-->
