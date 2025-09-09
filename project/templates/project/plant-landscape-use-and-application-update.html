@@ -78,10 +78,20 @@
               <input type="checkbox" id="id_shoreline_rehab" name="shoreline_rehab" {% if plant.shoreline_rehab %}checked{% endif %}>
               <label for="id_shoreline_rehab">Shoreline Rehabilitation</label>
             </div>
-            <!--input checkbox for foot traffic tolerant-->
+            <!--input checkbox for foot traffic tolerance no-->
             <div class="form-group">
-              <input type="checkbox" id="id_foot_traffic_tolerant" name="foot_traffic_tolerant" {% if plant.foot_traffic_tolerant %}checked{% endif %}>
-              <label for="id_foot_traffic_tolerant">Foot Traffic Tolerant</label>
+              <input type="checkbox" id="id_foot_traffic_tolerance_no" name="foot_traffic_tolerance_no" {% if plant.foot_traffic_tolerance_no %}checked{% endif %}>
+              <label for="id_foot_traffic_tolerance_no">Foot Traffic Tolerance: No</label>
+            </div>
+            <!--input checkbox for foot traffic tolerance light-->
+            <div class="form-group">
+              <input type="checkbox" id="id_foot_traffic_tolerance_light" name="foot_traffic_tolerance_light" {% if plant.foot_traffic_tolerance_light %}checked{% endif %}>
+              <label for="id_foot_traffic_tolerance_light">Foot Traffic Tolerance: Light</label>
+            </div>
+            <!--input checkbox for foot traffic tolerance medium-->
+            <div class="form-group">
+              <input type="checkbox" id="id_foot_traffic_tolerance_medium" name="foot_traffic_tolerance_medium" {% if plant.foot_traffic_tolerance_medium %}checked{% endif %}>
+              <label for="id_foot_traffic_tolerance_medium">Foot Traffic Tolerance: Medium</label>
             </div>
           </fieldset>
         </div>

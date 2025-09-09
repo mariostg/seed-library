@@ -793,7 +793,10 @@ class PlantProfile(Base):
     ground_cover = models.BooleanField(default=False)
     easy_to_contain = models.BooleanField(default=False)
     hedge = models.BooleanField(default=False)
-    foot_traffic_tolerant = models.BooleanField(default=False)
+
+    foot_traffic_tolerance_no = models.BooleanField(default=False)
+    foot_traffic_tolerance_light = models.BooleanField(default=False)
+    foot_traffic_tolerance_medium = models.BooleanField(default=False)
 
     #
     # Ecological benefits
