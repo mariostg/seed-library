@@ -17,14 +17,7 @@
       <form method="post" action="{% url 'plant-identification-information-create' %}">
         {% csrf_token %}
         <div class="form inputs">
-          <fieldset>
-            <legend>Plant Status</legend>
-              <!--is active-->
-            <div class="input-checkbox">
-              <label class="tooltip" for="id_is_active">Is Active <span class="tooltiptext">When Active is selected, the plant is available for public viewing.</span></label>
-              <input type="checkbox" id="id_is_active" name="is_active" {% if plant.is_active %}checked{% endif %}>
-            </div>
-          </fieldset>
+          {% include "project/_plant-identification-status.html" %}
           <fieldset>
             <legend>Plant definition</legend>
               <!--latin_name-->
