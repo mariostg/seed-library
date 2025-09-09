@@ -342,6 +342,7 @@ input#max_width {
   display: flex;
   padding: 0.5rem;
   justify-content: space-around;
+  border-radius: 4px;
 }
 
 .alert--info {
