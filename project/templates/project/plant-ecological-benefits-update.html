@@ -15,18 +15,43 @@
         {% csrf_token %}
         <div class="form inputs">
           <fieldset class="form-group">
-            <legend>Bee Interactions </legend>
-                    <!--input checkbox for bee host-->
+            <legend>Bee Interactions</legend>
             <div class="input-checkbox">
               {{ form.bee_host }}
               <label for="{{ form.bee_host.id_for_label }}">{{ form.bee_host.label }}</label>
             </div>
-                    <!--Multi selct lilst for bees supported-->
-            <div class="input-select">
-              <label for="{{ form.bees.id_for_label }}">Bees supported</label>
-              {{ form.bees }}
+
+            {% if plant.bees.all %}
+              <fieldset class="form-group">
+                <legend>Bees Supported</legend>
+                {% for bee in plant.bees.all %}
+                  <div class="bee-item">
+                    <input type="checkbox" id="bee_{{ bee.pk }}" name="bees" value="{{ bee.pk }}" checked>
+                    <label for="bee_{{ bee.pk }}">{{ bee.latin_name }}</label>
+                  </div>
+                {% endfor %}
+              </fieldset>
+            {% endif %}
+            <!-- input checkboxes for unsupported bees -->
+            <div class="form inputs">
+              <fieldset class="form-group flex-row">
+                <legend>Add more supported Bees</legend>
+                <div class="checkbox-group">
+                  {% for bee in unsupported_bees %}
+                    {% if forloop.counter0|divisibleby:10 and forloop.counter0 > 0 %}
+                      </div><div class="checkbox-group">
+                    {% endif %}
+
+                    <div class="input-checkbox">
+                      <input type="checkbox" id="bee_{{ bee.pk }}" name="bees" value="{{ bee.pk }}">
+                      <label for="bee_{{ bee.pk }}">{{ bee.latin_name }}</label>
+                    </div>
+                  {% endfor %}
+                </div>
+              </fieldset>
             </div>
           </fieldset>
+
           <fieldset class="form-group">
             <legend>Butterfly Interactions</legend>
             <div class="input-checkbox">
@@ -64,8 +89,6 @@
               </fieldset>
             </div>
           </fieldset>
-          <div class="butterfly-list">
-          </div>
 
           <fieldset class="form-group">
             <legend>Bird Interactions</legend>
