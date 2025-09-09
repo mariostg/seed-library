@@ -388,6 +388,9 @@ main {
 .logo {
   width: 250px;
 }
+.logo a:hover {
+  background-color: transparent;
+}
 
 .site-header {
   display: flex;

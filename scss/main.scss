@@ -16,6 +16,9 @@ main {
 }
 .logo {
   width: 250px;
+  & a:hover {
+    background-color: transparent;
+  }
 }
 .site-header {
   display: flex;
