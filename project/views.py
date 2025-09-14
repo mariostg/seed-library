@@ -319,13 +319,20 @@ def search_plant_name(request):
         + safety_and_compatibility_filters
         + region_filters
     )
+    item_count = object_list.qs.count()
+
     context = {
         "object_list": object_list.qs,
         "url_name": "index",
         "title": "Plant Profile Filter",
-        "item_count": object_list.qs.count(),
+        "item_count": item_count,
         "hx_include": hx_include,
     }
+    if item_count == 0:
+        messages.info(
+            request,
+            "No plant matches your search, try resetting the filters or verify your search term.",
+        )
     template = (
         "project/plant-search-results.html"
         if request.htmx
