@@ -127,6 +127,20 @@
 
 <div class='filter__sub-header'>Functional Uses</div>
 
+<!--Input checkbox for ground cover-->
+<input
+  type="checkbox"
+  id="ground_cover"
+  name="ground_cover"
+  value="Ground Cover"
+  hx-get="/search-plant-name"
+  hx-trigger="click"
+  hx-target="#search-results"
+  hx-push-url="true"
+  hx-include="{{hx_include}}"
+  {% if ground_cover %} checked {% endif %}
+/>
+<label for="ground_cover">Groundcover/lawn replacement ✔</label><br />
 <!--Input checkbox for hedge-->
 <input
   type="checkbox"
@@ -142,21 +156,6 @@
 />
 <label for="hedge">Hedge ✔</label
   ><br />
-
-<!--Input checkbox for ground cover-->
-  <input
-    type="checkbox"
-    id="ground_cover"
-    name="ground_cover"
-    value="Ground Cover"
-    hx-get="/search-plant-name"
-    hx-trigger="click"
-    hx-target="#search-results"
-    hx-push-url="true"
-    hx-include="{{hx_include}}"
-    {% if ground_cover %} checked {% endif %}
-  />
-  <label for="ground_cover">Groundcover/lawn replacement ✔</label><br />
 
   <input
     type="checkbox"
