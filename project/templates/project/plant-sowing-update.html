@@ -44,6 +44,13 @@
               <label for="id_double_dormancy">Double Dormancy Required</label>
             </div>
           </fieldset>
+          <fieldset>
+            <legend>Notes</legend>
+            <div class="input-text">
+              <label for="id_notes">Notes</label>
+              <textarea id="id_notes" name="notes">{{ plant.notes }}</textarea>
+            </div>
+          </fieldset>
         </div>
         <button type="submit" class="btn btn-primary">Update</button>
         <a href="{% url 'plant-growth-characteristics-update' plant.pk %}" class="btn btn-primary">Cancel</a>
