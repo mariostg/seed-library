@@ -111,17 +111,17 @@
 <!--Input checkbox for foot traffic tolerant-->
   <input
     type="checkbox"
-    id="foot_traffic_tolerant"
-    name="foot_traffic_tolerant"
+    id="foot_traffic_tolerance_medium"
+    name="foot_traffic_tolerance_medium"
     value="Foot Traffic Tolerant"
     hx-get="/search-plant-name"
     hx-trigger="click"
     hx-target="#search-results"
     hx-push-url="true"
     hx-include="{{hx_include}}"
-    {% if foot_traffic_tolerant %} checked {% endif %}
+    {% if foot_traffic_tolerance_medium %} checked {% endif %}
   />
-  <label for="foot_traffic_tolerant">Foot traffic tolerant ✔</label><br />
+  <label for="foot_traffic_tolerance_medium">Foot traffic tolerant ✔</label><br />
 <!--Input checkbox for juglone tolerant-->
   <input
     type="checkbox"

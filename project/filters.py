@@ -167,7 +167,7 @@ class PlantProfileFilter(django_filters.FilterSet):
     produces_burs = django_filters.CharFilter(
         method="filter_excludes",
     )
-    foot_traffic_tolerant = django_filters.CharFilter(
+    foot_traffic_tolerance_medium = django_filters.CharFilter(
         method="filter_boolean",
     )
     salt_tolerant = django_filters.CharFilter(
