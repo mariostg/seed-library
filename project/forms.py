@@ -183,6 +183,8 @@ class PlantIdentificationInformationForm(forms.ModelForm):
         model = models.PlantProfile
         fields = [
             "is_active",
+            "is_accepted",
+            "not_accepted_reason",
             "show_bees_supported_info",
             "show_butterflies_supported_info",
             "show_complementary_plants_info",
@@ -333,6 +335,7 @@ class PlantSowingForm(forms.ModelForm):
             "stratification_detail",
             "stratification_duration",
             "double_dormancy",
+            "notes",
         ]
 
     def __init__(self, *args, **kwargs):

@@ -664,6 +664,10 @@ class PlantProfile(Base):
 
     # Profile status
     is_active = models.BooleanField(default=True)
+    is_accepted = models.BooleanField(
+        default=True
+    )  # Whether the plant profile is accepted by OWSL
+    not_accepted_reason = models.CharField(max_length=255, blank=True)
     show_bees_supported_info = models.BooleanField(default=True)
     show_butterflies_supported_info = models.BooleanField(default=True)
     show_complementary_plants_info = models.BooleanField(default=True)

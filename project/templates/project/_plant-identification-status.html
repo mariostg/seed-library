@@ -5,6 +5,15 @@
     <input type="checkbox" id="id_is_active" name="is_active" {% if plant.is_active %}checked{% endif %}>
     <label class="tooltip" for="id_is_active">Is Active <span class="tooltiptext">When Active is selected, the plant is available for public viewing.</span></label>
   </div>
+  <!-- is accepted -->
+  <div class="input-checkbox">
+    <input type="checkbox" id="id_is_accepted" name="is_accepted" {% if plant.is_accepted %}checked{% endif %}>
+    <label class="tooltip" for="id_is_accepted">Is Accepted <span class="tooltiptext">When Accepted is selected, the plant profile is approved by OWSL for public viewing. If not accepted, please provide a reason in the field below.</span></label>
+  </div>
+  <div class="input-text">
+    <label for="id_not_accepted_reason">Reason for Not Accepting (if applicable)</label>
+    <input type="text" id="id_not_accepted_reason" name="not_accepted_reason" value="{{ plant.not_accepted_reason }}">
+  </div>
             <!-- input checkbox for show supported bees info-->
   <div class="input-checkbox">
     <input type="checkbox" id="id_show_bees_supported_info" name="show_bees_supported_info" {% if plant.show_bees_supported_info %}checked{% endif %}>

@@ -6,6 +6,15 @@
     <section class="main-content">
       <main>
         {% include "project/_profile_update_links.html" %}
+        <!--Display message if plant is not accepted by OWSL-->
+        {% if not plant.is_accepted %}
+          <div class="alert alert--warning">
+            This plant is not accepted by the Ottawa Wildflower Seed Library at this time.
+            {% if plant.not_accepted_reason %}
+              Reason: {{ plant.not_accepted_reason }}
+            {% endif %}
+          </div>
+        {% endif %}
         <!--Display message if plant is not active-->
         {% if not plant.is_active %}
           <div class="alert alert--warning">
