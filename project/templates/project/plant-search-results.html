@@ -8,6 +8,11 @@
       <a href="{% url 'export-plant-search-results' %}?{{ request.GET.urlencode }}" class="btn btn-primary">Export to CSV</a>
     </div>
   {% endif %}
+  {% if item_count == 0 and request.GET %}
+    <div class="alert alert--info">
+      No plant matches your search, try resetting the filters or verify your search term.
+    </div>
+  {% endif %}
   <div id='search-results' class="plant-cards">
 
     {% for item in object_list  %}
