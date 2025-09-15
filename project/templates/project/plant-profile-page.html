@@ -133,7 +133,12 @@
               {% include "project/_profile_harvesting.html" %}
             {% endif %}
           </div>
-
+          {% if plant.toxicity_indicator_notes %}
+            <div>
+              <h2>Toxicity Notes</h2>
+              <p>{{ plant.toxicity_indicator_notes }}</p>
+            </div>
+          {% endif %}
         </div>
 
 
