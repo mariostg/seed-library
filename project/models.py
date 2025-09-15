@@ -929,6 +929,9 @@ class PlantProfile(Base):
         if not self.latin_name:
             raise ValueError("Missing Latin Name")
         self.latin_name = self.latin_name.strip().capitalize()
+        self.english_name = " ".join(
+            word.capitalize() for word in self.english_name.strip().split()
+        )
         self.compare_blooming()
         super().save(*args, **kwargs)
 
