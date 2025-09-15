@@ -16,5 +16,8 @@
     {% if plant.remove_non_seed_material %}
       <li>Remove non seed material</li>
     {% endif %}
+    {% if plant.harvesting_notes %}
+      <li>Harvesting notes: {{ plant.harvesting_notes }}</li>
+    {% endif %}
   </ul>
 </div>
