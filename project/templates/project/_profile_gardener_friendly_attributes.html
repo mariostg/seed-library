@@ -36,4 +36,16 @@
       <span class="tooltiptext">Easy to germinate</span>
     </div>
   {% endif %}
+
+  {% if plant.self_seeding %}
+    <div class="tooltip">
+      <img
+        title="plant self seeding"
+        alt="plant self seeding"
+        class="icon"
+        src="{% static 'images/plant-self-seeding.svg'  %}"
+      />
+      <span class="tooltiptext">Self-seeding</span>
+    </div>
+  {% endif %}
 </div>
