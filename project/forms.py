@@ -240,6 +240,7 @@ class PlantLandscapeUseAndApplicationForm(forms.ModelForm):
     class Meta:
         model = models.PlantProfile
         fields = [
+            "pollinator_garden",
             "rock_garden",
             "rain_garden",
             "shoreline_rehab",
