@@ -83,6 +83,9 @@ class PlantProfileFilter(django_filters.FilterSet):
     spring_ephemeral = django_filters.CharFilter(
         method="filter_boolean",
     )
+    self_seeding = django_filters.CharFilter(
+        method="filter_boolean",
+    )
     septic_tank_safe = django_filters.CharFilter(
         method="filter_boolean",
     )

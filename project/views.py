@@ -210,6 +210,7 @@ def search_plant_name(request):
         "#biennial",
         "#perennial",
         "#spring_ephemeral",
+        "#self_seeding",
     ]
     color_filters = [
         "#color_blue",

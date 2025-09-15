@@ -82,6 +82,19 @@
     {% if spring_ephemeral %} checked {% endif %}
   />
   <label for="spring_ephemeral" class="tooltip">Spring Ephemeral ✔<span class="tooltiptext">Lives for a short period in spring</span></label><br />
+  <input
+    type="checkbox"
+    id="self_seeding"
+    name="self_seeding"
+    value="Self Seeding"
+    hx-get="/search-plant-name"
+    hx-trigger="click"
+    hx-target="#search-results"
+    hx-push-url="true"
+    hx-include="{{hx_include}}"
+    {% if self_seeding %} checked {% endif %}
+  />
+  <label for="self_seeding" class="tooltip">Self Seeding ✔<span class="tooltiptext">Produces seeds that can grow into new plants</span></label><br />
 </div>
 
 <div class='filter__sub-header'>Bloom period</div>
