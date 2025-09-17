@@ -1061,7 +1061,7 @@ class PlantImage(models.Model):
     )
     photo_author = models.CharField(verbose_name="Auteur", max_length=125)
     photo_date = models.DateField(verbose_name="Date photo")
-    image = models.ImageField(upload_to="project/images")
+    image = models.ImageField(upload_to="project/images/plants")
 
     def __str__(self) -> str:
         return f"{self.plant_profile.latin_name} - {self.title} - {self.photo_author}"

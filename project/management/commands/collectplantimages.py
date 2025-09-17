@@ -15,6 +15,7 @@ import logging
 import re
 from pathlib import Path
 
+from django.conf import settings
 from django.core.files import File
 from django.core.management.base import BaseCommand
 from django.utils import timezone
@@ -105,8 +106,8 @@ class Command(BaseCommand):
             slugified_filename = f"{slugify(plant.latin_name)}_{new_number}{source_image_path.suffix.lower()}"
             with source_image_path.open("rb") as img_file:
                 # Define the upload path for the image
-                upload_path = f"plants/{plant.pk}/{slugified_filename}"
-                plant_image = PlantImage(
+                upload_path = f"{plant.pk}/{slugified_filename}"
+                plant_image: PlantImage = PlantImage(
                     plant_profile=plant,
                     image=File(
                         img_file,
@@ -117,6 +118,14 @@ class Command(BaseCommand):
                     photo_author=author,
                     photo_date=timezone.now(),
                 )
+                plant_image_path = (
+                    Path(settings.MEDIA_ROOT) / f"project/images/plants/{plant.pk}/"
+                )
+                # delete all files min plant image path and do not create the folder if it does not exist
+                if plant_image_path.is_dir():
+                    for existing_file in plant_image_path.glob("*.*"):
+                        existing_file.unlink()
+
                 plant_image.save()
             processed_count += 1
         self.stdout.write(
