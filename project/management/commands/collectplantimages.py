@@ -21,6 +21,7 @@ from django.core.management.base import BaseCommand
 from django.utils import timezone
 from django.utils.text import slugify
 
+from project import utils
 from project.management.commands.utils import (
     get_morphology_aspect,
     get_plant_by_latin_name,
@@ -70,7 +71,8 @@ class Command(BaseCommand):
 
         processed_count = 0
         skipped_count = 0
-
+        latin_names_processed = set()
+        latin_names_duplicates = set()
         for source_image_path in image_files:
             match = re.match(
                 r"^(?P<latin_name>.+?)_(?P<author>.+?)\.(jpg|jpeg|png|gif)$",
@@ -87,6 +89,14 @@ class Command(BaseCommand):
             latin_name = (
                 match.group("latin_name").replace("_", " ").strip().capitalize()
             )
+            if latin_name in latin_names_processed:
+                self.stderr.write(
+                    f"Latin name '{latin_name}' has already been processed. Skipping duplicate."
+                )
+                skipped_count += 1
+                latin_names_duplicates.add(latin_name)
+                continue
+            latin_names_processed.add(latin_name)
             author = match.group("author").replace("_", " ").strip()
 
             plant: PlantProfile = get_plant_by_latin_name(latin_name)
@@ -131,3 +141,14 @@ class Command(BaseCommand):
         self.stdout.write(
             f"Processing complete. {processed_count} images processed, {skipped_count} images skipped."
         )
+        plants_without_images = utils.get_plants_without_images()
+        if plants_without_images.exists():
+            self.stdout.write(
+                f"Plants without images: {plants_without_images.count()}. Consider adding images for them."
+            )
+            for plant in plants_without_images:
+                self.stdout.write(f"- {plant.latin_name} (ID: {plant.pk})")
+        if latin_names_duplicates:
+            self.stdout.write(
+                f"Duplicate latin names encountered: {', '.join(latin_names_duplicates)}"
+            )

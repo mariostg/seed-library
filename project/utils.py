@@ -80,3 +80,8 @@ def is_plant_toxic(plant: PlantProfile):
     """Check if a plant is toxic based on its toxicity indicator."""
     not_toxic_options = ["Not known to be toxic", "Unknown", "None", ""]
     return str(plant.toxicity_indicator) not in not_toxic_options
+
+
+def get_plants_without_images():
+    # Returns a queryset of PlantProfile instances without associated PlantImage entries.
+    return PlantProfile.all_objects.filter(images__isnull=True)
