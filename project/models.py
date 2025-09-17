@@ -735,7 +735,9 @@ class PlantProfile(Base):
     self_seeding = models.BooleanField(default=False)
     beginner_friendly = models.BooleanField(default=False)
     transplantation_tolerant = models.BooleanField(default=False)
-
+    starter_pack_shade = models.BooleanField(default=False)
+    starter_pack_sun_dry = models.BooleanField(default=False)
+    starter_pack_sun_wet = models.BooleanField(default=False)
     #
     # Harvesting and seed sharing
     #

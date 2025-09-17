@@ -1,3 +1,4 @@
+<div class='filter__sub-header'>Gardening Experience</div>
   <!--Input box for beginner friendly-->
 <input
   type="checkbox"
@@ -43,4 +44,48 @@
 />
 <label for="germinate_easy">Easy to germinate ✔</label><br />
 
-<!--Input checkbox for transplantation_tolerant-->
+<div class="filter__sub-header">Starter Packs</div>
+<!--Input checkbox for starter_pack_shade-->
+<input
+  type="checkbox"
+  id="starter_pack_shade"
+  name="starter_pack_shade"
+  value="Starter Pack Shade"
+  hx-get="/search-plant-name"
+  hx-trigger="click"
+  hx-target="#search-results"
+  hx-push-url="true"
+  hx-include="{{hx_include}}"
+  {% if starter_pack_shade %} checked {% endif %}
+/>
+<label for="starter_pack_shade">Shade ✔</label><br />
+
+<!--Input checkbox for starter_pack_sun_dry-->
+<input
+  type="checkbox"
+  id="starter_pack_sun_dry"
+  name="starter_pack_sun_dry"
+  value="Starter Pack Sun Dry"
+  hx-get="/search-plant-name"
+  hx-trigger="click"
+  hx-target="#search-results"
+  hx-push-url="true"
+  hx-include="{{hx_include}}"
+  {% if starter_pack_sun_dry %} checked {% endif %}
+/>
+<label for="starter_pack_sun_dry">Sun Dry ✔</label><br />
+
+<!--Input checkbox for starter_pack_sun_wet-->
+<input
+  type="checkbox"
+  id="starter_pack_sun_wet"
+  name="starter_pack_sun_wet"
+  value="Starter Pack Sun Wet"
+  hx-get="/search-plant-name"
+  hx-trigger="click"
+  hx-target="#search-results"
+  hx-push-url="true"
+  hx-include="{{hx_include}}"
+  {% if starter_pack_sun_wet %} checked {% endif %}
+/>
+<label for="starter_pack_sun_wet">Sun Wet ✔</label><br />

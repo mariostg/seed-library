@@ -53,6 +53,15 @@ class PlantProfileFilter(django_filters.FilterSet):
     germinate_easy = django_filters.CharFilter(
         method="filter_boolean",
     )
+    starter_pack_shade = django_filters.CharFilter(
+        method="filter_boolean",
+    )
+    starter_pack_sun_dry = django_filters.CharFilter(
+        method="filter_boolean",
+    )
+    starter_pack_sun_wet = django_filters.CharFilter(
+        method="filter_boolean",
+    )
     ground_cover = django_filters.CharFilter(
         method="filter_boolean",
     )
