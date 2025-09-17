@@ -83,7 +83,9 @@ class Command(BaseCommand):
                 skipped_count += 1
                 continue
 
-            latin_name = match.group("latin_name").replace("_", " ").strip()
+            latin_name = (
+                match.group("latin_name").replace("_", " ").strip().capitalize()
+            )
             author = match.group("author").replace("_", " ").strip()
 
             plant: PlantProfile = get_plant_by_latin_name(latin_name)
