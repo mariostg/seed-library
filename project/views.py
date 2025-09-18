@@ -396,6 +396,7 @@ def export_plant_search_results(request):
         - Soil limestone
         - Soil sand
         - Harvesting Start
+        - Seed Event Table
     """
 
     if not request.GET:
@@ -432,6 +433,7 @@ def export_plant_search_results(request):
         "Soil limestone",
         "Soil sand",
         "Harvesting Start",
+        "Seed Event Table",
     ]
     if request.user.is_authenticated:
         row_header.insert(3, "Is Active")
@@ -464,6 +466,7 @@ def export_plant_search_results(request):
                 "Yes" if plant.limestone_tolerant else "No",
                 "Yes" if plant.sand_tolerant else "No",
                 plant.harvesting_start,
+                plant.seed_event_table,
             ]
         )
     return response
