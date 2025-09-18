@@ -253,8 +253,8 @@ def search_plant_name(request):
         "#does_not_spread",
         "#transplantation_tolerant",
         "#germinate_easy",
-        "#starter_pack_part_shade",
-        "#starter_pack_full_sun_dry",
+        "#starter_pack_shade",
+        "#starter_pack_sun_dry",
         "#starter_pack_sun_wet",
     ]
     wildlife_interaction_filters = [
