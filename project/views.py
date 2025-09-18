@@ -241,6 +241,7 @@ def search_plant_name(request):
         "#woodland_garden",
         "#wetland_garden",
         "#boulevard_garden_tolerant",
+        "#row_garden",
     ]
     functional_use_filters = [
         "#ground_cover",

@@ -77,6 +77,9 @@ class PlantProfileFilter(django_filters.FilterSet):
     woodland_garden = django_filters.CharFilter(
         method="filter_boolean",
     )
+    row_garden = django_filters.CharFilter(
+        method="filter_row_garden",
+    )
     does_not_spread = django_filters.CharFilter(
         method="filter_boolean",
     )
@@ -359,6 +362,10 @@ class PlantProfileFilter(django_filters.FilterSet):
 
     def filter_excludes(self, queryset, name, value):
         return queryset.filter(**{name: False})
+
+    def filter_row_garden(self, queryset, name, value):
+        # filter for plants that have a max height of 2 feet or less
+        return queryset.filter(max_height__lte=2)
 
     class Meta:
         model = models.PlantProfile
