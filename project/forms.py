@@ -335,7 +335,7 @@ class PlantSowingForm(forms.ModelForm):
             "stratification_detail",
             "stratification_duration",
             "double_dormancy",
-            "notes",
+            "sowing_notes",
         ]
 
     def __init__(self, *args, **kwargs):
