@@ -967,44 +967,63 @@ def siteadmin(request):
 
 
 def plant_label_pdf(request, pk):
-    plant_info = utils.plant_label_info(pk, request)
+    plant = utils.single_plant(pk, request)
+    plant_info: list[str] = utils.plant_label_info(plant, request)
+    plant_info_len = len(plant_info)
+    plant_longest_string = max(plant_info, key=len)
     buffer = io.BytesIO()
 
     c = canvas.Canvas(buffer, pagesize=landscape(letter))
     c.setStrokeColor(pink)
-    xw = 1.52
-    xm = 0.1
-    yh = 1.65
-    ym = 0.1
-    line_spacing = 0.155
 
-    x = [(x_ + xm) * inch * xw for x_ in range(8)]
-    y = [(y_ + ym) * inch * yh for y_ in range(6)]
-    c.grid(x, y)
+    label_width = len(plant_longest_string) * 0.06818  # 1.5
+    label_margin_x = 0.1
+    label_margin_y = 0.1
+    line_spacing = 0.155
+    label_height = plant_info_len * line_spacing + line_spacing
+    y_range = int(8.5 / label_height) + 1
+    x_positions = [label_margin_x * inch * label_width]
+    counter = 1
+    while x_positions[-1] + (label_margin_x + label_width) * inch < 11 * inch:
+        x_positions.append(
+            (label_margin_x + label_width * counter + label_margin_x) * inch
+        )
+        counter += 1
+    y_positions = [(y_ + label_margin_y) * inch * label_height for y_ in range(y_range)]
+
+    c.grid(x_positions, y_positions)
     c.setStrokeColor(black)
     c.setFont("Times-Roman", 10)
 
-    def draw_plant_info(c, x, y, xm, ym, line_spacing, info):
+    def draw_plant_info(
+        c, x_position, y_position, label_margin_x, label_margin_y, line_spacing, info
+    ):
         for idx, text in enumerate(info):
-            c.drawString(x + xm * inch, y + (ym + line_spacing * idx) * inch, text)
+            xpos = x_position + label_margin_x * inch
+            ypos = y_position + (label_margin_y + line_spacing * idx) * inch
+            c.drawString(xpos, ypos, text)
 
-    for i in range(7):
-        for j in range(5):
-            draw_plant_info(c, x[i], y[j], xm, ym, line_spacing, plant_info)
+    for x in range(len(x_positions) - 1):
+        for y in range(y_range - 1):
+            draw_plant_info(
+                c,
+                x_positions[x],
+                y_positions[y],
+                label_margin_x,
+                label_margin_y,
+                line_spacing,
+                plant_info,
+            )
 
-    for i in range(7):
-        for j in range(5):
-            for k, text in enumerate(plant_info):
-                c.drawString(
-                    x[i] + xm * inch, y[j] + (ym + line_spacing * k) * inch, text
-                )
     c.setFillColor(red)
 
     c.showPage()
     c.save()
 
     buffer.seek(0)
-    return FileResponse(buffer, as_attachment=True, filename="hello.pdf")
+    return FileResponse(
+        buffer, as_attachment=True, filename=f"{plant.latin_name.replace(' ', '_')}.pdf"
+    )
 
 
 def plant_catalog(request):

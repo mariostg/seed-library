@@ -97,6 +97,7 @@ def plant_label_info(plant: PlantProfile, request: HttpRequest) -> list[str]:
         f"Bloom: {MONTHS.get(plant.bloom_start, '')} - {MONTHS.get(plant.bloom_end, '')}",
         *plant_sowing_notes(plant),  # Unpack the list items individually
         plant.stratification_detail,
+        f"{plant.stratification_duration} days",
         plant.sowing_depth.sowing_depth,
     ]
     if detail:
