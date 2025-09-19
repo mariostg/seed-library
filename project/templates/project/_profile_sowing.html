@@ -6,15 +6,15 @@
   <ul>
     <li>Sowing depth: {{ plant.sowing_depth }}</li>
     <li>{{ sow_before|default:"Sow anytime" }}</li>
+    {% if plant.stratification_detail %}
+      <li>Stratification conditions: {{ plant.stratification_detail }}</li>
+    {% endif %}
     <li>Stratification duration: {{ plant.stratification_duration }} days</li>
     {% if plant.self_seeding %}
       <li>Self-seeding</li>
     {% endif %}
     {% if plant.double_dormancy %}
       <li>Double dormancy required</li>
-    {% endif %}
-    {% if plant.stratification_details %}
-      <li>Stratification details: {{ plant.stratification_details }}</li>
     {% endif %}
     {% if plant.sowing_notes %}
       <li>Notes: {{ plant.sowing_notes }}</li>
