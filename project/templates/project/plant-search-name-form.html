@@ -13,7 +13,7 @@
              hx-trigger="keyup[target.value.length >= 4] changed delay:500ms, keyup[key=='Enter']"
              hx-target="#search-results"
              hx-push-url="true"
-             hx-include="#seed_availability,#accepting_seed"
+             hx-include="{{hx_include}}"
              hx-indicator=".htmx-indicator"
              type="text"
              value="{{ any_plant_name }}"
