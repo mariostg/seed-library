@@ -306,7 +306,8 @@ def search_plant_name(request):
 
     # Merge all filter lists and join with commas
     hx_include = ",".join(
-        sun_filters
+        ["#any_plant_name"]
+        + sun_filters
         + moisture_filters
         + plant_type_filters
         + physical_attributes_filters
