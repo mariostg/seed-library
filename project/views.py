@@ -444,32 +444,32 @@ def export_plant_search_results(request):
         plant: (
             models.PlantProfile
         )  # Type hint for better IDE support and code readability
-        writer.writerow(
-            [
-                plant.latin_name,
-                plant.english_name,
-                plant.french_name,
-                "Yes" if request.user.is_authenticated and plant.is_active else "No",
-                plant.max_height,
-                plant.max_width,
-                plant.bloom_start,
-                plant.bloom_end,
-                plant.bloom_color,
-                "Yes" if plant.full_sun else "No",
-                "Yes" if plant.part_shade else "No",
-                "Yes" if plant.full_shade else "No",
-                "Yes" if plant.moisture_dry else "No",
-                "Yes" if plant.moisture_medium else "No",
-                "Yes" if plant.moisture_wet else "No",
-                plant.lifespan,
-                plant.growth_habit,
-                "Yes" if plant.acidic_soil_tolerant else "No",
-                "Yes" if plant.limestone_tolerant else "No",
-                "Yes" if plant.sand_tolerant else "No",
-                plant.harvesting_start,
-                plant.seed_event_table,
-            ]
-        )
+        row = [
+            plant.latin_name,
+            plant.english_name,
+            plant.french_name,
+            plant.max_height,
+            plant.max_width,
+            plant.bloom_start,
+            plant.bloom_end,
+            plant.bloom_color,
+            "Yes" if plant.full_sun else "No",
+            "Yes" if plant.part_shade else "No",
+            "Yes" if plant.full_shade else "No",
+            "Yes" if plant.moisture_dry else "No",
+            "Yes" if plant.moisture_medium else "No",
+            "Yes" if plant.moisture_wet else "No",
+            plant.lifespan,
+            plant.growth_habit,
+            "Yes" if plant.acidic_soil_tolerant else "No",
+            "Yes" if plant.limestone_tolerant else "No",
+            "Yes" if plant.sand_tolerant else "No",
+            plant.harvesting_start,
+            plant.seed_event_table,
+        ]
+        if request.user.is_authenticated:
+            row.insert(3, "Yes" if plant.is_active else "No")
+        writer.writerow(row)
     return response
 
 
