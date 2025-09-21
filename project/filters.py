@@ -11,6 +11,7 @@ class PlantProfileFilter(django_filters.FilterSet):
 
     any_plant_name = django_filters.CharFilter(
         method="filter_normalized_plant_name",
+        strip=False,
     )
 
     seed_availability = django_filters.CharFilter(
