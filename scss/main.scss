@@ -133,16 +133,7 @@ main {
   }
 }
 
-#location-filter.collapsed,
-#filter-wrapper.collapsed,
-#environmental-requirements-filter.collapsed,
-#gardening-experience-filter.collapsed,
-#growth-characteristics-filter.collapsed,
-#harvesting-and-seed-sharing-filter.collapsed,
-#landscape-uses-and-applications-filter.collapsed,
-#ecological-benefits-filter.collapsed,
-#special-features-and-considerations-filter.collapsed,
-#exclude-burs.collapsed {
+.collapsed {
   display: none;
 }
 .expanded {
