@@ -1,4 +1,4 @@
-function toggleFilter(toggleId) {
+function toggleHtmlBlock(toggleId) {
   current_element = event.target;
   current_element.classList.toggle("expanded");
   current_element.classList.toggle("collapser");
