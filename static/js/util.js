@@ -2,7 +2,7 @@ function toggleNextSibling(event) {
   current_element = event.target;
   const toggleMe = current_element.nextElementSibling;
   toggleMe.classList.toggle("collapsed");
-  current_element.classList.toggle("expanded");
+  current_element.classList.toggle("expander");
   current_element.classList.toggle("collapser");
 }
 function toggleFilterWrapper() {

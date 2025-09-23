@@ -514,17 +514,15 @@ main {
   display: none;
 }
 
-.expanded::after {
-  content: "▲";
-  float: right;
+.expander::before {
+  content: "+";
 }
 
 .collapser {
   cursor: pointer;
 }
-.collapser::after {
-  content: "▼";
-  float: right;
+.collapser::before {
+  content: "-";
 }
 
 .filter-wrapper {

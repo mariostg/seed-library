@@ -136,17 +136,15 @@ main {
 .collapsed {
   display: none;
 }
-.expanded {
-  &::after {
-    content: "▲";
-    float: right;
+.expander {
+  &::before {
+    content: "+";
   }
 }
 .collapser {
   cursor: pointer;
-  &::after {
-    content: "▼";
-    float: right;
+  &::before {
+    content: "-";
   }
 }
 .filter-wrapper {
