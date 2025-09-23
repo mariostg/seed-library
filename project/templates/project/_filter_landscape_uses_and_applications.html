@@ -61,6 +61,22 @@
 />
 <label for="rock_garden">Rock garden ✔</label><br />
 
+<!--input checkbox for right of way garden-->
+<div class='form__field'>
+  <input
+    type="checkbox"
+    id="row_garden"
+    name="row_garden"
+    hx-get="/search-plant-name"
+    hx-trigger="click"
+    hx-target="#search-results"
+    hx-push-url="true"
+    hx-include="{{hx_include}}"
+    {% if row_garden %} checked {% endif %}
+  />
+  <label for="row_garden" class="tooltip">Right of way garden ✔ <span class="tooltiptext">Plants with a maximum height of 2 feet</span></label>
+</div>
+
 <!--Input checkbox for school garden-->
 <div class="form__field">
   <input
@@ -123,22 +139,6 @@
     {% if woodland_garden %} checked {% endif %}
   />
   <label for="woodland_garden">Woodland garden ✔</label>
-</div>
-
-<!--input checkbox for row garden-->
-<div class='form__field'>
-  <input
-    type="checkbox"
-    id="row_garden"
-    name="row_garden"
-    hx-get="/search-plant-name"
-    hx-trigger="click"
-    hx-target="#search-results"
-    hx-push-url="true"
-    hx-include="{{hx_include}}"
-    {% if row_garden %} checked {% endif %}
-  />
-  <label for="row_garden" class="tooltip">Row garden ✔ <span class="tooltiptext">Plants having a maximum height of 2 feet</span></label>
 </div>
 
 <div class='filter__sub-header'>Functional Uses</div>
