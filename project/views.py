@@ -430,11 +430,17 @@ def export_plant_search_results(request):
         "Moisture Wet",
         "Lifespan",
         "Plant Type",
-        "Soil acidic",
-        "Soil limestone",
-        "Soil sand",
         "Harvesting Start",
         "Seed Event Table",
+        "Toxicity",
+        "Harvesting Indicator",
+        "Harvesting Mean",
+        "Seed Viability Test",
+        "Seed Storage",
+        "Packaging Measure",
+        "Stratification requirement",
+        "Sowing Depth (inches)",
+        "Plant Profile URL",
     ]
     if request.user.is_authenticated:
         row_header.insert(3, "Is Active")
@@ -461,11 +467,17 @@ def export_plant_search_results(request):
             "Yes" if plant.moisture_wet else "No",
             plant.lifespan,
             plant.growth_habit,
-            "Yes" if plant.acidic_soil_tolerant else "No",
-            "Yes" if plant.limestone_tolerant else "No",
-            "Yes" if plant.sand_tolerant else "No",
             plant.harvesting_start,
             plant.seed_event_table,
+            plant.toxicity_indicator,
+            plant.harvesting_indicator,
+            plant.harvesting_mean,
+            plant.seed_viability_test,
+            plant.seed_storage,
+            plant.packaging_measure,
+            f"{plant.stratification_duration},{plant.stratification_detail}",
+            plant.sowing_depth,
+            request.build_absolute_uri(redirect("plant-profile-page", pk=plant.pk).url),
         ]
         if request.user.is_authenticated:
             row.insert(3, "Yes" if plant.is_active else "No")
