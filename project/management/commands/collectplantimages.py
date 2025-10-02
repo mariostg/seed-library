@@ -11,6 +11,7 @@
 # If no matching plant is found for an image, a warning is printed and the image is skipped.
 # The command provides feedback on the number of images processed and any issues encountered.
 # Ensure that the MEDIA_ROOT setting in Django is correctly configured to point to the media directory.
+# by providing the --force argument, existing PlantImage entries will be deleted before processing new images.  The corresponding image files will also be deleted. This is useful for reprocessing all images from scratch.
 import logging
 import re
 from pathlib import Path
