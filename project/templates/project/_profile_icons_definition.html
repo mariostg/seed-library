@@ -1,414 +1,208 @@
 {% load static %}
 <section class="">
-  <h2 class="">Plant Profile Icons Reference</h2>
+  <h2 class="">Plant Profile Filter Groups and Icons Reference</h2>
 
   <div class="flex-col">
-    <!-- Light Requirements -->
-    <article class="profile-reference mb-1">
-      <h4 class="">Light Preferences</h4>
-      <span>Indicates how much sunlight the plant needs to thrive.</span>
-      <div class="card-box">
-        <div class="card">
-          <img
-            src="{% static 'images/plant-full-sun.svg' %}"
-            alt="Light Icon"
-            class="icon"
-          />
-          <span>Full sun:</span>
-          <span>More than 6 hours of direct sunlight a day</span>
-        </div>
-        <div class="card">
-          <img
-            src="{% static 'images/plant-partial-sun.svg' %}"
-            alt="Light Icon"
-            class="icon"
-          />
-          <span>Part shade:</span>
-          <span>3 to 6 hours of direct sunlight a day</span>
-        </div>
-        <div class="card">
-          <img
-            src="{% static 'images/plant-full-shade.svg' %}"
-            alt="Light Icon"
-            class="icon"
-          />
-          <span>Full shade:</span>
-          <span>Less than 3 hours of direct sunlight a day</span>
-        </div>
-      </div>
-    </article>
-    <!-- Soil Preferences -->
-    <article class="profile-reference mb-1">
-      <h4 class="">Soil Preferences</h4>
-      <span class="">Indicates the type of soil the plant prefers.</span>
-      <div class="card-box">
-        <div class="card">
-          <img
-            src="{% static 'images/plant-moisture-dry.svg' %}"
-            alt="Soil Icon"
-            class="icon"
-          />
-          <span>Dry:</span>
-          <span>Water runs through after rainfall</span>
-        </div>
-        <div class="card">
-          <img
-            src="{% static 'images/plant-moisture-medium.svg' %}"
-            alt="Soil Icon"
-            class="icon"
-          />
-          <span>Medium:</span>
-          <span>Water is retained but not soggy</span>
-        </div>
-        <div class="card">
-          <img
-            src="{% static 'images/plant-moisture-wet.svg' %}"
-            alt="Soil Icon"
-            class="icon"
-          />
-          <span>Wet:</span>
-          <span>Stays damp all year</span>
-        </div>
-      </div>
-    </article>
+    <!-- Environmental Requirements -->
+    <section class="profile-reference mb-1">
+      <h3>Environmental Requirements</h3>
+
+      <!-- Light Requirements -->
+      <article>
+        <h4>Light Preferences</h4>
+        <article class="mb-1">
+          <span>Indicates how much sunlight the plant needs to thrive.</span>
+          <!-- Full Sun -->
+          <div class="card-box">
+            <div class="card">
+              <img
+                src="{% static 'images/plant-full-sun.svg' %}"
+                alt="Light Icon"
+                class="icon"
+              />
+              <span>Full Sun:</span>
+              <span>More than 6 hours of direct sunlight daily</span>
+            </div>
+            <!-- Part Shade -->
+            <div class="card">
+              <img
+                src="{% static 'images/plant-part-shade.svg' %}"
+                alt="Light Icon"
+                class="icon"
+              />
+              <span>Part Shade:</span>
+              <span>Between 3 to 6 hours of direct sunlight daily</span>
+            </div>
+            <!-- Full Shade -->
+            <div class="card">
+              <img
+                src="{% static 'images/plant-full-shade.svg' %}"
+                alt="Light Icon"
+                class="icon"
+              />
+              <span>Full Shade:</span>
+              <span>Less than 3 hours of direct sunlight daily</span>
+            </div>
+          </div>
+        </article>
+      </article>
+
+      <!-- Moisture Preferences -->
+      <article class="profile-reference">
+        <h4>Moisture Preferences</h4>
+        <article class="mb-1">
+          <span class="">Indicates the type of soil the plant prefers.</span>
+          <div class="card-box">
+            <!--Dry-->
+            <div class="card">
+              <img
+                src="{% static 'images/plant-moisture-dry.svg' %}"
+                alt="Soil Icon"
+                class="icon"
+              />
+              <span>Dry:</span>
+              <span>Water runs through after rainfall</span>
+            </div>
+            <!--Medium-->
+            <div class="card">
+              <img
+                src="{% static 'images/plant-moisture-medium.svg' %}"
+                alt="Soil Icon"
+                class="icon"
+              />
+              <span>Medium:</span>
+              <span>Water is retained but not soggy</span>
+            </div>
+            <!--Wet-->
+            <div class="card">
+              <img
+                src="{% static 'images/plant-moisture-wet.svg' %}"
+                alt="Soil Icon"
+                class="icon"
+              />
+              <span>Wet:</span>
+              <span>Stays damp all year</span>
+            </div>
+          </div>
+        </article>
+      </article>
+    </section>
 
     <!-- Gardening Experience -->
-    <article class="profile-reference mb-1">
-      <h3 class="">Gardening Experience</h3>
-      <div class="card-box">
-        <img
-          src="{% static 'images/plant-beginner-friendly.svg' %}"
-          alt="Beginner Friendly Icon"
-          class="icon"
-        />
-        <span>Beginner Friendly:</span>
-        <span>Suitable for novice gardeners</span>
-      </div>
-      <div class="card-box">
-        <img
-          src="{% static 'images/plant-does-not-spread.svg' %}"
-          alt="Native to Ottawa Region Icon"
-          class="icon"
-        />
-        <span>Does not spread</span>
-        <span></span>
-      </div>
-      <div class="card-box">
-        <img
-          src="{% static 'images/plant-germinate-easy.svg' %}"
-          alt="Easy to Germinate Icon"
-          class="icon"
-        />
-        <span>Easy to Germinate:</span>
-        <span>Indicates if the plant is easy to germinate from seeds</span>
-      </div>
-      <div class="card-box">
-        <img
-          src="{% static 'images/plant-self-seeding.svg' %}"
-          alt="Self Seeding Icon"
-          class="icon"
-        />
-        <span>Self Seeding:</span>
-        <span>Indicates if the plant is self-seeding</span>
-      </div>
-    </article>
+    <section class="profile-reference mb-1">
+      <h3>Introductory Gardening Experience</h3>
+      <h4>Gardening Experience</h4>
+      <article class="mb-1">
+        <!--Beginner Friendly-->
+        <div class="card-box">
+          <img
+            src="{% static 'images/plant-beginner-friendly.svg' %}"
+            alt="Beginner Friendly Icon"
+            class="icon"
+          />
+          <span>Beginner Friendly:</span>
+          <span>Suitable for novice gardeners</span>
+        </div>
+        <!--Does not spread-->
+        <div class="card-box">
+          <img
+            src="{% static 'images/plant-does-not-spread.svg' %}"
+            alt="Native to Ottawa Region Icon"
+            class="icon"
+          />
+          <span>Does not spread</span>
+          <span>Plants will remain at the same place in the garden</span>
+        </div>
+        <!--Easy to Germinate-->
+        <div class="card-box">
+          <img
+            src="{% static 'images/plant-germinate-easy.svg' %}"
+            alt="Easy to Germinate Icon"
+            class="icon"
+          />
+          <span>Easy to Germinate:</span>
+          <span>Indicates if the plant is easy to germinate from seeds</span>
+        </div>
+        <!--Self Seeding-->
+        <div class="card-box">
+          <img
+            src="{% static 'images/plant-self-seeding.svg' %}"
+            alt="Self Seeding Icon"
+            class="icon"
+          />
+          <span>Self Seeding:</span>
+          <span>Indicates if the plant is self-seeding</span>
+        </div>
+      </article>
 
-    <!--Landscape Uses and Applications-->
-    <article class="profile-reference mb-1">
-      <h3 class="">Landscape Uses and Applications</h3>
-      <div class="card-box">
-        <img
-          src="{% static 'images/plant-hedge.svg' %}"
-          alt="Hedge Icon"
-          class="icon"
-        />
-        <span>Hedge:</span>
-        <span>Can be used as a hedge</span>
-      </div>
-      <!--Suitable for Container Garden-->
-      <div class="card-box">
-        <img
-          src="{% static 'images/plant-container-suitable.svg' %}"
-          alt="Container Suitable Icon"
-          class="icon"
-        />
-        <span>Suitable for container garden</span>
-        <span></span>
-      </div>
-      <!--suitable for ground cover   -->
-      <div class="card-box">
-        <img
-          src="{% static 'images/plant-ground-cover.svg' %}"
-          alt="Ground Cover Icon"
-          class="icon"
-        />
-        <span>Suitable for ground cover</span>
-        <span></span>
-      </div>
-      <!--Suitable for rain garden-->
-      <div class="card-box">
-        <img
-          src="{% static 'images/plant-rain-garden.svg' %}"
-          alt="Rain Garden Icon"
-          class="icon"
-        />
-        <span>Suitable for rain garden</span>
-        <span></span>
-      </div>
-      <!--Suitable for right of way garden-->
-      <div class="card-box">
-        <img
-          src="{% static 'images/plant-row-garden.svg' %}"
-          alt="Right of Way Garden Icon"
-          class="icon"
-        />
-        <span>Suitable for right of way garden</span>
-        <span></span>
-        <div class="card-box">
-        <!--Suitable for rock garden-->
-          <img
-            src="{% static 'images/plant-rock-garden.svg' %}"
-            alt="Rock Garden Icon"
-            class="icon"
-          />
-          <span>Suitable for rock garden</span>
-          <span></span>
-        </div>
-      <!--Suitable for school garden-->
-        <div class="card-box">
-          <img
-            src="{% static 'images/plant-school-garden.svg' %}"
-            alt="School Garden Icon"
-            class="icon"
-          />
-          <span>Suitable for school garden</span>
-          <span></span>
-        </div>
-      <!--Suitable for shoreline rehabilitation-->
-        <div class="card-box">
-          <img
-            src="{% static 'images/plant-shoreline-rehab.svg' %}"
-            alt="Shoreline Rehabilitation Icon"
-            class="icon"
-          />
-          <span>Suitable for shoreline rehabilitation</span>
-          <span></span>
-        </div>
-      <!--Suitable for wetland garden-->
-        <div class="card-box">
-          <img
-            src="{% static 'images/plant-wetland-garden.svg' %}"
-            alt="Wetland Garden Icon"
-            class="icon"
-          />
-          <span>Suitable for wetland garden</span>
-          <span></span>
-        </div>
-      <!--Suitable for woodland garden-->
-        <div class="card-box">
-          <img
-            src="{% static 'images/plant-woodland-garden.svg' %}"
-            alt="Woodland Garden Icon"
-            class="icon"
-          />
-          <span>Suitable for woodland garden</span>
-          <span></span>
-        </div>
-      <!--does not tolerate foot traffic-->
-        <div class="card-box">
-          <img
-            src="{% static 'images/plant-foot-traffic-tolerance-no.svg' %}"
-            alt="Cannot withstand foot traffic Icon"
-            class="icon"
-          />
-          <span>Cannot withstand foot traffic</span>
-        </div>
-      <!--tolerates light foot traffic-->
-        <div class="card-box">
-          <img
-            src="{% static 'images/plant-foot-traffic-tolerance-light.svg' %}"
-            alt="Can withstand a light amount of foot traffic Icon"
-            class="icon"
-          />
-          <span>Can withstand a light amount of foot traffic</span>
-        </div>
-      <!--tolerates medium foot traffic-->
-        <div class="card-box">
-          <img
-            src="{% static 'images/plant-foot-traffic-tolerance-medium.svg' %}"
-            alt="Can withstand a medium amount of foot traffic Icon"
-            class="icon"
-          />
-          <span>Can withstand a medium amount of foot traffic</span>
-        </div>
+      <article class="mb-1">
+        <h4>Starter Packs</h4>
+        <p>
+          Starter Packs provide ideas for plants that go well together in the
+          specified conditions (e.g. Shade, Sun Dry, Sun Wet)
+        </p>
       </article>
-    <!--End of Landscaping Attributes-->
-    <!--Ecological Benefits-->
+    </section>
+
+    <!-- Growth Characteristics -->
+    <section class="profile-reference mb-1">
+      <h3>Growth Characteristics</h3>
+      <article class="mb-1">
+        <p>
+          This section includes information on the expected growth, life span
+          and soil tolerances.
+        </p>
+
+        <article>
+          <h4>Physical Attributes</h4>
+          <p>
+            While exact heights and width will vary, this section gives the
+            typically observed maximums for the plant.
+          </p>
+          <p>
+            Max Height (feet)<br />
+            Max Width (feet)
+          </p>
+        </article>
+
+        <article>
+          <h4>Lifespan</h4>
+          <ul>
+            <li>Annual: plants that have a lifespan of one year</li>
+            <li>
+              Biennial: plants that will take two years to bloom, and then will
+              die
+            </li>
+            <li>Perennial: plants that will that come back year after year</li>
+            <li>
+              Spring Ephemeral: plants that bloom in the spring that loose their
+              leaves later in the year
+            </li>
+            <li>
+              Self Seeding: plants that will produce seeds abundantly resulting
+              in new plants
+            </li>
+          </ul>
+        </article>
+
+        <article>
+          <h4>Bloom Period</h4>
+          <p>
+            While exact bloom times will vary, this section gives the months
+            blooms are typically observed for the plant.
+          </p>
+        </article>
+
+        <article>
+          <h4>Bloom Colours</h4>
+          <p>Provides the dominant bloom colour of a plant.</p>
+        </article>
+      </article>
+
+      <!--Plant type-->
       <article class="profile-reference mb-1">
-        <h3 class="">Ecological Benefits</h3>
-        <div class="card-box">
-          <img
-            src="{% static 'images/plant-bee-host.svg' %}"
-            alt="Bee Host Icon"
-            class="icon"
-          />
-          <span>Bee Host:</span>
-          <span>Attracts bees</span>
-        </div>
-        <div class="card-box">
-          <img
-            src="{% static 'images/plant-butterfly-host.svg' %}"
-            alt="Butterfly Host Icon"
-            class="icon"
-          />
-          <span>Butterfly Host:</span>
-          <span>Attracts butterflies</span>
-        </div>
-        <div class="card-box">
-          <img
-            src="{% static 'images/plant-bird-friendly.svg' %}"
-            alt="Bird Friendly Icon"
-            class="icon"
-          />
-          <span>Bird Friendly:</span>
-          <span>Attracts birds</span>
-        </div>
-        <div class="card-box">
-          <img
-            src="{% static 'images/plant-hummingbird-friendly.svg' %}"
-            alt="Hummingbird Friendly Icon"
-            class="icon"
-          />
-          <span>Hummingbird Friendly:</span>
-          <span>Attracts hummingbirds</span>
-        </div>
-        <div class="card-box">
-          <img
-            src="{% static 'images/plant-pollinator-garden.svg' %}"
-            alt="Pollinator Garden Icon"
-            class="icon"
-          />
-          <span>Pollinator Garden:</span>
-          <span>Attracts pollinators</span>
-        </div>
-        <div class="card-box">
-          <img
-            src="{% static 'images/plant-nitrogen-fixer.svg' %}"
-            alt="Nitrogen Fixer Icon"
-            class="icon"
-          />
-          <span>Nitrogen Fixer:</span>
-          <span>Improves soil fertility</span>
-        </div>
-        <div class="card-box">
-          <img
-            src="{% static 'images/plant-keystones-species.svg' %}"
-            alt="Keystone Species Icon"
-            class="icon"
-          />
-          <span>Keystone Species:</span>
-          <span>Plays a critical role in the ecosystem</span>
-        </div>
-      </article>
-    <!--End of Ecological Benefits-->
-    <!--Tolerates-->
-      <article class="profile-reference mb-1">
-        <h3 class="">Tolerates</h3>
-        <div class="card-box">
-          <img
-            src="{% static 'images/plant-drought-tolerant.svg' %}"
-            alt="Drought Tolerant Icon"
-            class="icon"
-          />
-          <span>Drought Tolerant:</span>
-          <span>Can survive with minimal water</span>
-        </div>
-        <div class="card-box">
-          <img
-            src="{% static 'images/plant-salt-tolerant.svg' %}"
-            alt="Salt Tolerant Icon"
-            class="icon"
-          />
-          <span>Salt Tolerant:</span>
-          <span>Can withstand salt exposure</span>
-        </div>
-        <div class="card-box">
-          <img
-            src="{% static 'images/plant-deer-tolerant.svg' %}"
-            alt="Deer Tolerant Icon"
-            class="icon"
-          />
-          <span>Deer Tolerant:</span>
-          <span>Can withstand deer browsing</span>
-        </div>
-        <div class="card-box">
-          <img
-            src="{% static 'images/plant-rabbit-tolerant.svg' %}"
-            alt="Rabbit Tolerant Icon"
-            class="icon"
-          />
-          <span>Rabbit Tolerant:</span>
-          <span>Can withstand rabbit browsing</span>
-        </div>
-        <div class="card-box">
-          <img
-            src="{% static 'images/plant-limestone-tolerant.svg' %}"
-            alt="Limestone Tolerant Icon"
-            class="icon"
-          />
-          <span>Limestone Tolerant:</span>
-          <span>Can thrive in limestone soil conditions</span>
-        </div>
-        <div class="card-box">
-          <img
-            src="{% static 'images/plant-acidic-soil-tolerant.svg' %}"
-            alt="Acidic Soil Tolerant Icon"
-            class="icon"
-          />
-          <span>Acidic Soil Tolerant:</span>
-          <span>Can thrive in acidic soil conditions</span>
-        </div>
-        <div class="card-box">
-          <img
-            src="{% static 'images/plant-boulevard-garden-tolerant.svg' %}"
-            alt="Boulevard Garden Tolerant Icon"
-            class="icon"
-          />
-          <span>Boulevard Garden Tolerant:</span>
-          <span>Can thrive in boulevard garden conditions</span>
-        </div>
-        <div class="card-box">
-          <img
-            src="{% static 'images/plant-juglone-tolerant.svg' %}"
-            alt="Juglone Tolerant Icon"
-            class="icon"
-          />
-          <span>Juglone Tolerant:</span>
-          <span>Can tolerate juglone, a compound found in black walnut trees</span>
-        </div>
-        <div class="card-box">
-          <img
-            src="{% static 'images/plant-sand-tolerant.svg' %}"
-            alt="Sand Tolerant Icon"
-            class="icon"
-          />
-          <span>Sand Tolerant:</span>
-          <span>Can thrive in sandy soil conditions</span>
-        </div>
-        <div class="card-box">
-          <img
-            src="{% static 'images/plant-transplantation-tolerant.svg' %}"
-            alt="Transplantation Tolerant Icon"
-            class="icon"
-          />
-          <span>Transplantation Tolerant:</span>
-          <span>Can tolerate transplantation</span>
-        </div>
-      </article>
-    <!--End of Tolerates-->
-    <!--Plant type-->
-      <article class="profile-reference">
-        <h3 class="">Plant Type</h3>
+        <h4 class="">Plant Type</h4>
+        <!--Conifer Tree-->
         <div class="card-box">
           <img
             src="{% static 'images/plant-type-Conifer Tree.svg' %}"
@@ -417,6 +211,7 @@
           />
           <span>Conifer Tree</span>
         </div>
+        <!--Deciduous Tree-->
         <div class="card-box">
           <img
             src="{% static 'images/plant-type-Deciduous Tree.svg' %}"
@@ -425,6 +220,7 @@
           />
           <span>Deciduous Tree</span>
         </div>
+        <!--Flowering Plant-->
         <div class="card-box">
           <img
             src="{% static 'images/plant-type-Flowering plant.svg' %}"
@@ -433,6 +229,7 @@
           />
           <span>Flowering Plant</span>
         </div>
+        <!--Grass-->
         <div class="card-box">
           <img
             src="{% static 'images/plant-type-Grass.svg' %}"
@@ -441,6 +238,7 @@
           />
           <span>Grass</span>
         </div>
+        <!--Shrub-->
         <div class="card-box">
           <img
             src="{% static 'images/plant-type-Shrub.svg' %}"
@@ -449,6 +247,7 @@
           />
           <span>Shrub</span>
         </div>
+        <!--Vine-->
         <div class="card-box">
           <img
             src="{% static 'images/plant-type-Vine.svg' %}"
@@ -458,5 +257,397 @@
           <span>Vine</span>
         </div>
       </article>
-    </div>
-  </section>
+
+      <!--Soil Tolerances-->
+      <article class="profile-reference mb-1">
+        <h4>Soil Tolerances</h4>
+        <!--Acidic Soil Tolerant-->
+        <div class="card-box">
+          <img
+            src="{% static 'images/plant-acidic-soil-tolerant.svg' %}"
+            alt="Acidic Soil Tolerant Icon"
+            class="icon"
+          />
+          <span>Acidic Soil Tolerant:</span>
+          <span>Can thrive in acidic soil conditions</span>
+        </div>
+        <!--Limestone Soil Tolerant-->
+        <div class="card-box">
+          <img
+            src="{% static 'images/plant-limestone-tolerant.svg' %}"
+            alt="Limestone Tolerant Icon"
+            class="icon"
+          />
+          <span>Limestone Tolerant:</span>
+          <span>Can thrive in limestone soil conditions</span>
+        </div>
+        <!--Sand Soil Tolerant-->
+        <div class="card-box">
+          <img
+            src="{% static 'images/plant-sand-tolerant.svg' %}"
+            alt="Sand Tolerant Icon"
+            class="icon"
+          />
+          <span>Sand Tolerant:</span>
+          <span>Can thrive in sandy soil conditions</span>
+        </div>
+      </article>
+    </section>
+
+    <!-- Harvesting and Seed Sharing -->
+    <section class="profile-reference mb-1">
+      <h3>Harvesting and Seed Sharing</h3>
+
+      <article class="mb-1">
+        <h4>Harvesting Period Start</h4>
+        <p>
+          While exact harvest times will vary, this section gives the months the
+          plants can usually be harvested.
+        </p>
+      </article>
+
+      <article class="mb-1">
+        <h4>Winter Sowing Requirements</h4>
+        <p>
+          Indicates the minimum amount of Cold Moist Stratification required, as
+          well as the corresponding month in Ottawa. See
+          <a
+            href="https://wildflowerseedlibrary.ca/instructions/how-to-winter-sow-2/"
+          >Winter Sowing Requirements for more information about winter
+            sowing.</a
+            >
+          </p>
+        </article>
+      </section>
+
+      <article>
+        <h3>Seed</h3>
+      </article>
+
+    <!--Landscape Uses and Applications-->
+      <section class="profile-reference mb-1">
+        <h3 class="">Landscape Uses and Applications</h3>
+        <article class="mb-1">
+          <h4>Garden Suitability</h4>
+          <p>
+            This section indicates if the plants will be suitable to the
+            conditions present in the specified garden type
+          </p>
+
+        <!--Suitable for boulevard garden-->
+          <div class="card-box">
+            <img
+              src="{% static 'images/plant-boulevard-garden-tolerant.svg' %}"
+              alt="Boulevard Garden Tolerant Icon"
+              class="icon"
+            />
+            <span>Boulevard Garden Tolerant:</span>
+            <span>Can thrive in salted, dry, sunny gardens</span>
+          </div>
+
+        <!--Suitable for Container Garden-->
+          <div class="card-box">
+            <img
+              src="{% static 'images/plant-container-suitable.svg' %}"
+              alt="Container Suitable Icon"
+              class="icon"
+            />
+            <span>Container Garden:</span>
+            <span>Can be grown and left in containers all year round</span>
+          </div>
+
+        <!--Suitable for rain garden-->
+          <div class="card-box">
+            <img
+              src="{% static 'images/plant-rain-garden.svg' %}"
+              alt="Rain Garden Icon"
+              class="icon"
+            />
+            <span>Rain Garden:</span>
+            <span>Can thrive in wet and dry conditions</span>
+          </div>
+
+        <!--Suitable for right of way garden-->
+          <div class="card-box">
+            <img
+              src="{% static 'images/plant-row-garden.svg' %}"
+              alt="Right of Way Garden Icon"
+              class="icon"
+            />
+            <span>Right of Way (ROW) Garden:</span>
+            <span
+            >Can thrive near roadways, tolerates salt and is below 2 feet
+              tall</span
+              >
+            </div>
+        <!--Suitable for rock garden-->
+            <div class="card-box">
+              <img
+                src="{% static 'images/plant-rock-garden.svg' %}"
+                alt="Rock Garden Icon"
+                class="icon"
+              />
+              <span>Rock Garden:</span>
+              <span>Can thrive in rocky soil</span>
+            </div>
+
+        <!--Suitable for school garden-->
+            <div class="card-box">
+              <img
+                src="{% static 'images/plant-school-garden.svg' %}"
+                alt="School Garden Icon"
+                class="icon"
+              />
+              <span>School Garden:</span>
+              <span> Short plants that can thrive in dry and sunny conditions</span>
+            </div>
+
+        <!--Suitable for shoreline rehabilitation-->
+            <div class="card-box">
+              <img
+                src="{% static 'images/plant-shoreline-rehab.svg' %}"
+                alt="Shoreline Rehabilitation Icon"
+                class="icon"
+              />
+              <span>Shoreline Rehabilitation:</span>
+              <span>Can help stabilize soil</span>
+            </div>
+
+        <!--Suitable for wetland garden-->
+            <div class="card-box">
+              <img
+                src="{% static 'images/plant-wetland-garden.svg' %}"
+                alt="Wetland Garden Icon"
+                class="icon"
+              />
+              <span>Wetland Garden:</span>
+              <span>Can thrive in soil in water</span>
+            </div>
+
+        <!--Suitable for woodland garden-->
+            <div class="card-box">
+              <img
+                src="{% static 'images/plant-woodland-garden.svg' %}"
+                alt="Woodland Garden Icon"
+                class="icon"
+              />
+              <span>Woodland Garden:</span>
+              <span>Can thrive in shade or part shade</span>
+            </div>
+          </article>
+
+          <article class="mb-1">
+            <h4>Functional Uses</h4>
+        <!--suitable for ground cover   -->
+            <div class="card-box">
+              <img
+                src="{% static 'images/plant-ground-cover.svg' %}"
+                alt="Ground Cover Icon"
+                class="icon"
+              />
+              <span>Groundcover/Lawn Replacement:</span>
+              <span>Can be used as ground cover</span>
+            </div>
+
+        <!--suitable for hedge-->
+            <div class="card-box">
+              <img
+                src="{% static 'images/plant-hedge.svg' %}"
+                alt="Hedge Icon"
+                class="icon"
+              />
+              <span>Hedge:</span>
+              <span>Can be used as a hedge</span>
+            </div>
+
+        <!--Transplantats Well-->
+            <div class="card-box">
+              <img
+                src="{% static 'images/plant-transplantation-tolerant.svg' %}"
+                alt="Transplants Well Icon"
+                class="icon"
+              />
+              <span>Transplants Well:</span>
+              <span>Can tolerate transplantation</span>
+            </div>
+          </article>
+        </section>
+    <!--End of Landscape Uses and Applications-->
+
+        <section class="profile-reference mb-1">
+          <h3>Ecological Benefits</h3>
+          <article class="mb-1">
+            <h4>Wildlife Interactions</h4>
+        <!--Hummingbird Friendly-->
+            <div class="card-box">
+              <img
+                src="{% static 'images/plant-hummingbird-friendly.svg' %}"
+                alt="Hummingbird Friendly Icon"
+                class="icon"
+              />
+              <span>Hummingbird Friendly:</span>
+              <span>Attracts hummingbirds</span>
+            </div>
+
+        <!--Pollinator Garden-->
+            <div class="card-box">
+              <img
+                src="{% static 'images/plant-pollinator-garden.svg' %}"
+                alt="Pollinator Garden Icon"
+                class="icon"
+              />
+              <span>Pollinator Garden:</span>
+              <span>Attracts pollinators</span>
+            </div>
+
+        <!--Bird Friendly-->
+            <div class="card-box">
+              <img
+                src="{% static 'images/plant-bird-friendly.svg' %}"
+                alt="Bird Friendly Icon"
+                class="icon"
+              />
+              <span>Bird Friendly:</span>
+              <span>Attracts birds</span>
+            </div>
+          </article>
+        </section>
+    <!--End of Ecological Benefits-->
+
+        <section class="profile-reference mb-1">
+      <!--does not tolerate foot traffic-->
+          <div class="card-box">
+            <img
+              src="{% static 'images/plant-foot-traffic-tolerance-no.svg' %}"
+              alt="Cannot withstand foot traffic Icon"
+              class="icon"
+            />
+            <span>Cannot withstand foot traffic</span>
+          </div>
+      <!--tolerates medium foot traffic-->
+          <div class="card-box">
+            <img
+              src="{% static 'images/plant-foot-traffic-tolerance-medium.svg' %}"
+              alt="Can withstand a medium amount of foot traffic Icon"
+              class="icon"
+            />
+            <span>Can withstand a medium amount of foot traffic</span>
+          </div>
+        </section>
+    <!--End of Landscaping Attributes-->
+
+    <!--Ecological Benefits-->
+        <article class="profile-reference mb-1">
+          <h3 class="">Ecological Benefits</h3>
+          <div class="card-box">
+            <img
+              src="{% static 'images/plant-bee-host.svg' %}"
+              alt="Bee Host Icon"
+              class="icon"
+            />
+            <span>Bee Host:</span>
+            <span>Attracts bees</span>
+          </div>
+
+      <!--Butterfly Host-->
+          <div class="card-box">
+            <img
+              src="{% static 'images/plant-butterfly-host.svg' %}"
+              alt="Butterfly Host Icon"
+              class="icon"
+            />
+            <span>Butterfly Host:</span>
+            <span>Attracts butterflies</span>
+          </div>
+
+      <!--Bird Friendly-->
+          <div class="card-box">
+            <img
+              src="{% static 'images/plant-bird-friendly.svg' %}"
+              alt="Bird Friendly Icon"
+              class="icon"
+            />
+            <span>Bird Friendly:</span>
+            <span>Attracts birds</span>
+          </div>
+
+      <!--Deer Tolerant-->
+          <div class="card-box">
+            <img
+              src="{% static 'images/plant-deer-tolerant.svg' %}"
+              alt="Deer Tolerant Icon"
+              class="icon"
+            />
+            <span>Deer Tolerant:</span>
+            <span>Can withstand deer browsing</span>
+          </div>
+
+      <!--Rabbit Tolerant-->
+          <div class="card-box">
+            <img
+              src="{% static 'images/plant-rabbit-tolerant.svg' %}"
+              alt="Rabbit Tolerant Icon"
+              class="icon"
+            />
+            <span>Rabbit Tolerant:</span>
+            <span>Can withstand rabbit browsing</span>
+          </div>
+
+          <div class="card-box">
+            <img
+              src="{% static 'images/plant-nitrogen-fixer.svg' %}"
+              alt="Nitrogen Fixer Icon"
+              class="icon"
+            />
+            <span>Nitrogen Fixer:</span>
+            <span>Improves soil fertility</span>
+          </div>
+          <div class="card-box">
+            <img
+              src="{% static 'images/plant-keystones-species.svg' %}"
+              alt="Keystone Species Icon"
+              class="icon"
+            />
+            <span>Keystone Species:</span>
+            <span>Plays a critical role in the ecosystem</span>
+          </div>
+        </article>
+    <!--End of Ecological Benefits-->
+
+    <!--Tolerates-->
+        <article class="profile-reference mb-1">
+          <h3 class="">Tolerates</h3>
+          <div class="card-box">
+            <img
+              src="{% static 'images/plant-drought-tolerant.svg' %}"
+              alt="Drought Tolerant Icon"
+              class="icon"
+            />
+            <span>Drought Tolerant:</span>
+            <span>Can survive with minimal water</span>
+          </div>
+          <div class="card-box">
+            <img
+              src="{% static 'images/plant-salt-tolerant.svg' %}"
+              alt="Salt Tolerant Icon"
+              class="icon"
+            />
+            <span>Salt Tolerant:</span>
+            <span>Can withstand salt exposure</span>
+          </div>
+
+          <div class="card-box">
+            <img
+              src="{% static 'images/plant-juglone-tolerant.svg' %}"
+              alt="Juglone Tolerant Icon"
+              class="icon"
+            />
+            <span>Juglone Tolerant:</span>
+            <span
+            >Can tolerate juglone, a compound found in black walnut trees</span
+              >
+            </div>
+          </article>
+    <!--End of Tolerates-->
+        </div>
+      </section>
