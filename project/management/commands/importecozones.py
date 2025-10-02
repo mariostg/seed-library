@@ -49,10 +49,21 @@ class Command(BaseCommand):
             action="store_true",
             help="Process all files in the specified directory",
         )
+        parser.add_argument(
+            "--force",
+            action="store_true",
+            help="Force re-import of ecozone data even if it already exists and flush existing data",
+        )
 
     def handle(self, *args, **options):
         path = options["ecozone_file_path"]
         is_directory = options["directory"]
+        force = options["force"]
+        if force:
+            Ecozone.objects.all().delete()
+            for plant in PlantProfile.objects.all():
+                plant.ecozones.clear()
+            self.stdout.write(self.style.WARNING("Flushed existing ecozone data."))
 
         if is_directory:
             # Process all files in directory
