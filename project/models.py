@@ -1065,6 +1065,9 @@ class PlantImage(models.Model):
     photo_date = models.DateField(verbose_name="Date photo")
     image = models.ImageField(upload_to="project/images/plants")
 
+    class Meta:
+        ordering = ["plant_profile__latin_name", "title"]
+
     def __str__(self) -> str:
         return f"{self.plant_profile.latin_name} - {self.title} - {self.photo_author}"
 
