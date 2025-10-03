@@ -1,0 +1,38 @@
+{% load static %}
+
+<div class="plant-profile-characteristics-item">
+  <span>Special Features and Considerations:</span>
+  {% if plant.endangered %}
+    <div class="tooltip">
+      <img
+        title="plant endangered"
+        alt="plant endangered"
+        class="icon"
+        src="{% static 'images/plant-endangered.svg'  %}"
+      />
+      <span class="tooltiptext">This plant is endangered</span>
+    </div>
+  {% endif %}
+  {% if plant.grasp_candidate %}
+    <div class="tooltip">
+      <img
+        title="GRASP candidate"
+        alt="GRASP candidate"
+        class="icon"
+        src="{% static 'images/grasp-candidate.svg'  %}"
+      />
+      <span class="tooltiptext">This plant is a GRASP candidate</span>
+    </div>
+  {% endif %}
+  {% if plant.septic_tank_safe %}
+    <div class="tooltip">
+      <img
+        title="septic tank safe"
+        alt="septic tank safe"
+        class="icon"
+        src="{% static 'images/plant-septic-tank-safe.svg'  %}"
+      />
+      <span class="tooltiptext">This plant is septic tank safe</span>
+    </div>
+  {% endif %}
+</div>
