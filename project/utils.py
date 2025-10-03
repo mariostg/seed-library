@@ -96,7 +96,7 @@ def plant_label_info(plant: PlantProfile, request: HttpRequest) -> list[str]:
         f"{str(plant.max_height)}' tall, {str(plant.max_width)}' wide",
         f"Bloom: {MONTHS.get(plant.bloom_start, '')} - {MONTHS.get(plant.bloom_end, '')}",
         *plant_sowing_notes(plant),  # Unpack the list items individually
-        plant.stratification_detail,
+        sow_before(plant),
         f"{plant.stratification_duration} days",
         plant.sowing_depth.sowing_depth,
     ]
