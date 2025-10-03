@@ -2,7 +2,7 @@
 
 <!-- Harvesting period start-->
 <div>Harvesting Period Start</div>
-<div id="harvesting-period-start" class="slider-wrapper collapsed">
+<div id="harvesting-period-start" class="slider-wrapper">
   <div class="slider-values">
     <span id="harvesting-period-start-value"> Sept</span>
   </div>
@@ -10,17 +10,22 @@
     <div class="slider-track-harvesting-period-start"></div>
     <input
       type="range"
+      id="harvesting_start"
+      name="harvesting_start"
       min="0"
       max="9"
-      value="7"
-      id="sliderHarvestingPeriodStart"
+      hx-get="/search-plant-name"
+      hx-trigger="input changed delay:500ms"
+      hx-target="#search-results"
+      hx-push-url="true"
+      hx-include="{{hx_include}}"
       oninput="updateHarvestingPeriodStart(this.value)"
     />
   </div>
 </div>
 
 <!--Winter Sowing Requirements-->
-<div><a class="tooltip" target="_blank" href="https://wildflowerseedlibrary.ca/instructions/how-to-winter-sow-2/">Winter Sowing Requirements <span class="tooltiptext">Click to learn how to Winter sow</span></a></div>
+<div><a class="tooltip info" target="_blank" href="https://wildflowerseedlibrary.ca/instructions/how-to-winter-sow-2/">Winter Sowing Requirements <span class="tooltiptext">Click to learn how to Winter sow</span></a></div>
 <div id="winter-sowing-requirements" class="slider-wrapper">
   <div class="slider-values">
     <span id="winter-sowing-value"> 60 days</span>
@@ -32,7 +37,6 @@
       min="0"
       max="6"
       value="3"
-      id="sliderWinterSowingRequirements"
       oninput="updateWinterSowingValue(this.value)"
     />
   </div>

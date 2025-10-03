@@ -549,13 +549,6 @@ main {
   position: relative;
   display: inline-block;
 }
-.tooltip::after {
-  content: "ⓘ";
-  margin-left: 5px;
-  font-size: 16px;
-  cursor: pointer;
-  color: green;
-}
 
 .tooltip .tooltiptext {
   visibility: hidden;
@@ -574,6 +567,14 @@ main {
 
 .tooltip:hover .tooltiptext {
   visibility: visible;
+}
+
+.info::after {
+  content: "ⓘ";
+  margin-left: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  color: green;
 }
 
 .search-plants {
