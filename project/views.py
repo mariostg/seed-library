@@ -536,7 +536,7 @@ def advanced_search_plant(request):
 
 # @login_required
 def update_availability(request):
-    plants = utils.all_plants(request)
+    plants = utils.all_plants(request).order_by("seed_event_table", "latin_name")
     context = {"object_list": plants}
     return render(request, "project/update-availability.html", context)
 
