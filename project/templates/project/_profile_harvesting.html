@@ -19,5 +19,8 @@
     {% if plant.harvesting_notes %}
       <li>Harvesting notes: {{ plant.harvesting_notes }}</li>
     {% endif %}
+    {% if plant.harvesting_video_link %}
+      <li>Harvesting video: <a target="_blank" href="{{ plant.harvesting_video_link }}">Watch here</a></li>
+    {% endif %}
   </ul>
 </div>

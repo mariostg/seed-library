@@ -140,13 +140,13 @@
         <!--Fieldset for harvesting video link-->
       <fieldset class="form-group">
         <legend>Harvesting Video Link</legend>
-        <input type="url" id="id_harvesting_video_link" name="harvesting_video_link" value="{{ plant.harvesting_video_link }}">
+        <input class='wide' type="url" id="id_harvesting_video_link" name="harvesting_video_link" value="{{ plant.harvesting_video_link }}">
       </fieldset>
 
         <!--Fieldset for harvesting notes-->
       <fieldset class="form-group">
         <legend>Harvesting Notes</legend>
-        <textarea id="id_harvesting_notes" name="harvesting_notes">{{ plant.harvesting_notes }}</textarea>
+        <textarea class='wide' id="id_harvesting_notes" name="harvesting_notes">{{ plant.harvesting_notes }}</textarea>
       </fieldset>
       <button class="btn" type="submit">Update Harvesting</button>
       <a href="{% url 'plant-harvesting-update' plant.pk %}" class="btn btn-primary">Cancel</a>

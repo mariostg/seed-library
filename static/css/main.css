@@ -344,6 +344,10 @@ input#max_width {
   width: 100px;
 }
 
+input.wide textarea.wide {
+  width: 100%;
+}
+
 .alert {
   display: flex;
   padding: 0.5rem;
