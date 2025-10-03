@@ -110,15 +110,15 @@ def sow_before(plant: PlantProfile):
     if not plant.stratification_duration:
         return "Sow anytime"
     if plant.stratification_duration == 30:
-        return "Sow before March"
+        return "Sow by March"
     elif plant.stratification_duration == 60:
-        return "Sow before February"
+        return "Sow by February"
     elif plant.stratification_duration == 90:
-        return "Sow before January"
+        return "Sow by January"
     elif plant.stratification_duration == 120:
-        return "Sow before December"
+        return "Sow by December"
     elif plant.stratification_duration == 180:
-        return "Sow before November"
+        return "Sow by November"
 
 
 def is_plant_toxic(plant: PlantProfile):
