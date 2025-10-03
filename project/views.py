@@ -63,6 +63,14 @@ def plant_profile_page(request, pk):
     bloom_end = utils.MONTHS[plant.bloom_end]
     sow_before = utils.sow_before(plant)
     is_toxic = utils.is_plant_toxic(plant)
+    # !This will need to be refactored by including a boolean field in the ConservationStatus model
+    endangered_values = (
+        "Critically Imperiled",
+        "Presumed Extirpated",
+        "Imperiled",
+        "Vulnerable",
+    )
+    endangered = plant.conservation_status.conservation_status in endangered_values
     context = {
         "plant": plant,
         "title": plant.latin_name,
@@ -72,6 +80,7 @@ def plant_profile_page(request, pk):
         "ecological_benefits": ecological_benefits,
         "sow_before": sow_before,
         "is_toxic": is_toxic,
+        "endangered": endangered,
     }
     return render(request, "project/plant-profile-page.html", context)
 

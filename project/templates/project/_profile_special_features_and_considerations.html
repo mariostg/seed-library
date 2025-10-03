@@ -3,7 +3,7 @@
 <div class="plant-profile-characteristics-item">
   <span>Special Features and Considerations:</span>
   <!--endangered-->
-  {% if plant.endangered %}
+  {% if endangered %}
     <div class="tooltip">
       <img
         title="plant endangered"
@@ -21,7 +21,7 @@
         title="GRASP candidate"
         alt="GRASP candidate"
         class="icon"
-        src="{% static 'images/grasp-candidate.svg'  %}"
+        src="{% static 'images/plant-grasp-candidate.svg'  %}"
       />
       <span class="tooltiptext">This plant is a GRASP candidate</span>
     </div>
