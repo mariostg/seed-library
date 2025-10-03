@@ -2,6 +2,7 @@
 
 <div class="plant-profile-characteristics-item">
   <span>Special Features and Considerations:</span>
+  <!--endangered-->
   {% if plant.endangered %}
     <div class="tooltip">
       <img
@@ -13,6 +14,7 @@
       <span class="tooltiptext">This plant is endangered</span>
     </div>
   {% endif %}
+  <!--grasp candidate-->
   {% if plant.grasp_candidate %}
     <div class="tooltip">
       <img
@@ -24,6 +26,7 @@
       <span class="tooltiptext">This plant is a GRASP candidate</span>
     </div>
   {% endif %}
+  <!--septic tank safe-->
   {% if plant.septic_tank_safe %}
     <div class="tooltip">
       <img
@@ -33,6 +36,30 @@
         src="{% static 'images/plant-septic-tank-safe.svg'  %}"
       />
       <span class="tooltiptext">This plant is septic tank safe</span>
+    </div>
+  {% endif %}
+  <!--produces burs-->
+  {% if plant.produces_burs %}
+    <div class="tooltip">
+      <img
+        title="produces burs"
+        alt="produces burs"
+        class="icon"
+        src="{% static 'images/plant-burs-or-needles.svg'  %}"
+      />
+      <span class="tooltiptext">This plant produces burs</span>
+    </div>
+  {% endif %}
+  <!--Causes skin rashes-->
+  {% if plant.cause_skin_rashes %}
+    <div class="tooltip">
+      <img
+        title="causes skin rashes"
+        alt="causes skin rashes"
+        class="icon"
+        src="{% static 'images/plant-causes-rash.svg'  %}"
+      />
+      <span class="tooltiptext">This plant causes skin rashes</span>
     </div>
   {% endif %}
 </div>
