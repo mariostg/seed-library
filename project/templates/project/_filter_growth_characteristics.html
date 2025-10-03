@@ -85,7 +85,7 @@
 
 </div>
 
-<div class='filter__sub-header'>Bloom period</div>
+<div class='filter__sub-header'>Bloom period ✔</div>
 <div id="bloomperiod" class="slider-wrapper">
   <div class="slider-values">
     <span id="rangeFromBloomPeriod"> 0 </span>
@@ -96,17 +96,29 @@
     <div class="slider-track-bloom-period"></div>
     <input
       type="range"
-      min="0"
-      max="11"
-      value="0"
+      min="1"
+      max="12"
+      value="1"
+      name="bloom_start"
+      hx-get="/search-plant-name"
+      hx-trigger="change, input"
+      hx-target="#search-results"
+      hx-push-url="true"
+      hx-include="{{hx_include}}"
       id="sliderFromBloomPeriod"
       oninput="slideFromBloomPeriod()"
     />
     <input
       type="range"
-      min="0"
-      max="11"
-      value="11"
+      min="1"
+      max="12"
+      value="12"
+      name="bloom_end"
+      hx-get="/search-plant-name"
+      hx-trigger="change, input"
+      hx-target="#search-results"
+      hx-push-url="true"
+      hx-include="{{hx_include}}"
       id="sliderToBloomPeriod"
       oninput="slideToBloomPeriod()"
     />

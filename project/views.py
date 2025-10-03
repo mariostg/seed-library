@@ -212,6 +212,10 @@ def search_plant_name(request):
         "#spring_ephemeral",
         "#self_seeding",
     ]
+    bloom_period_filters = [
+        "#sliderFromBloomPeriod",
+        "#sliderToBloomPeriod",
+    ]
     color_filters = [
         "#color_blue",
         "#color_green",
@@ -312,6 +316,7 @@ def search_plant_name(request):
         + plant_type_filters
         + physical_attributes_filters
         + lifecycle_filters
+        + bloom_period_filters
         + color_filters
         + soil_tolerance_filters
         + seed_sharing_filters
