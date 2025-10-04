@@ -182,6 +182,7 @@ class PlantIdentificationInformationForm(forms.ModelForm):
     class Meta:
         model = models.PlantProfile
         fields = [
+            "is_draft",
             "is_active",
             "is_accepted",
             "not_accepted_reason",

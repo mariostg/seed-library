@@ -1,6 +1,11 @@
 <fieldset>
   <legend>Plant Status</legend>
-                          <!--is active-->
+  <!--is draft-->
+  <div class="input-checkbox">
+    <input type="checkbox" id="id_is_draft" name="is_draft" {% if plant.is_draft %}checked{% endif %}>
+    <label class="tooltip" for="id_is_draft">Is Draft <span class="tooltiptext">When Draft is selected, the plant profile is not yet complete.</span></label>
+  </div>
+  <!--is active-->
   <div class="input-checkbox">
     <input type="checkbox" id="id_is_active" name="is_active" {% if plant.is_active %}checked{% endif %}>
     <label class="tooltip" for="id_is_active">Is Active <span class="tooltiptext">When Active is selected, the plant is available for public viewing.</span></label>

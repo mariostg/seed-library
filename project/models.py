@@ -667,6 +667,9 @@ class PlantProfile(Base):
     is_accepted = models.BooleanField(
         default=True
     )  # Whether the plant profile is accepted by OWSL
+    is_draft = models.BooleanField(
+        default=True
+    )  # to indicate if the profile is incomplete
     not_accepted_reason = models.CharField(max_length=255, blank=True)
     show_bees_supported_info = models.BooleanField(default=True)
     show_butterflies_supported_info = models.BooleanField(default=True)
