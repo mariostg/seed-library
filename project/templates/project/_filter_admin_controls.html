@@ -1,0 +1,45 @@
+<div class='filter__sub-header'>Profile Status</div>
+  <!--Input box for draft status-->
+<input
+  type="checkbox"
+  id="is_draft"
+  name="is_draft"
+  value="Is Draft"
+  hx-get="/search-plant-name"
+  hx-trigger="click"
+  hx-target="#search-results"
+  hx-push-url="true"
+  hx-include="{{hx_include}}"
+  {% if is_draft %} checked {% endif %}
+/>
+<label for="is_draft">Is Draft ✔</label><br />
+
+<!--Input box for inactive status-->
+<input
+  type="checkbox"
+  id="is_active"
+  name="is_active"
+  value="Is Active"
+  hx-get="/search-plant-name"
+  hx-trigger="click"
+  hx-target="#search-results"
+  hx-push-url="true"
+  hx-include="{{hx_include}}"
+  {% if is_active %} checked {% endif %}
+/>
+<label for="is_active">Is Not Active ✔</label><br />
+
+<!--Input box for accepted status-->
+<input
+  type="checkbox"
+  id="is_accepted"
+  name="is_accepted"
+  value="Is Accepted"
+  hx-get="/search-plant-name"
+  hx-trigger="click"
+  hx-target="#search-results"
+  hx-push-url="true"
+  hx-include="{{hx_include}}"
+  {% if is_accepted %} checked {% endif %}
+/>
+<label for="is_accepted">Is Not Accepted ✔</label><br />

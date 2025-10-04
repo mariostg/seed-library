@@ -90,4 +90,15 @@
     </div>
   </div>
 
+  {% if request.user.is_authenticated %}
+  <!--Admin Controls-->
+    <div class="filter">
+      <div class="filter__header expander" onclick="toggleNextSibling(event)">
+        Admin Controls
+      </div>
+      <div id="admin-controls-filter" class="collapsed">
+        {% include "project/_filter_admin_controls.html" %}
+      </div>
+    </div>
+  {% endif %}
 </aside>

@@ -252,6 +252,17 @@ class PlantProfileFilter(django_filters.FilterSet):
         method="filter_excludes",
     )
 
+    # Admin Filters
+    is_draft = django_filters.CharFilter(
+        method="filter_boolean",
+    )
+    is_active = django_filters.CharFilter(
+        method="filter_excludes",
+    )
+    is_accepted = django_filters.CharFilter(
+        method="filter_excludes",
+    )
+
     def filter_normalized_plant_name(self, queryset, name, value):
         normalized_value = (
             normalize("NFKD", value).encode("ASCII", "ignore").decode("ASCII").lower()

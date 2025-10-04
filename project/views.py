@@ -316,6 +316,11 @@ def search_plant_name(request):
         "#YT",
         "#native_to_ottawa_region",
     ]
+    admin_controls_filters = [
+        "#is_draft",
+        "#is_active",
+        "#is_accepted",
+    ]
 
     # Merge all filter lists and join with commas
     hx_include = ",".join(
@@ -338,6 +343,7 @@ def search_plant_name(request):
         + conservation_status_filters
         + safety_and_compatibility_filters
         + region_filters
+        + admin_controls_filters
     )
     item_count = object_list.qs.count()
 
