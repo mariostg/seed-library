@@ -1,8 +1,7 @@
 # Image GPS Coordinates Command
 # This command prints GPS coordinates from image metadata if available.
 from django.core.management.base import BaseCommand
-from PIL import Image
-from PIL.ExifTags import GPSTAGS, TAGS
+from exif import Image
 
 
 class Command(BaseCommand):
@@ -16,52 +15,50 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args, **kwargs):
+        import glob
+        import os
+
         image_path = kwargs["image_path"]
         recursive = kwargs["recursive"]
-        if recursive:
-            import os
 
-            for root, _dirs, files in os.walk(image_path):
-                for file in files:
-                    if file.lower().endswith((".jpg", ".jpeg", ".png")):
-                        full_path = os.path.join(root, file)
-                        # self.stdout.write(f"Processing {full_path}")
-                        self.extract_gps_coordinates(full_path)
+        if os.path.isdir(image_path):
+            pattern = "**/*" if recursive else "*"
+            image_files = glob.glob(
+                os.path.join(image_path, pattern), recursive=recursive
+            )
+            image_files = [f for f in image_files if os.path.isfile(f)]
         else:
-            self.extract_gps_coordinates(image_path)
+            image_files = [image_path]
 
-    def extract_gps_coordinates(self, image_path):
-        try:
-            image = Image.open(image_path)
-            exif_data = image._getexif()
-            if not exif_data:
-                self.stdout.write(self.style.WARNING("No EXIF data found"))
-                return
+        for img_file in image_files:
+            try:
+                with open(img_file, "rb") as img_f:
+                    img = Image(img_f)
+                    if (
+                        img.has_exif
+                        and hasattr(img, "gps_latitude")
+                        and hasattr(img, "gps_longitude")
+                    ):
+                        lat = img.gps_latitude
+                        lon = img.gps_longitude
+                        lat_ref = img.gps_latitude_ref
+                        lon_ref = img.gps_longitude_ref
 
-            gps_info = None
-            for tag, value in exif_data.items():
-                if TAGS.get(tag) == "GPSInfo":
-                    gps_info = value
-                    break
+                        lat_decimal = (
+                            lat[0] + lat[1] / 60 + lat[2] / 3600
+                            if lat_ref == "N"
+                            else -(lat[0] + lat[1] / 60 + lat[2] / 3600)
+                        )
+                        lon_decimal = (
+                            lon[0] + lon[1] / 60 + lon[2] / 3600
+                            if lon_ref == "E"
+                            else -(lon[0] + lon[1] / 60 + lon[2] / 3600)
+                        )
 
-            if not gps_info:
-                # self.stdout.write(self.style.WARNING("No GPS information found"))
-                return
-
-            latitude = self.get_geotag(gps_info, GPSTAGS["GPSLatitude"])
-            longitude = self.get_geotag(gps_info, GPSTAGS["GPSLongitude"])
-
-            if latitude and longitude:
-                self.stdout.write(
-                    self.style.SUCCESS(
-                        f"GPS Coordinates: {latitude}, {longitude} in {image_path}"
-                    )
-                )
-            else:
-                self.stdout.write(self.style.WARNING("Incomplete GPS information"))
-
-        except Exception as e:
-            self.stdout.write(self.style.ERROR(f"Error: {e}"))
-
-    def get_geotag(self, gps_info, tag):
-        return gps_info.get(tag)
+                        self.stdout.write(
+                            f"{img_file}: Latitude: {lat_decimal}, Longitude: {lon_decimal}"
+                        )
+                    # else:
+                    # self.stdout.write(f"{img_file}: No GPS data found.")
+            except Exception as e:
+                self.stderr.write(f"Error processing {img_file}: {e}")
