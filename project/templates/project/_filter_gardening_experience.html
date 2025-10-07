@@ -61,47 +61,53 @@
 </span></label><br />
 
 <div class="filter__sub-header">Starter Packs</div>
-<!--Input checkbox for starter_pack_shade-->
-<input
-  type="checkbox"
-  id="starter_pack_shade"
-  name="starter_pack_shade"
-  value="Starter Pack Shade"
-  hx-get="/search-plant-name"
-  hx-trigger="click"
-  hx-target="#search-results"
-  hx-push-url="true"
-  hx-include="{{hx_include}}"
-  {% if starter_pack_shade %} checked {% endif %}
-/>
-<label for="starter_pack_shade">Shade ✔</label><br />
+<!--Radio button group for starter packs-->
+<div class="starter-pack-options">
+  <div>
+    <input
+      type="radio"
+      id="starter_pack_shade"
+      name="starter_pack"
+      value="starter_pack_shade"
+      hx-get="/search-plant-name"
+      hx-trigger="click"
+      hx-target="#search-results"
+      hx-push-url="true"
+      hx-include="{{hx_include}}"
+      {% if starter_pack_shade %} checked {% endif %}
+    />
+    <label for="starter_pack_shade">Shade ✔</label>
+  </div>
 
-<!--Input checkbox for starter_pack_sun_dry-->
-<input
-  type="checkbox"
-  id="starter_pack_sun_dry"
-  name="starter_pack_sun_dry"
-  value="Starter Pack Sun Dry"
-  hx-get="/search-plant-name"
-  hx-trigger="click"
-  hx-target="#search-results"
-  hx-push-url="true"
-  hx-include="{{hx_include}}"
-  {% if starter_pack_sun_dry %} checked {% endif %}
-/>
-<label for="starter_pack_sun_dry">Sun Dry ✔</label><br />
+  <div>
+    <input
+      type="radio"
+      id="starter_pack_sun_dry"
+      name="starter_pack"
+      value="starter_pack_sun_dry"
+      hx-get="/search-plant-name"
+      hx-trigger="click"
+      hx-target="#search-results"
+      hx-push-url="true"
+      hx-include="{{hx_include}}"
+      {% if starter_pack_sun_dry %} checked {% endif %}
+    />
+    <label for="starter_pack_sun_dry">Sun Dry ✔</label>
+  </div>
 
-<!--Input checkbox for starter_pack_sun_wet-->
-<input
-  type="checkbox"
-  id="starter_pack_sun_wet"
-  name="starter_pack_sun_wet"
-  value="Starter Pack Sun Wet"
-  hx-get="/search-plant-name"
-  hx-trigger="click"
-  hx-target="#search-results"
-  hx-push-url="true"
-  hx-include="{{hx_include}}"
-  {% if starter_pack_sun_wet %} checked {% endif %}
-/>
-<label for="starter_pack_sun_wet">Sun Wet ✔</label><br />
+  <div>
+    <input
+      type="radio"
+      id="starter_pack_sun_wet"
+      name="starter_pack"
+      value="starter_pack_sun_wet"
+      hx-get="/search-plant-name"
+      hx-trigger="click"
+      hx-target="#search-results"
+      hx-push-url="true"
+      hx-include="{{hx_include}}"
+      {% if starter_pack_sun_wet %} checked {% endif %}
+    />
+    <label for="starter_pack_sun_wet">Sun Wet ✔</label>
+  </div>
+</div>

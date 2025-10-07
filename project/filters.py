@@ -54,15 +54,10 @@ class PlantProfileFilter(django_filters.FilterSet):
     germinate_easy = django_filters.CharFilter(
         method="filter_boolean",
     )
-    starter_pack_shade = django_filters.CharFilter(
-        method="filter_boolean",
+    starter_pack = django_filters.CharFilter(
+        method="filter_starter_pack",
     )
-    starter_pack_sun_dry = django_filters.CharFilter(
-        method="filter_boolean",
-    )
-    starter_pack_sun_wet = django_filters.CharFilter(
-        method="filter_boolean",
-    )
+
     ground_cover = django_filters.CharFilter(
         method="filter_boolean",
     )
@@ -323,6 +318,16 @@ class PlantProfileFilter(django_filters.FilterSet):
         if value:
             return queryset.filter(growth_habit__growth_habit=value)
 
+        else:
+            return queryset.none()
+
+    def filter_starter_pack(self, queryset, name, value):
+        if value == "starter_pack_shade":
+            return queryset.filter(starter_pack_shade=True)
+        elif value == "starter_pack_sun_dry":
+            return queryset.filter(starter_pack_sun_dry=True)
+        elif value == "starter_pack_sun_wet":
+            return queryset.filter(starter_pack_sun_wet=True)
         else:
             return queryset.none()
 
