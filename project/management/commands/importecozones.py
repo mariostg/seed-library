@@ -74,11 +74,16 @@ class Command(BaseCommand):
 
             # Process all xlsx and csv files in the directory
             for file_path in dir_path.glob("*.xlsx"):
-                self.process_file(file_path)
+                self.convert_file_to_csv(file_path)
+            for file_path in dir_path.glob("*.csv"):
+                self.ecozone_csv_file_path = file_path
+                self.main()
             self.report_plants_without_ecozones()
         else:
             # Process single file
-            self.process_file(Path(path))
+            self.convert_file_to_csv(Path(path))
+            self.main()
+            self.report_plants_without_ecozones()
 
     def report_plants_without_ecozones(self):
         """Report plants that do not have associated ecozones."""
@@ -94,7 +99,7 @@ class Command(BaseCommand):
         else:
             self.stdout.write(self.style.SUCCESS("All plants have ecozones."))
 
-    def process_file(self, file_path):
+    def convert_file_to_csv(self, file_path):
         """Process a single ecozone file."""
         self.ecozone_xlsx_file_path = None
         self.ecozone_csv_file_path = None
@@ -108,8 +113,6 @@ class Command(BaseCommand):
         else:
             self.stderr.write(f"File '{file_path}' is not an xlsx or csv file.")
             return
-
-        self.main()
 
     def validate_plants(self, reader):
         """
@@ -131,6 +134,14 @@ class Command(BaseCommand):
             None: Outputs a success message if all plants are validated successfully.
         """
         for row in reader:
+            try:
+                if "latin_name" not in row:
+                    raise ValueError(
+                        f"CSV row must contain a 'latin_name' key. Row: {row}"
+                    )
+            except ValueError as e:
+                self.stderr.write(str(e))
+                raise (e)
             latin_name = row["latin_name"].strip().capitalize()
             if not PlantProfile.objects.filter(latin_name=latin_name).exists():
                 raise ValueError(
@@ -219,7 +230,7 @@ class Command(BaseCommand):
         """
 
         if "latin_name" not in row:
-            raise ValueError("CSV row must contain a 'latin_name' key.")
+            raise ValueError(f"CSV row must contain a 'latin_name' key. Row: {row}")
         latin_name = (
             row["latin_name"].strip().capitalize()
         )  # the latin name of the plant
@@ -296,7 +307,7 @@ class Command(BaseCommand):
 
     # Open the csv file and read the latin names of the plants and verifies that they exist in the database.
     def main(self):
-        self._convert_xlsx_to_csv()
+        # self._convert_xlsx_to_csv()
         try:
             with open(self.ecozone_csv_file_path) as f:
                 reader = csv.DictReader(f)
