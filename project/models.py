@@ -288,6 +288,31 @@ class SowingDepth(Base):
         ordering = ["sowing_depth"]
 
 
+class StratificationDuration(Base):
+    """
+    A model that represents the duration in days for stratification.
+
+    This model stores and represents a duration in days for stratification,
+    which is a process in plant propagation where seeds are exposed to cold
+    temperatures for a period of time to break dormancy and encourage germination.
+
+    Attributes:
+        stratification_duration (SmallIntegerField): The number of days required for
+                                                    stratification. Can be blank or null,
+                                                    with a default value of 0.
+
+    Methods:
+        __str__(): Returns a string representation of the stratification duration in days.
+    """
+
+    stratification_duration = models.SmallIntegerField(
+        blank=True, null=True, default=0, unique=True
+    )
+
+    def __str__(self) -> str:
+        return f"{self.stratification_duration} days"
+
+
 class Lighting(Base):
     """A model for different types of lighting conditions required by the plant for ideal growth.
 
@@ -773,7 +798,9 @@ class PlantProfile(Base):
 
     # Sowing information
     stratification_detail = models.CharField(max_length=55, blank=True)
-    stratification_duration = models.SmallIntegerField(blank=True, null=True, default=0)
+    stratification_duration = models.ForeignKey(
+        StratificationDuration, on_delete=models.RESTRICT, blank=True, null=True
+    )
     double_dormancy = models.BooleanField(default=False)
 
     sowing_depth = models.ForeignKey(
