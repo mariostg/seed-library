@@ -241,6 +241,7 @@ def search_plant_name(request):
         "#acidic_soil_tolerant",
     ]
 
+    harvesting_start_filters = [f"#harvesting_start_{month}" for month in range(4, 13)]
     seed_sharing_filters = [
         "#seed_availability",
         "#accepting_seed",
@@ -333,6 +334,7 @@ def search_plant_name(request):
         + bloom_period_filters
         + color_filters
         + soil_tolerance_filters
+        + harvesting_start_filters
         + seed_sharing_filters
         + garden_suitability_filters
         + functional_use_filters
@@ -346,8 +348,11 @@ def search_plant_name(request):
         + admin_controls_filters
     )
     item_count = object_list.qs.count()
-
     context = {
+        "months": utils.MONTHS.values(),
+        "harvesting_period": {
+            k: utils.MONTHS[k] for k in range(3, 12)
+        },  # from April (index 3) to December (index 11)
         "object_list": object_list.qs,
         "url_name": "index",
         "title": "Plant Profile Filter",

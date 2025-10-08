@@ -1,26 +1,41 @@
 <div class='filter__sub-header'>Harvesting and Seed Sharing</div>
 
-<!-- Harvesting period start-->
-<div>Harvesting Period Start</div>
-<div id="harvesting-period-start" class="slider-wrapper">
-  <div class="slider-values">
-    <span id="harvesting-period-start-value"> Sept</span>
-  </div>
-  <div class="slider-container">
-    <div class="slider-track-harvesting-period-start"></div>
+<!-- Harvesting start-->
+<div>Harvesting Period On or After</div>
+<div id="harvesting-start">
+  <!--Option group ratio buttons for harvesting period start for months from April to December-->
+  <div class="option-group">
+    <div>
+      {% for month, month_name in harvesting_period.items %}
+        <input
+          type="radio"
+          id="harvesting_start_{{ month }}"
+          name="harvesting_start"
+          value="{{ month }}"
+          hx-get="/search-plant-name"
+          hx-trigger="click"
+          hx-target="#search-results"
+          hx-push-url="true"
+          hx-include="{{hx_include}}"
+          {% if harvesting_start == month %} checked {% endif %}
+        />
+        <label for="harvesting_start_{{ month }}">{{ month_name }}</label>
+        {% if month == 7 %}<div></div>{% endif %}
+      {% endfor %}
+    </div>
     <input
-      type="range"
-      id="harvesting_start"
+      type="radio"
+      id="harvesting_start_none"
       name="harvesting_start"
-      min="0"
-      max="9"
+      value=""
       hx-get="/search-plant-name"
-      hx-trigger="input changed delay:500ms"
+      hx-trigger="click"
       hx-target="#search-results"
       hx-push-url="true"
       hx-include="{{hx_include}}"
-      oninput="updateHarvestingPeriodStart(this.value)"
+      {% if not harvesting_start %} checked {% endif %}
     />
+    <label for="harvesting_start_none">Any</label>
   </div>
 </div>
 
