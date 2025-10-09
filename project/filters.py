@@ -220,7 +220,7 @@ class PlantProfileFilter(django_filters.FilterSet):
         method="filter_lte",
     )
     stratification_duration = django_filters.NumberFilter(
-        method="filter_lte",
+        method="filter_stratification_duration",
     )
 
     full_sun = django_filters.CharFilter(
@@ -324,6 +324,14 @@ class PlantProfileFilter(django_filters.FilterSet):
     def filter_harvesting_start(self, queryset, name, value):
         if value:
             return queryset.filter(harvesting_start=value)
+        else:
+            return queryset.none()
+
+    def filter_stratification_duration(self, queryset, name, value):
+        if value >= 0:
+            return queryset.filter(
+                stratification_duration__stratification_duration__lte=value
+            )
         else:
             return queryset.none()
 

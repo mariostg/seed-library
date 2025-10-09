@@ -46,21 +46,31 @@
 </div>
 
 <!--Winter Sowing Requirements-->
+<div>Cold Moist Stratification Requirements</div>
 <div><a class="tooltip info" target="_blank" href="https://wildflowerseedlibrary.ca/instructions/how-to-winter-sow-2/">Winter Sowing Requirements <span class="tooltiptext">Click to learn how to Winter sow</span></a></div>
-<div id="winter-sowing-requirements" class="slider-wrapper">
-  <div class="slider-values">
-    <span id="winter-sowing-value"> 60 days</span>
-  </div>
-  <div class="slider-container">
-    <div class="slider-track-winter-sowing-requirements"></div>
-    <input
-      type="range"
-      min="0"
-      max="6"
-      value="3"
-      oninput="updateWinterSowingValue(this.value)"
-    />
-  </div>
+<!--Input select for stratification duration-->
+<div class="form__field">
+  <select
+    id="stratification_duration"
+    name="stratification_duration"
+    hx-get="/search-plant-name"
+    hx-trigger="change"
+    hx-target="#search-results"
+    hx-push-url="true"
+    hx-include="{{hx_include}}"
+  >
+    <option value="" {% if not stratification_duration %} selected {% endif %}>
+      Any
+    </option>
+    {% for duration in stratification_durations %}
+      <option
+        value="{{ duration.stratification_duration}}"
+        {% if stratification_duration == duration %} selected {% endif %}
+      >
+        {{ duration.stratification_duration }} days
+      </option>
+    {% endfor %}
+  </select>
 </div>
 
 <div class='filter__sub-header'>Seed Sharing</div>

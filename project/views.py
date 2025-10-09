@@ -335,6 +335,7 @@ def search_plant_name(request):
         + color_filters
         + soil_tolerance_filters
         + harvesting_start_filters
+        + ["#stratification_duration"]
         + seed_sharing_filters
         + garden_suitability_filters
         + functional_use_filters
@@ -348,7 +349,11 @@ def search_plant_name(request):
         + admin_controls_filters
     )
     item_count = object_list.qs.count()
+    stratification_durations = models.StratificationDuration.objects.all().order_by(
+        "stratification_duration"
+    )
     context = {
+        "stratification_durations": stratification_durations,
         "months": utils.MONTHS.values(),
         "harvesting_period": {
             k: utils.MONTHS[k] for k in range(5, 12)
