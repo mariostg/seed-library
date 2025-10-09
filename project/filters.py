@@ -374,11 +374,14 @@ class PlantProfileFilter(django_filters.FilterSet):
         return queryset.filter(**{lookup: value})
 
     def filter_lte(self, queryset, name, value):
+        if not value:
+            return queryset
         lookup = "__".join([name, "lte"])
-        d = queryset.filter(**{lookup: value})
-        return d
+        return queryset.filter(**{lookup: value})
 
     def filter_gte(self, queryset, name, value):
+        if not value:
+            return queryset
         lookup = "__".join([name, "gte"])
         return queryset.filter(**{lookup: value})
 
