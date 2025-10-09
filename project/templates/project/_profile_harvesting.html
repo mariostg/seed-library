@@ -21,6 +21,8 @@
     {% endif %}
     {% if plant.harvesting_video_link %}
       <li>Harvesting video: <a target="_blank" href="{{ plant.harvesting_video_link }}">Watch here</a></li>
+    {% else %}
+      <li>No harvesting video available at this time.</li>
     {% endif %}
   </ul>
 </div>
