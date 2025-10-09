@@ -351,7 +351,7 @@ def search_plant_name(request):
     context = {
         "months": utils.MONTHS.values(),
         "harvesting_period": {
-            k: utils.MONTHS[k] for k in range(3, 12)
+            k: utils.MONTHS[k] for k in range(5, 12)
         },  # from April (index 3) to December (index 11)
         "object_list": object_list.qs,
         "url_name": "index",
