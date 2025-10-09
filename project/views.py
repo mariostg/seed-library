@@ -222,8 +222,8 @@ def search_plant_name(request):
         "#self_seeding",
     ]
     bloom_period_filters = [
-        "#sliderFromBloomPeriod",
-        "#sliderToBloomPeriod",
+        "#bloom_start",
+        "#bloom_end",
     ]
     color_filters = [
         "#color_blue",
@@ -355,6 +355,7 @@ def search_plant_name(request):
     context = {
         "stratification_durations": stratification_durations,
         "months": utils.MONTHS.values(),
+        "months_numbered": utils.MONTHS.items(),
         "harvesting_period": {
             k: utils.MONTHS[k] for k in range(5, 12)
         },  # from April (index 3) to December (index 11)

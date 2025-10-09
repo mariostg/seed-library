@@ -86,43 +86,36 @@
 </div>
 
 <div class='filter__sub-header'>Bloom period ✔</div>
-<div id="bloomperiod" class="slider-wrapper">
-  <div class="slider-values">
-    <span id="rangeFromBloomPeriod"> 0 </span>
-    <span> &dash; </span>
-    <span id="rangeToBloomPeriod"> 12 </span>
-  </div>
-  <div class="slider-container">
-    <div class="slider-track-bloom-period"></div>
-    <input
-      type="range"
-      min="1"
-      max="12"
-      value="1"
-      name="bloom_start"
-      hx-get="/search-plant-name"
-      hx-trigger="change, input"
-      hx-target="#search-results"
-      hx-push-url="true"
-      hx-include="{{hx_include}}"
-      id="sliderFromBloomPeriod"
-      oninput="slideFromBloomPeriod()"
-    />
-    <input
-      type="range"
-      min="1"
-      max="12"
-      value="12"
-      name="bloom_end"
-      hx-get="/search-plant-name"
-      hx-trigger="change, input"
-      hx-target="#search-results"
-      hx-push-url="true"
-      hx-include="{{hx_include}}"
-      id="sliderToBloomPeriod"
-      oninput="slideToBloomPeriod()"
-    />
-  </div>
+<div id="bloom_period">
+  <!--2 input select options that define a period between which a plant blooms-->
+  <select
+    id="bloom_start"
+    name="bloom_start"
+    hx-get="/search-plant-name"
+    hx-trigger="change"
+    hx-target="#search-results"
+    hx-push-url="true"
+    hx-include="{{hx_include}}"
+  >
+    <option value="">Start Month</option>
+    {% for month in months_numbered %}
+      <option value="{{ month.0 }}" {% if bloom_start == month.0 %} selected {% endif %}>{{ month.1 }}</option>
+    {% endfor %}
+  </select>
+  <select
+    id="bloom_end"
+    name="bloom_end"
+    hx-get="/search-plant-name"
+    hx-trigger="change"
+    hx-target="#search-results"
+    hx-push-url="true"
+    hx-include="{{hx_include}}"
+  >
+    <option value="">End Month</option>
+    {% for month in months_numbered %}
+      <option value="{{ month.0 }}" {% if bloom_end == month.0 %} selected {% endif %}>{{ month.1 }}</option>
+    {% endfor %}
+  </select>
 </div>
 
 <div class='filter__sub-header'>Bloom colours</div>
