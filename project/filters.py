@@ -210,7 +210,7 @@ class PlantProfileFilter(django_filters.FilterSet):
     )
     harvesting_start = django_filters.ChoiceFilter(
         choices=utils.MONTHS,
-        method="filter_gte",
+        method="filter_harvesting_start",
     )
 
     max_height = django_filters.NumberFilter(
@@ -318,6 +318,12 @@ class PlantProfileFilter(django_filters.FilterSet):
         if value:
             return queryset.filter(growth_habit__growth_habit=value)
 
+        else:
+            return queryset.none()
+
+    def filter_harvesting_start(self, queryset, name, value):
+        if value:
+            return queryset.filter(harvesting_start=value)
         else:
             return queryset.none()
 
