@@ -11,7 +11,7 @@
     hx-push-url="true"
     hx-include="{{hx_include}}"
   />
-  <label for="height">Max. Height (Feet) ✔</label><br />
+  <label for="height">Max. Height (Feet)</label><br />
 </div>
 <div class="filter">
   <input
@@ -25,7 +25,7 @@
     hx-push-url="true"
     hx-include="{{hx_include}}"
   />
-  <label for="width">Max. Width (Feet) ✔</label><br />
+  <label for="width">Max. Width (Feet)</label><br />
 </div>
 
 <div class='filter__sub-header'>Lifespan</div>
@@ -42,7 +42,7 @@
     hx-include="{{hx_include}}"
     {% if annual %} checked {% endif %}
   />
-  <label for="annual" class="tooltip info">Annual ✔<span class="tooltiptext">Plants that have a lifespan of one year</span></label><br />
+  <label for="annual" class="tooltip info">Annual<span class="tooltiptext">Plants that have a lifespan of one year</span></label><br />
   <input
     type="checkbox"
     id="biennial"
@@ -55,7 +55,7 @@
     hx-include="{{hx_include}}"
     {% if biennial %} checked {% endif %}
   />
-  <label for="biennial" class="tooltip info">Biennial ✔<span class="tooltiptext">Plants that will take two years to bloom, and then will die</span></label><br />
+  <label for="biennial" class="tooltip info">Biennial<span class="tooltiptext">Plants that will take two years to bloom, and then will die</span></label><br />
   <input
     type="checkbox"
     id="perennial"
@@ -68,7 +68,7 @@
     hx-include="{{hx_include}}"
     {% if perennial %} checked {% endif %}
   />
-  <label for="perennial" class="tooltip info">Perennial ✔<span class="tooltiptext">Plants that will come back year after year</span></label><br />
+  <label for="perennial" class="tooltip info">Perennial<span class="tooltiptext">Plants that will come back year after year</span></label><br />
   <input
     type="checkbox"
     id="spring_ephemeral"
@@ -81,11 +81,11 @@
     hx-include="{{hx_include}}"
     {% if spring_ephemeral %} checked {% endif %}
   />
-  <label for="spring_ephemeral" class="tooltip info">Spring Ephemeral ✔<span class="tooltiptext">Plants that bloom in the spring then lose their leaves later in the season</span></label><br />
+  <label for="spring_ephemeral" class="tooltip info">Spring Ephemeral<span class="tooltiptext">Plants that bloom in the spring then lose their leaves later in the season</span></label><br />
 
 </div>
 
-<div class='filter__sub-header'>Bloom period ✔</div>
+<div class='filter__sub-header'>Bloom period</div>
 <div id="bloom_period">
   <!--2 input select options that define a period between which a plant blooms-->
   <select
@@ -133,7 +133,7 @@
     hx-include="{{hx_include}}"
     {% if color_blue %} checked {% endif %}
   />
-  <label for="color_blue">Blue ✔</label><br />
+  <label for="color_blue">Blue</label><br />
       <!--Input checkbox for color green-->
   <input
     type="checkbox"
@@ -147,7 +147,7 @@
     hx-include="{{hx_include}}"
     {% if color_green %} checked {% endif %}
   />
-  <label for="color_green">Green ✔</label><br />
+  <label for="color_green">Green</label><br />
       <!--Input checkbox for color orange-->
   <input
     type="checkbox"
@@ -161,7 +161,7 @@
     hx-include="{{hx_include}}"
     {% if color_orange %} checked {% endif %}
   />
-  <label for="color_orange">Orange ✔</label><br />
+  <label for="color_orange">Orange</label><br />
       <!--Input checkbox for color pink-->
   <input
     type="checkbox"
@@ -175,7 +175,7 @@
     hx-include="{{hx_include}}"
     {% if color_pink %} checked {% endif %}
   />
-  <label for="color_pink">Pink ✔</label><br />
+  <label for="color_pink">Pink</label><br />
       <!--Input checkbox for color purple-->
   <input
     type="checkbox"
@@ -189,7 +189,7 @@
     hx-include="{{hx_include}}"
     {% if color_purple %} checked {% endif %}
   />
-  <label for="color_purple">Purple ✔</label><br />
+  <label for="color_purple">Purple</label><br />
       <!--Input checkbox for color red-->
   <input
     type="checkbox"
@@ -203,7 +203,7 @@
     hx-include="{{hx_include}}"
     {% if color_red %} checked {% endif %}
   />
-  <label for="color_red">Red ✔</label><br />
+  <label for="color_red">Red</label><br />
       <!--Input checkbox for color white-->
   <input
     type="checkbox"
@@ -217,7 +217,7 @@
     hx-include="{{hx_include}}"
     {% if color_white %} checked {% endif %}
   />
-  <label for="color_white">White ✔</label><br />
+  <label for="color_white">White</label><br />
       <!--Input checkbox for color yellow-->
   <input
     type="checkbox"
@@ -231,7 +231,7 @@
     hx-include="{{hx_include}}"
     {% if color_yellow %} checked {% endif %}
   />
-  <label for="color_yellow">Yellow ✔</label><br />
+  <label for="color_yellow">Yellow</label><br />
 </div>
 
 <div class="filter__sub-header">Plant Type</div>
@@ -249,7 +249,7 @@
   hx-include="{{hx_include}}"
   {% if conifer_tree %} checked {% endif %}
 />
-<label for="conifer_tree">Conifer tree ✔</label><br />
+<label for="conifer_tree">Conifer tree</label><br />
 
   <!--Input checkbox for decideous tree-->
 <input
@@ -264,7 +264,7 @@
   hx-include="{{hx_include}}"
   {% if deciduous_tree %} checked {% endif %}
 />
-<label for="deciduous_tree">Deciduous tree ✔</label><br />
+<label for="deciduous_tree">Deciduous tree</label><br />
 
 <div id="plant-types" class="">
       <!--Input checkbox for flowering plant-->
@@ -280,7 +280,7 @@
     hx-include="{{hx_include}}"
     {% if flowering_plant %} checked {% endif %}
   />
-  <label for="flowering_plant">Flowering Plant ✔</label><br />
+  <label for="flowering_plant">Flowering Plant</label><br />
 
       <!--Input checkbox for grass-->
   <input
@@ -295,7 +295,7 @@
     hx-include="{{hx_include}}"
     {% if grass_sedge_rush %} checked {% endif %}
   />
-  <label for="grass_sedge_rush">Grass/sedge/rush ✔</label><br />
+  <label for="grass_sedge_rush">Grass/sedge/rush</label><br />
 
       <!--Input checkbox for shrub-->
   <input
@@ -310,7 +310,7 @@
     hx-include="{{hx_include}}"
     {% if shrub %} checked {% endif %}
   />
-  <label for="shrub">Shrub ✔</label><br />
+  <label for="shrub">Shrub</label><br />
 
       <!--Input checkbox for vine-->
   <input
@@ -325,7 +325,7 @@
     hx-include="{{hx_include}}"
     {% if id_checkbox_vine %} checked {% endif %}
   />
-  <label for="id_checkbox_vine">Vine ✔</label><br />
+  <label for="id_checkbox_vine">Vine</label><br />
 </div>
 
 <div class='filter__sub-header'>Soil Tolerances</div>
@@ -342,7 +342,7 @@
   hx-include="{{hx_include}}"
   {% if acidic_soil_tolerant %} checked {% endif %}
 />
-<label for="acidic_soil_tolerant">Acidic soil ✔</label><br />
+<label for="acidic_soil_tolerant">Acidic soil</label><br />
 
       <!--Input checkbox for limestone tolerant-->
 <input
@@ -357,7 +357,7 @@
   hx-include="{{hx_include}}"
   {% if limestone_tolerant %} checked {% endif %}
 />
-<label for="limestone_tolerant">Limestone ✔</label><br />
+<label for="limestone_tolerant">Limestone</label><br />
       <!--Input checkbox for sand tolerant-->
 <input
   type="checkbox"
@@ -371,4 +371,4 @@
   hx-include="{{hx_include}}"
   {% if sand_tolerant %} checked {% endif %}
 />
-<label for="sand_tolerant">Sand ✔</label><br />
+<label for="sand_tolerant">Sand</label><br />
