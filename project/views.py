@@ -1297,6 +1297,34 @@ def plant_ecological_benefits_update(request, pk):
     return render(request, "project/plant-ecological-benefits-update.html", context)
 
 
+def plant_introductory_gardening_experience_update(request, pk):
+    plant = utils.single_plant(pk, request)
+    context = {
+        "title": f"{plant.latin_name} - Introductory Gardening Experience",
+        "plant": plant,
+    }
+    if request.method == "POST":
+        form = forms.PlantIntroductoryGardeningExperienceForm(
+            request.POST, instance=plant
+        )
+        if form.is_valid():
+            form.save()
+            messages.success(
+                request, "Introductory gardening experience updated successfully."
+            )
+            return redirect("plant-profile-page", pk=plant.pk)
+        else:
+            messages.error(request, "Error updating introductory gardening experience.")
+    else:
+        form = forms.PlantIntroductoryGardeningExperienceForm(instance=plant)
+    context["form"] = form
+    return render(
+        request,
+        "project/plant-introductory-gardening-experience-update.html",
+        context,
+    )
+
+
 def plant_special_features_and_consideration_update(request, pk):
     plant = utils.single_plant(pk, request)
     context = {
@@ -1425,7 +1453,7 @@ def plant_harvesting_update(request, pk):
         "plant": plant,
         # "packaging_measures": packaging_measures,
         "on_cultivars": on_cultivars,
-        # "seed_viability_tests": seed_viability_tests,
+        "seed_viability_tests": seed_viability_tests,
         "seed_storages": seed_storages,
         # "sowing_depth": sowing_depth,
         "harvesting_months": harvesting_months,

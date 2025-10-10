@@ -162,6 +162,11 @@ urlpatterns += [
         name="plant-growth-characteristics-update",
     ),
     path(
+        "plant-introductory-gardening-experience-update/<int:pk>",
+        views.plant_introductory_gardening_experience_update,
+        name="plant-introductory-gardening-experience-update",
+    ),
+    path(
         "plant-landscape-use-and-application-update/<int:pk>",
         views.plant_landscape_use_and_application_update,
         name="plant-landscape-use-and-application-update",

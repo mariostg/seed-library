@@ -364,3 +364,20 @@ class PlantSeedDistributionForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
+
+class PlantIntroductoryGardeningExperienceForm(forms.ModelForm):
+    class Meta:
+        model = models.PlantProfile
+        fields = [
+            "beginner_friendly",
+            "does_not_spread",
+            "germinate_easy",
+            "self_seeding",
+            "starter_pack_shade",
+            "starter_pack_sun_dry",
+            "starter_pack_sun_wet",
+        ]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
