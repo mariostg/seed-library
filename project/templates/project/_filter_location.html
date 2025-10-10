@@ -1,121 +1,133 @@
 <div class='filter__sub-header'>Provinces and Territories</div>
-<input type="checkbox" id="AB" name="AB" value="AB"
+<input type="checkbox" id="distribution_in_AB" name="distribution_in_AB" value="N"
        hx-get="/search-plant-name"
        hx-trigger="click"
        hx-target="#search-results"
        hx-push-url="true"
        hx-include="{{hx_include}}"
-       {% if AB %} checked {% endif %}
+       {% if distribution_in_AB %} checked {% endif %}
 />
-<label for="AB">Alberta</label><br />
-<input type="checkbox" id="BC" name="BC" value="BC"
+<label for="distribution_in_AB">Alberta</label><br />
+
+<input type="checkbox" id="distribution_in_BC" name="distribution_in_BC" value="N"
        hx-get="/search-plant-name"
        hx-trigger="click"
        hx-target="#search-results"
        hx-push-url="true"
        hx-include="{{hx_include}}"
-       {% if BC %} checked {% endif %}
+       {% if distribution_in_BC %} checked {% endif %}
 />
-<label for="BC">British Columbia</label><br />
-<input type="checkbox" id="MB" name="MB" value="MB"
+<label for="distribution_in_BC">British Columbia</label><br />
+
+<input type="checkbox" id="distribution_in_MB" name="distribution_in_MB" value="N"
        hx-get="/search-plant-name"
        hx-trigger="click"
        hx-target="#search-results"
        hx-push-url="true"
        hx-include="{{hx_include}}"
-       {% if MB %} checked {% endif %}
+       {% if distribution_in_MB %} checked {% endif %}
 />
-<label for="MB">Manitoba</label><br />
-<input type="checkbox" id="NB" name="NB" value="NB"
+<label for="distribution_in_MB">Manitoba</label><br />
+
+<input type="checkbox" id="distribution_in_NB" name="distribution_in_NB" value="N"
        hx-get="/search-plant-name"
        hx-trigger="click"
        hx-target="#search-results"
        hx-push-url="true"
        hx-include="{{hx_include}}"
-       {% if NB %} checked {% endif %}
+       {% if distribution_in_NB %} checked {% endif %}
 />
-<label for="NB">New Brunswick</label><br />
-<input type="checkbox" id="NL" name="NL" value="NL"
+<label for="distribution_in_NB">New Brunswick</label><br />
+
+<input type="checkbox" id="distribution_in_NL" name="distribution_in_NL" value="N"
        hx-get="/search-plant-name"
        hx-trigger="click"
        hx-target="#search-results"
        hx-push-url="true"
        hx-include="{{hx_include}}"
-       {% if NL %} checked {% endif %}
+       {% if distribution_in_NL %} checked {% endif %}
 />
 <label for="NL">Newfoundland and Labrador</label><br />
-<input type="checkbox" id="NS" name="NS" value="NS"
+
+<input type="checkbox" id="distribution_in_NS" name="distribution_in_NS" value="N"
        hx-get="/search-plant-name"
        hx-trigger="click"
        hx-target="#search-results"
        hx-push-url="true"
        hx-include="{{hx_include}}"
-       {% if NS %} checked {% endif %}
+       {% if distribution_in_NS %} checked {% endif %}
 />
 <label for="NS">Nova Scotia</label><br />
-<input type="checkbox" id="NT" name="NT" value="NT"
+
+<input type="checkbox" id="distribution_in_NT" name="distribution_in_NT" value="N"
        hx-get="/search-plant-name"
        hx-trigger="click"
        hx-target="#search-results"
        hx-push-url="true"
        hx-include="{{hx_include}}"
-       {% if NT %} checked {% endif %}
+       {% if distribution_in_NT %} checked {% endif %}
 />
 <label for="NT">Northwest Territories</label><br />
-<input type="checkbox" id="NU" name="NU" value="NU"
+
+<input type="checkbox" id="distribution_in_NU" name="distribution_in_NU" value="N"
        hx-get="/search-plant-name"
        hx-trigger="click"
        hx-target="#search-results"
        hx-push-url="true"
        hx-include="{{hx_include}}"
-       {% if NU %} checked {% endif %}
+       {% if distribution_in_NU %} checked {% endif %}
 />
 <label for="NU">Nunavut</label><br />
-<input type="checkbox" id="ON" name="ON" value="ON"
+
+<input type="checkbox" id="distribution_in_ON" name="distribution_in_ON" value="N"
        hx-get="/search-plant-name"
        hx-trigger="click"
        hx-target="#search-results"
        hx-push-url="true"
        hx-include="{{hx_include}}"
-       {% if ON %} checked {% endif %}
+       {% if distribution_in_ON %} checked {% endif %}
 />
 <label for="ON">Ontario</label><br />
-<input type="checkbox" id="PE" name="PE" value="PE"
+
+<input type="checkbox" id="distribution_in_PE" name="distribution_in_PE" value="PE"
        hx-get="/search-plant-name"
        hx-trigger="click"
        hx-target="#search-results"
        hx-push-url="true"
        hx-include="{{hx_include}}"
-       {% if PE %} checked {% endif %}
+       {% if distribution_in_PE %} checked {% endif %}
 />
 <label for="PE">Prince Edward Island</label><br />
-<input type="checkbox" id="QC" name="QC" value="QC"
+
+<input type="checkbox" id="distribution_in_QC" name="distribution_in_QC" value="N"
        hx-get="/search-plant-name"
        hx-trigger="click"
        hx-target="#search-results"
        hx-push-url="true"
        hx-include="{{hx_include}}"
-       {% if QC %} checked {% endif %}
+       {% if distribution_in_QC %} checked {% endif %}
 />
 <label for="QC">Quebec</label><br />
-<input type="checkbox" id="SK" name="SK" value="SK"
+
+<input type="checkbox" id="distribution_in_SK" name="distribution_in_SK" value="N"
        hx-get="/search-plant-name"
        hx-trigger="click"
        hx-target="#search-results"
        hx-push-url="true"
        hx-include="{{hx_include}}"
-       {% if SK %} checked {% endif %}
+       {% if distribution_in_SK %} checked {% endif %}
 />
-<label for="SK">Saskatchewan</label><br />
-<input type="checkbox" id="YT" name="YT" value="YT"
+<label for="distribution_in_SK">Saskatchewan</label><br />
+
+<input type="checkbox" id="distribution_in_YT" name="distribution_in_YT" value="YT"
        hx-get="/search-plant-name"
        hx-trigger="click"
        hx-target="#search-results"
        hx-push-url="true"
        hx-include="{{hx_include}}"
-       {% if YT %} checked {% endif %}
+       {% if distribution_in_YT %} checked {% endif %}
 />
-<label for="YT">Yukon</label><br />
+<label for="distribution_in_YT">Yukon</label><br />
 
 <div class="filter__sub-header">Ecozones</div>
 <input type="checkbox" id="tbd" name="tbd" value="tbd" />
