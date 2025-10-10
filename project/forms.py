@@ -321,6 +321,7 @@ class PlantHarvestingForm(forms.ModelForm):
             "harvesting_start",
             "harvesting_indicator",
             "harvesting_mean",
+            "seed_viability_test",
             "seed_head",
             "remove_non_seed_material",
             "seed_storage",

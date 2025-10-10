@@ -1388,6 +1388,16 @@ def plant_harvesting_update(request, pk):
         messages.warning(request, "No seed heads available. Please add some first.")
         return redirect("seed-head-table")
 
+    # seed viability tests
+    seed_viability_tests = models.SeedViabilityTest.objects.all().order_by(
+        "seed_viability_test"
+    )
+    if not seed_viability_tests:
+        messages.warning(
+            request, "No seed viability tests available. Please add some first."
+        )
+        return redirect("seed-viability-test-table")
+
     # # seed event table
     # seed_event_table = models.SeedEventTable.objects.all().order_by("seed_event_table")
     # if not seed_event_table:

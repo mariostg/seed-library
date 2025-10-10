@@ -137,6 +137,26 @@
         </div>
       </fieldset>
 
+      <!--Fieldset for seed viability test-->
+      <fieldset class="form-group">
+        <legend>Seed Viability Test</legend>
+        <div class="radio-options">
+          <div class="radio-option">
+            <input type="radio" id="id_seed_viability_test_none" name="seed_viability_test" value="" {% if not seed_viability_test %}checked{% endif %}>
+            <label for="id_seed_viability_test_none">None</label>
+          </div>
+          {% for seed_viability_test in seed_viability_tests %}
+            <div class="radio-option">
+              <input type="radio"
+                     id="id_seed_viability_test_{{ seed_viability_test.id }}"
+                     name="seed_viability_test"
+                     value="{{ seed_viability_test.id }}"
+                     {% if seed_viability_test.id == plant.seed_viability_test.id %}checked{% endif %}>
+              <label for="id_seed_viability_test_{{ seed_viability_test.id }}">{{ seed_viability_test }}</label>
+          {% endfor %}
+        </div>
+      </fieldset>
+
         <!--Fieldset for harvesting video link-->
       <fieldset class="form-group">
         <legend>Harvesting Video Link</legend>
