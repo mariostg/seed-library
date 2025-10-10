@@ -130,3 +130,16 @@ def is_plant_toxic(plant: PlantProfile):
 def get_plants_without_images():
     # Returns a queryset of PlantProfile instances without associated PlantImage entries.
     return PlantProfile.all_objects.filter(images__isnull=True)
+
+
+def is_valid_url(url: str) -> bool:
+    """Check if a given string is a valid URL."""
+    from django.core.exceptions import ValidationError
+    from django.core.validators import URLValidator
+
+    validate = URLValidator()
+    try:
+        validate(url)
+        return True
+    except ValidationError:
+        return False

@@ -71,6 +71,10 @@ def plant_profile_page(request, pk):
         "Vulnerable",
     )
     endangered = plant.conservation_status.conservation_status in endangered_values
+    # check if plant video link is a valid url
+    is_valid_video_url = utils.is_valid_url(plant.harvesting_video_link)
+    if not is_valid_video_url:
+        plant.harvesting_video_link = ""
     context = {
         "plant": plant,
         "title": plant.latin_name,
