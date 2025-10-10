@@ -327,6 +327,7 @@ def search_plant_name(request):
         "#is_draft",
         "#is_active",
         "#is_accepted",
+        "#has_recall",
     ]
 
     # Merge all filter lists and join with commas

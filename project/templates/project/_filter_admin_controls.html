@@ -43,3 +43,18 @@
   {% if is_accepted %} checked {% endif %}
 />
 <label for="is_accepted">Is Not Accepted</label><br />
+
+<!--Input box for recall status-->
+<input
+  type="checkbox"
+  id="has_recall"
+  name="has_recall"
+  value="Has Recall"
+  hx-get="/search-plant-name"
+  hx-trigger="click"
+  hx-target="#search-results"
+  hx-push-url="true"
+  hx-include="{{hx_include}}"
+  {% if has_recall %} checked {% endif %}
+/>
+<label for="has_recall">Has Recall</label><br />

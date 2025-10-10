@@ -21,3 +21,12 @@
     {{ plant.toxicity_indicator }} - {{ plant.toxicity_indicator_notes }}
   </div>
 {% endif %}
+<!--Display message if plant is a recall-->
+{% if plant.has_recall %}
+  <div class="alert alert--error">
+    This plant has been recalled.
+    {% if plant.recall_reason %}
+      Reason: {{ plant.recall_reason }}
+    {% endif %}
+  </div>
+{% endif %}

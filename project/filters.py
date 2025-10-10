@@ -288,6 +288,9 @@ class PlantProfileFilter(django_filters.FilterSet):
     is_accepted = django_filters.CharFilter(
         method="filter_excludes",
     )
+    has_recall = django_filters.CharFilter(
+        method="filter_boolean",
+    )
 
     def filter_ecozones(self, queryset, name, value):
         # check if a given plant is native to the ecozone specified in 'name'
