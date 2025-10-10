@@ -23,10 +23,9 @@
 {% endif %}
 <!--Display message if plant is a recall-->
 {% if plant.has_recall %}
-  <div class="alert alert--error">
-    This plant has been recalled.
+  <div class="alert alert--warning">
     {% if plant.recall_reason %}
-      Reason: {{ plant.recall_reason }}
+      {{ plant.recall_reason }}
     {% endif %}
   </div>
 {% endif %}

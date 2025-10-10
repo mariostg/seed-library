@@ -186,6 +186,8 @@ class PlantIdentificationInformationForm(forms.ModelForm):
             "is_active",
             "is_accepted",
             "not_accepted_reason",
+            "has_recall",
+            "recall_reason",
             "show_bees_supported_info",
             "show_butterflies_supported_info",
             "show_complementary_plants_info",
