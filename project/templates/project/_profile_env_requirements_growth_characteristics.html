@@ -80,6 +80,15 @@
   </span>
 </div>
 <div class="flex-row row-spacer">
-  <span>Lifespan : {{ plant.lifespan }} {% if plant.spring_ephemeral %} (Spring Ephemeral) {% endif %} </span>
-  {% if plant.dioecious %}<span>Plant is <span class="tooltip">dioecious<span class="tooltiptext">Need a male and female plant to produce seeds</span>   </span></span>{% endif %}
+  <span>Lifespan:
+    <span class="tooltip info">{{ plant.lifespan }}
+      <span class="tooltiptext">{{ plant.lifespan.definition }}</span>
+    </span>{% if plant.spring_ephemeral %} (Spring Ephemeral) {% endif %}
+  </span>
+  {% if plant.dioecious %}
+    <span>Plant is
+      <span class="tooltip info">dioecious
+        <span class="tooltiptext">Need a male and female plant to produce seeds</span>
+      </span>
+    </span>{% endif %}
 </div>
