@@ -900,6 +900,20 @@ class PlantProfile(Base):
         related_name="plants",
         help_text="Ecozones where the plant thrives.",
     )
+    # fields that represent the native range of the plant in Canada as character fields for each province and territory. Each field is a 1-character code (e.g., 'N' for Native, 'E' for Extirpated,'I' for Introduced, "" for anything else).
+    distribution_in_AB = models.CharField("AB", max_length=1, default="")
+    distribution_in_BC = models.CharField("BC", max_length=1, default="")
+    distribution_in_MB = models.CharField("MB", max_length=1, default="")
+    distribution_in_NB = models.CharField("NB", max_length=1, default="")
+    distribution_in_NL = models.CharField("NL", max_length=1, default="")
+    distribution_in_NS = models.CharField("NS", max_length=1, default="")
+    distribution_in_NT = models.CharField("NT", max_length=1, default="")
+    distribution_in_NU = models.CharField("NU", max_length=1, default="")
+    distribution_in_ON = models.CharField("ON", max_length=1, default="")
+    distribution_in_PE = models.CharField("PE", max_length=1, default="")
+    distribution_in_QC = models.CharField("QC", max_length=1, default="")
+    distribution_in_SK = models.CharField("SK", max_length=1, default="")
+    distribution_in_YT = models.CharField("YT", max_length=1, default="")
 
     # !Image releated fields such as has_profile_image, has_bloom_image, has_seed_image etc.
     has_image_profile = models.BooleanField(default=False, null=True, blank=True)
