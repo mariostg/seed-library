@@ -377,7 +377,7 @@ class PlantProfileFilter(django_filters.FilterSet):
     def filter_stratification_duration(self, queryset, name, value):
         if value >= 0:
             return queryset.filter(
-                stratification_duration__stratification_duration__lte=value
+                stratification_duration__stratification_duration=value
             )
         else:
             return queryset.none()
