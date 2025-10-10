@@ -191,6 +191,7 @@ def search_plant_name(request):
         data = models.PlantProfile.objects.all().order_by("latin_name")
 
     object_list = filters.PlantProfileFilter(request.GET, queryset=data)
+    ecozones = models.Ecozone.objects.all().order_by("ecozone")
     # Create lists of different filter categories
     sun_filters = [
         "#full_sun",
@@ -317,6 +318,7 @@ def search_plant_name(request):
         "#distribution_in_YT",
         "#native_to_ottawa_region",
     ]
+    ecozones_filters = [f"#ecozone_{ecozone.id}" for ecozone in ecozones]
     admin_controls_filters = [
         "#is_draft",
         "#is_active",
@@ -346,6 +348,7 @@ def search_plant_name(request):
         + conservation_status_filters
         + safety_and_compatibility_filters
         + region_filters
+        + ecozones_filters
         + admin_controls_filters
     )
     item_count = object_list.qs.count()
@@ -353,6 +356,7 @@ def search_plant_name(request):
         "stratification_duration"
     )
     context = {
+        "ecozones": ecozones,
         "stratification_durations": stratification_durations,
         "months": utils.MONTHS.values(),
         "months_numbered": utils.MONTHS.items(),

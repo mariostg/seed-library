@@ -272,6 +272,12 @@ class PlantProfileFilter(django_filters.FilterSet):
             method="filter_native_distribution"
         )
 
+    # Ecozones
+    for ecozone in models.Ecozone.objects.all():
+        locals()[f"ecozone_{ecozone.id}"] = django_filters.CharFilter(
+            method="filter_ecozones"
+        )
+
     # Admin Filters
     is_draft = django_filters.CharFilter(
         method="filter_boolean",
@@ -282,6 +288,14 @@ class PlantProfileFilter(django_filters.FilterSet):
     is_accepted = django_filters.CharFilter(
         method="filter_excludes",
     )
+
+    def filter_ecozones(self, queryset, name, value):
+        # check if a given plant is native to the ecozone specified in 'name'
+        if value:
+            ecozone_id = int(value)
+            return queryset.filter(ecozones__id=ecozone_id)
+        else:
+            return queryset
 
     def filter_native_distribution(self, queryset, name, value):
         # check if a given plant is native to the province or territory specified in 'name'

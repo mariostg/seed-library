@@ -130,8 +130,16 @@
 <label for="distribution_in_YT">Yukon</label><br />
 
 <div class="filter__sub-header">Ecozones</div>
-<input type="checkbox" id="tbd" name="tbd" value="tbd" />
-<label for="tbd">TBD</label>
+{% for ecozone in ecozones %}
+  <input type="checkbox" id="ecozone_{{ ecozone.id }}" name="ecozone_{{ ecozone.id }}" value="{{ ecozone.id }}"
+         hx-get="/search-plant-name"
+         hx-trigger="click"
+         hx-target="#search-results"
+         hx-push-url="true"
+         hx-include="{{hx_include}}"
+  />
+  <label for="ecozone_{{ ecozone.id }}">{{ ecozone.ecozone }}</label><br />
+{% endfor %}
 
 
 <div class="filter__sub-header">Other</div>
