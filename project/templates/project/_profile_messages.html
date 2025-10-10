@@ -30,3 +30,9 @@
     {% endif %}
   </div>
 {% endif %}
+<!--Display message if plant profile is a draft-->
+{% if plant.is_draft %}
+  <div class="alert alert--info">
+    This plant profile is a draft and may be incomplete. Please help us complete it!
+  </div>
+{% endif %}
