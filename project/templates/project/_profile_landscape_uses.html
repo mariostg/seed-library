@@ -14,7 +14,19 @@
         />
         <span class="tooltiptext">Suitable for rock gardens</span>
       </div>
-    {% endif %} {% if plant.wetland_garden %}
+    {% endif %}
+    {% if is_row_garden %}
+      <div class="tooltip">
+        <img
+          title="row garden"
+          alt="row garden"
+          class="icon"
+          src="{% static 'images/plant-row-garden.svg'  %}"
+        />
+        <span class="tooltiptext">Suitable for Right of Way gardens</span>
+      </div>
+    {% endif %}
+    {% if plant.wetland_garden %}
       <div class="tooltip">
         <img
           title="wetland garden"

@@ -38,6 +38,7 @@ def plant_profile_page(request, pk):
     plant: models.PlantProfile = utils.single_plant(pk, request)
     if not plant:
         return render(request, "core/404.html", status=404)
+    is_row_garden = plant.boulevard_garden_tolerant and plant.max_height <= 2
     landscape_use = (
         # garden_suitability
         plant.container_suitable
@@ -50,6 +51,7 @@ def plant_profile_page(request, pk):
         # functional_use
         or plant.ground_cover
         or plant.hedge
+        or is_row_garden
     )
     ecological_benefits = (
         # wildlife_interaction
@@ -81,6 +83,7 @@ def plant_profile_page(request, pk):
         "bloom_start": bloom_start,
         "bloom_end": bloom_end,
         "landscape_use": landscape_use,
+        "is_row_garden": is_row_garden,
         "ecological_benefits": ecological_benefits,
         "sow_before": sow_before,
         "is_toxic": is_toxic,
