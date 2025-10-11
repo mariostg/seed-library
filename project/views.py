@@ -1351,6 +1351,12 @@ def plant_special_features_and_consideration_update(request, pk):
     else:
         form = forms.PlantSpecialFeaturesAndConsiderationForm(instance=plant)
     context["form"] = form
+
+    ecozones = models.Ecozone.objects.all().order_by("ecozone")
+    context["ecozones"] = ecozones
+
+    ecozones_ids = plant.ecozones.values_list("id", flat=True)
+    context["ecozones_ids"] = ecozones_ids
     return render(
         request,
         "project/plant-special-features-and-considerations-update.html",

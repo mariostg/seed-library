@@ -61,22 +61,36 @@
             </div>
           </fieldset>
 
-          <fieldset>
+          <fieldset class='flex-col'>
             <legend>Conservation status and Distribution</legend>
             <!--Input select for conservation status-->
             <div class="input-select">
               <label for="{{ form.conservation_status.id_for_label }}">{{ form.conservation_status.label }}</label>
               {{ form.conservation_status }}
             </div>
+          </fieldset>
+          <fieldset class='flex-col'>
+            <legend>Locations</legend>
             <!--Input checkbox for native to Ottawa region-->
             <div class="input-checkbox">
               {{ form.native_to_ottawa_region }}
               <label for="{{ form.native_to_ottawa_region.id_for_label }}">{{ form.native_to_ottawa_region.label }}</label>
             </div>
-            <!--Input multiple select for ecozones-->
-            <div class="input-select">
-              <label for="{{ form.ecozones.id_for_label }}">{{ form.ecozones.label }}</label>
-              {{ form.ecozones }}
+            <!--Input checkboxes for ecozones-->
+            <div class="form-group">
+              <h3>Ecozones</h3>
+              <div class="checkbox-options">
+                {% for ecozone in ecozones %}
+                  <div class="checkbox-option">
+                    <input type="checkbox"
+                           id="ecozone_{{ ecozone.id }}"
+                           name="ecozones"
+                           value="{{ ecozone.id }}"
+                           {% if ecozone.id in ecozones_ids %}checked{% endif %}>
+                    <label for="ecozone_{{ ecozone.id }}">{{ ecozone }}</label>
+                  </div>
+                {% endfor %}
+              </div>
             </div>
           </fieldset>
         </div>
