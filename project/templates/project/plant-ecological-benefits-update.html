@@ -132,12 +132,16 @@
             </div>
           </fieldset>
           <fieldset>
-            <legend>Soil Improvement</legend>
+            <legend>Ecosystem Services</legend>
             <div class="input-checkbox">
               {{ form.nitrogen_fixer }}
               <label for="{{ form.nitrogen_fixer.id_for_label }}">{{ form.nitrogen_fixer.label }}</label>
             </div>
-
+            <!--Input checkbox for keystones species-->
+            <div class="input-checkbox">
+              {{ form.keystones_species }}
+              <label for="{{ form.keystones_species.id_for_label }}">{{ form.keystones_species.label }}</label>
+            </div>
           </fieldset>
         </div>
         <button type="submit" class="btn btn-primary">Update</button>
