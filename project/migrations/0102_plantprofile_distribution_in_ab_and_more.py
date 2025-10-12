@@ -12,67 +12,67 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AddField(
             model_name="plantprofile",
-            name="distribution_in_AB",
+            name="is_native_to_AB",
             field=models.CharField(default="", max_length=1, verbose_name="AB"),
         ),
         migrations.AddField(
             model_name="plantprofile",
-            name="distribution_in_BC",
+            name="is_native_to_BC",
             field=models.CharField(default="", max_length=1, verbose_name="BC"),
         ),
         migrations.AddField(
             model_name="plantprofile",
-            name="distribution_in_MB",
+            name="is_native_to_MB",
             field=models.CharField(default="", max_length=1, verbose_name="MB"),
         ),
         migrations.AddField(
             model_name="plantprofile",
-            name="distribution_in_NB",
+            name="is_native_to_NB",
             field=models.CharField(default="", max_length=1, verbose_name="NB"),
         ),
         migrations.AddField(
             model_name="plantprofile",
-            name="distribution_in_NL",
+            name="is_native_to_NL",
             field=models.CharField(default="", max_length=1, verbose_name="NL"),
         ),
         migrations.AddField(
             model_name="plantprofile",
-            name="distribution_in_NS",
+            name="is_native_to_NS",
             field=models.CharField(default="", max_length=1, verbose_name="NS"),
         ),
         migrations.AddField(
             model_name="plantprofile",
-            name="distribution_in_NT",
+            name="is_native_to_NT",
             field=models.CharField(default="", max_length=1, verbose_name="NT"),
         ),
         migrations.AddField(
             model_name="plantprofile",
-            name="distribution_in_NU",
+            name="is_native_to_NU",
             field=models.CharField(default="", max_length=1, verbose_name="NU"),
         ),
         migrations.AddField(
             model_name="plantprofile",
-            name="distribution_in_ON",
+            name="is_native_to_ON",
             field=models.CharField(default="", max_length=1, verbose_name="ON"),
         ),
         migrations.AddField(
             model_name="plantprofile",
-            name="distribution_in_PE",
+            name="is_native_to_PE",
             field=models.CharField(default="", max_length=1, verbose_name="PE"),
         ),
         migrations.AddField(
             model_name="plantprofile",
-            name="distribution_in_QC",
+            name="is_native_to_QC",
             field=models.CharField(default="", max_length=1, verbose_name="QC"),
         ),
         migrations.AddField(
             model_name="plantprofile",
-            name="distribution_in_SK",
+            name="is_native_to_SK",
             field=models.CharField(default="", max_length=1, verbose_name="SK"),
         ),
         migrations.AddField(
             model_name="plantprofile",
-            name="distribution_in_YT",
+            name="is_native_to_YT",
             field=models.CharField(default="", max_length=1, verbose_name="YT"),
         ),
     ]

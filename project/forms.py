@@ -308,6 +308,19 @@ class PlantSpecialFeaturesAndConsiderationForm(forms.ModelForm):
             "conservation_status",
             "native_to_ottawa_region",
             "ecozones",
+            "is_native_to_AB",
+            "is_native_to_BC",
+            "is_native_to_MB",
+            "is_native_to_NB",
+            "is_native_to_NL",
+            "is_native_to_NS",
+            "is_native_to_ON",
+            "is_native_to_PE",
+            "is_native_to_QC",
+            "is_native_to_SK",
+            "is_native_to_YT",
+            "is_native_to_NT",
+            "is_native_to_NU",
         ]
 
     def __init__(self, *args, **kwargs):

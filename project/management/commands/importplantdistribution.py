@@ -75,21 +75,89 @@ class Command(BaseCommand):
                             )
                         )
                         continue
-                    profile.distribution_in_AB = row["AB"]
-                    profile.distribution_in_BC = row["BC"]
-                    profile.distribution_in_MB = row["MB"]
-                    profile.distribution_in_NB = row["NB"]
-                    profile.distribution_in_NL = row["NL"]
-                    profile.distribution_in_NS = row["NS"]
-                    profile.distribution_in_NT = row["NT"]
-                    profile.distribution_in_NU = row["NU"]
-                    profile.distribution_in_ON = row["ON"]
-                    profile.distribution_in_PE = row["PE"]
-                    profile.distribution_in_QC = row["QC"]
-                    profile.distribution_in_SK = row["SK"]
-                    profile.distribution_in_YT = row["YT"]
+                    profile.is_native_to_AB = True if row["AB"] == "N" else False
+                    profile.is_native_to_BC = True if row["BC"] == "N" else False
+                    profile.is_native_to_MB = True if row["MB"] == "N" else False
+                    profile.is_native_to_NB = True if row["NB"] == "N" else False
+                    profile.is_native_to_NL = True if row["NL"] == "N" else False
+                    profile.is_native_to_NS = True if row["NS"] == "N" else False
+                    profile.is_native_to_NT = True if row["NT"] == "N" else False
+                    profile.is_native_to_NU = True if row["NU"] == "N" else False
+                    profile.is_native_to_ON = True if row["ON"] == "N" else False
+                    profile.is_native_to_PE = True if row["PE"] == "N" else False
+                    profile.is_native_to_QC = True if row["QC"] == "N" else False
+                    profile.is_native_to_SK = True if row["SK"] == "N" else False
+                    profile.is_native_to_YT = True if row["YT"] == "N" else False
                     profile.save()
-                    # self.stdout.write(self.style.SUCCESS(f"Updated PlantProfile for {latin_name}"))
+                    # print all plant profile is_native_to_* values
+                    self.stdout.write(
+                        self.style.SUCCESS(f"Updated PlantProfile for {latin_name}")
+                    )
+                    self.stdout.write(
+                        self.style.SUCCESS(
+                            f"  is_native_to_AB: {profile.is_native_to_AB}"
+                        )
+                    )
+                    self.stdout.write(
+                        self.style.SUCCESS(
+                            f"  is_native_to_BC: {profile.is_native_to_BC}"
+                        )
+                    )
+                    self.stdout.write(
+                        self.style.SUCCESS(
+                            f"  is_native_to_MB: {profile.is_native_to_MB}"
+                        )
+                    )
+                    self.stdout.write(
+                        self.style.SUCCESS(
+                            f"  is_native_to_NB: {profile.is_native_to_NB}"
+                        )
+                    )
+                    self.stdout.write(
+                        self.style.SUCCESS(
+                            f"  is_native_to_NL: {profile.is_native_to_NL}"
+                        )
+                    )
+                    self.stdout.write(
+                        self.style.SUCCESS(
+                            f"  is_native_to_NS: {profile.is_native_to_NS}"
+                        )
+                    )
+                    self.stdout.write(
+                        self.style.SUCCESS(
+                            f"  is_native_to_NT: {profile.is_native_to_NT}"
+                        )
+                    )
+                    self.stdout.write(
+                        self.style.SUCCESS(
+                            f"  is_native_to_NU: {profile.is_native_to_NU}"
+                        )
+                    )
+                    self.stdout.write(
+                        self.style.SUCCESS(
+                            f"  is_native_to_ON: {profile.is_native_to_ON}"
+                        )
+                    )
+                    self.stdout.write(
+                        self.style.SUCCESS(
+                            f"  is_native_to_PE: {profile.is_native_to_PE}"
+                        )
+                    )
+                    self.stdout.write(
+                        self.style.SUCCESS(
+                            f"  is_native_to_QC: {profile.is_native_to_QC}"
+                        )
+                    )
+                    self.stdout.write(
+                        self.style.SUCCESS(
+                            f"  is_native_to_SK: {profile.is_native_to_SK}"
+                        )
+                    )
+                    self.stdout.write(
+                        self.style.SUCCESS(
+                            f"  is_native_to_YT: {profile.is_native_to_YT}"
+                        )
+                    )
 
             self.stdout.write(
                 self.style.SUCCESS(

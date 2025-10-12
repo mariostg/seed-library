@@ -248,7 +248,7 @@ class PlantProfileFilter(django_filters.FilterSet):
     )
 
     # filter for plants that are native to provinces and territories in Canada.
-    # plant is native if any of the distribution_in_* is 'N'
+    # plant is native if any of the is_native_to_* is 'N'
     # Define province/territory codes
     provinces = [
         "AB",
@@ -268,8 +268,8 @@ class PlantProfileFilter(django_filters.FilterSet):
 
     # Dynamically create filters for all provinces/territories
     for province in provinces:
-        locals()[f"distribution_in_{province}"] = django_filters.CharFilter(
-            method="filter_native_distribution"
+        locals()[f"is_native_to_{province}"] = django_filters.CharFilter(
+            method="filter_boolean"
         )
 
     # Ecozones
@@ -297,14 +297,6 @@ class PlantProfileFilter(django_filters.FilterSet):
         if value:
             ecozone_id = int(value)
             return queryset.filter(ecozones__id=ecozone_id)
-        else:
-            return queryset
-
-    def filter_native_distribution(self, queryset, name, value):
-        # check if a given plant is native to the province or territory specified in 'name'
-        if value:
-            filter_criteria = {f"{name}": "N"}
-            return queryset.filter(**filter_criteria)
         else:
             return queryset
 

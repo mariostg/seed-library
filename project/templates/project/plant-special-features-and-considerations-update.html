@@ -13,85 +13,202 @@
       <form action="{% url 'plant-special-features-and-considerations-update' plant.pk %}" method="post">
         {% csrf_token %}
         <div class="form inputs">
+          <div>
 
-          <fieldset class="form-group">
-            <legend>Environment </legend>
-                    <!--input checkbox septic_tank_safe-->
-            <div class="input-checkbox">
-              {{ form.septic_tank_safe }}
-              <label for="{{ form.septic_tank_safe.id_for_label }}">{{ form.septic_tank_safe.label }}</label>
-            </div>
-          </fieldset>
+            <fieldset class="form-group">
+              <legend>Environment </legend>
+                      <!--input checkbox septic_tank_safe-->
+              <div class="input-checkbox">
+                {{ form.septic_tank_safe }}
+                <label for="{{ form.septic_tank_safe.id_for_label }}">{{ form.septic_tank_safe.label }}</label>
+              </div>
+            </fieldset>
 
-          <fieldset class="form-group">
-            <legend>Toxicity and Safety</legend>
-            <!--input checkbox for produces_burs-->
-            <div class="input-checkbox">
-              {{ form.produces_burs }}
-              <label for="{{ form.produces_burs.id_for_label }}">{{ form.produces_burs.label }}</label>
-            </div>
-            <!--input checkbox for cause_skin_rashes-->
-            <div class="input-checkbox">
-              {{ form.cause_skin_rashes }}
-              <label for="{{ form.cause_skin_rashes.id_for_label }}">{{ form.cause_skin_rashes.label }}</label>
-            </div>
-            <!--input select list for toxicity indicator-->
-            <div class="input-select">
-              <label for="{{ form.toxicity_indicator.id_for_label }}">{{ form.toxicity_indicator.label }}</label>
-              {{ form.toxicity_indicator }}
-            </div>
-            <!--input text box for toxicity indicator notes-->
-            <div class="input-text">
-              <label for="{{ form.toxicity_indicator_notes.id_for_label }}">{{ form.toxicity_indicator_notes.label }}</label>
-              {{ form.toxicity_indicator_notes }}
-            </div>
-          </fieldset>
+            <fieldset class="form-group">
+              <legend>Toxicity and Safety</legend>
+              <!--input checkbox for produces_burs-->
+              <div class="input-checkbox">
+                {{ form.produces_burs }}
+                <label for="{{ form.produces_burs.id_for_label }}">{{ form.produces_burs.label }}</label>
+              </div>
+              <!--input checkbox for cause_skin_rashes-->
+              <div class="input-checkbox">
+                {{ form.cause_skin_rashes }}
+                <label for="{{ form.cause_skin_rashes.id_for_label }}">{{ form.cause_skin_rashes.label }}</label>
+              </div>
+              <!--input select list for toxicity indicator-->
+              <div class="input-select">
+                <label for="{{ form.toxicity_indicator.id_for_label }}">{{ form.toxicity_indicator.label }}</label>
+                {{ form.toxicity_indicator }}
+              </div>
+              <!--input text box for toxicity indicator notes-->
+              <div class="input-text">
+                <label for="{{ form.toxicity_indicator_notes.id_for_label }}">{{ form.toxicity_indicator_notes.label }}</label>
+                {{ form.toxicity_indicator_notes }}
+              </div>
+            </fieldset>
 
-          <fieldset class="form-group">
-            <legend>GRASP</legend>
-            <!--input checkbox for grasp_candidate-->
-            <div class="input-checkbox">
-              {{ form.grasp_candidate }}
-              <label for="{{ form.grasp_candidate.id_for_label }}">{{ form.grasp_candidate.label }}</label>
-            </div>
-            <!--input text box for grasp_candidate_notes-->
-            <div class="input-text">
-              <label for="{{ form.grasp_candidate_notes.id_for_label }}">{{ form.grasp_candidate_notes.label }}</label>
-              {{ form.grasp_candidate_notes }}
-            </div>
-          </fieldset>
+            <fieldset class="form-group">
+              <legend>GRASP</legend>
+              <!--input checkbox for grasp_candidate-->
+              <div class="input-checkbox">
+                {{ form.grasp_candidate }}
+                <label for="{{ form.grasp_candidate.id_for_label }}">{{ form.grasp_candidate.label }}</label>
+              </div>
+              <!--input text box for grasp_candidate_notes-->
+              <div class="input-text">
+                <label for="{{ form.grasp_candidate_notes.id_for_label }}">{{ form.grasp_candidate_notes.label }}</label>
+                {{ form.grasp_candidate_notes }}
+              </div>
+            </fieldset>
 
-          <fieldset class='flex-col'>
-            <legend>Conservation status and Distribution</legend>
+            <fieldset class='flex-col'>
+              <legend>Conservation status and Distribution</legend>
             <!--Input select for conservation status-->
-            <div class="input-select">
-              <label for="{{ form.conservation_status.id_for_label }}">{{ form.conservation_status.label }}</label>
-              {{ form.conservation_status }}
-            </div>
-          </fieldset>
+              <div class="input-select">
+                <label for="{{ form.conservation_status.id_for_label }}">{{ form.conservation_status.label }}</label>
+                {{ form.conservation_status }}
+              </div>
+            </fieldset>
+          </div>
+
           <fieldset class='flex-col'>
             <legend>Locations</legend>
-            <!--Input checkbox for native to Ottawa region-->
-            <div class="input-checkbox">
-              {{ form.native_to_ottawa_region }}
-              <label for="{{ form.native_to_ottawa_region.id_for_label }}">{{ form.native_to_ottawa_region.label }}</label>
-            </div>
-            <!--Input checkboxes for ecozones-->
-            <div class="form-group">
-              <h3>Ecozones</h3>
-              <div class="checkbox-options">
-                {% for ecozone in ecozones %}
-                  <div class="checkbox-option">
-                    <input type="checkbox"
-                           id="ecozone_{{ ecozone.id }}"
-                           name="ecozones"
-                           value="{{ ecozone.id }}"
-                           {% if ecozone.id in ecozones_ids %}checked{% endif %}>
-                    <label for="ecozone_{{ ecozone.id }}">{{ ecozone }}</label>
-                  </div>
-                {% endfor %}
+
+            <div class="flex-col__inputs">
+              <!--Input checkbox for native to Ottawa region-->
+              <div class="input-checkbox">
+                {{ form.native_to_ottawa_region }}
+                <label for="{{ form.native_to_ottawa_region.id_for_label }}">{{ form.native_to_ottawa_region.label }}</label>
               </div>
+              <!--Input checkboxes for ecozones-->
+              <div class="form-group">
+                <h3>Ecozones</h3>
+                <div class="checkbox-options">
+                  {% for ecozone in ecozones %}
+                    <div class="checkbox-option">
+                      <input type="checkbox"
+                             id="ecozone_{{ ecozone.id }}"
+                             name="ecozones"
+                             value="{{ ecozone.id }}"
+                             {% if ecozone.id in ecozones_ids %}checked{% endif %}>
+                      <label for="ecozone_{{ ecozone.id }}">{{ ecozone }}</label>
+                    </div>
+                  {% endfor %}
+                </div>
+              </div>
+              <!--Input checkboxes for provinces and territories-->
+              <div class="form-group">
+                <h3>Provinces and Territories</h3>
+                <!--input checkbox for is_native_to_AB-->
+                <div class="checkbox-option">
+                  <input type="checkbox"
+                         id="is_native_to_AB"
+                         name="is_native_to_AB"
+                         {% if plant.is_native_to_AB %}checked{% endif %}>
+                  <label for="is_native_to_AB">Alberta</label>
+                </div>
+                <!--input checkbox for is_native_to_BC-->
+                <div class="checkbox-option">
+                  <input type="checkbox"
+                         id="is_native_to_BC"
+                         name="is_native_to_BC"
+                         {% if plant.is_native_to_BC %}checked{% endif %}>
+                  <label for="is_native_to_BC">British Columbia</label>
+                </div>
+                <!--input checkbox for is_native_to_MB-->
+                <div class="checkbox-option">
+                  <input type="checkbox"
+                         id="is_native_to_MB"
+                         name="is_native_to_MB"
+                         {% if plant.is_native_to_MB %}checked{% endif %}>
+                  <label for="is_native_to_MB">Manitoba</label>
+                </div>
+                <!--input checkbox for is_native_to_NB-->
+                <div class="checkbox-option">
+                  <input type="checkbox"
+                         id="is_native_to_NB"
+                         name="is_native_to_NB"
+                         {% if plant.is_native_to_NB %}checked{% endif %}>
+                  <label for="is_native_to_NB">New Brunswick</label>
+                </div>
+                <!--input checkbox for is_native_to_NL-->
+                <div class="checkbox-option">
+                  <input type="checkbox"
+                         id="is_native_to_NL"
+                         name="is_native_to_NL"
+                         {% if plant.is_native_to_NL %}checked{% endif %}>
+                  <label for="is_native_to_NL">Newfoundland and Labrador</label>
+                </div>
+                <!--input checkbox for is_native_to_NS-->
+                <div class="checkbox-option">
+                  <input type="checkbox"
+                         id="is_native_to_NS"
+                         name="is_native_to_NS"
+                         {% if plant.is_native_to_NS %}checked{% endif %}>
+                  <label for="is_native_to_NS">Nova Scotia</label>
+                </div>
+                <!--input checkbox for is_native_to_NT-->
+                <div class="checkbox-option">
+                  <input type="checkbox"
+                         id="is_native_to_NT"
+                         name="is_native_to_NT"
+                         {% if plant.is_native_to_NT %}checked{% endif %}>
+                  <label for="is_native_to_NT">Northwest Territories</label>
+                </div>
+                <!--input checkbox for is_native_to_NU-->
+                <div class="checkbox-option">
+                  <input type="checkbox"
+                         id="is_native_to_NU"
+                         name="is_native_to_NU"
+                         {% if plant.is_native_to_NU %}checked{% endif %}>
+                  <label for="is_native_to_NU">Nunavut</label>
+                </div>
+                <!--input checkbox for is_native_to_ON-->
+                <div class="checkbox-option">
+                  <input type="checkbox"
+                         id="is_native_to_ON"
+                         name="is_native_to_ON"
+                         {% if plant.is_native_to_ON %}checked{% endif %}>
+                  <label for="is_native_to_ON">Ontario</label>
+                </div>
+                <!--input checkbox for is_native_to_PE-->
+                <div class="checkbox-option">
+                  <input type="checkbox"
+                         id="is_native_to_PE"
+                         name="is_native_to_PE"
+                         {% if plant.is_native_to_PE %}checked{% endif %}>
+                  <label for="is_native_to_PE">Prince Edward Island</label>
+                </div>
+                <!--input checkbox for is_native_to_QC-->
+                <div class="checkbox-option">
+                  <input type="checkbox"
+                         id="is_native_to_QC"
+                         name="is_native_to_QC"
+                         {% if plant.is_native_to_QC %}checked{% endif %}>
+                  <label for="is_native_to_QC">Quebec</label>
+                </div>
+                <!--input checkbox for is_native_to_SK-->
+                <div class="checkbox-option">
+                  <input type="checkbox"
+                         id="is_native_to_SK"
+                         name="is_native_to_SK"
+                         {% if plant.is_native_to_SK %}checked{% endif %}>
+                  <label for="is_native_to_SK">Saskatchewan</label>
+                </div>
+                <!--input checkbox for is_native_to_YT-->
+                <div class="checkbox-option">
+                  <input type="checkbox"
+                         id="is_native_to_YT"
+                         name="is_native_to_YT"
+                         {% if plant.is_native_to_YT %}checked{% endif %}>
+                  <label for="is_native_to_YT">Yukon</label>
+                </div>
+              </div>
+                <!--end of Provinces and Territories-->
             </div>
+
+
           </fieldset>
         </div>
         <button type="submit" class="btn btn-primary">Update</button>
