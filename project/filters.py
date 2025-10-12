@@ -288,7 +288,7 @@ class PlantProfileFilter(django_filters.FilterSet):
     is_accepted = django_filters.CharFilter(
         method="filter_excludes",
     )
-    has_recall = django_filters.CharFilter(
+    has_notice = django_filters.CharFilter(
         method="filter_boolean",
     )
 

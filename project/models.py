@@ -696,10 +696,10 @@ class PlantProfile(Base):
     is_draft = models.BooleanField(
         default=True
     )  # to indicate if the profile is incomplete
-    has_recall = models.BooleanField(
+    has_notice = models.BooleanField(
         default=False
-    )  # to indicate if the plant has been recalled for some reason
-    recall_reason = models.CharField(max_length=255, default="", blank=True)
+    )  # to indicate if the plant has a notice for some reason
+    notice_detail = models.CharField(max_length=255, default="", blank=True)
     not_accepted_reason = models.CharField(max_length=255, blank=True)
     show_bees_supported_info = models.BooleanField(default=True)
     show_butterflies_supported_info = models.BooleanField(default=True)

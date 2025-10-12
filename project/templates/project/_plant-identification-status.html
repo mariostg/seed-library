@@ -19,14 +19,14 @@
     <label for="id_not_accepted_reason">Reason for Not Accepting (if applicable)</label>
     <input type="text" id="id_not_accepted_reason" name="not_accepted_reason" value="{{ plant.not_accepted_reason }}">
   </div>
-  <!-- has recall -->
+  <!-- has notice -->
   <div class="input-checkbox">
-    <input type="checkbox" id="id_has_recall" name="has_recall" {% if plant.has_recall %}checked{% endif %}>
-    <label class="tooltip" for="id_has_recall">Has Recall <span class="tooltiptext">When Has Recall is selected, the plant profile has been recalled for some reason. Please provide a reason in the field below.</span></label>
+    <input type="checkbox" id="id_has_notice" name="has_notice" {% if plant.has_notice %}checked{% endif %}>
+    <label class="tooltip" for="id_has_notice">Has Notice <span class="tooltiptext">When Has Notice is selected, please provide a description of the notice.</span></label>
   </div>
   <div class="input-text">
-    <label for="id_recall_reason">Reason for Recall (if applicable)</label>
-    <input type="text" id="id_recall_reason" name="recall_reason" value="{{ plant.recall_reason }}">
+    <label for="id_notice_detail">Notice Details (if applicable)</label>
+    <input type="text" id="id_notice_detail" name="notice_detail" value="{{ plant.notice_detail }}">
   </div>
             <!-- input checkbox for show supported bees info-->
   <div class="input-checkbox">
