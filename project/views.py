@@ -578,17 +578,17 @@ def harvesting_mean_table(request):
 def colour_add(request):
     context = {
         "title": "Create Colour",
-        "url_name": "colour-page",
+        "url_name": "admin-colour-page",
     }
     if request.method == "POST":
-        form = forms.ColourForm(request.POST)
+        form = forms.AdminColourForm(request.POST)
         if form.is_valid():
             context["form"] = form
-            obj = form.save(commit=False)
+            obj: models.BloomColour = form.save(commit=False)
             try:
                 form.save()
             except IntegrityError:
-                messages.error(request, f"Colour {obj.colour} exists already.")
+                messages.error(request, f"Colour {obj.bloom_colour} exists already.")
                 return render(
                     request,
                     "project/simple-form.html",
@@ -598,7 +598,7 @@ def colour_add(request):
             messages.error(request, "Color not valid.")
             context["form"] = form
     else:
-        context["form"] = forms.ColorForm
+        context["form"] = forms.AdminColourForm
 
     return render(request, "project/simple-form.html", context)
 
@@ -698,13 +698,13 @@ def harvesting_mean_add(request):
 # @login_required
 def colour_update(request, pk):
     colour = models.BloomColour.objects.get(id=pk)
-    form = forms.ColourForm(instance=colour)
+    form = forms.AdminColourForm(instance=colour)
 
     if request.method == "POST":
-        form = forms.ColourForm(request.POST, instance=colour)
+        form = forms.AdminColourForm(request.POST, instance=colour)
         if form.is_valid():
             form.save()
-            return redirect("colour-page")
+            return redirect("admin-colour-page")
 
     return render(
         request,
@@ -712,7 +712,7 @@ def colour_update(request, pk):
         {
             "form": form,
             "title": "Colour Update",
-            "url_name": "colour-page",
+            "url_name": "admin-colour-page",
         },
     )
 
@@ -785,7 +785,7 @@ def harvesting_mean_update(request, pk):
 
 # @login_required
 def colour_delete(request, pk):
-    obj = models.BloomColour.objects.get(id=pk)
+    obj: models.BloomColour = models.BloomColour.objects.get(id=pk)
     if request.method == "POST":
         try:
             obj.delete()
@@ -796,8 +796,8 @@ def colour_delete(request, pk):
                 fkeys.append(fk.obj)
             msg = msg + ", ".join(fkeys)
             messages.warning(request, msg)
-        return redirect("colour-page")
-    context = {"object": obj, "back": "colour-page"}
+        return redirect("admin-colour-page")
+    context = {"object": obj, "back": "admin-colour-page"}
     return render(request, "core/delete-object.html", context)
 
 

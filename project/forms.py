@@ -105,7 +105,7 @@ class SearchPlantForm(forms.ModelForm):
             field.required = False
 
 
-class ColorForm(forms.ModelForm):
+class AdminColourForm(forms.ModelForm):
     class Meta:
         model = models.BloomColour
         fields = ["bloom_colour"]

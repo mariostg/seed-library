@@ -1,43 +1,33 @@
 {% extends 'core/base.html' %}
 {% load static %}
-{% block title %}{{title}}{% endblock title %}
+{% block title %}{{title}} Management{% endblock title %}
 {% block content %}
 
-  <section class="flex-col form">
-    <header class='form__header title'>
-      <h2>{{title}} Management</h2>
-    </header>
-    {% if user.is_authenticated %}
-      <div class='center'>
-        <a class='btn btn-add' href="{% url 'admin-colour-add' %}"></a>
-      </div>
-    {% endif %}
-
-    <table class='panel'>
-      <thead>
-        <tr>
-          <th>{{title}}</th>
-          {% if user.is_authenticated %}
-            <th colspan=2></th>
-          {% endif %}
-        </tr>
-      </thead>
-      <tbody>
-        {% for item in data %}
-          <tr class="{% cycle 'odd-row' 'even-row' %}">
-            <td>{{item.colour}}</td>
-            {% if user.is_authenticated %}
-              <td>
-                <a class='btn btn-edit' href="{% url "admin-colour-update" item.id %}"></a>
-                <a class='btn btn-delete' href="{% url "admin-colour-delete" item.id %}"></a>
-              </td>
-            {% endif %}
-          </tr>
-        {% endfor %}
-
-      </tbody>
-    </table>
-  </section>
+  <div class='flex-col-center'>
+    <fieldset class="flex-col-center">
+      <legend>{{title}} Management</legend>
+      {% if user.is_authenticated %}
+        <div class='center'>
+          <a class='btn btn-add' href="{% url 'admin-colour-add' %}">Add New Colour</a>
+        </div>
+      {% endif %}
+      <table class='panel'>
+        <tbody>
+          {% for item in data %}
+            <tr class="{% cycle 'odd-row' 'even-row' %}">
+              <td>{{item.bloom_colour}}</td>
+              {% if user.is_authenticated %}
+                <td>
+                  <a class='btn btn-edit' href="{% url "admin-colour-update" item.id %}">Edit</a>
+                  <a class='btn btn-delete' href="{% url "admin-colour-delete" item.id %}">Delete</a>
+                </td>
+              {% endif %}
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </fieldset>
+  </div>
 
   </body>
   </html>
