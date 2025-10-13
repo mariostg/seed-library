@@ -87,6 +87,29 @@ urlpatterns += [
 
 urlpatterns += [
     path(
+        "admin-growth-habit-add/",
+        views.admin_growth_habit_add,
+        name="admin-growth-habit-add",
+    ),
+    path(
+        "admin-growth-habit-page/",
+        views.admin_growth_habit_page,
+        name="admin-growth-habit-page",
+    ),
+    path(
+        "admin-growth-habit-delete/<int:pk>",
+        views.admin_growth_habit_delete,
+        name="admin-growth-habit-delete",
+    ),
+    path(
+        "admin-growth-habit-update/<int:pk>/",
+        views.admin_growth_habit_update,
+        name="admin-growth-habit-update",
+    ),
+]
+
+urlpatterns += [
+    path(
         "harvesting-indicator-add/",
         views.harvesting_indicator_add,
         name="harvesting-indicator-add",
