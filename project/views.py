@@ -540,16 +540,6 @@ def update_availability(request):
     return render(request, "project/update-availability.html", context)
 
 
-def colour_page(request):
-    data = models.BloomColour.objects.all().order_by("bloom_colour")
-    context = {
-        "data": data,
-        "url_name": "colour-page",
-        "title": "Colours",
-    }
-    return render(request, "project/admin-colour-page.html", context)
-
-
 def habit_table(request):
     data = models.GrowthHabit.objects.all().order_by("habit")
     context = {
@@ -580,6 +570,16 @@ def harvesting_mean_table(request):
     return render(request, "project/harvesting-mean-table.html", context)
 
 
+def colour_page(request):
+    data = models.BloomColour.objects.all().order_by("bloom_colour")
+    context = {
+        "data": data,
+        "url_name": "colour-page",
+        "title": "Colours",
+    }
+    return render(request, "project/admin-colour-page.html", context)
+
+
 # @login_required
 def colour_add(request):
     context = {
@@ -607,6 +607,46 @@ def colour_add(request):
         context["form"] = forms.AdminColourForm
 
     return render(request, "project/simple-form.html", context)
+
+
+# @login_required
+def colour_update(request, pk):
+    colour = models.BloomColour.objects.get(id=pk)
+    form = forms.AdminColourForm(instance=colour)
+
+    if request.method == "POST":
+        form = forms.AdminColourForm(request.POST, instance=colour)
+        if form.is_valid():
+            form.save()
+            return redirect("admin-colour-page")
+
+    return render(
+        request,
+        "project/simple-form.html",
+        {
+            "form": form,
+            "title": "Colour Update",
+            "url_name": "admin-colour-page",
+        },
+    )
+
+
+# @login_required
+def colour_delete(request, pk):
+    obj: models.BloomColour = models.BloomColour.objects.get(id=pk)
+    if request.method == "POST":
+        try:
+            obj.delete()
+        except RestrictedError as e:
+            msg = e.args[0].split(":")[0] + " : "
+            fkeys = []
+            for fk in e.restricted_objects:
+                fkeys.append(fk.obj)
+            msg = msg + ", ".join(fkeys)
+            messages.warning(request, msg)
+        return redirect("admin-colour-page")
+    context = {"object": obj, "back": "admin-colour-page"}
+    return render(request, "core/delete-object.html", context)
 
 
 # @login_required
@@ -702,28 +742,6 @@ def harvesting_mean_add(request):
 
 
 # @login_required
-def colour_update(request, pk):
-    colour = models.BloomColour.objects.get(id=pk)
-    form = forms.AdminColourForm(instance=colour)
-
-    if request.method == "POST":
-        form = forms.AdminColourForm(request.POST, instance=colour)
-        if form.is_valid():
-            form.save()
-            return redirect("admin-colour-page")
-
-    return render(
-        request,
-        "project/simple-form.html",
-        {
-            "form": form,
-            "title": "Colour Update",
-            "url_name": "admin-colour-page",
-        },
-    )
-
-
-# @login_required
 def habit_update(request, pk):
     obj = models.GrowthHabit.objects.get(id=pk)
     form = forms.HabitForm(instance=obj)
@@ -787,24 +805,6 @@ def harvesting_mean_update(request, pk):
             "url_name": "harvesting-mean-table",
         },
     )
-
-
-# @login_required
-def colour_delete(request, pk):
-    obj: models.BloomColour = models.BloomColour.objects.get(id=pk)
-    if request.method == "POST":
-        try:
-            obj.delete()
-        except RestrictedError as e:
-            msg = e.args[0].split(":")[0] + " : "
-            fkeys = []
-            for fk in e.restricted_objects:
-                fkeys.append(fk.obj)
-            msg = msg + ", ".join(fkeys)
-            messages.warning(request, msg)
-        return redirect("admin-colour-page")
-    context = {"object": obj, "back": "admin-colour-page"}
-    return render(request, "core/delete-object.html", context)
 
 
 # @login_required
