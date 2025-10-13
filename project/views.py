@@ -5,8 +5,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
-from django.db.models import OuterRef, RestrictedError, Subquery, Value
-from django.db.models.functions import Coalesce
+from django.db.models import RestrictedError
 from django.http import FileResponse, HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
 from reportlab.lib.colors import black, pink, red
@@ -526,41 +525,6 @@ def export_plant_search_results(request):
             row.insert(3, "Yes" if plant.is_active else "No")
         writer.writerow(row)
     return response
-
-
-def advanced_search_plant(request):
-    has_filter = False
-    if not request.GET:
-        data = models.PlantProfile.objects.none()
-    else:
-        data = models.PlantProfile.objects.all().order_by("latin_name")
-        has_filter = True
-    search_filter = filters.PlantProfileFilter(request.GET, queryset=data)
-    object_list = search_filter.qs
-    if not request.user.is_anonymous:
-        object_list = object_list.annotate(
-            is_owner=Coalesce(
-                Subquery(
-                    models.PlantCollection.objects.filter(
-                        owner=request.user, plants=OuterRef("pk")
-                    )
-                    .annotate(owns=Value("Yes"))
-                    .values("owns")
-                ),
-                Value("No"),
-            )
-        )
-    return render(
-        request,
-        "project/plant-search-advanced.html",
-        {
-            "filter": search_filter,
-            "object_list": object_list,
-            "has_filter": has_filter,
-            "url_name": "search-plant",
-            "title": "Plant Profile Filter",
-        },
-    )
 
 
 # @login_required

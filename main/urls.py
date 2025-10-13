@@ -15,7 +15,6 @@ urlpatterns = [
     path("__debug__/", include("debug_toolbar.urls")),
     path("__reload__/", include("django_browser_reload.urls")),
     path("", views.index, name="index"),
-    path("search-plant/", views.advanced_search_plant, name="search-plant"),
     path("search-plant-name/", views.search_plant_name, name="search-plant-name"),
     path(
         "search-vascan-taxon-id/",
