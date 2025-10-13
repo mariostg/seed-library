@@ -114,6 +114,15 @@ class AdminColourForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
 
 
+class AdminLifespanForm(forms.ModelForm):
+    class Meta:
+        model = models.PlantLifespan
+        fields = ["lifespan", "definition"]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+
 class EnvironmentalRequirementsForm(forms.ModelForm):
     class Meta:
         model = models.PlantProfile

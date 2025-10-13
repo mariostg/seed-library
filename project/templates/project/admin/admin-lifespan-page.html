@@ -1,0 +1,35 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block title %}{{title}} Management{% endblock title %}
+{% block content %}
+  {% include "project/admin/admin_links.html" %}
+  <div class='flex-col-center'>
+    <fieldset class="flex-col-center">
+      <legend>{{title}} Management</legend>
+      {% if user.is_authenticated %}
+        <div class='center'>
+          <a class='btn btn-add' href="{% url 'admin-lifespan-add' %}">Add New Lifespan element</a>
+        </div>
+      {% endif %}
+      <table class='panel'>
+        <tbody>
+          {% for item in object_list %}
+            <tr class="{% cycle 'odd-row' 'even-row' %}">
+              <td>{{item.lifespan}}</td>
+              <td>{{item.definition}}</td>
+              {% if user.is_authenticated %}
+                <td>
+                  <a class='btn btn-edit' href="{% url "admin-lifespan-update" item.id %}">Edit</a>
+                  <a class='btn btn-delete' href="{% url "admin-lifespan-delete" item.id %}">Delete</a>
+                </td>
+              {% endif %}
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </fieldset>
+  </div>
+
+  </body>
+  </html>
+{% endblock content %}

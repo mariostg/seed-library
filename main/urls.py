@@ -71,6 +71,21 @@ urlpatterns += [
 ]
 
 urlpatterns += [
+    path("admin-lifespan-add/", views.admin_lifespan_add, name="admin-lifespan-add"),
+    path("admin-lifespan-page/", views.admin_lifespan_page, name="admin-lifespan-page"),
+    path(
+        "admin-lifespan-delete/<int:pk>",
+        views.admin_lifespan_delete,
+        name="admin-lifespan-delete",
+    ),
+    path(
+        "admin-lifespan-update/<int:pk>/",
+        views.admin_lifespan_update,
+        name="admin-lifespan-update",
+    ),
+]
+
+urlpatterns += [
     path(
         "harvesting-indicator-add/",
         views.harvesting_indicator_add,

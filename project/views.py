@@ -1521,3 +1521,83 @@ def plant_ecozones(request):
                 row.append(0)
         writer.writerow(row)
     return response
+
+
+@login_required
+def admin_lifespan_page(request):
+    obj = models.PlantLifespan.objects.all().order_by("lifespan")
+    context = {
+        "title": "Plant Lifespan",
+        "object_list": obj,
+        "url_name": "admin-lifespan-page",
+    }
+    return render(request, "project/admin/admin-lifespan-page.html", context)
+
+
+@login_required
+def admin_lifespan_add(request):
+    context = {
+        "title": "Create Plant Lifespan",
+        "url_name": "admin-lifespan-page",
+    }
+    if request.method == "POST":
+        form = forms.AdminLifespanForm(request.POST)
+        if form.is_valid():
+            context["form"] = form
+            obj = form.save(commit=False)
+            try:
+                form.save()
+            except IntegrityError:
+                messages.error(request, f"Lifespan {obj.lifespan} exists already.")
+                return render(
+                    request,
+                    "project/simple-form.html",
+                    context,
+                )
+        else:
+            messages.error(request, "Lifespan not valid.")
+            context["form"] = form
+    else:
+        context["form"] = forms.AdminLifespanForm()
+
+    return render(request, "project/simple-form.html", context)
+
+
+@login_required
+def admin_lifespan_update(request, pk):
+    obj = models.PlantLifespan.objects.get(id=pk)
+    form = forms.AdminLifespanForm(instance=obj)
+
+    if request.method == "POST":
+        form = forms.AdminLifespanForm(request.POST, instance=obj)
+        if form.is_valid():
+            form.save()
+            return redirect("admin-lifespan-page")
+
+    return render(
+        request,
+        "project/simple-form.html",
+        {
+            "form": form,
+            "title": "Lifespan Update",
+            "url_name": "admin-lifespan-page",
+        },
+    )
+
+
+@login_required
+def admin_lifespan_delete(request, pk):
+    obj: models.PlantLifespan = models.PlantLifespan.objects.get(id=pk)
+    if request.method == "POST":
+        try:
+            obj.delete()
+        except RestrictedError as e:
+            msg = e.args[0].split(":")[0] + " : "
+            fkeys = []
+            for fk in e.restricted_objects:
+                fkeys.append(fk.lifespan)
+            msg = msg + ", ".join(fkeys)
+            messages.warning(request, msg)
+        return redirect("admin-lifespan-page")
+    context = {"object": obj, "back": "admin-lifespan-page"}
+    return render(request, "core/delete-object.html", context)
