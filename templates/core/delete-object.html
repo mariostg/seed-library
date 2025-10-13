@@ -6,10 +6,17 @@
       <header class="form__header">Delete Action</header>
       <form method="POST">
         {% csrf_token %}
-        <p class='alert alert--warning'>Are you sure you want to delete "{{ data }}"?</p>
+        <p class='alert alert--warning'>Are you sure you want to delete "{{ object }}"?</p>
 
         <div class="flex-row">
-          <a class='btn btn-back' href="{% url back data.pk %}" style='text-decoration:none;'>Back</a>
+          <a class='btn btn-back'
+             {% if pk %}
+               href="{% url back pk %}"
+             {% else %}
+               href="{% url back %}"
+             {% endif %}
+             style='text-decoration:none;'>Back
+          </a>
 
           <input class='btn' type="submit" value="Confirm" />
         </div>
