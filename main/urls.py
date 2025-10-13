@@ -57,7 +57,7 @@ urlpatterns += [
 ]
 urlpatterns += [
     path("color-add/", views.color_add, name="color-add"),
-    path("color-table/", views.color_table, name="color-table"),
+    path("color-page/", views.color_page, name="color-page"),
     path("color-delete/<int:pk>", views.color_delete, name="color-delete"),
     path("color-update/<int:pk>/", views.color_update, name="color-update"),
 ]

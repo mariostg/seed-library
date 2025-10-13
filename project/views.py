@@ -534,14 +534,14 @@ def update_availability(request):
     return render(request, "project/update-availability.html", context)
 
 
-def color_table(request):
+def color_page(request):
     data = models.BloomColor.objects.all().order_by("color")
     context = {
         "data": data,
         "url_name": "color-table",
         "title": "Colors",
     }
-    return render(request, "project/color-table.html", context)
+    return render(request, "project/color-page.html", context)
 
 
 def habit_table(request):
