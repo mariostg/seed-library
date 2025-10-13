@@ -570,7 +570,7 @@ def harvesting_mean_table(request):
     return render(request, "project/harvesting-mean-table.html", context)
 
 
-def colour_page(request):
+def admin_colour_page(request):
     data = models.BloomColour.objects.all().order_by("bloom_colour")
     context = {
         "data": data,
@@ -581,7 +581,7 @@ def colour_page(request):
 
 
 # @login_required
-def colour_add(request):
+def admin_colour_add(request):
     context = {
         "title": "Create Colour",
         "url_name": "admin-colour-page",
@@ -610,7 +610,7 @@ def colour_add(request):
 
 
 # @login_required
-def colour_update(request, pk):
+def admin_colour_update(request, pk):
     colour = models.BloomColour.objects.get(id=pk)
     form = forms.AdminColourForm(instance=colour)
 
@@ -632,7 +632,7 @@ def colour_update(request, pk):
 
 
 # @login_required
-def colour_delete(request, pk):
+def admin_colour_delete(request, pk):
     obj: models.BloomColour = models.BloomColour.objects.get(id=pk)
     if request.method == "POST":
         try:
