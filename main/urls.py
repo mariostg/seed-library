@@ -110,24 +110,24 @@ urlpatterns += [
 
 urlpatterns += [
     path(
-        "harvesting-indicator-add/",
-        views.harvesting_indicator_add,
-        name="harvesting-indicator-add",
+        "admin-harvesting-indicator-add/",
+        views.admin_harvesting_indicator_add,
+        name="admin-harvesting-indicator-add",
     ),
     path(
-        "harvesting-indicator-table/",
-        views.harvesting_indicator_table,
-        name="harvesting-indicator-table",
+        "admin-harvesting-indicator-page/",
+        views.admin_harvesting_indicator_page,
+        name="admin-harvesting-indicator-page",
     ),
     path(
-        "harvesting-indicator-delete/<int:pk>",
-        views.harvesting_indicator_delete,
-        name="harvesting-indicator-delete",
+        "admin-harvesting-indicator-delete/<int:pk>",
+        views.admin_harvesting_indicator_delete,
+        name="admin-harvesting-indicator-delete",
     ),
     path(
-        "harvesting-indicator-update/<int:pk>/",
-        views.harvesting_indicator_update,
-        name="harvesting-indicator-update",
+        "admin-harvesting-indicator-update/<int:pk>/",
+        views.admin_harvesting_indicator_update,
+        name="admin-harvesting-indicator-update",
     ),
 ]
 

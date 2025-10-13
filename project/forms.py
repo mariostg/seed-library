@@ -148,7 +148,7 @@ class HabitForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
 
 
-class HarvestingIndicatorForm(forms.ModelForm):
+class AdminHarvestingIndicatorForm(forms.ModelForm):
     class Meta:
         model = models.HarvestingIndicator
         fields = ["harvesting_indicator"]

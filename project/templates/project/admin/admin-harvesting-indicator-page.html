@@ -9,7 +9,7 @@
     </header>
     {% if user.is_authenticated %}
       <div class='center'>
-        <a class='btn btn-add' href="{% url 'harvesting-indicator-add' %}"></a>
+        <a class='btn btn-add' href="{% url 'admin-harvesting-indicator-add' %}">Add Harvesting Indicator</a>
       </div>
     {% endif %}
 
@@ -28,8 +28,8 @@
             <td>{{item.harvesting_indicator}}</td>
             {% if user.is_authenticated %}
               <td>
-                <a class='btn btn-edit' href="{% url "harvesting-indicator-update" item.id %}"></a>
-                <a class='btn btn-delete' href="{% url "harvesting-indicator-delete" item.id %}"></a>
+                <a class='btn btn-edit' href="{% url "admin-harvesting-indicator-update" item.id %}">Edit</a>
+                <a class='btn btn-delete' href="{% url "admin-harvesting-indicator-delete" item.id %}">Delete</a>
               </td>
             {% endif %}
           </tr>

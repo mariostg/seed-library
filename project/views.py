@@ -550,14 +550,16 @@ def habit_table(request):
     return render(request, "project/habit-table.html", context)
 
 
-def harvesting_indicator_table(request):
+def admin_harvesting_indicator_page(request):
     data = models.HarvestingIndicator.objects.all().order_by("harvesting_indicator")
     context = {
         "data": data,
-        "url_name": "harvesting-indicator-table",
+        "url_name": "admin-harvesting-indicator-page",
         "title": "Harvesting Indicators",
     }
-    return render(request, "project/harvesting-indicator-table.html", context)
+    return render(
+        request, "project/admin/admin-harvesting-indicator-page.html", context
+    )
 
 
 def harvesting_mean_table(request):
@@ -679,16 +681,16 @@ def habit_add(request):
 
 
 # @login_required
-def harvesting_indicator_add(request):
+def admin_harvesting_indicator_add(request):
     context = {
         "title": "Create Harvesting Indicator",
-        "url_name": "harvesting-indicator-table",
+        "url_name": "admin-harvesting-indicator-table",
     }
     if request.method == "POST":
-        form = forms.HarvestingIndicatorForm(request.POST)
+        form = forms.AdminHarvestingIndicatorForm(request.POST)
         if form.is_valid():
             context["form"] = form
-            obj = form.save(commit=False)
+            obj: models.HarvestingIndicator = form.save(commit=False)
             try:
                 form.save()
             except IntegrityError:
@@ -705,7 +707,7 @@ def harvesting_indicator_add(request):
             messages.error(request, "Harvesting Indicator not valid.")
             context["form"] = form
     else:
-        context["form"] = forms.HarvestingIndicatorForm
+        context["form"] = forms.AdminHarvestingIndicatorForm
 
     return render(request, "project/simple-form.html", context)
 
@@ -764,15 +766,15 @@ def habit_update(request, pk):
 
 
 # @login_required
-def harvesting_indicator_update(request, pk):
+def admin_harvesting_indicator_update(request, pk):
     obj = models.HarvestingIndicator.objects.get(id=pk)
-    form = forms.HarvestingIndicatorForm(instance=obj)
+    form = forms.AdminHarvestingIndicatorForm(instance=obj)
 
     if request.method == "POST":
         form = forms.HarvestingIndicatorForm(request.POST, instance=obj)
         if form.is_valid():
             form.save()
-            return redirect("harvesting-indicator-table")
+            return redirect("admin-harvesting-indicator-table")
 
     return render(
         request,
@@ -780,7 +782,7 @@ def harvesting_indicator_update(request, pk):
         {
             "form": form,
             "title": "Harvesting Indicator Update",
-            "url_name": "harvesting-indicator-table",
+            "url_name": "admin-harvesting-indicator-table",
         },
     )
 
@@ -826,7 +828,7 @@ def habit_delete(request, pk):
 
 
 # @login_required
-def harvesting_indicator_delete(request, pk):
+def admin_harvesting_indicator_delete(request, pk):
     obj: models.HarvestingIndicator = models.HarvestingIndicator.objects.get(id=pk)
     if request.method == "POST":
         try:
@@ -838,8 +840,8 @@ def harvesting_indicator_delete(request, pk):
                 fkeys.append(fk.harvesting_indicator)
             msg = msg + ", ".join(fkeys)
             messages.warning(request, msg)
-        return redirect("harvesting-indicator-table")
-    context = {"object": obj, "back": "harvesting-indicator-table"}
+        return redirect("admin-harvesting-indicator-table")
+    context = {"object": obj, "back": "admin-harvesting-indicator-table"}
     return render(request, "core/delete-object.html", context)
 
 
