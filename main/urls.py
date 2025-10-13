@@ -63,13 +63,6 @@ urlpatterns += [
 ]
 
 urlpatterns += [
-    path("habit-add/", views.habit_add, name="habit-add"),
-    path("habit-table/", views.habit_table, name="habit-table"),
-    path("habit-delete/<int:pk>", views.habit_delete, name="habit-delete"),
-    path("habit-update/<int:pk>/", views.habit_update, name="habit-update"),
-]
-
-urlpatterns += [
     path(
         "harvesting-indicator-add/",
         views.harvesting_indicator_add,
