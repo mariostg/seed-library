@@ -577,7 +577,7 @@ def admin_colour_page(request):
         "url_name": "colour-page",
         "title": "Colours",
     }
-    return render(request, "project/admin-colour-page.html", context)
+    return render(request, "project/admin/admin-colour-page.html", context)
 
 
 # @login_required
@@ -989,7 +989,7 @@ def plant_collection_csv(request):
 
 # @login_required
 def siteadmin(request):
-    return render(request, "project/admin.html")
+    return render(request, "project/admin/admin.html")
 
 
 def plant_label_pdf(request, pk):

@@ -1,7 +1,7 @@
 {% extends "core/base.html" %}
 {% load static %}
 {% block content %}
-  {% include "project/admin_links.html" %}
+  {% include "project/admin/admin_links.html" %}
   {% if object_list %}
     <section class='wrapper'>
       <p class='container'>Use this table to prepare a list of available plants for the next give away event.  Click on the plant to toggle its availailability.  Plants highlighted in green are marked available. View <a target='blank' href="/search-plant/?seed_availability=true#search-results">available plants</a> in a new tab. From there, you can drill down further to refine the research.</p>
