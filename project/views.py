@@ -71,7 +71,12 @@ def plant_profile_page(request, pk):
         "Imperiled",
         "Vulnerable",
     )
-    endangered = plant.conservation_status.conservation_status in endangered_values
+
+    if plant.conservation_status:
+        endangered = plant.conservation_status.conservation_status in endangered_values
+    else:
+        endangered = False
+
     # check if plant video link is a valid url
     is_valid_video_url = utils.is_valid_url(plant.harvesting_video_link)
     if not is_valid_video_url:
@@ -154,7 +159,7 @@ def plant_profile_delete(request, pk):
                 f"Plant Profile {plant.latin_name} ne peut-être effacée car il existe des éléments associés.",
             )
         return redirect("search-plant-name")
-    context = {"data": plant, "back": "plant-profile-page"}
+    context = {"data": plant, "back": "plant-profile-page", "pk": plant.pk}
     return render(request, "core/delete-object.html", context)
 
 
