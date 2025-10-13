@@ -1601,3 +1601,83 @@ def admin_lifespan_delete(request, pk):
         return redirect("admin-lifespan-page")
     context = {"object": obj, "back": "admin-lifespan-page"}
     return render(request, "core/delete-object.html", context)
+
+
+@login_required
+def admin_growth_habit_page(request):
+    obj = models.GrowthHabit.objects.all().order_by("growth_habit")
+    context = {
+        "title": "Growth Habit",
+        "object_list": obj,
+        "url_name": "admin-growth-habit-page",
+    }
+    return render(request, "project/admin/admin-growth-habit-page.html", context)
+
+
+@login_required
+def admin_growth_habit_add(request):
+    context = {
+        "title": "Create Growth Habit",
+        "url_name": "admin-growth-habit-page",
+    }
+    if request.method == "POST":
+        form = forms.HabitForm(request.POST)
+        if form.is_valid():
+            context["form"] = form
+            obj: models.GrowthHabit = form.save(commit=False)
+            try:
+                form.save()
+            except IntegrityError:
+                messages.error(request, f"Habit {obj.growth_habit} exists already.")
+                return render(
+                    request,
+                    "project/simple-form.html",
+                    context,
+                )
+        else:
+            messages.error(request, "Habit not valid.")
+            context["form"] = form
+    else:
+        context["form"] = forms.HabitForm()
+
+    return render(request, "project/simple-form.html", context)
+
+
+@login_required
+def admin_growth_habit_update(request, pk):
+    obj = models.GrowthHabit.objects.get(id=pk)
+    form = forms.HabitForm(instance=obj)
+
+    if request.method == "POST":
+        form = forms.HabitForm(request.POST, instance=obj)
+        if form.is_valid():
+            form.save()
+            return redirect("admin-growth-habit-page")
+
+    return render(
+        request,
+        "project/simple-form.html",
+        {
+            "form": form,
+            "title": "Habit Update",
+            "url_name": "admin-growth-habit-page",
+        },
+    )
+
+
+@login_required
+def admin_growth_habit_delete(request, pk):
+    obj: models.GrowthHabit = models.GrowthHabit.objects.get(id=pk)
+    if request.method == "POST":
+        try:
+            obj.delete()
+        except RestrictedError as e:
+            msg = e.args[0].split(":")[0] + " : "
+            fkeys = []
+            for fk in e.restricted_objects:
+                fkeys.append(fk.growth_habit)
+            msg = msg + ", ".join(fkeys)
+            messages.warning(request, msg)
+        return redirect("admin-growth-habit-page")
+    context = {"object": obj, "back": "admin-growth-habit-page"}
+    return render(request, "core/delete-object.html", context)
