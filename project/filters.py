@@ -103,28 +103,28 @@ class PlantProfileFilter(django_filters.FilterSet):
     grasp_candidate = django_filters.CharFilter(
         method="filter_boolean",
     )
-    color_blue = django_filters.CharFilter(
+    colour_blue = django_filters.CharFilter(
         method="filter_color",
     )
-    color_green = django_filters.CharFilter(
+    colour_green = django_filters.CharFilter(
         method="filter_color",
     )
-    color_orange = django_filters.CharFilter(
+    colour_orange = django_filters.CharFilter(
         method="filter_color",
     )
-    color_pink = django_filters.CharFilter(
+    colour_pink = django_filters.CharFilter(
         method="filter_color",
     )
-    color_purple = django_filters.CharFilter(
+    colour_purple = django_filters.CharFilter(
         method="filter_color",
     )
-    color_red = django_filters.CharFilter(
+    colour_red = django_filters.CharFilter(
         method="filter_color",
     )
-    color_white = django_filters.CharFilter(
+    colour_white = django_filters.CharFilter(
         method="filter_color",
     )
-    color_yellow = django_filters.CharFilter(
+    colour_yellow = django_filters.CharFilter(
         method="filter_color",
     )
     growth_habit = django_filters.CharFilter(

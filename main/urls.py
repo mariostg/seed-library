@@ -56,10 +56,14 @@ urlpatterns += [
     ),
 ]
 urlpatterns += [
-    path("color-add/", views.color_add, name="color-add"),
-    path("color-page/", views.color_page, name="color-page"),
-    path("color-delete/<int:pk>", views.color_delete, name="color-delete"),
-    path("color-update/<int:pk>/", views.color_update, name="color-update"),
+    path("admin-colour-add/", views.colour_add, name="admin-colour-add"),
+    path("admin-colour-page/", views.colour_page, name="admin-colour-page"),
+    path(
+        "admin-colour-delete/<int:pk>", views.colour_delete, name="admin-colour-delete"
+    ),
+    path(
+        "admin-colour-update/<int:pk>/", views.colour_update, name="admin-colour-update"
+    ),
 ]
 
 urlpatterns += [

@@ -232,15 +232,15 @@ def search_plant_name(request):
         "#bloom_start",
         "#bloom_end",
     ]
-    color_filters = [
-        "#color_blue",
-        "#color_green",
-        "#color_orange",
-        "#color_pink",
-        "#color_purple",
-        "#color_red",
-        "#color_white",
-        "#color_yellow",
+    colour_filters = [
+        "#colour_blue",
+        "#colour_green",
+        "#colour_orange",
+        "#colour_pink",
+        "#colour_purple",
+        "#colour_red",
+        "#colour_white",
+        "#colour_yellow",
     ]
     soil_tolerance_filters = [
         "#limestone_tolerant",
@@ -341,7 +341,7 @@ def search_plant_name(request):
         + physical_attributes_filters
         + lifecycle_filters
         + bloom_period_filters
-        + color_filters
+        + colour_filters
         + soil_tolerance_filters
         + harvesting_start_filters
         + ["#stratification_duration"]
@@ -534,14 +534,14 @@ def update_availability(request):
     return render(request, "project/update-availability.html", context)
 
 
-def color_page(request):
-    data = models.BloomColour.objects.all().order_by("colour")
+def colour_page(request):
+    data = models.BloomColour.objects.all().order_by("bloom_colour")
     context = {
         "data": data,
-        "url_name": "color-table",
-        "title": "Colors",
+        "url_name": "colour-page",
+        "title": "Colours",
     }
-    return render(request, "project/color-page.html", context)
+    return render(request, "project/admin-colour-page.html", context)
 
 
 def habit_table(request):
@@ -575,20 +575,20 @@ def harvesting_mean_table(request):
 
 
 # @login_required
-def color_add(request):
+def colour_add(request):
     context = {
-        "title": "Create Color",
-        "url_name": "color-table",
+        "title": "Create Colour",
+        "url_name": "colour-page",
     }
     if request.method == "POST":
-        form = forms.ColorForm(request.POST)
+        form = forms.ColourForm(request.POST)
         if form.is_valid():
             context["form"] = form
             obj = form.save(commit=False)
             try:
                 form.save()
             except IntegrityError:
-                messages.error(request, f"Color {obj.color} exists already.")
+                messages.error(request, f"Colour {obj.colour} exists already.")
                 return render(
                     request,
                     "project/simple-form.html",
@@ -696,23 +696,23 @@ def harvesting_mean_add(request):
 
 
 # @login_required
-def color_update(request, pk):
-    color = models.BloomColour.objects.get(id=pk)
-    form = forms.ColorForm(instance=color)
+def colour_update(request, pk):
+    colour = models.BloomColour.objects.get(id=pk)
+    form = forms.ColourForm(instance=colour)
 
     if request.method == "POST":
-        form = forms.ColorForm(request.POST, instance=color)
+        form = forms.ColourForm(request.POST, instance=colour)
         if form.is_valid():
             form.save()
-            return redirect("color-table")
+            return redirect("colour-page")
 
     return render(
         request,
         "project/simple-form.html",
         {
             "form": form,
-            "title": "Color Update",
-            "url_name": "color-table",
+            "title": "Colour Update",
+            "url_name": "colour-page",
         },
     )
 
@@ -784,7 +784,7 @@ def harvesting_mean_update(request, pk):
 
 
 # @login_required
-def color_delete(request, pk):
+def colour_delete(request, pk):
     obj = models.BloomColour.objects.get(id=pk)
     if request.method == "POST":
         try:
@@ -796,8 +796,8 @@ def color_delete(request, pk):
                 fkeys.append(fk.obj)
             msg = msg + ", ".join(fkeys)
             messages.warning(request, msg)
-        return redirect("color-table")
-    context = {"object": obj, "back": "color-table"}
+        return redirect("colour-page")
+    context = {"object": obj, "back": "colour-page"}
     return render(request, "core/delete-object.html", context)
 
 
