@@ -2,7 +2,7 @@
 {% load static %}
 {% block title %}{{title}} Management{% endblock title %}
 {% block content %}
-
+  {% include "project/admin/admin_links.html" %}
   <div class='flex-col-center'>
     <fieldset class="flex-col-center">
       <legend>{{title}} Management</legend>
