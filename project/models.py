@@ -397,7 +397,7 @@ class PlantLifespan(Base):
         str: String representation of the lifespan value.
     """
 
-    lifespan = models.CharField(max_length=15, blank=True)
+    lifespan = models.CharField(max_length=15, blank=True, unique=True)
     definition = models.CharField(max_length=75, blank=True)
 
     def __str__(self) -> str:
