@@ -337,27 +337,27 @@ class Lighting(Base):
         return f"{self.lighting} - {self.definition}"
 
 
-class BloomColor(Base):
-    """A Color model representing a color entity to be assigned to the flowers of the plant.
+class BloomColour(Base):
+    """A Colour model representing a colour entity to be assigned to the flowers of the plant.
 
-    This class inherits from Base and represents a color with a unique name.
-    The color name is automatically capitalized when saved.
+    This class inherits from Base and represents a colour with a unique name.
+    The colour name is automatically capitalized when saved.
 
     Attributes:
-        color (CharField): A unique color name, max length 25 characters, can be blank.
+        colour (CharField): A unique colour name, max length 25 characters, can be blank.
 
     Methods:
-        __str__(): Returns the color name as string representation.
-        save(*args, **kwargs): Overrides default save to capitalize color name.
+        __str__(): Returns the colour name as string representation.
+        save(*args, **kwargs): Overrides default save to capitalize colour name.
     """
 
-    bloom_color = models.CharField(unique=True, max_length=25, blank=True)
+    bloom_colour = models.CharField(unique=True, max_length=25, blank=True)
 
     def __str__(self) -> str:
-        return self.bloom_color
+        return self.bloom_colour
 
     def save(self, *args, **kwargs):
-        self.bloom_color = self.bloom_color.capitalize()
+        self.bloom_colour = self.bloom_colour.capitalize()
         super().save(*args, **kwargs)
 
 
@@ -576,7 +576,7 @@ class PlantProfile(Base):
         ## Flowering and Appearance
             bloom_start (SmallIntegerField): Month when blooming begins (choices from MONTHS)
             bloom_end (SmallIntegerField): Month when blooming ends (choices from MONTHS)
-            bloom_color (ForeignKey): Reference to BloomColor model
+            bloom_colour (ForeignKey): Reference to BloomColour model
 
     # Environmental Requirements
         ## Light Preferences
@@ -749,8 +749,8 @@ class PlantProfile(Base):
         choices=MONTHS.items(), blank=True, default=0
     )
     bloom_end = models.SmallIntegerField(choices=MONTHS.items(), blank=True, default=0)
-    bloom_color = models.ForeignKey(
-        BloomColor, on_delete=models.RESTRICT, null=True, blank=True
+    bloom_colour = models.ForeignKey(
+        BloomColour, on_delete=models.RESTRICT, null=True, blank=True
     )
     max_height = models.FloatField(blank=True, null=True, default=0)
     max_width = models.FloatField(blank=True, null=True, default=0)

@@ -62,7 +62,7 @@ class Command(BaseCommand):
             "bee_host": "plant-bee-host - csv.csv",
             "cause_skin_rashes": "plant-cause-skin_rashes - csv.csv",
             "hedge": "plant-hedge - csv.csv",
-            "bloom_color": "plant-bloom-color - csv.csv",
+            "bloom_colour": "plant-bloom-colour - csv.csv",
             "conservation_status": "plant-conservation-status - csv.csv",
             "container_suitable": "plant-container-suitable - csv.csv",
             "drought_tolerant": "plant-drought-tolerant - csv.csv",
@@ -126,7 +126,7 @@ class Command(BaseCommand):
 
         # Clear existing data in the database
         models.PlantProfile.all_objects.all().delete()
-        models.BloomColor.objects.all().delete()
+        models.BloomColour.objects.all().delete()
         models.ConservationStatus.objects.all().delete()
         models.ConservationStatus.objects.all().delete()
         models.GrowthHabit.objects.all().delete()
@@ -151,7 +151,7 @@ class Command(BaseCommand):
         self.import_latin_names()
         self.import_english_names()
         self.import_french_names()
-        self.import_bloom_color()
+        self.import_bloom_colour()
         self.import_conservation_status()
         self.import_growth_habit()
         self.import_height()
@@ -589,13 +589,13 @@ class Command(BaseCommand):
             display_name="Seed storage",
         )
 
-    def import_bloom_color(self):
-        """Read the plant color CSV file and update the PlantProfile model with color values."""
+    def import_bloom_colour(self):
+        """Read the plant colour CSV file and update the PlantProfile model with colour values."""
         self.import_foreign_key_relation(
-            csv_file=self.csv_files["bloom_color"],
-            field_name="bloom_color",
-            model_class=models.BloomColor,
-            display_name="Color",
+            csv_file=self.csv_files["bloom_colour"],
+            field_name="bloom_colour",
+            model_class=models.BloomColour,
+            display_name="Colour",
         )
 
     def import_on_cultivar(self):

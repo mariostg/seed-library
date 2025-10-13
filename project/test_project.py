@@ -48,7 +48,7 @@ class TestPostAddPlantProfile:
             "salt_tolerant": "",
             "deer_tolerant": "",
             "easy_to_contain": "",
-            "bloom_color": "",
+            "bloom_colour": "",
             "habit": "",
         }
 

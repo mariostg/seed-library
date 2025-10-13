@@ -15,7 +15,7 @@ It allows users to update the plant growth characteristics, including:
         ## Flowering and Appearance
             bloom_start (SmallIntegerField): Month when blooming begins (choices from MONTHS)
             bloom_end (SmallIntegerField): Month when blooming ends (choices from MONTHS)
-            bloom_color (ForeignKey): Reference to BloomColor model
+            bloom_colour (ForeignKey): Reference to BloomColour model
 -->
 
 {% extends "core/base.html" %}
@@ -142,11 +142,11 @@ It allows users to update the plant growth characteristics, including:
               </select>
             </div>
             <div class="input-select">
-              <label for="id_bloom_color">Bloom Colour</label>
-              <select id="id_bloom_color" name="bloom_color" required>
-                {% for color in bloom_colors %}
-                  <option value="{{ color.pk }}" {% if plant.bloom_color.pk == color.pk %}selected{% endif %}>
-                    {{ color }}
+              <label for="id_bloom_colour">Bloom Colour</label>
+              <select id="id_bloom_colour" name="bloom_colour" required>
+                {% for colour in bloom_colours %}
+                  <option value="{{ colour.pk }}" {% if plant.bloom_colour.pk == colour.pk %}selected{% endif %}>
+                    {{ colour }}
                   </option>
                 {% endfor %}
               </select>

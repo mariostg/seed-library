@@ -389,7 +389,7 @@ class PlantProfileFilter(django_filters.FilterSet):
 
     def filter_color(self, queryset, name, value):
         if value:
-            return queryset.filter(bloom_color__bloom_color=value)
+            return queryset.filter(bloom_colour__bloom_colour=value)
         else:
             return queryset.none()
 

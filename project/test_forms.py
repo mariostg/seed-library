@@ -18,7 +18,7 @@ class TestForms:
     @pytest.fixture
     def plant_profile_data(self):
         models.GrowthHabit.objects.create(habit="Habiter")
-        models.BloomColor.objects.create(color="Red")
+        models.BloomColour.objects.create(color="Red")
         models.SeedStorage.objects.create(seed_storage="Storage")
         models.SeedStorageLabelInfo.objects.create(seed_storage_label_info="Info")
         models.SeedPreparation.objects.create(seed_preparation="Preparation")
@@ -73,7 +73,7 @@ class TestForms:
             "salt_tolerant": True,
             "deer_tolerant": True,
             "easy_to_contain": True,
-            "bloom_color": 1,
+            "bloom_colour": 1,
             "habit": 1,
         }
 

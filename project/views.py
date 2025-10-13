@@ -500,7 +500,7 @@ def export_plant_search_results(request):
             plant.max_width,
             plant.bloom_start,
             plant.bloom_end,
-            plant.bloom_color,
+            plant.bloom_colour,
             "Yes" if plant.full_sun else "No",
             "Yes" if plant.part_shade else "No",
             "Yes" if plant.full_shade else "No",
@@ -535,7 +535,7 @@ def update_availability(request):
 
 
 def color_page(request):
-    data = models.BloomColor.objects.all().order_by("color")
+    data = models.BloomColour.objects.all().order_by("colour")
     context = {
         "data": data,
         "url_name": "color-table",
@@ -697,7 +697,7 @@ def harvesting_mean_add(request):
 
 # @login_required
 def color_update(request, pk):
-    color = models.BloomColor.objects.get(id=pk)
+    color = models.BloomColour.objects.get(id=pk)
     form = forms.ColorForm(instance=color)
 
     if request.method == "POST":
@@ -785,7 +785,7 @@ def harvesting_mean_update(request, pk):
 
 # @login_required
 def color_delete(request, pk):
-    obj = models.BloomColor.objects.get(id=pk)
+    obj = models.BloomColour.objects.get(id=pk)
     if request.method == "POST":
         try:
             obj.delete()
@@ -1162,13 +1162,13 @@ def plant_growth_characteristics_update(request, pk):
     )
     growth_habits = models.GrowthHabit.objects.all().order_by("growth_habit")
     lifespan_choices = models.PlantLifespan.objects.all().order_by("lifespan")
-    bloom_colors = models.BloomColor.objects.all().order_by("bloom_color")
+    bloom_colours = models.BloomColour.objects.all().order_by("bloom_colour")
     bloom_starts = bloom_ends = utils.MONTHS
     context = {
         "title": f"{plant.latin_name} - Growth Characteristics",
         "plant": plant,
         "growth_habits": growth_habits,
-        "bloom_colors": bloom_colors,
+        "bloom_colours": bloom_colours,
         "bloom_starts": bloom_starts,
         "bloom_ends": bloom_ends,
         "lifespan_choices": lifespan_choices,

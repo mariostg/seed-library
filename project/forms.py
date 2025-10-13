@@ -47,7 +47,7 @@ class PlantProfileForm(forms.ModelForm):
             "salt_tolerant",  #
             "deer_tolerant",  #
             "easy_to_contain",  #
-            "bloom_color",
+            "bloom_colour",
             "growth_habit",  #
         ]
 
@@ -107,8 +107,8 @@ class SearchPlantForm(forms.ModelForm):
 
 class ColorForm(forms.ModelForm):
     class Meta:
-        model = models.BloomColor
-        fields = ["bloom_color"]
+        model = models.BloomColour
+        fields = ["bloom_colour"]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -222,7 +222,7 @@ class PlantGrowthCharacteristicsForm(forms.ModelForm):
         fields = [
             "bloom_start",
             "bloom_end",
-            "bloom_color",
+            "bloom_colour",
             "max_height",
             "max_width",
             "lifespan",
