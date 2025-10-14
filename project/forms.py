@@ -202,6 +202,15 @@ class AdminOneCultivarForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
 
 
+class AdminStratificationDurationForm(forms.ModelForm):
+    class Meta:
+        model = models.StratificationDuration
+        fields = ["stratification_duration"]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+
 class ProjectUserForm(ModelForm):
     class Meta:
         model = models.ProjectUser

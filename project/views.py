@@ -1173,6 +1173,95 @@ def admin_one_cultivar_update(request, pk):
 
 
 @login_required
+def admin_stratification_duration_page(request):
+    data = models.StratificationDuration.objects.all().order_by(
+        "stratification_duration"
+    )
+    context = {
+        "object_list": data,
+        "url_name": "admin-stratification-duration-page",
+        "title": "Stratification Durations",
+    }
+    return render(
+        request, "project/admin/admin-stratification-duration-page.html", context
+    )
+
+
+@login_required
+def admin_stratification_duration_add(request):
+    context = {
+        "title": "Create Stratification Duration",
+        "url_name": "admin-stratification-duration-page",
+    }
+    if request.method == "POST":
+        form = forms.AdminStratificationDurationForm(request.POST)
+        if form.is_valid():
+            context["form"] = form
+            obj: models.StratificationDuration = form.save(commit=False)
+            try:
+                form.save()
+            except IntegrityError:
+                messages.error(
+                    request,
+                    f"Stratification Duration {obj.stratification_duration} exists already.",
+                )
+                return render(
+                    request,
+                    "project/simple-form.html",
+                    context,
+                )
+        else:
+            messages.error(request, "Stratification Detail not valid.")
+            context["form"] = form
+    else:
+        context["form"] = forms.AdminStratificationDurationForm
+
+    return render(request, "project/simple-form.html", context)
+
+
+@login_required
+def admin_stratification_duration_update(request, pk):
+    obj = models.StratificationDuration.objects.get(id=pk)
+    form = forms.AdminStratificationDurationForm(instance=obj)
+
+    if request.method == "POST":
+        form = forms.AdminStratificationDurationForm(request.POST, instance=obj)
+        if form.is_valid():
+            form.save()
+            return redirect("admin-stratification-duration-page")
+
+    return render(
+        request,
+        "project/simple-form.html",
+        {
+            "form": form,
+            "title": "Stratification Duration Update",
+            "url_name": "admin-stratification-duration-page",
+        },
+    )
+
+
+@login_required
+def admin_stratification_duration_delete(request, pk):
+    obj: models.StratificationDuration = models.StratificationDuration.objects.get(
+        id=pk
+    )
+    if request.method == "POST":
+        try:
+            obj.delete()
+        except RestrictedError as e:
+            msg = e.args[0].split(":")[0] + " : "
+            fkeys = []
+            for fk in e.restricted_objects:
+                fkeys.append(fk.stratification_detail)
+            msg = msg + ", ".join(fkeys)
+            messages.warning(request, msg)
+        return redirect("admin-stratification-duration-page")
+    context = {"object": obj, "back": "admin-stratification-duration-page"}
+    return render(request, "core/delete-object.html", context)
+
+
+@login_required
 def admin_one_cultivar_delete(request, pk):
     obj: models.OneCultivar = models.OneCultivar.objects.get(id=pk)
     if request.method == "POST":

@@ -247,6 +247,29 @@ urlpatterns += [
 ]
 
 urlpatterns += [
+    path(
+        "admin-stratification-duration-add/",
+        views.admin_stratification_duration_add,
+        name="admin-stratification-duration-add",
+    ),
+    path(
+        "admin-stratification-duration-page/",
+        views.admin_stratification_duration_page,
+        name="admin-stratification-duration-page",
+    ),
+    path(
+        "admin-stratification-duration-update/<int:pk>/",
+        views.admin_stratification_duration_update,
+        name="admin-stratification-duration-update",
+    ),
+    path(
+        "admin-stratification-duration-delete/<int:pk>/",
+        views.admin_stratification_duration_delete,
+        name="admin-stratification-duration-delete",
+    ),
+]
+
+urlpatterns += [
     path("login/", views.user_login, name="login"),
     path("logout/", views.user_logout, name="logout"),
     path(
