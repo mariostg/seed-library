@@ -1595,8 +1595,8 @@ def plant_harvesting_update(request, pk):
     #     return redirect("packaging-measure-table")
 
     # On Cultivars
-    on_cultivars = models.OneCultivar.objects.all().order_by("on_cultivar")
-    if not on_cultivars:
+    one_cultivars = models.OneCultivar.objects.all().order_by("one_cultivar")
+    if not one_cultivars:
         messages.warning(request, "No on cultivars available. Please add some first.")
         return redirect("on-cultivar-table")
 
@@ -1678,7 +1678,7 @@ def plant_harvesting_update(request, pk):
         "title": f"{plant.latin_name} - Harvesting and Seed Sharing",
         "plant": plant,
         # "packaging_measures": packaging_measures,
-        "on_cultivars": on_cultivars,
+        "one_cultivars": one_cultivars,
         "seed_viability_tests": seed_viability_tests,
         "seed_storages": seed_storages,
         # "sowing_depth": sowing_depth,

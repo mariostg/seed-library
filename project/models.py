@@ -168,7 +168,7 @@ class OneCultivar(Base):
     with a maximum length of 125 characters.
 
     Attributes:
-        on_cultivar (CharField): The name of the cultivar, allowing blank values
+        one_cultivar (CharField): The name of the cultivar, allowing blank values
             with maximum 125 characters.
 
     Meta:
@@ -178,13 +178,13 @@ class OneCultivar(Base):
         str: String representation of the cultivar name
     """
 
-    on_cultivar = models.CharField(max_length=125, blank=True)
+    one_cultivar = models.CharField(max_length=125, blank=True)
 
     def __str__(self) -> str:
-        return self.on_cultivar
+        return self.one_cultivar
 
     class Meta:
-        ordering = ["on_cultivar"]
+        ordering = ["one_cultivar"]
 
 
 class PackagingMeasure(Base):
@@ -600,7 +600,7 @@ class PlantProfile(Base):
             accepting_seed (BooleanField): Whether accepting seeds for this plant
             seed_viability_test (ForeignKey): Reference to SeedViablityTest model
             seed_storage (ForeignKey): Reference to SeedStorage model
-            on_cultivar (ForeignKey): Reference to OneCultivar model
+            one_cultivar (ForeignKey): Reference to OneCultivar model
             packaging_measure (ForeignKey): Reference to PackagingMeasure model
             seed_preparation (ForeignKey): Reference to SeedPreparation model
             seed_cleaning_notes (CharField): Notes on seed cleaning process
@@ -795,7 +795,7 @@ class PlantProfile(Base):
     seed_storage = models.ForeignKey(
         SeedStorage, on_delete=models.RESTRICT, null=True, blank=True
     )
-    on_cultivar = models.ForeignKey(
+    one_cultivar = models.ForeignKey(
         OneCultivar, on_delete=models.RESTRICT, null=True, blank=True
     )
     harvesting_video_link = models.CharField(max_length=200, blank=True)

@@ -27,7 +27,7 @@ class TestForms:
         models.Lighting.objects.create(lighting="Lighting 1")
         models.Lighting.objects.create(lighting="Lighting 2")
         models.PackagingMeasure.objects.create(packaging_measure="Measure")
-        models.OneCultivar.objects.create(on_cultivar="On cultivar")
+        models.OneCultivar.objects.create(one_cultivar="On cultivar")
         models.ViablityTest.objects.create(viability_test="Testme")
         models.SeedHead.objects.create(seed_head="Head")
         models.SowingDepth.objects.create(sowing_depth="Depth")
@@ -50,7 +50,7 @@ class TestForms:
             "remove_non_seed_material": "Material",
             "viability_test": True,
             "seed_storage": 1,
-            "on_cultivar": True,
+            "one_cultivar": True,
             "packaging_measure": 1,
             "seed_preparation": 1,
             "hyperlink": "http://example.com",

@@ -122,17 +122,17 @@
         <legend>On Cultivars</legend>
         <div class="radio-options">
           <div class="radio-option">
-            <input type="radio" id="id_on_cultivar_none" name="on_cultivar" value="" {% if not on_cultivar %}checked{% endif %}>
-            <label for="id_on_cultivar_none">None</label>
+            <input type="radio" id="id_one_cultivar_none" name="one_cultivar" value="" {% if not one_cultivar %}checked{% endif %}>
+            <label for="id_one_cultivar_none">None</label>
           </div>
-          {% for on_cultivar in on_cultivars %}
+          {% for one_cultivar in one_cultivars %}
             <div class="radio-option">
               <input type="radio"
-                     id="id_on_cultivar_{{ on_cultivar.id }}"
-                     name="on_cultivar"
-                     value="{{ on_cultivar.id }}"
-                     {% if on_cultivar.id == plant.on_cultivar.id %}checked{% endif %}>
-              <label for="id_on_cultivar_{{ on_cultivar.id }}">{{ on_cultivar }}</label>
+                     id="id_one_cultivar_{{ one_cultivar.id }}"
+                     name="one_cultivar"
+                     value="{{ one_cultivar.id }}"
+                     {% if one_cultivar.id == plant.one_cultivar.id %}checked{% endif %}>
+              <label for="id_one_cultivar_{{ one_cultivar.id }}">{{ one_cultivar }}</label>
           {% endfor %}
         </div>
       </fieldset>

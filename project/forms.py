@@ -27,7 +27,7 @@ class PlantProfileForm(forms.ModelForm):
             "remove_non_seed_material",  #
             "seed_viability_test",  #
             "seed_storage",  #
-            "on_cultivar",  #
+            "one_cultivar",  #
             "packaging_measure",  #
             "seed_preparation",  #
             "envelope_label_link",  #
@@ -374,7 +374,7 @@ class PlantHarvestingForm(forms.ModelForm):
             "seed_head",
             "remove_non_seed_material",
             "seed_storage",
-            "on_cultivar",
+            "one_cultivar",
             "harvesting_video_link",
             "harvesting_notes",
         ]
