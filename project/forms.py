@@ -184,6 +184,15 @@ class AdminSeedViabilityTestForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
 
 
+class AdminSeedStorageForm(forms.ModelForm):
+    class Meta:
+        model = models.SeedStorage
+        fields = ["seed_storage"]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+
 class ProjectUserForm(ModelForm):
     class Meta:
         model = models.ProjectUser

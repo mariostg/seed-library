@@ -201,6 +201,29 @@ urlpatterns += [
 ]
 
 urlpatterns += [
+    path(
+        "admin-seed-storage-add/",
+        views.admin_seed_storage_add,
+        name="admin-seed-storage-add",
+    ),
+    path(
+        "admin-seed-storage-page/",
+        views.admin_seed_storage_page,
+        name="admin-seed-storage-page",
+    ),
+    path(
+        "admin-seed-storage-delete/<int:pk>",
+        views.admin_seed_storage_delete,
+        name="admin-seed-storage-delete",
+    ),
+    path(
+        "admin-seed-storage-update/<int:pk>/",
+        views.admin_seed_storage_update,
+        name="admin-seed-storage-update",
+    ),
+]
+
+urlpatterns += [
     path("login/", views.user_login, name="login"),
     path("logout/", views.user_logout, name="logout"),
     path(

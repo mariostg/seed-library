@@ -944,6 +944,88 @@ def admin_seed_head_delete(request, pk):
 
 
 @login_required
+def admin_seed_storage_page(request):
+    data = models.SeedStorage.objects.all().order_by("seed_storage")
+    context = {
+        "object_list": data,
+        "url_name": "admin-seed-storage-page",
+        "title": "Seed Storage",
+    }
+    return render(request, "project/admin/admin-seed-storage-page.html", context)
+
+
+@login_required
+def admin_seed_storage_add(request):
+    context = {
+        "title": "Create Seed Storage",
+        "url_name": "admin-seed-storage-page",
+    }
+    if request.method == "POST":
+        form = forms.AdminSeedStorageForm(request.POST)
+        if form.is_valid():
+            context["form"] = form
+            obj: models.SeedStorage = form.save(commit=False)
+            try:
+                form.save()
+            except IntegrityError:
+                messages.error(
+                    request, f"Seed Storage {obj.seed_storage} exists already."
+                )
+                return render(
+                    request,
+                    "project/simple-form.html",
+                    context,
+                )
+        else:
+            messages.error(request, "Seed Storage not valid.")
+            context["form"] = form
+    else:
+        context["form"] = forms.AdminSeedStorageForm
+
+    return render(request, "project/simple-form.html", context)
+
+
+@login_required
+def admin_seed_storage_update(request, pk):
+    obj = models.SeedStorage.objects.get(id=pk)
+    form = forms.AdminSeedStorageForm(instance=obj)
+
+    if request.method == "POST":
+        form = forms.AdminSeedStorageForm(request.POST, instance=obj)
+        if form.is_valid():
+            form.save()
+            return redirect("admin-seed-storage-page")
+
+    return render(
+        request,
+        "project/simple-form.html",
+        {
+            "form": form,
+            "title": "Seed Storage Update",
+            "url_name": "admin-seed-storage-page",
+        },
+    )
+
+
+@login_required
+def admin_seed_storage_delete(request, pk):
+    obj: models.SeedStorage = models.SeedStorage.objects.get(id=pk)
+    if request.method == "POST":
+        try:
+            obj.delete()
+        except RestrictedError as e:
+            msg = e.args[0].split(":")[0] + " : "
+            fkeys = []
+            for fk in e.restricted_objects:
+                fkeys.append(fk.seed_storage)
+            msg = msg + ", ".join(fkeys)
+            messages.warning(request, msg)
+        return redirect("admin-seed-storage-page")
+    context = {"object": obj, "back": "admin-seed-storage-page"}
+    return render(request, "core/delete-object.html", context)
+
+
+@login_required
 def admin_seed_viability_test_page(request):
     data = models.SeedViabilityTest.objects.all().order_by("seed_viability_test")
     context = {
