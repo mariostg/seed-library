@@ -1694,6 +1694,89 @@ def admin_toxicity_indicator_delete(request, pk):
     return render(request, "core/delete-object.html", context)
 
 
+@login_required
+def admin_conservation_status_page(request):
+    data = models.ConservationStatus.objects.all().order_by("conservation_status")
+    context = {
+        "object_list": data,
+        "url_name": "admin-conservation-status-page",
+        "title": "Conservation Statuses",
+    }
+    return render(request, "project/admin/admin-conservation-status-page.html", context)
+
+
+@login_required
+def admin_conservation_status_add(request):
+    context = {
+        "title": "Create Conservation Status",
+        "url_name": "admin-conservation-status-page",
+    }
+    if request.method == "POST":
+        form = forms.AdminConservationStatusForm(request.POST)
+        if form.is_valid():
+            context["form"] = form
+            obj: models.ConservationStatus = form.save(commit=False)
+            try:
+                form.save()
+            except IntegrityError:
+                messages.error(
+                    request,
+                    f"Conservation Status {obj.conservation_status} exists already.",
+                )
+                return render(
+                    request,
+                    "project/simple-form.html",
+                    context,
+                )
+        else:
+            messages.error(request, "Conservation Status not valid.")
+            context["form"] = form
+    else:
+        context["form"] = forms.AdminConservationStatusForm
+
+    return render(request, "project/simple-form.html", context)
+
+
+@login_required
+def admin_conservation_status_update(request, pk):
+    obj = models.ConservationStatus.objects.get(id=pk)
+    form = forms.AdminConservationStatusForm(instance=obj)
+
+    if request.method == "POST":
+        form = forms.AdminConservationStatusForm(request.POST, instance=obj)
+        if form.is_valid():
+            form.save()
+            return redirect("admin-conservation-status-page")
+
+    return render(
+        request,
+        "project/simple-form.html",
+        {
+            "form": form,
+            "title": "Conservation Status Update",
+            "url_name": "admin-conservation-status-page",
+        },
+    )
+
+
+@login_required
+def admin_conservation_status_delete(request, pk):
+    obj: models.ConservationStatus = models.ConservationStatus.objects.get(id=pk)
+    if request.method == "POST":
+        try:
+            obj.delete()
+        except RestrictedError as e:
+            msg = e.args[0].split(":")[0] + " : "
+            fkeys = []
+            for fk in e.restricted_objects:
+                fkeys.append(fk.conservation_status)
+            msg = msg + ", ".join(fkeys)
+            messages.warning(request, msg)
+        return redirect("admin-conservation-status-page")
+    context = {"object": obj, "back": "admin-conservation-status-page"}
+    return render(request, "core/delete-object.html", context)
+
+
 ####
 # User
 ####

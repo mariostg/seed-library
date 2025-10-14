@@ -256,6 +256,15 @@ class AdminToxicityIndicatorForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
 
 
+class AdminConservationStatusForm(forms.ModelForm):
+    class Meta:
+        model = models.ConservationStatus
+        fields = ["conservation_status"]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+
 class ProjectUserForm(ModelForm):
     class Meta:
         model = models.ProjectUser

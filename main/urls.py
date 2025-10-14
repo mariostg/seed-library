@@ -385,6 +385,29 @@ urlpatterns += [
 ]
 
 urlpatterns += [
+    path(
+        "admin-conservation-status-add/",
+        views.admin_conservation_status_add,
+        name="admin-conservation-status-add",
+    ),
+    path(
+        "admin-conservation-status-page/",
+        views.admin_conservation_status_page,
+        name="admin-conservation-status-page",
+    ),
+    path(
+        "admin-conservation-status-update/<int:pk>/",
+        views.admin_conservation_status_update,
+        name="admin-conservation-status-update",
+    ),
+    path(
+        "admin-conservation-status-delete/<int:pk>/",
+        views.admin_conservation_status_delete,
+        name="admin-conservation-status-delete",
+    ),
+]
+
+urlpatterns += [
     path("login/", views.user_login, name="login"),
     path("logout/", views.user_logout, name="logout"),
     path(
