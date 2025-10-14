@@ -3,8 +3,8 @@
 {% block title %}{{title}}{% endblock title %}
 {% block content %}
   {% include "project/admin/admin_links.html" %}
-  <section class="flex-col-center">
-    <fieldset>
+  <div class='flex-col-center'>
+    <fieldset class="flex-col-center">
       <legend>
         {{title}} Management
       </legend>
@@ -39,8 +39,5 @@
         </tbody>
       </table>
     </fieldset>
-  </section>
-
-  </body>
-  </html>
+  </div>
 {% endblock content %}
