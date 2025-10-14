@@ -13,12 +13,13 @@
       </div>
     {% endif %}
 
-    <table class='editor panel'>
+    <table class=''>
       <thead>
         <tr>
           <th>{{title}}</th>
+          <th>plant count</th>
           {% if user.is_authenticated %}
-            <th colspan=2></th>
+            <th colspan=2>Actions</th>
           {% endif %}
         </tr>
       </thead>
@@ -26,6 +27,7 @@
         {% for item in object_list %}
           <tr class="{% cycle 'odd-row' 'even-row' %}">
             <td>{{item.harvesting_mean}}</td>
+            <td>{{item.plant_count}}</td>
             {% if user.is_authenticated %}
               <td class='actions'>
                 <a class='btn btn-edit' href="{% url "admin-harvesting-mean-update" item.id %}">Edit</a>

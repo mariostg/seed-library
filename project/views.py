@@ -565,7 +565,9 @@ def admin_harvesting_indicator_page(request):
 
 
 def admin_harvesting_mean_page(request):
-    data = models.HarvestingMean.objects.all().order_by("harvesting_mean")
+    data = models.HarvestingMean.objects.annotate(
+        plant_count=Count("plantprofile")
+    ).order_by("harvesting_mean")
     context = {
         "object_list": data,
         "url_name": "admin-harvesting-mean-page",
