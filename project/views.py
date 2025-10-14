@@ -1542,7 +1542,9 @@ def admin_seed_preparation_delete(request, pk):
 
 @login_required
 def admin_seed_event_table_page(request):
-    data = models.SeedEventTable.objects.all().order_by("seed_event_table")
+    data = models.SeedEventTable.objects.annotate(count=Count("plantprofile")).order_by(
+        "seed_event_table"
+    )
     context = {
         "object_list": data,
         "url_name": "admin-seed-event-table-page",
