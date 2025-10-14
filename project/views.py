@@ -1039,7 +1039,9 @@ def admin_seed_storage_delete(request, pk):
 
 @login_required
 def admin_seed_viability_test_page(request):
-    data = models.SeedViabilityTest.objects.all().order_by("seed_viability_test")
+    data = models.SeedViabilityTest.objects.annotate(
+        plant_count=Count("plantprofile")
+    ).order_by("seed_viability_test")
     context = {
         "object_list": data,
         "url_name": "admin-seed-viability-test-page",
