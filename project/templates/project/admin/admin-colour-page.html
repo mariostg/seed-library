@@ -12,10 +12,18 @@
         </div>
       {% endif %}
       <table class='panel'>
+        <thead>
+          <tr>
+            <th>Colour</th>
+            <th>Number of Plants with this Colour</th>
+            <th colspan=2>Actions</th>
+          </tr>
+        </thead>
         <tbody>
           {% for item in data %}
             <tr class="{% cycle 'odd-row' 'even-row' %}">
               <td>{{item.bloom_colour}}</td>
+              <td>{{item.plant_count}}</td>
               {% if user.is_authenticated %}
                 <td class='actions'>
                   <a class='btn btn-edit' href="{% url "admin-colour-update" item.id %}">Edit</a>

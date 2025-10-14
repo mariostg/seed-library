@@ -5,7 +5,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
-from django.db.models import RestrictedError
+from django.db.models import Count, RestrictedError
 from django.http import FileResponse, HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
 from reportlab.lib.colors import black, pink, red
@@ -573,7 +573,9 @@ def admin_harvesting_mean_page(request):
 
 
 def admin_colour_page(request):
-    data = models.BloomColour.objects.all().order_by("bloom_colour")
+    data = models.BloomColour.objects.annotate(
+        plant_count=Count("plantprofile")
+    ).order_by("bloom_colour")
     context = {
         "data": data,
         "url_name": "colour-page",
