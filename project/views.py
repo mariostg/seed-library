@@ -1374,7 +1374,9 @@ def admin_sowing_depth_delete(request, pk):
 
 @login_required
 def admin_packaging_measure_page(request):
-    data = models.PackagingMeasure.objects.all().order_by("packaging_measure")
+    data = models.PackagingMeasure.objects.annotate(
+        count=Count("plantprofile")
+    ).order_by("packaging_measure")
     context = {
         "object_list": data,
         "url_name": "admin-packaging-measure-page",
