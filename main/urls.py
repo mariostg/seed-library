@@ -155,6 +155,29 @@ urlpatterns += [
 ]
 
 urlpatterns += [
+    path(
+        "admin-seed-head-add/",
+        views.admin_seed_head_add,
+        name="admin-seed-head-add",
+    ),
+    path(
+        "admin-seed-head-page/",
+        views.admin_seed_head_page,
+        name="admin-seed-head-page",
+    ),
+    path(
+        "admin-seed-head-delete/<int:pk>",
+        views.admin_seed_head_delete,
+        name="admin-seed-head-delete",
+    ),
+    path(
+        "admin-seed-head-update/<int:pk>/",
+        views.admin_seed_head_update,
+        name="admin-seed-head-update",
+    ),
+]
+
+urlpatterns += [
     path("login/", views.user_login, name="login"),
     path("logout/", views.user_logout, name="logout"),
     path(

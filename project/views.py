@@ -863,6 +863,86 @@ def admin_harvesting_mean_delete(request, pk):
     return render(request, "core/delete-object.html", context)
 
 
+@login_required
+def admin_seed_head_page(request):
+    data = models.SeedHead.objects.all().order_by("seed_head")
+    context = {
+        "object_list": data,
+        "url_name": "admin-seed-head-page",
+        "title": "Seed Heads",
+    }
+    return render(request, "project/admin/admin-seed-head-page.html", context)
+
+
+# @login_required
+def admin_seed_head_add(request):
+    context = {
+        "title": "Create Seed Head",
+        "url_name": "admin-seed-head-page",
+    }
+    if request.method == "POST":
+        form = forms.AdminSeedHeadForm(request.POST)
+        if form.is_valid():
+            context["form"] = form
+            obj: models.SeedHead = form.save(commit=False)
+            try:
+                form.save()
+            except IntegrityError:
+                messages.error(request, f"Seed Head {obj.seed_head} exists already.")
+                return render(
+                    request,
+                    "project/simple-form.html",
+                    context,
+                )
+        else:
+            messages.error(request, "Seed Head not valid.")
+            context["form"] = form
+    else:
+        context["form"] = forms.AdminSeedHeadForm
+
+    return render(request, "project/simple-form.html", context)
+
+
+# @login_required
+def admin_seed_head_update(request, pk):
+    obj = models.SeedHead.objects.get(id=pk)
+    form = forms.AdminSeedHeadForm(instance=obj)
+
+    if request.method == "POST":
+        form = forms.AdminSeedHeadForm(request.POST, instance=obj)
+        if form.is_valid():
+            form.save()
+            return redirect("admin-seed-head-page")
+
+    return render(
+        request,
+        "project/simple-form.html",
+        {
+            "form": form,
+            "title": "Seed Head Update",
+            "url_name": "admin-seed-head-page",
+        },
+    )
+
+
+# @login_required
+def admin_seed_head_delete(request, pk):
+    obj: models.SeedHead = models.SeedHead.objects.get(id=pk)
+    if request.method == "POST":
+        try:
+            obj.delete()
+        except RestrictedError as e:
+            msg = e.args[0].split(":")[0] + " : "
+            fkeys = []
+            for fk in e.restricted_objects:
+                fkeys.append(fk.seed_head)
+            msg = msg + ", ".join(fkeys)
+            messages.warning(request, msg)
+        return redirect("admin-seed-head-page")
+    context = {"object": obj, "back": "admin-seed-head-page"}
+    return render(request, "core/delete-object.html", context)
+
+
 ####
 # User
 ####

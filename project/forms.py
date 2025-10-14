@@ -166,6 +166,15 @@ class AdminHarvestingMeanForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
 
 
+class AdminSeedHeadForm(forms.ModelForm):
+    class Meta:
+        model = models.SeedHead
+        fields = ["seed_head"]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+
 class ProjectUserForm(ModelForm):
     class Meta:
         model = models.ProjectUser
