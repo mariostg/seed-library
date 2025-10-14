@@ -2527,7 +2527,9 @@ def admin_lifespan_delete(request, pk):
 
 @login_required
 def admin_growth_habit_page(request):
-    obj = models.GrowthHabit.objects.all().order_by("growth_habit")
+    obj = models.GrowthHabit.objects.annotate(
+        plant_count=Count("plantprofile")
+    ).order_by("growth_habit")
     context = {
         "title": "Growth Habit",
         "object_list": obj,

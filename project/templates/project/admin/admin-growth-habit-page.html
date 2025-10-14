@@ -11,11 +11,19 @@
           <a class='btn btn-add' href="{% url 'admin-growth-habit-add' %}">Add New Growth Habit element</a>
         </div>
       {% endif %}
-      <table class='panel'>
+      <table class=''>
+        <thead>
+          <tr>
+            <th>Growth Habit</th>
+            <th>Plant Count</th>
+            <th>Action</th>
+          </tr>
+        </thead>
         <tbody>
           {% for item in object_list %}
             <tr class="{% cycle 'odd-row' 'even-row' %}">
               <td>{{item.growth_habit}}</td>
+              <td>{{item.plant_count}}</td>
               {% if user.is_authenticated %}
                 <td class="actions">
                   <a class='btn btn-edit' href="{% url "admin-growth-habit-update" item.id %}">Edit</a>
