@@ -362,6 +362,29 @@ urlpatterns += [
 ]
 
 urlpatterns += [
+    path(
+        "admin-toxicity-indicator-add/",
+        views.admin_toxicity_indicator_add,
+        name="admin-toxicity-indicator-add",
+    ),
+    path(
+        "admin-toxicity-indicator-page/",
+        views.admin_toxicity_indicator_page,
+        name="admin-toxicity-indicator-page",
+    ),
+    path(
+        "admin-toxicity-indicator-update/<int:pk>/",
+        views.admin_toxicity_indicator_update,
+        name="admin-toxicity-indicator-update",
+    ),
+    path(
+        "admin-toxicity-indicator-delete/<int:pk>/",
+        views.admin_toxicity_indicator_delete,
+        name="admin-toxicity-indicator-delete",
+    ),
+]
+
+urlpatterns += [
     path("login/", views.user_login, name="login"),
     path("logout/", views.user_logout, name="logout"),
     path(

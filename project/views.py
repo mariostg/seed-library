@@ -1611,6 +1611,89 @@ def admin_seed_event_table_delete(request, pk):
     return render(request, "core/delete-object.html", context)
 
 
+@login_required
+def admin_toxicity_indicator_page(request):
+    data = models.ToxicityIndicator.objects.all().order_by("toxicity_indicator")
+    context = {
+        "object_list": data,
+        "url_name": "admin-toxicity-indicator-page",
+        "title": "Toxicity Indicators",
+    }
+    return render(request, "project/admin/admin-toxicity-indicator-page.html", context)
+
+
+@login_required
+def admin_toxicity_indicator_add(request):
+    context = {
+        "title": "Create Toxicity Indicator",
+        "url_name": "admin-toxicity-indicator-page",
+    }
+    if request.method == "POST":
+        form = forms.AdminToxicityIndicatorForm(request.POST)
+        if form.is_valid():
+            context["form"] = form
+            obj: models.ToxicityIndicator = form.save(commit=False)
+            try:
+                form.save()
+            except IntegrityError:
+                messages.error(
+                    request,
+                    f"Toxicity Indicator {obj.toxicity_indicator} exists already.",
+                )
+                return render(
+                    request,
+                    "project/simple-form.html",
+                    context,
+                )
+        else:
+            messages.error(request, "Toxicity Indicator not valid.")
+            context["form"] = form
+    else:
+        context["form"] = forms.AdminToxicityIndicatorForm
+
+    return render(request, "project/simple-form.html", context)
+
+
+@login_required
+def admin_toxicity_indicator_update(request, pk):
+    obj = models.ToxicityIndicator.objects.get(id=pk)
+    form = forms.AdminToxicityIndicatorForm(instance=obj)
+
+    if request.method == "POST":
+        form = forms.AdminToxicityIndicatorForm(request.POST, instance=obj)
+        if form.is_valid():
+            form.save()
+            return redirect("admin-toxicity-indicator-page")
+
+    return render(
+        request,
+        "project/simple-form.html",
+        {
+            "form": form,
+            "title": "Toxicity Indicator Update",
+            "url_name": "admin-toxicity-indicator-page",
+        },
+    )
+
+
+@login_required
+def admin_toxicity_indicator_delete(request, pk):
+    obj: models.ToxicityIndicator = models.ToxicityIndicator.objects.get(id=pk)
+    if request.method == "POST":
+        try:
+            obj.delete()
+        except RestrictedError as e:
+            msg = e.args[0].split(":")[0] + " : "
+            fkeys = []
+            for fk in e.restricted_objects:
+                fkeys.append(fk.toxicity_indicator)
+            msg = msg + ", ".join(fkeys)
+            messages.warning(request, msg)
+        return redirect("admin-toxicity-indicator-page")
+    context = {"object": obj, "back": "admin-toxicity-indicator-page"}
+    return render(request, "core/delete-object.html", context)
+
+
 ####
 # User
 ####

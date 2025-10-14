@@ -247,6 +247,15 @@ class AdminSeedEventTableForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
 
 
+class AdminToxicityIndicatorForm(forms.ModelForm):
+    class Meta:
+        model = models.ToxicityIndicator
+        fields = ["toxicity_indicator"]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+
 class ProjectUserForm(ModelForm):
     class Meta:
         model = models.ProjectUser
