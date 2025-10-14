@@ -684,7 +684,7 @@ def habit_add(request):
 def admin_harvesting_indicator_add(request):
     context = {
         "title": "Create Harvesting Indicator",
-        "url_name": "admin-harvesting-indicator-table",
+        "url_name": "admin-harvesting-indicator-page",
     }
     if request.method == "POST":
         form = forms.AdminHarvestingIndicatorForm(request.POST)
@@ -771,10 +771,10 @@ def admin_harvesting_indicator_update(request, pk):
     form = forms.AdminHarvestingIndicatorForm(instance=obj)
 
     if request.method == "POST":
-        form = forms.HarvestingIndicatorForm(request.POST, instance=obj)
+        form = forms.AdminHarvestingIndicatorForm(request.POST, instance=obj)
         if form.is_valid():
             form.save()
-            return redirect("admin-harvesting-indicator-table")
+            return redirect("admin-harvesting-indicator-page")
 
     return render(
         request,
@@ -782,7 +782,7 @@ def admin_harvesting_indicator_update(request, pk):
         {
             "form": form,
             "title": "Harvesting Indicator Update",
-            "url_name": "admin-harvesting-indicator-table",
+            "url_name": "admin-harvesting-indicator-page",
         },
     )
 
@@ -840,8 +840,8 @@ def admin_harvesting_indicator_delete(request, pk):
                 fkeys.append(fk.harvesting_indicator)
             msg = msg + ", ".join(fkeys)
             messages.warning(request, msg)
-        return redirect("admin-harvesting-indicator-table")
-    context = {"object": obj, "back": "admin-harvesting-indicator-table"}
+        return redirect("admin-harvesting-indicator-page")
+    context = {"object": obj, "back": "admin-harvesting-indicator-page"}
     return render(request, "core/delete-object.html", context)
 
 

@@ -2,7 +2,7 @@
 {% load static %}
 {% block title %}{{title}}{% endblock title %}
 {% block content %}
-
+  {% include "project/admin/admin_links.html" %}
   <section class="flex-col form">
     <header class='title'>
       <h2>{{title}} Management</h2>
@@ -27,7 +27,7 @@
           <tr class="{% cycle 'odd-row' 'even-row' %}">
             <td>{{item.harvesting_indicator}}</td>
             {% if user.is_authenticated %}
-              <td>
+              <td class='actions'>
                 <a class='btn btn-edit' href="{% url "admin-harvesting-indicator-update" item.id %}">Edit</a>
                 <a class='btn btn-delete' href="{% url "admin-harvesting-indicator-delete" item.id %}">Delete</a>
               </td>
