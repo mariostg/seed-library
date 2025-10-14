@@ -96,7 +96,7 @@ def plant_profile_page(request, pk):
     return render(request, "project/plant-profile-page.html", context)
 
 
-# @login_required
+@login_required
 def plant_profile_add(request):
     context = {
         "title": "Create Plant Profile",
@@ -130,7 +130,7 @@ def plant_profile_add(request):
     return render(request, "project/plant-profile-form.html", context)
 
 
-# @login_required
+@login_required
 def plant_profile_update(request, pk):
     context = {
         "title": "Update Plant Profile",
@@ -147,7 +147,7 @@ def plant_profile_update(request, pk):
     return render(request, "project/plant-profile-form.html", context)
 
 
-# @login_required
+@login_required
 def plant_profile_delete(request, pk):
     plant: models.PlantProfile = utils.single_plant(pk, request)
     if request.method == "POST":
@@ -533,7 +533,7 @@ def export_plant_search_results(request):
     return response
 
 
-# @login_required
+@login_required
 def update_availability(request):
     plants = utils.all_plants(request).order_by("seed_event_table", "latin_name")
     context = {"object_list": plants}
@@ -582,7 +582,7 @@ def admin_colour_page(request):
     return render(request, "project/admin/admin-colour-page.html", context)
 
 
-# @login_required
+@login_required
 def admin_colour_add(request):
     context = {
         "title": "Create Colour",
@@ -611,7 +611,7 @@ def admin_colour_add(request):
     return render(request, "project/simple-form.html", context)
 
 
-# @login_required
+@login_required
 def admin_colour_update(request, pk):
     colour = models.BloomColour.objects.get(id=pk)
     form = forms.AdminColourForm(instance=colour)
@@ -633,7 +633,7 @@ def admin_colour_update(request, pk):
     )
 
 
-# @login_required
+@login_required
 def admin_colour_delete(request, pk):
     obj: models.BloomColour = models.BloomColour.objects.get(id=pk)
     if request.method == "POST":
@@ -651,7 +651,7 @@ def admin_colour_delete(request, pk):
     return render(request, "core/delete-object.html", context)
 
 
-# @login_required
+@login_required
 def habit_add(request):
     context = {
         "title": "Create Habit",
@@ -680,7 +680,7 @@ def habit_add(request):
     return render(request, "project/simple-form.html", context)
 
 
-# @login_required
+@login_required
 def admin_harvesting_indicator_add(request):
     context = {
         "title": "Create Harvesting Indicator",
@@ -712,7 +712,7 @@ def admin_harvesting_indicator_add(request):
     return render(request, "project/simple-form.html", context)
 
 
-# @login_required
+@login_required
 def admin_harvesting_mean_add(request):
     context = {
         "title": "Create Harvesting Mean Statement",
@@ -743,7 +743,7 @@ def admin_harvesting_mean_add(request):
     return render(request, "project/simple-form.html", context)
 
 
-# @login_required
+@login_required
 def habit_update(request, pk):
     obj = models.GrowthHabit.objects.get(id=pk)
     form = forms.HabitForm(instance=obj)
@@ -765,7 +765,7 @@ def habit_update(request, pk):
     )
 
 
-# @login_required
+@login_required
 def admin_harvesting_indicator_update(request, pk):
     obj = models.HarvestingIndicator.objects.get(id=pk)
     form = forms.AdminHarvestingIndicatorForm(instance=obj)
@@ -787,7 +787,7 @@ def admin_harvesting_indicator_update(request, pk):
     )
 
 
-# @login_required
+@login_required
 def admin_harvesting_mean_update(request, pk):
     obj = models.HarvestingMean.objects.get(id=pk)
     form = forms.AdminHarvestingMeanForm(instance=obj)
@@ -809,7 +809,7 @@ def admin_harvesting_mean_update(request, pk):
     )
 
 
-# @login_required
+@login_required
 def habit_delete(request, pk):
     obj: models.GrowthHabit = models.GrowthHabit.objects.get(id=pk)
     if request.method == "POST":
@@ -827,7 +827,7 @@ def habit_delete(request, pk):
     return render(request, "core/delete-object.html", context)
 
 
-# @login_required
+@login_required
 def admin_harvesting_indicator_delete(request, pk):
     obj: models.HarvestingIndicator = models.HarvestingIndicator.objects.get(id=pk)
     if request.method == "POST":
@@ -845,7 +845,7 @@ def admin_harvesting_indicator_delete(request, pk):
     return render(request, "core/delete-object.html", context)
 
 
-# @login_required
+@login_required
 def admin_harvesting_mean_delete(request, pk):
     obj: models.HarvestingMean = models.HarvestingMean.objects.get(id=pk)
     if request.method == "POST":
@@ -874,7 +874,7 @@ def admin_seed_head_page(request):
     return render(request, "project/admin/admin-seed-head-page.html", context)
 
 
-# @login_required
+@login_required
 def admin_seed_head_add(request):
     context = {
         "title": "Create Seed Head",
@@ -903,7 +903,7 @@ def admin_seed_head_add(request):
     return render(request, "project/simple-form.html", context)
 
 
-# @login_required
+@login_required
 def admin_seed_head_update(request, pk):
     obj = models.SeedHead.objects.get(id=pk)
     form = forms.AdminSeedHeadForm(instance=obj)
@@ -925,7 +925,7 @@ def admin_seed_head_update(request, pk):
     )
 
 
-# @login_required
+@login_required
 def admin_seed_head_delete(request, pk):
     obj: models.SeedHead = models.SeedHead.objects.get(id=pk)
     if request.method == "POST":
@@ -1036,7 +1036,7 @@ def admin_seed_viability_test_page(request):
     return render(request, "project/admin/admin-seed-viability-test-page.html", context)
 
 
-# @login_required
+@login_required
 def admin_seed_viability_test_add(request):
     context = {
         "title": "Create Seed Viability Test",
@@ -1068,7 +1068,7 @@ def admin_seed_viability_test_add(request):
     return render(request, "project/simple-form.html", context)
 
 
-# @login_required
+@login_required
 def admin_seed_viability_test_update(request, pk):
     obj = models.SeedViabilityTest.objects.get(id=pk)
     form = forms.AdminSeedViabilityTestForm(instance=obj)
@@ -1090,7 +1090,7 @@ def admin_seed_viability_test_update(request, pk):
     )
 
 
-# @login_required
+@login_required
 def admin_seed_viability_test_delete(request, pk):
     obj: models.SeedViabilityTest = models.SeedViabilityTest.objects.get(id=pk)
     if request.method == "POST":
@@ -1569,7 +1569,7 @@ def user_plant_collection(request):
     return render(request, "project/plant-collection.html", context)
 
 
-# @login_required
+@login_required
 def user_plant_update(request, pk):
     obj = models.PlantCollection.objects.get(id=pk)
     if obj.owner != request.user:
@@ -1654,7 +1654,7 @@ def plant_collection_csv(request):
     return response
 
 
-# @login_required
+@login_required
 def siteadmin(request):
     return render(request, "project/admin/admin.html")
 
