@@ -229,6 +229,15 @@ class AdminPackagingMeasureForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
 
 
+class AdminSeedPreparationForm(forms.ModelForm):
+    class Meta:
+        model = models.SeedPreparation
+        fields = ["seed_preparation"]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+
 class ProjectUserForm(ModelForm):
     class Meta:
         model = models.ProjectUser

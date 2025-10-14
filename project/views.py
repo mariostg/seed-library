@@ -1445,6 +1445,89 @@ def admin_packaging_measure_delete(request, pk):
     return render(request, "core/delete-object.html", context)
 
 
+@login_required
+def admin_seed_preparation_page(request):
+    data = models.SeedPreparation.objects.all().order_by("seed_preparation")
+    context = {
+        "object_list": data,
+        "url_name": "admin-seed-preparation-page",
+        "title": "Seed Preparations",
+    }
+    return render(request, "project/admin/admin-seed-preparation-page.html", context)
+
+
+@login_required
+def admin_seed_preparation_add(request):
+    context = {
+        "title": "Create Seed Preparation",
+        "url_name": "admin-seed-preparation-page",
+    }
+    if request.method == "POST":
+        form = forms.AdminSeedPreparationForm(request.POST)
+        if form.is_valid():
+            context["form"] = form
+            obj: models.SeedPreparation = form.save(commit=False)
+            try:
+                form.save()
+            except IntegrityError:
+                messages.error(
+                    request,
+                    f"Seed Preparation {obj.seed_preparation} exists already.",
+                )
+                return render(
+                    request,
+                    "project/simple-form.html",
+                    context,
+                )
+        else:
+            messages.error(request, "Seed Preparation not valid.")
+            context["form"] = form
+    else:
+        context["form"] = forms.AdminSeedPreparationForm
+
+    return render(request, "project/simple-form.html", context)
+
+
+@login_required
+def admin_seed_preparation_update(request, pk):
+    obj = models.SeedPreparation.objects.get(id=pk)
+    form = forms.AdminSeedPreparationForm(instance=obj)
+
+    if request.method == "POST":
+        form = forms.AdminSeedPreparationForm(request.POST, instance=obj)
+        if form.is_valid():
+            form.save()
+            return redirect("admin-seed-preparation-page")
+
+    return render(
+        request,
+        "project/simple-form.html",
+        {
+            "form": form,
+            "title": "Seed Preparation Update",
+            "url_name": "admin-seed-preparation-page",
+        },
+    )
+
+
+@login_required
+def admin_seed_preparation_delete(request, pk):
+    obj: models.SeedPreparation = models.SeedPreparation.objects.get(id=pk)
+    if request.method == "POST":
+        try:
+            obj.delete()
+        except RestrictedError as e:
+            msg = e.args[0].split(":")[0] + " : "
+            fkeys = []
+            for fk in e.restricted_objects:
+                fkeys.append(fk.seed_preparation)
+            msg = msg + ", ".join(fkeys)
+            messages.warning(request, msg)
+        return redirect("admin-seed-preparation-page")
+    context = {"object": obj, "back": "admin-seed-preparation-page"}
+    return render(request, "core/delete-object.html", context)
+
+
 ####
 # User
 ####

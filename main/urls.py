@@ -316,6 +316,29 @@ urlpatterns += [
 ]
 
 urlpatterns += [
+    path(
+        "admin-seed-preparation-add/",
+        views.admin_seed_preparation_add,
+        name="admin-seed-preparation-add",
+    ),
+    path(
+        "admin-seed-preparation-page/",
+        views.admin_seed_preparation_page,
+        name="admin-seed-preparation-page",
+    ),
+    path(
+        "admin-seed-preparation-update/<int:pk>/",
+        views.admin_seed_preparation_update,
+        name="admin-seed-preparation-update",
+    ),
+    path(
+        "admin-seed-preparation-delete/<int:pk>/",
+        views.admin_seed_preparation_delete,
+        name="admin-seed-preparation-delete",
+    ),
+]
+
+urlpatterns += [
     path("login/", views.user_login, name="login"),
     path("logout/", views.user_logout, name="logout"),
     path(
