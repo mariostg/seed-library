@@ -1190,9 +1190,9 @@ def admin_one_cultivar_update(request, pk):
 
 @login_required
 def admin_stratification_duration_page(request):
-    data = models.StratificationDuration.objects.all().order_by(
-        "stratification_duration"
-    )
+    data = models.StratificationDuration.objects.annotate(
+        plant_count=Count("plantprofile")
+    ).order_by("stratification_duration")
     context = {
         "object_list": data,
         "url_name": "admin-stratification-duration-page",
@@ -1297,7 +1297,9 @@ def admin_one_cultivar_delete(request, pk):
 
 @login_required
 def admin_sowing_depth_page(request):
-    data = models.SowingDepth.objects.all().order_by("sowing_depth")
+    data = models.SowingDepth.objects.annotate(
+        plant_count=Count("plantprofile")
+    ).order_by("sowing_depth")
     context = {
         "object_list": data,
         "url_name": "admin-sowing-depth-page",
@@ -1633,7 +1635,9 @@ def admin_seed_event_table_delete(request, pk):
 
 @login_required
 def admin_toxicity_indicator_page(request):
-    data = models.ToxicityIndicator.objects.all().order_by("toxicity_indicator")
+    data = models.ToxicityIndicator.objects.annotate(
+        plant_count=Count("plantprofile")
+    ).order_by("toxicity_indicator")
     context = {
         "object_list": data,
         "url_name": "admin-toxicity-indicator-page",
