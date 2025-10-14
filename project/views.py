@@ -1108,6 +1108,88 @@ def admin_seed_viability_test_delete(request, pk):
     return render(request, "core/delete-object.html", context)
 
 
+@login_required
+def admin_one_cultivar_page(request):
+    data = models.OneCultivar.objects.all().order_by("one_cultivar")
+    context = {
+        "object_list": data,
+        "url_name": "admin-one-cultivar-page",
+        "title": "One Cultivars",
+    }
+    return render(request, "project/admin/admin-one-cultivar-page.html", context)
+
+
+@login_required
+def admin_one_cultivar_add(request):
+    context = {
+        "title": "Create One Cultivar",
+        "url_name": "admin-one-cultivar-page",
+    }
+    if request.method == "POST":
+        form = forms.AdminOneCultivarForm(request.POST)
+        if form.is_valid():
+            context["form"] = form
+            obj: models.OneCultivar = form.save(commit=False)
+            try:
+                form.save()
+            except IntegrityError:
+                messages.error(
+                    request, f"One Cultivar {obj.one_cultivar} exists already."
+                )
+                return render(
+                    request,
+                    "project/simple-form.html",
+                    context,
+                )
+        else:
+            messages.error(request, "One Cultivar not valid.")
+            context["form"] = form
+    else:
+        context["form"] = forms.AdminOneCultivarForm
+
+    return render(request, "project/simple-form.html", context)
+
+
+@login_required
+def admin_one_cultivar_update(request, pk):
+    obj = models.OneCultivar.objects.get(id=pk)
+    form = forms.AdminOneCultivarForm(instance=obj)
+
+    if request.method == "POST":
+        form = forms.AdminOneCultivarForm(request.POST, instance=obj)
+        if form.is_valid():
+            form.save()
+            return redirect("admin-one-cultivar-page")
+
+    return render(
+        request,
+        "project/simple-form.html",
+        {
+            "form": form,
+            "title": "One Cultivar Update",
+            "url_name": "admin-one-cultivar-page",
+        },
+    )
+
+
+@login_required
+def admin_one_cultivar_delete(request, pk):
+    obj: models.OneCultivar = models.OneCultivar.objects.get(id=pk)
+    if request.method == "POST":
+        try:
+            obj.delete()
+        except RestrictedError as e:
+            msg = e.args[0].split(":")[0] + " : "
+            fkeys = []
+            for fk in e.restricted_objects:
+                fkeys.append(fk.one_cultivar)
+            msg = msg + ", ".join(fkeys)
+            messages.warning(request, msg)
+        return redirect("admin-one-cultivar-page")
+    context = {"object": obj, "back": "admin-one-cultivar-page"}
+    return render(request, "core/delete-object.html", context)
+
+
 ####
 # User
 ####

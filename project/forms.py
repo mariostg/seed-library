@@ -193,6 +193,15 @@ class AdminSeedStorageForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
 
 
+class AdminOneCultivarForm(forms.ModelForm):
+    class Meta:
+        model = models.OneCultivar
+        fields = ["one_cultivar"]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+
 class ProjectUserForm(ModelForm):
     class Meta:
         model = models.ProjectUser

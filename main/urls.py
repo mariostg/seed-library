@@ -224,6 +224,29 @@ urlpatterns += [
 ]
 
 urlpatterns += [
+    path(
+        "admin-one-cultivar-add/",
+        views.admin_one_cultivar_add,
+        name="admin-one-cultivar-add",
+    ),
+    path(
+        "admin-one-cultivar-page/",
+        views.admin_one_cultivar_page,
+        name="admin-one-cultivar-page",
+    ),
+    path(
+        "admin-one-cultivar-update/<int:pk>/",
+        views.admin_one_cultivar_update,
+        name="admin-one-cultivar-update",
+    ),
+    path(
+        "admin-one-cultivar-delete/<int:pk>/",
+        views.admin_one_cultivar_delete,
+        name="admin-one-cultivar-delete",
+    ),
+]
+
+urlpatterns += [
     path("login/", views.user_login, name="login"),
     path("logout/", views.user_logout, name="logout"),
     path(

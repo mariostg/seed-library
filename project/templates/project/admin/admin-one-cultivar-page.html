@@ -1,0 +1,44 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block title %}{{title}}{% endblock title %}
+{% block content %}
+  {% include "project/admin/admin_links.html" %}
+  <section class="flex-col-center">
+    <header class='title'>
+      <h2>{{title}} Management</h2>
+    </header>
+    {% if user.is_authenticated %}
+      <div class='center'>
+        <a class='btn btn-add' href="{% url 'admin-one-cultivar-add' %}">Add One Cultivar</a>
+      </div>
+    {% endif %}
+
+    <table class='editor panel'>
+      <thead>
+        <tr>
+          <th>{{title}}</th>
+          {% if user.is_authenticated %}
+            <th colspan=2></th>
+          {% endif %}
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in object_list %}
+          <tr class="{% cycle 'odd-row' 'even-row' %}">
+            <td>{{item.one_cultivar}}</td>
+            {% if user.is_authenticated %}
+              <td class='actions'>
+                <a class='btn btn-edit' href="{% url "admin-one-cultivar-update" item.id %}">Edit</a>
+                <a class='btn btn-delete' href="{% url "admin-one-cultivar-delete" item.id %}">Delete</a>
+              </td>
+            {% endif %}
+          </tr>
+        {% endfor %}
+
+      </tbody>
+    </table>
+  </section>
+
+  </body>
+  </html>
+{% endblock content %}
