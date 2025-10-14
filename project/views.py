@@ -1528,6 +1528,89 @@ def admin_seed_preparation_delete(request, pk):
     return render(request, "core/delete-object.html", context)
 
 
+@login_required
+def admin_seed_event_table_page(request):
+    data = models.SeedEventTable.objects.all().order_by("seed_event_table")
+    context = {
+        "object_list": data,
+        "url_name": "admin-seed-event-table-page",
+        "title": "Seed Event Tables",
+    }
+    return render(request, "project/admin/admin-seed-event-table-page.html", context)
+
+
+@login_required
+def admin_seed_event_table_add(request):
+    context = {
+        "title": "Create Seed Event Table",
+        "url_name": "admin-seed-event-table-page",
+    }
+    if request.method == "POST":
+        form = forms.AdminSeedEventTableForm(request.POST)
+        if form.is_valid():
+            context["form"] = form
+            obj: models.SeedEventTable = form.save(commit=False)
+            try:
+                form.save()
+            except IntegrityError:
+                messages.error(
+                    request,
+                    f"Seed Event Table {obj.seed_event_table} exists already.",
+                )
+                return render(
+                    request,
+                    "project/simple-form.html",
+                    context,
+                )
+        else:
+            messages.error(request, "Seed Event Table not valid.")
+            context["form"] = form
+    else:
+        context["form"] = forms.AdminSeedEventTableForm
+
+    return render(request, "project/simple-form.html", context)
+
+
+@login_required
+def admin_seed_event_table_update(request, pk):
+    obj = models.SeedEventTable.objects.get(id=pk)
+    form = forms.AdminSeedEventTableForm(instance=obj)
+
+    if request.method == "POST":
+        form = forms.AdminSeedEventTableForm(request.POST, instance=obj)
+        if form.is_valid():
+            form.save()
+            return redirect("admin-seed-event-table-page")
+
+    return render(
+        request,
+        "project/simple-form.html",
+        {
+            "form": form,
+            "title": "Seed Event Table Update",
+            "url_name": "admin-seed-event-table-page",
+        },
+    )
+
+
+@login_required
+def admin_seed_event_table_delete(request, pk):
+    obj: models.SeedEventTable = models.SeedEventTable.objects.get(id=pk)
+    if request.method == "POST":
+        try:
+            obj.delete()
+        except RestrictedError as e:
+            msg = e.args[0].split(":")[0] + " : "
+            fkeys = []
+            for fk in e.restricted_objects:
+                fkeys.append(fk.seed_event_table)
+            msg = msg + ", ".join(fkeys)
+            messages.warning(request, msg)
+        return redirect("admin-seed-event-table-page")
+    context = {"object": obj, "back": "admin-seed-event-table-page"}
+    return render(request, "core/delete-object.html", context)
+
+
 ####
 # User
 ####

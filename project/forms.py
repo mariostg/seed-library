@@ -238,6 +238,15 @@ class AdminSeedPreparationForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
 
 
+class AdminSeedEventTableForm(forms.ModelForm):
+    class Meta:
+        model = models.SeedEventTable
+        fields = ["seed_event_table"]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+
 class ProjectUserForm(ModelForm):
     class Meta:
         model = models.ProjectUser

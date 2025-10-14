@@ -339,6 +339,29 @@ urlpatterns += [
 ]
 
 urlpatterns += [
+    path(
+        "admin-seed-event-table-add/",
+        views.admin_seed_event_table_add,
+        name="admin-seed-event-table-add",
+    ),
+    path(
+        "admin-seed-event-table-page/",
+        views.admin_seed_event_table_page,
+        name="admin-seed-event-table-page",
+    ),
+    path(
+        "admin-seed-event-table-update/<int:pk>/",
+        views.admin_seed_event_table_update,
+        name="admin-seed-event-table-update",
+    ),
+    path(
+        "admin-seed-event-table-delete/<int:pk>/",
+        views.admin_seed_event_table_delete,
+        name="admin-seed-event-table-delete",
+    ),
+]
+
+urlpatterns += [
     path("login/", views.user_login, name="login"),
     path("logout/", views.user_logout, name="logout"),
     path(
