@@ -1803,6 +1803,91 @@ def admin_conservation_status_delete(request, pk):
     return render(request, "core/delete-object.html", context)
 
 
+@login_required
+def admin_butterfly_species_page(request):
+    data = models.ButterflySpecies.objects.annotate(
+        plant_count=Count("plants")
+    ).order_by("latin_name")
+    context = {
+        "object_list": data,
+        "url_name": "admin-butterfly-species-page",
+        "title": "Butterfly Species",
+    }
+    return render(request, "project/admin/admin-butterfly-species-page.html", context)
+
+
+@login_required
+def admin_butterfly_species_add(request):
+    context = {
+        "title": "Create Butterfly Species",
+        "url_name": "admin-butterfly-species-page",
+    }
+    if request.method == "POST":
+        form = forms.AdminButterflySpeciesForm(request.POST)
+        if form.is_valid():
+            context["form"] = form
+            obj: models.ButterflySpecies = form.save(commit=False)
+            try:
+                form.save()
+            except IntegrityError:
+                messages.error(
+                    request,
+                    f"Butterfly Species {obj.butterfly_species} exists already.",
+                )
+                return render(
+                    request,
+                    "project/simple-form.html",
+                    context,
+                )
+        else:
+            messages.error(request, "Butterfly Species not valid.")
+            context["form"] = form
+    else:
+        context["form"] = forms.AdminButterflySpeciesForm
+
+    return render(request, "project/simple-form.html", context)
+
+
+@login_required
+def admin_butterfly_species_update(request, pk):
+    obj = models.ButterflySpecies.objects.get(id=pk)
+    form = forms.AdminButterflySpeciesForm(instance=obj)
+
+    if request.method == "POST":
+        form = forms.AdminButterflySpeciesForm(request.POST, instance=obj)
+        if form.is_valid():
+            form.save()
+            return redirect("admin-butterfly-species-page")
+
+    return render(
+        request,
+        "project/simple-form.html",
+        {
+            "form": form,
+            "title": "Butterfly Species Update",
+            "url_name": "admin-butterfly-species-page",
+        },
+    )
+
+
+@login_required
+def admin_butterfly_species_delete(request, pk):
+    obj: models.ButterflySpecies = models.ButterflySpecies.objects.get(id=pk)
+    if request.method == "POST":
+        try:
+            obj.delete()
+        except RestrictedError as e:
+            msg = e.args[0].split(":")[0] + " : "
+            fkeys = []
+            for fk in e.restricted_objects:
+                fkeys.append(fk.butterfly_species)
+            msg = msg + ", ".join(fkeys)
+            messages.warning(request, msg)
+        return redirect("admin-butterfly-species-page")
+    context = {"object": obj, "back": "admin-butterfly-species-page"}
+    return render(request, "core/delete-object.html", context)
+
+
 ####
 # User
 ####

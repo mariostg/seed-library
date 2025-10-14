@@ -1,0 +1,44 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block title %}{{title}} Management{% endblock title %}
+{% block content %}
+  {% include "project/admin/admin_links.html" %}
+  <div class='flex-col-center'>
+    <fieldset class="flex-col-center">
+      <legend>{{title}} Management</legend>
+      {% if user.is_authenticated %}
+        <div class='center'>
+          <a class='btn btn-add' href="{% url 'admin-butterfly-species-add' %}">Add New Butterfly Species</a>
+        </div>
+      {% endif %}
+      <table class=''>
+        <thead>
+          <tr></tr>
+          <th>Latin Name</th>
+          <th>English Name</th>
+          <th>Plant Count</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in object_list %}
+          <tr class="{% cycle 'odd-row' 'even-row' %}">
+            <td>{{item.latin_name}}</td>
+            <td>{{item.english_name}}</td>
+            <td>{{item.plant_count}}</td>
+            {% if user.is_authenticated %}
+              <td class="actions">
+                <a class='btn btn-edit' href="{% url "admin-butterfly-species-update" item.id %}">Edit</a>
+                <a class='btn btn-delete' href="{% url "admin-butterfly-species-delete" item.id %}">Delete</a>
+              </td>
+            {% endif %}
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </fieldset>
+  </div>
+
+  </body>
+  </html>
+{% endblock content %}

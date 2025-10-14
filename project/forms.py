@@ -265,6 +265,15 @@ class AdminConservationStatusForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
 
 
+class AdminButterflySpeciesForm(forms.ModelForm):
+    class Meta:
+        model = models.ButterflySpecies
+        fields = ["latin_name", "english_name"]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+
 class ProjectUserForm(ModelForm):
     class Meta:
         model = models.ProjectUser

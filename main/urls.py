@@ -408,6 +408,29 @@ urlpatterns += [
 ]
 
 urlpatterns += [
+    path(
+        "admin-butterfly-species-page/",
+        views.admin_butterfly_species_page,
+        name="admin-butterfly-species-page",
+    ),
+    path(
+        "admin-butterfly-species-add/",
+        views.admin_butterfly_species_add,
+        name="admin-butterfly-species-add",
+    ),
+    path(
+        "admin-butterfly-species-update/<int:pk>/",
+        views.admin_butterfly_species_update,
+        name="admin-butterfly-species-update",
+    ),
+    path(
+        "admin-butterfly-species-delete/<int:pk>/",
+        views.admin_butterfly_species_delete,
+        name="admin-butterfly-species-delete",
+    ),
+]
+
+urlpatterns += [
     path("login/", views.user_login, name="login"),
     path("logout/", views.user_logout, name="logout"),
     path(
