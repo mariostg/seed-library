@@ -1279,6 +1279,89 @@ def admin_one_cultivar_delete(request, pk):
     return render(request, "core/delete-object.html", context)
 
 
+@login_required
+def admin_sowing_depth_page(request):
+    data = models.SowingDepth.objects.all().order_by("sowing_depth")
+    context = {
+        "object_list": data,
+        "url_name": "admin-sowing-depth-page",
+        "title": "Sowing Depths",
+    }
+    return render(request, "project/admin/admin-sowing-depth-page.html", context)
+
+
+@login_required
+def admin_sowing_depth_add(request):
+    context = {
+        "title": "Create Sowing Depth",
+        "url_name": "admin-sowing-depth-page",
+    }
+    if request.method == "POST":
+        form = forms.AdminSowingDepthForm(request.POST)
+        if form.is_valid():
+            context["form"] = form
+            obj: models.SowingDepth = form.save(commit=False)
+            try:
+                form.save()
+            except IntegrityError:
+                messages.error(
+                    request,
+                    f"Sowing Depth {obj.sowing_depth} exists already.",
+                )
+                return render(
+                    request,
+                    "project/simple-form.html",
+                    context,
+                )
+        else:
+            messages.error(request, "Sowing Depth not valid.")
+            context["form"] = form
+    else:
+        context["form"] = forms.AdminSowingDepthForm
+
+    return render(request, "project/simple-form.html", context)
+
+
+@login_required
+def admin_sowing_depth_update(request, pk):
+    obj = models.SowingDepth.objects.get(id=pk)
+    form = forms.AdminSowingDepthForm(instance=obj)
+
+    if request.method == "POST":
+        form = forms.AdminSowingDepthForm(request.POST, instance=obj)
+        if form.is_valid():
+            form.save()
+            return redirect("admin-sowing-depth-page")
+
+    return render(
+        request,
+        "project/simple-form.html",
+        {
+            "form": form,
+            "title": "Sowing Depth Update",
+            "url_name": "admin-sowing-depth-page",
+        },
+    )
+
+
+@login_required
+def admin_sowing_depth_delete(request, pk):
+    obj: models.SowingDepth = models.SowingDepth.objects.get(id=pk)
+    if request.method == "POST":
+        try:
+            obj.delete()
+        except RestrictedError as e:
+            msg = e.args[0].split(":")[0] + " : "
+            fkeys = []
+            for fk in e.restricted_objects:
+                fkeys.append(fk.sowing_depth)
+            msg = msg + ", ".join(fkeys)
+            messages.warning(request, msg)
+        return redirect("admin-sowing-depth-page")
+    context = {"object": obj, "back": "admin-sowing-depth-page"}
+    return render(request, "core/delete-object.html", context)
+
+
 ####
 # User
 ####

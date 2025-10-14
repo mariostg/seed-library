@@ -270,6 +270,29 @@ urlpatterns += [
 ]
 
 urlpatterns += [
+    path(
+        "admin-sowing-depth-add/",
+        views.admin_sowing_depth_add,
+        name="admin-sowing-depth-add",
+    ),
+    path(
+        "admin-sowing-depth-page/",
+        views.admin_sowing_depth_page,
+        name="admin-sowing-depth-page",
+    ),
+    path(
+        "admin-sowing-depth-update/<int:pk>/",
+        views.admin_sowing_depth_update,
+        name="admin-sowing-depth-update",
+    ),
+    path(
+        "admin-sowing-depth-delete/<int:pk>/",
+        views.admin_sowing_depth_delete,
+        name="admin-sowing-depth-delete",
+    ),
+]
+
+urlpatterns += [
     path("login/", views.user_login, name="login"),
     path("logout/", views.user_logout, name="logout"),
     path(

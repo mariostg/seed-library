@@ -211,6 +211,15 @@ class AdminStratificationDurationForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
 
 
+class AdminSowingDepthForm(forms.ModelForm):
+    class Meta:
+        model = models.SowingDepth
+        fields = ["sowing_depth"]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+
 class ProjectUserForm(ModelForm):
     class Meta:
         model = models.ProjectUser
