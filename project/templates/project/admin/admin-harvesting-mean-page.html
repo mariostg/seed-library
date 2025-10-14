@@ -2,14 +2,14 @@
 {% load static %}
 {% block title %}{{title}}{% endblock title %}
 {% block content %}
-
+  {% include "project/admin/admin_links.html" %}
   <section class="flex-col form">
     <header class='title'>
       <h2>{{title}} Management</h2>
     </header>
     {% if user.is_authenticated %}
       <div class='center'>
-        <a class='btn btn-add' href="{% url 'harvesting-mean-add' %}"></a>
+        <a class='btn btn-add' href="{% url 'admin-harvesting-mean-add' %}">Add Harvesting Mean</a>
       </div>
     {% endif %}
 
@@ -23,13 +23,13 @@
         </tr>
       </thead>
       <tbody>
-        {% for item in data %}
+        {% for item in object_list %}
           <tr class="{% cycle 'odd-row' 'even-row' %}">
             <td>{{item.harvesting_mean}}</td>
             {% if user.is_authenticated %}
-              <td>
-                <a class='btn btn-edit' href="{% url "harvesting-mean-update" item.id %}"></a>
-                <a class='btn btn-delete' href="{% url "harvesting-mean-delete" item.id %}"></a>
+              <td class='actions'>
+                <a class='btn btn-edit' href="{% url "admin-harvesting-mean-update" item.id %}">Edit</a>
+                <a class='btn btn-delete' href="{% url "admin-harvesting-mean-delete" item.id %}">Delete</a>
               </td>
             {% endif %}
           </tr>

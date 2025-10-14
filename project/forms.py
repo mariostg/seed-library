@@ -157,7 +157,7 @@ class AdminHarvestingIndicatorForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
 
 
-class HarvestingMeanForm(forms.ModelForm):
+class AdminHarvestingMeanForm(forms.ModelForm):
     class Meta:
         model = models.HarvestingMean
         fields = ["harvesting_mean"]

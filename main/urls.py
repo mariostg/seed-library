@@ -132,21 +132,25 @@ urlpatterns += [
 ]
 
 urlpatterns += [
-    path("harvesting-mean-add/", views.harvesting_mean_add, name="harvesting-mean-add"),
     path(
-        "harvesting-mean-table/",
-        views.harvesting_mean_table,
-        name="harvesting-mean-table",
+        "admin-harvesting-mean-add/",
+        views.admin_harvesting_mean_add,
+        name="admin-harvesting-mean-add",
     ),
     path(
-        "harvesting-mean-delete/<int:pk>",
-        views.harvesting_mean_delete,
-        name="harvesting-mean-delete",
+        "admin-harvesting-mean-page/",
+        views.admin_harvesting_mean_page,
+        name="admin-harvesting-mean-page",
     ),
     path(
-        "harvesting-mean-update/<int:pk>/",
-        views.harvesting_mean_update,
-        name="harvesting-mean-update",
+        "admin-harvesting-mean-delete/<int:pk>",
+        views.admin_harvesting_mean_delete,
+        name="admin-harvesting-mean-delete",
+    ),
+    path(
+        "admin-harvesting-mean-update/<int:pk>/",
+        views.admin_harvesting_mean_update,
+        name="admin-harvesting-mean-update",
     ),
 ]
 

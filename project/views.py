@@ -562,14 +562,14 @@ def admin_harvesting_indicator_page(request):
     )
 
 
-def harvesting_mean_table(request):
+def admin_harvesting_mean_page(request):
     data = models.HarvestingMean.objects.all().order_by("harvesting_mean")
     context = {
-        "data": data,
-        "url_name": "harvesting-mean-table",
+        "object_list": data,
+        "url_name": "admin-harvesting-mean-page",
         "title": "Harvesting Means",
     }
-    return render(request, "project/harvesting-mean-table.html", context)
+    return render(request, "project/admin/admin-harvesting-mean-page.html", context)
 
 
 def admin_colour_page(request):
@@ -713,16 +713,16 @@ def admin_harvesting_indicator_add(request):
 
 
 # @login_required
-def harvesting_mean_add(request):
+def admin_harvesting_mean_add(request):
     context = {
         "title": "Create Harvesting Mean Statement",
-        "url_name": "harvesting-mean-table",
+        "url_name": "admin-harvesting-mean-page",
     }
     if request.method == "POST":
-        form = forms.HarvestingMeanForm(request.POST)
+        form = forms.AdminHarvestingMeanForm(request.POST)
         if form.is_valid():
             context["form"] = form
-            obj = form.save(commit=False)
+            obj: models.HarvestingMean = form.save(commit=False)
             try:
                 form.save()
             except IntegrityError:
@@ -738,7 +738,7 @@ def harvesting_mean_add(request):
             messages.error(request, "Harvesting Mean not valid.")
             context["form"] = form
     else:
-        context["form"] = forms.HarvestingMeanForm
+        context["form"] = forms.AdminHarvestingMeanForm
 
     return render(request, "project/simple-form.html", context)
 
@@ -788,15 +788,15 @@ def admin_harvesting_indicator_update(request, pk):
 
 
 # @login_required
-def harvesting_mean_update(request, pk):
+def admin_harvesting_mean_update(request, pk):
     obj = models.HarvestingMean.objects.get(id=pk)
-    form = forms.HarvestingMeanForm(instance=obj)
+    form = forms.AdminHarvestingMeanForm(instance=obj)
 
     if request.method == "POST":
-        form = forms.HarvestingMeanForm(request.POST, instance=obj)
+        form = forms.AdminHarvestingMeanForm(request.POST, instance=obj)
         if form.is_valid():
             form.save()
-            return redirect("harvesting-mean-table")
+            return redirect("admin-harvesting-mean-page")
 
     return render(
         request,
@@ -804,7 +804,7 @@ def harvesting_mean_update(request, pk):
         {
             "form": form,
             "title": "Harvesting Mean Update",
-            "url_name": "harvesting-mean-table",
+            "url_name": "admin-harvesting-mean-page",
         },
     )
 
@@ -846,7 +846,7 @@ def admin_harvesting_indicator_delete(request, pk):
 
 
 # @login_required
-def harvesting_mean_delete(request, pk):
+def admin_harvesting_mean_delete(request, pk):
     obj: models.HarvestingMean = models.HarvestingMean.objects.get(id=pk)
     if request.method == "POST":
         try:
@@ -858,8 +858,8 @@ def harvesting_mean_delete(request, pk):
                 fkeys.append(fk.harvesting_mean)
             msg = msg + ", ".join(fkeys)
             messages.warning(request, msg)
-        return redirect("harvesting-mean-table")
-    context = {"object": obj, "back": "harvesting-mean-table"}
+        return redirect("admin-harvesting-mean-page")
+    context = {"object": obj, "back": "admin-harvesting-mean-page"}
     return render(request, "core/delete-object.html", context)
 
 
