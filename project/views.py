@@ -873,7 +873,9 @@ def admin_harvesting_mean_delete(request, pk):
 
 @login_required
 def admin_seed_head_page(request):
-    data = models.SeedHead.objects.all().order_by("seed_head")
+    data = models.SeedHead.objects.annotate(plant_count=Count("plantprofile")).order_by(
+        "seed_head"
+    )
     context = {
         "object_list": data,
         "url_name": "admin-seed-head-page",
