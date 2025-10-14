@@ -1700,7 +1700,9 @@ def admin_toxicity_indicator_delete(request, pk):
 
 @login_required
 def admin_conservation_status_page(request):
-    data = models.ConservationStatus.objects.all().order_by("conservation_status")
+    data = models.ConservationStatus.objects.annotate(
+        plant_count=Count("plantprofile")
+    ).order_by("conservation_status")
     context = {
         "object_list": data,
         "url_name": "admin-conservation-status-page",
