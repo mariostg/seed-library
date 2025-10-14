@@ -955,7 +955,9 @@ def admin_seed_head_delete(request, pk):
 
 @login_required
 def admin_seed_storage_page(request):
-    data = models.SeedStorage.objects.all().order_by("seed_storage")
+    data = models.SeedStorage.objects.annotate(
+        plant_count=Count("plantprofile")
+    ).order_by("seed_storage")
     context = {
         "object_list": data,
         "url_name": "admin-seed-storage-page",

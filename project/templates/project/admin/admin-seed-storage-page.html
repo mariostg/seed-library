@@ -4,39 +4,44 @@
 {% block content %}
   {% include "project/admin/admin_links.html" %}
   <section class="flex-col-center">
-    <header class='title'>
-      <h2>{{title}} Management</h2>
-    </header>
-    {% if user.is_authenticated %}
-      <div class='center'>
-        <a class='btn btn-add' href="{% url 'admin-seed-storage-add' %}">Add Seed Storage</a>
-      </div>
-    {% endif %}
+    <fieldset class='flex-col-center'>
 
-    <table class='editor panel'>
-      <thead>
-        <tr>
-          <th>{{title}}</th>
-          {% if user.is_authenticated %}
-            <th colspan=2></th>
-          {% endif %}
-        </tr>
-      </thead>
-      <tbody>
-        {% for item in object_list %}
-          <tr class="{% cycle 'odd-row' 'even-row' %}">
-            <td>{{item.seed_storage}}</td>
+      <legend>
+        {{title}} Management
+      </legend>
+      {% if user.is_authenticated %}
+        <div class='center'>
+          <a class='btn btn-add' href="{% url 'admin-seed-storage-add' %}">Add Seed Storage</a>
+        </div>
+      {% endif %}
+
+      <table class='editor panel'>
+        <thead>
+          <tr>
+            <th>{{title}}</th>
+            <th>Plant Count</th>
             {% if user.is_authenticated %}
-              <td class='actions'>
-                <a class='btn btn-edit' href="{% url "admin-seed-storage-update" item.id %}">Edit</a>
-                <a class='btn btn-delete' href="{% url "admin-seed-storage-delete" item.id %}">Delete</a>
-              </td>
+              <th colspan=2>Actions</th>
             {% endif %}
           </tr>
-        {% endfor %}
+        </thead>
+        <tbody>
+          {% for item in object_list %}
+            <tr class="{% cycle 'odd-row' 'even-row' %}">
+              <td>{{item.seed_storage}}</td>
+              <td>{{item.plant_count}}</td>
+              {% if user.is_authenticated %}
+                <td class='actions'>
+                  <a class='btn btn-edit' href="{% url "admin-seed-storage-update" item.id %}">Edit</a>
+                  <a class='btn btn-delete' href="{% url "admin-seed-storage-delete" item.id %}">Delete</a>
+                </td>
+              {% endif %}
+            </tr>
+          {% endfor %}
 
-      </tbody>
-    </table>
+        </tbody>
+      </table>
+    </fieldset>
   </section>
 
   </body>
