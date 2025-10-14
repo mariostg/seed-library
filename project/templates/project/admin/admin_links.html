@@ -1,31 +1,21 @@
 {% if request.user.is_authenticated %}
   <div class='flex-row row-spacer'>
-    <div><a href="{% url 'update-availability' %}">Update Availability</a></div>
     <div><a href="{% url 'admin-colour-page' %}">Colours</a></div>
-    <div><a href="{% url 'admin-lifespan-page' %}">Lifespans</a></div>
+    <div><a href="{% url 'admin-conservation-status-page' %}">Conservation Statuses</a></div>
     <div><a href="{% url 'admin-growth-habit-page' %}">Growth Habits</a></div>
-    <div>
-      <a href="{% url 'admin-harvesting-indicator-page' %}"
-      >Harvesting Indicators</a
-        >
-      </div>
-      <div>
-        <a href="{% url 'admin-harvesting-mean-page' %}">Harvesting Means</a>
-      </div>
-      <div><a href="{% url 'admin-seed-head-page' %}">Seed Heads</a></div>
-      <div>
-        <a href="{% url 'admin-seed-viability-test-page' %}"
-        >Seed Viability Tests</a
-          >
-        </div>
-        <div><a href="{% url 'admin-seed-storage-page' %}">Seed Storages</a></div>
-        <div><a href="{% url 'admin-one-cultivar-page' %}">One Cultivars</a></div>
-        <div><a href="{% url 'admin-stratification-duration-page' %}">Stratification Durations</a></div>
-        <div><a href="{% url 'admin-sowing-depth-page' %}">Sowing Depths</a></div>
-        <div><a href="{% url 'admin-packaging-measure-page' %}">Packaging Measures</a></div>
-        <div><a href="{% url 'admin-seed-preparation-page' %}">Seed Preparations</a></div>
-        <div><a href="{% url 'admin-seed-event-table-page' %}">Seed Event Tables</a></div>
-        <div><a href="{% url 'admin-toxicity-indicator-page' %}">Toxicity Indicators</a></div>
-        <div><a href="{% url 'admin-conservation-status-page' %}">Conservation Statuses</a></div>
-      </div>
+    <div><a href="{% url 'admin-lifespan-page' %}">Lifespans</a></div>
+    <div><a href="{% url 'admin-harvesting-indicator-page' %}" >Harvesting Indicators</a > </div>
+    <div><a href="{% url 'admin-harvesting-mean-page' %}">Harvesting Means</a> </div>
+    <div><a href="{% url 'admin-one-cultivar-page' %}">One Cultivars</a></div>
+    <div><a href="{% url 'admin-packaging-measure-page' %}">Packaging Measures</a></div>
+    <div><a href="{% url 'admin-seed-event-table-page' %}">Seed Event Tables</a></div>
+    <div><a href="{% url 'admin-seed-head-page' %}">Seed Heads</a></div>
+    <div><a href="{% url 'admin-seed-preparation-page' %}">Seed Preparations</a></div>
+    <div><a href="{% url 'admin-seed-storage-page' %}">Seed Storages</a></div>
+    <div><a href="{% url 'admin-seed-viability-test-page' %}" >Seed Viability Tests</a > </div>
+    <div><a href="{% url 'admin-sowing-depth-page' %}">Sowing Depths</a></div>
+    <div><a href="{% url 'admin-stratification-duration-page' %}">Stratification Durations</a></div>
+    <div><a href="{% url 'admin-toxicity-indicator-page' %}">Toxicity Indicators</a></div>
+    <div><a href="{% url 'update-availability' %}">Update Availability</a></div>
+  </div>
 {% endif %}
