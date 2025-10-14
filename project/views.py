@@ -535,7 +535,9 @@ def export_plant_search_results(request):
 
 @login_required
 def update_availability(request):
-    plants = utils.all_plants(request).order_by("seed_event_table", "latin_name")
+    plants = models.PlantProfile.all_objects.all().order_by(
+        "seed_event_table", "latin_name"
+    )
     context = {"object_list": plants}
     return render(request, "project/update-availability.html", context)
 
