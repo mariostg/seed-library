@@ -1362,6 +1362,89 @@ def admin_sowing_depth_delete(request, pk):
     return render(request, "core/delete-object.html", context)
 
 
+@login_required
+def admin_packaging_measure_page(request):
+    data = models.PackagingMeasure.objects.all().order_by("packaging_measure")
+    context = {
+        "object_list": data,
+        "url_name": "admin-packaging-measure-page",
+        "title": "Packaging Measures",
+    }
+    return render(request, "project/admin/admin-packaging-measure-page.html", context)
+
+
+@login_required
+def admin_packaging_measure_add(request):
+    context = {
+        "title": "Create Packaging Measure",
+        "url_name": "admin-packaging-measure-page",
+    }
+    if request.method == "POST":
+        form = forms.AdminPackagingMeasureForm(request.POST)
+        if form.is_valid():
+            context["form"] = form
+            obj: models.PackagingMeasure = form.save(commit=False)
+            try:
+                form.save()
+            except IntegrityError:
+                messages.error(
+                    request,
+                    f"Packaging Measure {obj.packaging_measure} exists already.",
+                )
+                return render(
+                    request,
+                    "project/simple-form.html",
+                    context,
+                )
+        else:
+            messages.error(request, "Packaging Measure not valid.")
+            context["form"] = form
+    else:
+        context["form"] = forms.AdminPackagingMeasureForm
+
+    return render(request, "project/simple-form.html", context)
+
+
+@login_required
+def admin_packaging_measure_update(request, pk):
+    obj = models.PackagingMeasure.objects.get(id=pk)
+    form = forms.AdminPackagingMeasureForm(instance=obj)
+
+    if request.method == "POST":
+        form = forms.AdminPackagingMeasureForm(request.POST, instance=obj)
+        if form.is_valid():
+            form.save()
+            return redirect("admin-packaging-measure-page")
+
+    return render(
+        request,
+        "project/simple-form.html",
+        {
+            "form": form,
+            "title": "Packaging Measure Update",
+            "url_name": "admin-packaging-measure-page",
+        },
+    )
+
+
+@login_required
+def admin_packaging_measure_delete(request, pk):
+    obj: models.PackagingMeasure = models.PackagingMeasure.objects.get(id=pk)
+    if request.method == "POST":
+        try:
+            obj.delete()
+        except RestrictedError as e:
+            msg = e.args[0].split(":")[0] + " : "
+            fkeys = []
+            for fk in e.restricted_objects:
+                fkeys.append(fk.packaging_measure)
+            msg = msg + ", ".join(fkeys)
+            messages.warning(request, msg)
+        return redirect("admin-packaging-measure-page")
+    context = {"object": obj, "back": "admin-packaging-measure-page"}
+    return render(request, "core/delete-object.html", context)
+
+
 ####
 # User
 ####

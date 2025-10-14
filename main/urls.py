@@ -293,6 +293,29 @@ urlpatterns += [
 ]
 
 urlpatterns += [
+    path(
+        "admin-packaging-measure-add/",
+        views.admin_packaging_measure_add,
+        name="admin-packaging-measure-add",
+    ),
+    path(
+        "admin-packaging-measure-page/",
+        views.admin_packaging_measure_page,
+        name="admin-packaging-measure-page",
+    ),
+    path(
+        "admin-packaging-measure-update/<int:pk>/",
+        views.admin_packaging_measure_update,
+        name="admin-packaging-measure-update",
+    ),
+    path(
+        "admin-packaging-measure-delete/<int:pk>/",
+        views.admin_packaging_measure_delete,
+        name="admin-packaging-measure-delete",
+    ),
+]
+
+urlpatterns += [
     path("login/", views.user_login, name="login"),
     path("logout/", views.user_logout, name="logout"),
     path(
