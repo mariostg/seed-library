@@ -4,39 +4,41 @@
 {% block content %}
   {% include "project/admin/admin_links.html" %}
   <section class="flex-col-center">
-    <header class='title'>
-      <h2>{{title}} Management</h2>
-    </header>
-    {% if user.is_authenticated %}
-      <div class='center'>
-        <a class='btn btn-add' href="{% url 'admin-harvesting-indicator-add' %}">Add Harvesting Indicator</a>
-      </div>
-    {% endif %}
-
-    <table class='editor panel'>
-      <thead>
-        <tr>
-          <th>{{title}}</th>
-          {% if user.is_authenticated %}
-            <th colspan=2></th>
-          {% endif %}
-        </tr>
-      </thead>
-      <tbody>
-        {% for item in data %}
-          <tr class="{% cycle 'odd-row' 'even-row' %}">
-            <td>{{item.harvesting_indicator}}</td>
+    <fieldset>
+      <legend>
+        {{title}} Management
+      </legend>
+      {% if user.is_authenticated %}
+        <div class='center'>
+          <a class='btn btn-add' href="{% url 'admin-harvesting-indicator-add' %}">Add Harvesting Indicator</a>
+        </div>
+      {% endif %}
+      <table class=''>
+        <thead>
+          <tr>
+            <th>{{title}}</th>
+            <th>Plant Count</th>
             {% if user.is_authenticated %}
-              <td class='actions'>
-                <a class='btn btn-edit' href="{% url "admin-harvesting-indicator-update" item.id %}">Edit</a>
-                <a class='btn btn-delete' href="{% url "admin-harvesting-indicator-delete" item.id %}">Delete</a>
-              </td>
+              <th colspan=2>Actions</th>
             {% endif %}
           </tr>
-        {% endfor %}
-
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {% for item in data %}
+            <tr class="{% cycle 'odd-row' 'even-row' %}">
+              <td>{{item.harvesting_indicator}}</td>
+              <td>{{item.plant_count}}</td>
+              {% if user.is_authenticated %}
+                <td class='actions'>
+                  <a class='btn btn-edit' href="{% url "admin-harvesting-indicator-update" item.id %}">Edit</a>
+                  <a class='btn btn-delete' href="{% url "admin-harvesting-indicator-delete" item.id %}">Delete</a>
+                </td>
+              {% endif %}
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </fieldset>
   </section>
 
   </body>

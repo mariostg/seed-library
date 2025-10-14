@@ -553,7 +553,9 @@ def habit_table(request):
 
 
 def admin_harvesting_indicator_page(request):
-    data = models.HarvestingIndicator.objects.all().order_by("harvesting_indicator")
+    data = models.HarvestingIndicator.objects.annotate(
+        plant_count=Count("plantprofile")
+    ).order_by("harvesting_indicator")
     context = {
         "data": data,
         "url_name": "admin-harvesting-indicator-page",
