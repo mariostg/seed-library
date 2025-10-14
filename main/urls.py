@@ -178,6 +178,29 @@ urlpatterns += [
 ]
 
 urlpatterns += [
+    path(
+        "admin-seed-viability-test-add/",
+        views.admin_seed_viability_test_add,
+        name="admin-seed-viability-test-add",
+    ),
+    path(
+        "admin-seed-viability-test-page/",
+        views.admin_seed_viability_test_page,
+        name="admin-seed-viability-test-page",
+    ),
+    path(
+        "admin-seed-viability-test-delete/<int:pk>",
+        views.admin_seed_viability_test_delete,
+        name="admin-seed-viability-test-delete",
+    ),
+    path(
+        "admin-seed-viability-test-update/<int:pk>/",
+        views.admin_seed_viability_test_update,
+        name="admin-seed-viability-test-update",
+    ),
+]
+
+urlpatterns += [
     path("login/", views.user_login, name="login"),
     path("logout/", views.user_logout, name="logout"),
     path(

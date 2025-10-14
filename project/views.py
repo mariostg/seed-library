@@ -943,6 +943,89 @@ def admin_seed_head_delete(request, pk):
     return render(request, "core/delete-object.html", context)
 
 
+@login_required
+def admin_seed_viability_test_page(request):
+    data = models.SeedViabilityTest.objects.all().order_by("seed_viability_test")
+    context = {
+        "object_list": data,
+        "url_name": "admin-seed-viability-test-page",
+        "title": "Seed Viability Tests",
+    }
+    return render(request, "project/admin/admin-seed-viability-test-page.html", context)
+
+
+# @login_required
+def admin_seed_viability_test_add(request):
+    context = {
+        "title": "Create Seed Viability Test",
+        "url_name": "admin-seed-viability-test-page",
+    }
+    if request.method == "POST":
+        form = forms.AdminSeedViabilityTestForm(request.POST)
+        if form.is_valid():
+            context["form"] = form
+            obj: models.SeedViabilityTest = form.save(commit=False)
+            try:
+                form.save()
+            except IntegrityError:
+                messages.error(
+                    request,
+                    f"Seed Viability Test {obj.seed_viability_test} exists already.",
+                )
+                return render(
+                    request,
+                    "project/simple-form.html",
+                    context,
+                )
+        else:
+            messages.error(request, "Seed Viability Test not valid.")
+            context["form"] = form
+    else:
+        context["form"] = forms.AdminSeedViabilityTestForm
+
+    return render(request, "project/simple-form.html", context)
+
+
+# @login_required
+def admin_seed_viability_test_update(request, pk):
+    obj = models.SeedViabilityTest.objects.get(id=pk)
+    form = forms.AdminSeedViabilityTestForm(instance=obj)
+
+    if request.method == "POST":
+        form = forms.AdminSeedViabilityTestForm(request.POST, instance=obj)
+        if form.is_valid():
+            form.save()
+            return redirect("admin-seed-viability-test-page")
+
+    return render(
+        request,
+        "project/simple-form.html",
+        {
+            "form": form,
+            "title": "Seed Viability Test Update",
+            "url_name": "admin-seed-viability-test-page",
+        },
+    )
+
+
+# @login_required
+def admin_seed_viability_test_delete(request, pk):
+    obj: models.SeedViabilityTest = models.SeedViabilityTest.objects.get(id=pk)
+    if request.method == "POST":
+        try:
+            obj.delete()
+        except RestrictedError as e:
+            msg = e.args[0].split(":")[0] + " : "
+            fkeys = []
+            for fk in e.restricted_objects:
+                fkeys.append(fk.seed_viability_test)
+            msg = msg + ", ".join(fkeys)
+            messages.warning(request, msg)
+        return redirect("admin-seed-viability-test-page")
+    context = {"object": obj, "back": "admin-seed-viability-test-page"}
+    return render(request, "core/delete-object.html", context)
+
+
 ####
 # User
 ####

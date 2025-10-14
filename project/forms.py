@@ -175,6 +175,15 @@ class AdminSeedHeadForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
 
 
+class AdminSeedViabilityTestForm(forms.ModelForm):
+    class Meta:
+        model = models.SeedViabilityTest
+        fields = ["seed_viability_test"]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+
 class ProjectUserForm(ModelForm):
     class Meta:
         model = models.ProjectUser
