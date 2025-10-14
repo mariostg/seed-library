@@ -2447,7 +2447,9 @@ def plant_ecozones(request):
 
 @login_required
 def admin_lifespan_page(request):
-    obj = models.PlantLifespan.objects.all().order_by("lifespan")
+    obj = models.PlantLifespan.objects.annotate(
+        plant_count=Count("plantprofile")
+    ).order_by("lifespan")
     context = {
         "title": "Plant Lifespan",
         "object_list": obj,
