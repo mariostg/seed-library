@@ -1118,7 +1118,9 @@ def admin_seed_viability_test_delete(request, pk):
 
 @login_required
 def admin_one_cultivar_page(request):
-    data = models.OneCultivar.objects.all().order_by("one_cultivar")
+    data = models.OneCultivar.objects.annotate(
+        plant_count=Count("plantprofile")
+    ).order_by("one_cultivar")
     context = {
         "object_list": data,
         "url_name": "admin-one-cultivar-page",
