@@ -1,13 +1,22 @@
 {% if request.user.is_authenticated %}
-  <div>
+  <div class='flex-row row-spacer'>
     <div><a href="{% url 'update-availability' %}">Update Availability</a></div>
-  </div>
-  <div><a href="{% url 'admin-colour-page' %}">Colours</a></div>
-  </div>
-  <div><a href="{% url 'admin-lifespan-page' %}">Lifespans</a></div>
-  <div><a href="{% url 'admin-growth-habit-page' %}">Growth Habits</a></div>
-  <div><a href="{% url 'admin-harvesting-indicator-page' %}">Harvesting Indicators</a></div>
-  <div><a href="{% url 'admin-harvesting-mean-page' %}">Harvesting Means</a></div>
-  <div><a href="{% url 'admin-seed-head-page' %}">Seed Heads</a></div>
-  <div><a href="{% url 'admin-seed-viability-test-page' %}">Seed Viability Tests</a></div>
+    <div><a href="{% url 'admin-colour-page' %}">Colours</a></div>
+    <div><a href="{% url 'admin-lifespan-page' %}">Lifespans</a></div>
+    <div><a href="{% url 'admin-growth-habit-page' %}">Growth Habits</a></div>
+    <div>
+      <a href="{% url 'admin-harvesting-indicator-page' %}"
+      >Harvesting Indicators</a
+        >
+      </div>
+      <div>
+        <a href="{% url 'admin-harvesting-mean-page' %}">Harvesting Means</a>
+      </div>
+      <div><a href="{% url 'admin-seed-head-page' %}">Seed Heads</a></div>
+      <div>
+        <a href="{% url 'admin-seed-viability-test-page' %}"
+        >Seed Viability Tests</a
+          >
+        </div>
+      </div>
 {% endif %}
