@@ -49,16 +49,6 @@
 />
 <label for="is_native_to_NL">Newfoundland and Labrador</label><br />
 
-<input type="checkbox" id="is_native_to_NS" name="is_native_to_NS" value="N"
-       hx-get="/search-plant-name"
-       hx-trigger="click"
-       hx-target="#search-results"
-       hx-push-url="true"
-       hx-include="{{hx_include}}"
-       {% if is_native_to_NS %} checked {% endif %}
-/>
-<label for="is_native_to_NS">Nova Scotia</label><br />
-
 <input type="checkbox" id="is_native_to_NT" name="is_native_to_NT" value="N"
        hx-get="/search-plant-name"
        hx-trigger="click"
@@ -68,6 +58,16 @@
        {% if is_native_to_NT %} checked {% endif %}
 />
 <label for="is_native_to_NT">Northwest Territories</label><br />
+
+<input type="checkbox" id="is_native_to_NS" name="is_native_to_NS" value="N"
+       hx-get="/search-plant-name"
+       hx-trigger="click"
+       hx-target="#search-results"
+       hx-push-url="true"
+       hx-include="{{hx_include}}"
+       {% if is_native_to_NS %} checked {% endif %}
+/>
+<label for="is_native_to_NS">Nova Scotia</label><br />
 
 <input type="checkbox" id="is_native_to_NU" name="is_native_to_NU" value="N"
        hx-get="/search-plant-name"
