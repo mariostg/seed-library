@@ -485,7 +485,7 @@ class PlantSeedDistributionForm(forms.ModelForm):
             "sowing_label_instructions",
             "sowing_notes",
             "envelope_label_link",
-            "seed_storage_label_info",
+            "seed_storage",
             "seed_event_table",
             "notes",
             "accepting_seed",

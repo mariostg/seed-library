@@ -76,13 +76,12 @@
               <label for="id_envelope_label_link">Envelope Label Link</label>
               <input type="text" id="id_envelope_label_link" name="envelope_label_link" class="input" value="{{ form.envelope_label_link.value }}">
             </div>
-            <!--Input select for seed_storage_label_info-->
+            <!--Input select for seed_storage-->
             <div class="input-select">
-              <label for="id_seed_storage_label_info">Seed Storage Label Info</label>
-              <select id="id_seed_storage_label_info" name="seed_storage_label_info" class="input">
-                <option value="">---------</option>
-                {% for choice in form.seed_storage_label_info.field.choices %}
-                  <option value="{{ choice.0 }}" {% if form.seed_storage_label_info.value == choice.0 %}selected{% endif %}>{{ choice.1 }}</option>
+              <label for="id_seed_storage">Seed Storage</label>
+              <select id="id_seed_storage" name="seed_storage" class="input">
+                {% for choice in form.seed_storage.field.choices %}
+                  <option value="{{ choice.0 }}" {% if form.seed_storage.value == choice.0 %}selected{% endif %}>{{ choice.1 }}</option>
                 {% endfor %}
               </select>
             </div>
