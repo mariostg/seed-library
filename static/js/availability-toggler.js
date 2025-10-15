@@ -17,13 +17,15 @@ function set_availability(elem) {
     })
       .then((response) => response.json())
       .then((data) => {
-        // elem.children[2].innerHTML = data.availability;
         if (data.availability || data.availability == "True") {
           elem.classList.add("ok");
+          elem.innerHTML = "&#x2713;";
         } else {
           elem.classList.remove("ok");
+          elem.innerHTML = "Not Available";
         }
       });
+    console.log("PK", elem);
   } else {
     console.log("NO PK");
   }
