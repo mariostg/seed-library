@@ -274,6 +274,15 @@ class AdminButterflySpeciesForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
 
 
+class AdminBeeSpeciesForm(forms.ModelForm):
+    class Meta:
+        model = models.BeeSpecies
+        fields = ["latin_name"]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+
 class ProjectUserForm(ModelForm):
     class Meta:
         model = models.ProjectUser

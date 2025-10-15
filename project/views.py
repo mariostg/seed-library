@@ -1888,6 +1888,91 @@ def admin_butterfly_species_delete(request, pk):
     return render(request, "core/delete-object.html", context)
 
 
+@login_required
+def admin_bee_species_page(request):
+    data = models.BeeSpecies.objects.annotate(plant_count=Count("plants")).order_by(
+        "latin_name"
+    )
+    context = {
+        "object_list": data,
+        "url_name": "admin-bee-species-page",
+        "title": "Bee Species",
+    }
+    return render(request, "project/admin/admin-bee-species-page.html", context)
+
+
+@login_required
+def admin_bee_species_add(request):
+    context = {
+        "title": "Create Bee Species",
+        "url_name": "admin-bee-species-page",
+    }
+    if request.method == "POST":
+        form = forms.AdminBeeSpeciesForm(request.POST)
+        if form.is_valid():
+            context["form"] = form
+            obj: models.BeeSpecies = form.save(commit=False)
+            try:
+                form.save()
+            except IntegrityError:
+                messages.error(
+                    request,
+                    f"Bee Species {obj.bee_species} exists already.",
+                )
+                return render(
+                    request,
+                    "project/simple-form.html",
+                    context,
+                )
+        else:
+            messages.error(request, "Bee Species not valid.")
+            context["form"] = form
+    else:
+        context["form"] = forms.AdminBeeSpeciesForm
+
+    return render(request, "project/simple-form.html", context)
+
+
+@login_required
+def admin_bee_species_update(request, pk):
+    obj = models.BeeSpecies.objects.get(id=pk)
+    form = forms.AdminBeeSpeciesForm(instance=obj)
+
+    if request.method == "POST":
+        form = forms.AdminBeeSpeciesForm(request.POST, instance=obj)
+        if form.is_valid():
+            form.save()
+            return redirect("admin-bee-species-page")
+
+    return render(
+        request,
+        "project/simple-form.html",
+        {
+            "form": form,
+            "title": "Bee Species Update",
+            "url_name": "admin-bee-species-page",
+        },
+    )
+
+
+@login_required
+def admin_bee_species_delete(request, pk):
+    obj: models.BeeSpecies = models.BeeSpecies.objects.get(id=pk)
+    if request.method == "POST":
+        try:
+            obj.delete()
+        except RestrictedError as e:
+            msg = e.args[0].split(":")[0] + " : "
+            fkeys = []
+            for fk in e.restricted_objects:
+                fkeys.append(fk.bee_species)
+            msg = msg + ", ".join(fkeys)
+            messages.warning(request, msg)
+        return redirect("admin-bee-species-page")
+    context = {"object": obj, "back": "admin-bee-species-page"}
+    return render(request, "core/delete-object.html", context)
+
+
 ####
 # User
 ####

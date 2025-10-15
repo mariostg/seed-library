@@ -431,6 +431,29 @@ urlpatterns += [
 ]
 
 urlpatterns += [
+    path(
+        "admin-bee-species-page/",
+        views.admin_bee_species_page,
+        name="admin-bee-species-page",
+    ),
+    path(
+        "admin-bee-species-add/",
+        views.admin_bee_species_add,
+        name="admin-bee-species-add",
+    ),
+    path(
+        "admin-bee-species-update/<int:pk>/",
+        views.admin_bee_species_update,
+        name="admin-bee-species-update",
+    ),
+    path(
+        "admin-bee-species-delete/<int:pk>/",
+        views.admin_bee_species_delete,
+        name="admin-bee-species-delete",
+    ),
+]
+
+urlpatterns += [
     path("login/", views.user_login, name="login"),
     path("logout/", views.user_logout, name="logout"),
     path(
