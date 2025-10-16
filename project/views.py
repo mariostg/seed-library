@@ -542,16 +542,6 @@ def update_availability(request):
     return render(request, "project/update-availability.html", context)
 
 
-def habit_table(request):
-    data = models.GrowthHabit.objects.all().order_by("habit")
-    context = {
-        "data": data,
-        "url_name": "habit-table",
-        "title": "Habits",
-    }
-    return render(request, "project/habit-table.html", context)
-
-
 def admin_harvesting_indicator_page(request):
     data = models.HarvestingIndicator.objects.annotate(
         plant_count=Count("plantprofile")
