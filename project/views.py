@@ -2274,7 +2274,7 @@ def plant_environmental_requirement_update(request, pk):
         "plant": plant,
     }
     return render(
-        request, "project/plant-environmental-requirement-update.html", context
+        request, "project/update/plant-environmental-requirement-update.html", context
     )
 
 
@@ -2296,7 +2296,7 @@ def plant_identification_information_update(request, pk):
         else:
             messages.error(request, "Error updating identification information.")
     return render(
-        request, "project/plant-identification-information-update.html", context
+        request, "project/update/plant-identification-information-update.html", context
     )
 
 
@@ -2404,7 +2404,9 @@ def plant_growth_characteristics_update(request, pk):
             return redirect("plant-profile-page", pk=plant.pk)
     else:
         form = forms.PlantGrowthCharacteristicsForm(instance=plant)
-    return render(request, "project/plant-growth-characteristics-update.html", context)
+    return render(
+        request, "project/update/plant-growth-characteristics-update.html", context
+    )
 
 
 def plant_landscape_use_and_application_update(request, pk):
@@ -2427,7 +2429,9 @@ def plant_landscape_use_and_application_update(request, pk):
         form = forms.PlantLandscapeUseAndApplicationForm(instance=plant)
     context["form"] = form
     return render(
-        request, "project/plant-landscape-use-and-application-update.html", context
+        request,
+        "project/update/plant-landscape-use-and-application-update.html",
+        context,
     )
 
 
@@ -2454,7 +2458,9 @@ def plant_ecological_benefits_update(request, pk):
     else:
         form = forms.PlantEcologicalBenefitsForm(instance=plant)
     context["form"] = form
-    return render(request, "project/plant-ecological-benefits-update.html", context)
+    return render(
+        request, "project/update/plant-ecological-benefits-update.html", context
+    )
 
 
 def plant_introductory_gardening_experience_update(request, pk):
@@ -2480,7 +2486,7 @@ def plant_introductory_gardening_experience_update(request, pk):
     context["form"] = form
     return render(
         request,
-        "project/plant-introductory-gardening-experience-update.html",
+        "project/update/plant-introductory-gardening-experience-update.html",
         context,
     )
 
@@ -2516,7 +2522,7 @@ def plant_special_features_and_consideration_update(request, pk):
     context["ecozones_ids"] = ecozones_ids
     return render(
         request,
-        "project/plant-special-features-and-considerations-update.html",
+        "project/update/plant-special-features-and-considerations-update.html",
         context,
     )
 
@@ -2628,7 +2634,7 @@ def plant_harvesting_update(request, pk):
         "seed_heads": seed_heads,
         # "seed_event_table": seed_event_table,
     }
-    return render(request, "project/plant-harvesting-update.html", context)
+    return render(request, "project/update/plant-harvesting-update.html", context)
 
 
 def plant_sowing_update(request, pk):
@@ -2657,7 +2663,7 @@ def plant_sowing_update(request, pk):
         "sowing_depth": sowing_depth,
         "form": form,
     }
-    return render(request, "project/plant-sowing-update.html", context)
+    return render(request, "project/update/plant-sowing-update.html", context)
 
 
 def plant_seed_distribution_update(request, pk):
@@ -2681,7 +2687,9 @@ def plant_seed_distribution_update(request, pk):
         "plant": plant,
         "form": form,
     }
-    return render(request, "project/plant-seed-distribution-update.html", context)
+    return render(
+        request, "project/update/plant-seed-distribution-update.html", context
+    )
 
 
 def plant_ecozones(request):

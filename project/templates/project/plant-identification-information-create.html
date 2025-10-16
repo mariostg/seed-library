@@ -17,7 +17,7 @@
       <form method="post" action="{% url 'plant-identification-information-create' %}">
         {% csrf_token %}
         <div class="form inputs">
-          {% include "project/_profile-identification-status.html" %}
+          {% include "project/profile/_profile-identification-status.html" %}
           <fieldset>
             <legend>Plant definition</legend>
               <!--latin_name-->
