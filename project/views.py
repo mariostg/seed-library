@@ -1973,6 +1973,91 @@ def admin_bee_species_delete(request, pk):
     return render(request, "core/delete-object.html", context)
 
 
+@login_required
+def admin_ecozone_page(request):
+    data = models.Ecozone.objects.annotate(plant_count=Count("plants")).order_by(
+        "ecozone"
+    )
+    context = {
+        "object_list": data,
+        "url_name": "admin-ecozone-page",
+        "title": "Ecozones",
+    }
+    return render(request, "project/admin/admin-ecozones-page.html", context)
+
+
+@login_required
+def admin_ecozone_add(request):
+    context = {
+        "title": "Create Ecozone",
+        "url_name": "admin-ecozone-page",
+    }
+    if request.method == "POST":
+        form = forms.AdminEcozoneForm(request.POST)
+        if form.is_valid():
+            context["form"] = form
+            obj: models.Ecozone = form.save(commit=False)
+            try:
+                form.save()
+            except IntegrityError:
+                messages.error(
+                    request,
+                    f"Ecozone {obj.ecozone} exists already.",
+                )
+                return render(
+                    request,
+                    "project/simple-form.html",
+                    context,
+                )
+        else:
+            messages.error(request, "Ecozone not valid.")
+            context["form"] = form
+    else:
+        context["form"] = forms.AdminEcozoneForm
+
+    return render(request, "project/simple-form.html", context)
+
+
+@login_required
+def admin_ecozone_update(request, pk):
+    obj = models.Ecozone.objects.get(id=pk)
+    form = forms.AdminEcozoneForm(instance=obj)
+
+    if request.method == "POST":
+        form = forms.AdminEcozoneForm(request.POST, instance=obj)
+        if form.is_valid():
+            form.save()
+            return redirect("admin-ecozone-page")
+
+    return render(
+        request,
+        "project/simple-form.html",
+        {
+            "form": form,
+            "title": "Ecozone Update",
+            "url_name": "admin-ecozone-page",
+        },
+    )
+
+
+@login_required
+def admin_ecozone_delete(request, pk):
+    obj: models.Ecozone = models.Ecozone.objects.get(id=pk)
+    if request.method == "POST":
+        try:
+            obj.delete()
+        except RestrictedError as e:
+            msg = e.args[0].split(":")[0] + " : "
+            fkeys = []
+            for fk in e.restricted_objects:
+                fkeys.append(fk.ecozone)
+            msg = msg + ", ".join(fkeys)
+            messages.warning(request, msg)
+        return redirect("admin-ecozone-page")
+    context = {"object": obj, "back": "admin-ecozone-page"}
+    return render(request, "core/delete-object.html", context)
+
+
 ####
 # User
 ####

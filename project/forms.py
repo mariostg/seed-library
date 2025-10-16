@@ -283,6 +283,15 @@ class AdminBeeSpeciesForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
 
 
+class AdminEcozoneForm(forms.ModelForm):
+    class Meta:
+        model = models.Ecozone
+        fields = ["ecozone"]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+
 class ProjectUserForm(ModelForm):
     class Meta:
         model = models.ProjectUser

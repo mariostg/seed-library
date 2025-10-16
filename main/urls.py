@@ -454,6 +454,25 @@ urlpatterns += [
 ]
 
 urlpatterns += [
+    path("admin-ecozone-page/", views.admin_ecozone_page, name="admin-ecozone-page"),
+    path(
+        "admin-ecozone-add/",
+        views.admin_ecozone_add,
+        name="admin-ecozone-add",
+    ),
+    path(
+        "admin-ecozone-update/<int:pk>/",
+        views.admin_ecozone_update,
+        name="admin-ecozone-update",
+    ),
+    path(
+        "admin-ecozone-delete/<int:pk>/",
+        views.admin_ecozone_delete,
+        name="admin-ecozone-delete",
+    ),
+]
+
+urlpatterns += [
     path("login/", views.user_login, name="login"),
     path("logout/", views.user_logout, name="logout"),
     path(
