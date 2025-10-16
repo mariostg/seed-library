@@ -116,6 +116,16 @@
         />
         <span class="tooltiptext">Can be used as a hedge</span>
       </div>
+    {% endif %}{% if plant.boulevard_garden_tolerant %}
+      <div class="tooltip">
+        <img
+          title=""
+          alt="boulevard garden tolerant"
+          class="icon"
+          src="{% static 'images/plant-boulevard-garden-tolerant.svg'  %}"
+        />
+        <span class="tooltiptext">Tolerates boulevard garden conditions</span>
+      </div>
     {% endif %}
       <!-- Foot traffic tolerence.  Display either of medium, light or no-->
     {% if plant.foot_traffic_tolerance_medium %}
