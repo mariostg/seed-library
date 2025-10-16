@@ -107,17 +107,18 @@ def plant_label_info(plant: PlantProfile, request: HttpRequest) -> list[str]:
 
 
 def sow_before(plant: PlantProfile):
-    if not plant.stratification_duration:
+    duration = plant.stratification_duration.stratification_duration
+    if not duration or duration == 0:
         return "Sow anytime"
-    if plant.stratification_duration == 30:
+    if duration == 30:
         return "Sow by March"
-    elif plant.stratification_duration == 60:
+    elif duration == 60:
         return "Sow by February"
-    elif plant.stratification_duration == 90:
+    elif duration == 90:
         return "Sow by January"
-    elif plant.stratification_duration == 120:
+    elif duration == 120:
         return "Sow by December"
-    elif plant.stratification_duration == 180:
+    elif duration == 180:
         return "Sow by November"
 
 
