@@ -5,9 +5,9 @@
 
     <section class="main-content">
       <main>
-        {% include "project/_profile_update_links.html" %}
+        {% include "project/plant_profile/_profile_update_links.html" %}
         <div class="flex-col">
-          {% include "project/_profile_messages.html" %}
+          {% include "project/plant_profile/_profile_messages.html" %}
         </div>
         <!-- Plant Profile Header -->
         <div class="plant-profile-header">
@@ -35,7 +35,7 @@
               </div>
               <!-- Obsolete Names -->
               {% if plant.show_obsolete_names_info %}
-                {% include "project/_profile_obsolete_names.html" %}
+                {% include "project/plant_profile/_profile_obsolete_names.html" %}
               {% endif %}
 
               <div class="plant-giveaway">
@@ -54,24 +54,24 @@
             </div>
 
             {% if plant.show_env_requirements_info %}
-              {% include "project/_profile_env_requirements_growth_characteristics.html" %}
+              {% include "project/plant_profile/_profile_env_requirements_growth_characteristics.html" %}
             {% endif %}
 
             {% if plant.show_gardener_friendly_info  %}
-              {% include "project/_profile_gardener_friendly_attributes.html" %}
+              {% include "project/plant_profile/_profile_gardener_friendly_attributes.html" %}
             {% endif %}
 
             {% if plant.show_landscape_uses_info %}
-              {% include "project/_profile_landscape_uses.html" %}
+              {% include "project/plant_profile/_profile_landscape_uses.html" %}
             {% endif %}
             {% if plant.show_ecological_benefits_info %}
-              {% include "project/_profile_ecological_benefits.html" %}
+              {% include "project/plant_profile/_profile_ecological_benefits.html" %}
             {% endif %}
 
             {% if plant.show_tolerates_info %}
-              {% include "project/_profile_tolerates.html" %}
+              {% include "project/plant_profile/_profile_tolerates.html" %}
             {% endif %}
-            {% include "project/_profile_special_features_and_considerations.html" %}
+            {% include "project/plant_profile/_profile_special_features_and_considerations.html" %}
           </div>
       <!-- End of Plant Profile Characteristics -->
 
@@ -84,15 +84,15 @@
             <h2 class="collapser" onclick="toggleNextSibling(event)">Plant Location</h2>
             <div>
               {% if plant.show_vascan_map_info %}
-                {% include "project/_profile_vascan_map.html" %}
+                {% include "project/plant_profile/_profile_vascan_map.html" %}
               {% endif %}
 
               {% if plant.show_inaturalist_link_info %}
-                {% include "project/_profile_inaturalist_link.html" %}
+                {% include "project/plant_profile/_profile_inaturalist_link.html" %}
               {% endif %}
 
               {% if plant.show_ecozones_info %}
-                {% include "project/_profile_ecozone.html" %}
+                {% include "project/plant_profile/_profile_ecozone.html" %}
               {% endif %}
             </div>
           </div>
@@ -103,10 +103,10 @@
             <h2 class="collapser" onclick="toggleNextSibling(event)">Ecological Benefits</h2>
             <div class=''>
               {% if plant.show_butterflies_supported_info %}
-                {% include "project/_profile_butterflies_supported.html" %}
+                {% include "project/plant_profile/_profile_butterflies_supported.html" %}
               {% endif %}
               {% if plant.show_bees_supported_info %}
-                {% include "project/_profile_bees_supported.html" %}
+                {% include "project/plant_profile/_profile_bees_supported.html" %}
               {% endif %}
             </div>
 
@@ -117,7 +117,7 @@
                   <span class="tooltiptext">Plants that grow in similar conditions, that bloom at the same time.</span>
                 </div>
                 <h2 class="collapser" onclick="toggleNextSibling(event)">Complementary Plants</h2>
-                {% include "project/_profile_complementary_plants.html" %}
+                {% include "project/plant_profile/_profile_complementary_plants.html" %}
               </div>
             {% endif %}
           </div>
@@ -128,7 +128,7 @@
             </h2>
             <!-- Sowing Information -->
             {% if plant.show_sowing_info %}
-              {% include "project/_profile_sowing.html" %}
+              {% include "project/plant_profile/_profile_sowing.html" %}
             {% endif %}
 
             <!-- Harvesting Information -->
@@ -136,7 +136,7 @@
               Harvesting and Seed Sharing
             </h2>
             {% if plant.show_harvesting_info %}
-              {% include "project/_profile_harvesting.html" %}
+              {% include "project/plant_profile/_profile_harvesting.html" %}
             {% endif %}
           </div>
           {% if plant.toxicity_indicator_notes %}

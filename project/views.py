@@ -93,7 +93,7 @@ def plant_profile_page(request, pk):
         "is_toxic": is_toxic,
         "endangered": endangered,
     }
-    return render(request, "project/plant-profile-page.html", context)
+    return render(request, "project/plant_profile/plant-profile-page.html", context)
 
 
 @login_required

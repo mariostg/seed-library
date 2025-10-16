@@ -6,7 +6,7 @@
 {% block title %}{{ plant.latin_name }} - Special Features and Considerations{% endblock title %}
 {% block content %}
   <main class="main-content">
-    {% include "project/_profile_update_links.html" %}
+    {% include "project/plant_profile/_profile_update_links.html" %}
     <div class="flex-col-center">
       <h1>Update Special Features and Considerations</h1>
       <h2><a href="{% url 'plant-profile-page' plant.pk %}">{{ plant.latin_name }}</a></h2>
