@@ -107,6 +107,8 @@ def plant_label_info(plant: PlantProfile, request: HttpRequest) -> list[str]:
 
 
 def sow_before(plant: PlantProfile):
+    if not plant.stratification_duration:
+        return "Sow anytime"
     duration = plant.stratification_duration.stratification_duration
     if not duration or duration == 0:
         return "Sow anytime"
