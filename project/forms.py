@@ -292,6 +292,22 @@ class AdminEcozoneForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
 
 
+class AdminImageForm(forms.ModelForm):
+    class Meta:
+        model = models.PlantImage
+        fields = [
+            "image",
+            "morphology_aspect",
+            "title",
+            "description",
+            "plant_profile",
+            "photo_author",
+        ]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+
 class ProjectUserForm(ModelForm):
     class Meta:
         model = models.ProjectUser

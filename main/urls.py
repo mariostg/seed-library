@@ -473,6 +473,21 @@ urlpatterns += [
 ]
 
 urlpatterns += [
+    path("admin-images-page/", views.admin_images_page, name="admin-images-page"),
+    path("admin-image-add/", views.admin_image_add, name="admin-image-add"),
+    path(
+        "admin-image-update/<int:pk>/",
+        views.admin_image_update,
+        name="admin-image-update",
+    ),
+    path(
+        "admin-image-delete/<int:pk>/",
+        views.admin_image_delete,
+        name="admin-image-delete",
+    ),
+]
+
+urlpatterns += [
     path("login/", views.user_login, name="login"),
     path("logout/", views.user_logout, name="logout"),
     path(

@@ -2,7 +2,7 @@ from django.contrib.auth.models import AbstractUser
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.dates import MONTHS
-from PIL import Image
+from PIL import Image, ImageOps
 
 
 class Base(models.Model):
@@ -1111,14 +1111,16 @@ class PlantImage(models.Model):
         verbose_name="Description", max_length=55, blank=True
     )
     photo_author = models.CharField(verbose_name="Auteur", max_length=125)
-    photo_date = models.DateField(verbose_name="Date photo")
+    photo_date = models.DateField(
+        verbose_name="Date photo",
+    )
     image = models.ImageField(upload_to="project/images/plants")
 
     class Meta:
         ordering = ["plant_profile__latin_name", "title"]
 
     def __str__(self) -> str:
-        return f"{self.plant_profile.latin_name} - {self.title} - {self.photo_author}"
+        return f"{self.plant_profile.latin_name} - {self.morphology_aspect.element} - {self.title} - {self.photo_author}"
 
     def save(self, *args, **kwargs):
         """
@@ -1140,23 +1142,40 @@ class PlantImage(models.Model):
              The method ensures proper cleanup by closing both the PIL Image object
              and the image file after processing.
         """
-        try:  # Delete plant if it exists
-            this = PlantImage.objects.get(id=self.id)
-            if this.image != self.image:
-                this.image.delete(save=False)
-        except PlantImage.DoesNotExist:
-            pass  # when new photo then we do nothing, normal case
+        # Delete any image that matches the plant_profile and morphology_aspect
+        if not kwargs.pop("skip_duplicate_check", False):  # Add flag to avoid recursion
+            try:
+                existing = PlantImage.objects.filter(
+                    plant_profile=self.plant_profile,
+                    morphology_aspect=self.morphology_aspect,
+                ).exclude(
+                    pk=self.pk if self.pk else 0
+                )  # Exclude current instance if it exists
+
+                if existing.exists():
+                    for img in existing:
+                        # Delete the image file directly instead of using the model delete method
+                        if img.image:
+                            try:
+                                img.image.delete(save=False)
+                            except Exception as e:
+                                raise ValueError(f"Error deleting image file: {e}")
+                        # Use the direct database delete to avoid recursion
+                        PlantImage.objects.filter(pk=img.pk).delete()
+            except PlantImage.DoesNotExist:
+                pass  # No existing image to delete
+
         super().save(*args, **kwargs)
-        # img = Image.open(self.image)
-        # img = ImageOps.exif_transpose(img)
-        # width, height = img.size
-        # target_width = 450
-        # h_coefficient = width / target_width
-        # target_height = height / h_coefficient
-        # img = img.resize((int(target_width), int(target_height)), Image.LANCZOS)
-        # img.save(self.image.path, quality=100)
-        # img.close()
-        # self.image.close()
+        img = Image.open(self.image)
+        img = ImageOps.exif_transpose(img)
+        width, height = img.size
+        target_width = 450
+        h_coefficient = width / target_width
+        target_height = height / h_coefficient
+        img = img.resize((int(target_width), int(target_height)), Image.LANCZOS)
+        img.save(self.image.path, quality=100)
+        img.close()
+        self.image.close()
 
     def get_size(self):
         """

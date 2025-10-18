@@ -1,0 +1,57 @@
+<!--
+  Admin Images Page
+  This page allows admins to manage images associated with plant profiles.
+  Features include uploading new images, deleting existing images, and viewing image details.
+-->
+{% extends 'core/base.html' %}
+{% load static %}
+{% block title %}{{title}}{% endblock title %}
+{% block content %}
+  {% include "project/admin/admin_links.html" %}
+  <div class="flex-col-center">
+    <fieldset class='flex-col-center'>
+      <legend>
+        {{title}} Management
+      </legend>
+      {% if user.is_authenticated %}
+        <div class='center'>
+          <a class='btn btn-add' href="{% url 'admin-image-add' %}">Add New Image</a>
+        </div>
+      {% endif %}
+
+      <table class=''>
+        <thead>
+          <tr>
+            <th>Image</th>
+            <th>Latin Name</th>
+            <th>Morphology Aspect</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Author</th>
+            {% if user.is_authenticated %}
+              <th colspan=2></th>
+            {% endif %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for image in object_list %}
+            <tr class="{% cycle 'odd-row' 'even-row' %}">
+              <td><img src="{{ image.image.url }}" alt="{{ image.description }}" width="100"></td>
+              <td><a target="_blank" href="{% url 'plant-profile-page' image.plant_profile.id %}">{{ image.plant_profile.latin_name }}</a></td>
+              <td>{{ image.morphology_aspect }}</td>
+              <td>{{ image.title }}</td>
+              <td>{{ image.description }}</td>
+              <td>{{ image.photo_author }}</td>
+              {% if user.is_authenticated %}
+                <td class='actions'>
+                  <a class='btn btn-edit' href="{% url "admin-image-update" image.id %}">Edit</a>
+                  <a class='btn btn-delete' href="{% url "admin-image-delete" image.id %}">Delete</a>
+                </td>
+              {% endif %}
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </fieldset>
+  </div>
+{% endblock content %}

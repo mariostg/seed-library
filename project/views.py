@@ -1,5 +1,6 @@
 import csv
 import io
+from datetime import datetime
 
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
@@ -2879,4 +2880,97 @@ def admin_growth_habit_delete(request, pk):
             messages.warning(request, msg)
         return redirect("admin-growth-habit-page")
     context = {"object": obj, "back": "admin-growth-habit-page"}
+    return render(request, "core/delete-object.html", context)
+
+
+@login_required
+def admin_images_page(request):
+    obj = models.PlantImage.objects.annotate(
+        plant_count=Count("plant_profile")
+    ).order_by("plant_profile__latin_name")
+    context = {
+        "title": "Images",
+        "object_list": obj,
+        "url_name": "admin-images-page",
+    }
+    return render(request, "project/admin/admin-images-page.html", context)
+
+
+@login_required
+def admin_image_add(request):
+    context = {
+        "title": "Add Image",
+        "url_name": "admin-images-page",
+    }
+    if request.method == "POST":
+        form = forms.AdminImageForm(request.POST, request.FILES)
+        if form.is_valid():
+            context["form"] = form
+            obj: models.PlantImage = form.save(commit=False)
+            # set obj.photo_date to today if not set
+            if not obj.photo_date:
+                obj.photo_date = datetime.now().date()
+
+            extension = obj.image.name.split(".")[-1]
+            plant_name = obj.plant_profile.latin_name.replace(" ", "_").lower()
+
+            # Set the image name with the correct path
+            obj.image.name = f"{obj.plant_profile.pk}/{plant_name}.{extension}"
+
+            # set photo_date to today if not set
+            if not obj.photo_date:
+                obj.photo_date = datetime.now().date()
+
+            obj.save()
+            messages.success(
+                request, f"Image for {obj.plant_profile} added successfully."
+            )
+            return render(
+                request,
+                "project/admin/admin-image-form.html",
+                context,
+            )
+    else:
+        context["form"] = forms.AdminImageForm()
+
+    return render(request, "project/admin/admin-image-form.html", context)
+
+
+@login_required
+def admin_image_update(request, pk):
+    obj = models.PlantImage.objects.get(id=pk)
+    form = forms.AdminImageForm(instance=obj)
+
+    if request.method == "POST":
+        form = forms.AdminImageForm(request.POST, request.FILES, instance=obj)
+        if form.is_valid():
+            form.save()
+            return redirect("admin-images-page")
+
+    return render(
+        request,
+        "project/simple-form.html",
+        {
+            "form": form,
+            "title": "Image Update",
+            "url_name": "admin-images-page",
+        },
+    )
+
+
+@login_required
+def admin_image_delete(request, pk):
+    obj: models.PlantImage = models.PlantImage.objects.get(id=pk)
+    if request.method == "POST":
+        try:
+            obj.delete()
+        except RestrictedError as e:
+            msg = e.args[0].split(":")[0] + " : "
+            fkeys = []
+            for fk in e.restricted_objects:
+                fkeys.append(fk.plant_profile)
+            msg = msg + ", ".join(fkeys)
+            messages.warning(request, msg)
+        return redirect("admin-images-page")
+    context = {"object": obj, "back": "admin-images-page"}
     return render(request, "core/delete-object.html", context)

@@ -14,7 +14,11 @@
           <div class="plant-profile-image">
             {% if plant.images.first.image %}
               <img src="{{ plant.images.first.image.url }}" alt="Image of {{plant.latin_name}}">
-              <div class="plant-card-source">Source: {{ plant.images.first.photo_author }}</div>
+              {% if plant.images.first.photo_author %}
+                <div class="plant-card-source">Source: {{ plant.images.first.photo_author }}</div>
+              {% endif %}
+              {% if plant.images.first.title %}<div class="plant-card-source"> {{ plant.images.first.title }}</div>{% endif %}
+              {% if plant.images.first.description %}<div class="plant-card-source"> {{ plant.images.first.description }}</div>{% endif %}
             {% else %}
               <img src="{% static 'images/plant-placeholder.png' %}" alt="No image available">
             {% endif %}
