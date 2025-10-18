@@ -24,6 +24,7 @@
     {% if messages %}
       {% for message in messages %}
         <div class="container alert  alert--{{message.tags}}">
+          <div class="alert__field">{{ message.extra_tags }}</div>
           <div class="alert__message">{{message|safe}}</div>
         </div>
       {% endfor %}
