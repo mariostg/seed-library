@@ -15,6 +15,7 @@
 import csv
 
 import pandas as pd
+from django.core.exceptions import ValidationError
 from django.core.management.base import BaseCommand
 from django.db import models
 
@@ -144,9 +145,17 @@ class Command(BaseCommand):
                     try:
                         plant.save()
                         updated += 1
-                    except ValueError:
+                    except ValueError as ve:
                         self.stdout.write(
-                            self.style.ERROR(f"Error updating {latin_name}: {value}")
+                            self.style.ERROR(
+                                f"Valuer Error updating {latin_name}: {value}, {ve}"
+                            )
+                        )
+                    except ValidationError as ve:
+                        self.stdout.write(
+                            self.style.ERROR(
+                                f"Validation error updating {latin_name}: {ve}"
+                            )
                         )
                 else:
                     skipped_count += 1
