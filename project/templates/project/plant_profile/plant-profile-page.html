@@ -22,6 +22,11 @@
             {% else %}
               <img src="{% static 'images/plant-placeholder.png' %}" alt="No image available">
             {% endif %}
+            {% if image_count > 1 %}
+              <div class="flex-col-center">
+                <a target="_blank" href="{% url 'plant-profile-images' plant.pk %}">View Image Gallery ({{ image_count }} images)</a>
+              </div>
+            {% endif %}
           </div>
       <!-- End of Plant Profile Image -->
 

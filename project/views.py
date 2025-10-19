@@ -38,6 +38,9 @@ def plant_profile_page(request, pk):
     plant: models.PlantProfile = utils.single_plant(pk, request)
     if not plant:
         return render(request, "core/404.html", status=404)
+
+    image_count = plant.images.all().count()
+
     is_row_garden = plant.boulevard_garden_tolerant and plant.max_height <= 2
     landscape_use = (
         # garden_suitability
@@ -84,6 +87,7 @@ def plant_profile_page(request, pk):
         plant.harvesting_video_link = ""
     context = {
         "plant": plant,
+        "image_count": image_count,
         "title": plant.latin_name,
         "bloom_start": bloom_start,
         "bloom_end": bloom_end,
@@ -162,6 +166,21 @@ def plant_profile_delete(request, pk):
         return redirect("search-plant-name")
     context = {"data": plant, "back": "plant-profile-page", "pk": plant.pk}
     return render(request, "core/delete-object.html", context)
+
+
+def plant_profile_images(request, pk):
+    plant: models.PlantProfile = utils.single_plant(pk, request)
+    if not plant:
+        return render(request, "core/404.html", status=404)
+
+    images = plant.images.all()
+
+    context = {
+        "plant": plant,
+        "images": images,
+        "title": f"Image Gallery for {plant.latin_name}",
+    }
+    return render(request, "project/plant_profile/plant-profile-images.html", context)
 
 
 def plant_catalogue_intro(request):

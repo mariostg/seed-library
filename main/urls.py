@@ -54,7 +54,13 @@ urlpatterns += [
         views.plant_profile_update,
         name="plant-profile-update",
     ),
+    path(
+        "plant-profile-images/<int:pk>",
+        views.plant_profile_images,
+        name="plant-profile-images",
+    ),
 ]
+
 urlpatterns += [
     path("admin-colour-add/", views.admin_colour_add, name="admin-colour-add"),
     path("admin-colour-page/", views.admin_colour_page, name="admin-colour-page"),

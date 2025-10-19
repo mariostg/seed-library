@@ -1,0 +1,33 @@
+.plant-profile-image-gallery-page {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.image-gallery-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 10px;
+  justify-content: center;
+  align-items: center;
+}
+
+.image-gallery-item {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  overflow: hidden;
+  position: relative;
+}
+
+.image-gallery-item img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.plant-card-info {
+  font-size: 0.8rem;
+  color: #fff;
+  text-align: center;
+  background-color: #000;
+}
