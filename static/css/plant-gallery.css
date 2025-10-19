@@ -1,3 +1,6 @@
+/*0 3px 5px rgba(75, 85, 68, 0.8);*/
+/*Wildflower theme colors*/
+/*blue theme*/
 .plant-profile-image-gallery-page {
   text-align: center;
   margin-top: 20px;
@@ -16,7 +19,13 @@
   border: 1px solid #ccc;
   border-radius: 5px;
   overflow: hidden;
-  position: relative;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+.image-gallery-item .title {
+  font-weight: bold;
+  background-color: #000;
+  color: #fff;
 }
 
 .image-gallery-item img {
@@ -30,4 +39,8 @@
   color: #fff;
   text-align: center;
   background-color: #000;
+}
+.plant-card-info div {
+  display: flex;
+  justify-content: space-between;
 }

@@ -1,0 +1,10 @@
+.admin-gallery-item {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 250px;
+}
+.admin-gallery-item img {
+  width: 100%;
+  height: auto;
+  display: block;
+}

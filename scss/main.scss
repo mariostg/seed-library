@@ -282,6 +282,15 @@ td {
   transition: background-color 0.3s ease;
   text-align: center;
 
+  &__delete {
+    background-color: red;
+  }
+  &__edit {
+    background-color: orange;
+  }
+  &__view {
+    background-color: green;
+  }
   &:hover {
     background-color: #0056b3;
   }

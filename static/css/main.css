@@ -564,6 +564,15 @@ td.actions {
   transition: background-color 0.3s ease;
   text-align: center;
 }
+.btn__delete {
+  background-color: red;
+}
+.btn__edit {
+  background-color: orange;
+}
+.btn__view {
+  background-color: green;
+}
 .btn:hover {
   background-color: #0056b3;
 }

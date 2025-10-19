@@ -6,6 +6,9 @@
 {% extends 'core/base.html' %}
 {% load static %}
 {% block title %}{{title}}{% endblock title %}
+{% block extracss %}
+  <link rel="stylesheet" href="{% static 'css/plant-gallery.css' %}" />
+{% endblock extracss %}
 {% block content %}
   {% include "project/admin/admin_links.html" %}
   <div class="flex-col-center">
@@ -19,39 +22,39 @@
         </div>
       {% endif %}
 
-      <table class=''>
-        <thead>
-          <tr>
-            <th>Image</th>
-            <th>Latin Name</th>
-            <th>Morphology Aspect</th>
-            <th>Title</th>
-            <th>Description</th>
-            <th>Author</th>
+      <div class='image-gallery-grid'>
+        {% for image in object_list %}
+          <div class='image-gallery-item'>
+            <div class='title'>{{ image.plant_profile.latin_name }}</div>
+            <img  src="{{ image.image.url }}" alt="{{ image.description }}" width="100">
+            <div class='plant-card-info'>
+              <div>
+                <div>Morphology Aspect:</div> <div>{{ image.morphology_aspect }}</div>
+              </div>
+              <div>
+                <div>Image size:</div> <div>{{ image.image_size }}</div>
+              </div>
+              <div>
+                <div>Title:</div> <div>{{ image.title }}</div>
+              </div>
+              <div>
+                <div>Description:</div> <div>{{ image.description }}</div>
+              </div>
+              <div>
+                <div>Photo Author:</div> <div>{{ image.photo_author }}</div>
+              </div>
+            </div>
+
             {% if user.is_authenticated %}
-              <th colspan=2></th>
+              <div class='row-spacer flex-row actions'>
+                <a class='btn btn__view' target="_blank" href="{% url 'plant-profile-page' image.plant_profile.id %}">View</a>
+                <a class='btn btn__edit' href="{% url "admin-image-update" image.id %}">Edit</a>
+                <a class='btn btn__delete' href="{% url "admin-image-delete" image.id %}">Delete</a>
+              </div>
             {% endif %}
-          </tr>
-        </thead>
-        <tbody>
-          {% for image in object_list %}
-            <tr class="{% cycle 'odd-row' 'even-row' %}">
-              <td><img src="{{ image.image.url }}" alt="{{ image.description }}" width="100"></td>
-              <td><a target="_blank" href="{% url 'plant-profile-page' image.plant_profile.id %}">{{ image.plant_profile.latin_name }}</a></td>
-              <td>{{ image.morphology_aspect }}</td>
-              <td>{{ image.title }}</td>
-              <td>{{ image.description }}</td>
-              <td>{{ image.photo_author }}</td>
-              {% if user.is_authenticated %}
-                <td class='actions'>
-                  <a class='btn btn-edit' href="{% url "admin-image-update" image.id %}">Edit</a>
-                  <a class='btn btn-delete' href="{% url "admin-image-delete" image.id %}">Delete</a>
-                </td>
-              {% endif %}
-            </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+          </div>
+        {% endfor %}
+      </div>
     </fieldset>
   </div>
 {% endblock content %}
