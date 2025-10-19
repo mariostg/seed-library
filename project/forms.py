@@ -408,9 +408,7 @@ class PlantLandscapeUseAndApplicationForm(forms.ModelForm):
             "wetland_garden",
             "easy_to_contain",
             "hedge",
-            "foot_traffic_tolerance_no",
-            "foot_traffic_tolerance_light",
-            "foot_traffic_tolerance_medium",
+            "foot_traffic_tolerant",
         ]
 
     def __init__(self, *args, **kwargs):
@@ -432,9 +430,7 @@ class PlantEcologicalBenefitsForm(forms.ModelForm):
             "deer_tolerant",
             "rabbit_tolerant",
             "drought_tolerant",
-            "foot_traffic_tolerance_no",
-            "foot_traffic_tolerance_light",
-            "foot_traffic_tolerance_medium",
+            "foot_traffic_tolerant",
             "juglone_tolerant",
             "nitrogen_fixer",
             "salt_tolerant",

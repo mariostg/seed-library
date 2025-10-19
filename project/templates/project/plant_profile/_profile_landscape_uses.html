@@ -115,33 +115,15 @@
         <span class="tooltiptext">Tolerates boulevard garden conditions</span>
       </div>
     {% endif %}
-      <!-- Foot traffic tolerence.  Display either of medium, light or no-->
-    {% if plant.foot_traffic_tolerance_medium %}
+      <!-- Foot traffic tolerant-->
+    {% if plant.foot_traffic_tolerant %}
       <div class="tooltip">
         <img
-          alt="foot traffic tolerance medium"
+          alt="foot traffic tolerant"
           class="icon"
-          src="{% static 'images/plant-foot-traffic-tolerance-medium.svg'  %}"
+          src="{% static 'images/plant-foot-traffic-tolerant.svg'  %}"
         />
-        <span class="tooltiptext">Tolerates medium foot traffic</span>
-      </div>
-    {% elif plant.foot_traffic_tolerance_light %}
-      <div class="tooltip">
-        <img
-          alt="foot traffic tolerance light"
-          class="icon"
-          src="{% static 'images/plant-foot-traffic-tolerance-light.svg'  %}"
-        />
-        <span class="tooltiptext">Tolerates light foot traffic</span>
-      </div>
-    {% elif plant.foot_traffic_tolerance_no %}
-      <div class="tooltip">
-        <img
-          alt="foot traffic tolerance no"
-          class="icon"
-          src="{% static 'images/plant-foot-traffic-tolerance-no.svg'  %}"
-        />
-        <span class="tooltiptext">Does not tolerate foot traffic</span>
+        <span class="tooltiptext">Tolerates foot traffic</span>
       </div>
     {% endif %}
   {% endif %}
