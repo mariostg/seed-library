@@ -76,6 +76,7 @@ class Command(BaseCommand):
 
     def convert_property_value_format(self, value):
         # handle yes and no values
+        value = str(value).strip()
         if value.lower() in ["yes", "y"]:
             return True
         elif value.lower() in ["no", "n"]:
