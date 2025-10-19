@@ -150,12 +150,17 @@
               {% include "project/plant_profile/_profile_harvesting.html" %}
             {% endif %}
           </div>
-          {% if plant.toxicity_indicator_notes %}
-            <div>
+
+          <div>
+            {% if plant.toxicity_indicator_notes %}
               <h2 class="collapser" onclick="toggleNextSibling(event)">Toxicity Notes</h2>
               <p>{{ plant.toxicity_indicator_notes }}</p>
-            </div>
-          {% endif %}
+            {% endif %}
+            {% if plant.grasp_candidate %}
+              <h2 class="collapser" onclick="toggleNextSibling(event)">GRASP Candidate</h2>
+              <p>{{ plant.grasp_candidate_notes }}</p>
+            {% endif %}
+          </div>
         </div>
 
 
