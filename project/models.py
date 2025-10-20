@@ -723,6 +723,7 @@ class PlantProfile(Base):
     show_bees_supported_info = models.BooleanField(default=True)
     show_butterflies_supported_info = models.BooleanField(default=True)
     show_complementary_plants_info = models.BooleanField(default=True)
+    show_alternative_to_info = models.BooleanField(default=True)
     show_ecological_benefits_info = models.BooleanField(default=True)
     show_ecozones_info = models.BooleanField(default=True)
     show_env_requirements_info = models.BooleanField(default=True)
