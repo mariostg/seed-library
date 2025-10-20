@@ -516,6 +516,25 @@ class ButterflySpecies(models.Model):
         ordering = ["latin_name"]
 
 
+class NonNativeSpecies(models.Model):
+    """A model representing non-native plant species.
+    This models is used to suggest alternative native plants to avoid planting non-native species.
+
+    This model stores the name of the non-native species and provides a string representation.
+    Attributes:
+        latin_name (CharField): The scientific name of the non-native species, max length 75 characters, unique.
+        english_name (CharField): The common name of the non-native species in English, max length 75 characters, can be blank.
+    Returns:
+        str: String representation of the non-native species, which is its Latin name.
+    """
+
+    latin_name = models.CharField(max_length=75, blank=True, unique=True)
+    english_name = models.CharField(max_length=75, blank=True)
+
+    def __str__(self) -> str:
+        return f"{self.latin_name} ({self.english_name})"
+
+
 class Ecozone(Base):
     """A model representing ecozones where plants can thrive."""
 
@@ -872,6 +891,10 @@ class PlantProfile(Base):
     salt_tolerant = models.BooleanField(default=False)
     juglone_tolerant = models.BooleanField(default=False)
     nitrogen_fixer = models.BooleanField(default=False)
+
+    substitute_for_non_native = models.ManyToManyField(
+        NonNativeSpecies, blank=True, related_name="native_alternatives"
+    )
 
     #
     # Special features and considerations
