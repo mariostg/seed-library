@@ -53,9 +53,16 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument("file_path", type=str, help="Path to the CSV or Excel file")
+        parser.add_argument(
+            "--force",
+            action="store_true",
+            help="Force update even if value is the same",
+        )
 
     def handle(self, *args, **options):
         self.file_path = options["file_path"]
+        self.force = options["force"]
+
         if self.file_path.endswith(".csv"):
             self.import_csv(self.file_path)
         elif self.file_path.endswith(".xls") or self.file_path.endswith(".xlsx"):
@@ -107,6 +114,30 @@ class Command(BaseCommand):
                     )
                 )
                 return
+
+            # Print the property field type
+            field = PlantProfile._meta.get_field(property_name)
+            field_type = field.get_internal_type()
+            self.stdout.write(
+                self.style.SUCCESS(
+                    f'Importing property "{property_name}" of type "{field_type}"'
+                )
+            )
+
+            # If force flag is set, reset all property values to None before updating
+            if self.force:
+                self.stdout.write(
+                    self.style.WARNING(
+                        "Force update enabled: all values will be updated"
+                    )
+                )
+                reset_value = {
+                    "BooleanField": False,
+                    "CharField": "",
+                    "FloatField": None,
+                }.get(field_type, None)
+                PlantProfile.objects.all().update(**{property_name: reset_value})
+
             not_found = []
             updated = 0
             skipped_count = 0
@@ -120,11 +151,6 @@ class Command(BaseCommand):
                     continue
                 current_value = getattr(plant, property_name)
                 if str(current_value) != str(value):
-                    self.stdout.write(
-                        self.style.SUCCESS(
-                            f"Updating {latin_name}: {property_name} from {current_value} to {value}"
-                        )
-                    )
                     # if property name is a foreign key, check if the value exists in the foreign key model and create the value
                     if isinstance(
                         getattr(PlantProfile, property_name).field, models.ForeignKey
@@ -141,7 +167,14 @@ class Command(BaseCommand):
                                     f"Created new related {related_model.__name__} entry: {value}"
                                 )
                             )
+                    if field_type == "CharField" and isinstance(value, float):
+                        value = str(int(value))
                     setattr(plant, property_name, value)
+                    self.stdout.write(
+                        self.style.SUCCESS(
+                            f"Updating {latin_name}: {property_name} from {current_value} to {value}"
+                        )
+                    )
                     try:
                         plant.save()
                         updated += 1
