@@ -283,8 +283,8 @@ class PlantProfileFilter(django_filters.FilterSet):
         method="filter_boolean",
     )
     is_active = django_filters.CharFilter(
-        # method="filter_excludes",
-        method="filter_boolean",
+        method="filter_excludes",
+        # method="filter_boolean",
     )
     is_accepted = django_filters.CharFilter(
         method="filter_excludes",
