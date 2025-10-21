@@ -1,0 +1,18 @@
+{% load static %}
+<div class="substitute-for-list">
+  {% if plant.substitute_for_non_native.all %}
+    <ul>
+      {% for substitute in plant.substitute_for_non_native.all %}
+        <li>
+          <i class="fas fa-seedling text-success me-2"></i>
+          {{ substitute.latin_name }}
+          {% if substitute.english_name %}
+            <span class="text-muted fst-italic">({{ substitute.english_name }})</span>
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p class="text-muted">No substitute plant data available for this plant.</p>
+  {% endif %}
+</div>

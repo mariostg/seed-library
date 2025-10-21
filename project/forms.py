@@ -353,6 +353,7 @@ class PlantIdentificationInformationForm(forms.ModelForm):
             "show_sowing_info",
             "show_tolerates_info",
             "show_vascan_map_info",
+            "show_alternative_to_info",
             "latin_name",
             "english_name",
             "french_name",

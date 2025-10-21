@@ -528,11 +528,14 @@ class NonNativeSpecies(models.Model):
         str: String representation of the non-native species, which is its Latin name.
     """
 
-    latin_name = models.CharField(max_length=75, blank=True, unique=True)
+    latin_name = models.CharField(max_length=75, blank=True)
     english_name = models.CharField(max_length=75, blank=True)
 
     def __str__(self) -> str:
         return f"{self.latin_name} ({self.english_name})"
+
+    class Meta:
+        unique_together = ("latin_name", "english_name")
 
 
 class Ecozone(Base):

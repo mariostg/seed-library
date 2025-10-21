@@ -131,6 +131,14 @@
                 {% include "project/plant_profile/_profile_complementary_plants.html" %}
               </div>
             {% endif %}
+
+            <!-- Substitute For -->
+            {% if plant.show_alternative_to_info %}
+              <div>
+                <h2 class="collapser" onclick="toggleNextSibling(event)">Substitute For Non-Native Plants</h2>
+                {% include "project/plant_profile/_profile_substitute_for.html" %}
+              </div>
+            {% endif %}
           </div>
 
           <div>
