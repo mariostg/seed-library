@@ -25,7 +25,7 @@
         {% endif %} {% endcomment %}
 
         <div>
-          <a href="{% url 'plant-profile-page' item.id %}" class="plant-card-link">
+          <a target="_blank" href="{% url 'plant-profile-page' item.id %}" class="plant-card-link">
             {% if item.images.first %}
               <img src="{{item.images.first.image.url}}" alt="image for {{item.latin_name}}">
             {% else %}
