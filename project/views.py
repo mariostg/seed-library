@@ -562,6 +562,7 @@ def update_availability(request):
     return render(request, "project/update-availability.html", context)
 
 
+@login_required
 def admin_harvesting_indicator_page(request):
     data = models.HarvestingIndicator.objects.annotate(
         plant_count=Count("plantprofile")
@@ -576,6 +577,7 @@ def admin_harvesting_indicator_page(request):
     )
 
 
+@login_required
 def admin_harvesting_mean_page(request):
     data = models.HarvestingMean.objects.annotate(
         plant_count=Count("plantprofile")
@@ -588,6 +590,7 @@ def admin_harvesting_mean_page(request):
     return render(request, "project/admin/admin-harvesting-mean-page.html", context)
 
 
+@login_required
 def admin_colour_page(request):
     data = models.BloomColour.objects.annotate(
         plant_count=Count("plantprofile")
@@ -2320,6 +2323,7 @@ def plant_identification_information_update(request, pk):
     )
 
 
+@login_required
 def plant_identification_information_create(request):
     context = {
         "title": "Create Plant Identification Information",
@@ -2367,6 +2371,7 @@ def plant_identification_information_create(request):
     )
 
 
+@login_required
 def plant_growth_characteristics_update(request, pk):
     plant: models.PlantProfile = utils.single_plant(pk, request)
     plants_complements = models.PlantComplementary.objects.filter(plant_profile_id=pk)
@@ -2429,6 +2434,7 @@ def plant_growth_characteristics_update(request, pk):
     )
 
 
+@login_required
 def plant_landscape_use_and_application_update(request, pk):
     plant = utils.single_plant(pk, request)
     context = {
@@ -2455,6 +2461,7 @@ def plant_landscape_use_and_application_update(request, pk):
     )
 
 
+@login_required
 def plant_ecological_benefits_update(request, pk):
     plant = utils.single_plant(pk, request)
     unsupported_butterflies = models.ButterflySpecies.objects.exclude(
@@ -2483,6 +2490,7 @@ def plant_ecological_benefits_update(request, pk):
     )
 
 
+@login_required
 def plant_introductory_gardening_experience_update(request, pk):
     plant = utils.single_plant(pk, request)
     context = {
@@ -2511,6 +2519,7 @@ def plant_introductory_gardening_experience_update(request, pk):
     )
 
 
+@login_required
 def plant_special_features_and_consideration_update(request, pk):
     plant = utils.single_plant(pk, request)
     context = {
@@ -2547,6 +2556,7 @@ def plant_special_features_and_consideration_update(request, pk):
     )
 
 
+@login_required
 def plant_harvesting_update(request, pk):
     plant = utils.single_plant(pk, request)
     harvesting_months = utils.MONTHS
@@ -2657,6 +2667,7 @@ def plant_harvesting_update(request, pk):
     return render(request, "project/update/plant-harvesting-update.html", context)
 
 
+@login_required
 def plant_sowing_update(request, pk):
     plant = utils.single_plant(pk, request)
 
@@ -2686,6 +2697,7 @@ def plant_sowing_update(request, pk):
     return render(request, "project/update/plant-sowing-update.html", context)
 
 
+@login_required
 def plant_seed_distribution_update(request, pk):
     plant = utils.single_plant(pk, request)
 
