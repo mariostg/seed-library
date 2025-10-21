@@ -5,6 +5,7 @@ from datetime import datetime
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 from django.db import IntegrityError
 from django.db.models import Count, RestrictedError
 from django.http import FileResponse, HttpResponse, JsonResponse
@@ -2916,12 +2917,20 @@ def admin_growth_habit_delete(request, pk):
 
 @login_required
 def admin_images_page(request):
-    obj = models.PlantImage.objects.annotate(
+    images_list = models.PlantImage.objects.annotate(
         plant_count=Count("plant_profile")
     ).order_by("plant_profile__latin_name")
+
+    # Set up pagination
+    paginator = Paginator(images_list, 18)  # Show 20 images per page
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
     context = {
+        "is_paginated": page_obj.has_other_pages(),
         "title": "Images",
-        "object_list": obj,
+        "object_list": page_obj,
+        "page_obj": page_obj,
         "url_name": "admin-images-page",
     }
     return render(request, "project/admin/admin-images-page.html", context)
