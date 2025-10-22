@@ -97,13 +97,22 @@ def plant_label_info(plant: PlantProfile, request: HttpRequest) -> list[str]:
         f"Bloom: {MONTHS.get(plant.bloom_start, '')} - {MONTHS.get(plant.bloom_end, '')}",
         *plant_sowing_notes(plant),  # Unpack the list items individually
         sow_before(plant),
-        f"{plant.stratification_duration} days",
+        stratification_need(plant),
         plant.sowing_depth.sowing_depth,
     ]
     if detail:
         label_info.append(detail)
     label_info.reverse()
     return label_info
+
+
+def stratification_need(plant: PlantProfile):
+    if not plant.stratification_duration:
+        return "No Stratification"
+    duration = plant.stratification_duration
+    if not duration or duration == 0:
+        return "No Stratification"
+    return f"Stratify for {duration}"
 
 
 def sow_before(plant: PlantProfile):
