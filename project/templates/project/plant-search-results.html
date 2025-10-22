@@ -2,70 +2,72 @@
 
 <div style="display: flex; flex-direction: column; align-items: center; ">
 
-  {% if object_list %}
-    <div class='flex-col-center'> Search Results: Found {{item_count}} matches, page</div>
-    <div class='flex-col-center'>
-      <a href="{% url 'export-plant-search-results' %}?{{ request.GET.urlencode }}" class="btn btn-primary">Export to CSV</a>
-    </div>
-  {% endif %}
+
   {% if item_count == 0 and request.GET %}
     <div class="alert alert--info">
       No plant matches your search, try resetting the filters or verify your search term.
     </div>
   {% endif %}
-  <div id='search-results' class="plant-cards">
+  <div id='search-results'>
+    {% if object_list %}
+      <div>
+        <div class='flex-col-center'> Search Results: Found {{item_count}} matches, page</div>
+        <div class='flex-col-center'>
+          <a href="{% url 'export-plant-search-results' %}?{{ request.GET.urlencode }}" class="btn btn-primary">Export to CSV</a>
+        </div>
+      </div>
 
-    {% for item in object_list  %}
-      <div class="plant-card {% if not item.is_active %}plant-card-not-active{% endif %}">
-
-        {% comment %} {% if item.is_favorite %}
-          <span class="plant-card-is-favourite"></span>
-        {% else %}
-          <span class="plant-card-is-not-favourite"></span>
-        {% endif %} {% endcomment %}
-
-        <div>
-          <a target="_blank" href="{% url 'plant-profile-page' item.id %}" class="plant-card-link">
+    {% endif %}
+    <section class="plant-cards">
+      {% for item in object_list  %}
+        <div class="plant-card {% if not item.is_active %}plant-card-not-active{% endif %}">
+          {% comment %} {% if item.is_favorite %}
+            <span class="plant-card-is-favourite"></span>
+          {% else %}
+            <span class="plant-card-is-not-favourite"></span>
+          {% endif %} {% endcomment %}
+          <div>
+            <a target="_blank" href="{% url 'plant-profile-page' item.id %}" class="plant-card-link">
+              {% if item.images.first %}
+                <img src="{{item.images.first.image.url}}" alt="image for {{item.latin_name}}">
+              {% else %}
+                <img src="{% static 'images/plant-placeholder.png' %}" alt="No image available">
+              {% endif %}
+            </a>
             {% if item.images.first %}
-              <img src="{{item.images.first.image.url}}" alt="image for {{item.latin_name}}">
-            {% else %}
-              <img src="{% static 'images/plant-placeholder.png' %}" alt="No image available">
+              <div class="plant-card-source">Source: {{item.images.first.photo_author}}</div>
             {% endif %}
-          </a>
-          {% if item.images.first %}
-            <div class="plant-card-source">Source: {{item.images.first.photo_author}}</div>
+          </div>
+          <div class="plant-card-caption">
+            <div class="plant-type-icon">
+              <img src="{% static 'images/' %}plant-type-{{ item.growth_habit }}.svg" alt="image of {{item.growth_habit}}" />
+            </div>
+            <div class="plant-names">
+              <span>{{item.english_name}}</span>
+              <span>{{item.latin_name}}</span>
+              <span>{{item.french_name}}</span>
+            </div>
+          </div>
+          {% if user.is_authenticated %}
+            <div class="flex-row wide">
+              <a class='btn' target="#">Add to cart</a>
+              <a class='btn' target="blank" href="{% url 'plant-label-pdf' item.pk%}">Labels</a>
+            </div>
           {% endif %}
         </div>
-
-        <div class="plant-card-caption">
-          <div class="plant-type-icon">
-            <img src="{% static 'images/' %}plant-type-{{ item.growth_habit }}.svg" alt="image of {{item.growth_habit}}" />
-          </div>
-          <div class="plant-names">
-            <span>{{item.english_name}}</span>
-            <span>{{item.latin_name}}</span>
-            <span>{{item.french_name}}</span>
-          </div>
-        </div>
-        {% if user.is_authenticated %}
-          <div class="flex-row wide">
-            <a class='btn' target="#">Add to cart</a>
-            <a class='btn' target="blank" href="{% url 'plant-label-pdf' item.pk%}">Labels</a>
-          </div>
+        {% if object_list.has_next and forloop.last %}
+          <span
+            hx-get="{% url 'search-plant-name' %}?page={{ page_obj.next_page_number }}"
+            hx-swap="beforeend"
+            hx-target="#search-results"
+            hx-select=".plant-card"
+            hx-push-url="true"
+            hx-trigger="revealed"
+          >
+          </span>
         {% endif %}
-      </div>
-      {% if object_list.has_next and forloop.last %}
-        <span
-          hx-get="{% url 'search-plant-name' %}?page={{ page_obj.next_page_number }}"
-          hx-swap="beforeend"
-          hx-target="#search-results"
-          hx-select=".plant-card"
-          hx-push-url="true"
-          hx-trigger="revealed"
-        >
-        </span>
-      {% endif %}
-    {% endfor %}
+      {% endfor %}
+    </section>
 
   </div>
 
