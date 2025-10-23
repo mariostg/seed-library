@@ -1916,6 +1916,19 @@ def admin_bee_species_page(request):
 
 
 @login_required
+def admin_accept_all_seeds(request):
+    # Set all plants to accepting seed and display how many were updated
+    updated_count = models.PlantProfile.objects.filter(accepting_seed=False).update(
+        accepting_seed=True
+    )
+    messages.success(
+        request,
+        f"All plants set to accepting seed. {updated_count} plants were updated.",
+    )
+    return redirect("site-admin")
+
+
+@login_required
 def admin_bee_species_add(request):
     context = {
         "title": "Create Bee Species",

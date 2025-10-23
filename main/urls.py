@@ -62,6 +62,13 @@ urlpatterns += [
 ]
 
 urlpatterns += [
+    path(
+        "admin-accept-all-seeds/",
+        views.admin_accept_all_seeds,
+        name="admin-accept-all-seeds",
+    ),
+]
+urlpatterns += [
     path("admin-colour-add/", views.admin_colour_add, name="admin-colour-add"),
     path("admin-colour-page/", views.admin_colour_page, name="admin-colour-page"),
     path(
