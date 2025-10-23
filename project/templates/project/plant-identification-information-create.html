@@ -14,6 +14,9 @@
   <main class="main-content">
     <div class="flex-col-center">
       <h1>Record New Plant Identification Information</h1>
+      <div class="alert alert--info">
+        You can search for the Latin Name of the plant to auto-fill the Taxon ID, English Name, and French Name fields using data from the VASCAN database.
+      </div>
       <form method="post" action="{% url 'plant-identification-information-create' %}">
         {% csrf_token %}
         <div class="form inputs">
@@ -29,10 +32,14 @@
                      hx-target="#id_taxon, #id_english_name, #id_french_name"    hx-trigger="change delay:500ms"
                      hx-swap="value"
                      hx-include="this"
+                     hx-indicator=".htmx-indicator"
                      id="id_latin_name"
                      name="latin_name"
                      value="{{ plant.latin_name }}" required>
             </div>
+            <span class="htmx-indicator alert alert--info">
+              <img src="{% static 'images/searching.svg' %}"/> Searching...
+            </span>
                 <!--english_name-->
             <div class="input-text">
               <label for="id_english_name">English Name</label>
