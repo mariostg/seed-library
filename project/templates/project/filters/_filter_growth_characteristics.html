@@ -236,96 +236,37 @@
 
 <div class="filter__sub-header">Plant Type</div>
 
-  <!--Input checkbox for conifer tree-->
-<input
-  type="checkbox"
-  id="conifer_tree"
-  name="conifer_tree"
-  value="Conifer Tree"
-  hx-get="/search-plant-name"
-  hx-trigger="click"
-  hx-target="#search-results"
-  hx-push-url="true"
-  hx-include="{{hx_include}}"
-  {% if conifer_tree %} checked {% endif %}
-/>
-<label for="conifer_tree">Conifer tree</label><br />
-
-  <!--Input checkbox for decideous tree-->
-<input
-  type="checkbox"
-  id="deciduous_tree"
-  name="deciduous_tree"
-  value="Deciduous Tree"
-  hx-get="/search-plant-name"
-  hx-trigger="click"
-  hx-target="#search-results"
-  hx-push-url="true"
-  hx-include="{{hx_include}}"
-  {% if deciduous_tree %} checked {% endif %}
-/>
-<label for="deciduous_tree">Deciduous tree</label><br />
-
-<div id="plant-types" class="">
-      <!--Input checkbox for flowering plant-->
+<div id="growth-habits-options">
+  <!--Radio options button group for growth habits-->
+  <!--a radio input to reset options-->
   <input
-    type="checkbox"
-    id="flowering_plant"
-    name="flowering_plant"
-    value="Flowering plant"
+    type="radio"
+    id="growth_habit_reset"
+    name="growth_habit"
+    value=""
     hx-get="/search-plant-name"
     hx-trigger="click"
     hx-target="#search-results"
     hx-push-url="true"
     hx-include="{{hx_include}}"
-    {% if flowering_plant %} checked {% endif %}
+    {% if growth_habit == "" %} checked {% endif %}
   />
-  <label for="flowering_plant">Flowering Plant</label><br />
-
-      <!--Input checkbox for grass-->
-  <input
-    type="checkbox"
-    id="grass_sedge_rush"
-    name="grass"
-    value="Grass"
-    hx-get="/search-plant-name"
-    hx-trigger="click"
-    hx-target="#search-results"
-    hx-push-url="true"
-    hx-include="{{hx_include}}"
-    {% if grass_sedge_rush %} checked {% endif %}
-  />
-  <label for="grass_sedge_rush">Grass/sedge/rush</label><br />
-
-      <!--Input checkbox for shrub-->
-  <input
-    type="checkbox"
-    id="shrub"
-    name="shrub"
-    value="Shrub"
-    hx-get="/search-plant-name"
-    hx-trigger="click"
-    hx-target="#search-results"
-    hx-push-url="true"
-    hx-include="{{hx_include}}"
-    {% if shrub %} checked {% endif %}
-  />
-  <label for="shrub">Shrub</label><br />
-
-      <!--Input checkbox for vine-->
-  <input
-    type="checkbox"
-    id="id_checkbox_vine"
-    name="vine"
-    value="Vine"
-    hx-get="/search-plant-name"
-    hx-trigger="click"
-    hx-target="#search-results"
-    hx-push-url="true"
-    hx-include="{{hx_include}}"
-    {% if id_checkbox_vine %} checked {% endif %}
-  />
-  <label for="id_checkbox_vine">Vine</label><br />
+  <label for="growth_habit_reset">Any</label><br />
+  {% for habit in growth_habits %}
+    <input
+      type="radio"
+      id="growth_habit_{{ habit.id }}"
+      name="growth_habit"
+      value="{{ habit.id }}"
+      hx-get="/search-plant-name"
+      hx-trigger="click"
+      hx-target="#search-results"
+      hx-push-url="true"
+      hx-include="{{hx_include}}"
+      {% if habit.id == growth_habit %} checked {% endif %}
+    />
+    <label for="growth_habit_{{ habit.id }}">{{ habit.growth_habit }}</label><br />
+  {% endfor %}
 </div>
 
 <div class='filter__sub-header'>Soil Tolerances</div>

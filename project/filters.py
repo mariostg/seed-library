@@ -130,24 +130,7 @@ class PlantProfileFilter(django_filters.FilterSet):
     growth_habit = django_filters.CharFilter(
         method="filter_growth_habit",
     )
-    flowering_plant = django_filters.CharFilter(
-        method="filter_growth_habit",
-    )
-    grass = django_filters.CharFilter(
-        method="filter_growth_habit",
-    )
-    shrub = django_filters.CharFilter(
-        method="filter_growth_habit",
-    )
-    deciduous_tree = django_filters.CharFilter(
-        method="filter_growth_habit",
-    )
-    conifer_tree = django_filters.CharFilter(
-        method="filter_growth_habit",
-    )
-    vine = django_filters.CharFilter(
-        method="filter_growth_habit",
-    )
+
     hummingbird_friendly = django_filters.CharFilter(
         method="filter_boolean",
     )
@@ -359,10 +342,10 @@ class PlantProfileFilter(django_filters.FilterSet):
 
     def filter_growth_habit(self, queryset, name, value):
         if value:
-            return queryset.filter(growth_habit__growth_habit=value)
-
+            growth_id = int(value)
+            return queryset.filter(growth_habit__id=growth_id)
         else:
-            return queryset.none()
+            return queryset
 
     def filter_harvesting_start(self, queryset, name, value):
         if value:

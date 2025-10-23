@@ -224,6 +224,7 @@ def search_plant_name(request):
 
     object_list = filters.PlantProfileFilter(request.GET, queryset=data)
     ecozones = models.Ecozone.objects.all().order_by("ecozone")
+    growth_habits = models.GrowthHabit.objects.all().order_by("growth_habit")
     # Create lists of different filter categories
     sun_filters = [
         "#full_sun",
@@ -235,14 +236,8 @@ def search_plant_name(request):
         "#moisture_medium",
         "#moisture_wet",
     ]
-    plant_type_filters = [
-        "#flowering_plant",
-        "#grass_sedge_rush",
-        "#shrub",
-        "#deciduous_tree",
-        "#conifer_tree",
-        "#vine",
-    ]
+    growth_habit_filters = [f"#growth_habit_{habit.id}" for habit in growth_habits]
+    growth_habit_filters.append("#growth_habit_reset")
     physical_attributes_filters = [
         "#max_height",
         "#max_width",
@@ -364,7 +359,7 @@ def search_plant_name(request):
         + ["#is_active"]
         + sun_filters
         + moisture_filters
-        + plant_type_filters
+        + growth_habit_filters
         + physical_attributes_filters
         + lifecycle_filters
         + bloom_period_filters
@@ -390,6 +385,7 @@ def search_plant_name(request):
         "stratification_duration"
     )
     context = {
+        "growth_habits": growth_habits,
         "ecozones": ecozones,
         "stratification_durations": stratification_durations,
         "months": utils.MONTHS.values(),
