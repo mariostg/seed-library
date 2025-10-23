@@ -28,3 +28,4 @@ rsync-exclude.txt
 upload.sh
 scss/
 db.sqlite3
+media/project/images/plants/
