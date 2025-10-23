@@ -119,119 +119,23 @@
 </div>
 
 <div class='filter__sub-header'>Bloom colours</div>
-<div id="colours" class="">
-      <!--Input checkbox for color blue-->
-  <input
-    type="checkbox"
-    id="colour_blue"
-    name="colour_blue"
-    value="Blue"
-    hx-get="/search-plant-name"
-    hx-trigger="click"
-    hx-target="#search-results"
-    hx-push-url="true"
-    hx-include="{{hx_include}}"
-    {% if colour_blue %} checked {% endif %}
-  />
-  <label for="colour_blue">Blue</label><br />
-      <!--Input checkbox for color green-->
-  <input
-    type="checkbox"
-    id="colour_green"
-    name="colour_green"
-    value="Green"
-    hx-get="/search-plant-name"
-    hx-trigger="click"
-    hx-target="#search-results"
-    hx-push-url="true"
-    hx-include="{{hx_include}}"
-    {% if colour_green %} checked {% endif %}
-  />
-  <label for="colour_green">Green</label><br />
-      <!--Input checkbox for color orange-->
-  <input
-    type="checkbox"
-    id="colour_orange"
-    name="colour_orange"
-    value="Orange"
-    hx-get="/search-plant-name"
-    hx-trigger="click"
-    hx-target="#search-results"
-    hx-push-url="true"
-    hx-include="{{hx_include}}"
-    {% if colour_orange %} checked {% endif %}
-  />
-  <label for="colour_orange">Orange</label><br />
-      <!--Input checkbox for color pink-->
-  <input
-    type="checkbox"
-    id="colour_pink"
-    name="colour_pink"
-    value="Pink"
-    hx-get="/search-plant-name"
-    hx-trigger="click"
-    hx-target="#search-results"
-    hx-push-url="true"
-    hx-include="{{hx_include}}"
-    {% if colour_pink %} checked {% endif %}
-  />
-  <label for="colour_pink">Pink</label><br />
-      <!--Input checkbox for color purple-->
-  <input
-    type="checkbox"
-    id="colour_purple"
-    name="colour_purple"
-    value="Purple"
-    hx-get="/search-plant-name"
-    hx-trigger="click"
-    hx-target="#search-results"
-    hx-push-url="true"
-    hx-include="{{hx_include}}"
-    {% if colour_purple %} checked {% endif %}
-  />
-  <label for="colour_purple">Purple</label><br />
-      <!--Input checkbox for color red-->
-  <input
-    type="checkbox"
-    id="colour_red"
-    name="colour_red"
-    value="Red"
-    hx-get="/search-plant-name"
-    hx-trigger="click"
-    hx-target="#search-results"
-    hx-push-url="true"
-    hx-include="{{hx_include}}"
-    {% if colour_red %} checked {% endif %}
-  />
-  <label for="colour_red">Red</label><br />
-      <!--Input checkbox for color white-->
-  <input
-    type="checkbox"
-    id="colour_white"
-    name="colour_white"
-    value="White"
-    hx-get="/search-plant-name"
-    hx-trigger="click"
-    hx-target="#search-results"
-    hx-push-url="true"
-    hx-include="{{hx_include}}"
-    {% if colour_white %} checked {% endif %}
-  />
-  <label for="colour_white">White</label><br />
-      <!--Input checkbox for color yellow-->
-  <input
-    type="checkbox"
-    id="colour_yellow"
-    name="colour_yellow"
-    value="Yellow"
-    hx-get="/search-plant-name"
-    hx-trigger="click"
-    hx-target="#search-results"
-    hx-push-url="true"
-    hx-include="{{hx_include}}"
-    {% if colour_yellow %} checked {% endif %}
-  />
-  <label for="colour_yellow">Yellow</label><br />
+<div id="bloom-colours">
+  <!--radio options for bloom colours-->
+  {% for colour in bloom_colours %}
+    <input
+      type="radio"
+      id="bloom_colour_{{ colour.id }}"
+      name="bloom_colour"
+      value="{{ colour.id }}"
+      hx-get="/search-plant-name"
+      hx-trigger="click"
+      hx-target="#search-results"
+      hx-push-url="true"
+      hx-include="{{hx_include}}"
+      {% if colour.id == bloom_colour %} checked {% endif %}
+    />
+    <label for="bloom_colour_{{ colour.id }}">{{ colour.bloom_colour }}</label><br />
+  {% endfor %}
 </div>
 
 <div class="filter__sub-header">Plant Type</div>

@@ -225,6 +225,7 @@ def search_plant_name(request):
     object_list = filters.PlantProfileFilter(request.GET, queryset=data)
     ecozones = models.Ecozone.objects.all().order_by("ecozone")
     growth_habits = models.GrowthHabit.objects.all().order_by("growth_habit")
+    bloom_colours = models.BloomColour.objects.all().order_by("bloom_colour")
     # Create lists of different filter categories
     sun_filters = [
         "#full_sun",
@@ -253,16 +254,8 @@ def search_plant_name(request):
         "#bloom_start",
         "#bloom_end",
     ]
-    colour_filters = [
-        "#colour_blue",
-        "#colour_green",
-        "#colour_orange",
-        "#colour_pink",
-        "#colour_purple",
-        "#colour_red",
-        "#colour_white",
-        "#colour_yellow",
-    ]
+    bloom_colour_filters = [f"#bloom_colour_{color.id}" for color in bloom_colours]
+
     soil_tolerance_filters = [
         "#limestone_tolerant",
         "#sand_tolerant",
@@ -363,7 +356,7 @@ def search_plant_name(request):
         + physical_attributes_filters
         + lifecycle_filters
         + bloom_period_filters
-        + colour_filters
+        + bloom_colour_filters
         + soil_tolerance_filters
         + harvesting_start_filters
         + ["#stratification_duration"]
@@ -387,6 +380,7 @@ def search_plant_name(request):
     context = {
         "growth_habits": growth_habits,
         "ecozones": ecozones,
+        "bloom_colours": bloom_colours,
         "stratification_durations": stratification_durations,
         "months": utils.MONTHS.values(),
         "months_numbered": utils.MONTHS.items(),

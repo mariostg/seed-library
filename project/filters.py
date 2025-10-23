@@ -103,30 +103,11 @@ class PlantProfileFilter(django_filters.FilterSet):
     grasp_candidate = django_filters.CharFilter(
         method="filter_boolean",
     )
-    colour_blue = django_filters.CharFilter(
-        method="filter_color",
+
+    bloom_colour = django_filters.CharFilter(
+        method="filter_bloom_colour",
     )
-    colour_green = django_filters.CharFilter(
-        method="filter_color",
-    )
-    colour_orange = django_filters.CharFilter(
-        method="filter_color",
-    )
-    colour_pink = django_filters.CharFilter(
-        method="filter_color",
-    )
-    colour_purple = django_filters.CharFilter(
-        method="filter_color",
-    )
-    colour_red = django_filters.CharFilter(
-        method="filter_color",
-    )
-    colour_white = django_filters.CharFilter(
-        method="filter_color",
-    )
-    colour_yellow = django_filters.CharFilter(
-        method="filter_color",
-    )
+
     growth_habit = django_filters.CharFilter(
         method="filter_growth_habit",
     )
@@ -371,9 +352,10 @@ class PlantProfileFilter(django_filters.FilterSet):
         else:
             return queryset.none()
 
-    def filter_color(self, queryset, name, value):
+    def filter_bloom_colour(self, queryset, name, value):
         if value:
-            return queryset.filter(bloom_colour__bloom_colour=value)
+            bloom_colour_id = int(value)
+            return queryset.filter(bloom_colour__id=bloom_colour_id)
         else:
             return queryset.none()
 
