@@ -121,6 +121,21 @@
 <div class='filter__sub-header'>Bloom colours</div>
 <div id="bloom-colours">
   <!--radio options for bloom colours-->
+  <!-- radio input to reset options-->
+  <input
+    type="radio"
+    id="bloom_colour_reset"
+    name="bloom_colour"
+    value=""
+    hx-get="/search-plant-name"
+    hx-trigger="click"
+    hx-target="#search-results"
+    hx-push-url="true"
+    hx-include="{{hx_include}}"
+    {% if bloom_colour == "" %} checked {% endif %}
+  />
+  <label for="bloom_colour_reset">Any</label><br />
+
   {% for colour in bloom_colours %}
     <input
       type="radio"
