@@ -2947,6 +2947,20 @@ def admin_image_add(request):
         if form.is_valid():
             context["form"] = form
             obj: models.PlantImage = form.save(commit=False)
+
+            # check if an image for this plant profile and morphology_aspect already exists
+            if models.PlantImage.objects.filter(
+                plant_profile=obj.plant_profile, morphology_aspect=obj.morphology_aspect
+            ).exists():
+                messages.error(
+                    request,
+                    f"An image for the plant profile <em>{obj.plant_profile}</em> and morphology aspect <em>{obj.morphology_aspect}</em> already exists. Please update the existing image instead.  If you want to add a new image, please select a different morphology aspect.",
+                )
+                return render(
+                    request,
+                    "project/admin/admin-image-form.html",
+                    context,
+                )
             # set obj.photo_date to today if not set
             if not obj.photo_date:
                 obj.photo_date = datetime.now().date()
