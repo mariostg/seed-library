@@ -560,7 +560,7 @@ def update_availability(request):
         "seed_event_table", "latin_name"
     )
     context = {"object_list": plants}
-    return render(request, "project/update-availability.html", context)
+    return render(request, "project/update/update-availability.html", context)
 
 
 @login_required
