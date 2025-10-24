@@ -17,32 +17,32 @@
 <!--Input box for inactive status-->
 <input
   type="checkbox"
-  id="is_active"
-  name="is_active"
-  value="Is Active"
+  id="is_not_active"
+  name="is_not_active"
+  value="True"
   hx-get="/search-plant-name"
   hx-trigger="click"
   hx-target="#search-results"
   hx-push-url="true"
   hx-include="{{hx_include}}"
-  {% if is_active %} checked {% endif %}
+  {% if is_not_active %} checked {% endif %}
 />
-<label for="is_active">Is Not Active</label><br />
+<label for="is_not_active">Is Not Active</label><br />
 
 <!--Input box for accepted status-->
 <input
   type="checkbox"
-  id="is_accepted"
-  name="is_accepted"
-  value="Is Accepted"
+  id="is_not_accepted"
+  name="is_not_accepted"
+  value="True"
   hx-get="/search-plant-name"
   hx-trigger="click"
   hx-target="#search-results"
   hx-push-url="true"
   hx-include="{{hx_include}}"
-  {% if is_accepted %} checked {% endif %}
+  {% if is_not_accepted %} checked {% endif %}
 />
-<label for="is_accepted">Is Not Accepted</label><br />
+<label for="is_not_accepted">Is Not Accepted</label><br />
 
 <!--Input box for has_notice status-->
 <input

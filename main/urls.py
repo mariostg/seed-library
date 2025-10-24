@@ -36,6 +36,17 @@ urlpatterns = [
         views.toggle_availability,
         name="toggle-availability",
     ),
+    path("toggle-is-active/<int:pk>", views.toggle_is_active, name="toggle-is-active"),
+    path(
+        "toggle-seed-accepting/<int:pk>",
+        views.toggle_seed_accepting,
+        name="toggle-seed-accepting",
+    ),
+    path(
+        "toggle-plant-accepted/<int:pk>",
+        views.toggle_plant_accepted,
+        name="toggle-plant-accepted",
+    ),
     path("plant-catalog/", views.plant_catalog, name="plant-catalog"),
 ]
 urlpatterns += [

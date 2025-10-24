@@ -35,6 +35,36 @@ def toggle_availability(request, pk):
     # return render(request, "project/update-availability.html", context)
 
 
+@login_required
+def toggle_is_active(request, pk):
+    plant = utils.single_plant(pk, request)
+    plant.is_active = not plant.is_active
+    plant.save()
+    plant = utils.single_plant(pk, request)
+    context = {"pk": plant.pk, "is_active": plant.is_active}
+    return JsonResponse(context)
+
+
+@login_required
+def toggle_seed_accepting(request, pk):
+    plant = utils.single_plant(pk, request)
+    plant.accepting_seed = not plant.accepting_seed
+    plant.save()
+    plant = utils.single_plant(pk, request)
+    context = {"pk": plant.pk, "accepting_seed": plant.accepting_seed}
+    return JsonResponse(context)
+
+
+@login_required
+def toggle_plant_accepted(request, pk):
+    plant = utils.single_plant(pk, request)
+    plant.is_accepted = not plant.is_accepted
+    plant.save()
+    plant = utils.single_plant(pk, request)
+    context = {"pk": plant.pk, "is_accepted": plant.is_accepted}
+    return JsonResponse(context)
+
+
 def plant_profile_page(request, pk):
     plant: models.PlantProfile = utils.single_plant(pk, request)
     if not plant:
@@ -341,7 +371,7 @@ def search_plant_name(request):
     ecozones_filters = [f"#ecozone_{ecozone.id}" for ecozone in ecozones]
     admin_controls_filters = [
         "#is_draft",
-        "#is_active",
+        "#is_not_active",
         "#is_accepted",
         "#has_notice",
     ]

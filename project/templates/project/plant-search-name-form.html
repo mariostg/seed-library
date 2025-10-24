@@ -23,15 +23,15 @@
       </div>
       <!--Input checkbox to filter for plants that are available only (is_active)-->
       <div class="form__field">
-        <input type="checkbox" id="is_active" name="is_active"
+        <input type="checkbox" id="seed_availability" name="seed_availability"
                hx-get="/search-plant-name"
                hx-trigger="change"
                hx-target="#search-results"
                hx-push-url="true"
                hx-include="{{hx_include}}"
                hx-indicator=".htmx-indicator"
-               {% if is_active %}checked{% endif %}>
-        <label for="is_active" class="form-label">Show Plants that are Available Only</label>
+               {% if seed_availability %}checked{% endif %}>
+        <label for="seed_availability" class="form-label">Show Plants that are Available Only</label>
       </div>
       <span class="htmx-indicator">
         <img src="{% static 'images/searching.svg' %}"/> Searching...

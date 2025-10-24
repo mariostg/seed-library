@@ -250,8 +250,20 @@ class PlantProfileFilter(django_filters.FilterSet):
         # method="filter_excludes",
         method="filter_boolean",
     )
+    is_not_active = django_filters.BooleanFilter(
+        field_name="is_active",
+        lookup_expr="exact",
+        exclude=True,  # This inverts the filter
+    )
+
     is_accepted = django_filters.CharFilter(
         method="filter_excludes",
+    )
+
+    is_not_accepted = django_filters.BooleanFilter(
+        field_name="is_accepted",
+        lookup_expr="exact",
+        exclude=True,  # This inverts the filter
     )
     has_notice = django_filters.CharFilter(
         method="filter_boolean",
@@ -411,4 +423,9 @@ class PlantProfileFilter(django_filters.FilterSet):
 
     class Meta:
         model = models.PlantProfile
-        fields = ["latin_name", "bloom_start", "bloom_end", "seed_availability"]
+        fields = [
+            "latin_name",
+            "bloom_start",
+            "bloom_end",
+            "seed_availability",
+        ]

@@ -8,28 +8,46 @@
       <table>
         <thead>
           <tr>
-            <th>Availability</th>
             <th>Event Table</th>
             <th colspan='3'>Names</th>
-            <th>Active</th>
-            <th>Accepted</th>
+            <th>Seed Availability</th>
+            <th>Seeds Accepted</th>
+            <th>Plant Active</th>
+            <th>Plant Accepted</th>
           </tr>
         </thead>
         {% for item in object_list  %}
           <tr>
+            <td>{{item.seed_event_table}}</td>
+            <td>{{item.latin_name}}</td>
+            <td> {{item.english_name}}</td>
+            <td>{{item.french_name}}</td>
+
             <td data-availability={{item.seed_availability}} data-pk={{item.pk}}
-                {% if item.seed_availability %}class="toggler ok">️✔️
+                {% if item.seed_availability %}class="toggler ok">&#x2713;
             {% else %}class="toggler">✖️
             {% endif %}
           </td>
-          <td>{{item.seed_event_table}}</td>
-          <td>{{item.latin_name}}</td>
-          <td> {{item.english_name}}</td>
-          <td>{{item.french_name}}</td>
-          <td>{{item.is_active}}</td>
-          <td>{{item.is_accepted}}</td>
-          <td><a target="_blank" href="{% url 'plant-profile-page' item.pk%}">View</a></td>
+
+          <td data-accepting-seed={{item.accepting_seed}} data-pk={{item.pk}}
+              {% if item.accepting_seed %}class="seed-accepting-toggler ok">&#x2713;
+          {% else %}class="seed-accepting-toggler">✖️
+          {% endif %}
           </td>
+
+          <td data-active={{item.is_active}} data-pk={{item.pk}}
+              {% if item.is_active %}class="is-active-toggler ok">&#x2713;
+          {% else %}class="is-active-toggler">✖️
+          {% endif %}
+          </td>
+
+          <td data-plant-accepted={{item.is_accepted}} data-pk={{item.pk}}
+              {% if item.is_accepted %}class="plant-accepted-toggler ok">&#x2713;
+          {% else %}class="plant-accepted-toggler">✖️
+          {% endif %}
+          </td>
+
+          <td><a target="_blank" href="{% url 'plant-profile-page' item.pk%}">Profile</a></td>
         {% endfor %}
       </table>
     </section>
