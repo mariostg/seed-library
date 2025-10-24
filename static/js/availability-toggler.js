@@ -22,7 +22,7 @@ function set_availability(elem) {
           elem.innerHTML = "&#x2713;";
         } else {
           elem.classList.remove("ok");
-          elem.innerHTML = "Not Available";
+          elem.innerHTML = "✖️";
         }
       });
     console.log("PK", elem);
