@@ -1164,7 +1164,7 @@ def admin_one_cultivar_page(request):
     context = {
         "object_list": data,
         "url_name": "admin-one-cultivar-page",
-        "title": "One Cultivars",
+        "title": "Cultivars",
     }
     return render(request, "project/admin/admin-one-cultivar-page.html", context)
 
@@ -1172,7 +1172,7 @@ def admin_one_cultivar_page(request):
 @login_required
 def admin_one_cultivar_add(request):
     context = {
-        "title": "Create One Cultivar",
+        "title": "Create Cultivar",
         "url_name": "admin-one-cultivar-page",
     }
     if request.method == "POST":
@@ -1183,16 +1183,14 @@ def admin_one_cultivar_add(request):
             try:
                 form.save()
             except IntegrityError:
-                messages.error(
-                    request, f"One Cultivar {obj.one_cultivar} exists already."
-                )
+                messages.error(request, f"Cultivar {obj.one_cultivar} exists already.")
                 return render(
                     request,
                     "project/simple-form.html",
                     context,
                 )
         else:
-            messages.error(request, "One Cultivar not valid.")
+            messages.error(request, "Cultivar not valid.")
             context["form"] = form
     else:
         context["form"] = forms.AdminOneCultivarForm
@@ -1216,7 +1214,7 @@ def admin_one_cultivar_update(request, pk):
         "project/simple-form.html",
         {
             "form": form,
-            "title": "One Cultivar Update",
+            "title": "Cultivar Update",
             "url_name": "admin-one-cultivar-page",
         },
     )
