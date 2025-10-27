@@ -2,7 +2,7 @@
 {% load static %}
 <div>
   <!--link to pdf sowing label-->
-  <a href="{% url 'plant-label-pdf' plant.pk %}" target="_blank">Download Sowing Label (PDF)</a>
+  <a href="{% url 'plant-label-pdf' plant.pk %}" target="_blank">Download Seed Envelope Labels (PDF)</a>
   <ul>
     <li>Sowing depth: {{ plant.sowing_depth }}</li>
     <li>{{ sow_before|default:"Sow anytime" }}</li>
