@@ -8,6 +8,11 @@
   padding: 1rem;
   background-color: #f7f7f7;
 }
+.plant-profile-characteristics {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
 .plant-profile-characteristics-item {
   display: flex;
   align-items: center;

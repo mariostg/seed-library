@@ -118,6 +118,7 @@ td {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     &-caption {
       display: flex;
+      flex: 2;
       gap: 10px;
       align-items: center;
     }

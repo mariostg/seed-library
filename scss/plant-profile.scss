@@ -2,6 +2,11 @@
 @import "_mixins";
 
 .plant-profile {
+  &-characteristics {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+  }
   &-characteristics-item {
     display: flex;
     align-items: center;
