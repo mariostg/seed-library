@@ -548,11 +548,41 @@ class Ecozone(Base):
 
 
 class PlantProfileManager(models.Manager):
+    """
+    Custom manager for PlantProfile model that filters out inactive plant profiles.
+
+    This manager automatically applies a filter to exclude plant profiles where
+    is_active=False, ensuring that only active plant profiles are returned in
+    queries by default.
+
+    Returns:
+        QuerySet: A filtered queryset containing only active plant profiles
+            (where is_active=True).
+
+    Example:
+        # Using the custom manager
+        active_plants = PlantProfile.objects.all()  # Only returns active profiles
+    """
+
     def get_queryset(self):
         return super().get_queryset().filter(is_active=True)
 
 
 class PlantProfileAllManager(models.Manager):
+    """
+    Custom manager for PlantProfile model that returns all objects without any filtering.
+
+    This manager provides access to all PlantProfile instances in the database,
+    including those that might be filtered out by other managers. It serves as
+    a complete, unfiltered view of all plant profile records.
+
+    This manager can be useful for administrative tasks or scenarios where a full overview of all plant profiles is needed.  It should be used by admin users only.
+
+    Methods:
+        get_queryset(): Returns the complete queryset of all PlantProfile objects
+                       without any additional filtering applied.
+    """
+
     def get_queryset(self):
         return super().get_queryset()
 
