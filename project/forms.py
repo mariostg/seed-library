@@ -308,6 +308,17 @@ class AdminImageForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
 
 
+class AdminPlantMorphologyForm(forms.ModelForm):
+    class Meta:
+        model = models.PlantMorphology
+        fields = [
+            "element",
+        ]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+
 class ProjectUserForm(ModelForm):
     class Meta:
         model = models.ProjectUser

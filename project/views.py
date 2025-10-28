@@ -3059,3 +3059,88 @@ def admin_image_delete(request, pk):
         return redirect("admin-images-page")
     context = {"object": obj, "back": "admin-images-page"}
     return render(request, "core/delete-object.html", context)
+
+
+@login_required
+def admin_plant_morphology_page(request):
+    obj = models.PlantMorphology.objects.annotate(
+        image_count=Count("plantimage")
+    ).order_by("element")
+    context = {
+        "title": "Plant Morphology Elements",
+        "object_list": obj,
+        "url_name": "admin-plant-morphology-page",
+    }
+    return render(request, "project/admin/admin-plant-morphology-page.html", context)
+
+
+@login_required
+def admin_plant_morphology_add(request):
+    context = {
+        "title": "Create Plant Morphology Element",
+        "url_name": "admin-plant-morphology-page",
+    }
+    if request.method == "POST":
+        form = forms.AdminPlantMorphologyForm(request.POST)
+        if form.is_valid():
+            context["form"] = form
+            obj: models.PlantMorphology = form.save(commit=False)
+            try:
+                form.save()
+            except IntegrityError:
+                messages.error(
+                    request, f"Plant Morphology Element {obj.element} exists already."
+                )
+                return render(
+                    request,
+                    "project/simple-form.html",
+                    context,
+                )
+        else:
+            messages.error(request, "Plant Morphology Element not valid.")
+            context["form"] = form
+    else:
+        context["form"] = forms.AdminPlantMorphologyForm()
+
+    return render(request, "project/simple-form.html", context)
+
+
+@login_required
+def admin_plant_morphology_update(request, pk):
+    obj = models.PlantMorphology.objects.get(id=pk)
+    form = forms.AdminPlantMorphologyForm(instance=obj)
+
+    if request.method == "POST":
+        form = forms.AdminPlantMorphologyForm(request.POST, instance=obj)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Plant morphology updated successfully.")
+            return redirect("admin-plant-morphology-page")
+
+    return render(
+        request,
+        "project/simple-form.html",
+        {
+            "form": form,
+            "title": "Update Plant Morphology",
+            "url_name": "admin-plant-morphology-page",
+        },
+    )
+
+
+@login_required
+def admin_plant_morphology_delete(request, pk):
+    obj: models.PlantMorphology = models.PlantMorphology.objects.get(id=pk)
+    if request.method == "POST":
+        try:
+            obj.delete()
+        except RestrictedError as e:
+            msg = e.args[0].split(":")[0] + " : "
+            fkeys = []
+            for fk in e.restricted_objects:
+                fkeys.append(fk.element)
+            msg = msg + ", ".join(fkeys)
+            messages.warning(request, msg)
+        return redirect("admin-plant-morphology-page")
+    context = {"object": obj, "back": "admin-plant-morphology-page"}
+    return render(request, "core/delete-object.html", context)

@@ -512,6 +512,29 @@ urlpatterns += [
 ]
 
 urlpatterns += [
+    path(
+        "admin-plant-morphology-page/",
+        views.admin_plant_morphology_page,
+        name="admin-plant-morphology-page",
+    ),
+    path(
+        "admin-plant-morphology-add/",
+        views.admin_plant_morphology_add,
+        name="admin-plant-morphology-add",
+    ),
+    path(
+        "admin-plant-morphology-update/<int:pk>/",
+        views.admin_plant_morphology_update,
+        name="admin-plant-morphology-update",
+    ),
+    path(
+        "admin-plant-morphology-delete/<int:pk>/",
+        views.admin_plant_morphology_delete,
+        name="admin-plant-morphology-delete",
+    ),
+]
+
+urlpatterns += [
     path("login/", views.user_login, name="login"),
     path("logout/", views.user_logout, name="logout"),
     path(
