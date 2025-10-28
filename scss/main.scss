@@ -283,6 +283,12 @@ td {
   transition: background-color 0.3s ease;
   text-align: center;
 
+  &-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
   &__delete {
     background-color: red;
   }

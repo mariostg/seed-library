@@ -565,6 +565,12 @@ td.actions {
   transition: background-color 0.3s ease;
   text-align: center;
 }
+.btn-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1rem;
+}
 .btn__delete {
   background-color: red;
 }
