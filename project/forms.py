@@ -194,6 +194,14 @@ class AdminSeedStorageForm(forms.ModelForm):
 
 
 class AdminOneCultivarForm(forms.ModelForm):
+    one_cultivar = forms.CharField(
+        label="Cultivar",
+        max_length=120,
+        widget=forms.Textarea(
+            attrs={"class": "input", "style": "width: 500px;", "rows": "4"},
+        ),
+    )
+
     class Meta:
         model = models.OneCultivar
         fields = ["one_cultivar"]
