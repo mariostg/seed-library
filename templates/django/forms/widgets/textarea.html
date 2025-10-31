@@ -1,2 +1,2 @@
-<textarea {% if widget.attrs.class %} {{widget.attrs.class}} {% else %} class='form-input' {% endif %} name="{{ widget.name }}"
+<textarea {% if widget.attrs.class %} class={{widget.attrs.class}} {% else %} class='form-input' {% endif %} name="{{ widget.name }}"
           {% for attr, value in widget.attrs.items %}{% if not attr == 'class'  %} {{ attr }}="{{ value }}"{% endif %}{% endfor %}> {% if widget.value %}{{ widget.value }}{% endif %} </textarea>
