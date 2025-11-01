@@ -2708,6 +2708,14 @@ def plant_sowing_update(request, pk):
     if not sowing_depth:
         messages.warning(request, "No sowing depth available. Please add some first.")
         return redirect("sowing-depth-table")
+    stratification_duration = models.StratificationDuration.objects.all().order_by(
+        "stratification_duration"
+    )
+    if not stratification_duration:
+        messages.warning(
+            request, "No stratification duration available. Please add some first."
+        )
+        return redirect("stratification-duration-table")
 
     if request.method == "POST":
         form = forms.PlantSowingForm(request.POST, instance=plant)
@@ -2724,6 +2732,7 @@ def plant_sowing_update(request, pk):
         "title": f"{plant.latin_name} - Sowing Information",
         "plant": plant,
         "sowing_depth": sowing_depth,
+        "stratification_duration": stratification_duration,
         "form": form,
     }
     return render(request, "project/update/plant-sowing-update.html", context)

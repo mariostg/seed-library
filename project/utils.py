@@ -81,7 +81,7 @@ def plant_sowing_notes(plant: PlantProfile):
 
 
 def plant_label_info(plant: PlantProfile, request: HttpRequest) -> list[str]:
-    detail = None
+    detail = ""
 
     if not plant.stratification_detail:
         plant.stratification_detail = "No Stratification"
@@ -97,10 +97,16 @@ def plant_label_info(plant: PlantProfile, request: HttpRequest) -> list[str]:
         f"Bloom: {MONTHS.get(plant.bloom_start, '')} - {MONTHS.get(plant.bloom_end, '')}",
         *plant_sowing_notes(plant),  # Unpack the list items individually
         sow_before(plant),
-        stratification_need(plant),
-        plant.sowing_depth.sowing_depth,
     ]
-    if detail:
+    if (
+        plant.stratification_duration
+        and plant.stratification_duration.stratification_duration > 0
+    ):
+        label_info.append(f"Stratify for: {plant.stratification_duration}")
+
+    label_info.append(plant.sowing_depth.sowing_depth)
+
+    if detail != "":
         label_info.append(detail)
     label_info.reverse()
     return label_info
@@ -131,6 +137,8 @@ def sow_before(plant: PlantProfile):
         return "Sow by December"
     elif duration == 180:
         return "Sow by November"
+    else:
+        return ""
 
 
 def is_plant_toxic(plant: PlantProfile):
