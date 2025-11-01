@@ -6,6 +6,17 @@ from django.utils.dates import MONTHS
 from project import models
 
 
+class TextAreaField(forms.CharField):
+    def __init__(self, *args, **kwargs):
+        kwargs.setdefault(
+            "widget",
+            forms.Textarea(
+                attrs={"class": "input-textarea", "rows": 4, "style": "width: 500px;"}
+            ),
+        )
+        super().__init__(*args, **kwargs)
+
+
 class PlantProfileForm(forms.ModelForm):
     class Meta:
         model = models.PlantProfile
@@ -185,6 +196,15 @@ class AdminSeedViabilityTestForm(forms.ModelForm):
 
 
 class AdminSeedStorageForm(forms.ModelForm):
+    # seed_storage = forms.CharField(
+    #     label="Seed Storage",
+    #     max_length=120,
+    #     widget=forms.Textarea(
+    #         attrs={"class": "input", "style": "width: 500px;", "rows": "4"},
+    #     ),
+    # )
+    seed_storage = TextAreaField(label="Seed Storages")
+
     class Meta:
         model = models.SeedStorage
         fields = ["seed_storage"]

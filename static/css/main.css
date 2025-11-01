@@ -199,12 +199,12 @@ form .input-radio-group {
   flex-direction: column;
   gap: 0.5rem;
 }
-form .input-text, form .input-select {
+form .input-text, form .input-select, form .input-textarea {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
 }
-form .input-text label, form .input-select label {
+form .input-text label, form .input-select label, form .input-textarea label {
   font-weight: bold;
 }
 

@@ -1,7 +1,16 @@
 {% for field in  form %}
   {{field.errors}}
+
   <div class='form__fields'>
     {{field.label_tag}}
     {{field}}
   </div>
+{% endfor %}
+{% for field in  form %}
+  {{field.errors}}
+  {% if field.attrs %}
+    {% for attr, value in field.attrs.items %}
+      <p>--{{ attr }}: {{ value }}</p>
+    {% endfor %}
+  {% endif %}
 {% endfor %}

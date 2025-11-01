@@ -22,7 +22,8 @@ form {
       gap: 0.5rem;
     }
     &-text,
-    &-select {
+    &-select,
+    &-textarea {
       display: flex;
       flex-direction: column;
       gap: 0.5rem;
