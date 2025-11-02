@@ -1,7 +1,7 @@
 # a function to query VASCAN website https://data.canadensys.net/vascan/api/0.1/search.json?q=Actaea%20racemosa where the query string is the plant's latin name.
 # the vascan API returns a JSON response with information about the plant, including its distribution, habitat, and conservation status.
 
-import requests
+# import requests
 
 # vascan sample json return response:
 # json_data = {
@@ -81,16 +81,23 @@ import requests
 #     ],
 # }
 
+import json
+import urllib.parse
+import urllib.request
+
 
 def vascan_query(latin_name: str):
 
     url = "https://data.canadensys.net/vascan/api/0.1/search.json"
     params = {"q": latin_name}
-    response = requests.get(url, params=params)
-    if response.status_code == 200:
-        return response.json()
-    else:
-        return None
+
+    query_string = urllib.parse.urlencode(params)
+    full_url = f"{url}?{query_string}"
+    with urllib.request.urlopen(full_url) as response:
+        if response.status == 200:
+            return json.loads(response.read().decode("utf-8"))
+        else:
+            return None
 
 
 def extract_taxon_id(vascan_response):
