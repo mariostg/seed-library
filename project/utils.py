@@ -81,44 +81,62 @@ def plant_sowing_notes(plant: PlantProfile):
 
 
 def plant_label_info(plant: PlantProfile, request: HttpRequest) -> list[str]:
-    detail = ""
+    double_dormancy = None
+    latin_name = plant.latin_name
+    english_name = plant.english_name
+    french_name = plant.french_name
+    light_range = plant_light_range(plant)
+    moisture_range = f"Moisture: {plant_moisture_range(plant)}"
+    plant_size = f"{str(plant.max_height)}' tall, {str(plant.max_width)}' wide"
+    bloom_period = f"Bloom: {MONTHS.get(plant.bloom_start, '')} - {MONTHS.get(plant.bloom_end, '')}"
+    sowing_notes = plant_sowing_notes(plant)
+    sowing_time = sow_before(plant)
+    sowing_depth = plant.sowing_depth.sowing_depth
 
-    if not plant.stratification_detail:
-        plant.stratification_detail = "No Stratification"
     if plant.double_dormancy:
-        detail = "Double Dormancy"
+        double_dormancy = "Double Dormancy"
+
     label_info = [
-        plant.latin_name,
-        plant.english_name,
-        plant.french_name,
-        plant_light_range(plant),
-        f"Moisture: {plant_moisture_range(plant)}",
-        f"{str(plant.max_height)}' tall, {str(plant.max_width)}' wide",
-        f"Bloom: {MONTHS.get(plant.bloom_start, '')} - {MONTHS.get(plant.bloom_end, '')}",
-        *plant_sowing_notes(plant),  # Unpack the list items individually
-        sow_before(plant),
+        latin_name,
+        english_name,
+        french_name,
+        light_range,
+        moisture_range,
+        plant_size,
+        bloom_period,
+        *sowing_notes,  # Unpack the list items individually
+        sowing_time,
+        sowing_depth,
     ]
-    if (
-        plant.stratification_duration
-        and plant.stratification_duration.stratification_duration > 0
-    ):
-        label_info.append(f"Stratify for: {plant.stratification_duration}")
 
-    label_info.append(plant.sowing_depth.sowing_depth)
+    _stratification_need = stratification_need(plant)
+    if _stratification_need:
+        label_info.append(_stratification_need)
 
-    if detail != "":
-        label_info.append(detail)
+    if double_dormancy:
+        label_info.append(double_dormancy)
+
     label_info.reverse()
     return label_info
 
 
 def stratification_need(plant: PlantProfile):
-    if not plant.stratification_duration:
-        return "No Stratification"
-    duration = plant.stratification_duration
-    if not duration or duration == 0:
-        return "No Stratification"
-    return f"Stratify for {duration}"
+    # consider plant.stratification_detail and plant.stratification_duration and return appropriate string
+    stratification_detail = None
+    stratification_duration = None
+
+    if plant.stratification_detail:
+        stratification_detail = plant.stratification_detail
+    if plant.stratification_duration:
+        stratification_duration = plant.stratification_duration.__str__()
+
+    if stratification_detail and stratification_duration:
+        return f"{stratification_detail} {stratification_duration}"
+    elif stratification_detail:
+        return stratification_detail
+    elif stratification_duration:
+        return f"Stratify for {stratification_duration}"
+    return None
 
 
 def sow_before(plant: PlantProfile):
