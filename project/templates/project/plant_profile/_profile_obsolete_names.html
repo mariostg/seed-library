@@ -1,6 +1,6 @@
 {% if plant.obsolete_names.exists %}
   <div class="plant-obsolete-names">
-    <h3>Obsolete Names</h3>
+    <h3>Synonyms</h3>
     {% for obsolete_name in plant.obsolete_names.all %}
       <div>{{ obsolete_name.obsolete_name }}</div>
     {% endfor %}
