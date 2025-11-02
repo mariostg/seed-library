@@ -49,7 +49,6 @@ INSTALLED_APPS = [
     "django.forms",
     "django_htmx",
     "django_filters",
-    # "debug_toolbar",
     "django_browser_reload",
     "project",
 ]
