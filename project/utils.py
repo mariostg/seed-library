@@ -105,9 +105,13 @@ def plant_label_info(plant: PlantProfile, request: HttpRequest) -> list[str]:
         plant_size,
         bloom_period,
         *sowing_notes,  # Unpack the list items individually
-        sowing_time,
-        sowing_depth,
     ]
+
+    if sowing_time:
+        label_info.append(sowing_time)
+
+    if sowing_depth:
+        label_info.append(sowing_depth)
 
     _stratification_need = stratification_need(plant)
     if _stratification_need:
@@ -156,7 +160,7 @@ def sow_before(plant: PlantProfile):
     elif duration == 180:
         return "Sow by November"
     else:
-        return ""
+        return None
 
 
 def is_plant_toxic(plant: PlantProfile):
