@@ -621,6 +621,14 @@ urlpatterns += [
 
 urlpatterns += [
     path(
+        "plant-substitute-to-update/<int:pk>",
+        views.plant_substitute_to_update,
+        name="plant-substitute-to-update",
+    ),
+]
+
+urlpatterns += [
+    path(
         "butterfly-supporting-plants/",
         views.butterfly_supporting_plants,
         name="butterfly-supporting-plants",

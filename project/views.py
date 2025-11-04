@@ -2494,6 +2494,31 @@ def plant_landscape_use_and_application_update(request, pk):
 
 
 @login_required
+def plant_substitute_to_update(request, pk):
+    plant = utils.single_plant(pk, request)
+    unsupported_substitutes = models.NonNativeSpecies.objects.exclude(
+        pk__in=plant.substitute_for_non_native.all()
+    )
+    context = {
+        "title": f"{plant.latin_name} - Alternative To",
+        "plant": plant,
+        "unsupported_substitutes": unsupported_substitutes,
+    }
+    if request.method == "POST":
+        form = forms.PlantSubstituteToForm(request.POST, instance=plant)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Substitutes updated successfully.")
+            return redirect("plant-profile-page", pk=plant.pk)
+        else:
+            messages.error(request, "Error updating substitutes.")
+    else:
+        form = forms.PlantSubstituteToForm(instance=plant)
+    context["form"] = form
+    return render(request, "project/update/plant-substitute-update.html", context)
+
+
+@login_required
 def plant_ecological_benefits_update(request, pk):
     plant = utils.single_plant(pk, request)
     unsupported_butterflies = models.ButterflySpecies.objects.exclude(

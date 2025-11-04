@@ -480,6 +480,17 @@ class PlantEcologicalBenefitsForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
 
 
+class PlantSubstituteToForm(forms.ModelForm):
+    class Meta:
+        model = models.PlantProfile
+        fields = [
+            "substitute_for_non_native",
+        ]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+
 class PlantSpecialFeaturesAndConsiderationForm(forms.ModelForm):
     class Meta:
         model = models.PlantProfile
