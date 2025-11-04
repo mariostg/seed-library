@@ -34,3 +34,4 @@ gunicorn
 Pillow
 reportlab
 pre-commit
+exif
