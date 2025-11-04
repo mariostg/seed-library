@@ -212,6 +212,7 @@ form .input-text label, form .input-select label, form .input-textarea label {
   display: flex;
   flex-wrap: wrap;
   border: 1px solid #ccc;
+  flex-direction: column;
 }
 .checkbox-group .input-checkbox {
   display: flex;

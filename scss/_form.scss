@@ -37,6 +37,8 @@ form {
   display: flex;
   flex-wrap: wrap;
   border: 1px solid #ccc;
+  flex-direction: column;
+
   .input-checkbox {
     display: flex;
     align-items: center;
