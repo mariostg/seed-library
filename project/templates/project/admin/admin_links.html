@@ -71,21 +71,22 @@
                   </div>
                   <div><a href="{% url 'admin-bee-species-page' %}">Bee Species</a></div>
                 </div>
+              </div>
 
-                <div class="flex-col-center">
-                  <div class="title">Utilities</div>
+              <div class="flex-col-center">
+                <div class="title">Utilities</div>
+                <div>
                   <div>
-                    <div>
-                      <a href="{% url 'update-availability' %}">Update Availability</a>
-                    </div>
-                    <div>
-                      <a href="{% url 'admin-ecozone-page' %}">Ecozones</a>
-                    </div>
-                    <div><a href="{% url 'admin-images-page' %}">Images</a></div>
-                    <div class="info"><a class="tooltip" href="{% url 'admin-accept-all-seeds' %}">Accept All Seeds <span class="tooltiptext">Attention, this will set all plant profiles with the <strong>accepting_seed</strong> field to true</span></a></div>
-                    <div><a href="{% url 'admin-plant-morphology-page' %}">Plant Morphology Elements</a></div>
+                    <a href="{% url 'update-availability' %}">Update Availability</a>
                   </div>
+                  <div>
+                    <a href="{% url 'admin-ecozone-page' %}">Ecozones</a>
+                  </div>
+                  <div><a href="{% url 'admin-images-page' %}">Images</a></div>
+                  <div class="info"><a class="tooltip" href="{% url 'admin-accept-all-seeds' %}">Accept All Seeds <span class="tooltiptext">Attention, this will set all plant profiles with the <strong>accepting_seed</strong> field to true</span></a></div>
+                  <div><a href="{% url 'admin-plant-morphology-page' %}">Plant Morphology Elements</a></div>
                 </div>
+              </div>
 {% endif %}
 </div>
 </nav>
