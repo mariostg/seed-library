@@ -17,8 +17,8 @@
                   {% if image.photo_author %}
                     <div class="plant-card-info">Source: {{ image.photo_author }}</div>
                   {% endif %}
-                  {% if image.title %}<div class="plant-card-info"> {{ image.title }}</div>{% endif %}
-                  {% if image.description %}<div class="plant-card-info"> {{ image.description }}</div>{% endif %}
+                  <div class="plant-card-info"> {{ image.title|default:"&nbsp;" }}</div>
+                  <div class="plant-card-info"> {{ image.description|default:"&nbsp;" }}</div>
                 {% else %}
                   <img src="{% static 'images/plant-placeholder.png' %}" alt="No image available">
                 {% endif %}
