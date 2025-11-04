@@ -2019,6 +2019,91 @@ def admin_bee_species_delete(request, pk):
 
 
 @login_required
+def admin_non_native_species_page(request):
+    data = models.NonNativeSpecies.objects.annotate(
+        plant_count=Count("native_alternatives")
+    ).order_by("latin_name")
+    context = {
+        "object_list": data,
+        "url_name": "admin-non-native-plant-page",
+        "title": "Non-Native Plants",
+    }
+    return render(request, "project/admin/admin-non-native-species-page.html", context)
+
+
+@login_required
+def admin_non_native_species_add(request):
+    context = {
+        "title": "Create Non-Native Plant",
+        "url_name": "admin-non-native-plant-page",
+    }
+    if request.method == "POST":
+        form = forms.AdminNonNativeSpeciesForm(request.POST)
+        if form.is_valid():
+            context["form"] = form
+            obj: models.NonNativeSpecies = form.save(commit=False)
+            try:
+                form.save()
+            except IntegrityError:
+                messages.error(
+                    request,
+                    f"Non-Native Plant {obj.latin_name} exists already.",
+                )
+                return render(
+                    request,
+                    "project/simple-form.html",
+                    context,
+                )
+        else:
+            messages.error(request, "Non-Native Species not valid.")
+            context["form"] = form
+    else:
+        context["form"] = forms.AdminNonNativeSpeciesForm
+
+    return render(request, "project/simple-form.html", context)
+
+
+@login_required
+def admin_non_native_species_update(request, pk):
+    obj = models.NonNativeSpecies.objects.get(id=pk)
+    form = forms.AdminNonNativeSpeciesForm(instance=obj)
+
+    if request.method == "POST":
+        form = forms.AdminNonNativeSpeciesForm(request.POST, instance=obj)
+        if form.is_valid():
+            form.save()
+            return redirect("admin-non-native-species-page")
+
+    return render(
+        request,
+        "project/simple-form.html",
+        {
+            "form": form,
+            "title": "Non-Native Species Update",
+            "url_name": "admin-non-native-species-page",
+        },
+    )
+
+
+@login_required
+def admin_non_native_species_delete(request, pk):
+    obj: models.NonNativeSpecies = models.NonNativeSpecies.objects.get(id=pk)
+    if request.method == "POST":
+        try:
+            obj.delete()
+        except RestrictedError as e:
+            msg = e.args[0].split(":")[0] + " : "
+            fkeys = []
+            for fk in e.restricted_objects:
+                fkeys.append(fk.latin_name)
+            msg = msg + ", ".join(fkeys)
+            messages.warning(request, msg)
+        return redirect("admin-non-native-species-page")
+    context = {"object": obj, "back": "admin-non-native-species-page"}
+    return render(request, "core/delete-object.html", context)
+
+
+@login_required
 def admin_ecozone_page(request):
     data = models.Ecozone.objects.annotate(plant_count=Count("plants")).order_by(
         "ecozone"

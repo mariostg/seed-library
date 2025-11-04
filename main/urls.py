@@ -478,6 +478,29 @@ urlpatterns += [
 ]
 
 urlpatterns += [
+    path(
+        "admin-non-native-species-page/",
+        views.admin_non_native_species_page,
+        name="admin-non-native-species-page",
+    ),
+    path(
+        "admin-non-native-species-add/",
+        views.admin_non_native_species_add,
+        name="admin-non-native-species-add",
+    ),
+    path(
+        "admin-non-native-species-update/<int:pk>/",
+        views.admin_non_native_species_update,
+        name="admin-non-native-species-update",
+    ),
+    path(
+        "admin-non-native-species-delete/<int:pk>/",
+        views.admin_non_native_species_delete,
+        name="admin-non-native-species-delete",
+    ),
+]
+
+urlpatterns += [
     path("admin-ecozone-page/", views.admin_ecozone_page, name="admin-ecozone-page"),
     path(
         "admin-ecozone-add/",

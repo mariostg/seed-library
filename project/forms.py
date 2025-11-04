@@ -311,6 +311,15 @@ class AdminBeeSpeciesForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
 
 
+class AdminNonNativeSpeciesForm(forms.ModelForm):
+    class Meta:
+        model = models.NonNativeSpecies
+        fields = ["latin_name", "english_name"]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+
 class AdminEcozoneForm(forms.ModelForm):
     class Meta:
         model = models.Ecozone
