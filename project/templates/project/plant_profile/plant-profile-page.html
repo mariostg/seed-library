@@ -51,7 +51,7 @@
 
               <div class="plant-giveaway">
                 {% if plant.seed_availability %}
-                  <div>Seeds available at in-person events table {{plant.seed_event_table|default:"Unconfirmed"}}</div>
+                  <div>Seeds in stock <br> Available at table {{plant.seed_event_table|default:"Unconfirmed"}}</div>
                 {% else %}
                   <div>No seeds available for this plant.</div>
                 {% endif %}
