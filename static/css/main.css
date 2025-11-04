@@ -148,6 +148,7 @@ textarea {
   color: #333;
   background-color: #f7f7f7;
   text-align: center;
+  width: 100%;
 }
 .flex-col__inputs {
   display: flex;
