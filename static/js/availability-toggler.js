@@ -23,6 +23,13 @@ for (let t of is_seed_accepting_toggler) {
   });
 }
 
+is_seed_needed_toggler = document.querySelectorAll(".seed-needed-toggler");
+for (let t of is_seed_needed_toggler) {
+  t.addEventListener("click", function () {
+    set_seed_needed(this);
+  });
+}
+
 is_plant_accepted_toggler = document.querySelectorAll(
   ".plant-accepted-toggler"
 );
@@ -88,6 +95,27 @@ function set_seed_accepting(elem) {
       .then((response) => response.json())
       .then((data) => {
         if (data.accepting_seed || data.accepting_seed == "True") {
+          elem.classList.add("ok");
+          elem.innerHTML = "&#x2713;";
+        } else {
+          elem.classList.remove("ok");
+          elem.innerHTML = "✖️";
+        }
+      });
+  }
+}
+
+function set_seed_needed(elem) {
+  if (elem) {
+    fetch("/toggle-seed-needed/" + elem.dataset.pk, {
+      method: "GET",
+      headers: {
+        "X-Requested-With": "XMLHttpRequest",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.is_needed || data.is_needed == "True") {
           elem.classList.add("ok");
           elem.innerHTML = "&#x2713;";
         } else {

@@ -43,6 +43,11 @@ urlpatterns = [
         name="toggle-seed-accepting",
     ),
     path(
+        "toggle-seed-needed/<int:pk>",
+        views.toggle_seed_needed,
+        name="toggle-seed-needed",
+    ),
+    path(
         "toggle-plant-accepted/<int:pk>",
         views.toggle_plant_accepted,
         name="toggle-plant-accepted",

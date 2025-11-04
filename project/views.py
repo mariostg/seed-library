@@ -46,6 +46,16 @@ def toggle_is_active(request, pk):
 
 
 @login_required
+def toggle_seed_needed(request, pk):
+    plant = utils.single_plant(pk, request)
+    plant.is_needed = not plant.is_needed
+    plant.save()
+    plant = utils.single_plant(pk, request)
+    context = {"pk": plant.pk, "is_needed": plant.is_needed}
+    return JsonResponse(context)
+
+
+@login_required
 def toggle_seed_accepting(request, pk):
     plant = utils.single_plant(pk, request)
     plant.accepting_seed = not plant.accepting_seed

@@ -748,6 +748,9 @@ class PlantProfile(Base):
     is_draft = models.BooleanField(
         default=True
     )  # to indicate if the profile is incomplete
+    is_needed = models.BooleanField(
+        default=False
+    )  # to indicate if seeds are needed for this plant
     has_notice = models.BooleanField(
         default=False
     )  # to indicate if the plant has a notice for some reason

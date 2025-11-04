@@ -383,6 +383,7 @@ class PlantIdentificationInformationForm(forms.ModelForm):
         fields = [
             "is_draft",
             "is_active",
+            "is_needed",
             "is_accepted",
             "not_accepted_reason",
             "has_notice",

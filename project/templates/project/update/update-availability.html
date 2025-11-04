@@ -10,6 +10,7 @@
           <tr>
             <th>Event Table</th>
             <th colspan='3'>Names</th>
+            <th>Seed Needed</th>
             <th>Seed Availability</th>
             <th>Seeds Accepted</th>
             <th>Plant Active</th>
@@ -23,10 +24,17 @@
             <td> {{item.english_name}}</td>
             <td>{{item.french_name}}</td>
 
-            <td data-availability={{item.seed_availability}} data-pk={{item.pk}}
-                {% if item.seed_availability %}class="toggler ok">&#x2713;
-            {% else %}class="toggler">✖️
+
+            <td data-seed-needed={{item.is_needed}} data-pk={{item.pk}}
+                {% if item.is_needed %}class="seed-needed-toggler ok">&#x2713;
+            {% else %}class="seed-needed-toggler">✖️
             {% endif %}
+          </td>
+
+          <td data-availability={{item.seed_availability}} data-pk={{item.pk}}
+              {% if item.seed_availability %}class="toggler ok">&#x2713;
+          {% else %}class="toggler">✖️
+          {% endif %}
           </td>
 
           <td data-accepting-seed={{item.accepting_seed}} data-pk={{item.pk}}
