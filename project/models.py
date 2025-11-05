@@ -1,6 +1,7 @@
 from django.contrib.auth.models import AbstractUser
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.urls import reverse
 from django.utils.dates import MONTHS
 from PIL import Image, ImageOps
 
@@ -1014,6 +1015,18 @@ class PlantProfile(Base):
             raise ValidationError(
                 f"{self.latin_name} bloom start month ({self.bloom_start}) cannot be later than bloom end month ({self.bloom_end})."
             )
+
+    def get_absolute_url(self):
+        """
+        Returns the absolute URL for the plant profile detail view.
+
+        This method constructs the URL for accessing the detail page of a specific
+        plant profile instance using Django's reverse function.
+
+        Returns:
+            str: The absolute URL for the plant profile detail view.
+        """
+        return reverse("plant-profile-page", args=[str(self.id)])
 
     def save(self, *args, **kwargs):
         """

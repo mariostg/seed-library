@@ -254,6 +254,25 @@ def bee_supporting_plants(request):
     return render(request, "project/bee_supporting_plants.html", context)
 
 
+def plants_needing_seeds_csv(request):
+    # export a csv file of all plants which seeds are needed.
+    response = HttpResponse(
+        content_type="text/csv",
+        headers={
+            "Content-Disposition": 'attachment; filename="plants_seeds_needed.csv"'
+        },
+    )
+    writer = csv.writer(response)
+    writer.writerow(["Latin Name", "English Name", "French Name", "Profile URL"])
+    plants = models.PlantProfile.objects.filter(is_needed=True).order_by("latin_name")
+    for plant in plants:
+        url_profile = request.build_absolute_uri(plant.get_absolute_url())
+        writer.writerow(
+            [plant.latin_name, plant.english_name, plant.french_name, url_profile]
+        )
+    return response
+
+
 def search_plant_name(request):
     if not request.GET:
         data = models.PlantProfile.objects.none()

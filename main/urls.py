@@ -667,6 +667,11 @@ urlpatterns += [
         name="bee-supporting-plants",
     ),
     path("plant-ecozones/", views.plant_ecozones, name="plant_ecozones"),
+    path(
+        "plants-needing-seeds-csv/",
+        views.plants_needing_seeds_csv,
+        name="plants-needing-seeds-csv",
+    ),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
