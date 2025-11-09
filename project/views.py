@@ -273,6 +273,28 @@ def plants_needing_seeds_csv(request):
     return response
 
 
+def search_plant_images(request):
+    # Similar to search_plant_name but for images. Using the plant name from the htmx request to filter images.
+    if not request.GET:
+        data = models.PlantImage.objects.none()
+    elif request.user.is_authenticated:
+        data = models.PlantImage.objects.all().order_by("plant_profile__latin_name")
+    else:
+        data = models.PlantImage.objects.filter(plant_profile__is_active=True).order_by(
+            "plant_profile__latin_name"
+        )
+    object_list = filters.PlantImageFilter(request.GET, queryset=data)
+    context = {"object_list": object_list.qs}
+    template = (
+        "project/admin/admin-image-page-results.html"
+        if request.htmx
+        else "project/admin/admin-images-page.html"
+    )
+    return render(request, template, context)
+
+    return render(request, "project/admin/admin-images-page.html", context)
+
+
 def search_plant_name(request):
     if not request.GET:
         data = models.PlantProfile.objects.none()

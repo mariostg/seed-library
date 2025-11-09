@@ -6,6 +6,28 @@ from django.db.models import Q
 from project import models, utils
 
 
+class PlantImageFilter(django_filters.FilterSet):
+    """Filters used on plant image search form"""
+
+    any_plant_name = django_filters.CharFilter(
+        method="filter_any_name",
+        strip=False,
+    )
+
+    def filter_any_name(self, queryset, name, value):
+        return queryset.filter(
+            Q(plant_profile__latin_name__icontains=value)
+            | Q(plant_profile__english_name__icontains=value)
+            | Q(plant_profile__french_name__icontains=value)
+        )
+
+    class Meta:
+        model = models.PlantImage
+        fields = [
+            "plant_profile__latin_name",
+        ]
+
+
 class PlantProfileFilter(django_filters.FilterSet):
     """Filters used on plant profile search form"""
 

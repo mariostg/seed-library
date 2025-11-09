@@ -1,0 +1,34 @@
+{% load static %}
+<div id="search-results" class='image-gallery-grid'>
+  {% for image in object_list %}
+    <div class='image-gallery-item'>
+      <div class='title'>{{ image.plant_profile.latin_name }}</div>
+      <img  src="{{ image.image.url }}" alt="{{ image.description }}" width="100">
+      <div class='plant-card-info'>
+        <div>
+          <div>Morphology Aspect:</div> <div>{{ image.morphology_aspect }}</div>
+        </div>
+        <div>
+          <div>Image size:</div> <div>{{ image.image_size }}</div>
+        </div>
+        <div>
+          <div>Title:</div> <div>{{ image.title }}</div>
+        </div>
+        <div>
+          <div>Description:</div> <div>{{ image.description }}</div>
+        </div>
+        <div>
+          <div>Photo Author:</div> <div>{{ image.photo_author }}</div>
+        </div>
+      </div>
+
+      {% if user.is_authenticated %}
+        <div class='row-spacer flex-row actions'>
+          <a class='btn btn__view' target="_blank" href="{% url 'plant-profile-page' image.plant_profile.id %}">View</a>
+          <a class='btn btn__edit' href="{% url "admin-image-update" image.id %}">Edit</a>
+          <a class='btn btn__delete' href="{% url "admin-image-delete" image.id %}">Delete</a>
+        </div>
+      {% endif %}
+    </div>
+  {% endfor %}
+</div>

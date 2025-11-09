@@ -15,6 +15,7 @@ urlpatterns = [
     path("__reload__/", include("django_browser_reload.urls")),
     path("", views.index, name="index"),
     path("search-plant-name/", views.search_plant_name, name="search-plant-name"),
+    path("search-plant-images/", views.search_plant_images, name="search-plant-images"),
     path(
         "search-vascan-taxon-id/",
         views.search_vascan_taxon_id,
