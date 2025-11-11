@@ -1244,7 +1244,12 @@ class PlantImage(models.Model):
         h_coefficient = width / target_width
         target_height = height / h_coefficient
         img = img.resize((int(target_width), int(target_height)), Image.LANCZOS)
-        img.save(self.image.path, quality=100)
+        # Preserve EXIF data including GPS coordinates
+        exif = img.info.get("exif", b"")
+        if exif:
+            img.save(self.image.path, quality=100, exif=exif)
+        else:
+            img.save(self.image.path, quality=100)
         img.close()
         self.image.close()
 

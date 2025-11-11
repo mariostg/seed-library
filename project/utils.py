@@ -1,4 +1,7 @@
+from pathlib import Path
+
 from django.http import HttpRequest
+from exif import Image
 
 from project.models import PlantProfile
 
@@ -185,3 +188,69 @@ def is_valid_url(url: str) -> bool:
         return True
     except ValidationError:
         return False
+
+
+def get_image_gps_coordinates(image_path: Path) -> dict | None:
+    try:
+        with open(image_path, "rb") as img_f:
+            img = Image(img_f)
+            if img.has_exif:
+                if hasattr(img, "gps_latitude") and hasattr(img, "gps_longitude"):
+
+                    lat = img.gps_latitude
+                    lon = img.gps_longitude
+                    lat_ref = img.gps_latitude_ref
+                    lon_ref = img.gps_longitude_ref
+
+                    lat_decimal = (
+                        lat[0] + lat[1] / 60 + lat[2] / 3600
+                        if lat_ref == "N"
+                        else -(lat[0] + lat[1] / 60 + lat[2] / 3600)
+                    )
+                    lon_decimal = (
+                        lon[0] + lon[1] / 60 + lon[2] / 3600
+                        if lon_ref == "E"
+                        else -(lon[0] + lon[1] / 60 + lon[2] / 3600)
+                    )
+
+                    return {
+                        "latitude": lat_decimal,
+                        "longitude": lon_decimal,
+                    }
+
+    except FileNotFoundError:
+        raise FileNotFoundError(f"File not found: {image_path}")
+    except Exception:
+        raise Exception(f"Error processing file {image_path}")
+
+    return None
+
+
+def flush_gps_coordinates(image_path: Path) -> dict | None:
+
+    gps_coordinates = get_image_gps_coordinates(image_path)
+    if not gps_coordinates:
+        return None
+
+    try:
+        with open(image_path, "rb") as img_f:
+            img = Image(img_f)
+            if hasattr(img, "gps_latitude"):
+                del img.gps_latitude
+
+            if hasattr(img, "gps_longitude"):
+                del img.gps_longitude
+
+            if hasattr(img, "gps_latitude_ref"):
+                del img.gps_latitude_ref
+
+            if hasattr(img, "gps_longitude_ref"):
+                del img.gps_longitude_ref
+
+        with open(image_path, "wb") as new_img_f:
+            new_img_f.write(img.get_file())
+
+    except Exception:
+        raise Exception(f"Error processing file {image_path}")
+
+    return gps_coordinates

@@ -3177,8 +3177,19 @@ def admin_image_add(request):
                 obj.photo_date = datetime.now().date()
 
             obj.save()
+            gps_data = utils.flush_gps_coordinates(obj.image.path)
+            if gps_data:
+                gps_check = utils.get_image_gps_coordinates(obj.image.path)
+                if gps_check:
+                    msg = "GPS data not deleted successfully."
+                    messages.warning(request, msg)
+                else:
+                    msg = "GPS data deleted successfully."
+                    messages.success(request, msg)
+
             messages.success(
-                request, f"Image for {obj.plant_profile} added successfully."
+                request,
+                f"Image for {obj.plant_profile} added successfully. GPS Data: {gps_data}",
             )
             return render(
                 request,
