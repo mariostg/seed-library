@@ -606,6 +606,12 @@ urlpatterns += [
         views.plant_identification_information_create,
         name="plant-identification-information-create",
     ),
+    # path for plants missingq inat taxon
+    path(
+        "admin-plant-missing-inaturalist-taxon/",
+        views.admin_plant_missing_inaturalist_taxon,
+        name="admin-plant-missing-inaturalist-taxon",
+    ),
     path(
         "plant-growth-characteristics-update/<int:pk>",
         views.plant_growth_characteristics_update,

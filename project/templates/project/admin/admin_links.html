@@ -86,6 +86,10 @@
                   <div><a href="{% url 'admin-images-page' %}">Images</a></div>
                   {% comment %} <div class="info"><a class="tooltip" href="{% url 'admin-accept-all-seeds' %}">Accept All Seeds <span class="tooltiptext">Attention, this will set all plant profiles with the <strong>accepting_seed</strong> field to true</span></a></div> {% endcomment %}
                   <div><a href="{% url 'admin-plant-morphology-page' %}">Plant Morphology Elements</a></div>
+                  <!--Plant without iNaturalist Taxon -->
+                  <div>
+                    <a href="{% url 'admin-plant-missing-inaturalist-taxon' %}">Plants missing iNaturalist Taxon</a>
+                  </div>
                 </div>
               </div>
 {% endif %}

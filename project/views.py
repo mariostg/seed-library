@@ -2168,6 +2168,21 @@ def admin_ecozone_page(request):
 
 
 @login_required
+def admin_plant_missing_inaturalist_taxon(request):
+    data = models.PlantProfile.objects.filter(inaturalist_taxon="").order_by(
+        "latin_name"
+    )
+    context = {
+        "object_list": data,
+        "url_name": "admin-plant-missing-inaturalist-taxon-id",
+        "title": "Plants missing iNaturalist Taxon ID",
+    }
+    return render(
+        request, "project/admin/admin-plant-missing-inaturalist-taxon.html", context
+    )
+
+
+@login_required
 def admin_ecozone_add(request):
     context = {
         "title": "Create Ecozone",

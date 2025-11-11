@@ -1,0 +1,34 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block title %}{{title}}{% endblock title %}
+{% block content %}
+  {% include "project/admin/admin_links.html" %}
+  <div class='flex-col-center'>
+    <fieldset class="flex-col-center">
+      <legend>{{title}}</legend>
+      <table class=''>
+        <thead>
+          <tr></tr>
+          <th>Plant Name</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in object_list %}
+          <tr class="{% cycle 'odd-row' 'even-row' %}">
+            <td>{{item.latin_name}}</td>
+            {% if user.is_authenticated %}
+              <td class="actions">
+                <a class='btn btn-edit' href="{% url "plant-identification-information-update" item.id %}">Edit</a>
+              </td>
+            {% endif %}
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </fieldset>
+  </div>
+
+  </body>
+  </html>
+{% endblock content %}
