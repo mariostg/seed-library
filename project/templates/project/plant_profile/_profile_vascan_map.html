@@ -1,3 +1,4 @@
+{% load static %}
 <h3>Native to Ottawa region: {% if plant.native_to_ottawa_region %}Yes{% else %}No{% endif %}</h3>
 
 {% if plant.taxon %}
@@ -21,11 +22,13 @@
       <span style="background-color: #afafaf; color: #000">Doubtful</span>
       <span style="background-color: #d3d3d3; color: #000">Absent</span>
     </div>
-    <a
-      target="blank"
-      href="https://data.canadensys.net/vascan/taxon/{{plant.taxon}}?lang=en"
-    >
-      <span class="navbar-logo_text">View taxonomy on Canadensys</span>
-    </a>
+    <div>
+      <a
+        target="blank"
+        href="https://data.canadensys.net/vascan/taxon/{{plant.taxon}}?lang=en" style="display: inline-flex; align-items: center; gap: 0.25em;"
+      >
+        View taxonomy on <img src="{% static 'images/canadensys-logo.png' %}" alt="Canadensys" style="height: 1em; vertical-align: middle;"> Canadensis
+      </a>
+    </div>
   </div>
 {% endif %}
