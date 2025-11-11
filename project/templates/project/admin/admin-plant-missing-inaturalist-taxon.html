@@ -19,7 +19,7 @@
             <td>{{item.latin_name}}</td>
             {% if user.is_authenticated %}
               <td class="actions">
-                <a class='btn btn-edit' href="{% url "plant-identification-information-update" item.id %}">Edit</a>
+                <a target="_blank" class='btn btn-edit' href="{% url "plant-identification-information-update" item.id %}">Edit</a>
               </td>
             {% endif %}
           </tr>
