@@ -1,5 +1,7 @@
-<p>
-  <a href="https://www.inaturalist.org/taxa/{{ plant.inaturalist_taxon }}" target="_blank">
-    View on iNaturalist
-  </a>
-</p>
+{% if plant.inaturalist_taxon %}
+  <p>
+    <a href="https://www.inaturalist.org/taxa/{{ plant.inaturalist_taxon }}" target="_blank">
+      View on iNaturalist
+    </a>
+  </p>
+{% endif %}
