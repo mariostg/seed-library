@@ -3,26 +3,20 @@
 {% block content %}
 
   <div id="aside-toggler">
-    <button class='btn' onclick="toggleFilterWrapper()">Hide Filters</button>
+    <button class='btn' onclick="toggleFilterWrapper()">Show Filters</button>
   </div>
   <section class="main-content">
             <!-- filter-wrapper -->
     {% include "project/filters/_filter.html" %}
     <main>
-      <!--Link for plant catalogue intro-->
-      <div>
-        <a href="{% url 'index' %}" class="btn btn-secondary"
-        >Learn about the plant catalogue</a
-          >
-        </div>
-<!--input text box for seraching plant name-->
-        {% include "project/plant-search-name-form.html" %}
+      <!--input text box for seraching plant name-->
+      {% include "project/plant-search-name-form.html" %}
 
 <!--Plant cards-->
-        {% include "project/plant-search-results.html" %}
+      {% include "project/plant-search-results.html" %}
 
 
-      </main>
-    </section>
+    </main>
+  </section>
 
 {% endblock content %}
