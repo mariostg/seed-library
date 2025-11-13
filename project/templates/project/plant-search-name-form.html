@@ -33,9 +33,10 @@
                {% if seed_availability %}checked{% endif %}>
         <label for="seed_availability" class="form-label">Show Plants that are Available Only</label>
       </div>
-      <span class="htmx-indicator">
-        <img src="{% static 'images/searching.svg' %}"/> Searching...
-      </span>
+
+    </div>
+    <div class="flex-row center htmx-indicator">
+      <img src="{% static 'images/searching.svg' %}"/> Searching...
     </div>
   </form>
 </div>
