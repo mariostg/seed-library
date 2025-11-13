@@ -98,8 +98,15 @@ textarea {
   gap: 0.5rem;
   flex-wrap: wrap;
 }
-.flex-row > * {
-  flex: 1;
+.flex-row.center {
+  justify-content: center;
+  align-items: center;
+  flex: none;
+}
+@media screen and (max-width: 991px) {
+  .flex-row.center {
+    align-items: flex-start;
+  }
 }
 @media screen and (max-width: 991px) {
   .flex-row {
@@ -284,6 +291,7 @@ input.wide textarea.wide {
 body {
   display: flex;
   flex-direction: column;
+  min-height: 100vh;
 }
 
 main {
@@ -377,6 +385,7 @@ td.actions {
 .main-content {
   display: flex;
   margin: 1rem;
+  flex-grow: 1;
 }
 @media (max-width: 768px) {
   .main-content {

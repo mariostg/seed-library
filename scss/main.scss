@@ -7,6 +7,7 @@
 body {
   display: flex;
   flex-direction: column;
+  min-height: 100vh;
 }
 main {
   display: flex;
@@ -91,6 +92,7 @@ td {
 .main-content {
   display: flex;
   margin: 1rem;
+  flex-grow: 1;
 
   @media (max-width: 768px) {
     flex-direction: column;
