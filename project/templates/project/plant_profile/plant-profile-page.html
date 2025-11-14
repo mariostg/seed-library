@@ -33,21 +33,23 @@
           <div class="plant-profile-characteristics">
 
             <div class='flex-row'>
-              <div class="plant-card-caption">
-                <!--insert the icon representing the plant type-->
-                {% if plant.growth_habit %}
-                  <div class="plant-type-icon"><img src="{% static 'images/' %}plant-type-{{ plant.growth_habit }}.svg" alt="image of {{plant.growth_habit}}" /></div>
-                {% endif %}
-                <div class="plant-profile-names">
-                  <div class="plant-profile-latin-name">{{plant.latin_name}}</div>
-                  <div class="plant-profile-english-name">{{plant.english_name}}</div>
-                  <div class="plant-profile-french-name">{{plant.french_name}}</div>
+              <div class="flex-row">
+                <div class="plant-card-caption">
+                  <!--insert the icon representing the plant type-->
+                  {% if plant.growth_habit %}
+                    <div class="plant-type-icon"><img src="{% static 'images/' %}plant-type-{{ plant.growth_habit }}.svg" alt="image of {{plant.growth_habit}}" /></div>
+                  {% endif %}
+                  <div class="plant-profile-names">
+                    <div class="plant-profile-latin-name">{{plant.latin_name}}</div>
+                    <div class="plant-profile-english-name">{{plant.english_name}}</div>
+                    <div class="plant-profile-french-name">{{plant.french_name}}</div>
+                  </div>
                 </div>
+                <!-- Obsolete Names -->
+                {% if plant.show_obsolete_names_info %}
+                  {% include "project/plant_profile/_profile_obsolete_names.html" %}
+                {% endif %}
               </div>
-              <!-- Obsolete Names -->
-              {% if plant.show_obsolete_names_info %}
-                {% include "project/plant_profile/_profile_obsolete_names.html" %}
-              {% endif %}
 
               <div class="plant-giveaway">
                 {% if plant.seed_availability %}

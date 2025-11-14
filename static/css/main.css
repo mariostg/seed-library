@@ -416,7 +416,7 @@ td.actions {
   display: flex;
   flex: 2;
   gap: 10px;
-  align-items: center;
+  margin-top: 5px;
 }
 .plant-card-source {
   font-size: 0.8rem;

@@ -1,8 +1,15 @@
 {% if plant.obsolete_names.exists %}
-  <div class="plant-obsolete-names">
+  <div class="flex-col-center">
     <h3>Synonyms</h3>
-    {% for obsolete_name in plant.obsolete_names.all %}
-      <div>{{ obsolete_name.obsolete_name }}</div>
-    {% endfor %}
+    <div class="flex-row">
+      <div>
+        {% for obsolete_name in plant.obsolete_names.all %}
+          <div>{{ obsolete_name.obsolete_name }}</div>
+          {% if forloop.counter0|divisibleby:4 and forloop.counter0 > 0 %}
+            </div><div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
   </div>
 {% endif %}
