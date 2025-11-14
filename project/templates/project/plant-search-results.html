@@ -18,7 +18,7 @@
       </div>
 
     {% endif %}
-    <section class="plant-cards">
+    <section id="plant-cards" class="plant-cards">
       {% for item in object_list  %}
         <div class="plant-card {% if not item.is_active %}plant-card-not-active{% endif %}">
           {% comment %} {% if item.is_favorite %}

@@ -16,3 +16,9 @@ function toggleFilterWrapper() {
     buttonText.innerHTML = "Show Filters";
   }
 }
+
+function resetFilter() {
+  // Reset all filter inputs to their default values and delete the html inside the plant-cards class
+  const filterForm = document.getElementById("filter-form");
+  filterForm.reset();
+}

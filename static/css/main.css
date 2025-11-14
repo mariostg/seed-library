@@ -575,6 +575,9 @@ td.actions {
   transition: background-color 0.3s ease;
   text-align: center;
 }
+.btn.info::after {
+  color: #fff;
+}
 .btn-row {
   display: flex;
   justify-content: space-between;

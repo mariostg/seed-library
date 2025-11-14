@@ -16,9 +16,18 @@
   display: flex;
   gap: 0.5rem;
   flex-wrap: wrap;
-  & > * {
-    flex: 1;
+  &.center {
+    justify-content: center;
+    align-items: center;
+    flex: none;
+    //on small screen, align items to the left
+    @include break(sm) {
+      align-items: flex-start;
+    }
   }
+  // & > * {
+  //   flex: 1;
+  // }
   @include break(sm) {
     flex-direction: column;
   }
