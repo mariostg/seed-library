@@ -1,4 +1,4 @@
-@import "_variables";
+@use "_variables";
 
 // Generate margin-bottom classes from 1 to 6 rem
 @for $i from 1 through 3 {

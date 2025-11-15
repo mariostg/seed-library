@@ -1,14 +1,14 @@
-@import "_variables";
+@use "_variables";
 .form-login {
   display: flex;
   flex-direction: column;
   max-width: 330px;
   padding: 1rem;
-  border-radius: $border-radius;
-  background-color: $light;
+  border-radius: variables.$border-radius;
+  background-color: variables.$light;
   text-align: center;
   margin: auto;
 }
 .btn-login {
-  background-color: $submit;
+  background-color: variables.$submit;
 }

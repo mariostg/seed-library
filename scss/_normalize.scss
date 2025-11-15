@@ -1,4 +1,4 @@
-@import "_variables";
+@use "_variables";
 // Reset and base styles
 * {
   margin: 0;
@@ -37,12 +37,12 @@ p {
 
 // Links
 a {
-  color: $link-color;
+  color: variables.$link-color;
   text-decoration: none;
   &:hover {
     text-decoration: underline;
     color: #ccc;
-    background-color: $hover;
+    background-color: variables.$hover;
   }
 }
 // Images

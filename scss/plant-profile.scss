@@ -1,5 +1,5 @@
-@import "_variables";
-@import "_mixins";
+@use "variables";
+@use "_mixins";
 
 .plant-profile {
   &-characteristics {
@@ -19,9 +19,9 @@
     display: flex;
     flex-direction: row;
     gap: 1rem;
-    background-color: $light_green;
-    color: $black;
-    @include break(sm) {
+    background-color: variables.$light_green;
+    color: variables.$black;
+    @include mixins.break(sm) {
       flex-direction: column;
     }
   }
@@ -52,7 +52,7 @@
   flex-direction: column;
   align-items: center;
   padding: 1rem;
-  background-color: $lightgrey;
+  background-color: variables.$lightgrey;
 }
 img {
   height: auto;
@@ -67,8 +67,8 @@ img {
   gap: 1px;
 }
 .image-title {
-  background-color: $green; // $lightgrey;
-  color: $white;
+  background-color: variables.$green; // $lightgrey;
+  color: variables.$white;
   text-align: center;
 }
 .icon {
@@ -77,18 +77,18 @@ img {
   margin-right: 0.5rem;
 }
 .low {
-  background-color: $low;
-  color: $white;
+  background-color: variables.$low;
+  color: variables.$white;
 }
 .none {
-  background-color: $none;
+  background-color: variables.$none;
 }
 .medium {
-  background-color: $medium;
+  background-color: variables.$medium;
 }
 .high {
-  background-color: $high;
-  color: $white;
+  background-color: variables.$high;
+  color: variables.$white;
 }
 .inaturalist-legend {
   display: flex;
@@ -103,14 +103,14 @@ img {
   margin-bottom: 1rem;
   a {
     padding: 0.5rem 1rem;
-    border: 1px solid $border;
-    border-radius: $border-radius;
-    background-color: $form;
-    color: $green;
+    border: 1px solid variables.$border;
+    border-radius: variables.$border-radius;
+    background-color: variables.$form;
+    color: variables.$green;
     text-decoration: none;
     &:hover {
-      background-color: $hover;
-      color: $white;
+      background-color: variables.$hover;
+      color: variables.$white;
     }
   }
   @media (max-width: 768px) {

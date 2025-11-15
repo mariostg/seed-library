@@ -1,9 +1,9 @@
-@import "_normalize";
-@import "_mixins";
-@import "_layout";
-@import "_form";
-@import "_alerts";
-@import "_variables";
+@use "_normalize";
+@use "_mixins";
+@use "_layout";
+@use "_form";
+@use "_alerts";
+@use "_variables";
 body {
   display: flex;
   flex-direction: column;
