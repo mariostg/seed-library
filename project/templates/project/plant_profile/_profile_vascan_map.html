@@ -1,5 +1,7 @@
 {% load static %}
-<h3>Native to Ottawa region: {% if plant.native_to_ottawa_region %}Yes{% else %}No{% endif %}</h3>
+{% if plant.native_to_ottawa_region %}
+  <h3>Native to Ottawa region: Yes</h3>
+{% endif %}
 
 {% if plant.taxon %}
   <div class="vascan-distribution">
