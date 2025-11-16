@@ -1,9 +1,13 @@
+import base64
+from io import BytesIO
 from pathlib import Path
 
+import qrcode
 from django.http import HttpRequest
 from exif import Image
+from PIL import Image as PILImage
 
-from project.models import PlantProfile
+from project.models import PlantImage, PlantProfile
 
 MONTHS = {
     0: "",
@@ -40,6 +44,22 @@ def single_plant(pk, request: HttpRequest):
 
     # plant.harvesting_start = MONTHS[plant.harvesting_start]
     return plant
+
+
+def plant_primary_image(plant: PlantProfile):
+    plant_image = PlantImage.objects.filter(
+        plant_profile=plant, morphology_aspect=7
+    ).first()
+    return plant_image
+
+
+def resize_image(image_path: str, max_width: int, max_height: int):
+    with PILImage.open(image_path) as img:
+        img.thumbnail((max_width, max_height))
+        buffered = BytesIO()
+        img.save(buffered, format="PNG")
+        buffered.seek(0)
+        return buffered
 
 
 def plant_light_range(plant: PlantProfile):
@@ -254,3 +274,38 @@ def flush_gps_coordinates(image_path: Path) -> dict | None:
         raise Exception(f"Error processing file {image_path}")
 
     return gps_coordinates
+
+
+def create_qr_code(data: str, box_size: int = 10, border: int = 4):
+    # createn a QR code and return as a base64 string
+    qr = qrcode.QRCode(
+        version=1,
+        error_correction=qrcode.constants.ERROR_CORRECT_L,
+        box_size=box_size,
+        border=border,
+    )
+    qr.add_data(data)
+    qr.make(fit=True)
+
+    img = qr.make_image(fill_color="black", back_color="white")
+    buffered = BytesIO()
+    img.save(buffered, format="PNG")
+    img_str = base64.b64encode(buffered.getvalue()).decode()
+
+    return img_str
+
+
+def create_qr_code_image(data: str, box_size: int = 10, border: int = 4):
+    # create a QR code and return as a PIL Image
+    # good for direct embedding in PDFs
+    qr = qrcode.QRCode(
+        version=1,
+        error_correction=qrcode.constants.ERROR_CORRECT_L,
+        box_size=box_size,
+        border=border,
+    )
+    qr.add_data(data)
+    qr.make(fit=True)
+
+    img = qr.make_image(fill_color="black", back_color="white")
+    return img

@@ -76,6 +76,11 @@ urlpatterns += [
         views.plant_profile_images,
         name="plant-profile-images",
     ),
+    path(
+        "plant-seed-box-label-pdf/<int:pk>",
+        views.plant_seed_box_label_pdf,
+        name="plant-seed-box-label-pdf",
+    ),
 ]
 
 urlpatterns += [

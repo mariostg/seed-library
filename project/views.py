@@ -2385,6 +2385,73 @@ def siteadmin(request):
     return render(request, "project/admin/admin.html")
 
 
+@login_required
+def plant_seed_box_label_pdf(request, pk):
+    # create a pdf with elements of the plant profile including plant image, a qr code linking to the plant profile page, and formatted for seed box labels
+
+    plant: models.PlantProfile = utils.single_plant(pk, request)
+    if not plant:
+        return render(request, "core/404.html", status=404)
+
+    plant_profile_url = request.build_absolute_uri(plant.get_absolute_url())
+    plant_image = utils.plant_primary_image(plant)
+
+    qrcode_img = utils.create_qr_code_image(plant_profile_url)
+
+    plant_info: list[str] = utils.plant_label_info(plant, request)
+    plant_info.reverse()
+
+    buffer = io.BytesIO()
+    c = canvas.Canvas(buffer, pagesize=letter)
+    label_width = 2.75 * inch
+    label_height = 5.5 * inch
+    c.setPageSize((label_width + inch, label_height + inch))
+    margin_top = 0.5 * inch
+    margin_left = 0.5 * inch
+    c.setFont("Times-Roman", 12)
+
+    # Draw plant image at the top
+    c.drawInlineImage(
+        plant_image.image.path,
+        margin_left,
+        margin_top + label_height - 200,
+        width=200,
+        height=200,
+    )
+
+    # Draw plant information just below the image
+    text_object = c.beginText(margin_left + 20, margin_top + label_height - 210)
+    text_object.setFont("Times-Roman", 10)
+    for idx, line in enumerate(plant_info):
+        text_object.textLine(line)
+        if idx == 2:  # After the 3rd item (index 2)
+            c.drawText(text_object)
+            y_pos = margin_top + label_height - 200 - ((idx + 1) * 12)
+            c.line(margin_left, y_pos - 5, margin_left + label_width, y_pos - 5)
+            text_object = c.beginText(margin_left + 20, y_pos - 15)
+            text_object.setFont("Times-Roman", 10)
+    c.drawText(text_object)
+
+    # Draw QR code just below the plant information
+    c.drawInlineImage(
+        qrcode_img,
+        margin_left + (label_width - 75) / 2,
+        margin_top - 15,
+        width=75,
+        height=75,
+    )
+
+    c.showPage()
+    c.save()
+
+    buffer.seek(0)
+    return FileResponse(
+        buffer,
+        as_attachment=True,
+        filename=f"{plant.latin_name.replace(' ', '_')}_seed_box_label.pdf",
+    )
+
+
 def plant_label_pdf(request, pk):
     plant = utils.single_plant(pk, request)
     plant_info: list[str] = utils.plant_label_info(plant, request)

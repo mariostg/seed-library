@@ -45,6 +45,11 @@
               <input type="checkbox" id="id_seed_availability" name="seed_availability" class="input" {% if form.seed_availability.value %}checked{% endif %}>
               <label for="id_seed_availability">Seed Availability</label>
             </div>
+            <!--link to seed box label-->
+            <br>
+            <div class="input-link">
+              <a target="_blank" href="{% url 'plant-seed-box-label-pdf' plant.pk %}">PDF Seed Box Label</a>
+            </div>
           </fieldset>
           <fieldset class="form-group">
             <legend>Seed Distribution</legend>

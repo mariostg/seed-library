@@ -36,3 +36,4 @@ reportlab
 pre-commit
 exif
 openpyxl
+qrcode
