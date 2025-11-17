@@ -160,6 +160,8 @@ class HabitForm(forms.ModelForm):
 
 
 class AdminHarvestingIndicatorForm(forms.ModelForm):
+    harvesting_indicator = TextAreaField(label="Harvesting Indicator")
+
     class Meta:
         model = models.HarvestingIndicator
         fields = ["harvesting_indicator"]
