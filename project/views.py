@@ -2429,24 +2429,32 @@ def plant_seed_box_label_pdf(request, pk):
     margin_left = 0.5 * inch
     c.setFont("Times-Roman", 12)
 
+    # draw a border around the label
+    c.rect(margin_left, margin_top, label_width + 2, label_height + 2)
+
     # Draw plant image at the top
+    image_width = 190
+    image_height = 190
+    image_margin_left = margin_left + (label_width - image_width) / 2
     c.drawInlineImage(
         plant_image.image.path,
-        margin_left,
-        margin_top + label_height - 200,
-        width=200,
-        height=200,
+        image_margin_left,
+        margin_top + label_height - image_height,
+        width=image_width,
+        height=image_height,
     )
 
     # Draw plant information just below the image
-    text_object = c.beginText(margin_left + 20, margin_top + label_height - 210)
+    text_object = c.beginText(
+        margin_left + 20, margin_top + label_height - image_height - 10
+    )
     text_object.setFont("Times-Roman", 10)
     for idx, line in enumerate(plant_info):
         text_object.textLine(line)
         if idx == 2:  # After the 3rd item (index 2)
             c.drawText(text_object)
-            y_pos = margin_top + label_height - 200 - ((idx + 1) * 12)
-            c.line(margin_left, y_pos - 5, margin_left + label_width, y_pos - 5)
+            y_pos = margin_top + label_height - image_height - ((idx + 1) * 12)
+            c.line(margin_left, y_pos - 2, margin_left + label_width, y_pos - 2)
             text_object = c.beginText(margin_left + 20, y_pos - 15)
             text_object.setFont("Times-Roman", 10)
     c.drawText(text_object)
@@ -2454,10 +2462,10 @@ def plant_seed_box_label_pdf(request, pk):
     # Draw QR code just below the plant information
     c.drawInlineImage(
         qrcode_img,
-        margin_left + (label_width - 75) / 2,
-        margin_top - 15,
-        width=75,
-        height=75,
+        margin_left + (label_width - 55) / 2,
+        margin_top,
+        width=55,
+        height=55,
     )
 
     c.showPage()
