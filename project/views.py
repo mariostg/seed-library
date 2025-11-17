@@ -134,6 +134,10 @@ def plant_profile_page(request, pk):
         plant.harvesting_mean.__str__()
     )
 
+    harvesting_indicator_list = utils.plant_split_long_string(
+        plant.harvesting_indicator.__str__()
+    )
+
     # check if plant video link is a valid url
     is_valid_video_url = utils.is_valid_url(plant.harvesting_video_link)
     if not is_valid_video_url:
@@ -153,6 +157,7 @@ def plant_profile_page(request, pk):
         "seed_viability_test_list": seed_viability_test_list,
         "seed_storage_list": seed_storage_list,
         "harvesting_mean_list": harvesting_mean_list,
+        "harvesting_indicator_list": harvesting_indicator_list,
     }
     return render(request, "project/plant_profile/plant-profile-page.html", context)
 

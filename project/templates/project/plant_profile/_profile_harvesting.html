@@ -7,7 +7,19 @@
     {% if plant.harvesting_start %}
       <li>Harvest start month: {{ plant.harvesting_start|month_name }}</li>
     {% endif %}
-    <li>Harvesting indicator: {{ plant.harvesting_indicator }}</li>
+
+    <li>Harvesting indicator:
+      {% if harvesting_indicator_list %}
+        <ul>
+          {% for item in harvesting_indicator_list %}
+            <li>{{ item }}</li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        {{ plant.harvesting_indicator }}
+      {% endif %}
+    </li>
+
     <li>Harvesting:
       {% if harvesting_mean_list %}
         <ul>
