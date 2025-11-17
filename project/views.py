@@ -122,6 +122,18 @@ def plant_profile_page(request, pk):
     else:
         endangered = False
 
+    # if plant.seed_viability_test length > 100 and it contains more than 2 sentences, split it into a list for better display
+    seed_viability_test_list = utils.plant_split_long_string(
+        plant.seed_viability_test.__str__()
+    )
+
+    # Seed storage check for long text
+    seed_storage_list = utils.plant_split_long_string(plant.seed_storage.__str__())
+
+    harvesting_mean_list = utils.plant_split_long_string(
+        plant.harvesting_mean.__str__()
+    )
+
     # check if plant video link is a valid url
     is_valid_video_url = utils.is_valid_url(plant.harvesting_video_link)
     if not is_valid_video_url:
@@ -138,6 +150,9 @@ def plant_profile_page(request, pk):
         "sow_before": sow_before,
         "is_toxic": is_toxic,
         "endangered": endangered,
+        "seed_viability_test_list": seed_viability_test_list,
+        "seed_storage_list": seed_storage_list,
+        "harvesting_mean_list": harvesting_mean_list,
     }
     return render(request, "project/plant_profile/plant-profile-page.html", context)
 

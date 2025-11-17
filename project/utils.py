@@ -94,6 +94,15 @@ def plant_moisture_range(plant: PlantProfile):
     return "Unknown Moisture Range"
 
 
+def plant_split_long_string(input_string: str, max_length: int = 100) -> list[str]:
+    """Splits a long string into a list of strings if the string contains 2 periods or more and input_string longer than 100 characters."""
+    if input_string and len(input_string) > max_length and input_string.count(".") >= 2:
+        return [
+            sentence.strip() for sentence in input_string.split(".") if sentence.strip()
+        ]
+    return [input_string] if input_string else []
+
+
 def plant_sowing_notes(plant: PlantProfile):
     if plant.sowing_notes:
 

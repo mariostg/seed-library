@@ -8,10 +8,41 @@
       <li>Harvest start month: {{ plant.harvesting_start|month_name }}</li>
     {% endif %}
     <li>Harvesting indicator: {{ plant.harvesting_indicator }}</li>
-    <li>Harvesting: {{ plant.harvesting_mean }}</li>
-    <li>Seed viability test: {{ plant.seed_viability_test }}</li>
+    <li>Harvesting:
+      {% if harvesting_mean_list %}
+        <ul>
+          {% for item in harvesting_mean_list %}
+            <li>{{ item }}</li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        {{ plant.harvesting_mean }}
+      {% endif %}
+    </li>
+
+    <li>Seed viability test:
+      {% if seed_viability_test_list %}
+        <ul>
+          {% for item in seed_viability_test_list %}
+            <li>{{ item }}</li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        {{ plant.seed_viability_test }}
+      {% endif %}
+    </li>
     <li>Packaging measure: {{ plant.packaging_measure }}</li>
-    <li>Seed storage: {{ plant.seed_storage }}</li>
+    <li>Seed storage:
+      {% if seed_storage_list %}
+        <ul>
+          {% for item in seed_storage_list %}
+            <li>{{ item }}</li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        {{ plant.seed_storage }}
+      {% endif %}
+    </li>
     <li>Cultivar: {{ plant.one_cultivar }}</li>
     {% if plant.remove_non_seed_material %}
       <li>Remove non-seed material</li>
