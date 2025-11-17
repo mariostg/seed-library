@@ -169,6 +169,8 @@ class AdminHarvestingIndicatorForm(forms.ModelForm):
 
 
 class AdminHarvestingMeanForm(forms.ModelForm):
+    harvesting_mean = TextAreaField(label="Harvesting")
+
     class Meta:
         model = models.HarvestingMean
         fields = ["harvesting_mean"]
