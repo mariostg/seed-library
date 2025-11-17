@@ -2405,7 +2405,6 @@ def plant_seed_box_label_pdf(request, pk):
     c = canvas.Canvas(buffer, pagesize=letter)
     label_width = 2.75 * inch
     label_height = 5.5 * inch
-    c.setPageSize((label_width + inch, label_height + inch))
     margin_top = 0.5 * inch
     margin_left = 0.5 * inch
     c.setFont("Times-Roman", 12)
