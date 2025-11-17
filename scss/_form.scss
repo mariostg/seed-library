@@ -1,5 +1,5 @@
 @use "_mixins.scss";
-@use "_variables";
+@use "_variables" as *;
 
 form {
   display: flex;

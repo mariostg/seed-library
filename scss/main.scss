@@ -3,7 +3,7 @@
 @use "_layout";
 @use "_form";
 @use "_alerts";
-@use "_variables";
+@use "_variables" as *;
 body {
   display: flex;
   flex-direction: column;

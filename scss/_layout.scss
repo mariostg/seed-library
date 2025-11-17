@@ -1,5 +1,5 @@
-@use "_variables";
-
+@use "_variables" as *;
+@use "_mixins";
 // Generate margin-bottom classes from 1 to 6 rem
 @for $i from 1 through 3 {
   .mb-#{$i} {
@@ -21,15 +21,22 @@
     align-items: center;
     flex: none;
     //on small screen, align items to the left
-    @include break(sm) {
-      align-items: flex-start;
+    @mixin break($breakpoint) {
+      @if $breakpoint == sm {
+        @media (max-width: 768px) {
+          @content;
+        }
+      }
+      // Add other breakpoints as needed
     }
   }
   // & > * {
   //   flex: 1;
   // }
-  @include break(sm) {
-    flex-direction: column;
+  @mixin break($breakpoint) {
+    @if $breakpoint == sm {
+      flex-direction: column;
+    }
   }
 }
 .wide {
@@ -50,8 +57,10 @@
 }
 .row-spacer {
   padding: 0.5rem 0;
-  @include break(sm) {
-    flex-direction: column;
+  @mixin break($breakpoint: sm) {
+    @if $breakpoint == sm {
+      flex-direction: column;
+    }
   }
 }
 .flex-col {
@@ -71,8 +80,10 @@
   &__inputs {
     display: flex;
     gap: 1rem;
-    @include break(sm) {
-      flex-direction: column;
+    @mixin break($breakpoint: sm) {
+      @if $breakpoint == sm {
+        flex-direction: column;
+      }
     }
   }
 }

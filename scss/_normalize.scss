@@ -58,6 +58,11 @@ ol {
   margin: 0 0 1rem 1.5rem;
 }
 
+li > ul,
+li > ol {
+  margin-bottom: 0;
+}
+
 // Form elements
 button {
   border: none;

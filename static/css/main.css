@@ -57,6 +57,11 @@ ol {
   margin: 0 0 1rem 1.5rem;
 }
 
+li > ul,
+li > ol {
+  margin-bottom: 0;
+}
+
 button {
   border: none;
 }
@@ -71,9 +76,6 @@ textarea {
   margin: 0;
 }
 
-/*0 3px 5px rgba(75, 85, 68, 0.8);*/
-/*Wildflower theme colors*/
-/*blue theme*/
 .mb-1 {
   margin-bottom: 1rem;
 }
@@ -103,16 +105,6 @@ textarea {
   align-items: center;
   flex: none;
 }
-@media screen and (max-width: 991px) {
-  .flex-row.center {
-    align-items: flex-start;
-  }
-}
-@media screen and (max-width: 991px) {
-  .flex-row {
-    flex-direction: column;
-  }
-}
 
 .wide {
   width: 100%;
@@ -136,11 +128,6 @@ textarea {
 .row-spacer {
   padding: 0.5rem 0;
 }
-@media screen and (max-width: 991px) {
-  .row-spacer {
-    flex-direction: column;
-  }
-}
 
 .flex-col, .flex-col-center {
   display: flex;
@@ -161,11 +148,6 @@ textarea {
   display: flex;
   gap: 1rem;
 }
-@media screen and (max-width: 991px) {
-  .flex-col__inputs {
-    flex-direction: column;
-  }
-}
 
 .flex-col-center {
   align-items: center;
@@ -182,9 +164,6 @@ header {
   margin-left: 1rem;
 }
 
-/*0 3px 5px rgba(75, 85, 68, 0.8);*/
-/*Wildflower theme colors*/
-/*blue theme*/
 form {
   display: flex;
   flex-direction: column;
@@ -285,9 +264,6 @@ input.wide textarea.wide {
   color: #f3f3f3;
 }
 
-/*0 3px 5px rgba(75, 85, 68, 0.8);*/
-/*Wildflower theme colors*/
-/*blue theme*/
 body {
   display: flex;
   flex-direction: column;
