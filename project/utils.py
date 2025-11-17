@@ -161,17 +161,25 @@ def stratification_need(plant: PlantProfile):
     stratification_detail = None
     stratification_duration = None
 
+    if plant.double_dormancy:
+        stratification_duration = "Stratify for 2 years"
+        return stratification_duration
+
     if plant.stratification_detail:
         stratification_detail = plant.stratification_detail
+
     if plant.stratification_duration:
         stratification_duration = plant.stratification_duration.__str__()
 
     if stratification_detail and stratification_duration:
         return f"{stratification_detail} {stratification_duration}"
+
     elif stratification_detail:
         return stratification_detail
+
     elif stratification_duration:
         return f"Stratify for {stratification_duration}"
+
     return None
 
 

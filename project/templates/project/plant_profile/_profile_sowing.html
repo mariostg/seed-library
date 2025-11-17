@@ -9,15 +9,20 @@
     {% if plant.stratification_detail %}
       <li>Stratification conditions: {{ plant.stratification_detail }}</li>
     {% endif %}
-    <li>Stratification duration: {{ plant.stratification_duration }}</li>
-    {% if plant.self_seeding %}
-      <li>Self-seeding</li>
-    {% endif %}
-    {% if plant.double_dormancy %}
-      <li>Double dormancy required</li>
-    {% endif %}
-    {% if plant.sowing_notes %}
-      <li>Notes: {{ plant.sowing_notes }}</li>
-    {% endif %}
-  </ul>
-</div>
+    <li>Stratification duration:
+      {% if plant.double_dormancy %}
+        2 years
+      {% else %}
+        {{ plant.stratification_duration }}</li>
+      {% endif %}
+      {% if plant.self_seeding %}
+        <li>Self-seeding</li>
+      {% endif %}
+      {% if plant.double_dormancy %}
+        <li>Double dormancy required</li>
+      {% endif %}
+      {% if plant.sowing_notes %}
+        <li>Notes: {{ plant.sowing_notes }}</li>
+      {% endif %}
+    </ul>
+  </div>
