@@ -2,7 +2,7 @@
         <!--Display message if plant is not accepted by OWSL-->
 {% if not plant.is_accepted %}
   <div class="alert alert--warning">
-    This plant is not accepted by the Ottawa Wildflower Seed Library at this time.
+    This species is not part of the collection of the Seed Library.
     {% if plant.not_accepted_reason %}
       Reason: {{ plant.not_accepted_reason }}
     {% endif %}
