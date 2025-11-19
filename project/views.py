@@ -2528,6 +2528,14 @@ def plant_label_pdf(request, pk):
                 plant_info,
             )
 
+    # Draw packaging size on just above the largest y_positions value and centered
+    c.setFont("Times-Bold", 12)
+    packaging_text = f"Packaging Size: {plant.packaging_measure}"
+    text_width = c.stringWidth(packaging_text, "Times-Bold", 12)
+    x_position = (11 * inch - text_width) / 2
+    y_position = y_positions[-1] + 0.25 * inch
+    c.drawString(x_position, y_position, packaging_text)
+
     c.setFillColor(red)
 
     c.showPage()
