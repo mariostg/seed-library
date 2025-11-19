@@ -765,35 +765,6 @@ def admin_colour_delete(request, pk):
 
 
 @login_required
-def habit_add(request):
-    context = {
-        "title": "Create Habit",
-        "url_name": "habit-table",
-    }
-    if request.method == "POST":
-        form = forms.HabitForm(request.POST)
-        if form.is_valid():
-            context["form"] = form
-            obj = form.save(commit=False)
-            try:
-                form.save()
-            except IntegrityError:
-                messages.error(request, f"Habit {obj.habit} exists already.")
-                return render(
-                    request,
-                    "project/simple-form.html",
-                    context,
-                )
-        else:
-            messages.error(request, "Habit not valid.")
-            context["form"] = form
-    else:
-        context["form"] = forms.HabitForm
-
-    return render(request, "project/simple-form.html", context)
-
-
-@login_required
 def admin_harvesting_indicator_add(request):
     context = {
         "title": "Create Harvesting Indicator",
@@ -857,28 +828,6 @@ def admin_harvesting_mean_add(request):
 
 
 @login_required
-def habit_update(request, pk):
-    obj = models.GrowthHabit.objects.get(id=pk)
-    form = forms.HabitForm(instance=obj)
-
-    if request.method == "POST":
-        form = forms.ColorForm(request.POST, instance=obj)
-        if form.is_valid():
-            form.save()
-            return redirect("habit-table")
-
-    return render(
-        request,
-        "project/simple-form.html",
-        {
-            "form": form,
-            "title": "Habit Update",
-            "url_name": "habit-table",
-        },
-    )
-
-
-@login_required
 def admin_harvesting_indicator_update(request, pk):
     obj = models.HarvestingIndicator.objects.get(id=pk)
     form = forms.AdminHarvestingIndicatorForm(instance=obj)
@@ -920,24 +869,6 @@ def admin_harvesting_mean_update(request, pk):
             "url_name": "admin-harvesting-mean-page",
         },
     )
-
-
-@login_required
-def habit_delete(request, pk):
-    obj: models.GrowthHabit = models.GrowthHabit.objects.get(id=pk)
-    if request.method == "POST":
-        try:
-            obj.delete()
-        except RestrictedError as e:
-            msg = e.args[0].split(":")[0] + " : "
-            fkeys = []
-            for fk in e.restricted_objects:
-                fkeys.append(fk.habit)
-            msg = msg + ", ".join(fkeys)
-            messages.warning(request, msg)
-        return redirect("habit-table")
-    context = {"object": obj, "back": "habit-table"}
-    return render(request, "core/delete-object.html", context)
 
 
 @login_required
