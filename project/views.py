@@ -504,17 +504,21 @@ def search_plant_name(request):
 
 def search_vascan_taxon_id(request):
     # uses vascan.vascan_query and vascan.extract_taxon_id from an htmx request
+    # also get inaturalist taxon id
     if request.method == "GET" and "latin_name" in request.GET:
         latin_name = request.GET["latin_name"]
         vascan_result = vascan.vascan_query(latin_name)
         taxon_id = vascan.extract_taxon_id(vascan_result)
         english_name = vascan.extract_english_name(vascan_result)
         french_name = vascan.extract_french_name(vascan_result)
+        inaturalist_taxon = utils.get_inaturalist_taxon_id(latin_name)
+
         return HttpResponse(
             f"""
             <input id="id_taxon" value="{taxon_id}" hx-swap-oob="true">
             <input id="id_english_name" value="{english_name}" hx-swap-oob="true">
             <input id="id_french_name" value="{french_name}" hx-swap-oob="true">
+            <input id="id_inaturalist_taxon" value="{inaturalist_taxon}" hx-swap-oob="true">
         """
         )
 

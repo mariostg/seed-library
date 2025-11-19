@@ -15,12 +15,18 @@ asttokens==3.0.0
     # via stack-data
 attrs==25.4.0
     # via flake8-bugbear
+beautifulsoup4==4.14.2
+    # via -r requirements.in
 black==25.9.0
     # via -r requirements.in
+certifi==2025.11.12
+    # via requests
 cfgv==3.4.0
     # via pre-commit
 charset-normalizer==3.4.4
-    # via reportlab
+    # via
+    #   reportlab
+    #   requests
 click==8.3.0
     # via black
 coverage==7.11.0
@@ -84,6 +90,8 @@ gunicorn==23.0.0
     # via -r requirements.in
 identify==2.6.15
     # via pre-commit
+idna==3.11
+    # via requests
 iniconfig==2.3.0
     # via pytest
 ipython==9.6.0
@@ -185,10 +193,14 @@ qrcode==8.2
     # via -r requirements.in
 reportlab==4.4.4
     # via -r requirements.in
+requests==2.32.5
+    # via -r requirements.in
 rich==14.2.0
     # via -r requirements.in
 six==1.17.0
     # via python-dateutil
+soupsieve==2.8
+    # via beautifulsoup4
 sqlparse==0.5.3
     # via django
 stack-data==0.6.3
@@ -203,6 +215,7 @@ traitlets==5.14.3
     #   matplotlib-inline
 typing-extensions==4.15.0
     # via
+    #   beautifulsoup4
     #   ipython
     #   pydantic
     #   pydantic-core
@@ -211,6 +224,8 @@ typing-inspection==0.4.2
     # via pydantic
 tzdata==2025.2
     # via pandas
+urllib3==2.5.0
+    # via requests
 virtualenv==20.35.4
     # via pre-commit
 wcwidth==0.2.14

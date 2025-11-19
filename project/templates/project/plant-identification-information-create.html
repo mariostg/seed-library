@@ -29,7 +29,8 @@
               <label for="id_latin_name">Latin Name</label>
               <input type="text"
                      hx-get="{% url 'search-vascan-taxon-id' %}"
-                     hx-target="#id_taxon, #id_english_name, #id_french_name"    hx-trigger="change delay:500ms"
+                     hx-target="#id_taxon, #id_english_name, #id_french_name,#id_inaturalist_taxon"
+                     hx-trigger="change delay:500ms"
                      hx-swap="value"
                      hx-include="this"
                      hx-indicator=".htmx-indicator"
