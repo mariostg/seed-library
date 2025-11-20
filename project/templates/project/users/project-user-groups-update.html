@@ -1,0 +1,75 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block title %}{{title}}{% endblock title %}
+{% block content %}
+  {% include "project/admin/admin_links.html" %}
+  <div class='flex-col-center'>
+    <fieldset class="flex-col-center">
+      <legend>
+        {{title}}
+      </legend>
+      {% if user.is_authenticated %}
+        <div class='center'>
+          <a class='btn btn-add' href="{% url 'project-group-add' %}">Add Project Group</a>
+        </div>
+      {% endif %}
+      <table class=''>
+        <thead>
+          <tr>
+            <th>Group Name</th>
+            <th>Group Permissions</th>
+            <th></th>
+            {% if user.is_authenticated %}
+              <th colspan=2>Actions</th>
+            {% endif %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for group in user.groups.all %}
+            <tr class="{% cycle 'odd-row' 'even-row' %}">
+              <td>{{group.name}}</td>
+              <td>
+                {% for perm in group.permissions.all|dictsort:"name" %}{{ perm.name }}{% if not forloop.last %}, {% endif %}
+                {% empty %}
+                  No group permissions assigned.
+                {% endfor %}
+              </td>
+              <td>{% for user_perm in user.permissions.all|dictsort:"name" %}{{ user_perm.name }}{% if not forloop.last %}, {% endif %}{% empty %}No direct permissions assigned.{% endfor %}</td>
+              {% if user.is_authenticated %}
+                <td class='actions'>
+                  <a class='btn btn-delete' href="{% url "project-user-groups-delete" group_pk=group.id user_pk=user.id %}">Delete</a>
+                </td>
+              {% endif %}
+            </tr>
+
+          {% endfor %}
+        </tbody>
+      </table>
+    </fieldset>
+
+    <!--s section that contains a form that contains a list of groups that can be assigned to the user.  Groups are enumerated with check box options-->
+    <section>
+      <fieldset class="flex-col-center">
+        <legend>
+          Assign Groups to User: {{user.username}}
+        </legend>
+        <form method="post" action="{% url 'project-user-groups-update' user.id %}">
+          {% csrf_token %}
+          <div class="flex-col-center">
+            {% for group in unassigned_groups %}
+              <div>
+                <input type="checkbox" id="group_{{group.id}}" name="groups" value="{{group.id}}"
+                       {% if group in project_user.groups.all %}checked{% endif %}>
+                <label for="group_{{group.id}}">{{group.name}}</label>
+              </div>
+            {% endfor %}
+          </div>
+          <div class='center'>
+            <button type="submit" class='btn btn-submit'>Update Groups</button>
+          </div>
+        </form>
+      </fieldset>
+    </section>
+
+  </div>
+{% endblock content %}

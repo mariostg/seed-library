@@ -64,6 +64,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "django_browser_reload.middleware.BrowserReloadMiddleware",
     "django_htmx.middleware.HtmxMiddleware",
+    "project.acl_handler.UserAdminCheckMiddleware",
 ]
 
 ROOT_URLCONF = "main.urls"

@@ -5,6 +5,7 @@ from datetime import datetime
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import Group
 from django.core.paginator import Paginator
 from django.db import IntegrityError
 from django.db.models import Count, RestrictedError
@@ -2316,6 +2317,231 @@ def user_plant_delete(request, pk):
         return redirect("user-plant-collection")
     context = {"object": obj, "back": "user-plant-collection"}
     return render(request, "core/delete-object.html", context)
+
+
+@login_required
+def project_user_page(request):
+    data = ProjectUser.objects.all().order_by("username")
+    # is_user_manager = acl_handler.is_user_manager(request)
+    context = {
+        "object_list": data,
+        "url_name": "project-user-page",
+        "title": "Project Users",
+        # "is_user_manager": is_user_manager,
+    }
+    return render(request, "project/users/project-user-page.html", context)
+
+
+@login_required
+def project_user_add(request):
+    context = {
+        "title": "Create Project User",
+        "url_name": "project-user-page",
+    }
+    if request.method == "POST":
+        form = forms.ProjectUserForm(request.POST)
+        if form.is_valid():
+            context["form"] = form
+            obj: ProjectUser = form.save(commit=False)
+            obj.set_password(form.cleaned_data["password"])
+            try:
+                obj.save()
+                messages.success(
+                    request, f"Project User {obj.username} created successfully."
+                )
+                return redirect("project-user-page")
+            except IntegrityError:
+                messages.error(
+                    request,
+                    f"Project User {obj.username} exists already.",
+                )
+                return render(
+                    request,
+                    "project/simple-form.html",
+                    context,
+                )
+        else:
+            messages.error(request, "Project User not valid.")
+            context["form"] = form
+    else:
+        context["form"] = forms.ProjectUserForm
+
+    return render(request, "project/simple-form.html", context)
+
+
+@login_required
+def project_user_update(request, pk):
+    obj = ProjectUser.objects.get(id=pk)
+    form = forms.ProjectUserForm(instance=obj)
+
+    if request.method == "POST":
+        form = forms.ProjectUserForm(request.POST, instance=obj)
+        if form.is_valid():
+            form.save()
+            return redirect("project-user-page")
+
+    return render(
+        request,
+        "project/simple-form.html",
+        {
+            "form": form,
+            "title": "Project User Update",
+            "url_name": "project-user-page",
+        },
+    )
+
+
+@login_required
+def project_user_delete(request, pk):
+    obj = ProjectUser.objects.get(id=pk)
+    if request.method == "POST":
+        obj.delete()
+        return redirect("project-user-page")
+    return render(
+        request,
+        "core/delete-object.html",
+        {
+            "object": obj,
+            "title": "Project User Delete",
+            "url_name": "project-user-page",
+            "back": "project-user-page",
+        },
+    )
+
+
+@login_required
+def project_user_groups_update(request, pk):
+    user = ProjectUser.objects.get(id=pk)
+    unassigned_groups = Group.objects.exclude(user=user)
+    assigned_groups = Group.objects.filter(user=user)
+    context = {
+        "user": user,
+        "unassigned_groups": unassigned_groups,
+        "assigned_groups": assigned_groups,
+        "title": f"Manage Groups for {user.username}",
+        "url_name": "project-user-page",
+    }
+    if request.method == "POST":
+        selected_groups = request.POST.getlist("groups")
+        # Update user groups without deleteing existing ones first
+        user.groups.add(*Group.objects.filter(id__in=selected_groups))
+        messages.success(
+            request, f"Groups updated successfully for user {user.username}."
+        )
+        return redirect("project-user-groups-update", pk=user.pk)
+
+    return render(request, "project/users/project-user-groups-update.html", context)
+
+
+@login_required
+def project_user_groups_delete(request, user_pk, group_pk):
+    user = ProjectUser.objects.get(id=user_pk)
+    group = Group.objects.get(id=group_pk)
+    if request.method == "POST":
+        user.groups.remove(group)
+        messages.success(
+            request,
+            f"Group {group.name} removed successfully from user {user.username}.",
+        )
+        return redirect("project-user-groups-update", pk=user.pk)
+    context = {
+        "object": group,
+        "title": f"Remove Group {group.name} from User {user.username}",
+        "url_name": "project-user-page",
+        "back": "project-user-page",
+    }
+    return render(request, "core/delete-object.html", context)
+
+
+@login_required
+def project_group_page(request):
+    data = Group.objects.all().order_by("name")
+    context = {
+        "object_list": data,
+        "url_name": "project-group-page",
+        "title": "Project Group Management",
+    }
+    return render(request, "project/users/project-group-page.html", context)
+
+
+@login_required
+def project_group_add(request):
+    context = {
+        "title": "Create Group",
+        "url_name": "project-group-page",
+    }
+    if request.method == "POST":
+        form = forms.GroupForm(request.POST)
+        if form.is_valid():
+            context["form"] = form
+            instance: Group = form.save(commit=False)
+            try:
+                instance.save()
+                form.save_m2m()
+                messages.success(
+                    request, f"Group {instance.name} created successfully."
+                )
+                return redirect("project-group-page")
+            except IntegrityError:
+                messages.error(
+                    request,
+                    f"Group {instance.name} exists already.",
+                )
+                return render(
+                    request,
+                    "project/simple-form.html",
+                    context,
+                )
+        else:
+            messages.error(request, "Group not valid.")
+            context["form"] = form
+    else:
+        context["form"] = forms.GroupForm
+
+    return render(request, "project/simple-form.html", context)
+
+
+@login_required
+def project_group_update(request, pk):
+    obj = Group.objects.get(id=pk)
+    form = forms.GroupForm(instance=obj)
+
+    if request.method == "POST":
+        form = forms.GroupForm(request.POST, instance=obj)
+        if form.is_valid():
+            instance: Group = form.save(commit=False)
+            instance.save()
+            form.save_m2m()
+            messages.success(request, "Group updated successfully.")
+            return redirect("project-group-page")
+
+    return render(
+        request,
+        "project/simple-form.html",
+        {
+            "form": form,
+            "title": "Group Update",
+            "url_name": "project-group-page",
+        },
+    )
+
+
+@login_required
+def project_group_delete(request, pk):
+    obj = Group.objects.get(id=pk)
+    if request.method == "POST":
+        obj.delete()
+        return redirect("project-group-page")
+    return render(
+        request,
+        "core/delete-object.html",
+        {
+            "object": obj,
+            "title": "Group Delete",
+            "url_name": "project-group-page",
+            "back": "project-group-page",
+        },
+    )
 
 
 @login_required

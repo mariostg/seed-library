@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib.auth.models import Group, Permission
 from django.core.exceptions import ValidationError
 from django.forms import ModelForm
 from django.utils.dates import MONTHS
@@ -363,13 +364,30 @@ class AdminPlantMorphologyForm(forms.ModelForm):
 class ProjectUserForm(ModelForm):
     class Meta:
         model = models.ProjectUser
-        fields = ["username", "email"]
+        fields = ["username", "email", "password"]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
         for _, field in self.fields.items():
             field.widget.attrs.update({"class": "input"})
+
+
+class GroupForm(forms.ModelForm):
+    name = forms.CharField(label="Group Name", max_length=150)
+    permissions = forms.ModelMultipleChoiceField(
+        queryset=Permission.objects.all(),
+        widget=forms.CheckboxSelectMultiple,
+        required=False,
+        label="Group Permissions",
+    )
+
+    class Meta:
+        model = Group
+        fields = ["name", "permissions"]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 
 
 class PlantCollectionForm(forms.ModelForm):

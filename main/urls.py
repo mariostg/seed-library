@@ -685,6 +685,63 @@ urlpatterns += [
         name="plants-needing-seeds-csv",
     ),
 ]
+
+urlpatterns += [
+    path(
+        "project-user-page/",
+        views.project_user_page,
+        name="project-user-page",
+    ),
+    path(
+        "project-user-add/",
+        views.project_user_add,
+        name="project-user-add",
+    ),
+    path(
+        "project-user-update/<int:pk>/",
+        views.project_user_update,
+        name="project-user-update",
+    ),
+    path(
+        "project-user-delete/<int:pk>/",
+        views.project_user_delete,
+        name="project-user-delete",
+    ),
+    path(
+        "project-user-groups-update/<int:pk>/",
+        views.project_user_groups_update,
+        name="project-user-groups-update",
+    ),
+    path(
+        "project-user-groups-delete/<int:user_pk>/<int:group_pk>/",
+        views.project_user_groups_delete,
+        name="project-user-groups-delete",
+    ),
+]
+
+
+urlpatterns += [
+    path(
+        "project-group-page/",
+        views.project_group_page,
+        name="project-group-page",
+    ),
+    path(
+        "project-group-add/",
+        views.project_group_add,
+        name="project-group-add",
+    ),
+    path(
+        "project-group-update/<int:pk>/",
+        views.project_group_update,
+        name="project-group-update",
+    ),
+    path(
+        "project-group-delete/<int:pk>/",
+        views.project_group_delete,
+        name="project-group-delete",
+    ),
+]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
