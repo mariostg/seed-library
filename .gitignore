@@ -16,3 +16,5 @@ staticfiles/
 media/*
 *.min.js
 static/images/plants/
+
+logs/

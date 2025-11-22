@@ -183,10 +183,16 @@ LOGGING = {
             "rich_tracebacks": True,
             "tracebacks_show_locals": True,
         },
+        "file": {
+            "class": "logging.FileHandler",
+            "filename": BASE_DIR / "logs/django.log",
+            "formatter": "verbose",
+            "level": "WARNING",
+        },
     },
     "loggers": {
         "django": {
-            "handlers": ["console"],
+            "handlers": ["console", "file"],
             "level": "INFO",
             "propagate": True,
         },
