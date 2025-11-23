@@ -11,6 +11,11 @@
   margin: 0 auto;
   padding: 0 1rem;
 }
+.flex-fit-content {
+  display: flex;
+  width: fit-content;
+  flex-direction: column;
+}
 .flex-row {
   justify-content: space-between;
   display: flex;
