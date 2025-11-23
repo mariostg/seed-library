@@ -20,6 +20,7 @@
             <th>Email</th>
             <th>First Name</th>
             <th>Last Name</th>
+            <th>User Groups</th>
             {% if user.is_authenticated %}
               <th colspan=2>Actions</th>
             {% endif %}
@@ -32,6 +33,13 @@
               <td>{{item.email}}</td>
               <td>{{item.first_name}}</td>
               <td>{{item.last_name}}</td>
+              <td>
+                {% for group in item.groups.all %}
+                  {{ group.name }}{% if not forloop.last %}, {% endif %}
+                {% empty %}
+                  No Groups
+                {% endfor %}
+              </td>
               {% if user.is_authenticated %}
                 <td class='actions'>
                   <a class='btn btn-edit' href="{% url "project-user-update" item.id %}">Edit</a>
