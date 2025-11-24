@@ -32,8 +32,10 @@
       <a target="_blank" href="https://wildflowerseedlibrary.ca/about-us/">About Us</a>
     </li>
 
-    {% if request.user.is_authenticated %}
+    {% if request.user.is_plant_profile_manager %}
       <li><a class='btn' href="{% url 'plant-identification-information-create' %}">Record new plant</a></li>
+    {% endif %}
+    {% if request.user.is_authenticated %}
       <li><a class='btn' href="{% url 'user-plant-collection' %}">My Collection</a></li>
       <li><a class='btn' href="{% url 'logout' %}">Logout {{request.user}}</a></li>
       {% if request.path != '/site-admin/' %}
