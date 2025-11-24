@@ -29,11 +29,13 @@
               <td>{{group.name}}</td>
               <td>{% for permission in group.permissions.all %}
                 {{ permission.name }}{% if not forloop.last %}, {% endif %}
+                <!--insert a <br> every 4 permissions-->
+                {% if forloop.counter|divisibleby:4 %}<br>{% endif %}
               {% empty %}
                 No group permissions assigned.
               {% endfor %}</td>
               {% if user.is_authenticated %}
-                <td class='actions'>
+                <td>
                   <a class='btn btn-edit' href="{% url "project-group-update" group.id %}">Edit</a>
                   <a class='btn btn-delete' href="{% url "project-group-delete" group.id %}">Delete</a>
                 </td>
