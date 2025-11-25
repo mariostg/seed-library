@@ -8,7 +8,7 @@
       <legend>
         {{title}}
       </legend>
-      {% if user.is_authenticated %}
+      {% if request.user.is_project_admin %}
         <div class='center'>
           <a class='btn btn-add' href="{% url 'project-group-add' %}">Add Project Group</a>
         </div>
@@ -19,7 +19,7 @@
             <th>Group Name</th>
             <th>Group Permissions</th>
             <th></th>
-            {% if user.is_authenticated %}
+            {% if request.user.is_project_admin %}
               <th colspan=2>Actions</th>
             {% endif %}
           </tr>
@@ -35,7 +35,7 @@
                 {% endfor %}
               </td>
               <td>{% for user_perm in user.permissions.all|dictsort:"name" %}{{ user_perm.name }}{% if not forloop.last %}, {% endif %}{% empty %}No direct permissions assigned.{% endfor %}</td>
-              {% if user.is_authenticated %}
+              {% if request.user.is_project_admin %}
                 <td class='actions'>
                   <a class='btn btn-delete' href="{% url "project-user-groups-delete" group_pk=group.id user_pk=user.id %}">Delete</a>
                 </td>

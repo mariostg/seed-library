@@ -1,8 +1,8 @@
-{% load static %}
-{% block extracss %}
-  <link rel="stylesheet" href="{% static 'css/plant-profile.css' %}">
-{% endblock extracss %}
-{% if user.is_authenticated %}
+{% if request.user.is_plant_profile_manager %}
+  {% load static %}
+  {% block extracss %}
+    <link rel="stylesheet" href="{% static 'css/plant-profile.css' %}">
+  {% endblock extracss %}
   <div class='profile-update-links'>
     <a href="{% url 'plant-identification-information-update' plant.pk %}">Identification Information</a>
     <a href="{% url 'plant-growth-characteristics-update' plant.pk %}">Growth Characteristics</a>
@@ -19,4 +19,5 @@
   <div class="panel flex-col-center">
     <a class="alert alert--warning" href="{% url 'plant-profile-delete' plant.pk %}">Delete {{ plant.latin_name }}</a>
   </div>
+
 {% endif %}

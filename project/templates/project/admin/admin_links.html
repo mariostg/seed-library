@@ -1,109 +1,121 @@
 {% if request.user.is_authenticated %}
 
   <nav class="admin-links flex-row row-spacer">
-    <div class="flex-col-center">
-      <div class="title">Taxonomy & Biology</div>
-      <div>
-        <div><a href="{% url 'admin-growth-habit-page' %}">Growth Habits</a></div>
-        <div><a href="{% url 'admin-lifespan-page' %}">Lifespans</a></div>
-        <div><a href="{% url 'admin-colour-page' %}">Colours</a></div>
+    {% if request.user.is_plant_profile_manager %}
+      <div class="flex-col-center">
+        <div class="title">Taxonomy & Biology</div>
         <div>
-          <a href="{% url 'admin-conservation-status-page' %}"
-          >Conservation Statuses</a
-            >
-          </div>
+          <div><a href="{% url 'admin-growth-habit-page' %}">Growth Habits</a></div>
+          <div><a href="{% url 'admin-lifespan-page' %}">Lifespans</a></div>
+          <div><a href="{% url 'admin-colour-page' %}">Colours</a></div>
           <div>
-            <a href="{% url 'admin-toxicity-indicator-page' %}"
-            >Toxicity Indicators</a
+            <a href="{% url 'admin-conservation-status-page' %}"
+            >Conservation Statuses</a
               >
             </div>
-          </div>
-        </div>
-
-        <div class="flex-col-center">
-          <div class="title">Seeds & Propagation</div>
-          <div>
-            <div><a href="{% url 'admin-seed-head-page' %}">Seed Heads</a></div>
             <div>
-              <a href="{% url 'admin-seed-preparation-page' %}">Seed Preparations</a>
-            </div>
-            <div><a href="{% url 'admin-seed-storage-page' %}">Seed Storages</a></div>
-            <div>
-              <a href="{% url 'admin-seed-viability-test-page' %}"
-              >Seed Viability Tests</a
+              <a href="{% url 'admin-toxicity-indicator-page' %}"
+              >Toxicity Indicators</a
                 >
               </div>
+            </div>
+          </div>
+
+          <div class="flex-col-center">
+            <div class="title">Seeds & Propagation</div>
+            <div>
+              <div><a href="{% url 'admin-seed-head-page' %}">Seed Heads</a></div>
               <div>
-                <a href="{% url 'admin-seed-event-table-page' %}">Seed Event Tables</a>
+                <a href="{% url 'admin-seed-preparation-page' %}">Seed Preparations</a>
               </div>
-              <div><a href="{% url 'admin-sowing-depth-page' %}">Sowing Depths</a></div>
+              <div><a href="{% url 'admin-seed-storage-page' %}">Seed Storages</a></div>
               <div>
-                <a href="{% url 'admin-stratification-duration-page' %}"
-                >Stratification Durations</a
+                <a href="{% url 'admin-seed-viability-test-page' %}"
+                >Seed Viability Tests</a
                   >
                 </div>
-              </div>
-            </div>
-
-            <div class="flex-col-center">
-              <div class="title">Harvesting & Packaging</div>
-              <div>
                 <div>
-                  <a href="{% url 'admin-harvesting-indicator-page' %}"
-                  >Harvesting Indicators</a
+                  <a href="{% url 'admin-seed-event-table-page' %}">Seed Event Tables</a>
+                </div>
+                <div><a href="{% url 'admin-sowing-depth-page' %}">Sowing Depths</a></div>
+                <div>
+                  <a href="{% url 'admin-stratification-duration-page' %}"
+                  >Stratification Durations</a
                     >
                   </div>
-                  <div>
-                    <a href="{% url 'admin-harvesting-mean-page' %}">Harvesting</a>
-                  </div>
-                  <div>
-                    <a href="{% url 'admin-packaging-measure-page' %}">Packaging Measures</a>
-                  </div>
-                  <div><a href="{% url 'admin-one-cultivar-page' %}">Cultivars</a></div>
                 </div>
               </div>
 
               <div class="flex-col-center">
-                <div class="title">Wildlife</div>
+                <div class="title">Harvesting & Packaging</div>
                 <div>
                   <div>
-                    <a href="{% url 'admin-butterfly-species-page' %}">Butterfly Species</a>
+                    <a href="{% url 'admin-harvesting-indicator-page' %}"
+                    >Harvesting Indicators</a
+                      >
+                    </div>
+                    <div>
+                      <a href="{% url 'admin-harvesting-mean-page' %}">Harvesting</a>
+                    </div>
+                    <div>
+                      <a href="{% url 'admin-packaging-measure-page' %}">Packaging Measures</a>
+                    </div>
+                    <div><a href="{% url 'admin-one-cultivar-page' %}">Cultivars</a></div>
                   </div>
-                  <div><a href="{% url 'admin-bee-species-page' %}">Bee Species</a></div>
-                  <div><a href="{% url 'admin-non-native-species-page' %}">Non-Native Species</a></div>
                 </div>
-              </div>
 
-              <div class="flex-col-center">
-                <div class="title">Utilities</div>
-                <div>
+                <div class="flex-col-center">
+                  <div class="title">Wildlife</div>
                   <div>
-                    <a href="{% url 'update-availability' %}">Update Availability</a>
-                  </div>
-                  <div>
-                    <a href="{% url 'admin-ecozone-page' %}">Ecozones</a>
-                  </div>
-                  <div><a href="{% url 'admin-images-page' %}">Images</a></div>
-                  {% comment %} <div class="info"><a class="tooltip" href="{% url 'admin-accept-all-seeds' %}">Accept All Seeds <span class="tooltiptext">Attention, this will set all plant profiles with the <strong>accepting_seed</strong> field to true</span></a></div> {% endcomment %}
-                  <div><a href="{% url 'admin-plant-morphology-page' %}">Plant Morphology Elements</a></div>
-                  <!--Plant without iNaturalist Taxon -->
-                  <div>
-                    <a href="{% url 'admin-plant-missing-inaturalist-taxon' %}">Plants missing iNaturalist Taxon</a>
+                    <div>
+                      <a href="{% url 'admin-butterfly-species-page' %}">Butterfly Species</a>
+                    </div>
+                    <div><a href="{% url 'admin-bee-species-page' %}">Bee Species</a></div>
+                    <div><a href="{% url 'admin-non-native-species-page' %}">Non-Native Species</a></div>
                   </div>
                 </div>
-              </div>
+    {% endif %}
+    {% if request.user.is_project_admin %}
+      <div class="flex-col-center">
+        <div class="title">Utilities</div>
+        <div>
+          <div>
+            <a href="{% url 'update-availability' %}">Update Availability</a>
+          </div>
+          <div>
+            <a href="{% url 'admin-ecozone-page' %}">Ecozones</a>
+          </div>
+          <div>
+            <a href="{% url 'admin-plant-missing-inaturalist-taxon' %}">Plants missing iNaturalist Taxon</a>
+          </div>
+        </div>
+      </div>
+    {% endif %}
 
-              <div class="flex-col-center">
-                <div class="title">Project Users</div>
-                <div>
-                  <div>
-                    <a href="{% url 'project-user-page' %}">Manage Project Users</a>
-                  </div>
-                  <div>
-                    <a href="{% url 'project-group-page' %}">Manage Groups</a>
-                  </div>
-                </div>
-              </div>
+    {% if request.user.is_image_manager %}
+      <div class="flex-col-center">
+        <div class="title">Photo Album</div>
+        <div>
+          <div><a href="{% url 'admin-images-page' %}">Manage Photo Albums</a></div>
+          <div><a href="{% url 'admin-image-add' %}">Add Photo</a></div>
+        </div>
+      </div>
+    {% endif %}
+
+    {% if request.user.is_project_admin %}
+      <div class="flex-col-center">
+        <div class="title">Project Users</div>
+        <div>
+          <div>
+            <a href="{% url 'project-user-page' %}">Manage Project Users</a>
+          </div>
+          <div>
+            <a href="{% url 'project-group-page' %}">Manage Groups</a>
+          </div>
+        </div>
+      </div>
+    {% endif %}
+
 {% endif %}
 </div>
 </nav>
