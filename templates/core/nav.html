@@ -38,11 +38,11 @@
     {% if request.user.is_authenticated %}
       <li><a class='btn' href="{% url 'user-plant-collection' %}">My Collection</a></li>
       <li><a class='btn' href="{% url 'logout' %}">Logout {{request.user}}</a></li>
-      {% if request.path != '/site-admin/' %}
-        <li><a class='btn' href="{% url 'site-admin' %}">Admin</a></li>
-      {% endif %}
     {% else %}
       <a class='btn' href="{% url 'login' %}">Login</a>
+    {% endif %}
+    {% if request.user.is_project_admin or request.user.is_image_manager %}
+      <li><a class='btn' href="{% url 'site-admin' %}">Admin</a></li>
     {% endif %}
   </ul>
 </nav>
