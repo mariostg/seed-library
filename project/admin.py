@@ -1,5 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
+from django.contrib.auth.models import Permission
+from django.contrib.contenttypes.models import ContentType
 
 from project import models
 
@@ -39,6 +41,17 @@ from project import models
 class PlantProfileAdmin(admin.ModelAdmin):
     # list_filter = ["harvest_start",]
     search_fields = ["latin_name", "french_name"]
+
+
+admin.site.register(Permission)
+
+
+@admin.register(ContentType)
+class ContentTypeAdmin(admin.ModelAdmin):
+    # list_display = ["app_label", "model"]
+    list_filter = ["app_label"]
+    search_fields = ["app_label", "model"]
+    ordering = ["app_label", "model"]
 
 
 admin.site.register(models.PlantProfile, PlantProfileAdmin)

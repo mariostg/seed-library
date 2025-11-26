@@ -1,0 +1,50 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block title %}{{title}}{% endblock title %}
+
+{% block content %}
+  <h1>{{ title }}</h1>
+  <div class="flex-col-center">
+    <form method="post" action="{% url 'group-permissions-matrix-update' %}">
+      {% csrf_token %}
+      <table>
+        <thead style="position: sticky; top: 0; background-color: white; z-index: 10;">
+          <tr>
+            <th scope="col">Content Type</th>
+            <th scope="col">Codename</th>
+            {% for group in groups %}
+              <th scope="col" class="text-vertical">{{ group.name }}</th>
+            {% endfor %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for permission in object_list %}
+            <tr>
+              <td>{{ permission.content_type }}</td>
+              <td>{{ permission.codename }}</td>
+              {% for group in groups %}
+                <td>
+                        <!-- checkbox to assign permission to group -->
+                         <!-- Check if the permission is already assigned to the group -->
+                  {% if permission in group.permissions.all %}
+                    <input type="checkbox" name="permission_{{ permission.id }}_group_{{ group.id }}" checked>
+                  {% else %}
+                    <input type="checkbox" name="permission_{{ permission.id }}_group_{{ group.id }}">
+                  {% endif %}
+                </td>
+              {% endfor %}
+            </tr>
+          {%empty %}
+            <tr>
+              <td colspan="3">No unassigned permissions found.</td>
+            </tr>
+
+          {% endfor %}
+        </tbody>
+      </table>
+      <div class="flex-row-center">
+        <button type="submit" class="btn btn-primary">Assign Selected Permissions</button>
+      </div>
+    </form>
+  </div>
+{% endblock %}

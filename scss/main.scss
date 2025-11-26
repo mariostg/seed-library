@@ -14,6 +14,11 @@ main {
   flex-direction: column;
   flex: 1;
 }
+th.text-vertical {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  text-align: left;
+}
 tr.ok {
   td {
     background-color: green;

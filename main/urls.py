@@ -717,6 +717,11 @@ urlpatterns += [
         views.project_user_groups_delete,
         name="project-user-groups-delete",
     ),
+    path(
+        "group-permissions-matrix-update/",
+        views.group_permissions_matrix_update,
+        name="group-permissions-matrix-update",
+    ),
 ]
 
 

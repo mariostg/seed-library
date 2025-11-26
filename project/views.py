@@ -5,7 +5,7 @@ from datetime import datetime
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import Group
+from django.contrib.auth.models import Group, Permission
 from django.core.paginator import Paginator
 from django.db import IntegrityError
 from django.db.models import Count, RestrictedError
@@ -2541,6 +2541,45 @@ def project_group_delete(request, pk):
             "url_name": "project-group-page",
             "back": "project-group-page",
         },
+    )
+
+
+# view to show permissions not assigned to any group
+@group_required("Access Administrator")
+def group_permissions_matrix_update(request):
+    all_permissions = Permission.objects.all().order_by("content_type__app_label")
+    groups = Group.objects.all()
+
+    if request.method == "POST":
+        # Assign selected permissions to a group
+        # input names are in the format permission_<permission.id>_group_<group.id>
+        # e.g., permission_5_group_2
+        # Iterate through POST data to find selected permissions
+        # for permission that are unchecked, we need to remove them from the group
+        # get a list of all permissions assigned to each group and compare to the POST data in order to determine which permissions to add or remove
+        for group in groups:
+            group_permissions = set(group.permissions.values_list("id", flat=True))
+            for permission in all_permissions:
+                input_name = f"permission_{permission.id}_group_{group.id}"
+                if input_name in request.POST:
+                    # Permission is checked, add it to the group if not already present
+                    if permission.id not in group_permissions:
+                        group.permissions.add(permission)
+                else:
+                    # Permission is unchecked, remove it from the group if present
+                    if permission.id in group_permissions:
+                        group.permissions.remove(permission)
+        messages.success(request, "Permissions updated successfully.")
+        return redirect("group-permissions-matrix-update")
+
+    context = {
+        "groups": groups,
+        "object_list": all_permissions,
+        "url_name": "group-permissions-matrix-update",
+        "title": "All Permissions",
+    }
+    return render(
+        request, "project/users/group-permissions-matrix-update.html", context
     )
 
 
