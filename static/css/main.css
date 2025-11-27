@@ -106,6 +106,9 @@ textarea {
   gap: 0.5rem;
   flex-wrap: wrap;
 }
+.flex-row.xcenter {
+  justify-content: center;
+}
 .flex-row.center {
   justify-content: center;
   align-items: center;
