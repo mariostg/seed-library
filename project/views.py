@@ -215,7 +215,7 @@ def plant_profile_update(request, pk):
     return render(request, "project/plant-profile-form.html", context)
 
 
-@group_required("NA")
+@group_required("Plant Profile Manager")
 def plant_profile_delete(request, pk):
     plant: models.PlantProfile = utils.single_plant(pk, request)
     if request.method == "POST":
