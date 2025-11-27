@@ -1,0 +1,79 @@
+{% if request.user.is_authenticated %}
+
+  <nav class="flex-row xcenter row-spacer">
+    {% if request.user.is_plant_profile_manager %}
+      <div class="flex-col-center">
+        <div class="title">Taxonomy & Biology</div>
+        <div>
+          <div><a href="{% url 'admin-growth-habit-page' %}">Growth Habits</a></div>
+          <div><a href="{% url 'admin-lifespan-page' %}">Lifespans</a></div>
+          <div><a href="{% url 'admin-colour-page' %}">Colours</a></div>
+          <div>
+            <a href="{% url 'admin-conservation-status-page' %}">Conservation Statuses</a>
+          </div>
+          <div>
+            <a href="{% url 'admin-toxicity-indicator-page' %}">Toxicity Indicators</a>
+          </div>
+          <div>
+            <a href="{% url 'admin-ecozone-page' %}">Ecozones</a>
+          </div>
+        </div>
+      </div>
+      <div class="flex-col-center">
+        <div class="title">Seeds & Propagation</div>
+        <div>
+          <div><a href="{% url 'admin-seed-head-page' %}">Seed Heads</a></div>
+          <div>
+            <a href="{% url 'admin-seed-preparation-page' %}">Seed Preparations</a>
+          </div>
+          <div><a href="{% url 'admin-seed-storage-page' %}">Seed Storages</a></div>
+          <div>
+            <a href="{% url 'admin-seed-viability-test-page' %}"
+            >Seed Viability Tests</a
+              >
+            </div>
+            <div>
+              <a href="{% url 'admin-seed-event-table-page' %}">Seed Event Tables</a>
+            </div>
+            <div><a href="{% url 'admin-sowing-depth-page' %}">Sowing Depths</a></div>
+            <div>
+              <a href="{% url 'admin-stratification-duration-page' %}"
+              >Stratification Durations</a
+                >
+              </div>
+            </div>
+          </div>
+
+          <div class="flex-col-center">
+            <div class="title">Harvesting & Packaging</div>
+            <div>
+              <div>
+                <a href="{% url 'admin-harvesting-indicator-page' %}"
+                >Harvesting Indicators</a
+                  >
+                </div>
+                <div>
+                  <a href="{% url 'admin-harvesting-mean-page' %}">Harvesting</a>
+                </div>
+                <div>
+                  <a href="{% url 'admin-packaging-measure-page' %}">Packaging Measures</a>
+                </div>
+                <div><a href="{% url 'admin-one-cultivar-page' %}">Cultivars</a></div>
+              </div>
+            </div>
+
+            <div class="flex-col-center">
+              <div class="title">Wildlife</div>
+              <div>
+                <div>
+                  <a href="{% url 'admin-butterfly-species-page' %}">Butterfly Species</a>
+                </div>
+                <div><a href="{% url 'admin-bee-species-page' %}">Bee Species</a></div>
+                <div><a href="{% url 'admin-non-native-species-page' %}">Non-Native Species</a></div>
+              </div>
+            </div>
+    {% endif %}
+
+{% endif %}
+</div>
+</nav>

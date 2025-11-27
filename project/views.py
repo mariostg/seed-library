@@ -26,7 +26,7 @@ def index(request):
     return render(request, "project/plant-catalogue-intro.html")
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def toggle_availability(request, pk):
     plant = utils.single_plant(pk, request)
     plant.seed_availability = not plant.seed_availability
@@ -37,7 +37,7 @@ def toggle_availability(request, pk):
     # return render(request, "project/update-availability.html", context)
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def toggle_is_active(request, pk):
     plant = utils.single_plant(pk, request)
     plant.is_active = not plant.is_active
@@ -47,7 +47,7 @@ def toggle_is_active(request, pk):
     return JsonResponse(context)
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def toggle_seed_needed(request, pk):
     plant = utils.single_plant(pk, request)
     plant.is_needed = not plant.is_needed
@@ -57,7 +57,7 @@ def toggle_seed_needed(request, pk):
     return JsonResponse(context)
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def toggle_seed_accepting(request, pk):
     plant = utils.single_plant(pk, request)
     plant.accepting_seed = not plant.accepting_seed
@@ -67,7 +67,7 @@ def toggle_seed_accepting(request, pk):
     return JsonResponse(context)
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def toggle_plant_accepted(request, pk):
     plant = utils.single_plant(pk, request)
     plant.is_accepted = not plant.is_accepted
@@ -652,7 +652,7 @@ def export_plant_search_results(request):
     return response
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def update_availability(request):
     plants = models.PlantProfile.all_objects.all().order_by(
         "seed_event_table", "latin_name"
@@ -661,7 +661,7 @@ def update_availability(request):
     return render(request, "project/update/update-availability.html", context)
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def admin_harvesting_indicator_page(request):
     data = models.HarvestingIndicator.objects.annotate(
         plant_count=Count("plantprofile")
@@ -676,7 +676,7 @@ def admin_harvesting_indicator_page(request):
     )
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def admin_harvesting_mean_page(request):
     data = models.HarvestingMean.objects.annotate(
         plant_count=Count("plantprofile")
@@ -689,7 +689,7 @@ def admin_harvesting_mean_page(request):
     return render(request, "project/admin/admin-harvesting-mean-page.html", context)
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def admin_colour_page(request):
     data = models.BloomColour.objects.annotate(
         plant_count=Count("plantprofile")
@@ -702,7 +702,7 @@ def admin_colour_page(request):
     return render(request, "project/admin/admin-colour-page.html", context)
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def admin_colour_add(request):
     context = {
         "title": "Create Colour",
@@ -731,7 +731,7 @@ def admin_colour_add(request):
     return render(request, "project/simple-form.html", context)
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def admin_colour_update(request, pk):
     colour = models.BloomColour.objects.get(id=pk)
     form = forms.AdminColourForm(instance=colour)
@@ -753,7 +753,7 @@ def admin_colour_update(request, pk):
     )
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def admin_colour_delete(request, pk):
     obj: models.BloomColour = models.BloomColour.objects.get(id=pk)
     if request.method == "POST":
@@ -771,7 +771,7 @@ def admin_colour_delete(request, pk):
     return render(request, "core/delete-object.html", context)
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def admin_harvesting_indicator_add(request):
     context = {
         "title": "Create Harvesting Indicator",
@@ -803,7 +803,7 @@ def admin_harvesting_indicator_add(request):
     return render(request, "project/simple-form.html", context)
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def admin_harvesting_mean_add(request):
     context = {
         "title": "Create Harvesting Mean Statement",
@@ -834,7 +834,7 @@ def admin_harvesting_mean_add(request):
     return render(request, "project/simple-form.html", context)
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def admin_harvesting_indicator_update(request, pk):
     obj = models.HarvestingIndicator.objects.get(id=pk)
     form = forms.AdminHarvestingIndicatorForm(instance=obj)
@@ -856,7 +856,7 @@ def admin_harvesting_indicator_update(request, pk):
     )
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def admin_harvesting_mean_update(request, pk):
     obj = models.HarvestingMean.objects.get(id=pk)
     form = forms.AdminHarvestingMeanForm(instance=obj)
@@ -878,7 +878,7 @@ def admin_harvesting_mean_update(request, pk):
     )
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def admin_harvesting_indicator_delete(request, pk):
     obj: models.HarvestingIndicator = models.HarvestingIndicator.objects.get(id=pk)
     if request.method == "POST":
@@ -896,7 +896,7 @@ def admin_harvesting_indicator_delete(request, pk):
     return render(request, "core/delete-object.html", context)
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def admin_harvesting_mean_delete(request, pk):
     obj: models.HarvestingMean = models.HarvestingMean.objects.get(id=pk)
     if request.method == "POST":
@@ -914,7 +914,7 @@ def admin_harvesting_mean_delete(request, pk):
     return render(request, "core/delete-object.html", context)
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def admin_seed_head_page(request):
     data = models.SeedHead.objects.annotate(plant_count=Count("plantprofile")).order_by(
         "seed_head"
@@ -927,7 +927,7 @@ def admin_seed_head_page(request):
     return render(request, "project/admin/admin-seed-head-page.html", context)
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def admin_seed_head_add(request):
     context = {
         "title": "Create Seed Head",
@@ -956,7 +956,7 @@ def admin_seed_head_add(request):
     return render(request, "project/simple-form.html", context)
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def admin_seed_head_update(request, pk):
     obj = models.SeedHead.objects.get(id=pk)
     form = forms.AdminSeedHeadForm(instance=obj)
@@ -978,7 +978,7 @@ def admin_seed_head_update(request, pk):
     )
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def admin_seed_head_delete(request, pk):
     obj: models.SeedHead = models.SeedHead.objects.get(id=pk)
     if request.method == "POST":
@@ -996,7 +996,7 @@ def admin_seed_head_delete(request, pk):
     return render(request, "core/delete-object.html", context)
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def admin_seed_storage_page(request):
     data = models.SeedStorage.objects.annotate(
         plant_count=Count("plantprofile")
@@ -1009,7 +1009,7 @@ def admin_seed_storage_page(request):
     return render(request, "project/admin/admin-seed-storage-page.html", context)
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def admin_seed_storage_add(request):
     context = {
         "title": "Create Seed Storage",
@@ -1040,7 +1040,7 @@ def admin_seed_storage_add(request):
     return render(request, "project/simple-form.html", context)
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def admin_seed_storage_update(request, pk):
     obj = models.SeedStorage.objects.get(id=pk)
     form = forms.AdminSeedStorageForm(instance=obj)
@@ -1062,7 +1062,7 @@ def admin_seed_storage_update(request, pk):
     )
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def admin_seed_storage_delete(request, pk):
     obj: models.SeedStorage = models.SeedStorage.objects.get(id=pk)
     if request.method == "POST":
@@ -1080,7 +1080,7 @@ def admin_seed_storage_delete(request, pk):
     return render(request, "core/delete-object.html", context)
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def admin_seed_viability_test_page(request):
     data = models.SeedViabilityTest.objects.annotate(
         plant_count=Count("plantprofile")
@@ -1093,7 +1093,7 @@ def admin_seed_viability_test_page(request):
     return render(request, "project/admin/admin-seed-viability-test-page.html", context)
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def admin_seed_viability_test_add(request):
     context = {
         "title": "Create Seed Viability Test",
@@ -1125,7 +1125,7 @@ def admin_seed_viability_test_add(request):
     return render(request, "project/simple-form.html", context)
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def admin_seed_viability_test_update(request, pk):
     obj = models.SeedViabilityTest.objects.get(id=pk)
     form = forms.AdminSeedViabilityTestForm(instance=obj)
@@ -1147,7 +1147,7 @@ def admin_seed_viability_test_update(request, pk):
     )
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def admin_seed_viability_test_delete(request, pk):
     obj: models.SeedViabilityTest = models.SeedViabilityTest.objects.get(id=pk)
     if request.method == "POST":
@@ -1165,7 +1165,7 @@ def admin_seed_viability_test_delete(request, pk):
     return render(request, "core/delete-object.html", context)
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def admin_one_cultivar_page(request):
     data = models.OneCultivar.objects.annotate(
         plant_count=Count("plantprofile")
@@ -1178,7 +1178,7 @@ def admin_one_cultivar_page(request):
     return render(request, "project/admin/admin-one-cultivar-page.html", context)
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def admin_one_cultivar_add(request):
     context = {
         "title": "Create Cultivar",
@@ -1207,7 +1207,7 @@ def admin_one_cultivar_add(request):
     return render(request, "project/simple-form.html", context)
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def admin_one_cultivar_update(request, pk):
     obj = models.OneCultivar.objects.get(id=pk)
     form = forms.AdminOneCultivarForm(instance=obj)
@@ -1229,7 +1229,7 @@ def admin_one_cultivar_update(request, pk):
     )
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def admin_stratification_duration_page(request):
     data = models.StratificationDuration.objects.annotate(
         plant_count=Count("plantprofile")
@@ -1244,7 +1244,7 @@ def admin_stratification_duration_page(request):
     )
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def admin_stratification_duration_add(request):
     context = {
         "title": "Create Stratification Duration",
@@ -1276,7 +1276,7 @@ def admin_stratification_duration_add(request):
     return render(request, "project/simple-form.html", context)
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def admin_stratification_duration_update(request, pk):
     obj = models.StratificationDuration.objects.get(id=pk)
     form = forms.AdminStratificationDurationForm(instance=obj)
@@ -1298,7 +1298,7 @@ def admin_stratification_duration_update(request, pk):
     )
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def admin_stratification_duration_delete(request, pk):
     obj: models.StratificationDuration = models.StratificationDuration.objects.get(
         id=pk
@@ -1318,7 +1318,7 @@ def admin_stratification_duration_delete(request, pk):
     return render(request, "core/delete-object.html", context)
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def admin_one_cultivar_delete(request, pk):
     obj: models.OneCultivar = models.OneCultivar.objects.get(id=pk)
     if request.method == "POST":
@@ -1336,7 +1336,7 @@ def admin_one_cultivar_delete(request, pk):
     return render(request, "core/delete-object.html", context)
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def admin_sowing_depth_page(request):
     data = models.SowingDepth.objects.annotate(
         plant_count=Count("plantprofile")
@@ -1349,7 +1349,7 @@ def admin_sowing_depth_page(request):
     return render(request, "project/admin/admin-sowing-depth-page.html", context)
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def admin_sowing_depth_add(request):
     context = {
         "title": "Create Sowing Depth",
@@ -1381,7 +1381,7 @@ def admin_sowing_depth_add(request):
     return render(request, "project/simple-form.html", context)
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def admin_sowing_depth_update(request, pk):
     obj = models.SowingDepth.objects.get(id=pk)
     form = forms.AdminSowingDepthForm(instance=obj)
@@ -1403,7 +1403,7 @@ def admin_sowing_depth_update(request, pk):
     )
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def admin_sowing_depth_delete(request, pk):
     obj: models.SowingDepth = models.SowingDepth.objects.get(id=pk)
     if request.method == "POST":
@@ -1421,7 +1421,7 @@ def admin_sowing_depth_delete(request, pk):
     return render(request, "core/delete-object.html", context)
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def admin_packaging_measure_page(request):
     data = models.PackagingMeasure.objects.annotate(
         count=Count("plantprofile")
@@ -1434,7 +1434,7 @@ def admin_packaging_measure_page(request):
     return render(request, "project/admin/admin-packaging-measure-page.html", context)
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def admin_packaging_measure_add(request):
     context = {
         "title": "Create Packaging Measure",
@@ -1466,7 +1466,7 @@ def admin_packaging_measure_add(request):
     return render(request, "project/simple-form.html", context)
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def admin_packaging_measure_update(request, pk):
     obj = models.PackagingMeasure.objects.get(id=pk)
     form = forms.AdminPackagingMeasureForm(instance=obj)
@@ -1488,7 +1488,7 @@ def admin_packaging_measure_update(request, pk):
     )
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def admin_packaging_measure_delete(request, pk):
     obj: models.PackagingMeasure = models.PackagingMeasure.objects.get(id=pk)
     if request.method == "POST":
@@ -1506,7 +1506,7 @@ def admin_packaging_measure_delete(request, pk):
     return render(request, "core/delete-object.html", context)
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def admin_seed_preparation_page(request):
     data = models.SeedPreparation.objects.all().order_by("seed_preparation")
     context = {
@@ -1517,7 +1517,7 @@ def admin_seed_preparation_page(request):
     return render(request, "project/admin/admin-seed-preparation-page.html", context)
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def admin_seed_preparation_add(request):
     context = {
         "title": "Create Seed Preparation",
@@ -1549,7 +1549,7 @@ def admin_seed_preparation_add(request):
     return render(request, "project/simple-form.html", context)
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def admin_seed_preparation_update(request, pk):
     obj = models.SeedPreparation.objects.get(id=pk)
     form = forms.AdminSeedPreparationForm(instance=obj)
@@ -1571,7 +1571,7 @@ def admin_seed_preparation_update(request, pk):
     )
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def admin_seed_preparation_delete(request, pk):
     obj: models.SeedPreparation = models.SeedPreparation.objects.get(id=pk)
     if request.method == "POST":
@@ -1589,7 +1589,7 @@ def admin_seed_preparation_delete(request, pk):
     return render(request, "core/delete-object.html", context)
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def admin_seed_event_table_page(request):
     data = models.SeedEventTable.objects.annotate(count=Count("plantprofile")).order_by(
         "seed_event_table"
@@ -1602,7 +1602,7 @@ def admin_seed_event_table_page(request):
     return render(request, "project/admin/admin-seed-event-table-page.html", context)
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def admin_seed_event_table_add(request):
     context = {
         "title": "Create Seed Event Table",
@@ -1634,7 +1634,7 @@ def admin_seed_event_table_add(request):
     return render(request, "project/simple-form.html", context)
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def admin_seed_event_table_update(request, pk):
     obj = models.SeedEventTable.objects.get(id=pk)
     form = forms.AdminSeedEventTableForm(instance=obj)
@@ -1656,7 +1656,7 @@ def admin_seed_event_table_update(request, pk):
     )
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def admin_seed_event_table_delete(request, pk):
     obj: models.SeedEventTable = models.SeedEventTable.objects.get(id=pk)
     if request.method == "POST":
@@ -1674,7 +1674,7 @@ def admin_seed_event_table_delete(request, pk):
     return render(request, "core/delete-object.html", context)
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def admin_toxicity_indicator_page(request):
     data = models.ToxicityIndicator.objects.annotate(
         plant_count=Count("plantprofile")
@@ -1687,7 +1687,7 @@ def admin_toxicity_indicator_page(request):
     return render(request, "project/admin/admin-toxicity-indicator-page.html", context)
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def admin_toxicity_indicator_add(request):
     context = {
         "title": "Create Toxicity Indicator",
@@ -1719,7 +1719,7 @@ def admin_toxicity_indicator_add(request):
     return render(request, "project/simple-form.html", context)
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def admin_toxicity_indicator_update(request, pk):
     obj = models.ToxicityIndicator.objects.get(id=pk)
     form = forms.AdminToxicityIndicatorForm(instance=obj)
@@ -1741,7 +1741,7 @@ def admin_toxicity_indicator_update(request, pk):
     )
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def admin_toxicity_indicator_delete(request, pk):
     obj: models.ToxicityIndicator = models.ToxicityIndicator.objects.get(id=pk)
     if request.method == "POST":
@@ -1759,7 +1759,7 @@ def admin_toxicity_indicator_delete(request, pk):
     return render(request, "core/delete-object.html", context)
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def admin_conservation_status_page(request):
     data = models.ConservationStatus.objects.annotate(
         plant_count=Count("plantprofile")
@@ -1772,7 +1772,7 @@ def admin_conservation_status_page(request):
     return render(request, "project/admin/admin-conservation-status-page.html", context)
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def admin_conservation_status_add(request):
     context = {
         "title": "Create Conservation Status",
@@ -1804,7 +1804,7 @@ def admin_conservation_status_add(request):
     return render(request, "project/simple-form.html", context)
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def admin_conservation_status_update(request, pk):
     obj = models.ConservationStatus.objects.get(id=pk)
     form = forms.AdminConservationStatusForm(instance=obj)
@@ -1826,7 +1826,7 @@ def admin_conservation_status_update(request, pk):
     )
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def admin_conservation_status_delete(request, pk):
     obj: models.ConservationStatus = models.ConservationStatus.objects.get(id=pk)
     if request.method == "POST":
@@ -1844,7 +1844,7 @@ def admin_conservation_status_delete(request, pk):
     return render(request, "core/delete-object.html", context)
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def admin_butterfly_species_page(request):
     data = models.ButterflySpecies.objects.annotate(
         plant_count=Count("plants")
@@ -1857,7 +1857,7 @@ def admin_butterfly_species_page(request):
     return render(request, "project/admin/admin-butterfly-species-page.html", context)
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def admin_butterfly_species_add(request):
     context = {
         "title": "Create Butterfly Species",
@@ -1889,7 +1889,7 @@ def admin_butterfly_species_add(request):
     return render(request, "project/simple-form.html", context)
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def admin_butterfly_species_update(request, pk):
     obj = models.ButterflySpecies.objects.get(id=pk)
     form = forms.AdminButterflySpeciesForm(instance=obj)
@@ -1911,7 +1911,7 @@ def admin_butterfly_species_update(request, pk):
     )
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def admin_butterfly_species_delete(request, pk):
     obj: models.ButterflySpecies = models.ButterflySpecies.objects.get(id=pk)
     if request.method == "POST":
@@ -1929,7 +1929,7 @@ def admin_butterfly_species_delete(request, pk):
     return render(request, "core/delete-object.html", context)
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def admin_bee_species_page(request):
     data = models.BeeSpecies.objects.annotate(plant_count=Count("plants")).order_by(
         "latin_name"
@@ -1942,7 +1942,7 @@ def admin_bee_species_page(request):
     return render(request, "project/admin/admin-bee-species-page.html", context)
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def admin_accept_all_seeds(request):
     # Set all plants to accepting seed and display how many were updated
     updated_count = models.PlantProfile.objects.filter(accepting_seed=False).update(
@@ -1955,7 +1955,7 @@ def admin_accept_all_seeds(request):
     return redirect("site-admin")
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def admin_bee_species_add(request):
     context = {
         "title": "Create Bee Species",
@@ -1987,7 +1987,7 @@ def admin_bee_species_add(request):
     return render(request, "project/simple-form.html", context)
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def admin_bee_species_update(request, pk):
     obj = models.BeeSpecies.objects.get(id=pk)
     form = forms.AdminBeeSpeciesForm(instance=obj)
@@ -2009,7 +2009,7 @@ def admin_bee_species_update(request, pk):
     )
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def admin_bee_species_delete(request, pk):
     obj: models.BeeSpecies = models.BeeSpecies.objects.get(id=pk)
     if request.method == "POST":
@@ -2027,7 +2027,7 @@ def admin_bee_species_delete(request, pk):
     return render(request, "core/delete-object.html", context)
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def admin_non_native_species_page(request):
     data = models.NonNativeSpecies.objects.annotate(
         plant_count=Count("native_alternatives")
@@ -2040,7 +2040,7 @@ def admin_non_native_species_page(request):
     return render(request, "project/admin/admin-non-native-species-page.html", context)
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def admin_non_native_species_add(request):
     context = {
         "title": "Create Non-Native Plant",
@@ -2072,7 +2072,7 @@ def admin_non_native_species_add(request):
     return render(request, "project/simple-form.html", context)
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def admin_non_native_species_update(request, pk):
     obj = models.NonNativeSpecies.objects.get(id=pk)
     form = forms.AdminNonNativeSpeciesForm(instance=obj)
@@ -2094,7 +2094,7 @@ def admin_non_native_species_update(request, pk):
     )
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def admin_non_native_species_delete(request, pk):
     obj: models.NonNativeSpecies = models.NonNativeSpecies.objects.get(id=pk)
     if request.method == "POST":
@@ -2112,7 +2112,7 @@ def admin_non_native_species_delete(request, pk):
     return render(request, "core/delete-object.html", context)
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def admin_ecozone_page(request):
     data = models.Ecozone.objects.annotate(plant_count=Count("plants")).order_by(
         "ecozone"
@@ -2125,7 +2125,7 @@ def admin_ecozone_page(request):
     return render(request, "project/admin/admin-ecozones-page.html", context)
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def admin_plant_missing_inaturalist_taxon(request):
     data = models.PlantProfile.objects.filter(inaturalist_taxon="").order_by(
         "latin_name"
@@ -2140,7 +2140,7 @@ def admin_plant_missing_inaturalist_taxon(request):
     )
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def admin_ecozone_add(request):
     context = {
         "title": "Create Ecozone",
@@ -2172,7 +2172,7 @@ def admin_ecozone_add(request):
     return render(request, "project/simple-form.html", context)
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def admin_ecozone_update(request, pk):
     obj = models.Ecozone.objects.get(id=pk)
     form = forms.AdminEcozoneForm(instance=obj)
@@ -2194,7 +2194,7 @@ def admin_ecozone_update(request, pk):
     )
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def admin_ecozone_delete(request, pk):
     obj: models.Ecozone = models.Ecozone.objects.get(id=pk)
     if request.method == "POST":
@@ -2243,7 +2243,7 @@ def user_logout(request):
     return redirect("login")
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def user_plant_collection(request):
     obj = models.PlantCollection.objects.filter(owner=request.user)
 
@@ -2251,7 +2251,7 @@ def user_plant_collection(request):
     return render(request, "project/plant-collection.html", context)
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def user_plant_update(request, pk):
     obj = models.PlantCollection.objects.get(id=pk)
     if obj.owner != request.user:
@@ -2275,7 +2275,7 @@ def user_plant_update(request, pk):
     )
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def user_plant_toggle(request, pk):
     plant = utils.single_plant(pk, request)
     user = None
@@ -2296,7 +2296,7 @@ def user_plant_toggle(request, pk):
     return JsonResponse(context)
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def user_plant_delete(request, pk):
     obj: models.PlantCollection = models.PlantCollection.objects.get(id=pk)
     if obj.owner != request.user:
@@ -2600,12 +2600,12 @@ def plant_collection_csv(request):
     return response
 
 
-@group_required(["Project Admin", "Image Manager"])
+@group_required(["Image Manager", "Access Administrator", "Plant Profile Manager"])
 def siteadmin(request):
     return render(request, "project/admin/admin.html")
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def plant_seed_box_label_pdf(request, pk):
     # create a pdf with elements of the plant profile including plant image, a qr code linking to the plant profile page, and formatted for seed box labels
 
@@ -2760,7 +2760,7 @@ def plant_catalog(request):
 # View to update plant profile characteristics
 
 
-@group_required(["Project Admin", "Plant Profile Manager"])
+@group_required(["Plant Profile Manager"])
 # update the environmental requirements of a plant profile if there is a post request
 def plant_environmental_requirement_update(request, pk):
     plant = utils.single_plant(pk, request)
@@ -2786,7 +2786,7 @@ def plant_environmental_requirement_update(request, pk):
     )
 
 
-@group_required(["Project Admin", "Plant Profile Manager"])
+@group_required(["Plant Profile Manager"])
 def plant_identification_information_update(request, pk):
     plant = utils.single_plant(pk, request)
     context = {
@@ -2808,7 +2808,7 @@ def plant_identification_information_update(request, pk):
     )
 
 
-@group_required(["Project Admin", "Plant Profile Manager"])
+@group_required(["Plant Profile Manager"])
 def plant_identification_information_create(request):
     context = {
         "title": "Create Plant Identification Information",
@@ -2856,7 +2856,7 @@ def plant_identification_information_create(request):
     )
 
 
-@group_required(["Project Admin", "Plant Profile Manager"])
+@group_required(["Plant Profile Manager"])
 def plant_growth_characteristics_update(request, pk):
     plant: models.PlantProfile = utils.single_plant(pk, request)
     plants_complements = models.PlantComplementary.objects.filter(plant_profile_id=pk)
@@ -2934,7 +2934,7 @@ def plant_growth_characteristics_update(request, pk):
     )
 
 
-@group_required(["Project Admin", "Plant Profile Manager"])
+@group_required(["Plant Profile Manager"])
 def plant_landscape_use_and_application_update(request, pk):
     plant = utils.single_plant(pk, request)
     context = {
@@ -2961,7 +2961,7 @@ def plant_landscape_use_and_application_update(request, pk):
     )
 
 
-@group_required(["Project Admin", "Plant Profile Manager"])
+@group_required(["Plant Profile Manager"])
 def plant_substitute_to_update(request, pk):
     plant = utils.single_plant(pk, request)
     unsupported_substitutes = models.NonNativeSpecies.objects.exclude(
@@ -2986,7 +2986,7 @@ def plant_substitute_to_update(request, pk):
     return render(request, "project/update/plant-substitute-update.html", context)
 
 
-@group_required(["Project Admin", "Plant Profile Manager"])
+@group_required(["Plant Profile Manager"])
 def plant_ecological_benefits_update(request, pk):
     plant = utils.single_plant(pk, request)
     unsupported_butterflies = models.ButterflySpecies.objects.exclude(
@@ -3015,7 +3015,7 @@ def plant_ecological_benefits_update(request, pk):
     )
 
 
-@group_required(["Project Admin", "Plant Profile Manager"])
+@group_required(["Plant Profile Manager"])
 def plant_introductory_gardening_experience_update(request, pk):
     plant = utils.single_plant(pk, request)
     context = {
@@ -3044,7 +3044,7 @@ def plant_introductory_gardening_experience_update(request, pk):
     )
 
 
-@group_required(["Project Admin", "Plant Profile Manager"])
+@group_required(["Plant Profile Manager"])
 def plant_special_features_and_consideration_update(request, pk):
     plant = utils.single_plant(pk, request)
     context = {
@@ -3081,7 +3081,7 @@ def plant_special_features_and_consideration_update(request, pk):
     )
 
 
-@group_required(["Project Admin", "Plant Profile Manager"])
+@group_required(["Plant Profile Manager"])
 def plant_harvesting_update(request, pk):
     plant = utils.single_plant(pk, request)
     harvesting_months = utils.MONTHS
@@ -3192,7 +3192,7 @@ def plant_harvesting_update(request, pk):
     return render(request, "project/update/plant-harvesting-update.html", context)
 
 
-@group_required(["Project Admin", "Plant Profile Manager"])
+@group_required(["Plant Profile Manager"])
 def plant_sowing_update(request, pk):
     plant = utils.single_plant(pk, request)
 
@@ -3231,7 +3231,7 @@ def plant_sowing_update(request, pk):
     return render(request, "project/update/plant-sowing-update.html", context)
 
 
-@group_required(["Project Admin", "Plant Profile Manager"])
+@group_required(["Plant Profile Manager"])
 def plant_seed_distribution_update(request, pk):
     plant = utils.single_plant(pk, request)
 
@@ -3258,7 +3258,7 @@ def plant_seed_distribution_update(request, pk):
     )
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def plant_ecozones(request):
     # export a csv file of all plants with their ecozones.
     # the first row is the header with the ecozone names.
@@ -3285,7 +3285,7 @@ def plant_ecozones(request):
     return response
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def admin_lifespan_page(request):
     obj = models.PlantLifespan.objects.annotate(
         plant_count=Count("plantprofile")
@@ -3298,7 +3298,7 @@ def admin_lifespan_page(request):
     return render(request, "project/admin/admin-lifespan-page.html", context)
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def admin_lifespan_add(request):
     context = {
         "title": "Create Plant Lifespan",
@@ -3327,7 +3327,7 @@ def admin_lifespan_add(request):
     return render(request, "project/simple-form.html", context)
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def admin_lifespan_update(request, pk):
     obj = models.PlantLifespan.objects.get(id=pk)
     form = forms.AdminLifespanForm(instance=obj)
@@ -3349,7 +3349,7 @@ def admin_lifespan_update(request, pk):
     )
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def admin_lifespan_delete(request, pk):
     obj: models.PlantLifespan = models.PlantLifespan.objects.get(id=pk)
     if request.method == "POST":
@@ -3367,7 +3367,7 @@ def admin_lifespan_delete(request, pk):
     return render(request, "core/delete-object.html", context)
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def admin_growth_habit_page(request):
     obj = models.GrowthHabit.objects.annotate(
         plant_count=Count("plantprofile")
@@ -3380,7 +3380,7 @@ def admin_growth_habit_page(request):
     return render(request, "project/admin/admin-growth-habit-page.html", context)
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def admin_growth_habit_add(request):
     context = {
         "title": "Create Growth Habit",
@@ -3409,7 +3409,7 @@ def admin_growth_habit_add(request):
     return render(request, "project/simple-form.html", context)
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def admin_growth_habit_update(request, pk):
     obj = models.GrowthHabit.objects.get(id=pk)
     form = forms.HabitForm(instance=obj)
@@ -3431,7 +3431,7 @@ def admin_growth_habit_update(request, pk):
     )
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def admin_growth_habit_delete(request, pk):
     obj: models.GrowthHabit = models.GrowthHabit.objects.get(id=pk)
     if request.method == "POST":
@@ -3449,7 +3449,7 @@ def admin_growth_habit_delete(request, pk):
     return render(request, "core/delete-object.html", context)
 
 
-@group_required(["Project Admin", "Image Manager"])
+@group_required(["Image Manager"])
 def admin_images_page(request):
     images_list = models.PlantImage.objects.annotate(
         plant_count=Count("plant_profile")
@@ -3470,7 +3470,7 @@ def admin_images_page(request):
     return render(request, "project/admin/admin-images-page.html", context)
 
 
-@group_required(["Project Admin", "Image Manager"])
+@group_required(["Image Manager"])
 def admin_image_add(request):
     context = {
         "title": "Add Image",
@@ -3535,7 +3535,7 @@ def admin_image_add(request):
     return render(request, "project/admin/admin-image-form.html", context)
 
 
-@group_required(["Project Admin", "Image Manager"])
+@group_required(["Image Manager"])
 def admin_image_update(request, pk):
     obj = models.PlantImage.objects.get(id=pk)
     form = forms.AdminImageForm(instance=obj)
@@ -3557,7 +3557,7 @@ def admin_image_update(request, pk):
     )
 
 
-@group_required(["Project Admin", "Image Manager"])
+@group_required(["Image Manager"])
 def admin_image_delete(request, pk):
     obj: models.PlantImage = models.PlantImage.objects.get(id=pk)
     if request.method == "POST":
@@ -3575,7 +3575,7 @@ def admin_image_delete(request, pk):
     return render(request, "core/delete-object.html", context)
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def admin_plant_morphology_page(request):
     obj = models.PlantMorphology.objects.annotate(
         image_count=Count("plantimage")
@@ -3588,7 +3588,7 @@ def admin_plant_morphology_page(request):
     return render(request, "project/admin/admin-plant-morphology-page.html", context)
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def admin_plant_morphology_add(request):
     context = {
         "title": "Create Plant Morphology Element",
@@ -3619,7 +3619,7 @@ def admin_plant_morphology_add(request):
     return render(request, "project/simple-form.html", context)
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def admin_plant_morphology_update(request, pk):
     obj = models.PlantMorphology.objects.get(id=pk)
     form = forms.AdminPlantMorphologyForm(instance=obj)
@@ -3642,7 +3642,7 @@ def admin_plant_morphology_update(request, pk):
     )
 
 
-@group_required("Project Admin")
+@group_required("Library Manager")
 def admin_plant_morphology_delete(request, pk):
     obj: models.PlantMorphology = models.PlantMorphology.objects.get(id=pk)
     if request.method == "POST":

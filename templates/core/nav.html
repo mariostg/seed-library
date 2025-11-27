@@ -32,17 +32,14 @@
       <a target="_blank" href="https://wildflowerseedlibrary.ca/about-us/">About Us</a>
     </li>
 
-    {% if request.user.is_plant_profile_manager %}
-      <li><a class='btn' href="{% url 'plant-identification-information-create' %}">Record new plant</a></li>
-    {% endif %}
     {% if request.user.is_authenticated %}
-      <li><a class='btn' href="{% url 'user-plant-collection' %}">My Collection</a></li>
+      {% comment %} <li><a class='btn' href="{% url 'user-plant-collection' %}">My Collection</a></li> {% endcomment %}
       <li><a class='btn' href="{% url 'logout' %}">Logout {{request.user}}</a></li>
     {% else %}
       <a class='btn' href="{% url 'login' %}">Login</a>
     {% endif %}
-    {% if request.user.is_project_admin or request.user.is_image_manager %}
-      <li><a class='btn' href="{% url 'site-admin' %}">Admin</a></li>
+    {% if request.user.is_plant_profile_manager or request.user.is_image_manager or request.user.library_manager %}
+      <li><a class='btn' href="{% url 'site-admin' %}">Library Management</a></li>
     {% endif %}
   </ul>
 </nav>

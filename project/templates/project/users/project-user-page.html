@@ -8,7 +8,7 @@
       <legend>
         {{title}} Management
       </legend>
-      {% if user.is_authenticated %}
+      {% if request.user.is_access_administrator %}
         <div class='center'>
           <a class='btn btn-add' href="{% url 'project-user-add' %}">Add Project User</a>
         </div>
@@ -21,7 +21,7 @@
             <th>First Name</th>
             <th>Last Name</th>
             <th>User Groups</th>
-            {% if user.is_authenticated %}
+            {% if request.user.is_access_administrator %}
               <th colspan=2>Actions</th>
             {% endif %}
           </tr>
@@ -40,7 +40,7 @@
                   No Groups
                 {% endfor %}
               </td>
-              {% if user.is_authenticated %}
+              {% if request.user.is_access_administrator %}
                 <td class='actions'>
                   <a class='btn btn-edit' href="{% url "project-user-update" item.id %}">Edit</a>
                   <a class='btn btn-delete' href="{% url "project-user-delete" item.id %}">Delete</a>

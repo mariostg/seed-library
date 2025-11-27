@@ -1,0 +1,23 @@
+{% if request.user.is_authenticated %}
+
+  <nav class="flex-row xcenter row-spacer">
+    {% if request.user.is_library_manager %}
+      <div class="flex-col-center">
+        <div class="title">Library Management</div>
+        <div>
+          <div>
+            <a href="{% url 'plant-identification-information-create' %}">Record new plant</a>
+          </div>
+          <div>
+            <a href="{% url 'update-availability' %}">Update Availability</a>
+          </div>
+          <div>
+            <a href="{% url 'admin-plant-missing-inaturalist-taxon' %}">Plants missing iNaturalist Taxon</a>
+          </div>
+        </div>
+      </div>
+    {% endif %}
+
+{% endif %}
+</div>
+</nav>
