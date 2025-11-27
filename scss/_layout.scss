@@ -21,6 +21,9 @@
   display: flex;
   gap: 0.5rem;
   flex-wrap: wrap;
+  &.xcenter {
+    justify-content: center;
+  }
   &.center {
     justify-content: center;
     align-items: center;

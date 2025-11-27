@@ -1,6 +1,6 @@
 {% if request.user.is_authenticated %}
 
-  <nav class="admin-links flex-row row-spacer">
+  <nav class="flex-row xcenter row-spacer">
     {% if request.user.is_plant_profile_manager %}
       <div class="flex-col-center">
         <div class="title">Taxonomy & Biology</div>
@@ -102,7 +102,7 @@
       </div>
     {% endif %}
 
-    {% if request.user.is_project_admin %}
+    {% if request.user.is_project_admin or request.user.is_access_administrator %}
       <div class="flex-col-center">
         <div class="title">Project Users</div>
         <div>
