@@ -364,7 +364,7 @@ class AdminPlantMorphologyForm(forms.ModelForm):
 class ProjectUserForm(ModelForm):
     class Meta:
         model = models.ProjectUser
-        fields = ["username", "email", "password"]
+        fields = ["username", "email", "first_name", "last_name", "password"]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
