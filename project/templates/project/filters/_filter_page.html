@@ -1,47 +1,47 @@
 
-
+{% load i18n %}
   <!--Provincial range distribution filter class checkbox options-->
 <div class="filter">
   <div
     class="collapser"
     onclick="toggleHtmlBlock('#provincial-range-distribution')"
   >
-    Range Distribution
+    {% trans "Range Distribution" %}
   </div>
   <div id="provincial-range-distribution" class="collapsed">
     <input type="checkbox" id="AB" name="AB" value="AB" />
-    <label for="AB">Alberta</label><br />
+    <label for="AB">{% trans "Alberta" %}</label><br />
     <input type="checkbox" id="BC" name="BC" value="BC" />
-    <label for="BC">British Columbia</label><br />
+    <label for="BC">{% trans "British Columbia" %}</label><br />
     <input type="checkbox" id="MB" name="MB" value="MB" />
-    <label for="MB">Manitoba</label><br />
+    <label for="MB">{% trans "Manitoba" %}</label><br />
     <input type="checkbox" id="NB" name="NB" value="NB" />
-    <label for="NB">New Brunswick</label><br />
+    <label for="NB">{% trans "New Brunswick" %}</label><br />
     <input type="checkbox" id="NL" name="NL" value="NL" />
-    <label for="NL">Newfoundland and Labrador</label><br />
+    <label for="NL">{% trans "Newfoundland and Labrador" %}</label><br />
     <input type="checkbox" id="NS" name="NS" value="NS" />
-    <label for="NS">Nova Scotia</label><br />
+    <label for="NS">{% trans "Nova Scotia" %}</label><br />
     <input type="checkbox" id="NT" name="NT" value="NT" />
-    <label for="NT">North West Territories</label><br />
+    <label for="NT">{% trans "North West Territories" %}</label><br />
     <input type="checkbox" id="NU" name="NU" value="NU" />
-    <label for="NU">Nunavut</label><br />
+    <label for="NU">{% trans "Nunavut" %}</label><br />
     <input type="checkbox" id="ON" name="ON" value="ON" />
-    <label for="ON">Ontario</label><br />
+    <label for="ON">{% trans "Ontario" %}</label><br />
     <input type="checkbox" id="PE" name="PE" value="PE" />
-    <label for="PE">Prince Edward Island</label><br />
+    <label for="PE">{% trans "Prince Edward Island" %}</label><br />
     <input type="checkbox" id="QC" name="QC" value="QC" />
-    <label for="QC">Québec</label><br />
+    <label for="QC">{% trans "Québec" %}</label><br />
     <input type="checkbox" id="SK" name="SK" value="SK" />
-    <label for="SK">Saskatchewan</label><br />
+    <label for="SK">{% trans "Saskatchewan" %}</label><br />
     <input type="checkbox" id="YT" name="YT" value="YT" />
-    <label for="YT">Yukon</label><br />
+    <label for="YT">{% trans "Yukon" %}</label><br />
   </div>
 </div>
 
   <!--Recommended For-->
 <div class="filter">
   <div class="collapser" onclick="toggleHtmlBlock('#recommended-for')">
-    Recommended For
+    {% trans "Recommended For" %}
   </div>
   <div id="recommended-for" class="collapsed">
 
@@ -56,13 +56,13 @@
   <!--Suitable For-->
 <div class="filter">
   <div class="collapser" onclick="toggleHtmlBlock('#suitable-for')">
-    Suitable for
+    {% trans "Suitable for" %}
   </div>
   <div id="suitable-for" class="collapsed">
   <!--Plant Characteristics-->
     <div class="filter">
       <div class="collapser" onclick="toggleHtmlBlock('#plant-characteristics')">
-        Characteristics
+        {% trans "Characteristics" %}
       </div>
       <div id="plant-characteristics" class="collapsed">
 
@@ -73,7 +73,7 @@
           name="does-not-spread"
           value="Does not Spread"
         />
-        <label for="does-not-spread">Does not Spread</label><br />
+        <label for="does-not-spread">{% trans "Does not Spread" %}</label><br />
 
 
         <input
@@ -82,14 +82,14 @@
           name="endangered"
           value="Endangered"
         />
-        <label for="endangered">Endangered</label><br />
+        <label for="endangered">{% trans "Endangered" %}</label><br />
 
       </div>
     </div>
 
   <!--Tolerances-->
     <div class="filter">
-      <div class="collapser" onclick="toggleHtmlBlock('#tolerates')">Tolerates</div>
+      <div class="collapser" onclick="toggleHtmlBlock('#tolerates')">{% trans "Tolerates" %}</div>
       <div id="tolerates" class="collapsed">
 
       </div>
@@ -98,7 +98,7 @@
 <!--Conservation and special status-->
     <div class="filter">
       <div class="collapser" onclick="toggleHtmlBlock('#conservation-status')">
-        Conservation and Special Status
+        {% trans "Conservation and Special Status" %}
       </div>
       <div id="conservation-status" class="collapsed">
 
@@ -108,7 +108,7 @@
 
   <!--class filter to exclude plant known to be toxic-->
     <div class="filter">
-      <div class="collapser" onclick="toggleHtmlBlock('#toxicity')">Toxicity</div>
+      <div class="collapser" onclick="toggleHtmlBlock('#toxicity')">{% trans "Toxicity" %}</div>
       <div id="toxicity" class="collapsed">
         <input
           type="checkbox"
@@ -116,24 +116,23 @@
           name="Exclude-toxic"
           value="Exclude-Toxic"
         />
-        <label for="toxic">Exclude plants known to be toxic to mammals</label><br />
+        <label for="toxic">{% trans "Exclude plants known to be toxic to mammals" %}</label><br />
       </div>
     </div>
 
     <div class="filter">
-      <div class="collapser" onclick="toggleHtmlBlock('#exclude-burs')">Burs</div>
+      <div class="collapser" onclick="toggleHtmlBlock('#exclude-burs')">{% trans "Burs" %}</div>
       <div id="exclude-burs" class="collapsed">
 
       </div>
     </div>
-
 
     <div class="filter">
       <div
         class="collapser"
         onclick="toggleHtmlBlock('#winter-sowing-requirements')"
       >
-        Winter Sowing Requirements
+        {% trans "Winter Sowing Requirements" %}
       </div>
 
     </div>

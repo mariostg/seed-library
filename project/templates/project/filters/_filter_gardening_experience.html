@@ -1,4 +1,5 @@
-<div class='filter__sub-header'>Gardening Experience</div>
+{% load i18n %}
+<div class='filter__sub-header'>{% trans "Gardening Experience" %}</div>
   <!--Input box for beginner friendly-->
 <input
   type="checkbox"
@@ -12,7 +13,7 @@
   hx-include="{{hx_include}}"
   {% if beginner_friendly %} checked {% endif %}
 />
-<label for="beginner_friendly">Beginner Friendly</label><br />
+<label for="beginner_friendly">{% trans "Beginner Friendly" %}</label><br />
 
 <!--Input checkbox for Does not Spread-->
 <input
@@ -27,7 +28,7 @@
   hx-include="{{hx_include}}"
   {% if does_not_spread %} checked {% endif %}
 />
-<label for="does_not_spread">Does not Spread</label><br />
+<label for="does_not_spread">{% trans "Does not Spread" %}</label><br />
 
 <!--Input checkbox for germinate_easy-->
 <input
@@ -42,7 +43,7 @@
   hx-include="{{hx_include}}"
   {% if germinate_easy %} checked {% endif %}
 />
-<label for="germinate_easy">Easy to Germinate</label><br />
+<label for="germinate_easy">{% trans "Easy to Germinate" %}</label><br />
 
 <!--Input checkbox for self_seeding-->
 <input
@@ -57,9 +58,9 @@
   hx-include="{{hx_include}}"
   {% if self_seeding %} checked {% endif %}
 />
-<label for="self_seeding" class="tooltip info">Self-Seeding<span class="tooltiptext">Plants that will produce seeds abundantly resulting in new plants</span></label><br />
+<label for="self_seeding" class="tooltip info">{% trans "Self-Seeding" %}<span class="tooltiptext">{% trans "Plants that will produce seeds abundantly resulting in new plants" %}</span></label><br />
 
-<div class="filter__sub-header">Starter Packs</div>
+<div class="filter__sub-header">{% trans "Starter Packs" %}</div>
 <!--Radio button group for starter packs-->
 <div class="starter-pack-options">
   <div>
@@ -75,7 +76,7 @@
       hx-include="{{hx_include}}"
       {% if starter_pack_shade %} checked {% endif %}
     />
-    <label for="starter_pack_shade">Shade</label>
+    <label for="starter_pack_shade">{% trans "Shade" %}</label>
   </div>
 
   <div>
@@ -91,7 +92,7 @@
       hx-include="{{hx_include}}"
       {% if starter_pack_sun_dry %} checked {% endif %}
     />
-    <label for="starter_pack_sun_dry">Sun Dry</label>
+    <label for="starter_pack_sun_dry">{% trans "Sun Dry" %}</label>
   </div>
 
   <div>
@@ -107,6 +108,6 @@
       hx-include="{{hx_include}}"
       {% if starter_pack_sun_wet %} checked {% endif %}
     />
-    <label for="starter_pack_sun_wet">Sun Wet</label>
+    <label for="starter_pack_sun_wet">{% trans "Sun Wet" %}</label>
   </div>
 </div>

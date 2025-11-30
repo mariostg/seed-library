@@ -1,4 +1,5 @@
-<div class='filter__sub-header'>Provinces and Territories</div>
+{% load i18n %}
+<div class='filter__sub-header'>{% trans "Provinces and Territories" %}</div>
 <input type="checkbox" id="is_native_to_AB" name="is_native_to_AB" value="N"
        hx-get="/search-plant-name"
        hx-trigger="click"
@@ -17,7 +18,7 @@
        hx-include="{{hx_include}}"
        {% if is_native_to_BC %} checked {% endif %}
 />
-<label for="is_native_to_BC">British Columbia</label><br />
+<label for="is_native_to_BC">{% trans "British Columbia" %}</label><br />
 
 <input type="checkbox" id="is_native_to_MB" name="is_native_to_MB" value="N"
        hx-get="/search-plant-name"
@@ -37,7 +38,7 @@
        hx-include="{{hx_include}}"
        {% if is_native_to_NB %} checked {% endif %}
 />
-<label for="is_native_to_NB">New Brunswick</label><br />
+<label for="is_native_to_NB">{% trans "New Brunswick" %}</label><br />
 
 <input type="checkbox" id="is_native_to_NL" name="is_native_to_NL" value="N"
        hx-get="/search-plant-name"
@@ -47,7 +48,7 @@
        hx-include="{{hx_include}}"
        {% if is_native_to_NL %} checked {% endif %}
 />
-<label for="is_native_to_NL">Newfoundland and Labrador</label><br />
+<label for="is_native_to_NL">{% trans "Newfoundland and Labrador" %}</label><br />
 
 <input type="checkbox" id="is_native_to_NT" name="is_native_to_NT" value="N"
        hx-get="/search-plant-name"
@@ -57,7 +58,7 @@
        hx-include="{{hx_include}}"
        {% if is_native_to_NT %} checked {% endif %}
 />
-<label for="is_native_to_NT">Northwest Territories</label><br />
+<label for="is_native_to_NT">{% trans "Northwest Territories" %}</label><br />
 
 <input type="checkbox" id="is_native_to_NS" name="is_native_to_NS" value="N"
        hx-get="/search-plant-name"
@@ -67,7 +68,7 @@
        hx-include="{{hx_include}}"
        {% if is_native_to_NS %} checked {% endif %}
 />
-<label for="is_native_to_NS">Nova Scotia</label><br />
+<label for="is_native_to_NS">{% trans "Nova Scotia" %}</label><br />
 
 <input type="checkbox" id="is_native_to_NU" name="is_native_to_NU" value="N"
        hx-get="/search-plant-name"
@@ -77,7 +78,7 @@
        hx-include="{{hx_include}}"
        {% if is_native_to_NU %} checked {% endif %}
 />
-<label for="is_native_to_NU">Nunavut</label><br />
+<label for="is_native_to_NU">{% trans "Nunavut" %}</label><br />
 
 <input type="checkbox" id="is_native_to_ON" name="is_native_to_ON" value="N"
        hx-get="/search-plant-name"
@@ -97,7 +98,7 @@
        hx-include="{{hx_include}}"
        {% if is_native_to_PE %} checked {% endif %}
 />
-<label for="is_native_to_PE">Prince Edward Island</label><br />
+<label for="is_native_to_PE">{% trans "Prince Edward Island" %}</label><br />
 
 <input type="checkbox" id="is_native_to_QC" name="is_native_to_QC" value="N"
        hx-get="/search-plant-name"
@@ -107,7 +108,7 @@
        hx-include="{{hx_include}}"
        {% if is_native_to_QC %} checked {% endif %}
 />
-<label for="is_native_to_QC">Quebec</label><br />
+<label for="is_native_to_QC">{% trans "Quebec" %}</label><br />
 
 <input type="checkbox" id="is_native_to_SK" name="is_native_to_SK" value="N"
        hx-get="/search-plant-name"
@@ -127,9 +128,9 @@
        hx-include="{{hx_include}}"
        {% if is_native_to_YT %} checked {% endif %}
 />
-<label for="is_native_to_YT">Yukon</label><br />
+<label for="is_native_to_YT">{% trans "Yukon" %}</label><br />
 
-<div class="filter__sub-header">Ecozones</div>
+<div class="filter__sub-header">{% trans "Ecozones" %}</div>
 {% for ecozone in ecozones %}
   <input type="checkbox" id="ecozone_{{ ecozone.id }}" name="ecozone_{{ ecozone.id }}" value="{{ ecozone.id }}"
          hx-get="/search-plant-name"
@@ -142,7 +143,7 @@
 {% endfor %}
 
 
-<div class="filter__sub-header">Other</div>
+<div class="filter__sub-header">{% trans "Other" %}</div>
 <input type="checkbox" id="native_to_ottawa_region" name="native_to_ottawa_region" value="native_to_ottawa_region"
        hx-get="/search-plant-name"
        hx-trigger="click"
@@ -150,4 +151,4 @@
        hx-push-url="true"
        hx-include="{{hx_include}}"
 >
-<label for="native_to_ottawa_region" class="tooltip info">Native to Ottawa Region <span class='tooltiptext'>Plants that are native to the Ottawa region</span></label><br />
+<label for="native_to_ottawa_region" class="tooltip info">{% trans "Native to Ottawa Region" %} <span class='tooltiptext'>{% trans "Plants that are native to the Ottawa region" %}</span></label><br />

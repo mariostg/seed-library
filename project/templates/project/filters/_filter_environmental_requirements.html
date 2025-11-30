@@ -1,5 +1,6 @@
+{% load i18n %}
 <!--Input checkbox for full sun-->
-<div class='filter__sub-header'>Light preferences</div>
+<div class='filter__sub-header'>{% trans "Light preferences" %}</div>
 <input
   type="checkbox"
   id="full_sun"
@@ -12,8 +13,8 @@
   hx-include="{{hx_include}}"
   {% if full_sun %} checked {% endif %}
 />
-<label for="full_sun" class="tooltip info">Full Sun <span class="tooltiptext"
-  >More than 6 hours of direct sun a day
+<label for="full_sun" class="tooltip info">{% trans "Full Sun" %} <span class="tooltiptext"
+  >{% trans "More than 6 hours of direct sun a day" %}
   </span></label><br />
 
       <!--Input checkbox for part shade-->
@@ -30,9 +31,9 @@
   {% if part_shade %} checked {% endif %}
 />
 <label for="part_shade" class="tooltip info"
->Part Shade
+>{% trans "Part Shade" %}
   <span class="tooltiptext"
-  >More than 2 or 3 hours but less than 6 hours of direct sun a day
+  >{% trans "More than 2 or 3 hours but less than 6 hours of direct sun a day" %}
   </span></label
   ><br />
 
@@ -49,10 +50,10 @@
     hx-include="{{hx_include}}"
     {% if full_shade %} checked {% endif %}
   />
-  <label for="full_shade" class="tooltip info">Full Shade <span class="tooltiptext"
-    >Less than 2 or 3 hours of direct sun a day</span></label><br />
+  <label for="full_shade" class="tooltip info">{% trans "Full Shade" %} <span class="tooltiptext"
+    >{% trans "Less than 2 or 3 hours of direct sun a day" %}</span></label><br />
 
-  <div class='filter__sub-header'>Moisture preferences</div>
+  <div class='filter__sub-header'>{% trans "Moisture preferences" %}</div>
 <!--Input checkbox for moisture dry-->
   <input
     type="checkbox"
@@ -66,8 +67,8 @@
     hx-include="{{hx_include}}"
     {% if moisture_dry %} checked {% endif %}
   />
-  <label for="moisture_dry" class="tooltip info">Dry <span class="tooltiptext"
-    >Water runs through after rainfall
+  <label for="moisture_dry" class="tooltip info">{% trans "Dry" %} <span class="tooltiptext"
+    >{% trans "Water runs through after rainfall" %}
     </span></label><br />
 
       <!--Input checkbox for moisture medium-->
@@ -83,8 +84,8 @@
     hx-include="{{hx_include}}"
     {% if moisture_medium %} checked {% endif %}
   />
-  <label for="moisture_medium" class="tooltip info">Medium <span class="tooltiptext"
-    >Sometimes holds water but for short periods of time</span></label><br />
+  <label for="moisture_medium" class="tooltip info">{% trans "Medium" %} <span class="tooltiptext"
+    >{% trans "Sometimes holds water but for short periods of time" %}</span></label><br />
 
       <!--Input checkbox for moisture wet-->
   <input
@@ -99,5 +100,5 @@
     hx-include="{{hx_include}}"
     {% if moisture_wet %} checked {% endif %}
   />
-  <label for="moisture_wet" class="tooltip info">Wet <span class="tooltiptext"
-    >Stays damp all year</span></label><br />
+  <label for="moisture_wet" class="tooltip info">{% trans "Wet" %} <span class="tooltiptext"
+    >{% trans "Stays damp all year" %}</span></label><br />

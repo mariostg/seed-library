@@ -1,15 +1,16 @@
+{% load i18n %}
 <aside id="filter-wrapper" class="filter-wrapper" style="display: none;">
   <!--Add a reset filter button-->
-  <button class="btn tooltip info" onclick="resetFilter()">Reset Filters <span class="tooltiptext">Reset all filters to their default values and preserve the current search results.</span> </button>
+  <button class="btn tooltip info" onclick="resetFilter()">{% trans "Reset Filters" %} <span class="tooltiptext">{% trans "Reset all filters to their default values and preserve the current search results." %}</span> </button>
 
-  <span>Filter by:</span>
+  <span>{% trans "Filter by:" %}</span>
   <form id="filter-form" action="">
 
     <!--Environmental Requirements-->
 
     <div class="filter">
       <div class="filter__header expander" onclick="toggleNextSibling(event)">
-        Environmental Requirements
+        {% trans "Environmental Requirements" %}
       </div>
       <div id="environmental-requirements-filter" class="collapsed">
         {% include "project/filters/_filter_environmental_requirements.html" %}
@@ -20,7 +21,7 @@
 
     <div class="filter">
       <div class="filter__header expander" onclick="toggleNextSibling(event)">
-        Introductory Gardening Experience
+        {% trans "Introductory Gardening Experience" %}
       </div>
       <div id="gardening-experience-filter" class="collapsed">
         {% include "project/filters/_filter_gardening_experience.html" %}
@@ -31,7 +32,7 @@
 
     <div class="filter">
       <div class="filter__header expander" onclick="toggleNextSibling(event)">
-        Growth Characteristics
+        {% trans "Growth Characteristics" %}
       </div>
       <div id="growth-characteristics-filter" class="collapsed">
         {% include "project/filters/_filter_growth_characteristics.html" %}
@@ -42,7 +43,7 @@
 
     <div class="filter">
       <div class="filter__header expander" onclick="toggleNextSibling(event)">
-        Harvesting and Seed Sharing
+        {% trans "Harvesting and Seed Sharing" %}
       </div>
       <div id="harvesting-and-seed-sharing-filter" class="collapsed">
         {% include "project/filters/_filter_harvesting_and_seed_sharing.html" %}
@@ -53,7 +54,7 @@
 
     <div class="filter">
       <div class="filter__header expander" onclick="toggleNextSibling(event)">
-        Landscape Uses and Applications
+        {% trans "Landscape Uses and Applications" %}
       </div>
       <div id="landscape-uses-and-applications-filter" class="collapsed">
         {% include "project/filters/_filter_landscape_uses_and_applications.html" %}
@@ -63,7 +64,7 @@
     <!--Ecological benefits-->
     <div class="filter">
       <div class="filter__header expander" onclick="toggleNextSibling(event)">
-        Ecological Benefits
+        {% trans "Ecological Benefits" %}
       </div>
       <div id="ecological-benefits-filter" class="collapsed">
         {% include "project/filters/_filter_ecological_benefits.html" %}
@@ -73,7 +74,7 @@
   <!--Special Features and Considerations-->
     <div class="filter">
       <div class="filter__header expander" onclick="toggleNextSibling(event)">
-        Special Features and Considerations
+        {% trans "Special Features and Considerations" %}
       </div>
       <div id="special-features-and-considerations-filter" class="collapsed">
         {% include "project/filters/_filter_special_features_and_considerations.html" %}
@@ -83,7 +84,7 @@
   <!--Location-->
     <div class="filter">
       <div class="filter__header expander" onclick="toggleNextSibling(event)">
-        Location
+        {% trans "Location" %}
       </div>
       <div id="location-filter" class="collapsed">
         {% include "project/filters/_filter_location.html" %}
@@ -94,7 +95,7 @@
     <!--Admin Controls-->
       <div class="filter">
         <div class="filter__header expander" onclick="toggleNextSibling(event)">
-          Admin Controls
+          {% trans "Admin Controls" %}
         </div>
         <div id="admin-controls-filter" class="collapsed">
           {% include "project/filters/_filter_admin_controls.html" %}

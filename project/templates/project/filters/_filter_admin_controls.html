@@ -1,4 +1,5 @@
-<div class='filter__sub-header'>Profile Status</div>
+{% load i18n %}
+<div class='filter__sub-header'>{% trans "Profile Status" %}</div>
   <!--Input box for draft status-->
 <input
   type="checkbox"
@@ -12,7 +13,7 @@
   hx-include="{{hx_include}}"
   {% if is_draft %} checked {% endif %}
 />
-<label for="is_draft">Is Draft</label><br />
+<label for="is_draft">{% trans "Is Draft" %}</label><br />
 
 <!--Input box for inactive status-->
 <input
@@ -27,7 +28,7 @@
   hx-include="{{hx_include}}"
   {% if is_not_active %} checked {% endif %}
 />
-<label for="is_not_active">Is Not Active</label><br />
+<label for="is_not_active">{% trans "Is Not Active" %}</label><br />
 
 <!--Input box for accepted status-->
 <input
@@ -42,7 +43,7 @@
   hx-include="{{hx_include}}"
   {% if is_not_accepted %} checked {% endif %}
 />
-<label for="is_not_accepted">Is Not Accepted</label><br />
+<label for="is_not_accepted">{% trans "Is Not Accepted" %}</label><br />
 
 <!--Input box for has_notice status-->
 <input
@@ -57,4 +58,4 @@
   hx-include="{{hx_include}}"
   {% if has_notice %} checked {% endif %}
 />
-<label for="has_notice">Has Notice</label><br />
+<label for="has_notice">{% trans "Has Notice" %}</label><br />

@@ -1,7 +1,8 @@
-<div class='filter__sub-header'>Harvesting and Seed Sharing</div>
+{% load i18n %}
+<div class='filter__sub-header'>{% trans "Harvesting and Seed Sharing" %}</div>
 
 <!-- Harvesting start-->
-<div>Harvesting Period Month Start</div>
+<div>{% trans "Harvesting Period Month Start" %}</div>
 <div id="harvesting-start">
   <!--Option group ratio buttons for harvesting period start for months from April to December-->
   <div class="radio-group">
@@ -46,8 +47,8 @@
 </div>
 
 <!--Winter Sowing Requirements-->
-<div>Cold Moist Stratification Requirements</div>
-<div><a class="tooltip info" target="_blank" href="https://wildflowerseedlibrary.ca/instructions/how-to-winter-sow-2/">Winter Sowing Requirements <span class="tooltiptext">Click to learn how to Winter sow</span></a></div>
+<div>{% trans "Cold Moist Stratification Requirements" %}</div>
+<div><a class="tooltip info" target="_blank" href="https://wildflowerseedlibrary.ca/instructions/how-to-winter-sow-2/">{% trans "Winter Sowing Requirements" %} <span class="tooltiptext">{% trans "Click to learn how to Winter sow" %}</span></a></div>
 <!--Input select for stratification duration-->
 <div class="form__field">
   <select
@@ -67,13 +68,13 @@
         value="{{ duration.stratification_duration}}"
         {% if stratification_duration == duration %} selected {% endif %}
       >
-        {{ duration.stratification_duration }} days
+        {{ duration.stratification_duration }} {% trans "days" %}
       </option>
     {% endfor %}
   </select>
 </div>
 
-<div class='filter__sub-header'>Seed Sharing</div>
+<div class='filter__sub-header'>{% trans "Seed Sharing" %}</div>
 
         <!--Input checkbox for accepting seeds-->
 <div class="form__field">
@@ -88,7 +89,7 @@
          hx-include="{{hx_include}}"
          {% if accepting_seed %} checked {% endif %}
   >
-  <label for="accepting_seed">Show seeds accepted for donations</label>
+  <label for="accepting_seed">{% trans "Show seeds accepted for donations" %}</label>
 </div>
 
     <!--Input checkbox for seeds available-->
@@ -105,5 +106,5 @@
     hx-include="{{hx_include}}"
     {% if seed_availability %} checked {% endif %}
   />
-  <label for="seed_availability">Show available seeds only</label>
+  <label for="seed_availability">{% trans "Show available seeds only" %}</label>
 </div>
