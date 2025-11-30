@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-30 04:21+0000\n"
+"POT-Creation-Date: 2025-11-30 04:48+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,10 +17,524 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-#: main/settings.py:129
+
+#: main/settings.py:128
 msgid "English"
 msgstr ""
 
-#: main/settings.py:130
+#: main/settings.py:129
 msgid "French"
+msgstr ""
+
+#: project/models.py:34 project/models.py:1090
+msgid "Seed Event Table"
+msgstr ""
+
+#: project/models.py:59 project/models.py:986
+msgid "Harvesting Indicator"
+msgstr ""
+
+#: project/models.py:89 project/models.py:993
+msgid "Harvesting"
+msgstr ""
+
+#: project/models.py:117 project/models.py:1000
+msgid "Seed Head"
+msgstr ""
+
+#: project/models.py:141 project/models.py:1008
+msgid "Seed Viability Test"
+msgstr ""
+
+#: project/models.py:168 project/models.py:1015
+msgid "Seed Storage"
+msgstr ""
+
+#: project/models.py:194 project/models.py:1022
+msgid "Cultivar"
+msgstr ""
+
+#: project/models.py:220 project/models.py:1060
+msgid "Packaging Measure"
+msgstr ""
+
+#: project/models.py:247 project/models.py:1067
+msgid "Seed Preparation"
+msgstr ""
+
+#: project/models.py:275 project/models.py:1083
+msgid "Seed Storage Label Info"
+msgstr ""
+
+#: project/models.py:303 project/models.py:1051
+msgid "Sowing Depth"
+msgstr ""
+
+#: project/models.py:335 project/models.py:1040
+msgid "Stratification Duration"
+msgstr ""
+
+#: project/models.py:360
+msgid "Lighting"
+msgstr ""
+
+#: project/models.py:363 project/models.py:438
+msgid "Definition"
+msgstr ""
+
+#: project/models.py:385 project/models.py:927
+msgid "Bloom Colour"
+msgstr ""
+
+#: project/models.py:412 project/models.py:942
+msgid "Growth Habit"
+msgstr ""
+
+#: project/models.py:435
+msgid "Lifespan"
+msgstr ""
+
+#: project/models.py:458 project/models.py:1218
+msgid "Conservation Status"
+msgstr ""
+
+#: project/models.py:506 project/models.py:1199
+msgid "Toxicity Indicator"
+msgstr ""
+
+#: project/models.py:527 project/models.py:553 project/models.py:580
+#: project/models.py:865
+msgid "Latin Name"
+msgstr ""
+
+#: project/models.py:556 project/models.py:583 project/models.py:868
+msgid "English Name"
+msgstr ""
+
+#: project/models.py:597
+msgid "Ecozone"
+msgstr ""
+
+#: project/models.py:798
+msgid "Is Active"
+msgstr ""
+
+#: project/models.py:800
+msgid "Is Accepted"
+msgstr ""
+
+#: project/models.py:803
+msgid "Is Draft"
+msgstr ""
+
+#: project/models.py:806
+msgid "Is Needed"
+msgstr ""
+
+#: project/models.py:809
+msgid "Has Notice"
+msgstr ""
+
+#: project/models.py:812
+msgid "Notice Detail"
+msgstr ""
+
+#: project/models.py:815
+msgid "Not Accepted Reason"
+msgstr ""
+
+#: project/models.py:818
+msgid "Show Bees Supported Information"
+msgstr ""
+
+#: project/models.py:821
+msgid "Show Butterflies Supported Information"
+msgstr ""
+
+#: project/models.py:824
+msgid "Show Complementary Plants Information"
+msgstr ""
+
+#: project/models.py:827
+msgid "Show Alternative To Information"
+msgstr ""
+
+#: project/models.py:830
+msgid "Show Ecological Benefits Information"
+msgstr ""
+
+#: project/models.py:833
+msgid "Show Ecozones Information"
+msgstr ""
+
+#: project/models.py:836
+msgid "Show Environmental Requirements Information"
+msgstr ""
+
+#: project/models.py:839
+msgid "Show Gardener Friendly Information"
+msgstr ""
+
+#: project/models.py:842
+msgid "Show Harvesting Information"
+msgstr ""
+
+#: project/models.py:845
+msgid "Show iNaturalist Link Information"
+msgstr ""
+
+#: project/models.py:848
+msgid "Show Landscape Uses Information"
+msgstr ""
+
+#: project/models.py:851
+msgid "Show Obsolete Names Information"
+msgstr ""
+
+#: project/models.py:854
+msgid "Show Sowing Information"
+msgstr ""
+
+#: project/models.py:857
+msgid "Show Tolerates Information"
+msgstr ""
+
+#: project/models.py:860
+msgid "Show Vascan Map Information"
+msgstr ""
+
+#: project/models.py:871
+msgid "French Name"
+msgstr ""
+
+#: project/models.py:873
+msgid "Taxon"
+msgstr ""
+
+#: project/models.py:875
+msgid "iNaturalist Taxon"
+msgstr ""
+
+#: project/models.py:881
+msgid "Full Sun"
+msgstr ""
+
+#: project/models.py:884
+msgid "Part Shade"
+msgstr ""
+
+#: project/models.py:887
+msgid "Full Shade"
+msgstr ""
+
+#: project/models.py:896
+msgid "Moisture Dry"
+msgstr ""
+
+#: project/models.py:899
+msgid "Moisture Wet"
+msgstr ""
+
+#: project/models.py:902
+msgid "Moisture Medium"
+msgstr ""
+
+#: project/models.py:905
+msgid "Limestone Tolerant"
+msgstr ""
+
+#: project/models.py:908
+msgid "Sand Tolerant"
+msgstr ""
+
+#: project/models.py:911
+msgid "Acidic Soil Tolerant"
+msgstr ""
+
+#: project/models.py:917
+msgid "Bloom Start"
+msgstr ""
+
+#: project/models.py:920
+msgid "Bloom End"
+msgstr ""
+
+#: project/models.py:935
+msgid "Spring Ephemeral"
+msgstr ""
+
+#: project/models.py:945
+msgid "Spread by Rhizome"
+msgstr ""
+
+#: project/models.py:948
+msgid "Does Not Spread"
+msgstr ""
+
+#: project/models.py:950
+msgid "Dioecious"
+msgstr ""
+
+#: project/models.py:952
+msgid "Germinate Easy"
+msgstr ""
+
+#: project/models.py:954
+msgid "Self Seeding"
+msgstr ""
+
+#: project/models.py:956
+msgid "Beginner Friendly"
+msgstr ""
+
+#: project/models.py:959
+msgid "Transplantation Tolerant"
+msgstr ""
+
+#: project/models.py:962
+msgid "Starter Pack Shade"
+msgstr ""
+
+#: project/models.py:965
+msgid "Starter Pack Sun Dry"
+msgstr ""
+
+#: project/models.py:968
+msgid "Starter Pack Sun Wet"
+msgstr ""
+
+#: project/models.py:979
+msgid "Harvesting Start"
+msgstr ""
+
+#: project/models.py:1025
+msgid "Harvesting Video Link"
+msgstr ""
+
+#: project/models.py:1028
+msgid "Harvesting Notes"
+msgstr ""
+
+#: project/models.py:1033
+msgid "Stratification Detail"
+msgstr ""
+
+#: project/models.py:1043
+msgid "Double Dormancy"
+msgstr ""
+
+#: project/models.py:1070
+msgid "Sowing Label Instructions"
+msgstr ""
+
+#: project/models.py:1073
+msgid "Sowing Notes"
+msgstr ""
+
+#: project/models.py:1076
+msgid "Envelope Label Link"
+msgstr ""
+
+#: project/models.py:1092
+msgid "Notes"
+msgstr ""
+
+#: project/models.py:1094
+msgid "Accepting Seed"
+msgstr ""
+
+#: project/models.py:1097
+msgid "Seed Availability"
+msgstr ""
+
+#: project/models.py:1104
+msgid "Pollinator Garden"
+msgstr ""
+
+#: project/models.py:1106
+msgid "Rock Garden"
+msgstr ""
+
+#: project/models.py:1107
+msgid "Rain Garden"
+msgstr ""
+
+#: project/models.py:1108
+msgid "School Garden"
+msgstr ""
+
+#: project/models.py:1110
+msgid "Wetland Garden"
+msgstr ""
+
+#: project/models.py:1113
+msgid "Woodland Garden"
+msgstr ""
+
+#: project/models.py:1116
+msgid "Boulevard Garden Tolerant"
+msgstr ""
+
+#: project/models.py:1120
+msgid "Shoreline Rehab"
+msgstr ""
+
+#: project/models.py:1123
+msgid "Container Suitable"
+msgstr ""
+
+#: project/models.py:1125
+msgid "Ground Cover"
+msgstr ""
+
+#: project/models.py:1127
+msgid "Easy to Contain"
+msgstr ""
+
+#: project/models.py:1129
+msgid "Hedge"
+msgstr ""
+
+#: project/models.py:1132
+msgid "Foot Traffic Tolerant"
+msgstr ""
+
+#: project/models.py:1138
+msgid "Bees"
+msgstr ""
+
+#: project/models.py:1140
+msgid "Bee Host"
+msgstr ""
+
+#: project/models.py:1141
+msgid "Bird Friendly"
+msgstr ""
+
+#: project/models.py:1146
+msgid "Butterflies"
+msgstr ""
+
+#: project/models.py:1149
+msgid "Butterfly Host"
+msgstr ""
+
+#: project/models.py:1152
+msgid "Hummingbird Friendly"
+msgstr ""
+
+#: project/models.py:1156
+msgid "Keystones Species"
+msgstr ""
+
+#: project/models.py:1159
+msgid "Deer Tolerant"
+msgstr ""
+
+#: project/models.py:1161
+msgid "Rabbit Tolerant"
+msgstr ""
+
+#: project/models.py:1165
+msgid "Drought Tolerant"
+msgstr ""
+
+#: project/models.py:1167
+msgid "Salt Tolerant"
+msgstr ""
+
+#: project/models.py:1169
+msgid "Juglone Tolerant"
+msgstr ""
+
+#: project/models.py:1172
+msgid "Nitrogen Fixer"
+msgstr ""
+
+#: project/models.py:1179
+msgid "Substitute for Non Native"
+msgstr ""
+
+#: project/models.py:1186
+msgid "Septic Tank Safe"
+msgstr ""
+
+#: project/models.py:1189
+msgid "Produces Burs"
+msgstr ""
+
+#: project/models.py:1191
+msgid "Cause Skin Rashes"
+msgstr ""
+
+#: project/models.py:1203
+msgid "Alternative To Notes"
+msgstr ""
+
+#: project/models.py:1207
+msgid "GRASP Candidate"
+msgstr ""
+
+#: project/models.py:1210
+msgid "GRASP Candidate Notes"
+msgstr ""
+
+#: project/models.py:1222
+msgid "Is the plant native to the Ottawa region?"
+msgstr ""
+
+#: project/models.py:1228
+msgid "Ecozones where the plant thrives."
+msgstr ""
+
+#: project/models.py:1340 project/models.py:1370
+msgid "Plants"
+msgstr ""
+
+#: project/models.py:1367
+msgid "Owner"
+msgstr ""
+
+#: project/models.py:1372
+msgid "Details"
+msgstr ""
+
+#: project/models.py:1403
+msgid "Element"
+msgstr ""
+
+#: project/models.py:1411
+msgid "plant morphology"
+msgstr ""
+
+#: project/models.py:1450 project/models.py:1596 project/models.py:1625
+msgid "Plant Profile"
+msgstr ""
+
+#: project/models.py:1453
+msgid "Morphology Aspect"
+msgstr ""
+
+#: project/models.py:1455
+msgid "Title"
+msgstr ""
+
+#: project/models.py:1457
+msgid "Description"
+msgstr ""
+
+#: project/models.py:1459
+msgid "Author"
+msgstr ""
+
+#: project/models.py:1461
+msgid "Photo Date"
+msgstr ""
+
+#: project/models.py:1599
+msgid "Obsolete Name"
+msgstr ""
+
+#: project/models.py:1631
+msgid "Complement"
 msgstr ""

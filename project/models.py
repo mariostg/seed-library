@@ -3,6 +3,7 @@ from django.core.exceptions import ValidationError
 from django.db import models
 from django.urls import reverse
 from django.utils.dates import MONTHS
+from django.utils.translation import gettext_lazy as _
 from PIL import Image, ImageOps
 
 
@@ -29,7 +30,9 @@ class SeedEventTable(Base):
         ordering (list): Specifies the default ordering for the model, which is by 'event_table'.
     """
 
-    seed_event_table = models.CharField(max_length=100, blank=True)
+    seed_event_table = models.CharField(
+        max_length=100, blank=True, verbose_name=_("Seed Event Table")
+    )
 
     def __str__(self) -> str:
         return self.seed_event_table
@@ -52,7 +55,9 @@ class HarvestingIndicator(Base):
         ordering (list): Specifies the default ordering for the model, which is by 'harvesting_indicator'.
     """
 
-    harvesting_indicator = models.CharField(max_length=255, blank=True)
+    harvesting_indicator = models.CharField(
+        max_length=255, blank=True, verbose_name=_("Harvesting Indicator")
+    )
 
     def __str__(self) -> str:
         return self.harvesting_indicator
@@ -80,7 +85,9 @@ class HarvestingMean(Base):
         str: String representation of the harvesting mean.
     """
 
-    harvesting_mean = models.CharField(max_length=100, blank=True)
+    harvesting_mean = models.CharField(
+        max_length=100, blank=True, verbose_name=_("Harvesting")
+    )
 
     def __str__(self) -> str:
         return self.harvesting_mean
@@ -107,7 +114,7 @@ class SeedHead(Base):
         str: String representation of the seed head name.
     """
 
-    seed_head = models.CharField(max_length=20, blank=True)
+    seed_head = models.CharField(max_length=20, blank=True, verbose_name=_("Seed Head"))
 
     def __str__(self) -> str:
         return self.seed_head
@@ -130,7 +137,9 @@ class SeedViabilityTest(Base):
         ordering: Ordered alphabetically by seed_viability_test field
     """
 
-    seed_viability_test = models.CharField(max_length=150, blank=True)
+    seed_viability_test = models.CharField(
+        max_length=150, blank=True, verbose_name=_("Seed Viability Test")
+    )
 
     def __str__(self) -> str:
         return self.seed_viability_test
@@ -155,7 +164,9 @@ class SeedStorage(Base):
         str: String representation of the seed storage information.
     """
 
-    seed_storage = models.CharField(max_length=150, blank=True)
+    seed_storage = models.CharField(
+        max_length=150, blank=True, verbose_name=_("Seed Storage")
+    )
 
     def __str__(self) -> str:
         return self.seed_storage
@@ -179,7 +190,9 @@ class OneCultivar(Base):
         str: String representation of the cultivar name
     """
 
-    one_cultivar = models.CharField(max_length=125, blank=True)
+    one_cultivar = models.CharField(
+        max_length=125, blank=True, verbose_name=_("Cultivar")
+    )
 
     def __str__(self) -> str:
         return self.one_cultivar
@@ -203,7 +216,9 @@ class PackagingMeasure(Base):
         "A dozen (12) seeds (eyeball)"
     """
 
-    packaging_measure = models.CharField(max_length=35, blank=True)
+    packaging_measure = models.CharField(
+        max_length=35, blank=True, verbose_name=_("Packaging Measure")
+    )
 
     def __str__(self) -> str:
         return self.packaging_measure
@@ -228,7 +243,9 @@ class SeedPreparation(Base):
         ordering: Ordered alphabetically by seed_preparation field.
     """
 
-    seed_preparation = models.CharField(max_length=100, blank=True)
+    seed_preparation = models.CharField(
+        max_length=100, blank=True, verbose_name=_("Seed Preparation")
+    )
 
     def __str__(self) -> str:
         return self.seed_preparation
@@ -254,7 +271,9 @@ class SeedStorageLabelInfo(Base):
         ordering: Orders objects by seed_storage_label_info field
     """
 
-    seed_storage_label_info = models.CharField(max_length=50, blank=True)
+    seed_storage_label_info = models.CharField(
+        max_length=50, blank=True, verbose_name=_("Seed Storage Label Info")
+    )
 
     def __str__(self) -> str:
         return self.seed_storage_label_info
@@ -280,7 +299,9 @@ class SowingDepth(Base):
         ordering: Ordered alphabetically by sowing_depth field
     """
 
-    sowing_depth = models.CharField(max_length=25, blank=True)
+    sowing_depth = models.CharField(
+        max_length=25, blank=True, verbose_name=_("Sowing Depth")
+    )
 
     def __str__(self) -> str:
         return self.sowing_depth
@@ -307,7 +328,11 @@ class StratificationDuration(Base):
     """
 
     stratification_duration = models.SmallIntegerField(
-        blank=True, null=True, default=0, unique=True
+        blank=True,
+        null=True,
+        default=0,
+        unique=True,
+        verbose_name=_("Stratification Duration"),
     )
 
     def __str__(self) -> str:
@@ -331,8 +356,12 @@ class Lighting(Base):
             "lighting - definition".
     """
 
-    lighting = models.CharField(unique=True, max_length=45, blank=True)
-    definition = models.CharField(max_length=75, blank=True)
+    lighting = models.CharField(
+        unique=True, max_length=45, blank=True, verbose_name=_("Lighting")
+    )
+    definition = models.CharField(
+        max_length=75, blank=True, verbose_name=_("Definition")
+    )
 
     def __str__(self) -> str:
         return f"{self.lighting} - {self.definition}"
@@ -352,7 +381,9 @@ class BloomColour(Base):
         save(*args, **kwargs): Overrides default save to capitalize colour name.
     """
 
-    bloom_colour = models.CharField(unique=True, max_length=25, blank=True)
+    bloom_colour = models.CharField(
+        unique=True, max_length=25, blank=True, verbose_name=_("Bloom Colour")
+    )
 
     def __str__(self) -> str:
         return self.bloom_colour
@@ -377,7 +408,9 @@ class GrowthHabit(Base):
         str: String representation of the habit (the habit name).
     """
 
-    growth_habit = models.CharField(unique=True, max_length=30, blank=True)
+    growth_habit = models.CharField(
+        unique=True, max_length=30, blank=True, verbose_name=_("Growth Habit")
+    )
 
     def __str__(self) -> str:
         return self.growth_habit
@@ -398,8 +431,12 @@ class PlantLifespan(Base):
         str: String representation of the lifespan value.
     """
 
-    lifespan = models.CharField(max_length=15, blank=True, unique=True)
-    definition = models.CharField(max_length=75, blank=True)
+    lifespan = models.CharField(
+        max_length=15, blank=True, unique=True, verbose_name=_("Lifespan")
+    )
+    definition = models.CharField(
+        max_length=75, blank=True, verbose_name=_("Definition")
+    )
 
     def __str__(self) -> str:
         return self.lifespan
@@ -417,7 +454,9 @@ class ConservationStatus(Base):
         str: String representation of the conservation status value.
     """
 
-    conservation_status = models.CharField(max_length=50, blank=True)
+    conservation_status = models.CharField(
+        max_length=50, blank=True, verbose_name=_("Conservation Status")
+    )
 
     def __str__(self) -> str:
         return self.conservation_status
@@ -463,7 +502,9 @@ class ToxicityIndicator(Base):
         str: String representation of the toxicity indicator.
     """
 
-    toxicity_indicator = models.CharField(max_length=50, blank=True)
+    toxicity_indicator = models.CharField(
+        max_length=50, blank=True, verbose_name=_("Toxicity Indicator")
+    )
 
     def __str__(self) -> str:
         return self.toxicity_indicator
@@ -482,7 +523,9 @@ class BeeSpecies(models.Model):
         ordering: Alphabetically by Latin name
     """
 
-    latin_name = models.CharField(max_length=75, blank=True, unique=True)
+    latin_name = models.CharField(
+        max_length=75, blank=True, unique=True, verbose_name=_("Latin Name")
+    )
 
     def __str__(self) -> str:
         return self.latin_name
@@ -506,8 +549,12 @@ class ButterflySpecies(models.Model):
         ordering: Alphabetically by Latin name
     """
 
-    latin_name = models.CharField(max_length=75, blank=True, unique=True)
-    english_name = models.CharField(max_length=75, blank=True)
+    latin_name = models.CharField(
+        max_length=75, blank=True, unique=True, verbose_name=_("Latin Name")
+    )
+    english_name = models.CharField(
+        max_length=75, blank=True, verbose_name=_("English Name")
+    )
 
     def __str__(self) -> str:
         return self.latin_name
@@ -529,8 +576,12 @@ class NonNativeSpecies(models.Model):
         str: String representation of the non-native species, which is its Latin name.
     """
 
-    latin_name = models.CharField(max_length=75, blank=True)
-    english_name = models.CharField(max_length=75, blank=True)
+    latin_name = models.CharField(
+        max_length=75, blank=True, verbose_name=_("Latin Name")
+    )
+    english_name = models.CharField(
+        max_length=75, blank=True, verbose_name=_("English Name")
+    )
 
     def __str__(self) -> str:
         return f"{self.latin_name} ({self.english_name})"
@@ -542,7 +593,9 @@ class NonNativeSpecies(models.Model):
 class Ecozone(Base):
     """A model representing ecozones where plants can thrive."""
 
-    ecozone = models.CharField(max_length=100, unique=True, blank=True)
+    ecozone = models.CharField(
+        max_length=100, unique=True, blank=True, verbose_name=_("Ecozone")
+    )
 
     def __str__(self) -> str:
         return self.ecozone
@@ -742,50 +795,97 @@ class PlantProfile(Base):
     """
 
     # Profile status
-    is_active = models.BooleanField(default=True)
+    is_active = models.BooleanField(default=True, verbose_name=_("Is Active"))
     is_accepted = models.BooleanField(
-        default=True
+        default=True, verbose_name=_("Is Accepted")
     )  # Whether the plant profile is accepted by OWSL
     is_draft = models.BooleanField(
-        default=True
+        default=True, verbose_name=_("Is Draft")
     )  # to indicate if the profile is incomplete
     is_needed = models.BooleanField(
-        default=False
+        default=False, verbose_name=_("Is Needed")
     )  # to indicate if seeds are needed for this plant
     has_notice = models.BooleanField(
-        default=False
+        default=False, verbose_name=_("Has Notice")
     )  # to indicate if the plant has a notice for some reason
-    notice_detail = models.CharField(max_length=255, default="", blank=True)
-    not_accepted_reason = models.CharField(max_length=255, blank=True)
-    show_bees_supported_info = models.BooleanField(default=True)
-    show_butterflies_supported_info = models.BooleanField(default=True)
-    show_complementary_plants_info = models.BooleanField(default=True)
-    show_alternative_to_info = models.BooleanField(default=True)
-    show_ecological_benefits_info = models.BooleanField(default=True)
-    show_ecozones_info = models.BooleanField(default=True)
-    show_env_requirements_info = models.BooleanField(default=True)
-    show_gardener_friendly_info = models.BooleanField(default=True)
-    show_harvesting_info = models.BooleanField(default=True)
-    show_inaturalist_link_info = models.BooleanField(default=True)
-    show_landscape_uses_info = models.BooleanField(default=True)
-    show_obsolete_names_info = models.BooleanField(default=True)
-    show_sowing_info = models.BooleanField(default=True)
-    show_tolerates_info = models.BooleanField(default=True)
-    show_vascan_map_info = models.BooleanField(default=True)
+    notice_detail = models.CharField(
+        max_length=255, default="", blank=True, verbose_name=_("Notice Detail")
+    )
+    not_accepted_reason = models.CharField(
+        max_length=255, blank=True, verbose_name=_("Not Accepted Reason")
+    )
+    show_bees_supported_info = models.BooleanField(
+        default=True, verbose_name=_("Show Bees Supported Information")
+    )
+    show_butterflies_supported_info = models.BooleanField(
+        default=True, verbose_name=_("Show Butterflies Supported Information")
+    )
+    show_complementary_plants_info = models.BooleanField(
+        default=True, verbose_name=_("Show Complementary Plants Information")
+    )
+    show_alternative_to_info = models.BooleanField(
+        default=True, verbose_name=_("Show Alternative To Information")
+    )
+    show_ecological_benefits_info = models.BooleanField(
+        default=True, verbose_name=_("Show Ecological Benefits Information")
+    )
+    show_ecozones_info = models.BooleanField(
+        default=True, verbose_name=_("Show Ecozones Information")
+    )
+    show_env_requirements_info = models.BooleanField(
+        default=True, verbose_name=_("Show Environmental Requirements Information")
+    )
+    show_gardener_friendly_info = models.BooleanField(
+        default=True, verbose_name=_("Show Gardener Friendly Information")
+    )
+    show_harvesting_info = models.BooleanField(
+        default=True, verbose_name=_("Show Harvesting Information")
+    )
+    show_inaturalist_link_info = models.BooleanField(
+        default=True, verbose_name=_("Show iNaturalist Link Information")
+    )
+    show_landscape_uses_info = models.BooleanField(
+        default=True, verbose_name=_("Show Landscape Uses Information")
+    )
+    show_obsolete_names_info = models.BooleanField(
+        default=True, verbose_name=_("Show Obsolete Names Information")
+    )
+    show_sowing_info = models.BooleanField(
+        default=True, verbose_name=_("Show Sowing Information")
+    )
+    show_tolerates_info = models.BooleanField(
+        default=True, verbose_name=_("Show Tolerates Information")
+    )
+    show_vascan_map_info = models.BooleanField(
+        default=True, verbose_name=_("Show Vascan Map Information")
+    )
 
     # Identification information
-    latin_name = models.CharField(max_length=75, unique=True)
-    english_name = models.CharField(max_length=75, blank=True)
-    french_name = models.CharField(max_length=75, blank=True)
-    taxon = models.CharField(max_length=5, blank=True)
-    inaturalist_taxon = models.CharField(max_length=10, blank=True)
-
+    latin_name = models.CharField(
+        max_length=75, unique=True, verbose_name=_("Latin Name")
+    )
+    english_name = models.CharField(
+        max_length=75, blank=True, verbose_name=_("English Name")
+    )
+    french_name = models.CharField(
+        max_length=75, blank=True, verbose_name=_("French Name")
+    )
+    taxon = models.CharField(max_length=5, blank=True, verbose_name=_("Taxon"))
+    inaturalist_taxon = models.CharField(
+        max_length=10, blank=True, verbose_name=_("iNaturalist Taxon")
+    )
     #
     # Environmental requirements
     #
-    full_sun = models.BooleanField(default=False, null=True, blank=True)
-    part_shade = models.BooleanField(default=False, null=True, blank=True)
-    full_shade = models.BooleanField(default=False, null=True, blank=True)
+    full_sun = models.BooleanField(
+        default=False, null=True, blank=True, verbose_name=_("Full Sun")
+    )
+    part_shade = models.BooleanField(
+        default=False, null=True, blank=True, verbose_name=_("Part Shade")
+    )
+    full_shade = models.BooleanField(
+        default=False, null=True, blank=True, verbose_name=_("Full Shade")
+    )
 
     moisture_dry = models.BooleanField(
         default=False,
@@ -793,176 +893,339 @@ class PlantProfile(Base):
         blank=True,
         help_text="Does the plant tolerate dry conditions?",
         name="moisture_dry",
+        verbose_name=_("Moisture Dry"),
     )
-    moisture_wet = models.BooleanField(default=False, null=True, blank=True)
-    moisture_medium = models.BooleanField(default=False, null=True, blank=True)
-    limestone_tolerant = models.BooleanField(default=False, null=True, blank=True)
-    sand_tolerant = models.BooleanField(default=False, null=True, blank=True)
-    acidic_soil_tolerant = models.BooleanField(default=False, null=True, blank=True)
+    moisture_wet = models.BooleanField(
+        default=False, null=True, blank=True, verbose_name=_("Moisture Wet")
+    )
+    moisture_medium = models.BooleanField(
+        default=False, null=True, blank=True, verbose_name=_("Moisture Medium")
+    )
+    limestone_tolerant = models.BooleanField(
+        default=False, null=True, blank=True, verbose_name=_("Limestone Tolerant")
+    )
+    sand_tolerant = models.BooleanField(
+        default=False, null=True, blank=True, verbose_name=_("Sand Tolerant")
+    )
+    acidic_soil_tolerant = models.BooleanField(
+        default=False, null=True, blank=True, verbose_name=_("Acidic Soil Tolerant")
+    )
     #
     # Growth characteristics
     #
     bloom_start = models.SmallIntegerField(
-        choices=MONTHS.items(), blank=True, default=0
+        choices=MONTHS.items(), blank=True, default=0, verbose_name=_("Bloom Start")
     )
-    bloom_end = models.SmallIntegerField(choices=MONTHS.items(), blank=True, default=0)
+    bloom_end = models.SmallIntegerField(
+        choices=MONTHS.items(), blank=True, default=0, verbose_name=_("Bloom End")
+    )
     bloom_colour = models.ForeignKey(
-        BloomColour, on_delete=models.RESTRICT, null=True, blank=True
+        BloomColour,
+        on_delete=models.RESTRICT,
+        null=True,
+        blank=True,
+        verbose_name=_("Bloom Colour"),
     )
     max_height = models.FloatField(blank=True, null=True, default=0)
     max_width = models.FloatField(blank=True, null=True, default=0)
     lifespan = models.ForeignKey(
         PlantLifespan, on_delete=models.RESTRICT, blank=True, null=True
     )
-    spring_ephemeral = models.BooleanField(default=False)
-    growth_habit = models.ForeignKey(
-        GrowthHabit, on_delete=models.RESTRICT, null=True, blank=True
+    spring_ephemeral = models.BooleanField(
+        default=False, verbose_name=_("Spring Ephemeral")
     )
-    spread_by_rhizome = models.BooleanField(default=False)
-    does_not_spread = models.BooleanField(default=False)
-    dioecious = models.BooleanField(default=False)
-    germinate_easy = models.BooleanField(default=False)
-    self_seeding = models.BooleanField(default=False)
-    beginner_friendly = models.BooleanField(default=False)
-    transplantation_tolerant = models.BooleanField(default=False)
-    starter_pack_shade = models.BooleanField(default=False)
-    starter_pack_sun_dry = models.BooleanField(default=False)
-    starter_pack_sun_wet = models.BooleanField(default=False)
+    growth_habit = models.ForeignKey(
+        GrowthHabit,
+        on_delete=models.RESTRICT,
+        null=True,
+        blank=True,
+        verbose_name=_("Growth Habit"),
+    )
+    spread_by_rhizome = models.BooleanField(
+        default=False, verbose_name=_("Spread by Rhizome")
+    )
+    does_not_spread = models.BooleanField(
+        default=False, verbose_name=_("Does Not Spread")
+    )
+    dioecious = models.BooleanField(default=False, verbose_name=_("Dioecious"))
+    germinate_easy = models.BooleanField(
+        default=False, verbose_name=_("Germinate Easy")
+    )
+    self_seeding = models.BooleanField(default=False, verbose_name=_("Self Seeding"))
+    beginner_friendly = models.BooleanField(
+        default=False, verbose_name=_("Beginner Friendly")
+    )
+    transplantation_tolerant = models.BooleanField(
+        default=False, verbose_name=_("Transplantation Tolerant")
+    )
+    starter_pack_shade = models.BooleanField(
+        default=False, verbose_name=_("Starter Pack Shade")
+    )
+    starter_pack_sun_dry = models.BooleanField(
+        default=False, verbose_name=_("Starter Pack Sun Dry")
+    )
+    starter_pack_sun_wet = models.BooleanField(
+        default=False, verbose_name=_("Starter Pack Sun Wet")
+    )
     #
     # Harvesting and seed sharing
     #
 
     # Harvesting information
     harvesting_start = models.SmallIntegerField(
-        choices=MONTHS.items(), blank=True, default=0
+        choices=MONTHS.items(),
+        blank=True,
+        default=0,
+        verbose_name=_("Harvesting Start"),
     )
     harvesting_indicator = models.ForeignKey(
-        HarvestingIndicator, on_delete=models.RESTRICT, null=True, blank=True
+        HarvestingIndicator,
+        on_delete=models.RESTRICT,
+        null=True,
+        blank=True,
+        verbose_name=_("Harvesting Indicator"),
     )
     harvesting_mean = models.ForeignKey(
-        HarvestingMean, on_delete=models.RESTRICT, null=True, blank=True
+        HarvestingMean,
+        on_delete=models.RESTRICT,
+        null=True,
+        blank=True,
+        verbose_name=_("Harvesting"),
     )
     seed_head = models.ForeignKey(
-        SeedHead, on_delete=models.RESTRICT, null=True, blank=True
+        SeedHead,
+        on_delete=models.RESTRICT,
+        null=True,
+        blank=True,
+        verbose_name=_("Seed Head"),
     )
     remove_non_seed_material = models.BooleanField(default=False)
     seed_viability_test = models.ForeignKey(
-        SeedViabilityTest, on_delete=models.RESTRICT, null=True, blank=True
+        SeedViabilityTest,
+        on_delete=models.RESTRICT,
+        null=True,
+        blank=True,
+        verbose_name=_("Seed Viability Test"),
     )
     seed_storage = models.ForeignKey(
-        SeedStorage, on_delete=models.RESTRICT, null=True, blank=True
+        SeedStorage,
+        on_delete=models.RESTRICT,
+        null=True,
+        blank=True,
+        verbose_name=_("Seed Storage"),
     )
     one_cultivar = models.ForeignKey(
-        OneCultivar, on_delete=models.RESTRICT, null=True, blank=True
+        OneCultivar,
+        on_delete=models.RESTRICT,
+        null=True,
+        blank=True,
+        verbose_name=_("Cultivar"),
     )
-    harvesting_video_link = models.CharField(max_length=200, blank=True)
-    harvesting_notes = models.CharField(max_length=450, blank=True)
+    harvesting_video_link = models.CharField(
+        max_length=200, blank=True, verbose_name=_("Harvesting Video Link")
+    )
+    harvesting_notes = models.CharField(
+        max_length=450, blank=True, verbose_name=_("Harvesting Notes")
+    )
 
     # Sowing information
-    stratification_detail = models.CharField(max_length=55, blank=True)
-    stratification_duration = models.ForeignKey(
-        StratificationDuration, on_delete=models.RESTRICT, blank=True, null=True
+    stratification_detail = models.CharField(
+        max_length=55, blank=True, verbose_name=_("Stratification Detail")
     )
-    double_dormancy = models.BooleanField(default=False)
+    stratification_duration = models.ForeignKey(
+        StratificationDuration,
+        on_delete=models.RESTRICT,
+        blank=True,
+        null=True,
+        verbose_name=_("Stratification Duration"),
+    )
+    double_dormancy = models.BooleanField(
+        default=False, verbose_name=_("Double Dormancy")
+    )
 
     sowing_depth = models.ForeignKey(
-        SowingDepth, on_delete=models.RESTRICT, blank=True, null=True
+        SowingDepth,
+        on_delete=models.RESTRICT,
+        blank=True,
+        null=True,
+        verbose_name=_("Sowing Depth"),
     )
 
     # Seed distribution
     packaging_measure = models.ForeignKey(
-        PackagingMeasure, on_delete=models.RESTRICT, null=True, blank=True
+        PackagingMeasure,
+        on_delete=models.RESTRICT,
+        null=True,
+        blank=True,
+        verbose_name=_("Packaging Measure"),
     )
     seed_preparation = models.ForeignKey(
-        SeedPreparation, on_delete=models.RESTRICT, null=True, blank=True
+        SeedPreparation,
+        on_delete=models.RESTRICT,
+        null=True,
+        blank=True,
+        verbose_name=_("Seed Preparation"),
     )
-    sowing_label_instructions = models.CharField(max_length=40, blank=True)
-    sowing_notes = models.CharField(max_length=450, blank=True)
-    envelope_label_link = models.CharField(max_length=200, blank=True)
+    sowing_label_instructions = models.CharField(
+        max_length=40, blank=True, verbose_name=_("Sowing Label Instructions")
+    )
+    sowing_notes = models.CharField(
+        max_length=450, blank=True, verbose_name=_("Sowing Notes")
+    )
+    envelope_label_link = models.CharField(
+        max_length=200, blank=True, verbose_name=_("Envelope Label Link")
+    )
     seed_storage_label_info = models.ForeignKey(
-        SeedStorageLabelInfo, on_delete=models.RESTRICT, null=True, blank=True
+        SeedStorageLabelInfo,
+        on_delete=models.RESTRICT,
+        null=True,
+        blank=True,
+        verbose_name=_("Seed Storage Label Info"),
     )
     seed_event_table = models.ForeignKey(
-        SeedEventTable, on_delete=models.RESTRICT, null=True, blank=True
+        SeedEventTable,
+        on_delete=models.RESTRICT,
+        null=True,
+        blank=True,
+        verbose_name=_("Seed Event Table"),
     )
-    notes = models.CharField(max_length=450, blank=True)
-    accepting_seed = models.BooleanField(default=False)
-    seed_availability = models.BooleanField(default=False)
+    notes = models.CharField(max_length=450, blank=True, verbose_name=_("Notes"))
+    accepting_seed = models.BooleanField(
+        default=False, verbose_name=_("Accepting Seed")
+    )
+    seed_availability = models.BooleanField(
+        default=False, verbose_name=_("Seed Availability")
+    )
 
     #
     # Landscape uses and applications
     #
-    pollinator_garden = models.BooleanField(default=False)
-    rock_garden = models.BooleanField(default=False)
-    rain_garden = models.BooleanField(default=False)
-    school_garden = models.BooleanField(default=False)
-    wetland_garden = models.BooleanField(default=False)
-    woodland_garden = models.BooleanField(default=False)
-    boulevard_garden_tolerant = models.BooleanField(default=False)
+    pollinator_garden = models.BooleanField(
+        default=False, verbose_name=_("Pollinator Garden")
+    )
+    rock_garden = models.BooleanField(default=False, verbose_name=_("Rock Garden"))
+    rain_garden = models.BooleanField(default=False, verbose_name=_("Rain Garden"))
+    school_garden = models.BooleanField(default=False, verbose_name=_("School Garden"))
+    wetland_garden = models.BooleanField(
+        default=False, verbose_name=_("Wetland Garden")
+    )
+    woodland_garden = models.BooleanField(
+        default=False, verbose_name=_("Woodland Garden")
+    )
+    boulevard_garden_tolerant = models.BooleanField(
+        default=False, verbose_name=_("Boulevard Garden Tolerant")
+    )
 
-    shoreline_rehab = models.BooleanField(default=False)
-    container_suitable = models.BooleanField(default=False)
-    ground_cover = models.BooleanField(default=False)
-    easy_to_contain = models.BooleanField(default=False)
-    hedge = models.BooleanField(default=False)
+    shoreline_rehab = models.BooleanField(
+        default=False, verbose_name=_("Shoreline Rehab")
+    )
+    container_suitable = models.BooleanField(
+        default=False, verbose_name=_("Container Suitable")
+    )
+    ground_cover = models.BooleanField(default=False, verbose_name=_("Ground Cover"))
+    easy_to_contain = models.BooleanField(
+        default=False, verbose_name=_("Easy to Contain")
+    )
+    hedge = models.BooleanField(default=False, verbose_name=_("Hedge"))
 
-    foot_traffic_tolerant = models.BooleanField(default=False)
-
+    foot_traffic_tolerant = models.BooleanField(
+        default=False, verbose_name=_("Foot Traffic Tolerant")
+    )
     #
     # Ecological benefits
     #
-    bees = models.ManyToManyField(BeeSpecies, blank=True, related_name="plants")
-    bee_host = models.BooleanField(default=False)
-    bird_friendly = models.BooleanField(default=False)
-    butterflies = models.ManyToManyField(
-        ButterflySpecies, blank=True, related_name="plants"
+    bees = models.ManyToManyField(
+        BeeSpecies, blank=True, related_name="plants", verbose_name=_("Bees")
     )
-    butterfly_host = models.BooleanField(default=False)
-    hummingbird_friendly = models.BooleanField(default=False)
+    bee_host = models.BooleanField(default=False, verbose_name=_("Bee Host"))
+    bird_friendly = models.BooleanField(default=False, verbose_name=_("Bird Friendly"))
+    butterflies = models.ManyToManyField(
+        ButterflySpecies,
+        blank=True,
+        related_name="plants",
+        verbose_name=_("Butterflies"),
+    )
+    butterfly_host = models.BooleanField(
+        default=False, verbose_name=_("Butterfly Host")
+    )
+    hummingbird_friendly = models.BooleanField(
+        default=False, verbose_name=_("Hummingbird Friendly")
+    )
 
-    keystones_species = models.BooleanField(default=False)
+    keystones_species = models.BooleanField(
+        default=False, verbose_name=_("Keystones Species")
+    )
 
-    deer_tolerant = models.BooleanField(default=False)
-    rabbit_tolerant = models.BooleanField(default=False)
+    deer_tolerant = models.BooleanField(default=False, verbose_name=_("Deer Tolerant"))
+    rabbit_tolerant = models.BooleanField(
+        default=False, verbose_name=_("Rabbit Tolerant")
+    )
 
-    drought_tolerant = models.BooleanField(default=False)
-    salt_tolerant = models.BooleanField(default=False)
-    juglone_tolerant = models.BooleanField(default=False)
-    nitrogen_fixer = models.BooleanField(default=False)
+    drought_tolerant = models.BooleanField(
+        default=False, verbose_name=_("Drought Tolerant")
+    )
+    salt_tolerant = models.BooleanField(default=False, verbose_name=_("Salt Tolerant"))
+    juglone_tolerant = models.BooleanField(
+        default=False, verbose_name=_("Juglone Tolerant")
+    )
+    nitrogen_fixer = models.BooleanField(
+        default=False, verbose_name=_("Nitrogen Fixer")
+    )
 
     substitute_for_non_native = models.ManyToManyField(
-        NonNativeSpecies, blank=True, related_name="native_alternatives"
+        NonNativeSpecies,
+        blank=True,
+        related_name="native_alternatives",
+        verbose_name=_("Substitute for Non Native"),
     )
 
     #
     # Special features and considerations
     #
-    septic_tank_safe = models.BooleanField(default=False)
-
-    produces_burs = models.BooleanField(default=False)
-    cause_skin_rashes = models.BooleanField(default=False)
-    toxicity_indicator_notes = models.CharField(max_length=450, blank=True)
-    toxicity_indicator = models.ForeignKey(
-        ToxicityIndicator, on_delete=models.RESTRICT, null=True, blank=True
+    septic_tank_safe = models.BooleanField(
+        default=False, verbose_name=_("Septic Tank Safe")
     )
 
-    alternative_to_notes = models.CharField(max_length=450, blank=True)
+    produces_burs = models.BooleanField(default=False, verbose_name=_("Produces Burs"))
+    cause_skin_rashes = models.BooleanField(
+        default=False, verbose_name=_("Cause Skin Rashes")
+    )
+    toxicity_indicator_notes = models.CharField(max_length=450, blank=True)
+    toxicity_indicator = models.ForeignKey(
+        ToxicityIndicator,
+        on_delete=models.RESTRICT,
+        null=True,
+        blank=True,
+        verbose_name=_("Toxicity Indicator"),
+    )
 
-    grasp_candidate = models.BooleanField(default=False)
-    grasp_candidate_notes = models.CharField(max_length=450, blank=True)
+    alternative_to_notes = models.CharField(
+        max_length=450, blank=True, verbose_name=_("Alternative To Notes")
+    )
+
+    grasp_candidate = models.BooleanField(
+        default=False, verbose_name=_("GRASP Candidate")
+    )
+    grasp_candidate_notes = models.CharField(
+        max_length=450, blank=True, verbose_name=_("GRASP Candidate Notes")
+    )
 
     conservation_status = models.ForeignKey(
-        ConservationStatus, on_delete=models.RESTRICT, null=True, blank=True
+        ConservationStatus,
+        on_delete=models.RESTRICT,
+        null=True,
+        blank=True,
+        verbose_name=_("Conservation Status"),
     )
     native_to_ottawa_region = models.BooleanField(
         default=False,
-        help_text="Is the plant native to the Ottawa region?",
+        help_text=_("Is the plant native to the Ottawa region?"),
     )
     ecozones = models.ManyToManyField(
         Ecozone,
         blank=True,
         related_name="plants",
-        help_text="Ecozones where the plant thrives.",
+        help_text=_("Ecozones where the plant thrives."),
     )
     # fields that represent the native range of the plant in Canada as boolean values.
     is_native_to_AB = models.BooleanField("AB", default=False)
@@ -1074,7 +1337,9 @@ class ProjectUser(AbstractUser):
         <QuerySet []>
     """
 
-    plants = models.ManyToManyField(PlantProfile, through="PlantCollection")
+    plants = models.ManyToManyField(
+        PlantProfile, through="PlantCollection", verbose_name=_("Plants")
+    )
 
     def __str__(self):
         return str(self.username)
@@ -1099,9 +1364,13 @@ class PlantCollection(models.Model):
         str: String representation in the format "owner, plants".
     """
 
-    owner = models.ForeignKey(ProjectUser, on_delete=models.CASCADE)
-    plants = models.ForeignKey(PlantProfile, on_delete=models.CASCADE)
-    details = models.CharField(max_length=125, blank=True)
+    owner = models.ForeignKey(
+        ProjectUser, on_delete=models.CASCADE, verbose_name=_("Owner")
+    )
+    plants = models.ForeignKey(
+        PlantProfile, on_delete=models.CASCADE, verbose_name=_("Plants")
+    )
+    details = models.CharField(max_length=125, blank=True, verbose_name=_("Details"))
 
     def __str__(self):
         return f"{self.owner}, {self.plants}"
@@ -1131,14 +1400,16 @@ class PlantMorphology(models.Model):
         verbose_name_plural: "plant morphology"
     """
 
-    element = models.CharField(max_length=75, blank=True, unique=True)
+    element = models.CharField(
+        max_length=75, blank=True, unique=True, verbose_name=_("Element")
+    )
 
     def __str__(self):
         return self.element
 
     class Meta:
         ordering = ["element"]
-        verbose_name_plural = "plant morphology"
+        verbose_name_plural = _("plant morphology")
 
 
 class PlantImage(models.Model):
@@ -1174,16 +1445,21 @@ class PlantImage(models.Model):
     """
 
     plant_profile = models.ForeignKey(
-        PlantProfile, on_delete=models.CASCADE, related_name="images"
+        PlantProfile,
+        on_delete=models.CASCADE,
+        related_name="images",
+        verbose_name=_("Plant Profile"),
     )
-    morphology_aspect = models.ForeignKey(PlantMorphology, on_delete=models.CASCADE)
-    title = models.CharField(verbose_name="Titre", max_length=125)
+    morphology_aspect = models.ForeignKey(
+        PlantMorphology, on_delete=models.CASCADE, verbose_name=_("Morphology Aspect")
+    )
+    title = models.CharField(verbose_name=_("Title"), max_length=125)
     description = models.CharField(
-        verbose_name="Description", max_length=55, blank=True
+        verbose_name=_("Description"), max_length=55, blank=True
     )
-    photo_author = models.CharField(verbose_name="Auteur", max_length=125)
+    photo_author = models.CharField(verbose_name=_("Author"), max_length=125)
     photo_date = models.DateField(
-        verbose_name="Date photo",
+        verbose_name=_("Photo Date"),
     )
     image = models.ImageField(upload_to="project/images/plants")
 
@@ -1315,9 +1591,14 @@ class ObsoleteNames(Base):
     """
 
     plant_profile = models.ForeignKey(
-        PlantProfile, on_delete=models.CASCADE, related_name="obsolete_names"
+        PlantProfile,
+        on_delete=models.CASCADE,
+        related_name="obsolete_names",
+        verbose_name=_("Plant Profile"),
     )
-    obsolete_name = models.CharField(max_length=75, blank=True)
+    obsolete_name = models.CharField(
+        max_length=75, blank=True, verbose_name=_("Obsolete Name")
+    )
 
     def __str__(self) -> str:
         return f"{self.plant_profile.latin_name} - {self.obsolete_name}"
@@ -1339,10 +1620,16 @@ class PlantComplementary(models.Model):
     """
 
     plant_profile = models.ForeignKey(
-        PlantProfile, on_delete=models.CASCADE, related_name="plant"
+        PlantProfile,
+        on_delete=models.CASCADE,
+        related_name="plant",
+        verbose_name=_("Plant Profile"),
     )
     complement = models.ForeignKey(
-        PlantProfile, on_delete=models.CASCADE, related_name="complements"
+        PlantProfile,
+        on_delete=models.CASCADE,
+        related_name="complements",
+        verbose_name=_("Complement"),
     )
 
     def __str__(self) -> str:
