@@ -38,7 +38,7 @@
     {% else %}
       <a class='btn' href="{% url 'login' %}">Login</a>
     {% endif %}
-    {% if request.user.is_plant_profile_manager or request.user.is_image_manager or request.user.library_manager %}
+    {% if request.user.is_plant_profile_manager or request.user.is_image_manager or request.user.is_library_manager %}
       <li><a class='btn' href="{% url 'site-admin' %}">Library Management</a></li>
     {% endif %}
   </ul>

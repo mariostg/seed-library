@@ -2600,7 +2600,14 @@ def plant_collection_csv(request):
     return response
 
 
-@group_required(["Image Manager", "Access Administrator", "Plant Profile Manager"])
+@group_required(
+    [
+        "Image Manager",
+        "Access Administrator",
+        "Plant Profile Manager",
+        "Library Manager",
+    ]
+)
 def siteadmin(request):
     return render(request, "project/admin/admin.html")
 
@@ -2786,7 +2793,7 @@ def plant_environmental_requirement_update(request, pk):
     )
 
 
-@group_required(["Plant Profile Manager"])
+@group_required(["Plant Profile Manager", "Library Manager"])
 def plant_identification_information_update(request, pk):
     plant = utils.single_plant(pk, request)
     context = {
@@ -2808,7 +2815,7 @@ def plant_identification_information_update(request, pk):
     )
 
 
-@group_required(["Plant Profile Manager"])
+@group_required(["Plant Profile Manager", "Library Manager"])
 def plant_identification_information_create(request):
     context = {
         "title": "Create Plant Identification Information",
@@ -2856,7 +2863,7 @@ def plant_identification_information_create(request):
     )
 
 
-@group_required(["Plant Profile Manager"])
+@group_required(["Plant Profile Manager", "Library Manager"])
 def plant_growth_characteristics_update(request, pk):
     plant: models.PlantProfile = utils.single_plant(pk, request)
     plants_complements = models.PlantComplementary.objects.filter(plant_profile_id=pk)
