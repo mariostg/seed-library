@@ -1,4 +1,5 @@
 {% extends 'core/base.html' %}
+{% load i18n %}
 {% load static %}
 {% block title %}{{title}} Management{% endblock title %}
 {% block content %}
@@ -8,15 +9,15 @@
       <legend>{{title}} Management</legend>
       {% if user.is_authenticated %}
         <div class='center'>
-          <a class='btn btn-add' href="{% url 'admin-ecozone-add' %}">Add New Ecozone</a>
+          <a class='btn btn-add' href="{% url 'admin-ecozone-add' %}">{% trans "Add New Ecozone" %}</a>
         </div>
       {% endif %}
       <table class=''>
         <thead>
           <tr>
-            <th>Ecozone</th>
-            <th>Plant Count</th>
-            <th colspan=2>Actions</th>
+            <th>{% trans "Ecozone" %}</th>
+            <th>{% trans "Plant Count" %}</th>
+            <th colspan=2>{% trans "Actions" %}</th>
           </tr>
         </thead>
         <tbody>
@@ -26,8 +27,8 @@
               <td>{{item.plant_count}}</td>
               {% if user.is_authenticated %}
                 <td class='actions'>
-                  <a class='btn btn-edit' href="{% url "admin-ecozone-update" item.id %}">Edit</a>
-                  <a class='btn btn-delete' href="{% url "admin-ecozone-delete" item.id %}">Delete</a>
+                  <a class='btn btn-edit' href="{% url "admin-ecozone-update" item.id %}">{% trans "Edit" %}</a>
+                  <a class='btn btn-delete' href="{% url "admin-ecozone-delete" item.id %}">{% trans "Delete" %}</a>
                 </td>
               {% endif %}
             </tr>

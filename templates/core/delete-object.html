@@ -1,12 +1,14 @@
 {% extends 'core/base.html' %}
+
+{% load i18n %}
 {% load static %}
 {% block content %}
   <div class="container block block--centered">
     <section class="form">
-      <header class="form__header">Delete Action</header>
+      <header class="form__header">{% trans "Delete Action" %}</header>
       <form method="POST">
         {% csrf_token %}
-        <p class='alert alert--warning'>Are you sure you want to delete "{{ object }}"?</p>
+        <p class='alert alert--warning'>{% trans "Are you sure you want to delete" %} "{{ object }}"?</p>
 
         <div class="flex-row">
           <a class='btn btn-back'
@@ -15,10 +17,10 @@
              {% else %}
                href="{% url back %}"
              {% endif %}
-             style='text-decoration:none;'>Back
+             style='text-decoration:none;'>{% trans "Back" %}
           </a>
 
-          <input class='btn' type="submit" value="Confirm" />
+          <input class='btn' type="submit" value="{% trans "Confirm" %}" />
         </div>
       </form>
     </div>

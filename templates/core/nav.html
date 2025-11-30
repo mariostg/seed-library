@@ -1,3 +1,4 @@
+{% load i18n %}
 <nav class='nav no-print'>
   <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('show')">
     <span class="bar"></span>
@@ -6,40 +7,40 @@
   </button>
   <ul class="nav-links">
     <li>
-      <a href="{% url 'index' %}">Learn about the plant catalogue</a>
+      <a href="{% url 'index' %}">{% trans "Learn about the plant catalogue" %}</a>
     </li>
     <li>
       {% if request.path != '/search-plant-name/' %}
-        <a href="{% url 'search-plant-name' %}">Search Catalogue</a>
+        <a href="{% url 'search-plant-name' %}">{% trans "Search Catalogue" %}</a>
       {% endif %}
     </li>
     <li>
-      <a href="{% url 'butterfly-supporting-plants' %}">Butterfly Plants</a>
+      <a href="{% url 'butterfly-supporting-plants' %}">{% trans "Butterfly Plants" %}</a>
     </li>
     <li>
-      <a href="{% url 'bee-supporting-plants' %}">Specialized Bee Plants</a>
+      <a href="{% url 'bee-supporting-plants' %}">{% trans "Specialized Bee Plants" %}</a>
     </li>
     {% if request.user.is_authenticated %}
       <li>
-        <a href="{% url 'plant_ecozones' %}">Ecozones (CSV)</a>
+        <a href="{% url 'plant_ecozones' %}">{% trans "Ecozones (CSV)" %}</a>
       </li>
     {% endif %}
-    <li><a href="{% url 'plants-needing-seeds-csv' %}">Plants Needing Seeds (CSV)</a></li>
+    <li><a href="{% url 'plants-needing-seeds-csv' %}">{% trans "Plants Needing Seeds (CSV)" %}</a></li>
     <li>
-      <a target="_blank" href="https://wildflowerseedlibrary.ca/events/">Events</a>
+      <a target="_blank" href="https://wildflowerseedlibrary.ca/events/">{% trans "Events" %}</a>
     </li>
     <li>
-      <a target="_blank" href="https://wildflowerseedlibrary.ca/about-us/">About Us</a>
+      <a target="_blank" href="https://wildflowerseedlibrary.ca/about-us/">{% trans "About Us" %}</a>
     </li>
 
     {% if request.user.is_authenticated %}
       {% comment %} <li><a class='btn' href="{% url 'user-plant-collection' %}">My Collection</a></li> {% endcomment %}
-      <li><a class='btn' href="{% url 'logout' %}">Logout {{request.user}}</a></li>
+      <li><a class='btn' href="{% url 'logout' %}">{% trans "Logout" %} {{request.user}}</a></li>
     {% else %}
-      <a class='btn' href="{% url 'login' %}">Login</a>
+      <a class='btn' href="{% url 'login' %}">{% trans "Login" %}</a>
     {% endif %}
     {% if request.user.is_plant_profile_manager or request.user.is_image_manager or request.user.is_library_manager %}
-      <li><a class='btn' href="{% url 'site-admin' %}">Library Management</a></li>
+      <li><a class='btn' href="{% url 'site-admin' %}">{% trans "Library Management" %}</a></li>
     {% endif %}
   </ul>
 </nav>

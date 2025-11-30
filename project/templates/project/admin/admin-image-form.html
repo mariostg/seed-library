@@ -1,5 +1,6 @@
 # Admin Image Form
 {% extends 'core/base.html' %}
+{% load i18n %}
 {% load static %}
 {% block title %}{{ title }}{% endblock title %}
 {% block content %}
@@ -9,13 +10,13 @@
       <legend>
         {{ title }} Form
       </legend>
-      <p class= "alert alert--info">The image should be in jpeg format. Dimensions should be 450x600 pixels (0.75 aspect ratio) portrait style.<br>  The image will be automatically resized to fit these dimensions.</p>
+      <p class= "alert alert--info">{% trans "The image should be in jpeg format. Dimensions should be 450x600 pixels (0.75 aspect ratio) portrait style." %}<br>  {% trans "The image will be automatically resized to fit these dimensions." %}</p>
       <form method="POST" enctype="multipart/form-data" class='flex-col-center'>
         {% csrf_token %}
         {{ form.as_p }}
         <div class='center'>
-          <button type="submit" class='btn btn-submit'>Submit</button>
-          <a href="{% url 'admin-images-page' %}" class='btn btn-cancel'>Cancel</a>
+          <button type="submit" class='btn btn-submit'>{% trans "Submit" %}</button>
+          <a href="{% url 'admin-images-page' %}" class='btn btn-cancel'>{% trans "Cancel" %}</a>
         </div>
       </form>
     </fieldset>

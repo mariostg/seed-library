@@ -4,6 +4,7 @@
   Features include uploading new images, deleting existing images, and viewing image details.
 -->
 {% extends 'core/base.html' %}
+{% load i18n %}
 {% load static %}
 {% block title %}{{title}}{% endblock title %}
 {% block extracss %}
@@ -20,10 +21,10 @@
       </legend>
       {% if user.is_authenticated %}
         <div class='flex-row'>
-          <a class='btn btn-add' href="{% url 'admin-image-add' %}">Add New Image</a>
+          <a class='btn btn-add' href="{% url 'admin-image-add' %}">{% trans "Add New Image" %}</a>
           <div class="form__field">
-            <label for="any_plant_name" class="form-label tooltip info">Search by plant name
-              <span class="tooltiptext">Enter 4 or more letters of the plant's latin, english, or french name</span>
+            <label for="any_plant_name" class="form-label tooltip info">{% trans "Search by plant name" %}
+              <span class="tooltiptext">{% trans "Enter 4 or more letters of the plant's latin, english, or french name" %}</span>
             </label>
             <input id="any_plant_name" class="name-search-input"
                    name="any_plant_name"
@@ -39,7 +40,7 @@
             >
           </div>
           <span class="htmx-indicator">
-            <img src="{% static 'images/searching.svg' %}"/> Searching...
+            <img src="{% static 'images/searching.svg' %}"/> {% trans "Searching..." %}
           </span>
         </div>
       {% endif %}
@@ -47,17 +48,17 @@
         <div class="pagination">
           <span class="step-links">
             {% if page_obj.has_previous %}
-              <a href="?page=1">&laquo; first</a>
-              <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+              <a href="?page=1">&laquo; {% trans "first" %}</a>
+              <a href="?page={{ page_obj.previous_page_number }}">{% trans "previous" %}</a>
             {% endif %}
 
             <span class="current">
-              Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+              {% trans "Page" %} {{ page_obj.number }} {% trans "of" %} {{ page_obj.paginator.num_pages }}
             </span>
 
             {% if page_obj.has_next %}
-              <a href="?page={{ page_obj.next_page_number }}">next</a>
-              <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+              <a href="?page={{ page_obj.next_page_number }}">{% trans "next" %}</a>
+              <a href="?page={{ page_obj.paginator.num_pages }}">{% trans "last" %} &raquo;</a>
             {% endif %}
           </span>
         </div>

@@ -1,19 +1,20 @@
+{% load i18n %}
 {% if request.user.is_authenticated %}
 
   <nav class="flex-row xcenter row-spacer">
 
     {% if request.user.is_access_administrator %}
       <div class="flex-col-center">
-        <div class="title">Project Users</div>
+        <div class="title">{% trans "Project Users" %}</div>
         <div>
           <div>
-            <a href="{% url 'project-user-page' %}">Manage Project Users</a>
+            <a href="{% url 'project-user-page' %}">{% trans "Manage Project Users" %}</a>
           </div>
           <div>
-            <a href="{% url 'project-group-page' %}">Manage Groups</a>
+            <a href="{% url 'project-group-page' %}">{% trans "Manage Groups" %}</a>
           </div>
           <div>
-            <a href="{% url 'group-permissions-matrix-update' %}"> Permissions Matrix</a>
+            <a href="{% url 'group-permissions-matrix-update' %}">{% trans "Permissions Matrix" %}</a>
           </div>
         </div>
       </div>

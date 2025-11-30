@@ -1,4 +1,5 @@
 {% extends 'core/base.html' %}
+{% load i18n %}
 {% load static %}
 {% block title %}{{title}}{% endblock title %}
 {% block content %}
@@ -11,7 +12,7 @@
       </legend>
       {% if user.is_authenticated %}
         <div class='center'>
-          <a class='btn btn-add' href="{% url 'admin-seed-storage-add' %}">Add Seed Storage</a>
+          <a class='btn btn-add' href="{% url 'admin-seed-storage-add' %}">{% trans "Add Seed Storage" %}</a>
         </div>
       {% endif %}
 
@@ -19,9 +20,9 @@
         <thead>
           <tr>
             <th>{{title}}</th>
-            <th>Plant Count</th>
+            <th>{% trans "Plant Count" %}</th>
             {% if user.is_authenticated %}
-              <th colspan=2>Actions</th>
+              <th colspan=2>{% trans "Actions" %}</th>
             {% endif %}
           </tr>
         </thead>
@@ -32,8 +33,8 @@
               <td>{{item.plant_count}}</td>
               {% if user.is_authenticated %}
                 <td class='actions'>
-                  <a class='btn btn-edit' href="{% url "admin-seed-storage-update" item.id %}">Edit</a>
-                  <a class='btn btn-delete' href="{% url "admin-seed-storage-delete" item.id %}">Delete</a>
+                  <a class='btn btn-edit' href="{% url "admin-seed-storage-update" item.id %}">{% trans "Edit" %}</a>
+                  <a class='btn btn-delete' href="{% url "admin-seed-storage-delete" item.id %}">{% trans "Delete" %}</a>
                 </td>
               {% endif %}
             </tr>

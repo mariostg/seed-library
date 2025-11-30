@@ -1,12 +1,13 @@
+{% load i18n %}
 {% if request.user.is_authenticated %}
 
   <nav class="flex-row xcenter row-spacer">
     {% if request.user.is_image_manager %}
       <div class="flex-col-center">
-        <div class="title">Photo Album</div>
+        <div class="title">{% trans "Photo Album" %}</div>
         <div>
-          <div><a href="{% url 'admin-images-page' %}">Manage Photo Albums</a></div>
-          <div><a href="{% url 'admin-image-add' %}">Add Photo</a></div>
+          <div><a href="{% url 'admin-images-page' %}">{% trans "Manage Photo Albums" %}</a></div>
+          <div><a href="{% url 'admin-image-add' %}">{% trans "Add Photo" %}</a></div>
         </div>
       </div>
     {% endif %}

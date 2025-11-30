@@ -1,4 +1,5 @@
 {% extends 'core/base.html' %}
+{% load i18n %}
 {% load static %}
 {% block title %}{{title}} Management{% endblock title %}
 {% block content %}
@@ -8,16 +9,16 @@
       <legend>{{title}} Management</legend>
       {% if user.is_authenticated %}
         <div class='center'>
-          <a class='btn btn-add' href="{% url 'admin-lifespan-add' %}">Add New Lifespan element</a>
+          <a class='btn btn-add' href="{% url 'admin-lifespan-add' %}">{% trans "Add New Lifespan element" %}</a>
         </div>
       {% endif %}
       <table class=''>
         <thead>
           <tr></tr>
-          <th>Lifespan</th>
-          <th>Definition</th>
-          <th>Plant Count</th>
-          <th>Action</th>
+          <th>{% trans "Lifespan" %}</th>
+          <th>{% trans "Definition" %}</th>
+          <th>{% trans "Plant Count" %}</th>
+          <th>{% trans "Action" %}</th>
         </tr>
       </thead>
       <tbody>
@@ -28,8 +29,8 @@
             <td>{{item.plant_count}}</td>
             {% if user.is_authenticated %}
               <td class="actions">
-                <a class='btn btn-edit' href="{% url "admin-lifespan-update" item.id %}">Edit</a>
-                <a class='btn btn-delete' href="{% url "admin-lifespan-delete" item.id %}">Delete</a>
+                <a class='btn btn-edit' href="{% url "admin-lifespan-update" item.id %}">{% trans "Edit" %}</a>
+                <a class='btn btn-delete' href="{% url "admin-lifespan-delete" item.id %}">{% trans "Delete" %}</a>
               </td>
             {% endif %}
           </tr>

@@ -1,3 +1,4 @@
+{% load i18n %}
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -6,8 +7,8 @@
     {% block extracss %}{% endblock extracss %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Ottawa Wildflower Seed Library - A catalogue of native wildflower seeds available for the Ottawa community to promote biodiversity and ecological gardening.">
-    <title>{% block title %}Ottawa Wildflower Seed Library Catalogue{% endblock title %}</title>
+    <meta name="description" content="{% trans "Ottawa Wildflower Seed Library - A catalogue of native wildflower seeds available for the Ottawa community to promote biodiversity and ecological gardening." %}">
+    <title>{% block title %}{% trans "Ottawa Wildflower Seed Library Catalogue" %}{% endblock title %}</title>
     <script src="{% static 'js/htmx-1.9.8.min.js' %}"></script>
     <script src="{% static 'js/util.js' %}"></script>
   </head>
