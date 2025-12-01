@@ -1,7 +1,8 @@
+{% load i18n %}
 {% load static %}
 
 <div class="plant-profile-characteristics-item">
-  <span>Special Features and Considerations:</span>
+  <span>{% trans "Special Features and Considerations:" %}</span>
   <!--endangered-->
   {% if endangered %}
     <div class="tooltip">
@@ -10,7 +11,7 @@
         class="icon"
         src="{% static 'images/plant-endangered.svg'  %}"
       />
-      <span class="tooltiptext">This plant is endangered</span>
+      <span class="tooltiptext">{% trans "This plant is endangered" %}</span>
     </div>
   {% endif %}
   <!--grasp candidate-->
@@ -21,7 +22,7 @@
         class="icon"
         src="{% static 'images/plant-grasp-candidate.svg'  %}"
       />
-      <span class="tooltiptext">This plant is a GRASP candidate</span>
+      <span class="tooltiptext">{% trans "This plant is a GRASP candidate" %}</span>
     </div>
   {% endif %}
   <!--septic tank safe-->
@@ -32,7 +33,7 @@
         class="icon"
         src="{% static 'images/plant-septic-tank-safe.svg'  %}"
       />
-      <span class="tooltiptext">This plant is septic tank safe</span>
+      <span class="tooltiptext">{% trans "This plant is septic tank safe" %}</span>
     </div>
   {% endif %}
   <!--produces burs-->
@@ -43,7 +44,7 @@
         class="icon"
         src="{% static 'images/plant-burs-or-needles.svg'  %}"
       />
-      <span class="tooltiptext">This plant produces burs</span>
+      <span class="tooltiptext">{% trans "This plant produces burs" %}</span>
     </div>
   {% endif %}
   <!--Causes skin rashes-->
@@ -54,7 +55,7 @@
         class="icon"
         src="{% static 'images/plant-causes-rash.svg'  %}"
       />
-      <span class="tooltiptext">This plant causes skin rashes</span>
+      <span class="tooltiptext">{% trans "This plant causes skin rashes" %}</span>
     </div>
   {% endif %}
 </div>

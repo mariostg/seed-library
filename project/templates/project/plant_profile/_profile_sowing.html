@@ -1,28 +1,29 @@
 <!--This template displays the sowing information for the plant-->
+{% load i18n %}
 {% load static %}
 <div>
   <!--link to pdf sowing label-->
-  <a href="{% url 'plant-label-pdf' plant.pk %}" target="_blank">Download Seed Envelope Labels (PDF)</a>
+  <a href="{% url 'plant-label-pdf' plant.pk %}" target="_blank">{% trans "Download Seed Envelope Labels (PDF)" %}</a>
   <ul>
-    <li>Sowing depth: {{ plant.sowing_depth }}</li>
+    <li>{% trans "Sowing depth:" %} {{ plant.sowing_depth }}</li>
     <li>{{ sow_before|default:"Sow anytime" }}</li>
     {% if plant.stratification_detail %}
-      <li>Stratification conditions: {{ plant.stratification_detail }}</li>
+      <li>{% trans "Stratification conditions:" %} {{ plant.stratification_detail }}</li>
     {% endif %}
-    <li>Stratification duration:
+    <li>{% trans "Stratification duration:" %}
       {% if plant.double_dormancy %}
-        2 years
+        2 {% trans "years" %}
       {% else %}
         {{ plant.stratification_duration }}</li>
       {% endif %}
       {% if plant.self_seeding %}
-        <li>Self-seeding</li>
+        <li>{% trans "Self-seeding" %}</li>
       {% endif %}
       {% if plant.double_dormancy %}
-        <li>Double dormancy required</li>
+        <li>{% trans "Double dormancy required" %}</li>
       {% endif %}
       {% if plant.sowing_notes %}
-        <li>Notes: {{ plant.sowing_notes }}</li>
+        <li>{% trans "Notes:" %} {{ plant.sowing_notes }}</li>
       {% endif %}
     </ul>
   </div>

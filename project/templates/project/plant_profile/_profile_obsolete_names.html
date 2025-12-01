@@ -1,6 +1,7 @@
+
 {% if plant.obsolete_names.exists %}
   <div class="flex-col-center">
-    <h3>Synonyms</h3>
+    <h3>{% trans "Synonyms" %}</h3>
     <div class="flex-row">
       <div>
         {% for obsolete_name in plant.obsolete_names.all %}

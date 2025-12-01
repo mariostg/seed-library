@@ -1,9 +1,10 @@
-{% load static %}
+
+{% load i18n static %}
 <div class="plant-profile-characteristics-item">
-  <span>Ecological Benefits:</span>
+  <span>{% trans "Ecological Benefits:" %}</span>
 
   {% if not ecological_benefits %}
-    <span>No ecological benefits information available.</span>
+    <span>{% trans "No ecological benefits information available." %}</span>
   {% else %}
 
     {% if plant.hummingbird_friendly %}
@@ -13,7 +14,7 @@
           class="icon"
           src="{% static 'images/plant-hummingbird-friendly.svg'  %}"
         />
-        <span class="tooltiptext">Supports hummingbirds</span>
+        <span class="tooltiptext">{% trans "Supports hummingbirds" %}</span>
       </div>
     {% endif %}
     {% if plant.bird_friendly%}
@@ -23,7 +24,7 @@
           class="icon"
           src="{% static 'images/plant-bird-friendly.svg'  %}"
         />
-        <span class="tooltiptext">Supports birds</span>
+        <span class="tooltiptext">{% trans "Supports birds" %}</span>
       </div>
     {% endif %}
     {% if plant.pollinator_garden %}
@@ -33,7 +34,7 @@
           class="icon"
           src="{% static 'images/plant-pollinator-garden.svg'  %}"
         />
-        <span class="tooltiptext">Supports pollinators</span>
+        <span class="tooltiptext">{% trans "Supports pollinators" %}</span>
       </div>
     {% endif %} {% if plant.butterfly_host %}
       <div class="tooltip">
@@ -42,7 +43,7 @@
           class="icon"
           src="{% static 'images/plant-butterfly-host.svg'  %}"
         />
-        <span class="tooltiptext">Butterfly host</span>
+        <span class="tooltiptext">{% trans "Butterfly host" %}</span>
       </div>
     {% endif %}{% if plant.bee_host %}
       <div class="tooltip">
@@ -51,7 +52,7 @@
           class="icon"
           src="{% static 'images/plant-bee-host.svg'  %}"
         />
-        <span class="tooltiptext">Bee host</span>
+        <span class="tooltiptext">{% trans "Bee host" %}</span>
       </div>
     {% endif %}  {% if plant.nitrogen_fixer %}
       <div class="tooltip">
@@ -60,7 +61,7 @@
           class="icon"
           src="{% static 'images/plant-nitrogen-fixer.svg'  %}"
         />
-        <span class="tooltiptext">Fixes nitrogen in the soil</span>
+        <span class="tooltiptext">{% trans "Fixes nitrogen in the soil" %}</span>
       </div>
     {% endif %}{% if plant.keystones_species %}
       <div class="tooltip">
@@ -69,7 +70,7 @@
           class="icon"
           src="{% static 'images/plant-keystones-species.svg'  %}"
         />
-        <span class="tooltiptext">Keystone species</span>
+        <span class="tooltiptext">{% trans "Keystone species" %}</span>
       </div>
     {% endif %}
   {% endif %}

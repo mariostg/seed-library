@@ -1,8 +1,8 @@
-{% load static %}
+{% load i18n static %}
 {% if plant.inaturalist_taxon %}
   <div>
     <a href="https://www.inaturalist.org/taxa/{{ plant.inaturalist_taxon }}" target="_blank" style="display: inline-flex; align-items: center; gap: 0.25em;">
-      View on <img src="{% static 'images/inaturalist-logo.svg' %}" alt="iNaturalist" style="height: 1em;">
+      {% trans "View on" %} <img src="{% static 'images/inaturalist-logo.svg' %}" alt="{% trans "iNaturalist" %}" style="height: 1em;">
     </a>
   </div>
 {% endif %}

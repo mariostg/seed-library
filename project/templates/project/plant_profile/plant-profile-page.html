@@ -1,179 +1,178 @@
-{% extends "core/base.html" %} {% load static %} {% block extracss%}
+{% extends "core/base.html" %}  {% load i18n %} {% load static %} {% block extracss%}
   <link rel="stylesheet" href="{% static 'css/plant-profile.css' %}" />
-{% endblock extracss %} {% block title %} {{ plant.english_name }} - Plant
-  Profile {% endblock title %}{{title}} {% block content %}
+{% endblock extracss %} {% block title %} {{ plant.english_name }} {% trans " - Plant Profile" %} {% endblock title %}{{title}} {% block content %}
 
-    <section class="main-content">
-      <main>
-        {% include "project/plant_profile/_profile_update_links.html" %}
-        <div class="flex-col">
-          {% include "project/plant_profile/_profile_messages.html" %}
-        </div>
+  <section class="main-content">
+    <main>
+      {% include "project/plant_profile/_profile_update_links.html" %}
+      <div class="flex-col">
+        {% include "project/plant_profile/_profile_messages.html" %}
+      </div>
         <!-- Plant Profile Header -->
-        <div class="plant-profile-header">
-          <div class="plant-profile-image">
-            {% if plant.images.first.image %}
-              <img src="{{ plant.images.first.image.url }}" alt="Image of {{plant.latin_name}}">
-              {% if plant.images.first.photo_author %}
-                <div class="plant-card-source">Source: {{ plant.images.first.photo_author }}</div>
-              {% endif %}
-              {% if plant.images.first.title %}<div class="plant-card-source"> {{ plant.images.first.title }}</div>{% endif %}
-              {% if plant.images.first.description %}<div class="plant-card-source"> {{ plant.images.first.description }}</div>{% endif %}
-            {% else %}
-              <img src="{% static 'images/plant-placeholder.png' %}" alt="No image available">
+      <div class="plant-profile-header">
+        <div class="plant-profile-image">
+          {% if plant.images.first.image %}
+            <img src="{{ plant.images.first.image.url }}" alt="{% trans "Image of" %} {{plant.latin_name}}">
+            {% if plant.images.first.photo_author %}
+              <div class="plant-card-source">{% trans "Source" %}: {{ plant.images.first.photo_author }}</div>
             {% endif %}
-            {% if image_count > 1 %}
-              <div class="flex-col-center">
-                <a target="_blank" href="{% url 'plant-profile-images' plant.pk %}">View Image Gallery ({{ image_count }} images)</a>
-              </div>
-            {% endif %}
-          </div>
+            {% if plant.images.first.title %}<div class="plant-card-source"> {{ plant.images.first.title }}</div>{% endif %}
+            {% if plant.images.first.description %}<div class="plant-card-source"> {{ plant.images.first.description }}</div>{% endif %}
+          {% else %}
+            <img src="{% static 'images/plant-placeholder.png' %}" alt="{% trans "No image available" %}">
+          {% endif %}
+          {% if image_count > 1 %}
+            <div class="flex-col-center">
+              <a target="_blank" href="{% url 'plant-profile-images' plant.pk %}">{% trans "View Image Gallery" %} ({{ image_count }} {% trans "images" %})</a>
+            </div>
+          {% endif %}
+        </div>
       <!-- End of Plant Profile Image -->
 
-          <div class="plant-profile-characteristics">
+        <div class="plant-profile-characteristics">
 
-            <div class='flex-row'>
-              <div class="flex-row">
-                <div class="plant-card-caption">
+          <div class='flex-row'>
+            <div class="flex-row">
+              <div class="plant-card-caption">
                   <!--insert the icon representing the plant type-->
-                  {% if plant.growth_habit %}
-                    <div class="plant-type-icon"><img src="{% static 'images/' %}plant-type-{{ plant.growth_habit }}.svg" alt="image of {{plant.growth_habit}}" /></div>
-                  {% endif %}
-                  <div class="plant-profile-names">
-                    <div class="plant-profile-latin-name">{{plant.latin_name}}</div>
-                    <div class="plant-profile-english-name">{{plant.english_name}}</div>
-                    <div class="plant-profile-french-name">{{plant.french_name}}</div>
-                  </div>
+                {% if plant.growth_habit %}
+                  <div class="plant-type-icon"><img src="{% static 'images/' %}plant-type-{{ plant.growth_habit }}.svg" alt="image of {{plant.growth_habit}}" /></div>
+                {% endif %}
+                <div class="plant-profile-names">
+                  <div class="plant-profile-latin-name">{{plant.latin_name}}</div>
+                  <div class="plant-profile-english-name">{{plant.english_name}}</div>
+                  <div class="plant-profile-french-name">{{plant.french_name}}</div>
                 </div>
+              </div>
                 <!-- Obsolete Names -->
-                {% if plant.show_obsolete_names_info %}
-                  {% include "project/plant_profile/_profile_obsolete_names.html" %}
-                {% endif %}
-              </div>
-
-              <div class="plant-giveaway">
-                {% if plant.seed_availability %}
-                  <div>Seeds in stock <br> Available at table {{plant.seed_event_table|default:"Unconfirmed"}}</div>
-                {% else %}
-                  <div>No seeds available for this plant.</div>
-                {% endif %}
-                {% if plant.accepting_seed %}
-                  <div>We currently accept seeds for this plant</div>
-                {% else %}
-                  <p>We are not accepting seeds for this plant at the moment.</p>
-                {% endif %}
-              </div>
-
+              {% if plant.show_obsolete_names_info %}
+                {% include "project/plant_profile/_profile_obsolete_names.html" %}
+              {% endif %}
             </div>
 
-            {% if plant.show_env_requirements_info %}
-              {% include "project/plant_profile/_profile_env_requirements_growth_characteristics.html" %}
-            {% endif %}
+            <div class="plant-giveaway">
+              {% if plant.seed_availability %}
+                <div>{% trans "Seeds in stock" %} <br> {% trans "Available at table" %} {{plant.seed_event_table|default:_("Unconfirmed")}}</div>
+              {% else %}
+                <div>{% trans "No seeds available for this plant." %}</div>
+              {% endif %}
+              {% if plant.accepting_seed %}
+                <div>{% trans "We currently accept seeds for this plant" %}</div>
+              {% else %}
+                <p>{% trans "We are not accepting seeds for this plant at the moment." %}</p>
+              {% endif %}
+            </div>
 
-            {% if plant.show_gardener_friendly_info  %}
-              {% include "project/plant_profile/_profile_gardener_friendly_attributes.html" %}
-            {% endif %}
-
-            {% if plant.show_landscape_uses_info %}
-              {% include "project/plant_profile/_profile_landscape_uses.html" %}
-            {% endif %}
-            {% if plant.show_ecological_benefits_info %}
-              {% include "project/plant_profile/_profile_ecological_benefits.html" %}
-            {% endif %}
-
-            {% if plant.show_tolerates_info %}
-              {% include "project/plant_profile/_profile_tolerates.html" %}
-            {% endif %}
-            {% include "project/plant_profile/_profile_special_features_and_considerations.html" %}
           </div>
+
+          {% if plant.show_env_requirements_info %}
+            {% include "project/plant_profile/_profile_env_requirements_growth_characteristics.html" %}
+          {% endif %}
+
+          {% if plant.show_gardener_friendly_info  %}
+            {% include "project/plant_profile/_profile_gardener_friendly_attributes.html" %}
+          {% endif %}
+
+          {% if plant.show_landscape_uses_info %}
+            {% include "project/plant_profile/_profile_landscape_uses.html" %}
+          {% endif %}
+          {% if plant.show_ecological_benefits_info %}
+            {% include "project/plant_profile/_profile_ecological_benefits.html" %}
+          {% endif %}
+
+          {% if plant.show_tolerates_info %}
+            {% include "project/plant_profile/_profile_tolerates.html" %}
+          {% endif %}
+          {% include "project/plant_profile/_profile_special_features_and_considerations.html" %}
+        </div>
       <!-- End of Plant Profile Characteristics -->
 
-        </div>
+      </div>
     <!-- End of Plant Profile Header -->
 
-        <div class="flex-row">
+      <div class="flex-row">
 
+        <div>
+          <h2 class="collapser" onclick="toggleNextSibling(event)">{% trans "Plant Location" %}</h2>
           <div>
-            <h2 class="collapser" onclick="toggleNextSibling(event)">Plant Location</h2>
-            <div>
-              {% if plant.show_vascan_map_info %}
-                {% include "project/plant_profile/_profile_vascan_map.html" %}
-              {% endif %}
+            {% if plant.show_vascan_map_info %}
+              {% include "project/plant_profile/_profile_vascan_map.html" %}
+            {% endif %}
 
-              {% if plant.show_inaturalist_link_info %}
-                {% include "project/plant_profile/_profile_inaturalist_link.html" %}
-              {% endif %}
+            {% if plant.show_inaturalist_link_info %}
+              {% include "project/plant_profile/_profile_inaturalist_link.html" %}
+            {% endif %}
 
-              {% if plant.show_ecozones_info %}
-                {% include "project/plant_profile/_profile_ecozone.html" %}
-              {% endif %}
-            </div>
+            {% if plant.show_ecozones_info %}
+              {% include "project/plant_profile/_profile_ecozone.html" %}
+            {% endif %}
           </div>
+        </div>
 
       <!-- End of inaturalist distribution -->
 
-          <div>
-            <h2 class="collapser" onclick="toggleNextSibling(event)">Ecological Benefits</h2>
-            <div class=''>
-              {% if plant.show_butterflies_supported_info %}
-                {% include "project/plant_profile/_profile_butterflies_supported.html" %}
-              {% endif %}
-              {% if plant.show_bees_supported_info %}
-                {% include "project/plant_profile/_profile_bees_supported.html" %}
-              {% endif %}
-            </div>
+        <div>
+          <h2 class="collapser" onclick="toggleNextSibling(event)">{% trans "Ecological Benefits" %}</h2>
+          <div class=''>
+            {% if plant.show_butterflies_supported_info %}
+              {% include "project/plant_profile/_profile_butterflies_supported.html" %}
+            {% endif %}
+            {% if plant.show_bees_supported_info %}
+              {% include "project/plant_profile/_profile_bees_supported.html" %}
+            {% endif %}
+          </div>
 
             <!-- Complementary Plants -->
-            {% if plant.show_complementary_plants_info %}
-              <div>
-                <div class="tooltip">
-                  <span class="tooltiptext">Plants that grow in similar conditions, that bloom at the same time.</span>
-                </div>
-                <h2 class="collapser" onclick="toggleNextSibling(event)">Complementary Plants</h2>
-                {% include "project/plant_profile/_profile_complementary_plants.html" %}
+          {% if plant.show_complementary_plants_info %}
+            <div>
+              <div class="tooltip">
+                <span class="tooltiptext">{% trans "Plants that grow in similar conditions, that bloom at the same time." %}</span>
               </div>
-            {% endif %}
+              <h2 class="collapser" onclick="toggleNextSibling(event)">{% trans "Complementary Plants" %}</h2>
+              {% include "project/plant_profile/_profile_complementary_plants.html" %}
+            </div>
+          {% endif %}
 
             <!-- Substitute For -->
-            {% if plant.show_alternative_to_info %}
-              <div>
-                <h2 class="collapser" onclick="toggleNextSibling(event)">Substitute For Non-Native Plants</h2>
-                {% include "project/plant_profile/_profile_substitute_for.html" %}
-              </div>
-            {% endif %}
-          </div>
-
-          <div>
-            <h2 class="collapser" onclick="toggleNextSibling(event)">
-              Sowing Information
-            </h2>
-            <!-- Sowing Information -->
-            {% if plant.show_sowing_info %}
-              {% include "project/plant_profile/_profile_sowing.html" %}
-            {% endif %}
-
-            <!-- Harvesting Information -->
-            <h2 class="collapser" onclick="toggleNextSibling(event)">
-              Harvesting and Seed Sharing
-            </h2>
-            {% if plant.show_harvesting_info %}
-              {% include "project/plant_profile/_profile_harvesting.html" %}
-            {% endif %}
-          </div>
-
-          <div>
-            {% if plant.toxicity_indicator_notes %}
-              <h2 class="collapser" onclick="toggleNextSibling(event)">Toxicity Notes</h2>
-              <p>{{ plant.toxicity_indicator_notes }}</p>
-            {% endif %}
-            {% if plant.grasp_candidate %}
-              <h2 class="collapser" onclick="toggleNextSibling(event)">GRASP Candidate</h2>
-              <p>{{ plant.grasp_candidate_notes }}</p>
-            {% endif %}
-          </div>
+          {% if plant.show_alternative_to_info %}
+            <div>
+              <h2 class="collapser" onclick="toggleNextSibling(event)">{% trans "Substitute For Non-Native Plants" %}</h2>
+              {% include "project/plant_profile/_profile_substitute_for.html" %}
+            </div>
+          {% endif %}
         </div>
 
+        <div>
+          <h2 class="collapser" onclick="toggleNextSibling(event)">
+            {% trans "Sowing Information" %}
+          </h2>
+            <!-- Sowing Information -->
+          {% if plant.show_sowing_info %}
+            {% include "project/plant_profile/_profile_sowing.html" %}
+          {% endif %}
 
-      </main>
-    </section>
-  {% endblock content %}
+            <!-- Harvesting Information -->
+          <h2 class="collapser" onclick="toggleNextSibling(event)">
+            {% trans "Harvesting and Seed Sharing" %}
+          </h2>
+          {% if plant.show_harvesting_info %}
+            {% include "project/plant_profile/_profile_harvesting.html" %}
+          {% endif %}
+        </div>
+
+        <div>
+          {% if plant.toxicity_indicator_notes %}
+            <h2 class="collapser" onclick="toggleNextSibling(event)">{% trans "Toxicity Notes" %}</h2>
+            <p>{{ plant.toxicity_indicator_notes }}</p>
+          {% endif %}
+          {% if plant.grasp_candidate %}
+            <h2 class="collapser" onclick="toggleNextSibling(event)">{% trans "GRASP Candidate" %}</h2>
+            <p>{{ plant.grasp_candidate_notes }}</p>
+          {% endif %}
+        </div>
+      </div>
+
+
+    </main>
+  </section>
+{% endblock content %}

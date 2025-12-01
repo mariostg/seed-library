@@ -1,23 +1,24 @@
 {% if request.user.is_plant_profile_manager %}
+  {% load i18n %}
   {% load static %}
   {% block extracss %}
     <link rel="stylesheet" href="{% static 'css/plant-profile.css' %}">
   {% endblock extracss %}
   <div class='profile-update-links'>
-    <a href="{% url 'plant-identification-information-update' plant.pk %}">Identification Information</a>
-    <a href="{% url 'plant-growth-characteristics-update' plant.pk %}">Growth Characteristics</a>
-    <a href="{% url 'plant-environmental-requirement-update' plant.pk %}">Environmental Requirements</a>
-    <a href="{% url 'plant-introductory-gardening-experience-update' plant.pk %}">Introductory Gardening Experience</a>
-    <a href="{% url 'plant-landscape-use-and-application-update' plant.pk %}">Landscape Use and Application</a>
-    <a href="{% url 'plant-ecological-benefits-update' plant.pk %}">Ecological Benefits</a>
-    <a href="{% url 'plant-substitute-to-update' plant.pk %}">Substitutes To</a>
-    <a href="{% url 'plant-special-features-and-considerations-update' plant.pk %}">Special Features and Considerations</a>
-    <a href="{% url 'plant-harvesting-update' plant.pk %}">Harvesting</a>
-    <a href="{% url 'plant-sowing-update' plant.pk %}">Sowing</a>
-    <a href="{% url 'plant-seed-distribution-update' plant.pk %}">Seed Distribution</a>
+    <a href="{% url 'plant-identification-information-update' plant.pk %}">{% trans "Identification Information" %}</a>
+    <a href="{% url 'plant-growth-characteristics-update' plant.pk %}">{% trans "Growth Characteristics" %}</a>
+    <a href="{% url 'plant-environmental-requirement-update' plant.pk %}">{% trans "Environmental Requirements" %}</a>
+    <a href="{% url 'plant-introductory-gardening-experience-update' plant.pk %}">{% trans "Introductory Gardening Experience" %}</a>
+    <a href="{% url 'plant-landscape-use-and-application-update' plant.pk %}">{% trans "Landscape Use and Application" %}</a>
+    <a href="{% url 'plant-ecological-benefits-update' plant.pk %}">{% trans "Ecological Benefits" %}</a>
+    <a href="{% url 'plant-substitute-to-update' plant.pk %}">{% trans "Substitutes To" %}</a>
+    <a href="{% url 'plant-special-features-and-considerations-update' plant.pk %}">{% trans "Special Features and Considerations" %}</a>
+    <a href="{% url 'plant-harvesting-update' plant.pk %}">{% trans "Harvesting" %}</a>
+    <a href="{% url 'plant-sowing-update' plant.pk %}">{% trans "Sowing" %}</a>
+    <a href="{% url 'plant-seed-distribution-update' plant.pk %}">{% trans "Seed Distribution" %}</a>
   </div>
   <div class="panel flex-col-center">
-    <a class="alert alert--warning" href="{% url 'plant-profile-delete' plant.pk %}">Delete {{ plant.latin_name }}</a>
+    <a class="alert alert--warning" href="{% url 'plant-profile-delete' plant.pk %}">{% trans "Delete" %} {{ plant.latin_name }}</a>
   </div>
 
 {% endif %}

@@ -1,94 +1,96 @@
+
+{% load i18n %}
 {% load static %}
 <div class="plant-profile-characteristics-item">
-  <span>Tolerates:</span> {% if plant.drought_tolerant %}
+  <span>{% trans "Tolerates:" %}</span> {% if plant.drought_tolerant %}
     <div class="tooltip">
       <img
-        alt="drought Tolerant"
+        alt="{% trans "drought Tolerant" %}"
         class="icon"
         src="{% static 'images/plant-drought-tolerant.svg'  %}"
       />
-      <span class="tooltiptext">Tolerates drought conditions</span>
+      <span class="tooltiptext">{% trans "Tolerates drought conditions" %}</span>
     </div>
   {% endif %} {% if plant.salt_tolerant %}
     <div class="tooltip">
       <img
-        alt="Salt Tolerant"
+        alt="{% trans "Salt Tolerant" %}"
         class="icon"
         src="{% static 'images/plant-salt-tolerant.svg'  %}"
       />
-      <span class="tooltiptext">Tolerates salt conditions</span>
+      <span class="tooltiptext">{% trans "Tolerates salt conditions" %}</span>
     </div>
   {% endif %} {% if plant.deer_tolerant %}
     <div class="tooltip">
       <img
-        alt="Deer Resistant"
+        alt="{% trans "Deer Resistant" %}"
         class="icon"
         src="{% static 'images/plant-deer-tolerant.svg'  %}"
       />
-      <span class="tooltiptext">Deer resistant</span>
+      <span class="tooltiptext">{% trans "Deer resistant" %}</span>
     </div>
   {% endif %} {% if plant.rabbit_tolerant %}
     <div class="tooltip">
       <img
-        alt="rabbit resistant"
+        alt="{% trans "Rabbit Resistant" %}"
         class="icon"
         src="{% static 'images/plant-rabbit-tolerant.svg'  %}"
       />
-      <span class="tooltiptext">Rabbit resistant</span>
+      <span class="tooltiptext">{% trans "Rabbit resistant" %}</span>
     </div>
   {% endif %} {% if plant.foot_traffic_tolerant %}
     <div class="tooltip">
       <img
-        alt="foot traffic Tolerant"
+        alt="{% trans "Foot Traffic Tolerant" %}"
         class="icon"
         src="{% static 'images/plant-foot-traffic-tolerant.svg'  %}"
       />
-      <span class="tooltiptext">Tolerates foot traffic around the plant</span>
+      <span class="tooltiptext">{% trans "Tolerates foot traffic around the plant" %}</span>
     </div>
   {% endif %} {% if plant.limestone_tolerant %}
     <div class="tooltip">
       <img
-        alt="limestone Tolerant"
+        alt="{% trans "Limestone Tolerant" %}"
         class="icon"
         src="{% static 'images/plant-limestone-tolerant.svg'  %}"
       />
-      <span class="tooltiptext">Tolerates limestone conditions</span>
+      <span class="tooltiptext">{% trans "Tolerates limestone conditions" %}</span>
     </div>
   {% endif %} {% if plant.sand_tolerant %}
     <div class="tooltip">
       <img
-        alt="sand Tolerant"
+        alt="{% trans "Sand Tolerant" %}"
         class="icon"
         src="{% static 'images/plant-sand-tolerant.svg'  %}"
       />
-      <span class="tooltiptext">Tolerates sandy conditions</span>
+      <span class="tooltiptext">{% trans "Tolerates sandy conditions" %}</span>
     </div>
   {% endif %} {% if plant.acidic_soil_tolerant %}
     <div class="tooltip">
       <img
-        alt="acidic soil Tolerant"
+        alt="{% trans "Acidic Soil Tolerant" %}"
         class="icon"
         src="{% static 'images/plant-acidic-soil-tolerant.svg'  %}"
       />
-      <span class="tooltiptext">Tolerates acidic soil conditions</span>
+      <span class="tooltiptext">{% trans "Tolerates acidic soil conditions" %}</span>
     </div>
   {% endif %} {% if plant.juglone_tolerant %}
     <div class="tooltip">
       <img
-        alt="juglone Tolerant"
+        alt="{% trans "Juglone Tolerant" %}"
         class="icon"
         src="{% static 'images/plant-juglone-tolerant.svg'  %}"
       />
-      <span class="tooltiptext">Tolerates juglone conditions</span>
+      <span class="tooltiptext">{% trans "Tolerates juglone conditions" %}</span>
     </div>
   {% endif %} {% if plant.transplantation_tolerant %}
     <div class="tooltip">
       <img
-        alt="transplantation Tolerant"
+        alt="{% trans "Transplantation Tolerant" %}"
         class="icon"
         src="{% static 'images/plant-transplantation-tolerant.svg'  %}"
       />
-      <span class="tooltiptext">Tolerates transplantation</span>
+      <span class="tooltiptext">{% trans "Tolerates transplantation" %}</span>
     </div>
   {% endif %}
 </div>

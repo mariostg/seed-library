@@ -1,7 +1,7 @@
-{% load static %}
+{% load i18n static %}
 
 <div class="plant-profile-characteristics-item">
-  <span>Gardener Experience:</span>
+  <span>{% trans "Gardener Experience" %}:</span>
   {% if plant.beginner_friendly %}
     <div class="tooltip">
       <img
@@ -9,7 +9,7 @@
         class="icon"
         src="{% static 'images/plant-beginner-friendly.svg'  %}"
       />
-      <span class="tooltiptext">Suitable for beginner gardeners</span>
+      <span class="tooltiptext">{% trans "Suitable for beginner gardeners" %}</span>
     </div>
   {% endif %}
 
@@ -20,7 +20,7 @@
         class="icon"
         src="{% static 'images/plant-does-not-spread.svg'  %}"
       />
-      <span class="tooltiptext">Does not spread uncontrollably</span>
+      <span class="tooltiptext">{% trans "Does not spread uncontrollably" %}</span>
     </div>
   {% endif %}
 
@@ -31,7 +31,7 @@
         class="icon"
         src="{% static 'images/plant-germinate-easy.svg'  %}"
       />
-      <span class="tooltiptext">Easy to germinate</span>
+      <span class="tooltiptext">{% trans "Easy to germinate" %}</span>
     </div>
   {% endif %}
 
@@ -42,7 +42,7 @@
         class="icon"
         src="{% static 'images/plant-self-seeding.svg'  %}"
       />
-      <span class="tooltiptext">Self-seeding</span>
+      <span class="tooltiptext">{% trans "Self-seeding" %}</span>
     </div>
   {% endif %}
 </div>

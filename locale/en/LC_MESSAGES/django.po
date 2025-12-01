@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-30 05:29+0000\n"
+"POT-Creation-Date: 2025-12-01 02:46+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -35,6 +35,8 @@ msgid "Harvesting Indicator"
 msgstr ""
 
 #: project/models.py:89 project/models.py:993
+#: project/templates/project/plant_profile/_profile_harvesting.html:23
+#: project/templates/project/plant_profile/_profile_update_links.html:16
 msgid "Harvesting"
 msgstr ""
 
@@ -52,6 +54,7 @@ msgid "Seed Storage"
 msgstr ""
 
 #: project/models.py:194 project/models.py:1022
+#: project/templates/project/plant_profile/_profile_harvesting.html:58
 msgid "Cultivar"
 msgstr ""
 
@@ -85,6 +88,7 @@ msgid "Definition"
 msgstr ""
 
 #: project/models.py:385 project/models.py:927
+#: project/templates/project/plant_profile/_profile_env_requirements_growth_characteristics.html:5
 msgid "Bloom Colour"
 msgstr ""
 
@@ -95,10 +99,15 @@ msgstr ""
 
 #: project/models.py:435
 #: project/templates/project/admin/admin-lifespan-page.html:18
+#: project/templates/project/filters/_filter_growth_characteristics.html:32
+#: project/templates/project/plant_profile/_profile_env_requirements_growth_characteristics.html:82
+#: project/templates/project/plant_profile/_profile_icons_definition.html:164
 msgid "Lifespan"
 msgstr ""
 
 #: project/models.py:458 project/models.py:1218
+#: project/templates/project/filters/_filter_special_features_and_considerations.html:2
+#: project/templates/project/plant_profile/_profile_icons_definition.html:616
 msgid "Conservation Status"
 msgstr ""
 
@@ -126,22 +135,29 @@ msgid "Ecozone"
 msgstr ""
 
 #: project/models.py:798
+#: project/templates/project/plant_profile/_profile-identification-status.html:13
 msgid "Is Active"
 msgstr ""
 
 #: project/models.py:800
+#: project/templates/project/plant_profile/_profile-identification-status.html:23
 msgid "Is Accepted"
 msgstr ""
 
 #: project/models.py:803
+#: project/templates/project/filters/_filter_admin_controls.html:16
+#: project/templates/project/plant_profile/_profile-identification-status.html:8
 msgid "Is Draft"
 msgstr ""
 
 #: project/models.py:806
+#: project/templates/project/plant_profile/_profile-identification-status.html:18
 msgid "Is Needed"
 msgstr ""
 
 #: project/models.py:809
+#: project/templates/project/filters/_filter_admin_controls.html:61
+#: project/templates/project/plant_profile/_profile-identification-status.html:32
 msgid "Has Notice"
 msgstr ""
 
@@ -226,14 +242,20 @@ msgid "iNaturalist Taxon"
 msgstr ""
 
 #: project/models.py:881
+#: project/templates/project/filters/_filter_environmental_requirements.html:16
+#: project/templates/project/plant_profile/_profile_icons_definition.html:21
 msgid "Full Sun"
 msgstr ""
 
 #: project/models.py:884
+#: project/templates/project/filters/_filter_environmental_requirements.html:34
+#: project/templates/project/plant_profile/_profile_icons_definition.html:31
 msgid "Part Shade"
 msgstr ""
 
 #: project/models.py:887
+#: project/templates/project/filters/_filter_environmental_requirements.html:53
+#: project/templates/project/plant_profile/_profile_icons_definition.html:41
 msgid "Full Shade"
 msgstr ""
 
@@ -250,14 +272,17 @@ msgid "Moisture Medium"
 msgstr ""
 
 #: project/models.py:905
+#: project/templates/project/plant_profile/_profile_tolerates.html:53
 msgid "Limestone Tolerant"
 msgstr ""
 
 #: project/models.py:908
+#: project/templates/project/plant_profile/_profile_tolerates.html:62
 msgid "Sand Tolerant"
 msgstr ""
 
 #: project/models.py:911
+#: project/templates/project/plant_profile/_profile_tolerates.html:71
 msgid "Acidic Soil Tolerant"
 msgstr ""
 
@@ -270,6 +295,8 @@ msgid "Bloom End"
 msgstr ""
 
 #: project/models.py:935
+#: project/templates/project/filters/_filter_growth_characteristics.html:85
+#: project/templates/project/plant_profile/_profile_env_requirements_growth_characteristics.html:85
 msgid "Spring Ephemeral"
 msgstr ""
 
@@ -294,10 +321,13 @@ msgid "Self Seeding"
 msgstr ""
 
 #: project/models.py:956
+#: project/templates/project/filters/_filter_gardening_experience.html:16
+#: project/templates/project/plant_profile/_profile_icons_definition.html:101
 msgid "Beginner Friendly"
 msgstr ""
 
 #: project/models.py:959
+#: project/templates/project/plant_profile/_profile_tolerates.html:89
 msgid "Transplantation Tolerant"
 msgstr ""
 
@@ -402,10 +432,12 @@ msgid "Easy to Contain"
 msgstr ""
 
 #: project/models.py:1129
+#: project/templates/project/filters/_filter_landscape_uses_and_applications.html:174
 msgid "Hedge"
 msgstr ""
 
 #: project/models.py:1132
+#: project/templates/project/plant_profile/_profile_tolerates.html:44
 msgid "Foot Traffic Tolerant"
 msgstr ""
 
@@ -450,10 +482,12 @@ msgid "Drought Tolerant"
 msgstr ""
 
 #: project/models.py:1167
+#: project/templates/project/plant_profile/_profile_tolerates.html:17
 msgid "Salt Tolerant"
 msgstr ""
 
 #: project/models.py:1169
+#: project/templates/project/plant_profile/_profile_tolerates.html:80
 msgid "Juglone Tolerant"
 msgstr ""
 
@@ -482,6 +516,7 @@ msgid "Alternative To Notes"
 msgstr ""
 
 #: project/models.py:1207
+#: project/templates/project/plant_profile/plant-profile-page.html:169
 msgid "GRASP Candidate"
 msgstr ""
 
@@ -643,6 +678,7 @@ msgstr ""
 #: project/templates/project/admin/admin-sowing-depth-page.html:35
 #: project/templates/project/admin/admin-stratification-duration-page.html:35
 #: project/templates/project/admin/admin-toxicity-indicator-page.html:35
+#: project/templates/project/plant_profile/_profile_update_links.html:21
 msgid "Delete"
 msgstr ""
 
@@ -837,6 +873,9 @@ msgid "Toxicity Indicators"
 msgstr ""
 
 #: project/templates/project/admin/admin-nav-plant-profile-manager.html:19
+#: project/templates/project/filters/_filter_location.html:133
+#: project/templates/project/plant_profile/_profile_ecozone.html:4
+#: project/templates/project/plant_profile/_profile_icons_definition.html:734
 msgid "Ecozones"
 msgstr ""
 
@@ -966,6 +1005,1824 @@ msgstr ""
 
 #: project/templates/project/admin/admin-toxicity-indicator-page.html:14
 msgid "Add Toxicity Indicator"
+msgstr ""
+
+#: project/templates/project/filters/_filter.html:4
+msgid "Reset Filters"
+msgstr ""
+
+#: project/templates/project/filters/_filter.html:4
+msgid ""
+"Reset all filters to their default values and preserve the current search "
+"results."
+msgstr ""
+
+#: project/templates/project/filters/_filter.html:6
+msgid "Filter by:"
+msgstr ""
+
+#: project/templates/project/filters/_filter.html:13
+#: project/templates/project/plant_profile/_profile_icons_definition.html:6
+#: project/templates/project/plant_profile/_profile_update_links.html:10
+msgid "Environmental Requirements"
+msgstr ""
+
+#: project/templates/project/filters/_filter.html:24
+#: project/templates/project/plant_profile/_profile_icons_definition.html:91
+#: project/templates/project/plant_profile/_profile_update_links.html:11
+msgid "Introductory Gardening Experience"
+msgstr ""
+
+#: project/templates/project/filters/_filter.html:35
+#: project/templates/project/plant_profile/_profile_icons_definition.html:146
+#: project/templates/project/plant_profile/_profile_update_links.html:9
+msgid "Growth Characteristics"
+msgstr ""
+
+#: project/templates/project/filters/_filter.html:46
+#: project/templates/project/filters/_filter_harvesting_and_seed_sharing.html:2
+#: project/templates/project/plant_profile/_profile_icons_definition.html:287
+#: project/templates/project/plant_profile/plant-profile-page.html:156
+msgid "Harvesting and Seed Sharing"
+msgstr ""
+
+#: project/templates/project/filters/_filter.html:57
+#: project/templates/project/plant_profile/_profile_icons_definition.html:321
+msgid "Landscape Uses and Applications"
+msgstr ""
+
+#: project/templates/project/filters/_filter.html:67
+#: project/templates/project/plant_profile/_profile_icons_definition.html:515
+#: project/templates/project/plant_profile/_profile_update_links.html:13
+#: project/templates/project/plant_profile/plant-profile-page.html:115
+msgid "Ecological Benefits"
+msgstr ""
+
+#: project/templates/project/filters/_filter.html:77
+#: project/templates/project/plant_profile/_profile_icons_definition.html:615
+#: project/templates/project/plant_profile/_profile_update_links.html:15
+msgid "Special Features and Considerations"
+msgstr ""
+
+#: project/templates/project/filters/_filter.html:87
+#: project/templates/project/plant_profile/_profile_icons_definition.html:706
+msgid "Location"
+msgstr ""
+
+#: project/templates/project/filters/_filter.html:98
+msgid "Admin Controls"
+msgstr ""
+
+#: project/templates/project/filters/_filter_admin_controls.html:2
+msgid "Profile Status"
+msgstr ""
+
+#: project/templates/project/filters/_filter_admin_controls.html:31
+msgid "Is Not Active"
+msgstr ""
+
+#: project/templates/project/filters/_filter_admin_controls.html:46
+msgid "Is Not Accepted"
+msgstr ""
+
+#: project/templates/project/filters/_filter_ecological_benefits.html:2
+#: project/templates/project/plant_profile/_profile_icons_definition.html:517
+msgid "Wildlife Interactions"
+msgstr ""
+
+#: project/templates/project/filters/_filter_ecological_benefits.html:16
+msgid "Bird friendly"
+msgstr ""
+
+#: project/templates/project/filters/_filter_ecological_benefits.html:31
+msgid "Deer tolerant"
+msgstr ""
+
+#: project/templates/project/filters/_filter_ecological_benefits.html:46
+msgid "Hummingbird friendly"
+msgstr ""
+
+#: project/templates/project/filters/_filter_ecological_benefits.html:61
+msgid "Pollinator garden"
+msgstr ""
+
+#: project/templates/project/filters/_filter_ecological_benefits.html:77
+msgid "Rabbit tolerant"
+msgstr ""
+
+#: project/templates/project/filters/_filter_ecological_benefits.html:79
+#: project/templates/project/plant_profile/_profile_icons_definition.html:466
+msgid "Environmental Stress Tolerance"
+msgstr ""
+
+#: project/templates/project/filters/_filter_ecological_benefits.html:94
+msgid "Drought tolerant"
+msgstr ""
+
+#: project/templates/project/filters/_filter_ecological_benefits.html:109
+msgid "Foot traffic tolerant"
+msgstr ""
+
+#: project/templates/project/filters/_filter_ecological_benefits.html:123
+msgid "Juglone tolerant"
+msgstr ""
+
+#: project/templates/project/filters/_filter_ecological_benefits.html:138
+msgid "Road salt tolerant"
+msgstr ""
+
+#: project/templates/project/filters/_filter_ecological_benefits.html:141
+#: project/templates/project/plant_profile/_profile_icons_definition.html:570
+msgid "Ecosystem Services"
+msgstr ""
+
+#: project/templates/project/filters/_filter_ecological_benefits.html:156
+#: project/templates/project/plant_profile/_profile_ecological_benefits.html:55
+msgid "Bee host"
+msgstr ""
+
+#: project/templates/project/filters/_filter_ecological_benefits.html:171
+#: project/templates/project/plant_profile/_profile_ecological_benefits.html:46
+msgid "Butterfly host"
+msgstr ""
+
+#: project/templates/project/filters/_filter_ecological_benefits.html:186
+#: project/templates/project/plant_profile/_profile_ecological_benefits.html:73
+msgid "Keystone species"
+msgstr ""
+
+#: project/templates/project/filters/_filter_ecological_benefits.html:201
+msgid "Nitrogen fixer"
+msgstr ""
+
+#: project/templates/project/filters/_filter_environmental_requirements.html:3
+msgid "Light preferences"
+msgstr ""
+
+#: project/templates/project/filters/_filter_environmental_requirements.html:17
+#: project/templates/project/plant_profile/_profile_env_requirements_growth_characteristics.html:23
+msgid "More than 6 hours of direct sun a day"
+msgstr ""
+
+#: project/templates/project/filters/_filter_environmental_requirements.html:36
+#: project/templates/project/plant_profile/_profile_env_requirements_growth_characteristics.html:33
+msgid "More than 2 or 3 hours but less than 6 hours of direct sun a day"
+msgstr ""
+
+#: project/templates/project/filters/_filter_environmental_requirements.html:54
+#: project/templates/project/plant_profile/_profile_env_requirements_growth_characteristics.html:44
+msgid "Less than 2 or 3 hours of direct sun a day"
+msgstr ""
+
+#: project/templates/project/filters/_filter_environmental_requirements.html:56
+msgid "Moisture preferences"
+msgstr ""
+
+#: project/templates/project/filters/_filter_environmental_requirements.html:70
+#: project/templates/project/plant_profile/_profile_icons_definition.html:61
+msgid "Dry"
+msgstr ""
+
+#: project/templates/project/filters/_filter_environmental_requirements.html:71
+#: project/templates/project/plant_profile/_profile_icons_definition.html:62
+msgid "Water runs through after rainfall"
+msgstr ""
+
+#: project/templates/project/filters/_filter_environmental_requirements.html:87
+#: project/templates/project/plant_profile/_profile_icons_definition.html:71
+msgid "Medium"
+msgstr ""
+
+#: project/templates/project/filters/_filter_environmental_requirements.html:88
+msgid "Sometimes holds water but for short periods of time"
+msgstr ""
+
+#: project/templates/project/filters/_filter_environmental_requirements.html:103
+#: project/templates/project/plant_profile/_profile_icons_definition.html:81
+msgid "Wet"
+msgstr ""
+
+#: project/templates/project/filters/_filter_environmental_requirements.html:104
+#: project/templates/project/plant_profile/_profile_icons_definition.html:82
+msgid "Stays damp all year"
+msgstr ""
+
+#: project/templates/project/filters/_filter_gardening_experience.html:2
+#: project/templates/project/plant_profile/_profile_icons_definition.html:92
+msgid "Gardening Experience"
+msgstr ""
+
+#: project/templates/project/filters/_filter_gardening_experience.html:31
+#: project/templates/project/filters/_filter_page.html:76
+#: project/templates/project/plant_profile/_profile_icons_definition.html:111
+msgid "Does not Spread"
+msgstr ""
+
+#: project/templates/project/filters/_filter_gardening_experience.html:46
+#: project/templates/project/plant_profile/_profile_icons_definition.html:121
+msgid "Easy to Germinate"
+msgstr ""
+
+#: project/templates/project/filters/_filter_gardening_experience.html:61
+#: project/templates/project/plant_profile/_profile_icons_definition.html:131
+msgid "Self-Seeding"
+msgstr ""
+
+#: project/templates/project/filters/_filter_gardening_experience.html:61
+#: project/templates/project/plant_profile/_profile_icons_definition.html:132
+msgid "Plants that will produce seeds abundantly resulting in new plants"
+msgstr ""
+
+#: project/templates/project/filters/_filter_gardening_experience.html:63
+#: project/templates/project/plant_profile/_profile_icons_definition.html:137
+msgid "Starter Packs"
+msgstr ""
+
+#: project/templates/project/filters/_filter_gardening_experience.html:79
+msgid "Shade"
+msgstr ""
+
+#: project/templates/project/filters/_filter_gardening_experience.html:95
+msgid "Sun Dry"
+msgstr ""
+
+#: project/templates/project/filters/_filter_gardening_experience.html:111
+msgid "Sun Wet"
+msgstr ""
+
+#: project/templates/project/filters/_filter_growth_characteristics.html:2
+#: project/templates/project/plant_profile/_profile_icons_definition.html:153
+msgid "Physical Attributes"
+msgstr ""
+
+#: project/templates/project/filters/_filter_growth_characteristics.html:15
+msgid "Max. Height (Feet)"
+msgstr ""
+
+#: project/templates/project/filters/_filter_growth_characteristics.html:29
+msgid "Max. Width (Feet)"
+msgstr ""
+
+#: project/templates/project/filters/_filter_growth_characteristics.html:46
+msgid "Annual"
+msgstr ""
+
+#: project/templates/project/filters/_filter_growth_characteristics.html:46
+msgid "Plants that have a lifespan of one year"
+msgstr ""
+
+#: project/templates/project/filters/_filter_growth_characteristics.html:59
+msgid "Biennial"
+msgstr ""
+
+#: project/templates/project/filters/_filter_growth_characteristics.html:59
+msgid "Plants that will take two years to bloom, and then will die"
+msgstr ""
+
+#: project/templates/project/filters/_filter_growth_characteristics.html:72
+msgid "Perennial"
+msgstr ""
+
+#: project/templates/project/filters/_filter_growth_characteristics.html:72
+msgid "Plants that will come back year after year"
+msgstr ""
+
+#: project/templates/project/filters/_filter_growth_characteristics.html:85
+msgid ""
+"Plants that bloom in the spring then lose their leaves later in the season"
+msgstr ""
+
+#: project/templates/project/filters/_filter_growth_characteristics.html:89
+msgid "Bloom period"
+msgstr ""
+
+#: project/templates/project/filters/_filter_growth_characteristics.html:101
+msgid "Start Month"
+msgstr ""
+
+#: project/templates/project/filters/_filter_growth_characteristics.html:115
+msgid "End Month"
+msgstr ""
+
+#: project/templates/project/filters/_filter_growth_characteristics.html:122
+#: project/templates/project/plant_profile/_profile_icons_definition.html:185
+msgid "Bloom Colours"
+msgstr ""
+
+#: project/templates/project/filters/_filter_growth_characteristics.html:138
+#: project/templates/project/filters/_filter_growth_characteristics.html:174
+msgid "Any"
+msgstr ""
+
+#: project/templates/project/filters/_filter_growth_characteristics.html:157
+#: project/templates/project/plant_profile/_profile_icons_definition.html:192
+msgid "Plant Type"
+msgstr ""
+
+#: project/templates/project/filters/_filter_growth_characteristics.html:192
+#: project/templates/project/plant_profile/_profile_icons_definition.html:251
+msgid "Soil Tolerances"
+msgstr ""
+
+#: project/templates/project/filters/_filter_growth_characteristics.html:206
+msgid "Acidic soil"
+msgstr ""
+
+#: project/templates/project/filters/_filter_growth_characteristics.html:221
+msgid "Limestone"
+msgstr ""
+
+#: project/templates/project/filters/_filter_growth_characteristics.html:235
+msgid "Sand"
+msgstr ""
+
+#: project/templates/project/filters/_filter_harvesting_and_seed_sharing.html:5
+msgid "Harvesting Period Month Start"
+msgstr ""
+
+#: project/templates/project/filters/_filter_harvesting_and_seed_sharing.html:50
+msgid "Cold Moist Stratification Requirements"
+msgstr ""
+
+#: project/templates/project/filters/_filter_harvesting_and_seed_sharing.html:51
+#: project/templates/project/filters/_filter_page.html:135
+#: project/templates/project/plant_profile/_profile_icons_definition.html:297
+msgid "Winter Sowing Requirements"
+msgstr ""
+
+#: project/templates/project/filters/_filter_harvesting_and_seed_sharing.html:51
+msgid "Click to learn how to Winter sow"
+msgstr ""
+
+#: project/templates/project/filters/_filter_harvesting_and_seed_sharing.html:71
+msgid "days"
+msgstr ""
+
+#: project/templates/project/filters/_filter_harvesting_and_seed_sharing.html:77
+#: project/templates/project/plant_profile/_profile_icons_definition.html:309
+msgid "Seed Sharing"
+msgstr ""
+
+#: project/templates/project/filters/_filter_harvesting_and_seed_sharing.html:92
+msgid "Show seeds accepted for donations"
+msgstr ""
+
+#: project/templates/project/filters/_filter_harvesting_and_seed_sharing.html:109
+msgid "Show available seeds only"
+msgstr ""
+
+#: project/templates/project/filters/_filter_landscape_uses_and_applications.html:2
+#: project/templates/project/plant_profile/_profile_icons_definition.html:323
+msgid "Garden Suitability"
+msgstr ""
+
+#: project/templates/project/filters/_filter_landscape_uses_and_applications.html:17
+msgid "Boulevard garden"
+msgstr ""
+
+#: project/templates/project/filters/_filter_landscape_uses_and_applications.html:32
+msgid "Container garden"
+msgstr ""
+
+#: project/templates/project/filters/_filter_landscape_uses_and_applications.html:48
+msgid "Rain garden"
+msgstr ""
+
+#: project/templates/project/filters/_filter_landscape_uses_and_applications.html:63
+msgid "Rock garden"
+msgstr ""
+
+#: project/templates/project/filters/_filter_landscape_uses_and_applications.html:78
+msgid "Right of way garden"
+msgstr ""
+
+#: project/templates/project/filters/_filter_landscape_uses_and_applications.html:78
+msgid "Plants with a maximum height of 2 feet"
+msgstr ""
+
+#: project/templates/project/filters/_filter_landscape_uses_and_applications.html:95
+msgid "School garden"
+msgstr ""
+
+#: project/templates/project/filters/_filter_landscape_uses_and_applications.html:111
+msgid "Shoreline restoration"
+msgstr ""
+
+#: project/templates/project/filters/_filter_landscape_uses_and_applications.html:126
+msgid "Wetland garden"
+msgstr ""
+
+#: project/templates/project/filters/_filter_landscape_uses_and_applications.html:142
+msgid "Woodland garden"
+msgstr ""
+
+#: project/templates/project/filters/_filter_landscape_uses_and_applications.html:145
+#: project/templates/project/plant_profile/_profile_icons_definition.html:431
+msgid "Functional Uses"
+msgstr ""
+
+#: project/templates/project/filters/_filter_landscape_uses_and_applications.html:160
+msgid "Groundcover/lawn replacement"
+msgstr ""
+
+#: project/templates/project/filters/_filter_landscape_uses_and_applications.html:189
+msgid "Transplants well"
+msgstr ""
+
+#: project/templates/project/filters/_filter_location.html:2
+#: project/templates/project/plant_profile/_profile_icons_definition.html:710
+msgid "Provinces and Territories"
+msgstr ""
+
+#: project/templates/project/filters/_filter_location.html:21
+#: project/templates/project/filters/_filter_page.html:15
+#: project/templates/project/plant_profile/_profile_icons_definition.html:720
+msgid "British Columbia"
+msgstr ""
+
+#: project/templates/project/filters/_filter_location.html:41
+#: project/templates/project/filters/_filter_page.html:19
+#: project/templates/project/plant_profile/_profile_icons_definition.html:722
+msgid "New Brunswick"
+msgstr ""
+
+#: project/templates/project/filters/_filter_location.html:51
+#: project/templates/project/filters/_filter_page.html:21
+#: project/templates/project/plant_profile/_profile_icons_definition.html:723
+msgid "Newfoundland and Labrador"
+msgstr ""
+
+#: project/templates/project/filters/_filter_location.html:61
+#: project/templates/project/plant_profile/_profile_icons_definition.html:725
+msgid "Northwest Territories"
+msgstr ""
+
+#: project/templates/project/filters/_filter_location.html:71
+#: project/templates/project/filters/_filter_page.html:23
+#: project/templates/project/plant_profile/_profile_icons_definition.html:724
+msgid "Nova Scotia"
+msgstr ""
+
+#: project/templates/project/filters/_filter_location.html:81
+#: project/templates/project/filters/_filter_page.html:27
+#: project/templates/project/plant_profile/_profile_icons_definition.html:726
+msgid "Nunavut"
+msgstr ""
+
+#: project/templates/project/filters/_filter_location.html:101
+#: project/templates/project/filters/_filter_page.html:31
+#: project/templates/project/plant_profile/_profile_icons_definition.html:728
+msgid "Prince Edward Island"
+msgstr ""
+
+#: project/templates/project/filters/_filter_location.html:111
+#: project/templates/project/plant_profile/_profile_icons_definition.html:729
+msgid "Quebec"
+msgstr ""
+
+#: project/templates/project/filters/_filter_location.html:131
+#: project/templates/project/filters/_filter_page.html:37
+#: project/templates/project/plant_profile/_profile_icons_definition.html:731
+msgid "Yukon"
+msgstr ""
+
+#: project/templates/project/filters/_filter_location.html:146
+#: project/templates/project/plant_profile/_profile_icons_definition.html:761
+msgid "Other"
+msgstr ""
+
+#: project/templates/project/filters/_filter_location.html:154
+msgid "Native to Ottawa Region"
+msgstr ""
+
+#: project/templates/project/filters/_filter_location.html:154
+msgid "Plants that are native to the Ottawa region"
+msgstr ""
+
+#: project/templates/project/filters/_filter_page.html:9
+msgid "Range Distribution"
+msgstr ""
+
+#: project/templates/project/filters/_filter_page.html:13
+#: project/templates/project/plant_profile/_profile_icons_definition.html:719
+msgid "Alberta"
+msgstr ""
+
+#: project/templates/project/filters/_filter_page.html:17
+#: project/templates/project/plant_profile/_profile_icons_definition.html:721
+msgid "Manitoba"
+msgstr ""
+
+#: project/templates/project/filters/_filter_page.html:25
+msgid "North West Territories"
+msgstr ""
+
+#: project/templates/project/filters/_filter_page.html:29
+#: project/templates/project/plant_profile/_profile_icons_definition.html:727
+msgid "Ontario"
+msgstr ""
+
+#: project/templates/project/filters/_filter_page.html:33
+msgid "Québec"
+msgstr ""
+
+#: project/templates/project/filters/_filter_page.html:35
+#: project/templates/project/plant_profile/_profile_icons_definition.html:730
+msgid "Saskatchewan"
+msgstr ""
+
+#: project/templates/project/filters/_filter_page.html:44
+msgid "Recommended For"
+msgstr ""
+
+#: project/templates/project/filters/_filter_page.html:59
+msgid "Suitable for"
+msgstr ""
+
+#: project/templates/project/filters/_filter_page.html:65
+msgid "Characteristics"
+msgstr ""
+
+#: project/templates/project/filters/_filter_page.html:85
+#: project/templates/project/filters/_filter_special_features_and_considerations.html:17
+msgid "Endangered"
+msgstr ""
+
+#: project/templates/project/filters/_filter_page.html:92
+msgid "Tolerates"
+msgstr ""
+
+#: project/templates/project/filters/_filter_page.html:101
+msgid "Conservation and Special Status"
+msgstr ""
+
+#: project/templates/project/filters/_filter_page.html:111
+msgid "Toxicity"
+msgstr ""
+
+#: project/templates/project/filters/_filter_page.html:119
+#: project/templates/project/filters/_filter_special_features_and_considerations.html:96
+msgid "Exclude plants known to be toxic to mammals"
+msgstr ""
+
+#: project/templates/project/filters/_filter_page.html:124
+msgid "Burs"
+msgstr ""
+
+#: project/templates/project/filters/_filter_special_features_and_considerations.html:33
+msgid "GRASP candidate"
+msgstr ""
+
+#: project/templates/project/filters/_filter_special_features_and_considerations.html:33
+msgid "Growing Rare and Significant Plants"
+msgstr ""
+
+#: project/templates/project/filters/_filter_special_features_and_considerations.html:36
+#: project/templates/project/plant_profile/_profile_icons_definition.html:639
+msgid "Safety and Compatibility"
+msgstr ""
+
+#: project/templates/project/filters/_filter_special_features_and_considerations.html:51
+msgid "Septic tank safe"
+msgstr ""
+
+#: project/templates/project/filters/_filter_special_features_and_considerations.html:66
+msgid "Exclude plants that cause skin rashes"
+msgstr ""
+
+#: project/templates/project/filters/_filter_special_features_and_considerations.html:81
+msgid "Exclude plants with burs or needles"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile-identification-status.html:4
+msgid "Plant Status"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile-identification-status.html:8
+msgid "When Draft is selected, the plant profile is not yet complete."
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile-identification-status.html:13
+msgid "When Active is selected, the plant is available for public viewing."
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile-identification-status.html:18
+msgid "When Is Needed is selected, seeds are required for this plant."
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile-identification-status.html:23
+msgid ""
+"When Accepted is selected, the plant profile is approved by OWSL for public "
+"viewing. If not accepted, please provide a reason in the field below."
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile-identification-status.html:26
+msgid "Reason for Not Accepting (if applicable)"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile-identification-status.html:32
+msgid ""
+"When Has Notice is selected, please provide a description of the notice."
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile-identification-status.html:35
+msgid "Notice Details (if applicable)"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile-identification-status.html:41
+msgid "Show Supported Bees Info"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile-identification-status.html:41
+msgid ""
+"When selected, information about supported bee species will be displayed on "
+"the plant profile."
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile-identification-status.html:46
+msgid "Show Supported Butterflies Info"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile-identification-status.html:46
+msgid ""
+"When selected, information about supported butterfly species will be "
+"displayed on the plant profile."
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile-identification-status.html:51
+msgid "Show Complementary Plants Info"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile-identification-status.html:51
+msgid ""
+"When selected, information about complementary plants will be displayed on "
+"the plant profile."
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile-identification-status.html:56
+msgid "Show Ecological Benefits Info"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile-identification-status.html:56
+msgid ""
+"When selected, information about the ecological benefits of this plant will "
+"be displayed on the plant profile."
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile-identification-status.html:61
+msgid "Show Ecozones Info"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile-identification-status.html:61
+msgid ""
+"When selected, information about the ecozones this plant is found in will be "
+"displayed on the plant profile."
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile-identification-status.html:66
+msgid "Show Environmental Requirements Info"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile-identification-status.html:66
+msgid ""
+"When selected, information about the environmental requirements of this "
+"plant will be displayed on the plant profile."
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile-identification-status.html:71
+msgid "Show Gardener Friendly Attributes Info"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile-identification-status.html:71
+msgid ""
+"When selected, information about the gardener-friendly attributes of this "
+"plant will be displayed on the plant profile."
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile-identification-status.html:76
+msgid "Show Harvesting Info"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile-identification-status.html:76
+msgid ""
+"When selected, information about the harvesting of this plant will be "
+"displayed on the plant profile."
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile-identification-status.html:81
+msgid "Show iNaturalist Link Info"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile-identification-status.html:81
+msgid ""
+"When selected, a link to the iNaturalist page for this plant will be "
+"displayed on the plant profile."
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile-identification-status.html:86
+msgid "Show Landscape Uses Info"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile-identification-status.html:86
+msgid ""
+"When selected, information about the landscape uses of this plant will be "
+"displayed on the plant profile."
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile-identification-status.html:91
+msgid "Show Synonyms Info"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile-identification-status.html:91
+msgid ""
+"When selected, information about the synonyms of this plant will be "
+"displayed on the plant profile."
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile-identification-status.html:96
+msgid "Show Sowing Info"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile-identification-status.html:96
+msgid ""
+"When selected, information about the sowing of this plant will be displayed "
+"on the plant profile."
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile-identification-status.html:101
+msgid "Show Tolerates Info"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile-identification-status.html:101
+msgid ""
+"When selected, information about the tolerances of this plant will be "
+"displayed on the plant profile."
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile-identification-status.html:106
+msgid "Show VASCAN Map Info"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile-identification-status.html:106
+msgid ""
+"When selected, a VASCAN distribution map for this plant will be displayed on "
+"the plant profile."
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile-identification-status.html:111
+msgid "Show Substitute For Info"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile-identification-status.html:111
+msgid ""
+"When selected, information about the substitute plants for this plant will "
+"be displayed on the plant profile."
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_butterflies_supported.html:3
+msgid "Butterflies Supported by"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_butterflies_supported.html:17
+msgid "No butterfly data available for this plant."
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_complementary_plants.html:8
+msgid "No complementary plants found."
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_ecological_benefits.html:4
+msgid "Ecological Benefits:"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_ecological_benefits.html:7
+msgid "No ecological benefits information available."
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_ecological_benefits.html:17
+msgid "Supports hummingbirds"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_ecological_benefits.html:27
+msgid "Supports birds"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_ecological_benefits.html:37
+msgid "Supports pollinators"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_ecological_benefits.html:64
+msgid "Fixes nitrogen in the soil"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_ecozone.html:4
+msgid "Thrives in"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_ecozone.html:15
+msgid "No ecozone information available for this plant."
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_env_requirements_growth_characteristics.html:6
+#: project/templates/project/plant_profile/_profile_icons_definition.html:178
+msgid "Bloom Period"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_env_requirements_growth_characteristics.html:10
+msgid "Max Height"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_env_requirements_growth_characteristics.html:10
+#: project/templates/project/plant_profile/_profile_env_requirements_growth_characteristics.html:11
+msgid "feet"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_env_requirements_growth_characteristics.html:11
+msgid "Max Width"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_env_requirements_growth_characteristics.html:11
+msgid "spreads by rhizome"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_env_requirements_growth_characteristics.html:16
+msgid "Light Condition"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_env_requirements_growth_characteristics.html:51
+msgid "Soil conditions"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_env_requirements_growth_characteristics.html:58
+msgid "Tolerates dry soil condition"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_env_requirements_growth_characteristics.html:67
+msgid "Tolerates medium soil condition"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_env_requirements_growth_characteristics.html:76
+msgid "Tolerates wet soil condition"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_env_requirements_growth_characteristics.html:88
+msgid "Plant is"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_env_requirements_growth_characteristics.html:89
+msgid "dioecious"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_env_requirements_growth_characteristics.html:90
+msgid "Need a male and female plant to produce seeds"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_gardener_friendly_attributes.html:4
+msgid "Gardener Experience"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_gardener_friendly_attributes.html:12
+msgid "Suitable for beginner gardeners"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_gardener_friendly_attributes.html:23
+msgid "Does not spread uncontrollably"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_gardener_friendly_attributes.html:34
+msgid "Easy to germinate"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_gardener_friendly_attributes.html:45
+#: project/templates/project/plant_profile/_profile_sowing.html:20
+msgid "Self-seeding"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_harvesting.html:8
+msgid "Harvest start month"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_harvesting.html:11
+msgid "Harvesting indicator"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_harvesting.html:35
+#, fuzzy
+#| msgid "Seed Event Table"
+msgid "Seed viability test"
+msgstr "Disponible à la table"
+
+#: project/templates/project/plant_profile/_profile_harvesting.html:46
+msgid "Packaging measure"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_harvesting.html:47
+msgid "Seed storage"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_harvesting.html:60
+msgid "Remove non-seed material"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_harvesting.html:63
+msgid "Harvesting notes"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_harvesting.html:66
+msgid "Harvesting video"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_harvesting.html:66
+msgid "Watch here"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_harvesting.html:68
+msgid "No harvesting video available at this time."
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:10
+msgid "Light Preferences"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:12
+msgid "Indicates how much sunlight the plant needs to thrive."
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:22
+msgid "More than 6 hours of direct sunlight daily"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:32
+msgid "Between 3 to 6 hours of direct sunlight daily"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:42
+msgid "Less than 3 hours of direct sunlight daily"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:50
+msgid "Moisture Preferences"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:52
+msgid "Indicates the moisture level the plant prefers."
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:72
+msgid "Water is retained but not soggy"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:102
+msgid "Suitable for novice gardeners"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:112
+msgid "Plants will remain at the same place in the garden"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:122
+msgid "Indicates if the plant is easy to germinate from seeds"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:139
+msgid ""
+"Starter Packs provide ideas for plants that go well together in the "
+"specified conditions (e.g. Shade, Sun Dry, Sun Wet)"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:149
+msgid ""
+"This section includes information on the expected growth, life span and soil "
+"tolerances."
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:155
+msgid ""
+"While exact heights and widths will vary, this section gives the typically "
+"observed maximums for the plant."
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:158
+msgid "Max Height (feet)"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:159
+msgid "Max Width (feet)"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:166
+msgid "Annual: plants that have a lifespan of one year"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:168
+msgid "Biennial: plants that will take two years to bloom, and then will die"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:170
+msgid "Perennial: plants that will come back year after year"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:172
+msgid ""
+"Spring Ephemeral: plants that bloom in the spring that loose their leaves "
+"later in the year"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:180
+msgid ""
+"While exact bloom times will vary, this section gives the months blooms are "
+"typically observed for the plant."
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:186
+msgid "Provides the dominant bloom colour of a plant."
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:200
+msgid "Conifer Tree"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:209
+msgid "Deciduous Tree"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:218
+msgid "Flowering Plant"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:227
+msgid "Grass"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:236
+msgid "Shrub"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:245
+msgid "Vine"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:256
+msgid "Acidic Soil Tolerant Icon"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:259
+msgid "Acidic Soil Tolerant:"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:260
+msgid "Can thrive in acidic soil conditions"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:269
+msgid "Limestone Tolerant:"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:270
+msgid "Can thrive in limestone soil conditions"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:279
+msgid "Sand Tolerant:"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:280
+msgid "Can thrive in sandy soil conditions"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:290
+msgid "Harvesting Period Start"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:292
+msgid ""
+"While exact harvest times will vary, this section gives the months the "
+"plants can usually be harvested."
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:299
+msgid ""
+"Indicates the minimum amount of Cold Moist Stratification required, as well "
+"as the corresponding month in Ottawa. See"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:311
+msgid ""
+"This section confirms if the seeds are accepted by the Ottawa Wildflower "
+"Seed Library for donation, as well as if the seeds are available to be "
+"requested."
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:314
+msgid ""
+"Show seeds accepted for donations - if you are looking to donate seeds and "
+"do not see the species when this filter is applied, we have reached "
+"sufficient inventory of these seeds."
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:325
+msgid ""
+"This section indicates if the plants will be suitable to the conditions "
+"present in the specified garden type"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:335
+msgid "Boulevard Garden:"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:336
+msgid "Can thrive in salted, dry, sunny gardens"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:346
+msgid "Container Garden:"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:347
+msgid "Can be grown and left in containers all year round"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:357
+msgid "Rain Garden:"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:358
+msgid "Can thrive in wet and dry conditions"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:368
+msgid "Right of Way (ROW) Garden:"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:381
+msgid "Rock Garden:"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:382
+msgid "Can thrive in rocky soil"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:392
+msgid "School Garden:"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:393
+msgid "Short plants that can thrive in dry and sunny conditions"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:403
+msgid "Shoreline Rehabilitation:"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:404
+msgid "Can help stabilize soil"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:414
+msgid "Wetland Garden:"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:415
+msgid "Can thrive in soil in water"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:425
+msgid "Woodland Garden:"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:426
+msgid "Can thrive in shade or part shade"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:439
+msgid "Groundcover/Lawn Replacement:"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:440
+msgid "Can be used as ground cover"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:450
+msgid "Hedge:"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:451
+#: project/templates/project/plant_profile/_profile_landscape_uses.html:107
+msgid "Can be used as a hedge"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:461
+msgid "Transplants Well:"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:462
+msgid "Can tolerate transplantation"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:475
+msgid "Can withstand foot traffic around the plant"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:484
+msgid "Drought Tolerant:"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:485
+msgid "Can survive with minimal water"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:493
+msgid "Juglone Tolerant:"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:495
+msgid "Can tolerate juglone, a compound found in black walnut trees"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:504
+msgid "Salt Tolerant:"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:505
+msgid "Can withstand salt exposure"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:525
+msgid "Bird Friendly:"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:526
+msgid "Attracts birds"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:535
+msgid "Deer Tolerant:"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:536
+msgid "Can withstand deer browsing"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:545
+msgid "Hummingbird Friendly:"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:546
+msgid "Attracts hummingbirds"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:555
+msgid "Pollinator Garden:"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:556
+msgid "Attracts pollinators"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:565
+msgid "Rabbit Tolerant:"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:566
+msgid "Can withstand rabbit browsing"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:579
+msgid "Specialized Bee Host:"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:580
+msgid "Supports specialized bees"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:589
+msgid "Butterfly Host:"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:590
+msgid "Supports butterflies"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:598
+msgid "Keystone Species:"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:599
+msgid "Plays a critical role in the ecosystem"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:607
+msgid "Nitrogen Fixer:"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:608
+msgid "Improves soil fertility"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:625
+msgid "Endangered:"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:626
+msgid ""
+"Species that live in the wild in Ontario but is facing imminent extinction "
+"or extirpation"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:626
+msgid "for more information"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:635
+msgid "GRASP Program Member:"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:636
+msgid ""
+"Member of the Growing Rare and Significant Plants (GRASP) in Ottawa Program"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:648
+msgid "Causes Rash:"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:649
+msgid "May cause skin rashes or irritation"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:658
+msgid "Does Not Cause Rash:"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:659
+msgid "Does not cause skin rashes or irritation"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:668
+msgid "Has Burs or Needles:"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:669
+msgid "May have burs or needles that can cause discomfort"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:678
+msgid "Septic Tank Safe:"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:679
+msgid "Safe to plant near or over septic tank systems"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:688
+msgid "Toxic:"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:689
+msgid ""
+"May be toxic if ingested or handled improperly as indicated on the plant "
+"profile that bears this warning."
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:698
+msgid "Wear Gloves:"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:699
+msgid "Handling may require gloves for safety"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:707
+msgid ""
+"This section allows to filter by different location options, including by "
+"geographic location or by terrestrial ecozones and ecoprovinces, as defined "
+"by"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:708
+msgid "Statistics Canada"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:713
+msgid "Note: Distribution for this section is according to"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:736
+msgid ""
+"Terrestrial ecozones and ecoprovinces of Canada as defined by Statistics "
+"Canada. For more information on Ecozones, visit:"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:744
+msgid "Arctic Cordillera"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:745
+msgid "Atlantic Maritime"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:746
+msgid "Boreal Cordillera"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:747
+msgid "Boreal Plains"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:748
+msgid "Boreal Shield"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:749
+msgid "Hudson Plains"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:750
+msgid "Mixedwood Plains"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:751
+msgid "Montane Cordillera"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:752
+msgid "Northern Arctic"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:753
+msgid "Pacific Maritime"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:754
+msgid "Prairies"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:755
+msgid "Southern Arctic"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:756
+msgid "Taiga Cordiller"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:757
+msgid "Taiga Plains"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:758
+msgid "Taiga Shield"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_icons_definition.html:764
+msgid "Native to Ottawa Region."
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_inaturalist_link.html:5
+msgid "View on"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_inaturalist_link.html:5
+msgid "iNaturalist"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_landscape_uses.html:4
+msgid "Landscape Uses:"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_landscape_uses.html:6
+msgid "No landscape information available."
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_landscape_uses.html:15
+msgid "Suitable for rock gardens"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_landscape_uses.html:25
+msgid "Suitable for Right of Way gardens"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_landscape_uses.html:35
+msgid "Suitable for wetland garden"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_landscape_uses.html:44
+msgid "Suitable for rain gardens"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_landscape_uses.html:53
+msgid "Suitable for shoreline rehabilitation"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_landscape_uses.html:62
+msgid "Suitable for container garden"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_landscape_uses.html:80
+msgid "Suitable for ground cover"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_landscape_uses.html:89
+msgid "Suitable for garden hedges"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_landscape_uses.html:98
+msgid "Suitable for woodland gardens"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_landscape_uses.html:116
+msgid "Tolerates boulevard garden conditions"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_messages.html:6
+msgid "This species is not part of the collection of the Seed Library."
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_messages.html:8
+msgid "Reason:"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_messages.html:15
+msgid ""
+"This plant profile is not active. Activate it through the Information "
+"Identification tab"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_messages.html:28
+msgid "Notice:"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_messages.html:34
+msgid ""
+"This plant profile is a draft and may be incomplete. Please help us complete "
+"it!"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_obsolete_names.html:4
+msgid "Synonyms"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_sowing.html:6
+msgid "Download Seed Envelope Labels (PDF)"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_sowing.html:8
+msgid "Sowing depth:"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_sowing.html:11
+msgid "Stratification conditions:"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_sowing.html:13
+msgid "Stratification duration:"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_sowing.html:15
+msgid "years"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_sowing.html:23
+msgid "Double dormancy required"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_sowing.html:26
+msgid "Notes:"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_special_features_and_considerations.html:5
+msgid "Special Features and Considerations:"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_special_features_and_considerations.html:14
+msgid "This plant is endangered"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_special_features_and_considerations.html:25
+msgid "This plant is a GRASP candidate"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_special_features_and_considerations.html:36
+msgid "This plant is septic tank safe"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_special_features_and_considerations.html:47
+msgid "This plant produces burs"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_special_features_and_considerations.html:58
+msgid "This plant causes skin rashes"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_substitute_for.html:17
+msgid "No substitute plant data available for this plant."
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_tolerates.html:5
+msgid "Tolerates:"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_tolerates.html:8
+msgid "drought Tolerant"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_tolerates.html:12
+msgid "Tolerates drought conditions"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_tolerates.html:21
+msgid "Tolerates salt conditions"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_tolerates.html:26
+msgid "Deer Resistant"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_tolerates.html:30
+msgid "Deer resistant"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_tolerates.html:35
+msgid "Rabbit Resistant"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_tolerates.html:39
+msgid "Rabbit resistant"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_tolerates.html:48
+msgid "Tolerates foot traffic around the plant"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_tolerates.html:57
+msgid "Tolerates limestone conditions"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_tolerates.html:66
+msgid "Tolerates sandy conditions"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_tolerates.html:75
+msgid "Tolerates acidic soil conditions"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_tolerates.html:84
+msgid "Tolerates juglone conditions"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_tolerates.html:93
+msgid "Tolerates transplantation"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_update_links.html:8
+msgid "Identification Information"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_update_links.html:12
+msgid "Landscape Use and Application"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_update_links.html:14
+msgid "Substitutes To"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_update_links.html:17
+msgid "Sowing"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_update_links.html:18
+msgid "Seed Distribution"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_vascan_map.html:5
+msgid "Native to Ottawa region"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_vascan_map.html:5
+msgid "Yes"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_vascan_map.html:10
+msgid "Distribution according to VASCAN"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_vascan_map.html:16
+msgid "Distribution"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_vascan_map.html:21
+msgid "Ephemeral"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_vascan_map.html:22
+msgid "Native"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_vascan_map.html:23
+msgid "Introduced"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_vascan_map.html:24
+msgid "Excluded"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_vascan_map.html:25
+msgid "Extirpated"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_vascan_map.html:26
+msgid "Doubtful"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_vascan_map.html:27
+msgid "Absent"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_vascan_map.html:34
+msgid "View taxonomy on"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_vascan_map.html:34
+msgid "Canadensys"
+msgstr ""
+
+#: project/templates/project/plant_profile/plant-profile-images.html:4
+#: project/templates/project/plant_profile/plant-profile-page.html:3
+msgid " - Plant Profile"
+msgstr ""
+
+#: project/templates/project/plant_profile/plant-profile-images.html:10
+msgid "Image Gallery for"
+msgstr ""
+
+#: project/templates/project/plant_profile/plant-profile-images.html:15
+#: project/templates/project/plant_profile/plant-profile-page.html:15
+msgid "Image of"
+msgstr ""
+
+#: project/templates/project/plant_profile/plant-profile-images.html:17
+#: project/templates/project/plant_profile/plant-profile-page.html:17
+msgid "Source"
+msgstr ""
+
+#: project/templates/project/plant_profile/plant-profile-images.html:22
+#: project/templates/project/plant_profile/plant-profile-page.html:22
+msgid "No image available"
+msgstr ""
+
+#: project/templates/project/plant_profile/plant-profile-page.html:26
+msgid "View Image Gallery"
+msgstr ""
+
+#: project/templates/project/plant_profile/plant-profile-page.html:26
+msgid "images"
+msgstr ""
+
+#: project/templates/project/plant_profile/plant-profile-page.html:55
+msgid "Seeds in stock"
+msgstr ""
+
+#: project/templates/project/plant_profile/plant-profile-page.html:55
+msgid "Available at table"
+msgstr ""
+
+#: project/templates/project/plant_profile/plant-profile-page.html:55
+msgid "Unconfirmed"
+msgstr ""
+
+#: project/templates/project/plant_profile/plant-profile-page.html:57
+msgid "No seeds available for this plant."
+msgstr ""
+
+#: project/templates/project/plant_profile/plant-profile-page.html:60
+msgid "We currently accept seeds for this plant"
+msgstr ""
+
+#: project/templates/project/plant_profile/plant-profile-page.html:62
+msgid "We are not accepting seeds for this plant at the moment."
+msgstr ""
+
+#: project/templates/project/plant_profile/plant-profile-page.html:96
+msgid "Plant Location"
+msgstr ""
+
+#: project/templates/project/plant_profile/plant-profile-page.html:129
+msgid "Plants that grow in similar conditions, that bloom at the same time."
+msgstr ""
+
+#: project/templates/project/plant_profile/plant-profile-page.html:131
+msgid "Complementary Plants"
+msgstr ""
+
+#: project/templates/project/plant_profile/plant-profile-page.html:139
+msgid "Substitute For Non-Native Plants"
+msgstr ""
+
+#: project/templates/project/plant_profile/plant-profile-page.html:147
+msgid "Sowing Information"
+msgstr ""
+
+#: project/templates/project/plant_profile/plant-profile-page.html:165
+msgid "Toxicity Notes"
 msgstr ""
 
 #: templates/core/base.html:10

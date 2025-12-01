@@ -1,33 +1,32 @@
 <!--A template to display images related to a specific plant-->
-{% extends "core/base.html" %} {% load static %} {% block extracss%}
+{% extends "core/base.html" %} {% load i18n %} {% load static %} {% block extracss%}
   <link rel="stylesheet" href="{% static 'css/plant-gallery.css' %}" />
-{% endblock extracss %} {% block title %} {{ plant.english_name }} - Plant
-  Profile {% endblock title %}{{title}} {% block content %}
-    <section class="main-content">
-      <main>
-        {% include "project/plant_profile/_profile_update_links.html" %}
+{% endblock extracss %} {% block title %} {{ plant.english_name }} {% trans " - Plant Profile" %} {% endblock title %}{{title}} {% block content %}
+  <section class="main-content">
+    <main>
+      {% include "project/plant_profile/_profile_update_links.html" %}
 
-        <div class="plant-profile-image-gallery-page">
-          <h2>Image Gallery for {{ plant.english_name }}</h2>
-          <div class="image-gallery-grid">
-            {% for image in plant.images.all %}
-              <div class="image-gallery-item">
-                {% if image.image %}
-                  <img src="{{ image.image.url }}" alt="Image of {{plant.latin_name}}">
-                  {% if image.photo_author %}
-                    <div class="plant-card-info">Source: {{ image.photo_author }}</div>
-                  {% endif %}
-                  <div class="plant-card-info"> {{ image.title|default:"&nbsp;" }}</div>
-                  <div class="plant-card-info"> {{ image.description|default:"&nbsp;" }}</div>
-                {% else %}
-                  <img src="{% static 'images/plant-placeholder.png' %}" alt="No image available">
+      <div class="plant-profile-image-gallery-page">
+        <h2>{% trans "Image Gallery for" %} {{ plant.english_name }}</h2>
+        <div class="image-gallery-grid">
+          {% for image in plant.images.all %}
+            <div class="image-gallery-item">
+              {% if image.image %}
+                <img src="{{ image.image.url }}" alt="{% trans "Image of" %} {{plant.latin_name}}">
+                {% if image.photo_author %}
+                  <div class="plant-card-info">{% trans "Source" %}: {{ image.photo_author }}</div>
                 {% endif %}
-              </div>
-            {% endfor %}
-          </div>
+                <div class="plant-card-info"> {{ image.title|default:"&nbsp;" }}</div>
+                <div class="plant-card-info"> {{ image.description|default:"&nbsp;" }}</div>
+              {% else %}
+                <img src="{% static 'images/plant-placeholder.png' %}" alt="{% trans "No image available" %}">
+              {% endif %}
+            </div>
+          {% endfor %}
         </div>
-      </main>
-    </section>
-    </body>
-    </html>
-  {% endblock content %}
+      </div>
+    </main>
+  </section>
+  </body>
+  </html>
+{% endblock content %}

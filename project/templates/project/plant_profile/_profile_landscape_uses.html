@@ -1,8 +1,9 @@
+{% load i18n %}
 {% load static %}
 <div class="plant-profile-characteristics-item">
-  <span>Landscape Uses:</span>
+  <span>{% trans "Landscape Uses:" %}</span>
   {% if not landscape_use %}
-    <span>No landscape information available.</span>
+    <span>{% trans "No landscape information available." %}</span>
   {% else %}
     {% if plant.rock_garden %}
       <div class="tooltip">
@@ -11,7 +12,7 @@
           class="icon"
           src="{% static 'images/plant-rock-garden.svg'  %}"
         />
-        <span class="tooltiptext">Suitable for rock gardens</span>
+        <span class="tooltiptext">{% trans "Suitable for rock gardens" %}</span>
       </div>
     {% endif %}
     {% if is_row_garden %}
@@ -21,7 +22,7 @@
           class="icon"
           src="{% static 'images/plant-row-garden.svg'  %}"
         />
-        <span class="tooltiptext">Suitable for Right of Way gardens</span>
+        <span class="tooltiptext">{% trans "Suitable for Right of Way gardens" %}</span>
       </div>
     {% endif %}
     {% if plant.wetland_garden %}
@@ -31,7 +32,7 @@
           class="icon"
           src="{% static 'images/plant-wetland-garden.svg'  %}"
         />
-        <span class="tooltiptext">Suitable for wetland garden</span>
+        <span class="tooltiptext">{% trans "Suitable for wetland garden" %}</span>
       </div>
     {% endif %} {% if plant.rain_garden %}
       <div class="tooltip">
@@ -40,7 +41,7 @@
           class="icon"
           src="{% static 'images/plant-rain-garden.svg'  %}"
         />
-        <span class="tooltiptext">Suitable for rain gardens</span>
+        <span class="tooltiptext">{% trans "Suitable for rain gardens" %}</span>
       </div>
     {% endif %} {% if plant.shoreline_rehab %}
       <div class="tooltip">
@@ -49,7 +50,7 @@
           class="icon"
           src="{% static 'images/plant-shoreline-rehab.svg'  %}"
         />
-        <span class="tooltiptext">Suitable for shoreline rehabilitation</span>
+        <span class="tooltiptext">{% trans "Suitable for shoreline rehabilitation" %}</span>
       </div>
     {% endif %} {% if plant.container_suitable %}
       <div class="tooltip">
@@ -58,7 +59,7 @@
           class="icon"
           src="{% static 'images/plant-container-suitable.svg'  %}"
         />
-        <span class="tooltiptext">Suitable for container garden</span>
+        <span class="tooltiptext">{% trans "Suitable for container garden" %}</span>
       </div>
     {% endif %} {% if plant.school_garden %}
       <div class="tooltip">
@@ -76,7 +77,7 @@
           class="icon"
           src="{% static 'images/plant-ground-cover.svg'  %}"
         />
-        <span class="tooltiptext">Suitable for ground cover</span>
+        <span class="tooltiptext">{% trans "Suitable for ground cover" %}</span>
       </div>
     {% endif %} {% if plant.garden_hedge %}
       <div class="tooltip">
@@ -85,7 +86,7 @@
           class="icon"
           src="{% static 'images/plant-garden-hedge.svg'  %}"
         />
-        <span class="tooltiptext">Suitable for garden hedges</span>
+        <span class="tooltiptext">{% trans "Suitable for garden hedges" %}</span>
       </div>
     {% endif %} {% if plant.woodland_garden %}
       <div class="tooltip">
@@ -94,7 +95,7 @@
           class="icon"
           src="{% static 'images/plant-woodland-garden.svg'  %}"
         />
-        <span class="tooltiptext">Suitable for woodland gardens</span>
+        <span class="tooltiptext">{% trans "Suitable for woodland gardens" %}</span>
       </div>
     {% endif %} {% if plant.hedge %}
       <div class="tooltip">
@@ -103,7 +104,7 @@
           class="icon"
           src="{% static 'images/plant-hedge.svg'  %}"
         />
-        <span class="tooltiptext">Can be used as a hedge</span>
+        <span class="tooltiptext">{% trans "Can be used as a hedge" %}</span>
       </div>
     {% endif %}{% if plant.boulevard_garden_tolerant %}
       <div class="tooltip">
@@ -112,7 +113,7 @@
           class="icon"
           src="{% static 'images/plant-boulevard-garden-tolerant.svg'  %}"
         />
-        <span class="tooltiptext">Tolerates boulevard garden conditions</span>
+        <span class="tooltiptext">{% trans "Tolerates boulevard garden conditions" %}</span>
       </div>
     {% endif %}
   {% endif %}

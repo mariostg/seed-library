@@ -1,17 +1,18 @@
+{% load i18n %}
 {% load static %}
         <!--Display message if plant is not accepted by OWSL-->
 {% if not plant.is_accepted %}
   <div class="alert alert--warning">
-    This species is not part of the collection of the Seed Library.
+    {% trans "This species is not part of the collection of the Seed Library." %}
     {% if plant.not_accepted_reason %}
-      Reason: {{ plant.not_accepted_reason }}
+      {% trans "Reason:" %} {{ plant.not_accepted_reason }}
     {% endif %}
   </div>
 {% endif %}
         <!--Display message if plant is not active-->
 {% if not plant.is_active %}
   <div class="alert alert--warning">
-    This plant profile is not active. Activate it through the Information Identification tab
+    {% trans "This plant profile is not active. Activate it through the Information Identification tab" %}
   </div>
 {% endif %}
         <!--Display message if plant is known to be toxic-->
@@ -24,12 +25,12 @@
 <!--Display message if plant is a notice§-->
 {% if plant.has_notice and plant.notice_detail %}
   <div class="alert alert--warning">
-    Notice: {{ plant.notice_detail }}
+    {% trans "Notice:" %} {{ plant.notice_detail }}
   </div>
 {% endif %}
 <!--Display message if plant profile is a draft-->
 {% if plant.is_draft %}
   <div class="alert alert--info">
-    This plant profile is a draft and may be incomplete. Please help us complete it!
+    {% trans "This plant profile is a draft and may be incomplete. Please help us complete it!" %}
   </div>
 {% endif %}

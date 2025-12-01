@@ -1,6 +1,7 @@
+{% load i18n %}
 {% if plant.ecozones.all %}
   <div class="plant-ecozones">
-    <h3>Thrives in <a target="_blank" href="https://www.statcan.gc.ca/en/subjects/standard/environment/elc/2017-map">Ecozones</a></h3>
+    <h3>{% trans "Thrives in" %} <a target="_blank" href="https://www.statcan.gc.ca/en/subjects/standard/environment/elc/2017-map">{% trans "Ecozones" %}</a></h3>
     <ul class="ecozone-list">
       {% for ecozone in plant.ecozones.all %}
         <li class="ecozone-item">
@@ -11,6 +12,6 @@
   </div>
 {% else %}
   <div class="plant-ecozones plant-ecozones-empty">
-    <p>No ecozone information available for this plant.</p>
+    <p>{% trans "No ecozone information available for this plant." %}</p>
   </div>
 {% endif %}

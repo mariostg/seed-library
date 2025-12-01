@@ -1,5 +1,6 @@
+{% load i18n %}
 <div class="butterfly-list">
-  <h3>Butterflies Supported by {{ plant.latin_name }}</h3>
+  <h3>{% trans "Butterflies Supported by" %} {{ plant.latin_name }}</h3>
   {% if plant.butterflies.all %}
     <ul>
       {% for butterfly in plant.butterflies.all %}
@@ -13,6 +14,6 @@
       {% endfor %}
     </ul>
   {% else %}
-    <p class="text-muted">No butterfly data available for this plant.</p>
+    <p class="text-muted">{% trans "No butterfly data available for this plant." %}</p>
   {% endif %}
 </div>

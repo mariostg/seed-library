@@ -1,14 +1,14 @@
 
-{% load static %}
+{% load i18n static %}
 {% load months %}
 <div id="harvesting-and-seed-sharing" class="plant-profile-section">
 
   <ul>
     {% if plant.harvesting_start %}
-      <li>Harvest start month: {{ plant.harvesting_start|month_name }}</li>
+      <li>{% trans "Harvest start month" %}: {{ plant.harvesting_start|month_name }}</li>
     {% endif %}
 
-    <li>Harvesting indicator:
+    <li>{% trans "Harvesting indicator" %}:
       {% if harvesting_indicator_list %}
         <ul>
           {% for item in harvesting_indicator_list %}
@@ -20,7 +20,7 @@
       {% endif %}
     </li>
 
-    <li>Harvesting:
+    <li>{% trans "Harvesting" %}:
       {% if harvesting_mean_list %}
         <ul>
           {% for item in harvesting_mean_list %}
@@ -32,7 +32,7 @@
       {% endif %}
     </li>
 
-    <li>Seed viability test:
+    <li>{% trans "Seed viability test" %}:
       {% if seed_viability_test_list %}
         <ul>
           {% for item in seed_viability_test_list %}
@@ -43,8 +43,8 @@
         {{ plant.seed_viability_test }}
       {% endif %}
     </li>
-    <li>Packaging measure: {{ plant.packaging_measure }}</li>
-    <li>Seed storage:
+    <li>{% trans "Packaging measure" %}: {{ plant.packaging_measure }}</li>
+    <li>{% trans "Seed storage" %}:
       {% if seed_storage_list %}
         <ul>
           {% for item in seed_storage_list %}
@@ -55,17 +55,17 @@
         {{ plant.seed_storage }}
       {% endif %}
     </li>
-    <li>Cultivar: {{ plant.one_cultivar }}</li>
+    <li>{% trans "Cultivar" %}: {{ plant.one_cultivar }}</li>
     {% if plant.remove_non_seed_material %}
-      <li>Remove non-seed material</li>
+      <li>{% trans "Remove non-seed material" %}</li>
     {% endif %}
     {% if plant.harvesting_notes %}
-      <li>Harvesting notes: {{ plant.harvesting_notes }}</li>
+      <li>{% trans "Harvesting notes" %}: {{ plant.harvesting_notes }}</li>
     {% endif %}
     {% if plant.harvesting_video_link %}
-      <li>Harvesting video: <a target="_blank" href="{{ plant.harvesting_video_link }}">Watch here</a></li>
+      <li>{% trans "Harvesting video" %}: <a target="_blank" href="{{ plant.harvesting_video_link }}">{% trans "Watch here" %}</a></li>
     {% else %}
-      <li>No harvesting video available at this time.</li>
+      <li>{% trans "No harvesting video available at this time." %}</li>
     {% endif %}
   </ul>
 </div>
