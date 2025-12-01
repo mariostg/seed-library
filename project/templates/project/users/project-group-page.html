@@ -1,4 +1,6 @@
 {% extends 'core/base.html' %}
+
+{% load i18n %}
 {% load static %}
 {% block title %}{{title}}{% endblock title %}
 {% block content %}
@@ -6,20 +8,20 @@
   <div class='flex-col-center'>
     <fieldset class="flex-col-center">
       <legend>
-        {{title}} Management
+        {{title}} {% trans "Management" %}
       </legend>
       {% if user.is_authenticated %}
         <div class='center'>
-          <a class='btn btn-add' href="{% url 'project-group-add' %}">Add Project Group</a>
+          <a class='btn btn-add' href="{% url 'project-group-add' %}">{% trans "Add Project Group" %}</a>
         </div>
       {% endif %}
       <table class=''>
         <thead>
           <tr>
-            <th>Group Name</th>
-            <th>Description</th>
+            <th>{% trans "Group Name" %}</th>
+            <th>{% trans "Description" %}</th>
             {% if user.is_authenticated %}
-              <th colspan=2>Actions</th>
+              <th colspan=2>{% trans "Actions" %}</th>
             {% endif %}
           </tr>
         </thead>
@@ -32,12 +34,12 @@
                 <!--insert a <br> every 4 permissions-->
                 {% if forloop.counter|divisibleby:4 %}<br>{% endif %}
               {% empty %}
-                No group permissions assigned.
+                {% trans "No group permissions assigned." %}
               {% endfor %}</td>
               {% if user.is_authenticated %}
                 <td>
-                  <a class='btn btn-edit' href="{% url "project-group-update" group.id %}">Edit</a>
-                  <a class='btn btn-delete' href="{% url "project-group-delete" group.id %}">Delete</a>
+                  <a class='btn btn-edit' href="{% url "project-group-update" group.id %}">{% trans "Edit" %}</a>
+                  <a class='btn btn-delete' href="{% url "project-group-delete" group.id %}">{% trans "Delete" %}</a>
                 </td>
               {% endif %}
             </tr>

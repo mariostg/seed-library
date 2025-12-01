@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-01 03:01+0000\n"
+"POT-Creation-Date: 2025-12-01 03:05+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -626,6 +626,7 @@ msgstr ""
 
 #: project/models.py:1458
 #: project/templates/project/admin/admin-image-page-results.html:19
+#: project/templates/project/users/project-group-page.html:22
 msgid "Description"
 msgstr ""
 
@@ -651,6 +652,8 @@ msgstr ""
 #: project/templates/project/admin/admin-butterfly-species-page.html:9
 #: project/templates/project/admin/admin-colour-page.html:4
 #: project/templates/project/admin/admin-colour-page.html:9
+#: project/templates/project/users/project-group-page.html:11
+#: project/templates/project/users/project-user-page.html:10
 msgid "Management"
 msgstr ""
 
@@ -711,6 +714,8 @@ msgstr ""
 #: project/templates/project/admin/admin-sowing-depth-page.html:34
 #: project/templates/project/admin/admin-stratification-duration-page.html:34
 #: project/templates/project/admin/admin-toxicity-indicator-page.html:34
+#: project/templates/project/users/project-group-page.html:41
+#: project/templates/project/users/project-user-page.html:46
 msgid "Edit"
 msgstr ""
 
@@ -737,6 +742,9 @@ msgstr ""
 #: project/templates/project/admin/admin-stratification-duration-page.html:35
 #: project/templates/project/admin/admin-toxicity-indicator-page.html:35
 #: project/templates/project/plant_profile/_profile_update_links.html:21
+#: project/templates/project/users/project-group-page.html:42
+#: project/templates/project/users/project-user-groups-update.html:41
+#: project/templates/project/users/project-user-page.html:47
 msgid "Delete"
 msgstr ""
 
@@ -762,6 +770,9 @@ msgstr ""
 #: project/templates/project/admin/admin-seed-viability-test-page.html:23
 #: project/templates/project/admin/admin-sowing-depth-page.html:23
 #: project/templates/project/admin/admin-toxicity-indicator-page.html:23
+#: project/templates/project/users/project-group-page.html:24
+#: project/templates/project/users/project-user-groups-update.html:24
+#: project/templates/project/users/project-user-page.html:26
 msgid "Actions"
 msgstr ""
 
@@ -878,6 +889,7 @@ msgid "Manage Project Users"
 msgstr ""
 
 #: project/templates/project/admin/admin-nav-access-administrator.html:14
+#: project/templates/project/users/project-user-page.html:48
 msgid "Manage Groups"
 msgstr ""
 
@@ -3244,6 +3256,81 @@ msgstr ""
 
 #: project/templates/project/update/update-availability.html:60
 msgid "Profile"
+msgstr ""
+
+#: project/templates/project/users/group-permissions-matrix-update.html:18
+msgid "Content Type"
+msgstr ""
+
+#: project/templates/project/users/group-permissions-matrix-update.html:19
+msgid "Codename"
+msgstr ""
+
+#: project/templates/project/users/group-permissions-matrix-update.html:44
+msgid "No unassigned permissions found."
+msgstr ""
+
+#: project/templates/project/users/group-permissions-matrix-update.html:51
+msgid "Assign Selected Permissions"
+msgstr ""
+
+#: project/templates/project/users/project-group-page.html:15
+#: project/templates/project/users/project-user-groups-update.html:14
+msgid "Add Project Group"
+msgstr ""
+
+#: project/templates/project/users/project-group-page.html:21
+#: project/templates/project/users/project-user-groups-update.html:20
+msgid "Group Name"
+msgstr ""
+
+#: project/templates/project/users/project-group-page.html:37
+#: project/templates/project/users/project-user-groups-update.html:35
+msgid "No group permissions assigned."
+msgstr ""
+
+#: project/templates/project/users/project-user-groups-update.html:21
+msgid "Group Permissions"
+msgstr ""
+
+#: project/templates/project/users/project-user-groups-update.html:38
+msgid "No direct permissions assigned."
+msgstr ""
+
+#: project/templates/project/users/project-user-groups-update.html:55
+msgid "Assign Groups to User:"
+msgstr ""
+
+#: project/templates/project/users/project-user-groups-update.html:69
+msgid "Update Groups"
+msgstr ""
+
+#: project/templates/project/users/project-user-page.html:14
+msgid "Add Project User"
+msgstr ""
+
+#: project/templates/project/users/project-user-page.html:20
+msgid "Username"
+msgstr ""
+
+#: project/templates/project/users/project-user-page.html:21
+msgid "Email"
+msgstr ""
+
+#: project/templates/project/users/project-user-page.html:22
+msgid "First Name"
+msgstr ""
+
+#: project/templates/project/users/project-user-page.html:23
+msgid "Last Name"
+msgstr ""
+
+#: project/templates/project/users/project-user-page.html:24
+msgid "User Groups"
+msgstr ""
+
+#: project/templates/project/users/project-user-page.html:41
+msgid "No Groups"
 msgstr ""
 
 #: templates/core/base.html:10

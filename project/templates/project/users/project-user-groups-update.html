@@ -1,4 +1,5 @@
 {% extends 'core/base.html' %}
+{% load i18n %}
 {% load static %}
 {% block title %}{{title}}{% endblock title %}
 {% block content %}
@@ -10,17 +11,17 @@
       </legend>
       {% if request.user.is_access_administrator %}
         <div class='center'>
-          <a class='btn btn-add' href="{% url 'project-group-add' %}">Add Project Group</a>
+          <a class='btn btn-add' href="{% url 'project-group-add' %}">{% trans "Add Project Group" %}</a>
         </div>
       {% endif %}
       <table class=''>
         <thead>
           <tr>
-            <th>Group Name</th>
-            <th>Group Permissions</th>
+            <th>{% trans "Group Name" %}</th>
+            <th>{% trans "Group Permissions" %}</th>
             <th></th>
             {% if request.user.is_access_administrator %}
-              <th colspan=2>Actions</th>
+              <th colspan=2>{% trans "Actions" %}</th>
             {% endif %}
           </tr>
         </thead>
@@ -31,13 +32,13 @@
               <td>
                 {% for perm in group.permissions.all|dictsort:"name" %}{{ perm.name }}{% if not forloop.last %}, {% endif %}
                 {% empty %}
-                  No group permissions assigned.
+                  {% trans "No group permissions assigned." %}
                 {% endfor %}
               </td>
-              <td>{% for user_perm in user.permissions.all|dictsort:"name" %}{{ user_perm.name }}{% if not forloop.last %}, {% endif %}{% empty %}No direct permissions assigned.{% endfor %}</td>
+              <td>{% for user_perm in user.permissions.all|dictsort:"name" %}{{ user_perm.name }}{% if not forloop.last %}, {% endif %}{% empty %}{% trans "No direct permissions assigned." %}{% endfor %}</td>
               {% if request.user.is_access_administrator %}
                 <td class='actions'>
-                  <a class='btn btn-delete' href="{% url "project-user-groups-delete" group_pk=group.id user_pk=user.id %}">Delete</a>
+                  <a class='btn btn-delete' href="{% url "project-user-groups-delete" group_pk=group.id user_pk=user.id %}">{% trans "Delete" %}</a>
                 </td>
               {% endif %}
             </tr>
@@ -51,7 +52,7 @@
     <section>
       <fieldset class="flex-col-center">
         <legend>
-          Assign Groups to User: {{user.username}}
+          {% trans "Assign Groups to User:" %} {{user.username}}
         </legend>
         <form method="post" action="{% url 'project-user-groups-update' user.id %}">
           {% csrf_token %}
@@ -65,7 +66,7 @@
             {% endfor %}
           </div>
           <div class='center'>
-            <button type="submit" class='btn btn-submit'>Update Groups</button>
+            <button type="submit" class='btn btn-submit'>{% trans "Update Groups" %}</button>
           </div>
         </form>
       </fieldset>
