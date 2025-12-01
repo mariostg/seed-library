@@ -1,3 +1,4 @@
+{% load i18n %}
 {% load static %}
 
 <div style="display: flex; flex-direction: column; align-items: center; ">
@@ -5,15 +6,15 @@
 
   {% if item_count == 0 and request.GET %}
     <div class="alert alert--info">
-      No plant matches your search, try resetting the filters or verify your search term.
+      {% trans "No plant matches your search, try resetting the filters or verify your search term." %}
     </div>
   {% endif %}
   <div id='search-results'>
     {% if object_list %}
       <div>
-        <div class='flex-col-center'> Search Results: Found {{item_count}} matches</div>
+        <div class='flex-col-center'>{% trans "Search Results: Found" %} {{item_count}} {% trans "matches" %}</div>
         <div class='flex-col-center'>
-          <a href="{% url 'export-plant-search-results' %}?{{ request.GET.urlencode }}" class="btn btn-primary">Export to CSV</a>
+          <a href="{% url 'export-plant-search-results' %}?{{ request.GET.urlencode }}" class="btn btn-primary">{% trans "Export to CSV" %}</a>
         </div>
       </div>
 
@@ -35,7 +36,7 @@
               {% endif %}
             </a>
             {% if item.images.first %}
-              <div class="plant-card-source">Source: {{item.images.first.photo_author}}</div>
+              <div class="plant-card-source">{% trans "Source" %}: {{item.images.first.photo_author}}</div>
             {% endif %}
           </div>
           <div class="plant-card-caption">
@@ -51,7 +52,7 @@
           {% if user.is_authenticated %}
             <div class="flex-row wide">
               <a class='btn' target="#">Add to cart</a>
-              <a class='btn' target="blank" href="{% url 'plant-label-pdf' item.pk%}">Labels</a>
+              <a class='btn' target="blank" href="{% url 'plant-label-pdf' item.pk%}">{% trans "Labels" %}</a>
             </div>
           {% endif %}
         </div>

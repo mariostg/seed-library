@@ -1,4 +1,5 @@
 {% extends 'core/base.html' %}
+{% load i18n %}
 {% load static %}
 {% block extracss %}
   <link rel="stylesheet" href={% static "css/form-login.css"%} /> {% endblock extracss %}
@@ -6,19 +7,19 @@
 
   <div class="form-login">
     <div class="h3 mb-3 fw-normal text-center">
-      <h2>Grainothèque | Seed Library</h2>
-      <h4>Administration</h4>
+      <h2>{% trans "Grainothèque | Seed Library" %}</h2>
+      <h4>{% trans "Administration" %}</h4>
     </div>
 
     <form action="#" method="POST">
       {% csrf_token %}
       <div class="form__field">
-        <label class='form-label' for="username">Username</label>
+        <label class='form-label' for="username">{% trans "Username" %}</label>
         <input class="form-input" type="text" name="username" autofocus="autofocus" />
       </div>
 
       <div class="form__field">
-        <label class='form-label' for="password">Password</label>
+        <label class='form-label' for="password">{% trans "Password" %}</label>
         <input
           class="form-input"
           id="formInput#password"
@@ -30,10 +31,10 @@
 
       <div class="form__field-checkbox">
         <input class="form-input" type="checkbox" onclick="togglePassword()" />
-        <label class="form-label" id="show_password"> Montrer le mot de passe </label>
+        <label class="form-label" id="show_password">{% trans "Show Password" %}</label>
       </div>
 
-      <input class="btn btn-login" type="submit" value="Log In" />
+      <input class="btn btn-login" type="submit" value="{% trans "Log In" %}" />
     </form>
 
 

@@ -1,3 +1,4 @@
+{% load i18n %}
 {% load static %}
 <div class="search-plants">
   <form method='GET'>
@@ -5,12 +6,12 @@
     <div class="flex-row center">
     <!--Input text box for searching plant name-->
       <div class="form__field">
-        <label for="any_plant_name" class="form-label tooltip info">Search by plant name
-          <span class="tooltiptext">Enter 4 or more letters of the plant's latin, english, or french name</span>
+        <label for="any_plant_name" class="form-label tooltip info">{% trans "Search by plant name" %}
+          <span class="tooltiptext">{% trans "Enter 4 or more letters of the plant's latin, english, or french name" %}</span>
         </label>
         <input id="any_plant_name" class="name-search-input"
                name="any_plant_name"
-               hx-get="/search-plant-name"
+               hx-get="{% url 'search-plant-name' %}"
                hx-trigger="keyup[target.value.length >= 4] changed delay:500ms, keyup[key=='Enter']"
                hx-target="#search-results"
                hx-push-url="true"
@@ -31,13 +32,13 @@
                hx-include="{{hx_include}}"
                hx-indicator=".htmx-indicator"
                {% if seed_availability %}checked{% endif %}>
-        <label for="seed_availability" class="form-label">Show Plants that are Available Only</label>
+        <label for="seed_availability" class="form-label">{% trans "Show Plants that are Available Only" %}</label>
       </div>
 
     </div>
-    <div class="flex-row center"><a href="{% url 'search-plant-name' %}?any_plant_name=" class="btn btn-primary">Show all plants</a></div>
+    <div class="flex-row center"><a href="{% url 'search-plant-name' %}?any_plant_name=" class="btn btn-primary">{% trans "Show all plants" %}</a></div>
     <div class="flex-row center htmx-indicator">
-      <img src="{% static 'images/searching.svg' %}"/> Searching...
+      <img src="{% static 'images/searching.svg' %}"/> {% trans "Searching..." %}
     </div>
   </form>
 </div>

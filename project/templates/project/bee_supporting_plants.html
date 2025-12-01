@@ -1,15 +1,17 @@
 <!--Display a list of all butterflies and their supporting plants-->
 <!--First columns shows the latin name of the butterfly species,  the second column shows the common name, and the third column lists the supporting plants-->
-{% extends 'core/base.html' %} {% load static %} {% block extracss %}
+{% extends 'core/base.html' %} {% load i18n %} {% load static %} {% block extracss %}
 {% endblock extracss %} {% block content %}
   <section class="container">
     <div>
-      <h1>Specialized Bees and Their Supporting Plants</h1>
+      <h1>{% trans "Specialized Bees and Their Supporting Plants" %}</h1>
 
       <p>
-        This page lists all <strong>{{ bees.count }}</strong> specialized bee species along with their supporting plants
-        that exist in the plant catalogue. Each plant species is linked to its
-        profile page for more detailed information.
+        {% blocktrans count bees.count as bee_count %}
+          This page lists all <strong>{{ bee_count }}</strong> specialized bee species along with their supporting plants
+          that exist in the plant catalogue. Each plant species is linked to its
+          profile page for more detailed information.
+        {% endblocktrans %}
       </p>
     </div>
     <div>
