@@ -1,20 +1,21 @@
 {% extends "core/base.html" %}
+{% load i18n %}
 {% load static %}
 
-{% block title %}{{ plant.latin_name }} - Harvesting{% endblock title %}
+{% block title %}{{ plant.latin_name }} - {% trans "Harvesting" %}{% endblock title %}
 {{ title }}
 {% block content %}
   <main class="main-content">
     {% include "project/plant_profile/_profile_update_links.html" %}
     <div class="flex-col-center">
-      <h1>Update Plant Harvesting</h1>
+      <h1>{% trans "Update Plant Harvesting" %}</h1>
       <h2><a href="{% url 'plant-profile-page' plant.pk %}">{{ plant.latin_name }}</a></h2>
       <form method="post" action="{% url 'plant-harvesting-update' plant.pk %}">
         {% csrf_token %}
         <div class="inputs">
 
           <fieldset class="form-group">
-            <legend>Harvesting Start Month</legend>
+            <legend>{% trans "Harvesting Start Month" %}</legend>
             <div class="input-select">
               <select id="id_harvesting_start" name="harvesting_start" class="input">
                 <option value="">---------</option>
@@ -26,11 +27,11 @@
           </fieldset>
 
           <fieldset class="form-group">
-            <legend>Harvesting Indicator</legend>
+            <legend>{% trans "Harvesting Indicator" %}</legend>
             <div class="radio-options">
               <div class="radio-option">
                 <input type="radio" id="id_harvesting_indicator_none" name="harvesting_indicator" value="" {% if not harvesting_indicator %}checked{% endif %}>
-                <label for="id_harvesting_indicator_none">None</label>
+                <label for="id_harvesting_indicator_none">{% trans "None" %}</label>
               </div>
               {% for harvesting_indicator in harvesting_indicators %}
                 <div class="radio-option">
@@ -47,11 +48,11 @@
 
           <!--fieldset for harvesting-->
         <fieldset class="form-group">
-          <legend>Harvesting</legend>
+          <legend>{% trans "Harvesting" %}</legend>
           <div class="radio-options">
             <div class="radio-option">
               <input type="radio" id="id_harvesting_mean_none" name="harvesting_mean" value="" {% if not harvesting_mean %}checked{% endif %}>
-              <label for="id_harvesting_mean_none">None</label>
+              <label for="id_harvesting_mean_none">{% trans "None" %}</label>
             </div>
             {% for harvesting_mean in harvesting_means %}
               <div class="radio-option">
@@ -67,11 +68,11 @@
 
           <!--Fieldset for seed head-->
         <fieldset class="form-group">
-          <legend>Seed Head</legend>
+          <legend>{% trans "Seed Head" %}</legend>
           <div class="radio-options">
             <div class="radio-option">
               <input type="radio" id="id_seed_head_none" name="seed_head" value="" {% if not seed_head %}checked{% endif %}>
-              <label for="id_seed_head_none">None</label>
+              <label for="id_seed_head_none">{% trans "None" %}</label>
             </div>
             {% for seed_head in seed_heads %}
               <div class="radio-option">
@@ -88,22 +89,22 @@
 
         <!--fieldset for boolean field remove non-seed material-->
       <fieldset class="form-group">
-        <legend>Remove Non-Seed Material</legend>
+        <legend>{% trans "Remove Non-Seed Material" %}</legend>
         <div class="checkbox-options">
           <div class="checkbox-option">
             <input type="checkbox" id="id_remove_non_seed_material" name="remove_non_seed_material" value="true" {% if plant.remove_non_seed_material %}checked{% endif %}>
-            <label for="id_remove_non_seed_material">Yes</label>
+            <label for="id_remove_non_seed_material">{% trans "Yes" %}</label>
           </div>
         </div>
       </fieldset>
 
         <!--Fieldset for seed storage-->
       <fieldset class="form-group">
-        <legend>Seed Storage</legend>
+        <legend>{% trans "Seed Storage" %}</legend>
         <div class="radio-options">
           <div class="radio-option">
             <input type="radio" id="id_seed_storage_none" name="seed_storage" value="" {% if not seed_storage %}checked{% endif %}>
-            <label for="id_seed_storage_none">None</label>
+            <label for="id_seed_storage_none">{% trans "None" %}</label>
           </div>
           {% for seed_storage in seed_storages %}
             <div class="radio-option">
@@ -119,11 +120,11 @@
 
         <!--Fieldset for On Cultivars-->
       <fieldset class="form-group">
-        <legend>On Cultivars</legend>
+        <legend>{% trans "On Cultivars" %}</legend>
         <div class="radio-options">
           <div class="radio-option">
             <input type="radio" id="id_one_cultivar_none" name="one_cultivar" value="" {% if not one_cultivar %}checked{% endif %}>
-            <label for="id_one_cultivar_none">None</label>
+            <label for="id_one_cultivar_none">{% trans "None" %}</label>
           </div>
           {% for one_cultivar in one_cultivars %}
             <div class="radio-option">
@@ -139,11 +140,11 @@
 
       <!--Fieldset for seed viability test-->
       <fieldset class="form-group">
-        <legend>Seed Viability Test</legend>
+        <legend>{% trans "Seed Viability Test" %}</legend>
         <div class="radio-options">
           <div class="radio-option">
             <input type="radio" id="id_seed_viability_test_none" name="seed_viability_test" value="" {% if not seed_viability_test %}checked{% endif %}>
-            <label for="id_seed_viability_test_none">None</label>
+            <label for="id_seed_viability_test_none">{% trans "None" %}</label>
           </div>
           {% for seed_viability_test in seed_viability_tests %}
             <div class="radio-option">
@@ -159,17 +160,17 @@
 
         <!--Fieldset for harvesting video link-->
       <fieldset class="form-group">
-        <legend>Harvesting Video Link</legend>
+        <legend>{% trans "Harvesting Video Link" %}</legend>
         <input class='wide' type="url" id="id_harvesting_video_link" name="harvesting_video_link" value="{{ plant.harvesting_video_link }}">
       </fieldset>
 
         <!--Fieldset for harvesting notes-->
       <fieldset class="form-group">
-        <legend>Harvesting Notes</legend>
+        <legend>{% trans "Harvesting Notes" %}</legend>
         <textarea class='wide' id="id_harvesting_notes" name="harvesting_notes">{{ plant.harvesting_notes }}</textarea>
       </fieldset>
-      <button class="btn" type="submit">Update Harvesting</button>
-      <a href="{% url 'plant-harvesting-update' plant.pk %}" class="btn btn-primary">Cancel</a>
+      <button class="btn" type="submit">{% trans "Update Harvesting" %}</button>
+      <a href="{% url 'plant-harvesting-update' plant.pk %}" class="btn btn-primary">{% trans "Cancel" %}</a>
     </form>
   </div>
   </main>

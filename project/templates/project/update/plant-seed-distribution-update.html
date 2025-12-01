@@ -1,27 +1,28 @@
 {% extends "core/base.html" %}
+{% load i18n %}
 {% load static %}
 
-{% block title %}{{plant.latin_name}} - Seed distribution{% endblock title %}
+{% block title %}{{plant.latin_name}} - {% trans "Seed distribution" %}{% endblock title %}
 {{title}}
 {% block content %}
   <main class="main-content">
     {% include "project/plant_profile/_profile_update_links.html" %}
     <div class="flex-col-center">
-      <h1>Update Plant Seed Distribution</h1>
+      <h1>{% trans "Update Plant Seed Distribution" %}</h1>
       <h2><a href="{% url 'plant-profile-page' plant.pk %}">{{ plant.latin_name }}</a></h2>
       <form method="post" action="{% url 'plant-seed-distribution-update' plant.pk %}">
         {% csrf_token %}
         <div class="form inputs">
           <fieldset>
-            <legend>Collecting Seeds</legend>
+            <legend>{% trans "Collecting Seeds" %}</legend>
             <!--input checkbox for accepting_seed-->
             <div class="input-checkbox">
               <input type="checkbox" id="id_accepting_seed" name="accepting_seed" class="input" {% if form.accepting_seed.value %}checked{% endif %}>
-              <label for="id_accepting_seed">Accepting Seed</label>
+              <label for="id_accepting_seed">{% trans "Accepting Seed" %}</label>
             </div>
             <!-- input select for packaging_measure-->
             <div class="input-select">
-              <label for="id_packaging_measure">Packaging Measure</label>
+              <label for="id_packaging_measure">{% trans "Packaging Measure" %}</label>
               <select id="id_packaging_measure" name="packaging_measure" class="input">
                 {% for choice in form.packaging_measure.field.choices %}
                   <option value="{{ choice.0 }}" {% if form.packaging_measure.value == choice.0 %}selected{% endif %}>{{ choice.1 }}</option>
@@ -30,10 +31,10 @@
             </div>
           </fieldset>
           <fieldset>
-            <legend>Event Preparation</legend>
+            <legend>{% trans "Event Preparation" %}</legend>
             <!--input select for seed_event_table-->
             <div class="input-select">
-              <label for="id_seed_event_table">Seed Event Table</label>
+              <label for="id_seed_event_table">{% trans "Seed Event Table" %}</label>
               <select id="id_seed_event_table" name="seed_event_table" class="input">
                 {% for choice in form.seed_event_table.field.choices %}
                   <option value="{{ choice.0 }}" {% if form.seed_event_table.value == choice.0 %}selected{% endif %}>{{ choice.1 }}</option>
@@ -43,20 +44,20 @@
             <!--input checkbox for seed_availability-->
             <div class="input-checkbox">
               <input type="checkbox" id="id_seed_availability" name="seed_availability" class="input" {% if form.seed_availability.value %}checked{% endif %}>
-              <label for="id_seed_availability">Seed Availability</label>
+              <label for="id_seed_availability">{% trans "Seed Availability" %}</label>
             </div>
             <!--link to seed box label-->
             <br>
             <div class="input-link">
-              <a target="_blank" href="{% url 'plant-seed-box-label-pdf' plant.pk %}">PDF Seed Box Label</a>
+              <a target="_blank" href="{% url 'plant-seed-box-label-pdf' plant.pk %}">{% trans "PDF Seed Box Label" %}</a>
             </div>
           </fieldset>
           <fieldset class="form-group">
-            <legend>Seed Distribution</legend>
+            <legend>{% trans "Seed Distribution" %}</legend>
 
             <!--Input select for seed_preparation-->
             <div class="input-select">
-              <label for="id_seed_preparation">Seed Preparation</label>
+              <label for="id_seed_preparation">{% trans "Seed Preparation" %}</label>
               <select id="id_seed_preparation" name="seed_preparation" class="input">
                 {% for choice in form.seed_preparation.field.choices %}
                   <option value="{{ choice.0 }}" {% if form.seed_preparation.value == choice.0 %}selected{% endif %}>{{ choice.1 }}</option>
@@ -65,22 +66,22 @@
             </div>
             <!--InPut text for sowing_label_instructions-->
             <div class="input-text">
-              <label for="id_sowing_label_instructions">Sowing Label Instructions</label>
+              <label for="id_sowing_label_instructions">{% trans "Sowing Label Instructions" %}</label>
               <input type="text" id="id_sowing_label_instructions" name="sowing_label_instructions" class="input" value="{{ form.sowing_label_instructions.value }}">
             </div>
             <!--Input text for sowing_notes-->
             <div class="input-text">
-              <label for="id_sowing_notes">Sowing Notes</label>
+              <label for="id_sowing_notes">{% trans "Sowing Notes" %}</label>
               <input type="text" id="id_sowing_notes" name="sowing_notes" class="input" value="{{ form.sowing_notes.value }}">
             </div>
             <!--Input text for envelope_label_link-->
             <div class="input-text">
-              <label for="id_envelope_label_link">Envelope Label Link</label>
+              <label for="id_envelope_label_link">{% trans "Envelope Label Link" %}</label>
               <input type="text" id="id_envelope_label_link" name="envelope_label_link" class="input" value="{{ form.envelope_label_link.value }}">
             </div>
             <!--Input select for seed_storage-->
             <div class="input-select">
-              <label for="id_seed_storage">Seed Storage</label>
+              <label for="id_seed_storage">{% trans "Seed Storage" %}</label>
               <select id="id_seed_storage" name="seed_storage" class="input">
                 {% for choice in form.seed_storage.field.choices %}
                   <option value="{{ choice.0 }}" {% if form.seed_storage.value == choice.0 %}selected{% endif %}>{{ choice.1 }}</option>
@@ -89,8 +90,8 @@
             </div>
           </fieldset>
         </div>
-        <button type="submit" class="btn btn-primary">Update</button>
-        <a href="{% url 'plant-seed-distribution-update' plant.pk %}" class="btn btn-primary">Cancel</a>
+        <button type="submit" class="btn btn-primary">{% trans "Update" %}</button>
+        <a href="{% url 'plant-seed-distribution-update' plant.pk %}" class="btn btn-primary">{% trans "Cancel" %}</a>
       </form>
     </div>
   </main>

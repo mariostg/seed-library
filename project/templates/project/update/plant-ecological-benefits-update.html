@@ -1,21 +1,22 @@
 {% extends "core/base.html" %}
+{% load i18n %}
 {% load static %}
 {% block extracss %}
   <link rel="stylesheet" href="{% static 'project/css/plant-ecological-benefits.css' %}">
 {% endblock extracss %}
-{% block title %}{{ plant_profile.latin_name }} - Ecological Benefits{% endblock title %}
+{% block title %}{{ plant_profile.latin_name }} - {% trans "Ecological Benefits" %}{% endblock title %}
 {{ title }}
 {% block content %}
   <main class="main-content">
     {% include "project/plant_profile/_profile_update_links.html" %}
     <div class="flex-col-center">
-      <h1>Update Plant Ecological Benefits</h1>
+      <h1>{% trans "Update Plant Ecological Benefits" %}</h1>
       <h2><a href="{% url 'plant-profile-page' plant.pk %}">{{ plant.latin_name }}</a></h2>
       <form action="{% url 'plant-ecological-benefits-update' plant.pk %}" method="post">
         {% csrf_token %}
         <div class="form inputs">
           <fieldset class="form-group">
-            <legend>Bee Interactions</legend>
+            <legend>{% trans "Bee Interactions" %}</legend>
             <div class="input-checkbox">
               {{ form.bee_host }}
               <label for="{{ form.bee_host.id_for_label }}">{{ form.bee_host.label }}</label>
@@ -23,7 +24,7 @@
 
             {% if plant.bees.all %}
               <fieldset class="form-group">
-                <legend>Bees Supported</legend>
+                <legend>{% trans "Bees Supported" %}</legend>
                 {% for bee in plant.bees.all %}
                   <div class="bee-item">
                     <input type="checkbox" id="bee_{{ bee.pk }}" name="bees" value="{{ bee.pk }}" checked>
@@ -35,7 +36,7 @@
             <!-- input checkboxes for unsupported bees -->
             <div class="form inputs">
               <fieldset class="form-group flex-row">
-                <legend>Add more supported Bees</legend>
+                <legend>{% trans "Add more supported Bees" %}</legend>
                 <div class="checkbox-group">
                   {% for bee in unsupported_bees %}
                     {% if forloop.counter0|divisibleby:10 and forloop.counter0 > 0 %}
@@ -53,7 +54,7 @@
           </fieldset>
 
           <fieldset class="form-group">
-            <legend>Butterfly Interactions</legend>
+            <legend>{% trans "Butterfly Interactions" %}</legend>
             <div class="input-checkbox">
               {{ form.butterfly_host }}
               <label for="{{ form.butterfly_host.id_for_label }}">{{ form.butterfly_host.label }}</label>
@@ -61,7 +62,7 @@
 
             {% if plant.butterflies.all %}
               <fieldset class="form-group">
-                <legend>Butterflies Supported</legend>
+                <legend>{% trans "Butterflies Supported" %}</legend>
                 {% for butterfly in plant.butterflies.all %}
                   <div class="butterfly-item">
                     <input type="checkbox" id="butterfly_{{ butterfly.pk }}" name="butterflies" value="{{ butterfly.pk }}" checked>
@@ -73,7 +74,7 @@
             <!-- input checkboxes for unsupported butterflies -->
             <div class="form inputs">
               <fieldset class="form-group flex-row">
-                <legend>Add more supported Butterflies</legend>
+                <legend>{% trans "Add more supported Butterflies" %}</legend>
                 <div class="checkbox-group">
                   {% for butterfly in unsupported_butterflies %}
                     {% if forloop.counter0|divisibleby:10 and forloop.counter0 > 0 %}
@@ -91,7 +92,7 @@
           </fieldset>
 
           <fieldset class="form-group">
-            <legend>Bird Interactions</legend>
+            <legend>{% trans "Bird Interactions" %}</legend>
                     <!--Input checkbox for bird friendly-->
             <div class="input-checkbox">
               {{ form.bird_friendly }}
@@ -104,7 +105,7 @@
             </div>
           </fieldset>
           <fieldset>
-            <legend>Other Wildlife Interactions</legend>
+            <legend>{% trans "Other Wildlife Interactions" %}</legend>
                     <!--Input checkbox for deer resistant-->
             <div class="input-checkbox">
               {{ form.deer_tolerant }}
@@ -117,7 +118,7 @@
             </div>
           </fieldset>
           <fieldset>
-            <legend>Other Tolerances</legend>
+            <legend>{% trans "Other Tolerances" %}</legend>
             <div class="input-checkbox">
               {{ form.drought_tolerant }}
               <label for="{{ form.drought_tolerant.id_for_label }}">{{ form.drought_tolerant.label }}</label>
@@ -132,7 +133,7 @@
             </div>
           </fieldset>
           <fieldset>
-            <legend>Ecosystem Services</legend>
+            <legend>{% trans "Ecosystem Services" %}</legend>
             <div class="input-checkbox">
               {{ form.nitrogen_fixer }}
               <label for="{{ form.nitrogen_fixer.id_for_label }}">{{ form.nitrogen_fixer.label }}</label>
@@ -144,8 +145,8 @@
             </div>
           </fieldset>
         </div>
-        <button type="submit" class="btn btn-primary">Update</button>
-        <a href="{% url 'plant-ecological-benefits-update' plant.pk %}" class="btn btn-primary">Cancel</a>
+        <button type="submit" class="btn btn-primary">{% trans "Update" %}</button>
+        <a href="{% url 'plant-ecological-benefits-update' plant.pk %}" class="btn btn-primary">{% trans "Cancel" %}</a>
       </form>
     </div>
   </main>

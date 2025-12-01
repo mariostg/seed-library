@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-01 02:46+0000\n"
+"POT-Creation-Date: 2025-12-01 03:01+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -27,29 +27,37 @@ msgid "French"
 msgstr ""
 
 #: project/models.py:34 project/models.py:1090
+#: project/templates/project/update/plant-seed-distribution-update.html:37
 msgid "Seed Event Table"
 msgstr "Disponible à la table"
 
 #: project/models.py:59 project/models.py:986
+#: project/templates/project/update/plant-harvesting-update.html:30
 msgid "Harvesting Indicator"
 msgstr ""
 
 #: project/models.py:89 project/models.py:993
 #: project/templates/project/plant_profile/_profile_harvesting.html:23
 #: project/templates/project/plant_profile/_profile_update_links.html:16
+#: project/templates/project/update/plant-harvesting-update.html:5
+#: project/templates/project/update/plant-harvesting-update.html:51
 msgid "Harvesting"
 msgstr ""
 
 #: project/models.py:117 project/models.py:1000
 #: project/templates/project/admin/admin-seed-head-page.html:18
+#: project/templates/project/update/plant-harvesting-update.html:71
 msgid "Seed Head"
 msgstr ""
 
 #: project/models.py:141 project/models.py:1008
+#: project/templates/project/update/plant-harvesting-update.html:143
 msgid "Seed Viability Test"
 msgstr ""
 
 #: project/models.py:168 project/models.py:1015
+#: project/templates/project/update/plant-harvesting-update.html:103
+#: project/templates/project/update/plant-seed-distribution-update.html:84
 msgid "Seed Storage"
 msgstr ""
 
@@ -59,10 +67,12 @@ msgid "Cultivar"
 msgstr ""
 
 #: project/models.py:220 project/models.py:1060
+#: project/templates/project/update/plant-seed-distribution-update.html:25
 msgid "Packaging Measure"
 msgstr ""
 
 #: project/models.py:247 project/models.py:1067
+#: project/templates/project/update/plant-seed-distribution-update.html:60
 msgid "Seed Preparation"
 msgstr ""
 
@@ -89,11 +99,13 @@ msgstr ""
 
 #: project/models.py:385 project/models.py:927
 #: project/templates/project/plant_profile/_profile_env_requirements_growth_characteristics.html:5
+#: project/templates/project/update/plant-growth-characteristics-update.html:146
 msgid "Bloom Colour"
 msgstr ""
 
 #: project/models.py:412 project/models.py:942
 #: project/templates/project/admin/admin-growth-habit-page.html:18
+#: project/templates/project/update/plant-growth-characteristics-update.html:51
 msgid "Growth Habit"
 msgstr ""
 
@@ -102,6 +114,7 @@ msgstr ""
 #: project/templates/project/filters/_filter_growth_characteristics.html:32
 #: project/templates/project/plant_profile/_profile_env_requirements_growth_characteristics.html:82
 #: project/templates/project/plant_profile/_profile_icons_definition.html:164
+#: project/templates/project/update/plant-growth-characteristics-update.html:110
 msgid "Lifespan"
 msgstr ""
 
@@ -120,12 +133,14 @@ msgstr ""
 #: project/templates/project/admin/admin-bee-species-page.html:18
 #: project/templates/project/admin/admin-butterfly-species-page.html:18
 #: project/templates/project/admin/admin-non-native-species-page.html:18
+#: project/templates/project/update/plant-identification-information-update.html:30
 msgid "Latin Name"
 msgstr ""
 
 #: project/models.py:556 project/models.py:583 project/models.py:868
 #: project/templates/project/admin/admin-butterfly-species-page.html:19
 #: project/templates/project/admin/admin-non-native-species-page.html:19
+#: project/templates/project/update/plant-identification-information-update.html:35
 msgid "English Name"
 msgstr ""
 
@@ -230,6 +245,7 @@ msgid "Show Vascan Map Information"
 msgstr ""
 
 #: project/models.py:871
+#: project/templates/project/update/plant-identification-information-update.html:40
 msgid "French Name"
 msgstr ""
 
@@ -244,18 +260,21 @@ msgstr ""
 #: project/models.py:881
 #: project/templates/project/filters/_filter_environmental_requirements.html:16
 #: project/templates/project/plant_profile/_profile_icons_definition.html:21
+#: project/templates/project/update/plant-environmental-requirement-update.html:22
 msgid "Full Sun"
 msgstr ""
 
 #: project/models.py:884
 #: project/templates/project/filters/_filter_environmental_requirements.html:34
 #: project/templates/project/plant_profile/_profile_icons_definition.html:31
+#: project/templates/project/update/plant-environmental-requirement-update.html:26
 msgid "Part Shade"
 msgstr ""
 
 #: project/models.py:887
 #: project/templates/project/filters/_filter_environmental_requirements.html:53
 #: project/templates/project/plant_profile/_profile_icons_definition.html:41
+#: project/templates/project/update/plant-environmental-requirement-update.html:30
 msgid "Full Shade"
 msgstr ""
 
@@ -273,16 +292,19 @@ msgstr ""
 
 #: project/models.py:905
 #: project/templates/project/plant_profile/_profile_tolerates.html:53
+#: project/templates/project/update/plant-environmental-requirement-update.html:52
 msgid "Limestone Tolerant"
 msgstr ""
 
 #: project/models.py:908
 #: project/templates/project/plant_profile/_profile_tolerates.html:62
+#: project/templates/project/update/plant-environmental-requirement-update.html:56
 msgid "Sand Tolerant"
 msgstr ""
 
 #: project/models.py:911
 #: project/templates/project/plant_profile/_profile_tolerates.html:71
+#: project/templates/project/update/plant-environmental-requirement-update.html:60
 msgid "Acidic Soil Tolerant"
 msgstr ""
 
@@ -297,37 +319,48 @@ msgstr ""
 #: project/models.py:935
 #: project/templates/project/filters/_filter_growth_characteristics.html:85
 #: project/templates/project/plant_profile/_profile_env_requirements_growth_characteristics.html:85
+#: project/templates/project/update/plant-growth-characteristics-update.html:102
 msgid "Spring Ephemeral"
 msgstr ""
 
 #: project/models.py:945
+#: project/templates/project/update/plant-growth-characteristics-update.html:72
 msgid "Spread by Rhizome"
 msgstr ""
 
 #: project/models.py:948
+#: project/templates/project/update/plant-growth-characteristics-update.html:68
+#: project/templates/project/update/plant-introductory-gardening-experience-update.html:27
 msgid "Does Not Spread"
 msgstr ""
 
 #: project/models.py:950
+#: project/templates/project/update/plant-growth-characteristics-update.html:106
 msgid "Dioecious"
 msgstr ""
 
 #: project/models.py:952
+#: project/templates/project/update/plant-growth-characteristics-update.html:77
 msgid "Germinate Easy"
 msgstr ""
 
 #: project/models.py:954
+#: project/templates/project/update/plant-growth-characteristics-update.html:82
+#: project/templates/project/update/plant-introductory-gardening-experience-update.html:37
 msgid "Self Seeding"
 msgstr ""
 
 #: project/models.py:956
 #: project/templates/project/filters/_filter_gardening_experience.html:16
 #: project/templates/project/plant_profile/_profile_icons_definition.html:101
+#: project/templates/project/update/plant-growth-characteristics-update.html:87
+#: project/templates/project/update/plant-introductory-gardening-experience-update.html:22
 msgid "Beginner Friendly"
 msgstr ""
 
 #: project/models.py:959
 #: project/templates/project/plant_profile/_profile_tolerates.html:89
+#: project/templates/project/update/plant-growth-characteristics-update.html:92
 msgid "Transplantation Tolerant"
 msgstr ""
 
@@ -348,14 +381,17 @@ msgid "Harvesting Start"
 msgstr ""
 
 #: project/models.py:1025
+#: project/templates/project/update/plant-harvesting-update.html:163
 msgid "Harvesting Video Link"
 msgstr ""
 
 #: project/models.py:1028
+#: project/templates/project/update/plant-harvesting-update.html:169
 msgid "Harvesting Notes"
 msgstr ""
 
 #: project/models.py:1033
+#: project/templates/project/update/plant-sowing-update.html:34
 msgid "Stratification Detail"
 msgstr ""
 
@@ -364,50 +400,64 @@ msgid "Double Dormancy"
 msgstr ""
 
 #: project/models.py:1070
+#: project/templates/project/update/plant-seed-distribution-update.html:69
 msgid "Sowing Label Instructions"
 msgstr ""
 
 #: project/models.py:1073
+#: project/templates/project/update/plant-seed-distribution-update.html:74
+#: project/templates/project/update/plant-sowing-update.html:55
 msgid "Sowing Notes"
 msgstr ""
 
 #: project/models.py:1076
+#: project/templates/project/update/plant-seed-distribution-update.html:79
 msgid "Envelope Label Link"
 msgstr ""
 
 #: project/models.py:1092
+#: project/templates/project/update/plant-sowing-update.html:53
 msgid "Notes"
 msgstr ""
 
 #: project/models.py:1094
+#: project/templates/project/update/plant-seed-distribution-update.html:21
 msgid "Accepting Seed"
 msgstr ""
 
 #: project/models.py:1097
+#: project/templates/project/update/plant-seed-distribution-update.html:47
+#: project/templates/project/update/update-availability.html:16
 msgid "Seed Availability"
 msgstr ""
 
 #: project/models.py:1104
+#: project/templates/project/update/plant-landscape-use-and-application-update.html:23
 msgid "Pollinator Garden"
 msgstr ""
 
 #: project/models.py:1106
+#: project/templates/project/update/plant-landscape-use-and-application-update.html:28
 msgid "Rock Garden"
 msgstr ""
 
 #: project/models.py:1107
+#: project/templates/project/update/plant-landscape-use-and-application-update.html:33
 msgid "Rain Garden"
 msgstr ""
 
 #: project/models.py:1108
+#: project/templates/project/update/plant-landscape-use-and-application-update.html:37
 msgid "School Garden"
 msgstr ""
 
 #: project/models.py:1110
+#: project/templates/project/update/plant-landscape-use-and-application-update.html:42
 msgid "Wetland Garden"
 msgstr ""
 
 #: project/models.py:1113
+#: project/templates/project/update/plant-landscape-use-and-application-update.html:47
 msgid "Woodland Garden"
 msgstr ""
 
@@ -420,24 +470,29 @@ msgid "Shoreline Rehab"
 msgstr ""
 
 #: project/models.py:1123
+#: project/templates/project/update/plant-landscape-use-and-application-update.html:60
 msgid "Container Suitable"
 msgstr ""
 
 #: project/models.py:1125
+#: project/templates/project/update/plant-landscape-use-and-application-update.html:70
 msgid "Ground Cover"
 msgstr ""
 
 #: project/models.py:1127
+#: project/templates/project/update/plant-landscape-use-and-application-update.html:65
 msgid "Easy to Contain"
 msgstr ""
 
 #: project/models.py:1129
 #: project/templates/project/filters/_filter_landscape_uses_and_applications.html:174
+#: project/templates/project/update/plant-landscape-use-and-application-update.html:75
 msgid "Hedge"
 msgstr ""
 
 #: project/models.py:1132
 #: project/templates/project/plant_profile/_profile_tolerates.html:44
+#: project/templates/project/update/plant-landscape-use-and-application-update.html:85
 msgid "Foot Traffic Tolerant"
 msgstr ""
 
@@ -553,6 +608,9 @@ msgid "plant morphology"
 msgstr ""
 
 #: project/models.py:1451 project/models.py:1597 project/models.py:1626
+#: project/templates/project/update/plant-environmental-requirement-update.html:7
+#: project/templates/project/update/plant-identification-information-update.html:13
+#: project/templates/project/update/plant-landscape-use-and-application-update.html:7
 msgid "Plant Profile"
 msgstr ""
 
@@ -742,6 +800,16 @@ msgid "Submit"
 msgstr ""
 
 #: project/templates/project/admin/admin-image-form.html:19
+#: project/templates/project/update/plant-ecological-benefits-update.html:149
+#: project/templates/project/update/plant-environmental-requirement-update.html:65
+#: project/templates/project/update/plant-growth-characteristics-update.html:190
+#: project/templates/project/update/plant-harvesting-update.html:173
+#: project/templates/project/update/plant-identification-information-update.html:60
+#: project/templates/project/update/plant-introductory-gardening-experience-update.html:61
+#: project/templates/project/update/plant-landscape-use-and-application-update.html:90
+#: project/templates/project/update/plant-seed-distribution-update.html:94
+#: project/templates/project/update/plant-sowing-update.html:61
+#: project/templates/project/update/plant-special-features-and-considerations-update.html:216
 msgid "Cancel"
 msgstr ""
 
@@ -876,6 +944,7 @@ msgstr ""
 #: project/templates/project/filters/_filter_location.html:133
 #: project/templates/project/plant_profile/_profile_ecozone.html:4
 #: project/templates/project/plant_profile/_profile_icons_definition.html:734
+#: project/templates/project/update/plant-special-features-and-considerations-update.html:87
 msgid "Ecozones"
 msgstr ""
 
@@ -1030,6 +1099,7 @@ msgstr ""
 #: project/templates/project/filters/_filter.html:24
 #: project/templates/project/plant_profile/_profile_icons_definition.html:91
 #: project/templates/project/plant_profile/_profile_update_links.html:11
+#: project/templates/project/update/plant-introductory-gardening-experience-update.html:5
 msgid "Introductory Gardening Experience"
 msgstr ""
 
@@ -1055,12 +1125,14 @@ msgstr ""
 #: project/templates/project/plant_profile/_profile_icons_definition.html:515
 #: project/templates/project/plant_profile/_profile_update_links.html:13
 #: project/templates/project/plant_profile/plant-profile-page.html:115
+#: project/templates/project/update/plant-ecological-benefits-update.html:7
 msgid "Ecological Benefits"
 msgstr ""
 
 #: project/templates/project/filters/_filter.html:77
 #: project/templates/project/plant_profile/_profile_icons_definition.html:615
 #: project/templates/project/plant_profile/_profile_update_links.html:15
+#: project/templates/project/update/plant-special-features-and-considerations-update.html:7
 msgid "Special Features and Considerations"
 msgstr ""
 
@@ -1133,6 +1205,7 @@ msgstr ""
 
 #: project/templates/project/filters/_filter_ecological_benefits.html:141
 #: project/templates/project/plant_profile/_profile_icons_definition.html:570
+#: project/templates/project/update/plant-ecological-benefits-update.html:136
 msgid "Ecosystem Services"
 msgstr ""
 
@@ -1180,6 +1253,7 @@ msgstr ""
 
 #: project/templates/project/filters/_filter_environmental_requirements.html:70
 #: project/templates/project/plant_profile/_profile_icons_definition.html:61
+#: project/templates/project/update/plant-environmental-requirement-update.html:37
 msgid "Dry"
 msgstr ""
 
@@ -1190,6 +1264,7 @@ msgstr ""
 
 #: project/templates/project/filters/_filter_environmental_requirements.html:87
 #: project/templates/project/plant_profile/_profile_icons_definition.html:71
+#: project/templates/project/update/plant-environmental-requirement-update.html:41
 msgid "Medium"
 msgstr ""
 
@@ -1199,6 +1274,7 @@ msgstr ""
 
 #: project/templates/project/filters/_filter_environmental_requirements.html:103
 #: project/templates/project/plant_profile/_profile_icons_definition.html:81
+#: project/templates/project/update/plant-environmental-requirement-update.html:45
 msgid "Wet"
 msgstr ""
 
@@ -1209,6 +1285,7 @@ msgstr ""
 
 #: project/templates/project/filters/_filter_gardening_experience.html:2
 #: project/templates/project/plant_profile/_profile_icons_definition.html:92
+#: project/templates/project/update/plant-introductory-gardening-experience-update.html:18
 msgid "Gardening Experience"
 msgstr ""
 
@@ -1220,6 +1297,7 @@ msgstr ""
 
 #: project/templates/project/filters/_filter_gardening_experience.html:46
 #: project/templates/project/plant_profile/_profile_icons_definition.html:121
+#: project/templates/project/update/plant-introductory-gardening-experience-update.html:32
 msgid "Easy to Germinate"
 msgstr ""
 
@@ -1235,10 +1313,12 @@ msgstr ""
 
 #: project/templates/project/filters/_filter_gardening_experience.html:63
 #: project/templates/project/plant_profile/_profile_icons_definition.html:137
+#: project/templates/project/update/plant-introductory-gardening-experience-update.html:42
 msgid "Starter Packs"
 msgstr ""
 
 #: project/templates/project/filters/_filter_gardening_experience.html:79
+#: project/templates/project/update/plant-introductory-gardening-experience-update.html:46
 msgid "Shade"
 msgstr ""
 
@@ -1431,35 +1511,41 @@ msgstr ""
 
 #: project/templates/project/filters/_filter_location.html:2
 #: project/templates/project/plant_profile/_profile_icons_definition.html:710
+#: project/templates/project/update/plant-special-features-and-considerations-update.html:103
 msgid "Provinces and Territories"
 msgstr ""
 
 #: project/templates/project/filters/_filter_location.html:21
 #: project/templates/project/filters/_filter_page.html:15
 #: project/templates/project/plant_profile/_profile_icons_definition.html:720
+#: project/templates/project/update/plant-special-features-and-considerations-update.html:118
 msgid "British Columbia"
 msgstr ""
 
 #: project/templates/project/filters/_filter_location.html:41
 #: project/templates/project/filters/_filter_page.html:19
 #: project/templates/project/plant_profile/_profile_icons_definition.html:722
+#: project/templates/project/update/plant-special-features-and-considerations-update.html:134
 msgid "New Brunswick"
 msgstr ""
 
 #: project/templates/project/filters/_filter_location.html:51
 #: project/templates/project/filters/_filter_page.html:21
 #: project/templates/project/plant_profile/_profile_icons_definition.html:723
+#: project/templates/project/update/plant-special-features-and-considerations-update.html:142
 msgid "Newfoundland and Labrador"
 msgstr ""
 
 #: project/templates/project/filters/_filter_location.html:61
 #: project/templates/project/plant_profile/_profile_icons_definition.html:725
+#: project/templates/project/update/plant-special-features-and-considerations-update.html:150
 msgid "Northwest Territories"
 msgstr ""
 
 #: project/templates/project/filters/_filter_location.html:71
 #: project/templates/project/filters/_filter_page.html:23
 #: project/templates/project/plant_profile/_profile_icons_definition.html:724
+#: project/templates/project/update/plant-special-features-and-considerations-update.html:158
 msgid "Nova Scotia"
 msgstr ""
 
@@ -1472,11 +1558,13 @@ msgstr ""
 #: project/templates/project/filters/_filter_location.html:101
 #: project/templates/project/filters/_filter_page.html:31
 #: project/templates/project/plant_profile/_profile_icons_definition.html:728
+#: project/templates/project/update/plant-special-features-and-considerations-update.html:182
 msgid "Prince Edward Island"
 msgstr ""
 
 #: project/templates/project/filters/_filter_location.html:111
 #: project/templates/project/plant_profile/_profile_icons_definition.html:729
+#: project/templates/project/update/plant-special-features-and-considerations-update.html:190
 msgid "Quebec"
 msgstr ""
 
@@ -1788,6 +1876,7 @@ msgid "No butterfly data available for this plant."
 msgstr ""
 
 #: project/templates/project/plant_profile/_profile_complementary_plants.html:8
+#: project/templates/project/update/plant-growth-characteristics-update.html:167
 msgid "No complementary plants found."
 msgstr ""
 
@@ -2686,10 +2775,12 @@ msgid "Substitutes To"
 msgstr ""
 
 #: project/templates/project/plant_profile/_profile_update_links.html:17
+#: project/templates/project/update/plant-sowing-update.html:18
 msgid "Sowing"
 msgstr ""
 
 #: project/templates/project/plant_profile/_profile_update_links.html:18
+#: project/templates/project/update/plant-seed-distribution-update.html:56
 msgid "Seed Distribution"
 msgstr ""
 
@@ -2698,6 +2789,7 @@ msgid "Native to Ottawa region"
 msgstr ""
 
 #: project/templates/project/plant_profile/_profile_vascan_map.html:5
+#: project/templates/project/update/plant-harvesting-update.html:96
 msgid "Yes"
 msgstr ""
 
@@ -2818,11 +2910,342 @@ msgid "Substitute For Non-Native Plants"
 msgstr ""
 
 #: project/templates/project/plant_profile/plant-profile-page.html:147
+#: project/templates/project/update/plant-sowing-update.html:5
 msgid "Sowing Information"
 msgstr ""
 
 #: project/templates/project/plant_profile/plant-profile-page.html:165
 msgid "Toxicity Notes"
+msgstr ""
+
+#: project/templates/project/update/plant-ecological-benefits-update.html:13
+msgid "Update Plant Ecological Benefits"
+msgstr ""
+
+#: project/templates/project/update/plant-ecological-benefits-update.html:19
+msgid "Bee Interactions"
+msgstr ""
+
+#: project/templates/project/update/plant-ecological-benefits-update.html:27
+msgid "Bees Supported"
+msgstr ""
+
+#: project/templates/project/update/plant-ecological-benefits-update.html:39
+msgid "Add more supported Bees"
+msgstr ""
+
+#: project/templates/project/update/plant-ecological-benefits-update.html:57
+msgid "Butterfly Interactions"
+msgstr ""
+
+#: project/templates/project/update/plant-ecological-benefits-update.html:65
+msgid "Butterflies Supported"
+msgstr ""
+
+#: project/templates/project/update/plant-ecological-benefits-update.html:77
+msgid "Add more supported Butterflies"
+msgstr ""
+
+#: project/templates/project/update/plant-ecological-benefits-update.html:95
+msgid "Bird Interactions"
+msgstr ""
+
+#: project/templates/project/update/plant-ecological-benefits-update.html:108
+msgid "Other Wildlife Interactions"
+msgstr ""
+
+#: project/templates/project/update/plant-ecological-benefits-update.html:121
+msgid "Other Tolerances"
+msgstr ""
+
+#: project/templates/project/update/plant-ecological-benefits-update.html:148
+#: project/templates/project/update/plant-environmental-requirement-update.html:64
+#: project/templates/project/update/plant-growth-characteristics-update.html:189
+#: project/templates/project/update/plant-identification-information-update.html:58
+#: project/templates/project/update/plant-landscape-use-and-application-update.html:89
+#: project/templates/project/update/plant-seed-distribution-update.html:93
+#: project/templates/project/update/plant-sowing-update.html:60
+#: project/templates/project/update/plant-special-features-and-considerations-update.html:215
+msgid "Update"
+msgstr ""
+
+#: project/templates/project/update/plant-environmental-requirement-update.html:13
+msgid "Update Plant Environmental Requirements"
+msgstr ""
+
+#: project/templates/project/update/plant-environmental-requirement-update.html:19
+msgid "Sunlight Requirements"
+msgstr ""
+
+#: project/templates/project/update/plant-environmental-requirement-update.html:34
+msgid "Moisture Requirements"
+msgstr ""
+
+#: project/templates/project/update/plant-environmental-requirement-update.html:49
+msgid "Soil Preferences"
+msgstr ""
+
+#: project/templates/project/update/plant-growth-characteristics-update.html:26
+msgid "Plant Growth Characteristics"
+msgstr ""
+
+#: project/templates/project/update/plant-growth-characteristics-update.html:32
+msgid "Update Plant Growth Characteristics"
+msgstr ""
+
+#: project/templates/project/update/plant-growth-characteristics-update.html:39
+msgid "Physical Dimensions"
+msgstr ""
+
+#: project/templates/project/update/plant-growth-characteristics-update.html:41
+msgid "Maximum Height (feet)"
+msgstr ""
+
+#: project/templates/project/update/plant-growth-characteristics-update.html:45
+msgid "Maximum Width (feet)"
+msgstr ""
+
+#: project/templates/project/update/plant-growth-characteristics-update.html:65
+msgid "Spread Characteristics"
+msgstr ""
+
+#: project/templates/project/update/plant-growth-characteristics-update.html:99
+msgid "Life Cycle Characteristics"
+msgstr ""
+
+#: project/templates/project/update/plant-growth-characteristics-update.html:124
+msgid "Bloom characteristics"
+msgstr ""
+
+#: project/templates/project/update/plant-growth-characteristics-update.html:126
+msgid "Bloom Start Month"
+msgstr ""
+
+#: project/templates/project/update/plant-growth-characteristics-update.html:136
+msgid "Bloom End Month"
+msgstr ""
+
+#: project/templates/project/update/plant-growth-characteristics-update.html:159
+msgid "Plant Complementary"
+msgstr ""
+
+#: project/templates/project/update/plant-growth-characteristics-update.html:174
+msgid "Add More Complements"
+msgstr ""
+
+#: project/templates/project/update/plant-harvesting-update.html:11
+msgid "Update Plant Harvesting"
+msgstr ""
+
+#: project/templates/project/update/plant-harvesting-update.html:18
+msgid "Harvesting Start Month"
+msgstr ""
+
+#: project/templates/project/update/plant-harvesting-update.html:34
+#: project/templates/project/update/plant-harvesting-update.html:55
+#: project/templates/project/update/plant-harvesting-update.html:75
+#: project/templates/project/update/plant-harvesting-update.html:107
+#: project/templates/project/update/plant-harvesting-update.html:127
+#: project/templates/project/update/plant-harvesting-update.html:147
+msgid "None"
+msgstr ""
+
+#: project/templates/project/update/plant-harvesting-update.html:92
+msgid "Remove Non-Seed Material"
+msgstr ""
+
+#: project/templates/project/update/plant-harvesting-update.html:123
+msgid "On Cultivars"
+msgstr ""
+
+#: project/templates/project/update/plant-harvesting-update.html:172
+msgid "Update Harvesting"
+msgstr ""
+
+#: project/templates/project/update/plant-identification-information-update.html:19
+msgid "Update Plant Identification Information"
+msgstr ""
+
+#: project/templates/project/update/plant-identification-information-update.html:26
+msgid "Plant Names"
+msgstr ""
+
+#: project/templates/project/update/plant-identification-information-update.html:45
+msgid "Taxonomy"
+msgstr ""
+
+#: project/templates/project/update/plant-identification-information-update.html:48
+msgid "VASCAN Taxon ID Number"
+msgstr ""
+
+#: project/templates/project/update/plant-identification-information-update.html:53
+msgid "iNaturalist Taxon ID Number"
+msgstr ""
+
+#: project/templates/project/update/plant-introductory-gardening-experience-update.html:11
+msgid "Update Introductory Gardening Experience"
+msgstr ""
+
+#: project/templates/project/update/plant-introductory-gardening-experience-update.html:51
+msgid "Sun/Dry"
+msgstr ""
+
+#: project/templates/project/update/plant-introductory-gardening-experience-update.html:56
+msgid "Sun/Wet"
+msgstr ""
+
+#: project/templates/project/update/plant-introductory-gardening-experience-update.html:60
+msgid "Save Changes"
+msgstr ""
+
+#: project/templates/project/update/plant-landscape-use-and-application-update.html:13
+msgid "Update Plant Landscape Use and Application"
+msgstr ""
+
+#: project/templates/project/update/plant-landscape-use-and-application-update.html:19
+msgid "Landscape Use"
+msgstr ""
+
+#: project/templates/project/update/plant-landscape-use-and-application-update.html:52
+msgid "Boulevard Garden"
+msgstr ""
+
+#: project/templates/project/update/plant-landscape-use-and-application-update.html:56
+msgid "Applications"
+msgstr ""
+
+#: project/templates/project/update/plant-landscape-use-and-application-update.html:80
+msgid "Shoreline Rehabilitation"
+msgstr ""
+
+#: project/templates/project/update/plant-seed-distribution-update.html:5
+msgid "Seed distribution"
+msgstr ""
+
+#: project/templates/project/update/plant-seed-distribution-update.html:11
+msgid "Update Plant Seed Distribution"
+msgstr ""
+
+#: project/templates/project/update/plant-seed-distribution-update.html:17
+msgid "Collecting Seeds"
+msgstr ""
+
+#: project/templates/project/update/plant-seed-distribution-update.html:34
+msgid "Event Preparation"
+msgstr ""
+
+#: project/templates/project/update/plant-seed-distribution-update.html:52
+msgid "PDF Seed Box Label"
+msgstr ""
+
+#: project/templates/project/update/plant-sowing-update.html:11
+msgid "Update Plant Sowing Information"
+msgstr ""
+
+#: project/templates/project/update/plant-sowing-update.html:21
+msgid "Depth (inches)"
+msgstr ""
+
+#: project/templates/project/update/plant-sowing-update.html:32
+msgid "Stratification and Dormancy"
+msgstr ""
+
+#: project/templates/project/update/plant-sowing-update.html:39
+msgid "Stratification Duration (days)"
+msgstr ""
+
+#: project/templates/project/update/plant-sowing-update.html:49
+msgid "Double Dormancy Required"
+msgstr ""
+
+#: project/templates/project/update/plant-special-features-and-considerations-update.html:12
+msgid "Update Special Features and Considerations"
+msgstr ""
+
+#: project/templates/project/update/plant-special-features-and-considerations-update.html:20
+msgid "Environment"
+msgstr ""
+
+#: project/templates/project/update/plant-special-features-and-considerations-update.html:29
+msgid "Toxicity and Safety"
+msgstr ""
+
+#: project/templates/project/update/plant-special-features-and-considerations-update.html:53
+msgid "GRASP"
+msgstr ""
+
+#: project/templates/project/update/plant-special-features-and-considerations-update.html:67
+msgid "Conservation status and Distribution"
+msgstr ""
+
+#: project/templates/project/update/plant-special-features-and-considerations-update.html:77
+msgid "Locations"
+msgstr ""
+
+#: project/templates/project/update/plant-substitute-update.html:6
+msgid "substitutes to"
+msgstr ""
+
+#: project/templates/project/update/plant-substitute-update.html:12
+msgid "Update Plant Substitute To"
+msgstr ""
+
+#: project/templates/project/update/plant-substitute-update.html:19
+msgid "Substitute To"
+msgstr ""
+
+#: project/templates/project/update/plant-substitute-update.html:31
+msgid "Add more non-native substitutes"
+msgstr ""
+
+#: project/templates/project/update/plant-substitute-update.html:48
+msgid "Update Substitutes To"
+msgstr ""
+
+#: project/templates/project/update/update-availability.html:9
+msgid ""
+"Use this table to prepare a list of available plants for the next give away "
+"event.  Click on the plant to toggle its availailability.  Plants "
+"highlighted in green are marked available. View"
+msgstr ""
+
+#: project/templates/project/update/update-availability.html:9
+msgid "available plants"
+msgstr ""
+
+#: project/templates/project/update/update-availability.html:9
+msgid ""
+"in a new tab. From there, you can drill down further to refine the research."
+msgstr ""
+
+#: project/templates/project/update/update-availability.html:13
+#, fuzzy
+#| msgid "Seed Event Table"
+msgid "Event Table"
+msgstr "Disponible à la table"
+
+#: project/templates/project/update/update-availability.html:14
+msgid "Names"
+msgstr ""
+
+#: project/templates/project/update/update-availability.html:15
+msgid "Seed Needed"
+msgstr ""
+
+#: project/templates/project/update/update-availability.html:17
+msgid "Seeds Accepted"
+msgstr ""
+
+#: project/templates/project/update/update-availability.html:18
+msgid "Plant Active"
+msgstr ""
+
+#: project/templates/project/update/update-availability.html:19
+msgid "Plant Accepted"
+msgstr ""
+
+#: project/templates/project/update/update-availability.html:60
+msgid "Profile"
 msgstr ""
 
 #: templates/core/base.html:10

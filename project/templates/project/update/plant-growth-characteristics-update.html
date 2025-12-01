@@ -19,35 +19,36 @@ It allows users to update the plant growth characteristics, including:
 -->
 
 {% extends "core/base.html" %}
+{% load i18n %}
 {% load static %}
 
 
-{% block title %}{{ plant.latin_name }} - Plant Growth Characteristics{% endblock title %}
+{% block title %}{{ plant.latin_name }} - {% trans "Plant Growth Characteristics" %}{% endblock title %}
 {{ title }}
 {% block content %}
   <main class="main-content">
     {% include "project/plant_profile/_profile_update_links.html" %}
     <div class="flex-col-center">
-      <h1>Update Plant Growth Characteristics</h1>
+      <h1>{% trans "Update Plant Growth Characteristics" %}</h1>
       <h2><a href="{% url 'plant-profile-page' plant.pk %}">{{ plant.latin_name }}</a></h2>
       <form method="post" action="{% url 'plant-growth-characteristics-update' plant.pk %}">
         {% csrf_token %}
         <div class="form inputs">
               <!--Physical Dimensions-->
           <fieldset class="form-group">
-            <legend>Physical Dimensions</legend>
+            <legend>{% trans "Physical Dimensions" %}</legend>
             <div class="input-text">
-              <label for="id_max_height">Maximum Height (feet)</label>
+              <label for="id_max_height">{% trans "Maximum Height (feet)" %}</label>
               <input type="number" id="id_max_height" name="max_height" value="{{ plant.max_height }}" step="0.01" required>
             </div>
             <div class="input-text">
-              <label for="id_max_width">Maximum Width (feet)</label>
+              <label for="id_max_width">{% trans "Maximum Width (feet)" %}</label>
               <input type="number" id="id_max_width" name="max_width" value="{{ plant.max_width }}" step="0.01" required>
             </div>
           </fieldset>
               <!--growth_habit-->
           <fieldset class="form-group">
-            <legend>Growth Habit</legend>
+            <legend>{% trans "Growth Habit" %}</legend>
             <div class="radio-options">
               {% for habit in growth_habits %}
                 <div class="radio-option">
@@ -61,52 +62,52 @@ It allows users to update the plant growth characteristics, including:
 
             <!--Plant Spread Characteristics-->
           <fieldset class="form-group">
-            <legend>Spread Characteristics</legend>
+            <legend>{% trans "Spread Characteristics" %}</legend>
             <div class="input-checkbox">
               <input type="checkbox" id="id_does_not_spread" name="does_not_spread" {% if plant.does_not_spread %}checked{% endif %}>
-              <label for="id_does_not_spread">Does Not Spread</label>
+              <label for="id_does_not_spread">{% trans "Does Not Spread" %}</label>
             </div>
             <div class="input-checkbox">
               <input type="checkbox" id="id_spread_by_rhizome" name="spread_by_rhizome" {% if plant.spread_by_rhizome %}checked{% endif %}>
-              <label for="id_spread_by_rhizome">Spread by Rhizome</label>
+              <label for="id_spread_by_rhizome">{% trans "Spread by Rhizome" %}</label>
             </div>
             <!--input checkbox for germinate_easy-->
             <div class="input-checkbox">
               <input type="checkbox" id="id_germinate_easy" name="germinate_easy" {% if plant.germinate_easy %}checked{% endif %}>
-              <label for="id_germinate_easy">Germinate Easy</label>
+              <label for="id_germinate_easy">{% trans "Germinate Easy" %}</label>
             </div>
             <!--input checkbox for self_seeding-->
             <div class="input-checkbox">
               <input type="checkbox" id="id_self_seeding" name="self_seeding" {% if plant.self_seeding %}checked{% endif %}>
-              <label for="id_self_seeding">Self Seeding</label>
+              <label for="id_self_seeding">{% trans "Self Seeding" %}</label>
             </div>
             <!--input checkbox for beginner_friendly-->
             <div class="input-checkbox">
               <input type="checkbox" id="id_beginner_friendly" name="beginner_friendly" {% if plant.beginner_friendly %}checked{% endif %}>
-              <label for="id_beginner_friendly">Beginner Friendly</label>
+              <label for="id_beginner_friendly">{% trans "Beginner Friendly" %}</label>
             </div>
             <!--input checkbox for transplantation_tolerant-->
             <div class="input-checkbox">
               <input type="checkbox" id="id_transplantation_tolerant" name="transplantation_tolerant" {% if plant.transplantation_tolerant %}checked{% endif %}>
-              <label for="id_transplantation_tolerant">Transplantation Tolerant</label>
+              <label for="id_transplantation_tolerant">{% trans "Transplantation Tolerant" %}</label>
             </div>
 
           </fieldset>
 
             <!--Plant Life Cycle Characteristics-->
           <fieldset class="form-group">
-            <legend>Life Cycle Characteristics</legend>
+            <legend>{% trans "Life Cycle Characteristics" %}</legend>
             <div class="input-checkbox">
               <input type="checkbox" id="id_spring_ephemeral" name="spring_ephemeral" {% if plant.spring_ephemeral %}checked{% endif %}>
-              <label for="id_spring_ephemeral">Spring Ephemeral</label>
+              <label for="id_spring_ephemeral">{% trans "Spring Ephemeral" %}</label>
             </div>
             <div class="input-checkbox">
               <input type="checkbox" id="id_dioecious" name="dioecious" {% if plant.dioecious %}checked{% endif %}>
-              <label for="id_dioecious">Dioecious</label>
+              <label for="id_dioecious">{% trans "Dioecious" %}</label>
             </div>
           </fieldset>
           <fieldset class="form-group">
-            <legend>Lifespan</legend>
+            <legend>{% trans "Lifespan" %}</legend>
             <div class="radio-options">
               {% for lifespan in lifespan_choices %}
                 <div class="radio-option">
@@ -120,9 +121,9 @@ It allows users to update the plant growth characteristics, including:
 
             <!--Flowering and Appearance-->
           <fieldset class="form-group">
-            <legend>Bloom characteristics</legend>
+            <legend>{% trans "Bloom characteristics" %}</legend>
             <div class="input-select">
-              <label for="id_bloom_start">Bloom Start Month</label>
+              <label for="id_bloom_start">{% trans "Bloom Start Month" %}</label>
               <select id="id_bloom_start" name="bloom_start" required>
                 {% for month in bloom_starts %}
                   <option value="{{ month }}" {% if plant.bloom_start == month %}selected{% endif %}>
@@ -132,7 +133,7 @@ It allows users to update the plant growth characteristics, including:
               </select>
             </div>
             <div class="input-select">
-              <label for="id_bloom_end">Bloom End Month</label>
+              <label for="id_bloom_end">{% trans "Bloom End Month" %}</label>
               <select id="id_bloom_end" name="bloom_end" required>
                 {% for month in bloom_ends %}
                   <option value="{{ month }}" {% if plant.bloom_end == month %}selected{% endif %}>
@@ -142,7 +143,7 @@ It allows users to update the plant growth characteristics, including:
               </select>
             </div>
             <div class="input-select">
-              <label for="id_bloom_colour">Bloom Colour</label>
+              <label for="id_bloom_colour">{% trans "Bloom Colour" %}</label>
               <select id="id_bloom_colour" name="bloom_colour" required>
                 {% for colour in bloom_colours %}
                   <option value="{{ colour.pk }}" {% if plant.bloom_colour.pk == colour.pk %}selected{% endif %}>
@@ -155,7 +156,7 @@ It allows users to update the plant growth characteristics, including:
 
           <!--Plant Complementary-->
           <fieldset>
-            <legend>Plant Complementary</legend>
+            <legend>{% trans "Plant Complementary" %}</legend>
             {% for plant in plant_complements  %}
             <!--input checkbox for plant complementary-->
               <div class="input-checkbox">
@@ -163,14 +164,14 @@ It allows users to update the plant growth characteristics, including:
                 <label for="id_plant_{{ plant.complement.pk }}">{{ plant.complement.latin_name }}</label>
               </div>
             {% empty %}
-              <p>No complementary plants found.</p>
+              <p>{% trans "No complementary plants found." %}</p>
             {% endfor %}
           </fieldset>
         </div>
         <div class='form inputs'>
           <!--complement element from forms -->
           <fieldset class="form-group flex-row">
-            <legend>Add More Complements</legend>
+            <legend>{% trans "Add More Complements" %}</legend>
             <div class="checkbox-group">
               {% for plant in plants %}
                 {% if forloop.counter0|divisibleby:10 and forloop.counter0 > 0 %}
@@ -185,8 +186,8 @@ It allows users to update the plant growth characteristics, including:
             </div>
           </fieldset>
         </div>
-        <button type="submit" class="btn btn-primary">Update</button>
-        <a href="{% url 'plant-growth-characteristics-update' plant.pk %}" class="btn btn-primary">Cancel</a>
+        <button type="submit" class="btn btn-primary">{% trans "Update" %}</button>
+        <a href="{% url 'plant-growth-characteristics-update' plant.pk %}" class="btn btn-primary">{% trans "Cancel" %}</a>
       </form>
     </div>
   </main>

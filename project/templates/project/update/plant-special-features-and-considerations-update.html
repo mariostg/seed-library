@@ -1,14 +1,15 @@
 {% extends "core/base.html" %}
+{% load i18n %}
 {% load static %}
 {% block extracss %}
   <link rel="stylesheet" href="{% static 'project/css/form.css' %}">
 {% endblock extracss %}
-{% block title %}{{ plant.latin_name }} - Special Features and Considerations{% endblock title %}
+{% block title %}{{ plant.latin_name }} - {% trans "Special Features and Considerations" %}{% endblock title %}
 {% block content %}
   <main class="main-content">
     {% include "project/plant_profile/_profile_update_links.html" %}
     <div class="flex-col-center">
-      <h1>Update Special Features and Considerations</h1>
+      <h1>{% trans "Update Special Features and Considerations" %}</h1>
       <h2><a href="{% url 'plant-profile-page' plant.pk %}">{{ plant.latin_name }}</a></h2>
       <form action="{% url 'plant-special-features-and-considerations-update' plant.pk %}" method="post">
         {% csrf_token %}
@@ -16,7 +17,7 @@
           <div>
 
             <fieldset class="form-group">
-              <legend>Environment </legend>
+              <legend>{% trans "Environment" %}</legend>
                       <!--input checkbox septic_tank_safe-->
               <div class="input-checkbox">
                 {{ form.septic_tank_safe }}
@@ -25,7 +26,7 @@
             </fieldset>
 
             <fieldset class="form-group">
-              <legend>Toxicity and Safety</legend>
+              <legend>{% trans "Toxicity and Safety" %}</legend>
               <!--input checkbox for produces_burs-->
               <div class="input-checkbox">
                 {{ form.produces_burs }}
@@ -49,7 +50,7 @@
             </fieldset>
 
             <fieldset class="form-group">
-              <legend>GRASP</legend>
+              <legend>{% trans "GRASP" %}</legend>
               <!--input checkbox for grasp_candidate-->
               <div class="input-checkbox">
                 {{ form.grasp_candidate }}
@@ -63,7 +64,7 @@
             </fieldset>
 
             <fieldset class='flex-col'>
-              <legend>Conservation status and Distribution</legend>
+              <legend>{% trans "Conservation status and Distribution" %}</legend>
             <!--Input select for conservation status-->
               <div class="input-select">
                 <label for="{{ form.conservation_status.id_for_label }}">{{ form.conservation_status.label }}</label>
@@ -73,7 +74,7 @@
           </div>
 
           <fieldset class='flex-col'>
-            <legend>Locations</legend>
+            <legend>{% trans "Locations" %}</legend>
 
             <div class="flex-col__inputs">
               <!--Input checkbox for native to Ottawa region-->
@@ -83,7 +84,7 @@
               </div>
               <!--Input checkboxes for ecozones-->
               <div class="form-group">
-                <h3>Ecozones</h3>
+                <h3>{% trans "Ecozones" %}</h3>
                 <div class="checkbox-options">
                   {% for ecozone in ecozones %}
                     <div class="checkbox-option">
@@ -99,7 +100,7 @@
               </div>
               <!--Input checkboxes for provinces and territories-->
               <div class="form-group">
-                <h3>Provinces and Territories</h3>
+                <h3>{% trans "Provinces and Territories" %}</h3>
                 <!--input checkbox for is_native_to_AB-->
                 <div class="checkbox-option">
                   <input type="checkbox"
@@ -114,7 +115,7 @@
                          id="is_native_to_BC"
                          name="is_native_to_BC"
                          {% if plant.is_native_to_BC %}checked{% endif %}>
-                  <label for="is_native_to_BC">British Columbia</label>
+                  <label for="is_native_to_BC">{% trans "British Columbia" %}</label>
                 </div>
                 <!--input checkbox for is_native_to_MB-->
                 <div class="checkbox-option">
@@ -130,7 +131,7 @@
                          id="is_native_to_NB"
                          name="is_native_to_NB"
                          {% if plant.is_native_to_NB %}checked{% endif %}>
-                  <label for="is_native_to_NB">New Brunswick</label>
+                  <label for="is_native_to_NB">{% trans "New Brunswick" %}</label>
                 </div>
                 <!--input checkbox for is_native_to_NL-->
                 <div class="checkbox-option">
@@ -138,7 +139,7 @@
                          id="is_native_to_NL"
                          name="is_native_to_NL"
                          {% if plant.is_native_to_NL %}checked{% endif %}>
-                  <label for="is_native_to_NL">Newfoundland and Labrador</label>
+                  <label for="is_native_to_NL">{% trans "Newfoundland and Labrador" %}</label>
                 </div>
                 <!--input checkbox for is_native_to_NT-->
                 <div class="checkbox-option">
@@ -146,7 +147,7 @@
                          id="is_native_to_NT"
                          name="is_native_to_NT"
                          {% if plant.is_native_to_NT %}checked{% endif %}>
-                  <label for="is_native_to_NT">Northwest Territories</label>
+                  <label for="is_native_to_NT">{% trans "Northwest Territories" %}</label>
                 </div>
                 <!--input checkbox for is_native_to_NS-->
                 <div class="checkbox-option">
@@ -154,7 +155,7 @@
                          id="is_native_to_NS"
                          name="is_native_to_NS"
                          {% if plant.is_native_to_NS %}checked{% endif %}>
-                  <label for="is_native_to_NS">Nova Scotia</label>
+                  <label for="is_native_to_NS">{% trans "Nova Scotia" %}</label>
                 </div>
                 <!--input checkbox for is_native_to_NU-->
                 <div class="checkbox-option">
@@ -178,7 +179,7 @@
                          id="is_native_to_PE"
                          name="is_native_to_PE"
                          {% if plant.is_native_to_PE %}checked{% endif %}>
-                  <label for="is_native_to_PE">Prince Edward Island</label>
+                  <label for="is_native_to_PE">{% trans "Prince Edward Island" %}</label>
                 </div>
                 <!--input checkbox for is_native_to_QC-->
                 <div class="checkbox-option">
@@ -186,7 +187,7 @@
                          id="is_native_to_QC"
                          name="is_native_to_QC"
                          {% if plant.is_native_to_QC %}checked{% endif %}>
-                  <label for="is_native_to_QC">Quebec</label>
+                  <label for="is_native_to_QC">{% trans "Quebec" %}</label>
                 </div>
                 <!--input checkbox for is_native_to_SK-->
                 <div class="checkbox-option">
@@ -211,8 +212,8 @@
 
           </fieldset>
         </div>
-        <button type="submit" class="btn btn-primary">Update</button>
-        <a href="{% url 'plant-special-features-and-considerations-update' plant.pk %}" class="btn btn-primary">Cancel</a>
+        <button type="submit" class="btn btn-primary">{% trans "Update" %}</button>
+        <a href="{% url 'plant-special-features-and-considerations-update' plant.pk %}" class="btn btn-primary">{% trans "Cancel" %}</a>
       </form>
     </div>
   </main>

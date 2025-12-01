@@ -1,20 +1,22 @@
 {% extends "core/base.html" %}
+
+{% load i18n %}
 {% load static %}
 {% block content %}
   {% include "project/admin/admin_links.html" %}
   {% if object_list %}
     <section class='wrapper'>
-      <p class='container'>Use this table to prepare a list of available plants for the next give away event.  Click on the plant to toggle its availailability.  Plants highlighted in green are marked available. View <a target='blank' href="/search-plant-name/?seed_availability=true#search-results">available plants</a> in a new tab. From there, you can drill down further to refine the research.</p>
+      <p class='container'>{% trans "Use this table to prepare a list of available plants for the next give away event.  Click on the plant to toggle its availailability.  Plants highlighted in green are marked available. View" %} <a target='blank' href="/search-plant-name/?seed_availability=true#search-results">{% trans "available plants" %}</a> {% trans "in a new tab. From there, you can drill down further to refine the research." %}</p>
       <table>
         <thead>
           <tr>
-            <th>Event Table</th>
-            <th colspan='3'>Names</th>
-            <th>Seed Needed</th>
-            <th>Seed Availability</th>
-            <th>Seeds Accepted</th>
-            <th>Plant Active</th>
-            <th>Plant Accepted</th>
+            <th>{% trans "Event Table" %}</th>
+            <th colspan='3'>{% trans "Names" %}</th>
+            <th>{% trans "Seed Needed" %}</th>
+            <th>{% trans "Seed Availability" %}</th>
+            <th>{% trans "Seeds Accepted" %}</th>
+            <th>{% trans "Plant Active" %}</th>
+            <th>{% trans "Plant Accepted" %}</th>
           </tr>
         </thead>
         {% for item in object_list  %}
@@ -55,7 +57,7 @@
           {% endif %}
           </td>
 
-          <td><a target="_blank" href="{% url 'plant-profile-page' item.pk%}">Profile</a></td>
+          <td><a target="_blank" href="{% url 'plant-profile-page' item.pk%}">{% trans "Profile" %}</a></td>
         {% endfor %}
       </table>
     </section>

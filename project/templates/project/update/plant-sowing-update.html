@@ -1,23 +1,24 @@
 {% extends "core/base.html" %}
+{% load i18n %}
 {% load static %}
 
-{% block title %}{{plant.latin_name}} - Sowing Information{% endblock title %}
+{% block title %}{{plant.latin_name}} - {% trans "Sowing Information" %}{% endblock title %}
 {{title}}
 {% block content %}
   <main class="main-content">
     {% include "project/plant_profile/_profile_update_links.html" %}
     <div class="flex-col-center">
-      <h1>Update Plant Sowing Information</h1>
+      <h1>{% trans "Update Plant Sowing Information" %}</h1>
       <h2><a href="{% url 'plant-profile-page' plant.pk %}">{{ plant.latin_name }}</a></h2>
       <form method="post" action="{% url 'plant-sowing-update' plant.pk %}">
         {% csrf_token %}
         <div class="form inputs">
                 <!--Sowing-->
           <fieldset class="form-group">
-            <legend>Sowing</legend>
+            <legend>{% trans "Sowing" %}</legend>
                     <!--use input select for sowing depth-->
             <div class="input-select">
-              <label for="id_sowing_depth">Depth (inches)</label>
+              <label for="id_sowing_depth">{% trans "Depth (inches)" %}</label>
               <select id="id_sowing_depth" name="sowing_depth">
                 <option value="">---------</option>
                 {% for depth in sowing_depth %}
@@ -28,14 +29,14 @@
           </fieldset>
                 <!--fieldset for stratification and dormancy-->
           <fieldset class="form-group">
-            <legend>Stratification and Dormancy</legend>
+            <legend>{% trans "Stratification and Dormancy" %}</legend>
             <div class="input-text">
-              <label for="id_stratification_detail">Stratification Detail</label>
+              <label for="id_stratification_detail">{% trans "Stratification Detail" %}</label>
               <input type="text" id="id_stratification_detail" name="stratification_detail" value="{{ plant.stratification_detail }}">
             </div>
                     <!--input text for stratification duration-->
             <div class="input-text">
-              <label for="id_stratification_duration">Stratification Duration (days)</label>
+              <label for="id_stratification_duration">{% trans "Stratification Duration (days)" %}</label>
               <select name="stratification_duration" id="id_stratification_duration">
                 {% for duration in stratification_duration %}
                   <option value="{{ duration.pk }}" {% if plant.stratification_duration.pk == duration.pk %}selected{% endif %}>{{ duration }}</option>
@@ -45,19 +46,19 @@
                     <!--input checkbox for double dormancy-->
             <div class="input-checkbox">
               <input type="checkbox" id="id_double_dormancy" name="double_dormancy" {% if plant.double_dormancy %}checked{% endif %}>
-              <label for="id_double_dormancy">Double Dormancy Required</label>
+              <label for="id_double_dormancy">{% trans "Double Dormancy Required" %}</label>
             </div>
           </fieldset>
           <fieldset>
-            <legend>Notes</legend>
+            <legend>{% trans "Notes" %}</legend>
             <div class="input-text">
-              <label for="id_sowing_notes">Sowing Notes</label>
+              <label for="id_sowing_notes">{% trans "Sowing Notes" %}</label>
               <textarea id="id_sowing_notes" name="sowing_notes">{{ plant.sowing_notes }}</textarea>
             </div>
           </fieldset>
         </div>
-        <button type="submit" class="btn btn-primary">Update</button>
-        <a href="{% url 'plant-growth-characteristics-update' plant.pk %}" class="btn btn-primary">Cancel</a>
+        <button type="submit" class="btn btn-primary">{% trans "Update" %}</button>
+        <a href="{% url 'plant-growth-characteristics-update' plant.pk %}" class="btn btn-primary">{% trans "Cancel" %}</a>
       </form>
     </div>
   </main>
