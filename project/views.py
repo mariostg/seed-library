@@ -183,7 +183,12 @@ def plant_profile_add(request):
             try:
                 form.save()
             except IntegrityError:
-                messages.error(request, f"Plant {obj.latin_name} exists already.")
+                messages.error(
+                    request,
+                    _("Plant {latin_name} exists already.").format(
+                        latin_name=obj.latin_name
+                    ),
+                )
                 return render(
                     request,
                     "project/plant-profile-form.html",
