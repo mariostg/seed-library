@@ -6,11 +6,13 @@
     <div>
       <h1>{% trans "Butterflies and Their Supporting Plants" %}</h1>
       <p>
-        {% blocktrans count butterflies.count as butterfly_count %}
-          This page lists all <strong>{{ butterfly_count }}</strong> butterfly species along with their supporting plants
-          that exist in the plant catalogue. Each plant species is linked to its
-          profile page for more detailed information.
-        {% endblocktrans %}
+        {% with butterfly_count=butterflies.count %}
+          {% blocktrans %}
+            This page lists all <strong>{{ butterfly_count }}</strong> butterfly species along with their supporting plants
+            that exist in the plant catalogue. Each plant species is linked to its
+            profile page for more detailed information.
+          {% endblocktrans %}
+        {% endwith %}
       </p>
     </div>
     <div>
