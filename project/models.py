@@ -336,7 +336,9 @@ class StratificationDuration(Base):
     )
 
     def __str__(self) -> str:
-        return f"{self.stratification_duration} days"
+        return _("%(stratification_duration) days") % {
+            "stratification_duration": self.stratification_duration
+        }
 
 
 class Lighting(Base):
@@ -1276,7 +1278,13 @@ class PlantProfile(Base):
             and int(self.bloom_start) > int(self.bloom_end)
         ):
             raise ValidationError(
-                f"{self.latin_name} bloom start month ({self.bloom_start}) cannot be later than bloom end month ({self.bloom_end})."
+                (
+                    "{latin_name} bloom start month ({bloom_start}) cannot be later than bloom end month ({bloom_end})."
+                ).format(
+                    latin_name=self.latin_name,
+                    bloom_start=self.bloom_start,
+                    bloom_end=self.bloom_end,
+                )
             )
 
     def get_absolute_url(self):
@@ -1506,7 +1514,9 @@ class PlantImage(models.Model):
                             try:
                                 img.image.delete(save=False)
                             except Exception as e:
-                                raise ValueError(f"Error deleting image file: {e}")
+                                raise ValueError(
+                                    _("Error deleting image file: {e}").format(e=str(e))
+                                )
                         # Use the direct database delete to avoid recursion
                         PlantImage.objects.filter(pk=img.pk).delete()
             except PlantImage.DoesNotExist:
