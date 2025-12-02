@@ -125,6 +125,9 @@ class PlantProfileFilter(django_filters.FilterSet):
     grasp_candidate = django_filters.CharFilter(
         method="filter_boolean",
     )
+    endangered_species = django_filters.CharFilter(
+        method="filter_endangered_species",
+    )
 
     bloom_colour = django_filters.CharFilter(
         method="filter_bloom_colour",
@@ -375,6 +378,17 @@ class PlantProfileFilter(django_filters.FilterSet):
             )
         else:
             return queryset.none()
+
+    def filter_endangered_species(self, queryset, name, value):
+        endangered_values = (
+            "Critically Imperiled",
+            "Presumed Extirpated",
+            "Imperiled",
+            "Vulnerable",
+        )
+        return queryset.filter(
+            conservation_status__conservation_status__in=endangered_values
+        )
 
     def filter_starter_pack(self, queryset, name, value):
         if value == "starter_pack_shade":
