@@ -17,7 +17,7 @@
     <div class="flex-col-center">
       <h1>{% trans "Record New Plant Identification Information" %}</h1>
       <div class="alert alert--info">
-        {% trans "You can search for the Latin Name of the plant to auto-fill the Taxon ID, English Name, and French Name fields using data from the VASCAN database." %}
+        {% trans "You can search for the Latin Name of the plant to autofill the Taxon ID, English Name, and French Name fields using data from the VASCAN database." %}
       </div>
       <form method="post" action="{% url 'plant-identification-information-create' %}">
         {% csrf_token %}
