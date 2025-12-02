@@ -3,6 +3,7 @@ from django.contrib.auth.models import Group, Permission
 from django.core.exceptions import ValidationError
 from django.forms import ModelForm
 from django.utils.dates import MONTHS
+from django.utils.translation import gettext_lazy as _
 
 from project import models
 
@@ -66,7 +67,7 @@ class PlantProfileForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        for _, field in self.fields.items():
+        for __, field in self.fields.items():
             field.widget.attrs.update({"class": "input"})
             field.required = False
 
@@ -77,14 +78,27 @@ class PlantProfileForm(forms.ModelForm):
         latin_name = cleaned_data.get("latin_name")
         if min_height and max_height and min_height > max_height:
             raise ValidationError(
-                f"{latin_name}: Minimum height ({min_height}) must be smaller than maximum height ({max_height})"
+                _(
+                    "%(latin_name): Minimum height (%(min_height)) must be smaller than maximum height (%(max_height))"
+                )
+                % {
+                    "latin_name": latin_name,
+                    "min_height": min_height,
+                    "max_height": max_height,
+                }
             )
 
         bloom_start = cleaned_data.get("bloom_start")
         bloom_end = cleaned_data.get("bloom_end")
         if bloom_end and bloom_start and bloom_start > bloom_end:
             raise ValidationError(
-                f"Beginning of blooming period ({ MONTHS[bloom_start]}) must be before end of blooming period ({MONTHS[bloom_end]})"
+                _(
+                    "Beginning of blooming period (%(bloom_start)) must be before end of blooming period (%(bloom_end))"
+                )
+                % {
+                    "bloom_start": MONTHS[bloom_start],
+                    "bloom_end": MONTHS[bloom_end],
+                }
             )
 
 
@@ -112,7 +126,7 @@ class SearchPlantForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        for _, field in self.fields.items():
+        for __, field in self.fields.items():
             field.widget.attrs.update({"class": "input"})
             field.required = False
 
@@ -369,7 +383,7 @@ class ProjectUserForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        for _, field in self.fields.items():
+        for __, field in self.fields.items():
             field.widget.attrs.update({"class": "input"})
 
 
