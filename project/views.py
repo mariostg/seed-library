@@ -11,6 +11,7 @@ from django.db import IntegrityError
 from django.db.models import Count, RestrictedError
 from django.http import FileResponse, HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
+from django.utils.translation import gettext as _
 from reportlab.lib.colors import black, pink, red
 from reportlab.lib.pagesizes import landscape, letter
 from reportlab.lib.units import inch
@@ -167,7 +168,7 @@ def plant_profile_page(request, pk):
 @group_required("NA")
 def plant_profile_add(request):
     context = {
-        "title": "Create Plant Profile",
+        "title": _("Create Plant Profile"),
         "url_name": "index",
     }
     if request.method == "POST":
@@ -201,7 +202,7 @@ def plant_profile_add(request):
 @group_required("NA")
 def plant_profile_update(request, pk):
     context = {
-        "title": "Update Plant Profile",
+        "title": _("Update Plant Profile"),
         "url_name": "index",
     }
     obj = utils.single_plant(pk, request)
@@ -224,7 +225,10 @@ def plant_profile_delete(request, pk):
         except RestrictedError:
             messages.info(
                 request,
-                f"Plant Profile {plant.latin_name} ne peut-être effacée car il existe des éléments associés.",
+                _(
+                    "Plant Profile %(name)s ne peut-être effacée car il existe des éléments associés."
+                )
+                % {"name": plant.latin_name},
             )
         return redirect("search-plant-name")
     context = {"data": plant, "back": "plant-profile-page", "pk": plant.pk}
@@ -241,14 +245,15 @@ def plant_profile_images(request, pk):
     context = {
         "plant": plant,
         "images": images,
-        "title": f"Image Gallery for {plant.latin_name}",
+        "title": _("Image Gallery for %(latin_name)s")
+        % {"latin_name": plant.latin_name},
     }
     return render(request, "project/plant_profile/plant-profile-images.html", context)
 
 
 def plant_catalogue_intro(request):
     context = {
-        "title": "Plant Catalogue Introduction",
+        "title": _("Plant Catalogue Introduction"),
         "url_name": "plant-catalogue-intro",
     }
     return render(request, "project/plant_catalogue_intro.html", context)
@@ -258,7 +263,7 @@ def butterfly_supporting_plants(request):
     # This view is used to display a list of butterflies with the plants that support them
     butterflies = models.ButterflySpecies.objects.all().order_by("latin_name")
     context = {
-        "title": "Butterfly Supporting Plants",
+        "title": _("Butterfly Supporting Plants"),
         "url_name": "butterfly-supporting-plants",
         "butterflies": butterflies,
     }
@@ -269,7 +274,7 @@ def bee_supporting_plants(request):
     # This view is used to display a list of bees with the plants that support them
     bees = models.BeeSpecies.objects.all().order_by("latin_name")
     context = {
-        "title": "Bee Supporting Plants",
+        "title": _("Bee Supporting Plants"),
         "url_name": "bee-supporting-plants",
         "bees": bees,
     }
@@ -492,7 +497,7 @@ def search_plant_name(request):
         },  # from April (index 3) to December (index 11)
         "object_list": object_list.qs,
         "url_name": "index",
-        "title": "Plant Profile Filter",
+        "title": _("Plant Profile Filter"),
         "item_count": item_count,
         "hx_include": hx_include,
     }
@@ -669,7 +674,7 @@ def admin_harvesting_indicator_page(request):
     context = {
         "data": data,
         "url_name": "admin-harvesting-indicator-page",
-        "title": "Harvesting Indicators",
+        "title": _("Harvesting Indicators"),
     }
     return render(
         request, "project/admin/admin-harvesting-indicator-page.html", context
@@ -684,7 +689,7 @@ def admin_harvesting_mean_page(request):
     context = {
         "object_list": data,
         "url_name": "admin-harvesting-mean-page",
-        "title": "Harvesting Means",
+        "title": _("Harvesting Means"),
     }
     return render(request, "project/admin/admin-harvesting-mean-page.html", context)
 
@@ -697,7 +702,7 @@ def admin_colour_page(request):
     context = {
         "data": data,
         "url_name": "colour-page",
-        "title": "Colours",
+        "title": _("Colours"),
     }
     return render(request, "project/admin/admin-colour-page.html", context)
 
@@ -705,7 +710,7 @@ def admin_colour_page(request):
 @group_required("Library Manager")
 def admin_colour_add(request):
     context = {
-        "title": "Create Colour",
+        "title": _("Register New Colour"),
         "url_name": "admin-colour-page",
     }
     if request.method == "POST":
@@ -716,14 +721,18 @@ def admin_colour_add(request):
             try:
                 form.save()
             except IntegrityError:
-                messages.error(request, f"Colour {obj.bloom_colour} exists already.")
+                messages.error(
+                    request,
+                    _("Colour %(colour)s exists already.")
+                    % {"colour": obj.bloom_colour},
+                )
                 return render(
                     request,
                     "project/simple-form.html",
                     context,
                 )
         else:
-            messages.error(request, "Color not valid.")
+            messages.error(request, _("Colour not valid."))
             context["form"] = form
     else:
         context["form"] = forms.AdminColourForm
@@ -747,7 +756,7 @@ def admin_colour_update(request, pk):
         "project/simple-form.html",
         {
             "form": form,
-            "title": "Colour Update",
+            "title": _("Colour Update"),
             "url_name": "admin-colour-page",
         },
     )
@@ -774,7 +783,7 @@ def admin_colour_delete(request, pk):
 @group_required("Library Manager")
 def admin_harvesting_indicator_add(request):
     context = {
-        "title": "Create Harvesting Indicator",
+        "title": _("Register New Harvesting Indicator"),
         "url_name": "admin-harvesting-indicator-page",
     }
     if request.method == "POST":
@@ -787,7 +796,8 @@ def admin_harvesting_indicator_add(request):
             except IntegrityError:
                 messages.error(
                     request,
-                    f"Harvesting Indicator {obj.harvesting_indicator} exists already.",
+                    _("Harvesting Indicator %(indicator)s exists already.")
+                    % {"indicator": obj.harvesting_indicator},
                 )
                 return render(
                     request,
@@ -795,7 +805,7 @@ def admin_harvesting_indicator_add(request):
                     context,
                 )
         else:
-            messages.error(request, "Harvesting Indicator not valid.")
+            messages.error(request, _("Harvesting Indicator not valid."))
             context["form"] = form
     else:
         context["form"] = forms.AdminHarvestingIndicatorForm
@@ -806,7 +816,7 @@ def admin_harvesting_indicator_add(request):
 @group_required("Library Manager")
 def admin_harvesting_mean_add(request):
     context = {
-        "title": "Create Harvesting Mean Statement",
+        "title": _("Register New Harvesting Mean Statement"),
         "url_name": "admin-harvesting-mean-page",
     }
     if request.method == "POST":
@@ -818,7 +828,9 @@ def admin_harvesting_mean_add(request):
                 form.save()
             except IntegrityError:
                 messages.error(
-                    request, f"Harvesting Mean {obj.harvesting_mean} exists already."
+                    request,
+                    _("Harvesting Mean %(harvesting_mean)s exists already.")
+                    % {"harvesting_mean": obj.harvesting_mean},
                 )
                 return render(
                     request,
@@ -826,7 +838,7 @@ def admin_harvesting_mean_add(request):
                     context,
                 )
         else:
-            messages.error(request, "Harvesting Mean not valid.")
+            messages.error(request, _("Harvesting Mean not valid."))
             context["form"] = form
     else:
         context["form"] = forms.AdminHarvestingMeanForm
@@ -850,7 +862,7 @@ def admin_harvesting_indicator_update(request, pk):
         "project/simple-form.html",
         {
             "form": form,
-            "title": "Harvesting Indicator Update",
+            "title": _("Harvesting Indicator Update"),
             "url_name": "admin-harvesting-indicator-page",
         },
     )
@@ -872,7 +884,7 @@ def admin_harvesting_mean_update(request, pk):
         "project/simple-form.html",
         {
             "form": form,
-            "title": "Harvesting Mean Update",
+            "title": _("Harvesting Mean Update"),
             "url_name": "admin-harvesting-mean-page",
         },
     )
@@ -922,7 +934,7 @@ def admin_seed_head_page(request):
     context = {
         "object_list": data,
         "url_name": "admin-seed-head-page",
-        "title": "Seed Heads",
+        "title": _("Seed Heads"),
     }
     return render(request, "project/admin/admin-seed-head-page.html", context)
 
@@ -930,7 +942,7 @@ def admin_seed_head_page(request):
 @group_required("Library Manager")
 def admin_seed_head_add(request):
     context = {
-        "title": "Create Seed Head",
+        "title": _("Register New Seed Head"),
         "url_name": "admin-seed-head-page",
     }
     if request.method == "POST":
@@ -941,14 +953,18 @@ def admin_seed_head_add(request):
             try:
                 form.save()
             except IntegrityError:
-                messages.error(request, f"Seed Head {obj.seed_head} exists already.")
+                messages.error(
+                    request,
+                    _("Seed Head {seed_head} exists already.")
+                    % {"seed_head": obj.seed_head},
+                )
                 return render(
                     request,
                     "project/simple-form.html",
                     context,
                 )
         else:
-            messages.error(request, "Seed Head not valid.")
+            messages.error(request, _("Seed Head not valid."))
             context["form"] = form
     else:
         context["form"] = forms.AdminSeedHeadForm
@@ -972,7 +988,7 @@ def admin_seed_head_update(request, pk):
         "project/simple-form.html",
         {
             "form": form,
-            "title": "Seed Head Update",
+            "title": _("Seed Head Update"),
             "url_name": "admin-seed-head-page",
         },
     )
@@ -1004,7 +1020,7 @@ def admin_seed_storage_page(request):
     context = {
         "object_list": data,
         "url_name": "admin-seed-storage-page",
-        "title": "Seed Storage",
+        "title": _("Seed Storage"),
     }
     return render(request, "project/admin/admin-seed-storage-page.html", context)
 
@@ -1012,7 +1028,7 @@ def admin_seed_storage_page(request):
 @group_required("Library Manager")
 def admin_seed_storage_add(request):
     context = {
-        "title": "Create Seed Storage",
+        "title": _("Register New Seed Storage"),
         "url_name": "admin-seed-storage-page",
     }
     if request.method == "POST":
@@ -1024,7 +1040,9 @@ def admin_seed_storage_add(request):
                 form.save()
             except IntegrityError:
                 messages.error(
-                    request, f"Seed Storage {obj.seed_storage} exists already."
+                    request,
+                    _("Seed Storage %(seed_storage)s exists already.")
+                    % {"seed_storage": obj.seed_storage},
                 )
                 return render(
                     request,
@@ -1032,7 +1050,7 @@ def admin_seed_storage_add(request):
                     context,
                 )
         else:
-            messages.error(request, "Seed Storage not valid.")
+            messages.error(request, _("Seed Storage not valid."))
             context["form"] = form
     else:
         context["form"] = forms.AdminSeedStorageForm
@@ -1056,7 +1074,7 @@ def admin_seed_storage_update(request, pk):
         "project/simple-form.html",
         {
             "form": form,
-            "title": "Seed Storage Update",
+            "title": _("Seed Storage Update"),
             "url_name": "admin-seed-storage-page",
         },
     )
@@ -1088,7 +1106,7 @@ def admin_seed_viability_test_page(request):
     context = {
         "object_list": data,
         "url_name": "admin-seed-viability-test-page",
-        "title": "Seed Viability Tests",
+        "title": _("Seed Viability Tests"),
     }
     return render(request, "project/admin/admin-seed-viability-test-page.html", context)
 
@@ -1096,7 +1114,7 @@ def admin_seed_viability_test_page(request):
 @group_required("Library Manager")
 def admin_seed_viability_test_add(request):
     context = {
-        "title": "Create Seed Viability Test",
+        "title": _("Register New Seed Viability Test"),
         "url_name": "admin-seed-viability-test-page",
     }
     if request.method == "POST":
@@ -1109,7 +1127,8 @@ def admin_seed_viability_test_add(request):
             except IntegrityError:
                 messages.error(
                     request,
-                    f"Seed Viability Test {obj.seed_viability_test} exists already.",
+                    _("Seed Viability Test %(seed_viability_test)s exists already.")
+                    % {"seed_viability_test": obj.seed_viability_test},
                 )
                 return render(
                     request,
@@ -1117,7 +1136,7 @@ def admin_seed_viability_test_add(request):
                     context,
                 )
         else:
-            messages.error(request, "Seed Viability Test not valid.")
+            messages.error(request, _("Seed Viability Test not valid."))
             context["form"] = form
     else:
         context["form"] = forms.AdminSeedViabilityTestForm
@@ -1141,7 +1160,7 @@ def admin_seed_viability_test_update(request, pk):
         "project/simple-form.html",
         {
             "form": form,
-            "title": "Seed Viability Test Update",
+            "title": _("Seed Viability Test Update"),
             "url_name": "admin-seed-viability-test-page",
         },
     )
@@ -1173,7 +1192,7 @@ def admin_one_cultivar_page(request):
     context = {
         "object_list": data,
         "url_name": "admin-one-cultivar-page",
-        "title": "Cultivars",
+        "title": _("Cultivars"),
     }
     return render(request, "project/admin/admin-one-cultivar-page.html", context)
 
@@ -1181,7 +1200,7 @@ def admin_one_cultivar_page(request):
 @group_required("Library Manager")
 def admin_one_cultivar_add(request):
     context = {
-        "title": "Create Cultivar",
+        "title": _("Register New Cultivar"),
         "url_name": "admin-one-cultivar-page",
     }
     if request.method == "POST":
@@ -1192,14 +1211,18 @@ def admin_one_cultivar_add(request):
             try:
                 form.save()
             except IntegrityError:
-                messages.error(request, f"Cultivar {obj.one_cultivar} exists already.")
+                messages.error(
+                    request,
+                    _("Cultivar %(cultivar)s exists already.")
+                    % {"cultivar": obj.one_cultivar},
+                )
                 return render(
                     request,
                     "project/simple-form.html",
                     context,
                 )
         else:
-            messages.error(request, "Cultivar not valid.")
+            messages.error(request, _("Cultivar not valid."))
             context["form"] = form
     else:
         context["form"] = forms.AdminOneCultivarForm
@@ -1223,7 +1246,7 @@ def admin_one_cultivar_update(request, pk):
         "project/simple-form.html",
         {
             "form": form,
-            "title": "Cultivar Update",
+            "title": _("Cultivar Update"),
             "url_name": "admin-one-cultivar-page",
         },
     )
@@ -1237,7 +1260,7 @@ def admin_stratification_duration_page(request):
     context = {
         "object_list": data,
         "url_name": "admin-stratification-duration-page",
-        "title": "Stratification Durations",
+        "title": _("Stratification Durations"),
     }
     return render(
         request, "project/admin/admin-stratification-duration-page.html", context
@@ -1247,7 +1270,7 @@ def admin_stratification_duration_page(request):
 @group_required("Library Manager")
 def admin_stratification_duration_add(request):
     context = {
-        "title": "Create Stratification Duration",
+        "title": _("Register New Stratification Duration"),
         "url_name": "admin-stratification-duration-page",
     }
     if request.method == "POST":
@@ -1260,7 +1283,8 @@ def admin_stratification_duration_add(request):
             except IntegrityError:
                 messages.error(
                     request,
-                    f"Stratification Duration {obj.stratification_duration} exists already.",
+                    _("Stratification Duration %(duration)s exists already.")
+                    % {"duration": obj.stratification_duration},
                 )
                 return render(
                     request,
@@ -1268,7 +1292,7 @@ def admin_stratification_duration_add(request):
                     context,
                 )
         else:
-            messages.error(request, "Stratification Detail not valid.")
+            messages.error(request, _("Stratification Detail not valid."))
             context["form"] = form
     else:
         context["form"] = forms.AdminStratificationDurationForm
@@ -1292,7 +1316,7 @@ def admin_stratification_duration_update(request, pk):
         "project/simple-form.html",
         {
             "form": form,
-            "title": "Stratification Duration Update",
+            "title": _("Stratification Duration Update"),
             "url_name": "admin-stratification-duration-page",
         },
     )
@@ -1344,7 +1368,7 @@ def admin_sowing_depth_page(request):
     context = {
         "object_list": data,
         "url_name": "admin-sowing-depth-page",
-        "title": "Sowing Depths",
+        "title": _("Sowing Depths"),
     }
     return render(request, "project/admin/admin-sowing-depth-page.html", context)
 
@@ -1352,7 +1376,7 @@ def admin_sowing_depth_page(request):
 @group_required("Library Manager")
 def admin_sowing_depth_add(request):
     context = {
-        "title": "Create Sowing Depth",
+        "title": _("Register New Sowing Depth"),
         "url_name": "admin-sowing-depth-page",
     }
     if request.method == "POST":
@@ -1365,7 +1389,8 @@ def admin_sowing_depth_add(request):
             except IntegrityError:
                 messages.error(
                     request,
-                    f"Sowing Depth {obj.sowing_depth} exists already.",
+                    _("Sowing Depth {sowing_depth} exists already.")
+                    % {"sowing_depth": obj.sowing_depth},
                 )
                 return render(
                     request,
@@ -1373,7 +1398,7 @@ def admin_sowing_depth_add(request):
                     context,
                 )
         else:
-            messages.error(request, "Sowing Depth not valid.")
+            messages.error(request, _("Sowing Depth not valid."))
             context["form"] = form
     else:
         context["form"] = forms.AdminSowingDepthForm
@@ -1397,7 +1422,7 @@ def admin_sowing_depth_update(request, pk):
         "project/simple-form.html",
         {
             "form": form,
-            "title": "Sowing Depth Update",
+            "title": _("Sowing Depth Update"),
             "url_name": "admin-sowing-depth-page",
         },
     )
@@ -1429,7 +1454,7 @@ def admin_packaging_measure_page(request):
     context = {
         "object_list": data,
         "url_name": "admin-packaging-measure-page",
-        "title": "Packaging Measures",
+        "title": _("Packaging Measures"),
     }
     return render(request, "project/admin/admin-packaging-measure-page.html", context)
 
@@ -1437,7 +1462,7 @@ def admin_packaging_measure_page(request):
 @group_required("Library Manager")
 def admin_packaging_measure_add(request):
     context = {
-        "title": "Create Packaging Measure",
+        "title": _("Register New Packaging Measure"),
         "url_name": "admin-packaging-measure-page",
     }
     if request.method == "POST":
@@ -1450,7 +1475,8 @@ def admin_packaging_measure_add(request):
             except IntegrityError:
                 messages.error(
                     request,
-                    f"Packaging Measure {obj.packaging_measure} exists already.",
+                    _("Packaging Measure {packaging_measure} exists already.")
+                    % {"packaging_measure": obj.packaging_measure},
                 )
                 return render(
                     request,
@@ -1458,7 +1484,7 @@ def admin_packaging_measure_add(request):
                     context,
                 )
         else:
-            messages.error(request, "Packaging Measure not valid.")
+            messages.error(request, _("Packaging Measure not valid."))
             context["form"] = form
     else:
         context["form"] = forms.AdminPackagingMeasureForm
@@ -1482,7 +1508,7 @@ def admin_packaging_measure_update(request, pk):
         "project/simple-form.html",
         {
             "form": form,
-            "title": "Packaging Measure Update",
+            "title": _("Packaging Measure Update"),
             "url_name": "admin-packaging-measure-page",
         },
     )
@@ -1512,7 +1538,7 @@ def admin_seed_preparation_page(request):
     context = {
         "object_list": data,
         "url_name": "admin-seed-preparation-page",
-        "title": "Seed Preparations",
+        "title": _("Seed Preparations"),
     }
     return render(request, "project/admin/admin-seed-preparation-page.html", context)
 
@@ -1520,7 +1546,7 @@ def admin_seed_preparation_page(request):
 @group_required("Library Manager")
 def admin_seed_preparation_add(request):
     context = {
-        "title": "Create Seed Preparation",
+        "title": _("Register New Seed Preparation"),
         "url_name": "admin-seed-preparation-page",
     }
     if request.method == "POST":
@@ -1533,7 +1559,8 @@ def admin_seed_preparation_add(request):
             except IntegrityError:
                 messages.error(
                     request,
-                    f"Seed Preparation {obj.seed_preparation} exists already.",
+                    _("Seed Preparation {seed_preparation} exists already.")
+                    % {"seed_preparation": obj.seed_preparation},
                 )
                 return render(
                     request,
@@ -1541,7 +1568,7 @@ def admin_seed_preparation_add(request):
                     context,
                 )
         else:
-            messages.error(request, "Seed Preparation not valid.")
+            messages.error(request, _("Seed Preparation not valid."))
             context["form"] = form
     else:
         context["form"] = forms.AdminSeedPreparationForm
@@ -1565,7 +1592,7 @@ def admin_seed_preparation_update(request, pk):
         "project/simple-form.html",
         {
             "form": form,
-            "title": "Seed Preparation Update",
+            "title": _("Seed Preparation Update"),
             "url_name": "admin-seed-preparation-page",
         },
     )
@@ -1597,7 +1624,7 @@ def admin_seed_event_table_page(request):
     context = {
         "object_list": data,
         "url_name": "admin-seed-event-table-page",
-        "title": "Seed Event Tables",
+        "title": _("Seed Event Tables"),
     }
     return render(request, "project/admin/admin-seed-event-table-page.html", context)
 
@@ -1605,7 +1632,7 @@ def admin_seed_event_table_page(request):
 @group_required("Library Manager")
 def admin_seed_event_table_add(request):
     context = {
-        "title": "Create Seed Event Table",
+        "title": _("Register New Seed Event Table"),
         "url_name": "admin-seed-event-table-page",
     }
     if request.method == "POST":
@@ -1618,7 +1645,8 @@ def admin_seed_event_table_add(request):
             except IntegrityError:
                 messages.error(
                     request,
-                    f"Seed Event Table {obj.seed_event_table} exists already.",
+                    _("Seed Event Table {seed_event_table} exists already.")
+                    % {"seed_event_table": obj.seed_event_table},
                 )
                 return render(
                     request,
@@ -1626,7 +1654,7 @@ def admin_seed_event_table_add(request):
                     context,
                 )
         else:
-            messages.error(request, "Seed Event Table not valid.")
+            messages.error(request, _("Seed Event Table not valid."))
             context["form"] = form
     else:
         context["form"] = forms.AdminSeedEventTableForm
@@ -1650,7 +1678,7 @@ def admin_seed_event_table_update(request, pk):
         "project/simple-form.html",
         {
             "form": form,
-            "title": "Seed Event Table Update",
+            "title": _("Seed Event Table Update"),
             "url_name": "admin-seed-event-table-page",
         },
     )
@@ -1682,7 +1710,7 @@ def admin_toxicity_indicator_page(request):
     context = {
         "object_list": data,
         "url_name": "admin-toxicity-indicator-page",
-        "title": "Toxicity Indicators",
+        "title": _("Toxicity Indicators"),
     }
     return render(request, "project/admin/admin-toxicity-indicator-page.html", context)
 
@@ -1690,7 +1718,7 @@ def admin_toxicity_indicator_page(request):
 @group_required("Library Manager")
 def admin_toxicity_indicator_add(request):
     context = {
-        "title": "Create Toxicity Indicator",
+        "title": _("Register New Toxicity Indicator"),
         "url_name": "admin-toxicity-indicator-page",
     }
     if request.method == "POST":
@@ -1703,7 +1731,8 @@ def admin_toxicity_indicator_add(request):
             except IntegrityError:
                 messages.error(
                     request,
-                    f"Toxicity Indicator {obj.toxicity_indicator} exists already.",
+                    _("Toxicity Indicator %(toxicity_indicator)s exists already.")
+                    % {"toxicity_indicator": obj.toxicity_indicator},
                 )
                 return render(
                     request,
@@ -1711,7 +1740,7 @@ def admin_toxicity_indicator_add(request):
                     context,
                 )
         else:
-            messages.error(request, "Toxicity Indicator not valid.")
+            messages.error(request, _("Toxicity Indicator not valid."))
             context["form"] = form
     else:
         context["form"] = forms.AdminToxicityIndicatorForm
@@ -1735,7 +1764,7 @@ def admin_toxicity_indicator_update(request, pk):
         "project/simple-form.html",
         {
             "form": form,
-            "title": "Toxicity Indicator Update",
+            "title": _("Toxicity Indicator Update"),
             "url_name": "admin-toxicity-indicator-page",
         },
     )
@@ -1767,7 +1796,7 @@ def admin_conservation_status_page(request):
     context = {
         "object_list": data,
         "url_name": "admin-conservation-status-page",
-        "title": "Conservation Statuses",
+        "title": _("Conservation Statuses"),
     }
     return render(request, "project/admin/admin-conservation-status-page.html", context)
 
@@ -1775,7 +1804,7 @@ def admin_conservation_status_page(request):
 @group_required("Library Manager")
 def admin_conservation_status_add(request):
     context = {
-        "title": "Create Conservation Status",
+        "title": _("Register New Conservation Status"),
         "url_name": "admin-conservation-status-page",
     }
     if request.method == "POST":
@@ -1788,7 +1817,8 @@ def admin_conservation_status_add(request):
             except IntegrityError:
                 messages.error(
                     request,
-                    f"Conservation Status {obj.conservation_status} exists already.",
+                    _("Conservation Status %(conservation_status)s exists already.")
+                    % {"conservation_status": obj.conservation_status},
                 )
                 return render(
                     request,
@@ -1796,7 +1826,7 @@ def admin_conservation_status_add(request):
                     context,
                 )
         else:
-            messages.error(request, "Conservation Status not valid.")
+            messages.error(request, _("Conservation Status not valid."))
             context["form"] = form
     else:
         context["form"] = forms.AdminConservationStatusForm
@@ -1820,7 +1850,7 @@ def admin_conservation_status_update(request, pk):
         "project/simple-form.html",
         {
             "form": form,
-            "title": "Conservation Status Update",
+            "title": _("Conservation Status Update"),
             "url_name": "admin-conservation-status-page",
         },
     )
@@ -1852,7 +1882,7 @@ def admin_butterfly_species_page(request):
     context = {
         "object_list": data,
         "url_name": "admin-butterfly-species-page",
-        "title": "Butterfly Species",
+        "title": _("Butterfly Species"),
     }
     return render(request, "project/admin/admin-butterfly-species-page.html", context)
 
@@ -1860,7 +1890,7 @@ def admin_butterfly_species_page(request):
 @group_required("Library Manager")
 def admin_butterfly_species_add(request):
     context = {
-        "title": "Create Butterfly Species",
+        "title": _("Register New Butterfly Species"),
         "url_name": "admin-butterfly-species-page",
     }
     if request.method == "POST":
@@ -1873,7 +1903,8 @@ def admin_butterfly_species_add(request):
             except IntegrityError:
                 messages.error(
                     request,
-                    f"Butterfly Species {obj.butterfly_species} exists already.",
+                    _("Butterfly Species %(butterfly_species)s exists already.")
+                    % {"butterfly_species": obj},
                 )
                 return render(
                     request,
@@ -1881,7 +1912,7 @@ def admin_butterfly_species_add(request):
                     context,
                 )
         else:
-            messages.error(request, "Butterfly Species not valid.")
+            messages.error(request, _("Butterfly Species not valid."))
             context["form"] = form
     else:
         context["form"] = forms.AdminButterflySpeciesForm
@@ -1905,7 +1936,7 @@ def admin_butterfly_species_update(request, pk):
         "project/simple-form.html",
         {
             "form": form,
-            "title": "Butterfly Species Update",
+            "title": _("Butterfly Species Update"),
             "url_name": "admin-butterfly-species-page",
         },
     )
@@ -1937,7 +1968,7 @@ def admin_bee_species_page(request):
     context = {
         "object_list": data,
         "url_name": "admin-bee-species-page",
-        "title": "Bee Species",
+        "title": _("Bee Species"),
     }
     return render(request, "project/admin/admin-bee-species-page.html", context)
 
@@ -1950,7 +1981,8 @@ def admin_accept_all_seeds(request):
     )
     messages.success(
         request,
-        f"All plants set to accepting seed. {updated_count} plants were updated.",
+        _("All plants set to accepting seed. {updated_count} plants were updated.")
+        % {"updated_count": updated_count},
     )
     return redirect("site-admin")
 
@@ -1958,7 +1990,7 @@ def admin_accept_all_seeds(request):
 @group_required("Library Manager")
 def admin_bee_species_add(request):
     context = {
-        "title": "Create Bee Species",
+        "title": _("Register New Bee Species"),
         "url_name": "admin-bee-species-page",
     }
     if request.method == "POST":
@@ -1971,7 +2003,8 @@ def admin_bee_species_add(request):
             except IntegrityError:
                 messages.error(
                     request,
-                    f"Bee Species {obj.bee_species} exists already.",
+                    _("Bee Species %(bee_species)s exists already.")
+                    % {"bee_species": obj},
                 )
                 return render(
                     request,
@@ -1979,7 +2012,7 @@ def admin_bee_species_add(request):
                     context,
                 )
         else:
-            messages.error(request, "Bee Species not valid.")
+            messages.error(request, _("Bee Species not valid."))
             context["form"] = form
     else:
         context["form"] = forms.AdminBeeSpeciesForm
@@ -2003,7 +2036,7 @@ def admin_bee_species_update(request, pk):
         "project/simple-form.html",
         {
             "form": form,
-            "title": "Bee Species Update",
+            "title": _("Bee Species Update"),
             "url_name": "admin-bee-species-page",
         },
     )
@@ -2035,7 +2068,7 @@ def admin_non_native_species_page(request):
     context = {
         "object_list": data,
         "url_name": "admin-non-native-plant-page",
-        "title": "Non-Native Plants",
+        "title": _("Non-Native Plants"),
     }
     return render(request, "project/admin/admin-non-native-species-page.html", context)
 
@@ -2043,7 +2076,7 @@ def admin_non_native_species_page(request):
 @group_required("Library Manager")
 def admin_non_native_species_add(request):
     context = {
-        "title": "Create Non-Native Plant",
+        "title": _("Register New Non-Native Plant"),
         "url_name": "admin-non-native-plant-page",
     }
     if request.method == "POST":
@@ -2056,7 +2089,8 @@ def admin_non_native_species_add(request):
             except IntegrityError:
                 messages.error(
                     request,
-                    f"Non-Native Plant {obj.latin_name} exists already.",
+                    _("Non-Native Plant %(non_native_plant)s exists already.")
+                    % {"non_native_plant": obj},
                 )
                 return render(
                     request,
@@ -2064,7 +2098,7 @@ def admin_non_native_species_add(request):
                     context,
                 )
         else:
-            messages.error(request, "Non-Native Species not valid.")
+            messages.error(request, _("Non-Native Species not valid."))
             context["form"] = form
     else:
         context["form"] = forms.AdminNonNativeSpeciesForm
@@ -2088,7 +2122,7 @@ def admin_non_native_species_update(request, pk):
         "project/simple-form.html",
         {
             "form": form,
-            "title": "Non-Native Species Update",
+            "title": _("Non-Native Species Update"),
             "url_name": "admin-non-native-species-page",
         },
     )
@@ -2120,7 +2154,7 @@ def admin_ecozone_page(request):
     context = {
         "object_list": data,
         "url_name": "admin-ecozone-page",
-        "title": "Ecozones",
+        "title": _("Ecozones"),
     }
     return render(request, "project/admin/admin-ecozones-page.html", context)
 
@@ -2133,7 +2167,7 @@ def admin_plant_missing_inaturalist_taxon(request):
     context = {
         "object_list": data,
         "url_name": "admin-plant-missing-inaturalist-taxon-id",
-        "title": "Plants missing iNaturalist Taxon ID",
+        "title": _("Plants missing iNaturalist Taxon ID"),
     }
     return render(
         request, "project/admin/admin-plant-missing-inaturalist-taxon.html", context
@@ -2143,7 +2177,7 @@ def admin_plant_missing_inaturalist_taxon(request):
 @group_required("Library Manager")
 def admin_ecozone_add(request):
     context = {
-        "title": "Create Ecozone",
+        "title": _("Register New Ecozone"),
         "url_name": "admin-ecozone-page",
     }
     if request.method == "POST":
@@ -2156,7 +2190,7 @@ def admin_ecozone_add(request):
             except IntegrityError:
                 messages.error(
                     request,
-                    f"Ecozone {obj.ecozone} exists already.",
+                    _("Ecozone %(ecozone)s exists already.") % {"ecozone": obj.ecozone},
                 )
                 return render(
                     request,
@@ -2164,7 +2198,7 @@ def admin_ecozone_add(request):
                     context,
                 )
         else:
-            messages.error(request, "Ecozone not valid.")
+            messages.error(request, _("Ecozone not valid."))
             context["form"] = form
     else:
         context["form"] = forms.AdminEcozoneForm
@@ -2188,7 +2222,7 @@ def admin_ecozone_update(request, pk):
         "project/simple-form.html",
         {
             "form": form,
-            "title": "Ecozone Update",
+            "title": _("Ecozone Update"),
             "url_name": "admin-ecozone-page",
         },
     )
@@ -2225,7 +2259,7 @@ def user_login(request):
         try:
             user = ProjectUser.objects.get(username=username)
         except ProjectUser.DoesNotExist:
-            messages.error(request, "Username does not exist")
+            messages.error(request, _("Username does not exist"))
 
         user = authenticate(request, username=username, password=password)
 
@@ -2233,7 +2267,7 @@ def user_login(request):
             login(request, user)
             return redirect(request.GET["next"] if "next" in request.GET else "index")
         else:
-            messages.error(request, "Username OR password is incorrect")
+            messages.error(request, _("Username OR password is incorrect"))
 
     return render(request, "project/login.html")
 
@@ -2255,7 +2289,7 @@ def user_plant_collection(request):
 def user_plant_update(request, pk):
     obj = models.PlantCollection.objects.get(id=pk)
     if obj.owner != request.user:
-        messages.warning(request, "You are not allowed to modify this user plant")
+        messages.warning(request, _("You are not allowed to modify this user plant"))
     form = forms.PlantCollectionForm(instance=obj)
 
     if request.method == "POST":
@@ -2269,7 +2303,7 @@ def user_plant_update(request, pk):
         "project/simple-form.html",
         {
             "form": form,
-            "title": "Color Update",
+            "title": _("Colour Update"),
             "url_name": "user-plant-collection",
         },
     )
@@ -2301,7 +2335,8 @@ def user_plant_delete(request, pk):
     obj: models.PlantCollection = models.PlantCollection.objects.get(id=pk)
     if obj.owner != request.user:
         messages.warning(
-            request, "You are not allowed to delete this plant from the user collection"
+            request,
+            _("You are not allowed to delete this plant from the user collection"),
         )
         return render(request, "project/user-plant-collection.html")
     if request.method == "POST":
@@ -2326,7 +2361,7 @@ def project_user_page(request):
     context = {
         "object_list": data,
         "url_name": "project-user-page",
-        "title": "Project Users",
+        "title": _("Project Users"),
         # "is_user_manager": is_user_manager,
     }
     return render(request, "project/users/project-user-page.html", context)
@@ -2335,7 +2370,7 @@ def project_user_page(request):
 @group_required("Access Administrator")
 def project_user_add(request):
     context = {
-        "title": "Create Project User",
+        "title": _("Create Project User"),
         "url_name": "project-user-page",
     }
     if request.method == "POST":
@@ -2347,13 +2382,16 @@ def project_user_add(request):
             try:
                 obj.save()
                 messages.success(
-                    request, f"Project User {obj.username} created successfully."
+                    request,
+                    _("Project User %(username)s created successfully.")
+                    % {"username": obj.username},
                 )
                 return redirect("project-user-page")
             except IntegrityError:
                 messages.error(
                     request,
-                    f"Project User {obj.username} exists already.",
+                    _("Project User %(username)s exists already.")
+                    % {"username": obj.username},
                 )
                 return render(
                     request,
@@ -2361,7 +2399,7 @@ def project_user_add(request):
                     context,
                 )
         else:
-            messages.error(request, "Project User not valid.")
+            messages.error(request, _("Project User not valid."))
             context["form"] = form
     else:
         context["form"] = forms.ProjectUserForm
@@ -2385,7 +2423,7 @@ def project_user_update(request, pk):
         "project/simple-form.html",
         {
             "form": form,
-            "title": "Project User Update",
+            "title": _("Project User Update"),
             "url_name": "project-user-page",
         },
     )
@@ -2402,7 +2440,7 @@ def project_user_delete(request, pk):
         "core/delete-object.html",
         {
             "object": obj,
-            "title": "Project User Delete",
+            "title": _("Project User Delete"),
             "url_name": "project-user-page",
             "back": "project-user-page",
         },
@@ -2418,7 +2456,7 @@ def project_user_groups_update(request, pk):
         "user": user,
         "unassigned_groups": unassigned_groups,
         "assigned_groups": assigned_groups,
-        "title": f"Manage Groups for {user.username}",
+        "title": _("Manage Groups for %(username)s") % {"username": user.username},
         "url_name": "project-user-page",
     }
     if request.method == "POST":
@@ -2426,7 +2464,9 @@ def project_user_groups_update(request, pk):
         # Update user groups without deleteing existing ones first
         user.groups.add(*Group.objects.filter(id__in=selected_groups))
         messages.success(
-            request, f"Groups updated successfully for user {user.username}."
+            request,
+            _("Groups updated successfully for user %(username)s.")
+            % {"username": user.username},
         )
         return redirect("project-user-groups-update", pk=user.pk)
 
@@ -2441,12 +2481,13 @@ def project_user_groups_delete(request, user_pk, group_pk):
         user.groups.remove(group)
         messages.success(
             request,
-            f"Group {group.name} removed successfully from user {user.username}.",
+            _("Group %(group_name)s removed successfully from user %(username)s."),
         )
         return redirect("project-user-groups-update", pk=user.pk)
     context = {
         "object": group,
-        "title": f"Remove Group {group.name} from User {user.username}",
+        "title": _("Remove Group %(group_name)s from User %(username)s")
+        % {"group_name": group.name, "username": user.username},
         "url_name": "project-user-page",
         "back": "project-user-page",
     }
@@ -2459,7 +2500,7 @@ def project_group_page(request):
     context = {
         "object_list": data,
         "url_name": "project-group-page",
-        "title": "Project Group Management",
+        "title": _("Project Group Management"),
     }
     return render(request, "project/users/project-group-page.html", context)
 
@@ -2467,7 +2508,7 @@ def project_group_page(request):
 @group_required("Access Administrator")
 def project_group_add(request):
     context = {
-        "title": "Create Group",
+        "title": _("Register New Group"),
         "url_name": "project-group-page",
     }
     if request.method == "POST":
@@ -2479,13 +2520,16 @@ def project_group_add(request):
                 instance.save()
                 form.save_m2m()
                 messages.success(
-                    request, f"Group {instance.name} created successfully."
+                    request,
+                    _("Group %(group_name)s created successfully.")
+                    % {"group_name": instance.name},
                 )
                 return redirect("project-group-page")
             except IntegrityError:
                 messages.error(
                     request,
-                    f"Group {instance.name} exists already.",
+                    _("Group %(group_name)s exists already.")
+                    % {"group_name": instance.name},
                 )
                 return render(
                     request,
@@ -2493,7 +2537,7 @@ def project_group_add(request):
                     context,
                 )
         else:
-            messages.error(request, "Group not valid.")
+            messages.error(request, _("Group not valid."))
             context["form"] = form
     else:
         context["form"] = forms.GroupForm
@@ -2512,7 +2556,7 @@ def project_group_update(request, pk):
             instance: Group = form.save(commit=False)
             instance.save()
             form.save_m2m()
-            messages.success(request, "Group updated successfully.")
+            messages.success(request, _("Group updated successfully."))
             return redirect("project-group-page")
 
     return render(
@@ -2520,7 +2564,7 @@ def project_group_update(request, pk):
         "project/simple-form.html",
         {
             "form": form,
-            "title": "Group Update",
+            "title": _("Group Update"),
             "url_name": "project-group-page",
         },
     )
@@ -2537,7 +2581,7 @@ def project_group_delete(request, pk):
         "core/delete-object.html",
         {
             "object": obj,
-            "title": "Group Delete",
+            "title": _("Group Delete"),
             "url_name": "project-group-page",
             "back": "project-group-page",
         },
@@ -2569,14 +2613,14 @@ def group_permissions_matrix_update(request):
                     # Permission is unchecked, remove it from the group if present
                     if permission.id in group_permissions:
                         group.permissions.remove(permission)
-        messages.success(request, "Permissions updated successfully.")
+        messages.success(request, _("Permissions updated successfully."))
         return redirect("group-permissions-matrix-update")
 
     context = {
         "groups": groups,
         "object_list": all_permissions,
         "url_name": "group-permissions-matrix-update",
-        "title": "All Permissions",
+        "title": _("All Permissions"),
     }
     return render(
         request, "project/users/group-permissions-matrix-update.html", context
@@ -2757,7 +2801,7 @@ def plant_label_pdf(request, pk):
 def plant_catalog(request):
     plants = models.PlantProfile.objects.none()
     context = {
-        "title": "Plant Catalog",
+        "title": _("Plant Catalog"),
         "object_list": plants,
         "url_name": "plant-catalog",
     }
@@ -2782,10 +2826,11 @@ def plant_environmental_requirement_update(request, pk):
         plant.sand_tolerant = request.POST.get("sand_tolerant") == "on"
         plant.acidic_soil_tolerant = request.POST.get("acidic_soil_tolerant") == "on"
         plant.save()
-        messages.success(request, "Environmental requirements updated successfully.")
+        messages.success(request, _("Environmental requirements updated successfully."))
         return redirect("plant-profile-page", pk=plant.pk)
     context = {
-        "title": f"{plant.latin_name} - Environmental Requirements",
+        "title": _("%(latin_name)s - Environmental Requirements")
+        % {"latin_name": plant.latin_name},
         "plant": plant,
     }
     return render(
@@ -2797,7 +2842,8 @@ def plant_environmental_requirement_update(request, pk):
 def plant_identification_information_update(request, pk):
     plant = utils.single_plant(pk, request)
     context = {
-        "title": f"{plant.latin_name} - Identification Information",
+        "title": _("%(latin_name)s - Identification Information")
+        % {"latin_name": plant.latin_name},
         "plant": plant,
     }
     if request.method == "POST":
@@ -2805,11 +2851,11 @@ def plant_identification_information_update(request, pk):
         if form.is_valid():
             form.save()
             messages.success(
-                request, "Identification information updated successfully."
+                request, _("Identification information updated successfully.")
             )
             return redirect("plant-profile-page", pk=plant.pk)
         else:
-            messages.error(request, "Error updating identification information.")
+            messages.error(request, _("Error updating identification information."))
     return render(
         request, "project/update/plant-identification-information-update.html", context
     )
@@ -2818,7 +2864,7 @@ def plant_identification_information_update(request, pk):
 @group_required(["Plant Profile Manager", "Library Manager"])
 def plant_identification_information_create(request):
     context = {
-        "title": "Create Plant Identification Information",
+        "title": _("Create Plant Identification Information"),
     }
     if request.method == "POST":
         form = forms.PlantIdentificationInformationForm(request.POST)
@@ -2829,7 +2875,10 @@ def plant_identification_information_create(request):
             if models.PlantProfile.objects.filter(latin_name=latin_name).exists():
                 messages.error(
                     request,
-                    f"A plant with this Latin name {latin_name} already exists. Please choose a different name.",
+                    _(
+                        "A plant with this Latin name %(latin_name)s already exists. Please choose a different name."
+                    )
+                    % {"latin_name": latin_name},
                 )
                 return render(
                     request,
@@ -2849,15 +2898,13 @@ def plant_identification_information_create(request):
             plant.french_name = french_name
             plant.save()
             messages.success(
-                request, "Plant identification information created successfully."
+                request, _("Plant identification information created successfully.")
             )
             return redirect("plant-profile-page", pk=plant.pk)
     else:
         form = forms.PlantIdentificationInformationForm()
-    context = {
-        "title": "Create Plant Identification Information",
-        "form": form,
-    }
+    context["form"] = form
+
     return render(
         request, "project/plant-identification-information-create.html", context
     )
@@ -2875,7 +2922,8 @@ def plant_growth_characteristics_update(request, pk):
     bloom_colours = models.BloomColour.objects.all().order_by("bloom_colour")
     bloom_starts = bloom_ends = utils.MONTHS
     context = {
-        "title": f"{plant.latin_name} - Growth Characteristics",
+        "title": _("%(latin_name)s - Growth Characteristics")
+        % {"latin_name": plant.latin_name},
         "plant": plant,
         "growth_habits": growth_habits,
         "bloom_colours": bloom_colours,
@@ -2910,14 +2958,18 @@ def plant_growth_characteristics_update(request, pk):
                         except IntegrityError:
                             messages.warning(
                                 request,
-                                f"Complementary plant ID {complement_id} already exists.",
+                                _(
+                                    "Complementary plant ID {complement_id} already exists."
+                                )
+                                % {"complement_id": complement_id},
                             )
                     except models.PlantProfile.DoesNotExist:
                         messages.warning(
                             request,
-                            f"Complementary plant ID {complement_id} not found.",
+                            _("Complementary plant ID {complement_id} not found.")
+                            % {"complement_id": complement_id},
                         )
-            messages.success(request, "Growth characteristics updated successfully.")
+            messages.success(request, _("Growth characteristics updated successfully."))
             return redirect("plant-profile-page", pk=plant.pk)
         else:
             import logging
@@ -2932,7 +2984,9 @@ def plant_growth_characteristics_update(request, pk):
             # Show specific error messages to user
             for field, errors in form.errors.items():
                 for error in errors:
-                    messages.error(request, f"{field}: {error}")
+                    messages.error(
+                        request, _("{field}: {error}").format(field=field, error=error)
+                    )
 
     else:
         form = forms.PlantGrowthCharacteristicsForm(instance=plant)
@@ -2945,7 +2999,8 @@ def plant_growth_characteristics_update(request, pk):
 def plant_landscape_use_and_application_update(request, pk):
     plant = utils.single_plant(pk, request)
     context = {
-        "title": f"{plant.latin_name} - Landscape Use and Application",
+        "title": _("%(latin_name)s - Landscape Use and Application")
+        % {"latin_name": plant.latin_name},
         "plant": plant,
     }
     if request.method == "POST":
@@ -2953,11 +3008,11 @@ def plant_landscape_use_and_application_update(request, pk):
         if form.is_valid():
             form.save()
             messages.success(
-                request, "Landscape use and application updated successfully."
+                request, _("Landscape use and application updated successfully.")
             )
             return redirect("plant-profile-page", pk=plant.pk)
         else:
-            messages.error(request, "Error updating landscape use and application.")
+            messages.error(request, _("Error updating landscape use and application."))
     else:
         form = forms.PlantLandscapeUseAndApplicationForm(instance=plant)
     context["form"] = form
@@ -2975,7 +3030,8 @@ def plant_substitute_to_update(request, pk):
         pk__in=plant.substitute_for_non_native.all()
     )
     context = {
-        "title": f"{plant.latin_name} - Alternative To",
+        "title": _("%(latin_name)s - Alternative To")
+        % {"latin_name": plant.latin_name},
         "plant": plant,
         "unsupported_substitutes": unsupported_substitutes,
     }
@@ -2983,10 +3039,10 @@ def plant_substitute_to_update(request, pk):
         form = forms.PlantSubstituteToForm(request.POST, instance=plant)
         if form.is_valid():
             form.save()
-            messages.success(request, "Substitutes updated successfully.")
+            messages.success(request, _("Substitutes updated successfully."))
             return redirect("plant-profile-page", pk=plant.pk)
         else:
-            messages.error(request, "Error updating substitutes.")
+            messages.error(request, _("Error updating substitutes."))
     else:
         form = forms.PlantSubstituteToForm(instance=plant)
     context["form"] = form
@@ -3001,7 +3057,8 @@ def plant_ecological_benefits_update(request, pk):
     )
     unsupported_bees = models.BeeSpecies.objects.exclude(pk__in=plant.bees.all())
     context = {
-        "title": f"{plant.latin_name} - Ecological Benefits",
+        "title": _("%(latin_name)s - Ecological Benefits")
+        % {"latin_name": plant.latin_name},
         "plant": plant,
         "unsupported_butterflies": unsupported_butterflies,
         "unsupported_bees": unsupported_bees,
@@ -3010,10 +3067,10 @@ def plant_ecological_benefits_update(request, pk):
         form = forms.PlantEcologicalBenefitsForm(request.POST, instance=plant)
         if form.is_valid():
             form.save()
-            messages.success(request, "Ecological benefits updated successfully.")
+            messages.success(request, _("Ecological benefits updated successfully."))
             return redirect("plant-profile-page", pk=plant.pk)
         else:
-            messages.error(request, "Error updating ecological benefits.")
+            messages.error(request, _("Error updating ecological benefits."))
     else:
         form = forms.PlantEcologicalBenefitsForm(instance=plant)
     context["form"] = form
@@ -3026,7 +3083,8 @@ def plant_ecological_benefits_update(request, pk):
 def plant_introductory_gardening_experience_update(request, pk):
     plant = utils.single_plant(pk, request)
     context = {
-        "title": f"{plant.latin_name} - Introductory Gardening Experience",
+        "title": _("%(latin_name)s - Introductory Gardening Experience")
+        % {"latin_name": plant.latin_name},
         "plant": plant,
     }
     if request.method == "POST":
@@ -3036,11 +3094,13 @@ def plant_introductory_gardening_experience_update(request, pk):
         if form.is_valid():
             form.save()
             messages.success(
-                request, "Introductory gardening experience updated successfully."
+                request, _("Introductory gardening experience updated successfully.")
             )
             return redirect("plant-profile-page", pk=plant.pk)
         else:
-            messages.error(request, "Error updating introductory gardening experience.")
+            messages.error(
+                request, _("Error updating introductory gardening experience.")
+            )
     else:
         form = forms.PlantIntroductoryGardeningExperienceForm(instance=plant)
     context["form"] = form
@@ -3055,7 +3115,8 @@ def plant_introductory_gardening_experience_update(request, pk):
 def plant_special_features_and_consideration_update(request, pk):
     plant = utils.single_plant(pk, request)
     context = {
-        "title": f"{plant.latin_name} - Special Features and Considerations",
+        "title": _("%(latin_name)s - Special Features and Considerations")
+        % {"latin_name": plant.latin_name},
         "plant": plant,
     }
     if request.method == "POST":
@@ -3065,12 +3126,12 @@ def plant_special_features_and_consideration_update(request, pk):
         if form.is_valid():
             form.save()
             messages.success(
-                request, "Special features and considerations updated successfully."
+                request, _("Special features and considerations updated successfully.")
             )
             return redirect("plant-profile-page", pk=plant.pk)
         else:
             messages.error(
-                request, "Error updating special features and considerations."
+                request, _("Error updating special features and considerations.")
             )
     else:
         form = forms.PlantSpecialFeaturesAndConsiderationForm(instance=plant)
@@ -3105,7 +3166,9 @@ def plant_harvesting_update(request, pk):
     # On Cultivars
     one_cultivars = models.OneCultivar.objects.all().order_by("one_cultivar")
     if not one_cultivars:
-        messages.warning(request, "No on cultivars available. Please add some first.")
+        messages.warning(
+            request, _("No on cultivars available. Please add some first.")
+        )
         return redirect("on-cultivar-table")
 
     # # Seed Viability Tests
@@ -3122,7 +3185,7 @@ def plant_harvesting_update(request, pk):
     seed_storages = models.SeedStorage.objects.all().order_by("seed_storage")
     if not seed_storages:
         messages.warning(
-            request, "No seed storage options available. Please add some first."
+            request, _("No seed storage options available. Please add some first.")
         )
         return redirect("seed-storage-table")
 
@@ -3132,7 +3195,7 @@ def plant_harvesting_update(request, pk):
     )
     if not harvesting_indicators:
         messages.warning(
-            request, "No harvesting indicators available. Please add some first."
+            request, _("No harvesting indicators available. Please add some first.")
         )
         return redirect("harvesting-indicator-table")
 
@@ -3140,14 +3203,14 @@ def plant_harvesting_update(request, pk):
     harvesting_means = models.HarvestingMean.objects.all().order_by("harvesting_mean")
     if not harvesting_means:
         messages.warning(
-            request, "No harvesting means available. Please add some first."
+            request, _("No harvesting means available. Please add some first.")
         )
         return redirect("harvesting-mean-table")
 
     # # seed heads
     seed_heads = models.SeedHead.objects.all().order_by("seed_head")
     if not seed_heads:
-        messages.warning(request, "No seed heads available. Please add some first.")
+        messages.warning(request, _("No seed heads available. Please add some first."))
         return redirect("seed-head-table")
 
     # seed viability tests
@@ -3156,7 +3219,7 @@ def plant_harvesting_update(request, pk):
     )
     if not seed_viability_tests:
         messages.warning(
-            request, "No seed viability tests available. Please add some first."
+            request, _("No seed viability tests available. Please add some first.")
         )
         return redirect("seed-viability-test-table")
 
@@ -3174,16 +3237,17 @@ def plant_harvesting_update(request, pk):
         if form.is_valid():
             form.save()
             messages.success(
-                request, "Harvesting and seed sharing updated successfully."
+                request, _("Harvesting and seed sharing updated successfully.")
             )
             return redirect("plant-profile-page", pk=plant.pk)
         else:
-            messages.error(request, "Error updating harvesting and seed sharing.")
+            messages.error(request, _("Error updating harvesting and seed sharing."))
     else:
         form = forms.PlantHarvestingForm(instance=plant)
 
     context = {
-        "title": f"{plant.latin_name} - Harvesting and Seed Sharing",
+        "title": _("%(latin_name)s - Harvesting and Seed Sharing")
+        % {"latin_name": plant.latin_name},
         "plant": plant,
         # "packaging_measures": packaging_measures,
         "one_cultivars": one_cultivars,
@@ -3206,14 +3270,16 @@ def plant_sowing_update(request, pk):
     # sowing depth
     sowing_depth = models.SowingDepth.objects.all().order_by("sowing_depth")
     if not sowing_depth:
-        messages.warning(request, "No sowing depth available. Please add some first.")
+        messages.warning(
+            request, _("No sowing depth available. Please add some first.")
+        )
         return redirect("sowing-depth-table")
     stratification_duration = models.StratificationDuration.objects.all().order_by(
         "stratification_duration"
     )
     if not stratification_duration:
         messages.warning(
-            request, "No stratification duration available. Please add some first."
+            request, _("No stratification duration available. Please add some first.")
         )
         return redirect("stratification-duration-table")
 
@@ -3221,15 +3287,16 @@ def plant_sowing_update(request, pk):
         form = forms.PlantSowingForm(request.POST, instance=plant)
         if form.is_valid():
             form.save()
-            messages.success(request, "Sowing information updated successfully.")
+            messages.success(request, _("Sowing information updated successfully."))
             return redirect("plant-profile-page", pk=plant.pk)
         else:
-            messages.error(request, "Error updating sowing information.")
+            messages.error(request, _("Error updating sowing information."))
     else:
         form = forms.PlantSowingForm(instance=plant)
 
     context = {
-        "title": f"{plant.latin_name} - Sowing Information",
+        "title": _("%(latin_name)s - Sowing Information")
+        % {"latin_name": plant.latin_name},
         "plant": plant,
         "sowing_depth": sowing_depth,
         "stratification_duration": stratification_duration,
@@ -3247,16 +3314,17 @@ def plant_seed_distribution_update(request, pk):
         if form.is_valid():
             form.save()
             messages.success(
-                request, "Seed distribution information updated successfully."
+                request, _("Seed distribution information updated successfully.")
             )
             return redirect("plant-profile-page", pk=plant.pk)
         else:
-            messages.error(request, "Error updating seed distribution information.")
+            messages.error(request, _("Error updating seed distribution information."))
     else:
         form = forms.PlantSeedDistributionForm(instance=plant)
 
     context = {
-        "title": f"{plant.latin_name} - Seed Distribution Information",
+        "title": _("%(latin_name)s - Seed Distribution Information")
+        % {"latin_name": plant.latin_name},
         "plant": plant,
         "form": form,
     }
@@ -3298,7 +3366,7 @@ def admin_lifespan_page(request):
         plant_count=Count("plantprofile")
     ).order_by("lifespan")
     context = {
-        "title": "Plant Lifespan",
+        "title": _("Plant Lifespans"),
         "object_list": obj,
         "url_name": "admin-lifespan-page",
     }
@@ -3308,7 +3376,7 @@ def admin_lifespan_page(request):
 @group_required("Library Manager")
 def admin_lifespan_add(request):
     context = {
-        "title": "Create Plant Lifespan",
+        "title": _("Register New Plant Lifespan"),
         "url_name": "admin-lifespan-page",
     }
     if request.method == "POST":
@@ -3326,7 +3394,7 @@ def admin_lifespan_add(request):
                     context,
                 )
         else:
-            messages.error(request, "Lifespan not valid.")
+            messages.error(request, _("Lifespan not valid."))
             context["form"] = form
     else:
         context["form"] = forms.AdminLifespanForm()
@@ -3350,7 +3418,7 @@ def admin_lifespan_update(request, pk):
         "project/simple-form.html",
         {
             "form": form,
-            "title": "Lifespan Update",
+            "title": _("Lifespan Update"),
             "url_name": "admin-lifespan-page",
         },
     )
@@ -3380,7 +3448,7 @@ def admin_growth_habit_page(request):
         plant_count=Count("plantprofile")
     ).order_by("growth_habit")
     context = {
-        "title": "Growth Habit",
+        "title": _("Growth Habit"),
         "object_list": obj,
         "url_name": "admin-growth-habit-page",
     }
@@ -3390,7 +3458,7 @@ def admin_growth_habit_page(request):
 @group_required("Library Manager")
 def admin_growth_habit_add(request):
     context = {
-        "title": "Create Growth Habit",
+        "title": _("Create Growth Habit"),
         "url_name": "admin-growth-habit-page",
     }
     if request.method == "POST":
@@ -3401,14 +3469,17 @@ def admin_growth_habit_add(request):
             try:
                 form.save()
             except IntegrityError:
-                messages.error(request, f"Habit {obj.growth_habit} exists already.")
+                messages.error(
+                    request,
+                    _("Habit %(obj)s exists already.") % {"obj": obj.growth_habit},
+                )
                 return render(
                     request,
                     "project/simple-form.html",
                     context,
                 )
         else:
-            messages.error(request, "Habit not valid.")
+            messages.error(request, _("Habit not valid."))
             context["form"] = form
     else:
         context["form"] = forms.HabitForm()
@@ -3432,7 +3503,7 @@ def admin_growth_habit_update(request, pk):
         "project/simple-form.html",
         {
             "form": form,
-            "title": "Habit Update",
+            "title": _("Habit Update"),
             "url_name": "admin-growth-habit-page",
         },
     )
@@ -3469,7 +3540,7 @@ def admin_images_page(request):
 
     context = {
         "is_paginated": page_obj.has_other_pages(),
-        "title": "Images",
+        "title": _("Images"),
         "object_list": page_obj,
         "page_obj": page_obj,
         "url_name": "admin-images-page",
@@ -3480,7 +3551,7 @@ def admin_images_page(request):
 @group_required(["Image Manager"])
 def admin_image_add(request):
     context = {
-        "title": "Add Image",
+        "title": _("Register New Image"),
         "url_name": "admin-images-page",
     }
     if request.method == "POST":
@@ -3495,7 +3566,13 @@ def admin_image_add(request):
             ).exists():
                 messages.error(
                     request,
-                    f"An image for the plant profile <em>{obj.plant_profile}</em> and morphology aspect <em>{obj.morphology_aspect}</em> already exists. Please update the existing image instead.  If you want to add a new image, please select a different morphology aspect.",
+                    _(
+                        "An image for the plant profile <em>%(plant_profile)s</em> and morphology aspect <em>%(morphology_aspect)s</em> already exists. Please update the existing image instead.  If you want to add a new image, please select a different morphology aspect."
+                    )
+                    % {
+                        "plant_profile": obj.plant_profile,
+                        "morphology_aspect": obj.morphology_aspect,
+                    },
                 )
                 return render(
                     request,
@@ -3521,15 +3598,18 @@ def admin_image_add(request):
             if gps_data:
                 gps_check = utils.get_image_gps_coordinates(obj.image.path)
                 if gps_check:
-                    msg = "GPS data not deleted successfully."
+                    msg = _("GPS data not deleted successfully.")
                     messages.warning(request, msg)
                 else:
-                    msg = "GPS data deleted successfully."
+                    msg = _("GPS data deleted successfully.")
                     messages.success(request, msg)
 
             messages.success(
                 request,
-                f"Image for {obj.plant_profile} added successfully. GPS Data: {gps_data}",
+                _(
+                    "Image for %(plant_profile)s added successfully. GPS Data: %(gps_data)s"
+                )
+                % {"plant_profile": obj.plant_profile, "gps_data": gps_data},
             )
             return render(
                 request,
@@ -3558,7 +3638,7 @@ def admin_image_update(request, pk):
         "project/simple-form.html",
         {
             "form": form,
-            "title": "Image Update",
+            "title": _("Image Update"),
             "url_name": "admin-images-page",
         },
     )
@@ -3588,7 +3668,7 @@ def admin_plant_morphology_page(request):
         image_count=Count("plantimage")
     ).order_by("element")
     context = {
-        "title": "Plant Morphology Elements",
+        "title": _("Plant Morphology Elements"),
         "object_list": obj,
         "url_name": "admin-plant-morphology-page",
     }
@@ -3598,7 +3678,7 @@ def admin_plant_morphology_page(request):
 @group_required("Library Manager")
 def admin_plant_morphology_add(request):
     context = {
-        "title": "Create Plant Morphology Element",
+        "title": _("Register New Plant Morphology Element"),
         "url_name": "admin-plant-morphology-page",
     }
     if request.method == "POST":
@@ -3610,7 +3690,9 @@ def admin_plant_morphology_add(request):
                 form.save()
             except IntegrityError:
                 messages.error(
-                    request, f"Plant Morphology Element {obj.element} exists already."
+                    request,
+                    _("Plant Morphology Element %(element)s exists already.")
+                    % {"element": obj.element},
                 )
                 return render(
                     request,
@@ -3618,7 +3700,7 @@ def admin_plant_morphology_add(request):
                     context,
                 )
         else:
-            messages.error(request, "Plant Morphology Element not valid.")
+            messages.error(request, _("Plant Morphology Element not valid."))
             context["form"] = form
     else:
         context["form"] = forms.AdminPlantMorphologyForm()
@@ -3635,7 +3717,7 @@ def admin_plant_morphology_update(request, pk):
         form = forms.AdminPlantMorphologyForm(request.POST, instance=obj)
         if form.is_valid():
             form.save()
-            messages.success(request, "Plant morphology updated successfully.")
+            messages.success(request, _("Plant morphology updated successfully."))
             return redirect("admin-plant-morphology-page")
 
     return render(
@@ -3643,7 +3725,7 @@ def admin_plant_morphology_update(request, pk):
         "project/simple-form.html",
         {
             "form": form,
-            "title": "Update Plant Morphology",
+            "title": _("Update Plant Morphology"),
             "url_name": "admin-plant-morphology-page",
         },
     )
