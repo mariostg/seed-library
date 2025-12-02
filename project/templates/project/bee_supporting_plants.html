@@ -7,11 +7,13 @@
       <h1>{% trans "Specialized Bees and Their Supporting Plants" %}</h1>
 
       <p>
-        {% blocktrans count bees.count as bee_count %}
-          This page lists all <strong>{{ bee_count }}</strong> specialized bee species along with their supporting plants
-          that exist in the plant catalogue. Each plant species is linked to its
-          profile page for more detailed information.
-        {% endblocktrans %}
+        {% with bee_count=bees.count %}
+          {% blocktrans %}
+            This page lists all <strong>{{ bee_count }}</strong> specialized bee species along with their supporting plants
+            that exist in the plant catalogue. Each plant species is linked to its
+            profile page for more detailed information.
+          {% endblocktrans %}
+        {% endwith %}
       </p>
     </div>
     <div>
