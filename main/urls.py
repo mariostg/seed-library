@@ -754,3 +754,5 @@ if settings.DEBUG:
 urlpatterns += [
     path("api/v1/", api.urls),
 ]
+if "rosetta" in settings.INSTALLED_APPS:
+    urlpatterns += [path("rosetta/", include("rosetta.urls"))]

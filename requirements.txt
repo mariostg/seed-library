@@ -43,6 +43,7 @@ django==5.2.7
     #   django-filter
     #   django-htmx
     #   django-ninja
+    #   django-rosetta
 django-browser-reload==1.21.0
     # via -r requirements.in
 django-extensions==4.1
@@ -52,6 +53,8 @@ django-filter==25.2
 django-htmx==1.26.0
     # via -r requirements.in
 django-ninja==1.4.5
+    # via -r requirements.in
+django-rosetta==0.10.2
     # via -r requirements.in
 django-upgrade==1.29.1
     # via -r requirements.in
@@ -145,6 +148,8 @@ pluggy==1.6.0
     # via pytest
 plum-py==0.8.7
     # via exif
+polib==1.2.0
+    # via django-rosetta
 pre-commit==4.3.0
     # via -r requirements.in
 prompt-toolkit==3.0.52
@@ -194,7 +199,9 @@ qrcode==8.2
 reportlab==4.4.4
     # via -r requirements.in
 requests==2.32.5
-    # via -r requirements.in
+    # via
+    #   -r requirements.in
+    #   django-rosetta
 rich==14.2.0
     # via -r requirements.in
 six==1.17.0

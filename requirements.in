@@ -39,3 +39,4 @@ openpyxl
 qrcode
 requests
 beautifulsoup4
+django-rosetta

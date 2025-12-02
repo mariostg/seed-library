@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     "django_filters",
     "django_browser_reload",
     "project",
+    "rosetta",
 ]
 
 MIDDLEWARE = [
