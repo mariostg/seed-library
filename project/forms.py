@@ -175,7 +175,7 @@ class HabitForm(forms.ModelForm):
 
 
 class AdminHarvestingIndicatorForm(forms.ModelForm):
-    harvesting_indicator = TextAreaField(label="Harvesting Indicator")
+    harvesting_indicator = TextAreaField(label=_("Harvesting Indicator"))
 
     class Meta:
         model = models.HarvestingIndicator
@@ -186,7 +186,7 @@ class AdminHarvestingIndicatorForm(forms.ModelForm):
 
 
 class AdminHarvestingMeanForm(forms.ModelForm):
-    harvesting_mean = TextAreaField(label="Harvesting")
+    harvesting_mean = TextAreaField(label=_("Harvesting"))
 
     class Meta:
         model = models.HarvestingMean
@@ -222,7 +222,7 @@ class AdminSeedStorageForm(forms.ModelForm):
     #         attrs={"class": "input", "style": "width: 500px;", "rows": "4"},
     #     ),
     # )
-    seed_storage = TextAreaField(label="Seed Storages")
+    seed_storage = TextAreaField(label=_("Seed Storages"))
 
     class Meta:
         model = models.SeedStorage
@@ -234,7 +234,7 @@ class AdminSeedStorageForm(forms.ModelForm):
 
 class AdminOneCultivarForm(forms.ModelForm):
     one_cultivar = forms.CharField(
-        label="Cultivar",
+        label=_("Cultivar"),
         max_length=120,
         widget=forms.Textarea(
             attrs={"class": "input", "style": "width: 500px;", "rows": "4"},
@@ -388,12 +388,12 @@ class ProjectUserForm(ModelForm):
 
 
 class GroupForm(forms.ModelForm):
-    name = forms.CharField(label="Group Name", max_length=150)
+    name = forms.CharField(label=_("Group Name"), max_length=150)
     permissions = forms.ModelMultipleChoiceField(
         queryset=Permission.objects.all(),
         widget=forms.CheckboxSelectMultiple,
         required=False,
-        label="Group Permissions",
+        label=_("Group Permissions"),
     )
 
     class Meta:
