@@ -18,8 +18,10 @@
                 alt="Light Icon"
                 class="icon"
               />
-              <span>{% trans "Full Sun" %}:</span>
-              <span>{% trans "More than 6 hours of direct sunlight daily" %}</span>
+              {% blocktrans %}
+                <span>Full Sun:</span>
+                <span>More than 6 hours of direct sunlight daily</span>
+              {% endblocktrans %}
             </div>
             <!-- Part Shade -->
             <div class="card">
@@ -28,8 +30,10 @@
                 alt="Light Icon"
                 class="icon"
               />
-              <span>{% trans "Part Shade" %}:</span>
-              <span>{% trans "Between 3 to 6 hours of direct sunlight daily" %}</span>
+              {% blocktrans %}
+                <span>Part Shade:</span>
+                <span>Between 3 to 6 hours of direct sunlight daily</span>
+              {% endblocktrans %}
             </div>
             <!-- Full Shade -->
             <div class="card">
@@ -38,8 +42,10 @@
                 alt="Light Icon"
                 class="icon"
               />
-              <span>{% trans "Full Shade" %}:</span>
-              <span>{% trans "Less than 3 hours of direct sunlight daily" %}</span>
+              {% blocktrans %}
+                <span>"Full Shade:</span>
+                <span>"Less than 3 hours of direct sunlight daily</span>
+              {% endblocktrans %}
             </div>
           </div>
         </article>
@@ -58,8 +64,10 @@
                 alt="Soil Icon"
                 class="icon"
               />
-              <span>{% trans "Dry" %}:</span>
-              <span>{% trans "Water runs through after rainfall" %}</span>
+              {% blocktrans %}
+                <span>Dry:</span>
+                <span>Water runs through after rainfall</span>
+              {% endblocktrans %}
             </div>
             <!--Medium-->
             <div class="card">
@@ -68,8 +76,10 @@
                 alt="Soil Icon"
                 class="icon"
               />
-              <span>{% trans "Medium" %}:</span>
-              <span>{% trans "Water is retained but not soggy" %}</span>
+              {% blocktrans %}
+                <span>Medium:</span>
+                <span>Water is retained but not soggy</span>
+              {% endblocktrans %}
             </div>
             <!--Wet-->
             <div class="card">
@@ -78,8 +88,10 @@
                 alt="Soil Icon"
                 class="icon"
               />
-              <span>{% trans "Wet" %}:</span>
-              <span>{% trans "Stays damp all year" %}</span>
+              {% blocktrans %}
+                <span>Wet:</span>
+                <span>Stays damp all year</span>
+              {% endblocktrans %}
             </div>
           </div>
         </article>
@@ -98,8 +110,10 @@
             alt="Beginner Friendly Icon"
             class="icon"
           />
-          <span>{% trans "Beginner Friendly" %}:</span>
-          <span>{% trans "Suitable for novice gardeners" %}</span>
+          {% blocktrans %}
+            <span>Beginner Friendly:</span>
+            <span>Suitable for novice gardeners</span>
+          {% endblocktrans %}
         </div>
         <!--Does not Spread-->
         <div class="card-box">
@@ -108,8 +122,10 @@
             alt="Native to Ottawa Region Icon"
             class="icon"
           />
-          <span>{% trans "Does not Spread" %}:</span>
-          <span>{% trans "Plants will remain at the same place in the garden" %}</span>
+          {% blocktrans %}
+            <span>Does not Spread:</span>
+            <span>Plants will remain at the same place in the garden</span>
+          {% endblocktrans %}
         </div>
         <!--Easy to Germinate-->
         <div class="card-box">
@@ -118,8 +134,10 @@
             alt="Easy to Germinate Icon"
             class="icon"
           />
-          <span>{% trans "Easy to Germinate" %}:</span>
-          <span>{% trans "Indicates if the plant is easy to germinate from seeds" %}</span>
+          {% blocktrans %}
+            <span>Easy to Germinate:</span>
+            <span>Indicates if the plant is easy to germinate from seeds</span>
+          {% endblocktrans %}
         </div>
         <!--Self-Seeding-->
         <div class="card-box">
@@ -128,8 +146,10 @@
             alt="Self Seeding Icon"
             class="icon"
           />
-          <span>{% trans "Self-Seeding" %}:</span>
-          <span>{% trans "Plants that will produce seeds abundantly resulting in new plants" %}</span>
+          {% blocktrans %}
+            <span>Self-Seeding:</span>
+            <span>Plants that will produce seeds abundantly resulting in new plants</span>
+          {% endblocktrans %}
         </div>
       </article>
 
@@ -161,17 +181,19 @@
         </article>
 
         <article>
-          <h4>{% trans "Lifespan" %}</h4>
-          <ul>
-            <li>{% trans "Annual: plants that have a lifespan of one year" %}</li>
-            <li>
-              {% trans "Biennial: plants that will take two years to bloom, and then will die" %}
-            </li>
-            <li>{% trans "Perennial: plants that will come back year after year" %}</li>
-            <li>
-              {% trans "Spring Ephemeral: plants that bloom in the spring that loose their leaves later in the year" %}
-            </li>
-          </ul>
+          {% blocktrans %}
+            <h4>Lifespan</h4>
+            <ul>
+              <li>Annual: plants that have a lifespan of one year</li>
+              <li>
+                Biennial: plants that will take two years to bloom, and then will die
+              </li>
+              <li>Perennial: plants that will come back year after year</li>
+              <li>
+                Spring Ephemeral: plants that bloom in the spring that loose their leaves later in the year
+              </li>
+            </ul>
+          {% endblocktrans %}
         </article>
 
         <article>
@@ -182,8 +204,10 @@
         </article>
 
         <article>
-          <h4>{% trans "Bloom Colours" %}</h4>
-          <p>{% trans "Provides the dominant bloom colour of a plant." %}</p>
+          {% blocktrans %}
+            <h4>Bloom Colours</h4>
+            <p>Provides the dominant bloom colour of a plant.</p>
+          {% endblocktrans %}
         </article>
       </article>
 
@@ -256,8 +280,10 @@
             alt="{% trans "Acidic Soil Tolerant Icon" %}"
             class="icon"
           />
-          <span>{% trans "Acidic Soil Tolerant:" %}</span>
-          <span>{% trans "Can thrive in acidic soil conditions" %}</span>
+          {% blocktrans %}
+            <span>Acidic Soil Tolerant:</span>
+            <span>Can thrive in acidic soil conditions</span>
+          {% endblocktrans %}
         </div>
         <!--Limestone Soil Tolerant-->
         <div class="card-box">
@@ -266,8 +292,10 @@
             alt="Limestone Tolerant Icon"
             class="icon"
           />
-          <span>{% trans "Limestone Tolerant:" %}</span>
-          <span>{% trans "Can thrive in limestone soil conditions" %}</span>
+          {% blocktrans %}
+            <span>Limestone Tolerant:</span>
+            <span>Can thrive in limestone soil conditions</span>
+          {% endblocktrans %}
         </div>
         <!--Sand Soil Tolerant-->
         <div class="card-box">
@@ -276,8 +304,10 @@
             alt="Sand Tolerant Icon"
             class="icon"
           />
-          <span>{% trans "Sand Tolerant:" %}</span>
-          <span>{% trans "Can thrive in sandy soil conditions" %}</span>
+          {% blocktrans %}
+            <span>Sand Tolerant:</span>
+            <span>Can thrive in sandy soil conditions</span>
+          {% endblocktrans %}
         </div>
       </article>
     </section>
@@ -332,8 +362,10 @@
               alt="Boulevard Garden Icon"
               class="icon"
             />
-            <span>{% trans "Boulevard Garden:" %}</span>
-            <span>{% trans "Can thrive in salted, dry, sunny gardens" %}</span>
+            {% blocktrans %}
+              <span>Boulevard Garden:</span>
+              <span>Can thrive in salted, dry, sunny gardens</span>
+            {% endblocktrans %}
           </div>
 
         <!--Suitable for Container Garden-->
@@ -343,8 +375,10 @@
               alt="Container Suitable Icon"
               class="icon"
             />
-            <span>{% trans "Container Garden:" %}</span>
-            <span>{% trans "Can be grown and left in containers all year round" %}</span>
+            {% blocktrans %}
+              <span>Container Garden:</span>
+              <span>Can be grown and left in containers all year round</span>
+            {% endblocktrans %}
           </div>
 
         <!--Suitable for rain garden-->
@@ -354,8 +388,10 @@
               alt="Rain Garden Icon"
               class="icon"
             />
-            <span>{% trans "Rain Garden:" %}</span>
-            <span>{% trans "Can thrive in wet and dry conditions" %}</span>
+            {% blocktrans %}
+              <span>Rain Garden:</span>
+              <span>Can thrive in wet and dry conditions</span>
+            {% endblocktrans %}
           </div>
 
         <!--Suitable for right of way garden-->
@@ -378,8 +414,10 @@
                 alt="Rock Garden Icon"
                 class="icon"
               />
-              <span>{% trans "Rock Garden:" %}</span>
-              <span>{% trans "Can thrive in rocky soil" %}</span>
+              {% blocktrans %}
+                <span>Rock Garden:</span>
+                <span>Can thrive in rocky soil</span>
+              {% endblocktrans %}
             </div>
 
         <!--Suitable for school garden-->
@@ -389,8 +427,10 @@
                 alt="School Garden Icon"
                 class="icon"
               />
-              <span>{% trans "School Garden:" %}</span>
-              <span>{% trans "Short plants that can thrive in dry and sunny conditions" %}</span>
+              {% blocktrans %}
+                <span>School Garden:</span>
+                <span>Short plants that can thrive in dry and sunny conditions</span>
+              {% endblocktrans %}
             </div>
 
         <!--Suitable for shoreline rehabilitation-->
@@ -400,8 +440,12 @@
                 alt="Shoreline Rehabilitation Icon"
                 class="icon"
               />
-              <span>{% trans "Shoreline Rehabilitation:" %}</span>
-              <span>{% trans "Can help stabilize soil" %}</span>
+
+              {% blocktrans %}
+                <span>Shoreline Rehabilitation:</span>
+                <span>Can help stabilize soil</span>
+              {% endblocktrans %}
+
             </div>
 
         <!--Suitable for wetland garden-->
@@ -411,8 +455,10 @@
                 alt="Wetland Garden Icon"
                 class="icon"
               />
-              <span>{% trans "Wetland Garden:" %}</span>
-              <span>{% trans "Can thrive in soil in water" %}</span>
+              {% blocktrans %}
+                <span>Wetland Garden</span>
+                <span>Can thrive in soil in water</span>
+              {% endblocktrans %}
             </div>
 
         <!--Suitable for woodland garden-->
@@ -422,8 +468,10 @@
                 alt="Woodland Garden Icon"
                 class="icon"
               />
-              <span>{% trans "Woodland Garden:" %}</span>
-              <span>{% trans "Can thrive in shade or part shade" %}</span>
+              {% blocktrans %}
+                <span>Woodland Garden:</span>
+                <span>Can thrive in shade or part shade</span>
+              {% endblocktrans %}
             </div>
           </article>
 
@@ -436,8 +484,10 @@
                 alt="Ground Cover Icon"
                 class="icon"
               />
-              <span>{% trans "Groundcover/Lawn Replacement:" %}</span>
-              <span>{% trans "Can be used as ground cover" %}</span>
+              {% blocktrans %}
+                <span>Groundcover/Lawn Replacement:</span>
+                <span>Can be used as ground cover</span>
+              {% endblocktrans %}
             </div>
 
         <!--suitable for hedge-->
@@ -447,8 +497,10 @@
                 alt="Hedge Icon"
                 class="icon"
               />
-              <span>{% trans "Hedge:" %}</span>
-              <span>{% trans "Can be used as a hedge" %}</span>
+              {% blocktrans %}
+                <span>Hedge:</span>
+                <span>Can be used as a hedge</span>
+              {% endblocktrans %}
             </div>
 
         <!--Transplantats Well-->
@@ -458,8 +510,10 @@
                 alt="Transplants Well Icon"
                 class="icon"
               />
-              <span>{% trans "Transplants Well:" %}</span>
-              <span>{% trans "Can tolerate transplantation" %}</span>
+              {% blocktrans %}
+                <span>Transplants Well:</span>
+                <span>Can tolerate transplantation</span>
+              {% endblocktrans %}
             </div>
           </article>
 
@@ -481,8 +535,10 @@
                 alt="Drought Tolerant Icon"
                 class="icon"
               />
-              <span>{% trans "Drought Tolerant:" %}</span>
-              <span>{% trans "Can survive with minimal water" %}</span>
+              {% blocktrans %}
+                <span>Drought Tolerant:</span>
+                <span>Can survive with minimal water</span>
+              {% endblocktrans %}
             </div>
             <div class="card-box">
               <img
@@ -490,280 +546,318 @@
                 alt="Juglone Tolerant Icon"
                 class="icon"
               />
-              <span>{% trans "Juglone Tolerant:" %}</span>
-              <span
-              >{% trans "Can tolerate juglone, a compound found in black walnut trees" %}</span
-                >
-              </div>
-              <div class="card-box">
-                <img
-                  src="{% static 'images/plant-salt-tolerant.svg' %}"
-                  alt="Salt Tolerant Icon"
-                  class="icon"
-                />
-                <span>{% trans "Salt Tolerant:" %}</span>
-                <span>{% trans "Can withstand salt exposure" %}</span>
-              </div>
-            </article>
+              {% blocktrans %}
+                <span>Juglone Tolerant:</span>
+                <span>Can tolerate juglone, a compound found in black walnut trees</span>
+              {% endblocktrans %}
+            </div>
+            <div class="card-box">
+              <img
+                src="{% static 'images/plant-salt-tolerant.svg' %}"
+                alt="Salt Tolerant Icon"
+                class="icon"
+              />
+              {% blocktrans %}
+                <span>Salt Tolerant:</span>
+                <span>Can withstand salt exposure</span>
+              {% endblocktrans %}
+            </div>
+          </article>
 
 
-          </section>
+        </section>
     <!--End of Landscape Uses and Applications-->
 
     <!--Ecological Benefits-->
-          <section class="profile-reference mb-1">
-            <h3>{% trans "Ecological Benefits" %}</h3>
-            <article class="mb-1">
-              <h4>{% trans "Wildlife Interactions" %}</h4>
+        <section class="profile-reference mb-1">
+          <h3>{% trans "Ecological Benefits" %}</h3>
+          <article class="mb-1">
+            <h4>{% trans "Wildlife Interactions" %}</h4>
         <!--Bird Friendly-->
-              <div class="card-box">
-                <img
-                  src="{% static 'images/plant-bird-friendly.svg' %}"
-                  alt="Bird Friendly Icon"
-                  class="icon"
-                />
-                <span>{% trans "Bird Friendly:" %}</span>
-                <span>{% trans "Attracts birds" %}</span>
-              </div>
+            <div class="card-box">
+              <img
+                src="{% static 'images/plant-bird-friendly.svg' %}"
+                alt="Bird Friendly Icon"
+                class="icon"
+              />
+              {% blocktrans %}
+                <span>Bird Friendly:</span>
+                <span>Attracts birds</span>
+              {% endblocktrans %}
+            </div>
         <!--Deer Tolerant-->
-              <div class="card-box">
-                <img
-                  src="{% static 'images/plant-deer-tolerant.svg' %}"
-                  alt="Deer Tolerant Icon"
-                  class="icon"
-                />
-                <span>{% trans "Deer Tolerant:" %}</span>
-                <span>{% trans "Can withstand deer browsing" %}</span>
-              </div>
+            <div class="card-box">
+              <img
+                src="{% static 'images/plant-deer-tolerant.svg' %}"
+                alt="Deer Tolerant Icon"
+                class="icon"
+              />
+              {% blocktrans %}
+                <span>Deer Tolerant:</span>
+                <span>Can withstand deer browsing</span>
+              {% endblocktrans %}
+            </div>
         <!--Hummingbird Friendly-->
-              <div class="card-box">
-                <img
-                  src="{% static 'images/plant-hummingbird-friendly.svg' %}"
-                  alt="Hummingbird Friendly Icon"
-                  class="icon"
-                />
-                <span>{% trans "Hummingbird Friendly:" %}</span>
-                <span>{% trans "Attracts hummingbirds" %}</span>
-              </div>
+            <div class="card-box">
+              <img
+                src="{% static 'images/plant-hummingbird-friendly.svg' %}"
+                alt="Hummingbird Friendly Icon"
+                class="icon"
+              />
+              {% blocktrans %}
+                <span>Hummingbird Friendly:</span>
+                <span>Attracts hummingbirds</span>
+              {% endblocktrans %}
+            </div>
         <!--Pollinator Garden-->
-              <div class="card-box">
-                <img
-                  src="{% static 'images/plant-pollinator-garden.svg' %}"
-                  alt="Pollinator Garden Icon"
-                  class="icon"
-                />
-                <span>{% trans "Pollinator Garden:" %}</span>
-                <span>{% trans "Attracts pollinators" %}</span>
-              </div>
+            <div class="card-box">
+              <img
+                src="{% static 'images/plant-pollinator-garden.svg' %}"
+                alt="Pollinator Garden Icon"
+                class="icon"
+              />
+              {% blocktrans %}
+                <span>Pollinator Garden:</span>
+                <span>Attracts pollinators</span>
+              {% endblocktrans %}
+            </div>
         <!--Rabbit Tolerant-->
-              <div class="card-box">
-                <img
-                  src="{% static 'images/plant-rabbit-tolerant.svg' %}"
-                  alt="Rabbit Tolerant Icon"
-                  class="icon"
-                />
-                <span>{% trans "Rabbit Tolerant:" %}</span>
-                <span>{% trans "Can withstand rabbit browsing" %}</span>
-              </div>
-            </article>
+            <div class="card-box">
+              <img
+                src="{% static 'images/plant-rabbit-tolerant.svg' %}"
+                alt="Rabbit Tolerant Icon"
+                class="icon"
+              />
+              {% blocktrans %}
+                <span>Rabbit Tolerant:</span>
+                <span>Can withstand rabbit browsing</span>
+              {% endblocktrans %}
+            </div>
+          </article>
 
-            <h4>{% trans "Ecosystem Services" %}</h4>
-            <article class="mb-1">
+          <h4>{% trans "Ecosystem Services" %}</h4>
+          <article class="mb-1">
         <!--Bee Host-->
-              <div class="card-box">
-                <img
-                  src="{% static 'images/plant-bee-host.svg' %}"
-                  alt="Bee Host Icon"
-                  class="icon"
-                />
-                <span>{% trans "Specialized Bee Host:" %}</span>
-                <span>{% trans "Supports specialized bees" %} </span>
-              </div>
+            <div class="card-box">
+              <img
+                src="{% static 'images/plant-bee-host.svg' %}"
+                alt="Bee Host Icon"
+                class="icon"
+              />
+              {% blocktrans %}
+                <span>Specialized Bee Host:</span>
+                <span>Supports specialized bees</span>
+              {% endblocktrans %}
+            </div>
         <!--Butterfly Host-->
-              <div class="card-box">
-                <img
-                  src="{% static 'images/plant-butterfly-host.svg' %}"
-                  alt="Butterfly Host Icon"
-                  class="icon"
-                />
-                <span>{% trans "Butterfly Host:" %}</span>
-                <span>{% trans "Supports butterflies" %}</span>
-              </div>
-              <div class="card-box">
-                <img
-                  src="{% static 'images/plant-keystones-species.svg' %}"
-                  alt="Keystone Species Icon"
-                  class="icon"
-                />
-                <span>{% trans "Keystone Species:" %}</span>
-                <span>{% trans "Plays a critical role in the ecosystem" %}</span>
-              </div>
-              <div class="card-box">
-                <img
-                  src="{% static 'images/plant-nitrogen-fixer.svg' %}"
-                  alt="Nitrogen Fixer Icon"
-                  class="icon"
-                />
-                <span>{% trans "Nitrogen Fixer:" %}</span>
-                <span>{% trans "Improves soil fertility" %}</span>
-              </div>
-            </article>
-          </section>
+            <div class="card-box">
+              <img
+                src="{% static 'images/plant-butterfly-host.svg' %}"
+                alt="Butterfly Host Icon"
+                class="icon"
+              />
+              {% blocktrans %}
+                <span>Butterfly Host:</span>
+                <span>Supports butterflies</span>
+              {% endblocktrans %}
+            </div>
+            <div class="card-box">
+              <img
+                src="{% static 'images/plant-keystones-species.svg' %}"
+                alt="Keystone Species Icon"
+                class="icon"
+              />
+              {% blocktrans %}
+                <span>Keystone Species:</span>
+                <span>Plays a critical role in the ecosystem</span>
+              {% endblocktrans %}
+            </div>
+            <div class="card-box">
+              <img
+                src="{% static 'images/plant-nitrogen-fixer.svg' %}"
+                alt="Nitrogen Fixer Icon"
+                class="icon"
+              />
+              {% blocktrans %}
+                <span>Nitrogen Fixer:</span>
+                <span>Improves soil fertility</span>
+              {% endblocktrans %}
+            </div>
+          </article>
+        </section>
 
     <!--Special Features and Consideration-->
-          <section class="mb1">
-            <h3>{% trans "Special Features and Considerations" %}</h3>
-            <h4>{% trans "Conservation Status" %}</h4>
-            <article class="mb-1">
+        <section class="mb1">
+          <h3>{% trans "Special Features and Considerations" %}</h3>
+          <h4>{% trans "Conservation Status" %}</h4>
+          <article class="mb-1">
         <!--Endangered-->
-              <div class="card-box">
-                <img
-                  src="{% static 'images/plant-endangered.svg' %}"
-                  alt="Plant Endangered Icon"
-                  class="icon"
-                />
-                <span>{% trans "Endangered:" %}</span>
-                <span>{% trans "Species that live in the wild in Ontario but is facing imminent extinction or extirpation" %} (<a target="_blank" href="https://explorer.natureserve.org/pro/Welcome/">Nature Serve</a> {% trans "for more information" %})</span>
-              </div>
+            <div class="card-box">
+              <img
+                src="{% static 'images/plant-endangered.svg' %}"
+                alt="Plant Endangered Icon"
+                class="icon"
+              />
+              {% blocktrans %}
+                <span>Endangered:</span>
+                <span>Species that live in the wild in Ontario but is facing imminent extinction or extirpation. For more information, please visit
+              {% endblocktrans %}
+              <a target="_blank" href="https://explorer.natureserve.org/pro/Welcome/">Nature Serve</a>
+            </span>
+          </div>
         <!--GRASP Candidate-->
-              <div class="card-box">
-                <img
-                  src="{% static 'images/plant-grasp-candidate.svg' %}"
-                  alt="GRASP Candidate Icon"
-                  class="icon"
-                />
-                <span>{% trans "GRASP Program Member:" %}</span>
-                <span>{% trans "Member of the Growing Rare and Significant Plants (GRASP) in Ottawa Program" %}</span>
-              </div>
-            </article>
-            <h4>{% trans "Safety and Compatibility" %}</h4>
-            <article class="mb-1">
+          <div class="card-box">
+            <img
+              src="{% static 'images/plant-grasp-candidate.svg' %}"
+              alt="GRASP Candidate Icon"
+              class="icon"
+            />
+            {% blocktrans %}
+              <span>GRASP Program Member:</span>
+              <span>Member of the Growing Rare and Significant Plants (GRASP) in Ottawa Program</span>
+            {% endblocktrans %}
+          </div>
+        </article>
+        <h4>{% trans "Safety and Compatibility" %}</h4>
+        <article class="mb-1">
         <!--Plant causes rash-->
-              <div class="card-box">
-                <img
-                  src="{% static 'images/plant-causes-rash.svg' %}"
-                  alt="Causes Rash Icon"
-                  class="icon"
-                />
-                <span>{% trans "Causes Rash:" %}</span>
-                <span>{% trans "May cause skin rashes or irritation" %}</span>
-              </div>
+          <div class="card-box">
+            <img
+              src="{% static 'images/plant-causes-rash.svg' %}"
+              alt="Causes Rash Icon"
+              class="icon"
+            />
+            {% blocktrans %}
+              <span>Causes Rash:</span>
+              <span>May cause skin rashes or irritation</span>
+            {% endblocktrans %}
+          </div>
         <!--Exclude plants that can cause skin rashes-->
-              <div class="card-box">
-                <img
-                  src="{% static 'images/plant-does-not-cause-rash.svg' %}"
-                  alt="Does Not Cause Rash Icon"
-                  class="icon"
-                />
-                <span>{% trans "Does Not Cause Rash:" %}</span>
-                <span>{% trans "Does not cause skin rashes or irritation" %}</span>
-              </div>
+          <div class="card-box">
+            <img
+              src="{% static 'images/plant-does-not-cause-rash.svg' %}"
+              alt="Does Not Cause Rash Icon"
+              class="icon"
+            />
+            {% blocktrans %}
+              <span>Does Not Cause Rash:</span>
+              <span>Does not cause skin rashes or irritation</span>
+            {% endblocktrans %}
+          </div>
         <!--Plant has burs or needles-->
-              <div class="card-box">
-                <img
-                  src="{% static 'images/plant-burs-or-needles.svg' %}"
-                  alt="Has Burs or Needles Icon"
-                  class="icon"
-                />
-                <span>{% trans "Has Burs or Needles:" %}</span>
-                <span>{% trans "May have burs or needles that can cause discomfort" %}</span>
-              </div>
+          <div class="card-box">
+            <img
+              src="{% static 'images/plant-burs-or-needles.svg' %}"
+              alt="Has Burs or Needles Icon"
+              class="icon"
+            />
+            {% blocktrans %}
+              <span>Has Burs or Needles:</span>
+              <span>May have burs or needles that can cause discomfort</span>
+            {% endblocktrans %}
+          </div>
         <!--Septic tank safe-->
-              <div class="card-box">
-                <img
-                  src="{% static 'images/plant-septic-tank-safe.svg' %}"
-                  alt="Septic Tank Safe Icon"
-                  class="icon"
-                />
-                <span>{% trans "Septic Tank Safe:" %}</span>
-                <span>{% trans "Safe to plant near or over septic tank systems" %}</span>
-              </div>
+          <div class="card-box">
+            <img
+              src="{% static 'images/plant-septic-tank-safe.svg' %}"
+              alt="Septic Tank Safe Icon"
+              class="icon"
+            />
+            {% blocktrans %}
+              <span>Septic Tank Safe:</span>
+              <span>Safe to plant near or over septic tank systems</span>
+            {% endblocktrans %}
+          </div>
         <!--Toxic-->
-              <div class="card-box">
-                <img
-                  src="{% static 'images/plant-toxic.svg' %}"
-                  alt="Toxic Icon"
-                  class="icon"
-                />
-                <span>{% trans "Toxic:" %}</span>
-                <span>{% trans "May be toxic if ingested or handled improperly as indicated on the plant profile that bears this warning." %}</span>
-              </div>
+          <div class="card-box">
+            <img
+              src="{% static 'images/plant-toxic.svg' %}"
+              alt="Toxic Icon"
+              class="icon"
+            />
+            {% blocktrans %}
+              <span>Toxic:</span>
+              <span>May be toxic if ingested or handled improperly as indicated on the plant profile that bears this warning.</span>
+            {% endblocktrans %}
+          </div>
         <!--plant wears glove-->
-              <div class="card-box">
-                <img
-                  src="{% static 'images/plant-wear-gloves.svg' %}"
-                  alt="Wear Gloves Icon"
-                  class="icon"
-                />
-                <span>{% trans "Wear Gloves:" %}</span>
-                <span>{% trans "Handling may require gloves for safety" %}</span>
-              </div>
-            </article>
-          </section>
+          <div class="card-box">
+            <img
+              src="{% static 'images/plant-wear-gloves.svg' %}"
+              alt="Wear Gloves Icon"
+              class="icon"
+            />
+            {% blocktrans %}
+              <span>Wear Gloves:</span>
+              <span>Handling may require gloves for safety</span>
+            {% endblocktrans %}
+          </div>
+        </article>
+      </section>
     <!--End of Special Features and Consideration-->
     <!--Location-->
-          <section class="mb-1">
-            <h3>{% trans "Location" %}</h3>
-            <p>{% trans "This section allows to filter by different location options, including by geographic location or by terrestrial ecozones and ecoprovinces, as defined by" %} <a target="_blank"
-                                                                                                                                                                                         href="https://www.statcan.gc.ca/en/subjects/standard/environment/elc/2017-map">{% trans "Statistics Canada" %}</a>.
+      <section class="mb-1">
+        <h3>{% trans "Location" %}</h3>
+        <p>{% trans "This section allows to filter by different location options, including by geographic location or by terrestrial ecozones and ecoprovinces, as defined by" %} <a target="_blank"
+                                                                                                                                                                                     href="https://www.statcan.gc.ca/en/subjects/standard/environment/elc/2017-map">{% trans "Statistics Canada" %}</a>.
+        </p>
+        <h4>{% trans "Provinces and Territories" %}</h4>
+        <article class="mb-1">
+          <p>
+            {% trans "Note: Distribution for this section is according to" %}
+            <a target="_blank" href="https://data.canadensys.net/vascan/search"
+            >VASCAN</a
+              >.
             </p>
-            <h4>{% trans "Provinces and Territories" %}</h4>
+            <ul>
+              <li>{% trans "Alberta" %}</li>
+              <li>{% trans "British Columbia" %}</li>
+              <li>{% trans "Manitoba" %}</li>
+              <li>{% trans "New Brunswick" %}</li>
+              <li>{% trans "Newfoundland and Labrador" %}</li>
+              <li>{% trans "Nova Scotia" %}</li>
+              <li>{% trans "Northwest Territories" %}</li>
+              <li>{% trans "Nunavut" %}</li>
+              <li>{% trans "Ontario" %}</li>
+              <li>{% trans "Prince Edward Island" %}</li>
+              <li>{% trans "Quebec" %}</li>
+              <li>{% trans "Saskatchewan" %}</li>
+              <li>{% trans "Yukon" %}</li>
+            </ul>
+          </article>
+          <h4>{% trans "Ecozones" %}</h4>
+          <article class="mb-1">
+            <p>{% trans "Terrestrial ecozones and ecoprovinces of Canada as defined by Statistics Canada. For more information on Ecozones, visit:" %}
+              <a
+                target="_blank"
+                href="https://www.statcan.gc.ca/en/subjects/standard/environment/elc/2017-map"
+              >https://www.statcan.gc.ca/en/subjects/standard/environment/elc/2017-map</a
+                >
+              </p>
+              <ul>
+                <li>{% trans "Arctic Cordillera" %}</li>
+                <li>{% trans "Atlantic Maritime" %}</li>
+                <li>{% trans "Boreal Cordillera" %}</li>
+                <li>{% trans "Boreal Plains" %}</li>
+                <li>{% trans "Boreal Shield" %}</li>
+                <li>{% trans "Hudson Plains" %}</li>
+                <li>{% trans "Mixedwood Plains" %}</li>
+                <li>{% trans "Montane Cordillera" %}</li>
+                <li>{% trans "Northern Arctic" %}</li>
+                <li>{% trans "Pacific Maritime" %}</li>
+                <li>{% trans "Prairies" %}</li>
+                <li>{% trans "Southern Arctic" %}</li>
+                <li>{% trans "Taiga Cordiller" %}</li>
+                <li>{% trans "Taiga Plains" %}</li>
+                <li>{% trans "Taiga Shield" %}</li>
+              </ul>
+            </article>
+            <h4>{% trans "Other" %}</h4>
             <article class="mb-1">
               <p>
-                {% trans "Note: Distribution for this section is according to" %}
-                <a target="_blank" href="https://data.canadensys.net/vascan/search"
-                >VASCAN</a
-                  >.
-                </p>
-                <ul>
-                  <li>{% trans "Alberta" %}</li>
-                  <li>{% trans "British Columbia" %}</li>
-                  <li>{% trans "Manitoba" %}</li>
-                  <li>{% trans "New Brunswick" %}</li>
-                  <li>{% trans "Newfoundland and Labrador" %}</li>
-                  <li>{% trans "Nova Scotia" %}</li>
-                  <li>{% trans "Northwest Territories" %}</li>
-                  <li>{% trans "Nunavut" %}</li>
-                  <li>{% trans "Ontario" %}</li>
-                  <li>{% trans "Prince Edward Island" %}</li>
-                  <li>{% trans "Quebec" %}</li>
-                  <li>{% trans "Saskatchewan" %}</li>
-                  <li>{% trans "Yukon" %}</li>
-                </ul>
-              </article>
-              <h4>{% trans "Ecozones" %}</h4>
-              <article class="mb-1">
-                <p>{% trans "Terrestrial ecozones and ecoprovinces of Canada as defined by Statistics Canada. For more information on Ecozones, visit:" %}
-                  <a
-                    target="_blank"
-                    href="https://www.statcan.gc.ca/en/subjects/standard/environment/elc/2017-map"
-                  >https://www.statcan.gc.ca/en/subjects/standard/environment/elc/2017-map</a
-                    >
-                  </p>
-                  <ul>
-                    <li>{% trans "Arctic Cordillera" %}</li>
-                    <li>{% trans "Atlantic Maritime" %}</li>
-                    <li>{% trans "Boreal Cordillera" %}</li>
-                    <li>{% trans "Boreal Plains" %}</li>
-                    <li>{% trans "Boreal Shield" %}</li>
-                    <li>{% trans "Hudson Plains" %}</li>
-                    <li>{% trans "Mixedwood Plains" %}</li>
-                    <li>{% trans "Montane Cordillera" %}</li>
-                    <li>{% trans "Northern Arctic" %}</li>
-                    <li>{% trans "Pacific Maritime" %}</li>
-                    <li>{% trans "Prairies" %}</li>
-                    <li>{% trans "Southern Arctic" %}</li>
-                    <li>{% trans "Taiga Cordiller" %}</li>
-                    <li>{% trans "Taiga Plains" %}</li>
-                    <li>{% trans "Taiga Shield" %}</li>
-                  </ul>
-                </article>
-                <h4>{% trans "Other" %}</h4>
-                <article class="mb-1">
-                  <p>
-                    {% trans "Native to Ottawa Region." %}
-                  </p>
-                </article>
-              </section>
-            </div>
+                {% trans "Native to Ottawa Region." %}
+              </p>
+            </article>
           </section>
+        </div>
+      </section>
