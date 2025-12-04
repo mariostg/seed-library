@@ -25,7 +25,7 @@
       <!--Input checkbox to filter for plants that are available only (is_active)-->
       <div class="form__field">
         <input type="checkbox" id="seed_availability" name="seed_availability"
-               hx-get="/search-plant-name"
+               hx-get="{% url 'search-plant-name' %}"
                hx-trigger="change"
                hx-target="#search-results"
                hx-push-url="true"

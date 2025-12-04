@@ -1,7 +1,7 @@
 {% load i18n %}
 <div class='filter__sub-header'>{% trans "Provinces and Territories" %}</div>
 <input type="checkbox" id="is_native_to_AB" name="is_native_to_AB" value="N"
-       hx-get="/search-plant-name"
+       hx-get="{% url 'search-plant-name' %}"
        hx-trigger="click"
        hx-target="#search-results"
        hx-push-url="true"
@@ -11,7 +11,7 @@
 <label for="is_native_to_AB">Alberta</label><br />
 
 <input type="checkbox" id="is_native_to_BC" name="is_native_to_BC" value="N"
-       hx-get="/search-plant-name"
+       hx-get="{% url 'search-plant-name' %}"
        hx-trigger="click"
        hx-target="#search-results"
        hx-push-url="true"
@@ -21,7 +21,7 @@
 <label for="is_native_to_BC">{% trans "British Columbia" %}</label><br />
 
 <input type="checkbox" id="is_native_to_MB" name="is_native_to_MB" value="N"
-       hx-get="/search-plant-name"
+       hx-get="{% url 'search-plant-name' %}"
        hx-trigger="click"
        hx-target="#search-results"
        hx-push-url="true"
@@ -31,7 +31,7 @@
 <label for="is_native_to_MB">Manitoba</label><br />
 
 <input type="checkbox" id="is_native_to_NB" name="is_native_to_NB" value="N"
-       hx-get="/search-plant-name"
+       hx-get="{% url 'search-plant-name' %}"
        hx-trigger="click"
        hx-target="#search-results"
        hx-push-url="true"
@@ -41,7 +41,7 @@
 <label for="is_native_to_NB">{% trans "New Brunswick" %}</label><br />
 
 <input type="checkbox" id="is_native_to_NL" name="is_native_to_NL" value="N"
-       hx-get="/search-plant-name"
+       hx-get="{% url 'search-plant-name' %}"
        hx-trigger="click"
        hx-target="#search-results"
        hx-push-url="true"
@@ -51,7 +51,7 @@
 <label for="is_native_to_NL">{% trans "Newfoundland and Labrador" %}</label><br />
 
 <input type="checkbox" id="is_native_to_NT" name="is_native_to_NT" value="N"
-       hx-get="/search-plant-name"
+       hx-get="{% url 'search-plant-name' %}"
        hx-trigger="click"
        hx-target="#search-results"
        hx-push-url="true"
@@ -61,7 +61,7 @@
 <label for="is_native_to_NT">{% trans "Northwest Territories" %}</label><br />
 
 <input type="checkbox" id="is_native_to_NS" name="is_native_to_NS" value="N"
-       hx-get="/search-plant-name"
+       hx-get="{% url 'search-plant-name' %}"
        hx-trigger="click"
        hx-target="#search-results"
        hx-push-url="true"
@@ -71,7 +71,7 @@
 <label for="is_native_to_NS">{% trans "Nova Scotia" %}</label><br />
 
 <input type="checkbox" id="is_native_to_NU" name="is_native_to_NU" value="N"
-       hx-get="/search-plant-name"
+       hx-get="{% url 'search-plant-name' %}"
        hx-trigger="click"
        hx-target="#search-results"
        hx-push-url="true"
@@ -81,7 +81,7 @@
 <label for="is_native_to_NU">{% trans "Nunavut" %}</label><br />
 
 <input type="checkbox" id="is_native_to_ON" name="is_native_to_ON" value="N"
-       hx-get="/search-plant-name"
+       hx-get="{% url 'search-plant-name' %}"
        hx-trigger="click"
        hx-target="#search-results"
        hx-push-url="true"
@@ -91,7 +91,7 @@
 <label for="is_native_to_ON">Ontario</label><br />
 
 <input type="checkbox" id="is_native_to_PE" name="is_native_to_PE" value="PE"
-       hx-get="/search-plant-name"
+       hx-get="{% url 'search-plant-name' %}"
        hx-trigger="click"
        hx-target="#search-results"
        hx-push-url="true"
@@ -101,7 +101,7 @@
 <label for="is_native_to_PE">{% trans "Prince Edward Island" %}</label><br />
 
 <input type="checkbox" id="is_native_to_QC" name="is_native_to_QC" value="N"
-       hx-get="/search-plant-name"
+       hx-get="{% url 'search-plant-name' %}"
        hx-trigger="click"
        hx-target="#search-results"
        hx-push-url="true"
@@ -111,7 +111,7 @@
 <label for="is_native_to_QC">{% trans "Quebec" %}</label><br />
 
 <input type="checkbox" id="is_native_to_SK" name="is_native_to_SK" value="N"
-       hx-get="/search-plant-name"
+       hx-get="{% url 'search-plant-name' %}"
        hx-trigger="click"
        hx-target="#search-results"
        hx-push-url="true"
@@ -121,7 +121,7 @@
 <label for="is_native_to_SK">Saskatchewan</label><br />
 
 <input type="checkbox" id="is_native_to_YT" name="is_native_to_YT" value="YT"
-       hx-get="/search-plant-name"
+       hx-get="{% url 'search-plant-name' %}"
        hx-trigger="click"
        hx-target="#search-results"
        hx-push-url="true"
@@ -133,7 +133,7 @@
 <div class="filter__sub-header">{% trans "Ecozones" %}</div>
 {% for ecozone in ecozones %}
   <input type="checkbox" id="ecozone_{{ ecozone.id }}" name="ecozone_{{ ecozone.id }}" value="{{ ecozone.id }}"
-         hx-get="/search-plant-name"
+         hx-get="{% url 'search-plant-name' %}"
          hx-trigger="click"
          hx-target="#search-results"
          hx-push-url="true"
@@ -145,7 +145,7 @@
 
 <div class="filter__sub-header">{% trans "Other" %}</div>
 <input type="checkbox" id="native_to_ottawa_region" name="native_to_ottawa_region" value="native_to_ottawa_region"
-       hx-get="/search-plant-name"
+       hx-get="{% url 'search-plant-name' %}"
        hx-trigger="click"
        hx-target="#search-results"
        hx-push-url="true"
