@@ -1,7 +1,9 @@
 from django.conf import settings
+from django.conf.urls.i18n import i18n_patterns
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
+from django.utils.translation import gettext_lazy as _
 from ninja import NinjaAPI
 
 from project import views
@@ -13,746 +15,773 @@ api.add_router("/", home_router)
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("__reload__/", include("django_browser_reload.urls")),
+]
+
+urlpatterns += i18n_patterns(
+    path("en/", include("django.contrib.auth.urls")),
+    path("fr/", include("django.contrib.auth.urls")),
     path("", views.index, name="index"),
-    path("search-plant-name/", views.search_plant_name, name="search-plant-name"),
-    path("search-plant-images/", views.search_plant_images, name="search-plant-images"),
+    path(_("search-plant-name/"), views.search_plant_name, name="search-plant-name"),
     path(
-        "search-vascan-taxon-id/",
+        _("search-plant-images/"), views.search_plant_images, name="search-plant-images"
+    ),
+    path(
+        _("search-vascan-taxon-id/"),
         views.search_vascan_taxon_id,
         name="search-vascan-taxon-id",
     ),
     path(
-        "export-plant-search-results/",
+        _("export-plant-search-results/"),
         views.export_plant_search_results,
         name="export-plant-search-results",
     ),
     path(
-        "plant-catalogue-intro/",
+        _("plant-catalogue-intro/"),
         views.plant_catalogue_intro,
         name="plant-catalogue-intro",
     ),
-    path("update-availability/", views.update_availability, name="update-availability"),
     path(
-        "toggle-availability/<int:pk>",
+        _("update-availability/"), views.update_availability, name="update-availability"
+    ),
+    path(
+        _("toggle-availability/<int:pk>"),
         views.toggle_availability,
         name="toggle-availability",
     ),
-    path("toggle-is-active/<int:pk>", views.toggle_is_active, name="toggle-is-active"),
     path(
-        "toggle-seed-accepting/<int:pk>",
+        _("toggle-is-active/<int:pk>"), views.toggle_is_active, name="toggle-is-active"
+    ),
+    path(
+        _("toggle-seed-accepting/<int:pk>"),
         views.toggle_seed_accepting,
         name="toggle-seed-accepting",
     ),
     path(
-        "toggle-seed-needed/<int:pk>",
+        _("toggle-seed-needed/<int:pk>"),
         views.toggle_seed_needed,
         name="toggle-seed-needed",
     ),
     path(
-        "toggle-plant-accepted/<int:pk>",
+        _("toggle-plant-accepted/<int:pk>"),
         views.toggle_plant_accepted,
         name="toggle-plant-accepted",
     ),
-    path("plant-catalog/", views.plant_catalog, name="plant-catalog"),
-]
-urlpatterns += [
+    path(_("plant-catalog/"), views.plant_catalog, name="plant-catalog"),
+)
+
+urlpatterns += i18n_patterns(
     path(
-        "plant-profile-page/<int:pk>",
+        _("plant-profile-page/<int:pk>"),
         views.plant_profile_page,
         name="plant-profile-page",
     ),
     path(
-        "plant-profile-delete/<int:pk>",
+        _("plant-profile-delete/<int:pk>"),
         views.plant_profile_delete,
         name="plant-profile-delete",
     ),
     path(
-        "plant-profile-update/<int:pk>",
+        _("plant-profile-update/<int:pk>"),
         views.plant_profile_update,
         name="plant-profile-update",
     ),
     path(
-        "plant-profile-images/<int:pk>",
+        _("plant-profile-images/<int:pk>"),
         views.plant_profile_images,
         name="plant-profile-images",
     ),
     path(
-        "plant-seed-box-label-pdf/<int:pk>",
+        _("plant-seed-box-label-pdf/<int:pk>"),
         views.plant_seed_box_label_pdf,
         name="plant-seed-box-label-pdf",
     ),
-]
+)
 
-urlpatterns += [
+
+urlpatterns += i18n_patterns(
     path(
-        "admin-accept-all-seeds/",
+        _("admin-accept-all-seeds/"),
         views.admin_accept_all_seeds,
         name="admin-accept-all-seeds",
     ),
-]
-urlpatterns += [
-    path("admin-colour-add/", views.admin_colour_add, name="admin-colour-add"),
-    path("admin-colour-page/", views.admin_colour_page, name="admin-colour-page"),
+)
+
+urlpatterns += i18n_patterns(
+    path(_("admin-colour-add/"), views.admin_colour_add, name="admin-colour-add"),
+    path(_("admin-colour-page/"), views.admin_colour_page, name="admin-colour-page"),
     path(
-        "admin-colour-delete/<int:pk>",
+        _("admin-colour-delete/<int:pk>"),
         views.admin_colour_delete,
         name="admin-colour-delete",
     ),
     path(
-        "admin-colour-update/<int:pk>/",
+        _("admin-colour-update/<int:pk>/"),
         views.admin_colour_update,
         name="admin-colour-update",
     ),
-]
+)
 
-urlpatterns += [
-    path("admin-lifespan-add/", views.admin_lifespan_add, name="admin-lifespan-add"),
-    path("admin-lifespan-page/", views.admin_lifespan_page, name="admin-lifespan-page"),
+urlpatterns += i18n_patterns(
+    path(_("admin-lifespan-add/"), views.admin_lifespan_add, name="admin-lifespan-add"),
     path(
-        "admin-lifespan-delete/<int:pk>",
+        _("admin-lifespan-page/"), views.admin_lifespan_page, name="admin-lifespan-page"
+    ),
+    path(
+        _("admin-lifespan-delete/<int:pk>"),
         views.admin_lifespan_delete,
         name="admin-lifespan-delete",
     ),
     path(
-        "admin-lifespan-update/<int:pk>/",
+        _("admin-lifespan-update/<int:pk>/"),
         views.admin_lifespan_update,
         name="admin-lifespan-update",
     ),
-]
+)
 
-urlpatterns += [
+urlpatterns += i18n_patterns(
     path(
-        "admin-growth-habit-add/",
+        _("admin-growth-habit-add/"),
         views.admin_growth_habit_add,
         name="admin-growth-habit-add",
     ),
     path(
-        "admin-growth-habit-page/",
+        _("admin-growth-habit-page/"),
         views.admin_growth_habit_page,
         name="admin-growth-habit-page",
     ),
     path(
-        "admin-growth-habit-delete/<int:pk>",
+        _("admin-growth-habit-delete/<int:pk>"),
         views.admin_growth_habit_delete,
         name="admin-growth-habit-delete",
     ),
     path(
-        "admin-growth-habit-update/<int:pk>/",
+        _("admin-growth-habit-update/<int:pk>/"),
         views.admin_growth_habit_update,
         name="admin-growth-habit-update",
     ),
-]
+)
 
-urlpatterns += [
+urlpatterns += i18n_patterns(
     path(
-        "admin-harvesting-indicator-add/",
+        _("admin-harvesting-indicator-add/"),
         views.admin_harvesting_indicator_add,
         name="admin-harvesting-indicator-add",
     ),
     path(
-        "admin-harvesting-indicator-page/",
+        _("admin-harvesting-indicator-page/"),
         views.admin_harvesting_indicator_page,
         name="admin-harvesting-indicator-page",
     ),
     path(
-        "admin-harvesting-indicator-delete/<int:pk>",
+        _("admin-harvesting-indicator-delete/<int:pk>"),
         views.admin_harvesting_indicator_delete,
         name="admin-harvesting-indicator-delete",
     ),
     path(
-        "admin-harvesting-indicator-update/<int:pk>/",
+        _("admin-harvesting-indicator-update/<int:pk>/"),
         views.admin_harvesting_indicator_update,
         name="admin-harvesting-indicator-update",
     ),
-]
+)
 
-urlpatterns += [
+urlpatterns += i18n_patterns(
     path(
-        "admin-harvesting-mean-add/",
+        _("admin-harvesting-mean-add/"),
         views.admin_harvesting_mean_add,
         name="admin-harvesting-mean-add",
     ),
     path(
-        "admin-harvesting-mean-page/",
+        _("admin-harvesting-mean-page/"),
         views.admin_harvesting_mean_page,
         name="admin-harvesting-mean-page",
     ),
     path(
-        "admin-harvesting-mean-delete/<int:pk>",
+        _("admin-harvesting-mean-delete/<int:pk>"),
         views.admin_harvesting_mean_delete,
         name="admin-harvesting-mean-delete",
     ),
     path(
-        "admin-harvesting-mean-update/<int:pk>/",
+        _("admin-harvesting-mean-update/<int:pk>/"),
         views.admin_harvesting_mean_update,
         name="admin-harvesting-mean-update",
     ),
-]
+)
 
-urlpatterns += [
+urlpatterns += i18n_patterns(
     path(
-        "admin-seed-head-add/",
+        _("admin-seed-head-add/"),
         views.admin_seed_head_add,
         name="admin-seed-head-add",
     ),
     path(
-        "admin-seed-head-page/",
+        _("admin-seed-head-page/"),
         views.admin_seed_head_page,
         name="admin-seed-head-page",
     ),
     path(
-        "admin-seed-head-delete/<int:pk>",
+        _("admin-seed-head-delete/<int:pk>"),
         views.admin_seed_head_delete,
         name="admin-seed-head-delete",
     ),
     path(
-        "admin-seed-head-update/<int:pk>/",
+        _("admin-seed-head-update/<int:pk>/"),
         views.admin_seed_head_update,
         name="admin-seed-head-update",
     ),
-]
+)
 
-urlpatterns += [
+urlpatterns += i18n_patterns(
     path(
-        "admin-seed-viability-test-add/",
+        _("admin-seed-viability-test-add/"),
         views.admin_seed_viability_test_add,
         name="admin-seed-viability-test-add",
     ),
     path(
-        "admin-seed-viability-test-page/",
+        _("admin-seed-viability-test-page/"),
         views.admin_seed_viability_test_page,
         name="admin-seed-viability-test-page",
     ),
     path(
-        "admin-seed-viability-test-delete/<int:pk>",
+        _("admin-seed-viability-test-delete/<int:pk>"),
         views.admin_seed_viability_test_delete,
         name="admin-seed-viability-test-delete",
     ),
     path(
-        "admin-seed-viability-test-update/<int:pk>/",
+        _("admin-seed-viability-test-update/<int:pk>/"),
         views.admin_seed_viability_test_update,
         name="admin-seed-viability-test-update",
     ),
-]
+)
 
-urlpatterns += [
+urlpatterns += i18n_patterns(
     path(
-        "admin-seed-storage-add/",
+        _("admin-seed-storage-add/"),
         views.admin_seed_storage_add,
         name="admin-seed-storage-add",
     ),
     path(
-        "admin-seed-storage-page/",
+        _("admin-seed-storage-page/"),
         views.admin_seed_storage_page,
         name="admin-seed-storage-page",
     ),
     path(
-        "admin-seed-storage-delete/<int:pk>",
+        _("admin-seed-storage-delete/<int:pk>"),
         views.admin_seed_storage_delete,
         name="admin-seed-storage-delete",
     ),
     path(
-        "admin-seed-storage-update/<int:pk>/",
+        _("admin-seed-storage-update/<int:pk>/"),
         views.admin_seed_storage_update,
         name="admin-seed-storage-update",
     ),
-]
+)
 
-urlpatterns += [
+urlpatterns += i18n_patterns(
     path(
-        "admin-one-cultivar-add/",
+        _("admin-one-cultivar-add/"),
         views.admin_one_cultivar_add,
         name="admin-one-cultivar-add",
     ),
     path(
-        "admin-one-cultivar-page/",
+        _("admin-one-cultivar-page/"),
         views.admin_one_cultivar_page,
         name="admin-one-cultivar-page",
     ),
     path(
-        "admin-one-cultivar-update/<int:pk>/",
+        _("admin-one-cultivar-update/<int:pk>/"),
         views.admin_one_cultivar_update,
         name="admin-one-cultivar-update",
     ),
     path(
-        "admin-one-cultivar-delete/<int:pk>/",
+        _("admin-one-cultivar-delete/<int:pk>/"),
         views.admin_one_cultivar_delete,
         name="admin-one-cultivar-delete",
     ),
-]
+)
 
-urlpatterns += [
+urlpatterns += i18n_patterns(
     path(
-        "admin-stratification-duration-add/",
+        _("admin-stratification-duration-add/"),
         views.admin_stratification_duration_add,
         name="admin-stratification-duration-add",
     ),
     path(
-        "admin-stratification-duration-page/",
+        _("admin-stratification-duration-page/"),
         views.admin_stratification_duration_page,
         name="admin-stratification-duration-page",
     ),
     path(
-        "admin-stratification-duration-update/<int:pk>/",
+        _("admin-stratification-duration-update/<int:pk>/"),
         views.admin_stratification_duration_update,
         name="admin-stratification-duration-update",
     ),
     path(
-        "admin-stratification-duration-delete/<int:pk>/",
+        _("admin-stratification-duration-delete/<int:pk>/"),
         views.admin_stratification_duration_delete,
         name="admin-stratification-duration-delete",
     ),
-]
+)
 
-urlpatterns += [
+urlpatterns += i18n_patterns(
     path(
-        "admin-sowing-depth-add/",
+        _("admin-sowing-depth-add/"),
         views.admin_sowing_depth_add,
         name="admin-sowing-depth-add",
     ),
     path(
-        "admin-sowing-depth-page/",
+        _("admin-sowing-depth-page/"),
         views.admin_sowing_depth_page,
         name="admin-sowing-depth-page",
     ),
     path(
-        "admin-sowing-depth-update/<int:pk>/",
+        _("admin-sowing-depth-update/<int:pk>/"),
         views.admin_sowing_depth_update,
         name="admin-sowing-depth-update",
     ),
     path(
-        "admin-sowing-depth-delete/<int:pk>/",
+        _("admin-sowing-depth-delete/<int:pk>/"),
         views.admin_sowing_depth_delete,
         name="admin-sowing-depth-delete",
     ),
-]
+)
 
-urlpatterns += [
+urlpatterns += i18n_patterns(
     path(
-        "admin-packaging-measure-add/",
+        _("admin-packaging-measure-add/"),
         views.admin_packaging_measure_add,
         name="admin-packaging-measure-add",
     ),
     path(
-        "admin-packaging-measure-page/",
+        _("admin-packaging-measure-page/"),
         views.admin_packaging_measure_page,
         name="admin-packaging-measure-page",
     ),
     path(
-        "admin-packaging-measure-update/<int:pk>/",
+        _("admin-packaging-measure-update/<int:pk>/"),
         views.admin_packaging_measure_update,
         name="admin-packaging-measure-update",
     ),
     path(
-        "admin-packaging-measure-delete/<int:pk>/",
+        _("admin-packaging-measure-delete/<int:pk>/"),
         views.admin_packaging_measure_delete,
         name="admin-packaging-measure-delete",
     ),
-]
+)
 
-urlpatterns += [
+urlpatterns += i18n_patterns(
     path(
-        "admin-seed-preparation-add/",
+        _("admin-seed-preparation-add/"),
         views.admin_seed_preparation_add,
         name="admin-seed-preparation-add",
     ),
     path(
-        "admin-seed-preparation-page/",
+        _("admin-seed-preparation-page/"),
         views.admin_seed_preparation_page,
         name="admin-seed-preparation-page",
     ),
     path(
-        "admin-seed-preparation-update/<int:pk>/",
+        _("admin-seed-preparation-update/<int:pk>/"),
         views.admin_seed_preparation_update,
         name="admin-seed-preparation-update",
     ),
     path(
-        "admin-seed-preparation-delete/<int:pk>/",
+        _("admin-seed-preparation-delete/<int:pk>/"),
         views.admin_seed_preparation_delete,
         name="admin-seed-preparation-delete",
     ),
-]
+)
 
-urlpatterns += [
+urlpatterns += i18n_patterns(
     path(
-        "admin-seed-event-table-add/",
+        _("admin-seed-event-table-add/"),
         views.admin_seed_event_table_add,
         name="admin-seed-event-table-add",
     ),
     path(
-        "admin-seed-event-table-page/",
+        _("admin-seed-event-table-page/"),
         views.admin_seed_event_table_page,
         name="admin-seed-event-table-page",
     ),
     path(
-        "admin-seed-event-table-update/<int:pk>/",
+        _("admin-seed-event-table-update/<int:pk>/"),
         views.admin_seed_event_table_update,
         name="admin-seed-event-table-update",
     ),
     path(
-        "admin-seed-event-table-delete/<int:pk>/",
+        _("admin-seed-event-table-delete/<int:pk>/"),
         views.admin_seed_event_table_delete,
         name="admin-seed-event-table-delete",
     ),
-]
+)
 
-urlpatterns += [
+urlpatterns += i18n_patterns(
     path(
-        "admin-toxicity-indicator-add/",
+        _("admin-toxicity-indicator-add/"),
         views.admin_toxicity_indicator_add,
         name="admin-toxicity-indicator-add",
     ),
     path(
-        "admin-toxicity-indicator-page/",
+        _("admin-toxicity-indicator-page/"),
         views.admin_toxicity_indicator_page,
         name="admin-toxicity-indicator-page",
     ),
     path(
-        "admin-toxicity-indicator-update/<int:pk>/",
+        _("admin-toxicity-indicator-update/<int:pk>/"),
         views.admin_toxicity_indicator_update,
         name="admin-toxicity-indicator-update",
     ),
     path(
-        "admin-toxicity-indicator-delete/<int:pk>/",
+        _("admin-toxicity-indicator-delete/<int:pk>/"),
         views.admin_toxicity_indicator_delete,
         name="admin-toxicity-indicator-delete",
     ),
-]
+)
 
-urlpatterns += [
+urlpatterns += i18n_patterns(
     path(
-        "admin-conservation-status-add/",
+        _("admin-conservation-status-add/"),
         views.admin_conservation_status_add,
         name="admin-conservation-status-add",
     ),
     path(
-        "admin-conservation-status-page/",
+        _("admin-conservation-status-page/"),
         views.admin_conservation_status_page,
         name="admin-conservation-status-page",
     ),
     path(
-        "admin-conservation-status-update/<int:pk>/",
+        _("admin-conservation-status-update/<int:pk>/"),
         views.admin_conservation_status_update,
         name="admin-conservation-status-update",
     ),
     path(
-        "admin-conservation-status-delete/<int:pk>/",
+        _("admin-conservation-status-delete/<int:pk>/"),
         views.admin_conservation_status_delete,
         name="admin-conservation-status-delete",
     ),
-]
+)
 
-urlpatterns += [
+urlpatterns += i18n_patterns(
     path(
-        "admin-butterfly-species-page/",
+        _("admin-butterfly-species-page/"),
         views.admin_butterfly_species_page,
         name="admin-butterfly-species-page",
     ),
     path(
-        "admin-butterfly-species-add/",
+        _("admin-butterfly-species-add/"),
         views.admin_butterfly_species_add,
         name="admin-butterfly-species-add",
     ),
     path(
-        "admin-butterfly-species-update/<int:pk>/",
+        _("admin-butterfly-species-update/<int:pk>/"),
         views.admin_butterfly_species_update,
         name="admin-butterfly-species-update",
     ),
     path(
-        "admin-butterfly-species-delete/<int:pk>/",
+        _("admin-butterfly-species-delete/<int:pk>/"),
         views.admin_butterfly_species_delete,
         name="admin-butterfly-species-delete",
     ),
-]
+)
 
-urlpatterns += [
+urlpatterns += i18n_patterns(
     path(
-        "admin-bee-species-page/",
+        _("admin-bee-species-page/"),
         views.admin_bee_species_page,
         name="admin-bee-species-page",
     ),
     path(
-        "admin-bee-species-add/",
+        _("admin-bee-species-add/"),
         views.admin_bee_species_add,
         name="admin-bee-species-add",
     ),
     path(
-        "admin-bee-species-update/<int:pk>/",
+        _("admin-bee-species-update/<int:pk>/"),
         views.admin_bee_species_update,
         name="admin-bee-species-update",
     ),
     path(
-        "admin-bee-species-delete/<int:pk>/",
+        _("admin-bee-species-delete/<int:pk>/"),
         views.admin_bee_species_delete,
         name="admin-bee-species-delete",
     ),
-]
+)
 
-urlpatterns += [
+urlpatterns += i18n_patterns(
     path(
-        "admin-non-native-species-page/",
+        _("admin-non-native-species-page/"),
         views.admin_non_native_species_page,
         name="admin-non-native-species-page",
     ),
     path(
-        "admin-non-native-species-add/",
+        _("admin-non-native-species-add/"),
         views.admin_non_native_species_add,
         name="admin-non-native-species-add",
     ),
     path(
-        "admin-non-native-species-update/<int:pk>/",
+        _("admin-non-native-species-update/<int:pk>/"),
         views.admin_non_native_species_update,
         name="admin-non-native-species-update",
     ),
     path(
-        "admin-non-native-species-delete/<int:pk>/",
+        _("admin-non-native-species-delete/<int:pk>/"),
         views.admin_non_native_species_delete,
         name="admin-non-native-species-delete",
     ),
-]
+)
 
-urlpatterns += [
-    path("admin-ecozone-page/", views.admin_ecozone_page, name="admin-ecozone-page"),
+urlpatterns += i18n_patterns(
+    path(_("admin-ecozone-page/"), views.admin_ecozone_page, name="admin-ecozone-page"),
     path(
-        "admin-ecozone-add/",
+        _("admin-ecozone-add/"),
         views.admin_ecozone_add,
         name="admin-ecozone-add",
     ),
     path(
-        "admin-ecozone-update/<int:pk>/",
+        _("admin-ecozone-update/<int:pk>/"),
         views.admin_ecozone_update,
         name="admin-ecozone-update",
     ),
     path(
-        "admin-ecozone-delete/<int:pk>/",
+        _("admin-ecozone-delete/<int:pk>/"),
         views.admin_ecozone_delete,
         name="admin-ecozone-delete",
     ),
-]
+)
 
-urlpatterns += [
-    path("admin-images-page/", views.admin_images_page, name="admin-images-page"),
-    path("admin-image-add/", views.admin_image_add, name="admin-image-add"),
+urlpatterns += i18n_patterns(
+    path(_("admin-images-page/"), views.admin_images_page, name="admin-images-page"),
+    path(_("admin-image-add/"), views.admin_image_add, name="admin-image-add"),
     path(
-        "admin-image-update/<int:pk>/",
+        _("admin-image-update/<int:pk>/"),
         views.admin_image_update,
         name="admin-image-update",
     ),
     path(
-        "admin-image-delete/<int:pk>/",
+        _("admin-image-delete/<int:pk>/"),
         views.admin_image_delete,
         name="admin-image-delete",
     ),
-]
+)
 
-urlpatterns += [
+urlpatterns += i18n_patterns(
     path(
-        "admin-plant-morphology-page/",
+        _("admin-plant-morphology-page/"),
         views.admin_plant_morphology_page,
         name="admin-plant-morphology-page",
     ),
     path(
-        "admin-plant-morphology-add/",
+        _("admin-plant-morphology-add/"),
         views.admin_plant_morphology_add,
         name="admin-plant-morphology-add",
     ),
     path(
-        "admin-plant-morphology-update/<int:pk>/",
+        _("admin-plant-morphology-update/<int:pk>/"),
         views.admin_plant_morphology_update,
         name="admin-plant-morphology-update",
     ),
     path(
-        "admin-plant-morphology-delete/<int:pk>/",
+        _("admin-plant-morphology-delete/<int:pk>/"),
         views.admin_plant_morphology_delete,
         name="admin-plant-morphology-delete",
     ),
-]
+)
 
-urlpatterns += [
-    path("login/", views.user_login, name="login"),
-    path("logout/", views.user_logout, name="logout"),
+urlpatterns += i18n_patterns(
+    path(_("login/"), views.user_login, name="login"),
+    path(_("logout/"), views.user_logout, name="logout"),
     path(
-        "user-plant-collection/",
+        _("user-plant-collection/"),
         views.user_plant_collection,
         name="user-plant-collection",
     ),
     path(
-        "user-plant-toggle/<int:pk>", views.user_plant_toggle, name="user-plant-toggle"
+        _("user-plant-toggle/<int:pk>"),
+        views.user_plant_toggle,
+        name="user-plant-toggle",
     ),
     path(
-        "user-plant-update/<int:pk>", views.user_plant_update, name="user-plant-update"
+        _("user-plant-update/<int:pk>"),
+        views.user_plant_update,
+        name="user-plant-update",
     ),
     path(
-        "user-plant-delete/<int:pk>", views.user_plant_delete, name="user-plant-delete"
+        _("user-plant-delete/<int:pk>"),
+        views.user_plant_delete,
+        name="user-plant-delete",
     ),
     path(
-        "plant-collection-csv/", views.plant_collection_csv, name="plant-collection-csv"
+        _("plant-collection-csv/"),
+        views.plant_collection_csv,
+        name="plant-collection-csv",
     ),
-    path("site-admin/", views.siteadmin, name="site-admin"),
-]
+    path(_("site-admin/"), views.siteadmin, name="site-admin"),
+)
 
-urlpatterns += [
-    path("plant-label-pdf/<int:pk>", views.plant_label_pdf, name="plant-label-pdf"),
-]
-urlpatterns += [
+urlpatterns += i18n_patterns(
+    path(_("plant-label-pdf/<int:pk>"), views.plant_label_pdf, name="plant-label-pdf"),
+)
+
+urlpatterns += i18n_patterns(
     path(
-        "plant-environmental-requirement-update/<int:pk>",
+        _("plant-environmental-requirement-update/<int:pk>"),
         views.plant_environmental_requirement_update,
         name="plant-environmental-requirement-update",
     ),
     path(
-        "plant-identification-information-update/<int:pk>",
+        _("plant-identification-information-update/<int:pk>"),
         views.plant_identification_information_update,
         name="plant-identification-information-update",
     ),
     # path for creating a new plant profile
     path(
-        "plant-identification-information-create/",
+        _("plant-identification-information-create/"),
         views.plant_identification_information_create,
         name="plant-identification-information-create",
     ),
     # path for plants missingq inat taxon
     path(
-        "admin-plant-missing-inaturalist-taxon/",
+        _("admin-plant-missing-inaturalist-taxon/"),
         views.admin_plant_missing_inaturalist_taxon,
         name="admin-plant-missing-inaturalist-taxon",
     ),
     path(
-        "plant-growth-characteristics-update/<int:pk>",
+        _("plant-growth-characteristics-update/<int:pk>"),
         views.plant_growth_characteristics_update,
         name="plant-growth-characteristics-update",
     ),
     path(
-        "plant-introductory-gardening-experience-update/<int:pk>",
+        _("plant-introductory-gardening-experience-update/<int:pk>"),
         views.plant_introductory_gardening_experience_update,
         name="plant-introductory-gardening-experience-update",
     ),
     path(
-        "plant-landscape-use-and-application-update/<int:pk>",
+        _("plant-landscape-use-and-application-update/<int:pk>"),
         views.plant_landscape_use_and_application_update,
         name="plant-landscape-use-and-application-update",
     ),
     path(
-        "plant-ecological-benefits-update/<int:pk>",
+        _("plant-ecological-benefits-update/<int:pk>"),
         views.plant_ecological_benefits_update,
         name="plant-ecological-benefits-update",
     ),
     path(
-        "plant-special-features-and-considerations-update/<int:pk>",
+        _("plant-special-features-and-considerations-update/<int:pk>"),
         views.plant_special_features_and_consideration_update,
         name="plant-special-features-and-considerations-update",
     ),
     path(
-        "plant-harvesting-update/<int:pk>",
+        _("plant-harvesting-update/<int:pk>"),
         views.plant_harvesting_update,
         name="plant-harvesting-update",
     ),
     path(
-        "plant-sowing-update/<int:pk>",
+        _("plant-sowing-update/<int:pk>"),
         views.plant_sowing_update,
         name="plant-sowing-update",
     ),
     path(
-        "plant-seed-distribution-update/<int:pk>",
+        _("plant-seed-distribution-update/<int:pk>"),
         views.plant_seed_distribution_update,
         name="plant-seed-distribution-update",
     ),
-]
+)
 
-urlpatterns += [
+urlpatterns += i18n_patterns(
     path(
-        "plant-substitute-to-update/<int:pk>",
+        _("plant-substitute-to-update/<int:pk>"),
         views.plant_substitute_to_update,
         name="plant-substitute-to-update",
     ),
-]
+)
 
-urlpatterns += [
+urlpatterns += i18n_patterns(
     path(
-        "butterfly-supporting-plants/",
+        _("butterfly-supporting-plants/"),
         views.butterfly_supporting_plants,
         name="butterfly-supporting-plants",
     ),
     path(
-        "bee-supporting-plants/",
+        _("bee-supporting-plants/"),
         views.bee_supporting_plants,
         name="bee-supporting-plants",
     ),
-    path("plant-ecozones/", views.plant_ecozones, name="plant_ecozones"),
+    path(_("plant-ecozones/"), views.plant_ecozones, name="plant_ecozones"),
     path(
-        "plants-needing-seeds-csv/",
+        _("plants-needing-seeds-csv/"),
         views.plants_needing_seeds_csv,
         name="plants-needing-seeds-csv",
     ),
-]
+)
 
-urlpatterns += [
+
+urlpatterns += i18n_patterns(
     path(
-        "project-user-page/",
+        _("project-user-page/"),
         views.project_user_page,
         name="project-user-page",
     ),
     path(
-        "project-user-add/",
+        _("project-user-add/"),
         views.project_user_add,
         name="project-user-add",
     ),
     path(
-        "project-user-update/<int:pk>/",
+        _("project-user-update/<int:pk>/"),
         views.project_user_update,
         name="project-user-update",
     ),
     path(
-        "project-user-delete/<int:pk>/",
+        _("project-user-delete/<int:pk>/"),
         views.project_user_delete,
         name="project-user-delete",
     ),
     path(
-        "project-user-groups-update/<int:pk>/",
+        _("project-user-groups-update/<int:pk>/"),
         views.project_user_groups_update,
         name="project-user-groups-update",
     ),
     path(
-        "project-user-groups-delete/<int:user_pk>/<int:group_pk>/",
+        _("project-user-groups-delete/<int:user_pk>/<int:group_pk>/"),
         views.project_user_groups_delete,
         name="project-user-groups-delete",
     ),
     path(
-        "group-permissions-matrix-update/",
+        _("group-permissions-matrix-update/"),
         views.group_permissions_matrix_update,
         name="group-permissions-matrix-update",
     ),
-]
+)
 
 
-urlpatterns += [
+urlpatterns += i18n_patterns(
     path(
-        "project-group-page/",
+        _("project-group-page/"),
         views.project_group_page,
         name="project-group-page",
     ),
     path(
-        "project-group-add/",
+        _("project-group-add/"),
         views.project_group_add,
         name="project-group-add",
     ),
     path(
-        "project-group-update/<int:pk>/",
+        _("project-group-update/<int:pk>/"),
         views.project_group_update,
         name="project-group-update",
     ),
     path(
-        "project-group-delete/<int:pk>/",
+        _("project-group-delete/<int:pk>/"),
         views.project_group_delete,
         name="project-group-delete",
     ),
-]
+)
+
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
-urlpatterns += [
+urlpatterns += i18n_patterns(
     path("api/v1/", api.urls),
-]
+)
 if "rosetta" in settings.INSTALLED_APPS:
     urlpatterns += [path("rosetta/", include("rosetta.urls"))]
