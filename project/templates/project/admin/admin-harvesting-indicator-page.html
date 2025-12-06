@@ -17,7 +17,7 @@
       <table class=''>
         <thead>
           <tr>
-            <th>{{title}}</th>
+            <th colspan=2>{{title}}</th>
             <th>{% trans "Plant Count" %}</th>
             {% if user.is_authenticated %}
               <th colspan=2>{% trans "Actions" %}</th>
@@ -27,7 +27,8 @@
         <tbody>
           {% for item in data %}
             <tr class="{% cycle 'odd-row' 'even-row' %}">
-              <td>{{item.harvesting_indicator}}</td>
+              <td>{{item.harvesting_indicator_en}}</td>
+              <td>{{item.harvesting_indicator_fr}}</td>
               <td>{{item.plant_count}}</td>
               {% if user.is_authenticated %}
                 <td class='actions'>

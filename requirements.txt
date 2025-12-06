@@ -42,6 +42,7 @@ django==5.2.7
     #   django-extensions
     #   django-filter
     #   django-htmx
+    #   django-modeltranslation
     #   django-ninja
     #   django-rosetta
 django-browser-reload==1.21.0
@@ -51,6 +52,8 @@ django-extensions==4.1
 django-filter==25.2
     # via -r requirements.in
 django-htmx==1.26.0
+    # via -r requirements.in
+django-modeltranslation==0.19.17
     # via -r requirements.in
 django-ninja==1.4.5
     # via -r requirements.in

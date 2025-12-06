@@ -23,7 +23,8 @@
         <tbody>
           {% for item in data %}
             <tr class="{% cycle 'odd-row' 'even-row' %}">
-              <td>{{item.bloom_colour}}</td>
+              <td>{{item.bloom_colour_en}} / {{item.bloom_colour_fr}}</td>
+
               <td>{{item.plant_count}}</td>
               {% if user.is_authenticated %}
                 <td class='actions'>

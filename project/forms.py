@@ -134,7 +134,7 @@ class SearchPlantForm(forms.ModelForm):
 class AdminColourForm(forms.ModelForm):
     class Meta:
         model = models.BloomColour
-        fields = ["bloom_colour"]
+        fields = ["bloom_colour", "bloom_colour_fr"]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -168,29 +168,31 @@ class EnvironmentalRequirementsForm(forms.ModelForm):
 class HabitForm(forms.ModelForm):
     class Meta:
         model = models.GrowthHabit
-        fields = ["growth_habit"]
+        fields = ["growth_habit", "growth_habit_fr"]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
 
 class AdminHarvestingIndicatorForm(forms.ModelForm):
-    harvesting_indicator = TextAreaField(label=_("Harvesting Indicator"))
+    harvesting_indicator_en = TextAreaField(label=_("Harvesting Indicator (English)"))
+    harvesting_indicator_fr = TextAreaField(label=_("Harvesting Indicator (French)"))
 
     class Meta:
         model = models.HarvestingIndicator
-        fields = ["harvesting_indicator"]
+        fields = ["harvesting_indicator_en", "harvesting_indicator_fr"]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
 
 class AdminHarvestingMeanForm(forms.ModelForm):
-    harvesting_mean = TextAreaField(label=_("Harvesting"))
+    harvesting_mean_en = TextAreaField(label=_("Harvesting Mean (English)"))
+    harvesting_mean_fr = TextAreaField(label=_("Harvesting Mean (French)"))
 
     class Meta:
         model = models.HarvestingMean
-        fields = ["harvesting_mean"]
+        fields = ["harvesting_mean_en", "harvesting_mean_fr"]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -306,7 +308,7 @@ class AdminToxicityIndicatorForm(forms.ModelForm):
 class AdminConservationStatusForm(forms.ModelForm):
     class Meta:
         model = models.ConservationStatus
-        fields = ["conservation_status"]
+        fields = ["conservation_status", "conservation_status_fr"]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

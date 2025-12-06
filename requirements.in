@@ -40,3 +40,4 @@ qrcode
 requests
 beautifulsoup4
 django-rosetta
+django-modeltranslation
