@@ -23,7 +23,7 @@
         <tbody>
           {% for item in object_list %}
             <tr class="{% cycle 'odd-row' 'even-row' %}">
-              <td>{{item.element}}</td>
+              <td>{{item.element_en}}</td>
               <td>{{item.element_fr}}</td>
               <td>{{item.image_count}}</td>
               {% if user.is_authenticated %}

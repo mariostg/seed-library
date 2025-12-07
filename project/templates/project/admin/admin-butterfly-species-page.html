@@ -26,8 +26,8 @@
         {% for item in object_list %}
           <tr class="{% cycle 'odd-row' 'even-row' %}">
             <td>{{item.latin_name}}</td>
-            <td>{{item.english_name}}</td>
-            <td>{{item.french_name}}</td>
+            <td>{{item.english_name_en}}</td>
+            <td>{{item.english_name_fr}}</td>
             <td>{{item.plant_count}}</td>
             {% if user.is_authenticated %}
               <td class="actions">

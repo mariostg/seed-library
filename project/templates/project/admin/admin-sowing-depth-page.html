@@ -27,7 +27,7 @@
         <tbody>
           {% for item in object_list %}
             <tr class="{% cycle 'odd-row' 'even-row' %}">
-              <td>{{item.sowing_depth}}</td>
+              <td>{{item.sowing_depth_en}}</td>
               <td>{{item.sowing_depth_fr}}</td>
               <td>{{item.plant_count}}</td>
               {% if user.is_authenticated %}
