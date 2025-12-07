@@ -50,6 +50,12 @@ class EcozoneTranslationOptions(TranslationOptions):
     required_languages = ("fr",)
 
 
+# NonNativeSpecies
+class NonNativeSpeciesTranslationOptions(TranslationOptions):
+    fields = ("english_name",)
+    required_languages = ("fr",)
+
+
 # PlantMorphology
 class PlantMorphologyTranslationOptions(TranslationOptions):
     fields = ("element",)
@@ -111,6 +117,7 @@ translator.register(models.ConservationStatus, ConservationStatusTranslationOpti
 translator.register(models.GrowthHabit, GrowthHabitTranslationOptions)
 translator.register(models.HarvestingIndicator, HarvestingIndicatorTranslationOptions)
 translator.register(models.HarvestingMean, HarvestingMeanTranslationOptions)
+translator.register(models.NonNativeSpecies, NonNativeSpeciesTranslationOptions)
 translator.register(models.PlantLifespan, PlantLifespanTranslationOptions)
 translator.register(models.OneCultivar, CultivarTranslationOptions)
 translator.register(models.Ecozone, EcozoneTranslationOptions)

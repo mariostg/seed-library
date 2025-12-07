@@ -334,7 +334,7 @@ class AdminBeeSpeciesForm(forms.ModelForm):
 class AdminNonNativeSpeciesForm(forms.ModelForm):
     class Meta:
         model = models.NonNativeSpecies
-        fields = ["latin_name", "english_name"]
+        fields = ["latin_name", "english_name_en", "english_name_fr"]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
