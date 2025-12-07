@@ -15,7 +15,7 @@
       <table class=''>
         <thead>
           <tr>
-            <th>{% trans "Ecozone" %}</th>
+            <th colspan="2">{% trans "Ecozone" %}</th>
             <th>{% trans "Plant Count" %}</th>
             <th colspan=2>{% trans "Actions" %}</th>
           </tr>
@@ -24,6 +24,7 @@
           {% for item in object_list %}
             <tr class="{% cycle 'odd-row' 'even-row' %}">
               <td>{{item.ecozone}}</td>
+              <td>{{item.ecozone_fr}}</td>
               <td>{{item.plant_count}}</td>
               {% if user.is_authenticated %}
                 <td class='actions'>

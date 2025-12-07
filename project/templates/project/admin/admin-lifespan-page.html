@@ -14,30 +14,32 @@
       {% endif %}
       <table class=''>
         <thead>
-          <tr></tr>
-          <th>{% trans "Lifespan" %}</th>
-          <th>{% trans "Definition" %}</th>
-          <th>{% trans "Plant Count" %}</th>
-          <th>{% trans "Action" %}</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for item in object_list %}
-          <tr class="{% cycle 'odd-row' 'even-row' %}">
-            <td>{{item.lifespan}}</td>
-            <td>{{item.definition}}</td>
-            <td>{{item.plant_count}}</td>
-            {% if user.is_authenticated %}
-              <td class="actions">
-                <a class='btn btn-edit' href="{% url "admin-lifespan-update" item.id %}">{% trans "Edit" %}</a>
-                <a class='btn btn-delete' href="{% url "admin-lifespan-delete" item.id %}">{% trans "Delete" %}</a>
-              </td>
-            {% endif %}
+          <tr>
+            <th colspan="2">{% trans "Lifespan" %}</th>
+            <th colspan="2">{% trans "Definition" %}</th>
+            <th>{% trans "Plant Count" %}</th>
+            <th>{% trans "Action" %}</th>
           </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  </fieldset>
+        </thead>
+        <tbody>
+          {% for item in object_list %}
+            <tr class="{% cycle 'odd-row' 'even-row' %}">
+              <td>{{item.lifespan}}</td>
+              <td>{{item.lifespan_fr}}</td>
+              <td>{{item.definition}}</td>
+              <td>{{item.definition_fr}}</td>
+              <td>{{item.plant_count}}</td>
+              {% if user.is_authenticated %}
+                <td class="actions">
+                  <a class='btn btn-edit' href="{% url "admin-lifespan-update" item.id %}">{% trans "Edit" %}</a>
+                  <a class='btn btn-delete' href="{% url "admin-lifespan-delete" item.id %}">{% trans "Delete" %}</a>
+                </td>
+              {% endif %}
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </fieldset>
   </div>
 
   </body>

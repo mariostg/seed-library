@@ -143,7 +143,7 @@ class AdminColourForm(forms.ModelForm):
 class AdminLifespanForm(forms.ModelForm):
     class Meta:
         model = models.PlantLifespan
-        fields = ["lifespan", "definition"]
+        fields = ["lifespan", "" "definition", "lifespan_fr", "definition_fr"]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -201,7 +201,7 @@ class AdminHarvestingMeanForm(forms.ModelForm):
 class AdminSeedHeadForm(forms.ModelForm):
     class Meta:
         model = models.SeedHead
-        fields = ["seed_head"]
+        fields = ["seed_head", "seed_head_fr"]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -210,7 +210,7 @@ class AdminSeedHeadForm(forms.ModelForm):
 class AdminSeedViabilityTestForm(forms.ModelForm):
     class Meta:
         model = models.SeedViabilityTest
-        fields = ["seed_viability_test"]
+        fields = ["seed_viability_test", "seed_viability_test_fr"]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -225,10 +225,11 @@ class AdminSeedStorageForm(forms.ModelForm):
     #     ),
     # )
     seed_storage = TextAreaField(label=_("Seed Storages"))
+    seed_storage_fr = TextAreaField(label=_("Seed Storages (French)"))
 
     class Meta:
         model = models.SeedStorage
-        fields = ["seed_storage"]
+        fields = ["seed_storage", "seed_storage_fr"]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -242,10 +243,17 @@ class AdminOneCultivarForm(forms.ModelForm):
             attrs={"class": "input", "style": "width: 500px;", "rows": "4"},
         ),
     )
+    one_cultivar_fr = forms.CharField(
+        label=_("Cultivar (French)"),
+        max_length=120,
+        widget=forms.Textarea(
+            attrs={"class": "input", "style": "width: 500px;", "rows": "4"},
+        ),
+    )
 
     class Meta:
         model = models.OneCultivar
-        fields = ["one_cultivar"]
+        fields = ["one_cultivar", "one_cultivar_fr"]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -263,7 +271,7 @@ class AdminStratificationDurationForm(forms.ModelForm):
 class AdminSowingDepthForm(forms.ModelForm):
     class Meta:
         model = models.SowingDepth
-        fields = ["sowing_depth"]
+        fields = ["sowing_depth", "sowing_depth_fr"]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -272,7 +280,7 @@ class AdminSowingDepthForm(forms.ModelForm):
 class AdminPackagingMeasureForm(forms.ModelForm):
     class Meta:
         model = models.PackagingMeasure
-        fields = ["packaging_measure"]
+        fields = ["packaging_measure", "packaging_measure_fr"]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -281,7 +289,7 @@ class AdminPackagingMeasureForm(forms.ModelForm):
 class AdminSeedPreparationForm(forms.ModelForm):
     class Meta:
         model = models.SeedPreparation
-        fields = ["seed_preparation"]
+        fields = ["seed_preparation", "seed_preparation_fr"]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -290,7 +298,7 @@ class AdminSeedPreparationForm(forms.ModelForm):
 class AdminSeedEventTableForm(forms.ModelForm):
     class Meta:
         model = models.SeedEventTable
-        fields = ["seed_event_table"]
+        fields = ["seed_event_table", "seed_event_table_fr"]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -299,7 +307,7 @@ class AdminSeedEventTableForm(forms.ModelForm):
 class AdminToxicityIndicatorForm(forms.ModelForm):
     class Meta:
         model = models.ToxicityIndicator
-        fields = ["toxicity_indicator"]
+        fields = ["toxicity_indicator", "toxicity_indicator_fr"]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -317,7 +325,7 @@ class AdminConservationStatusForm(forms.ModelForm):
 class AdminButterflySpeciesForm(forms.ModelForm):
     class Meta:
         model = models.ButterflySpecies
-        fields = ["latin_name", "english_name"]
+        fields = ["latin_name", "english_name", "english_name_fr"]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -344,7 +352,7 @@ class AdminNonNativeSpeciesForm(forms.ModelForm):
 class AdminEcozoneForm(forms.ModelForm):
     class Meta:
         model = models.Ecozone
-        fields = ["ecozone"]
+        fields = ["ecozone", "ecozone_fr"]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -371,6 +379,7 @@ class AdminPlantMorphologyForm(forms.ModelForm):
         model = models.PlantMorphology
         fields = [
             "element",
+            "element_fr",
         ]
 
     def __init__(self, *args, **kwargs):

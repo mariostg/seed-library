@@ -15,7 +15,7 @@
       <table class=''>
         <thead>
           <tr></tr>
-          <th>{% trans "Seed Head" %}</th>
+          <th colspan="2">{% trans "Seed Head" %}</th>
           <th>{% trans "Plant Count" %}</th>
           <th>{% trans "Action" %}</th>
         </tr>
@@ -24,6 +24,7 @@
         {% for item in object_list %}
           <tr class="{% cycle 'odd-row' 'even-row' %}">
             <td>{{item.seed_head}}</td>
+            <td>{{item.seed_head_fr}}</td>
             <td>{{item.plant_count}}</td>
             {% if user.is_authenticated %}
               <td class="actions">
