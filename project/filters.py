@@ -387,7 +387,7 @@ class PlantProfileFilter(django_filters.FilterSet):
             "Vulnerable",
         )
         return queryset.filter(
-            conservation_status__conservation_status__in=endangered_values
+            conservation_status__conservation_status_en__in=endangered_values
         )
 
     def filter_starter_pack(self, queryset, name, value):
