@@ -1,4 +1,7 @@
 {% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+{% get_available_languages as LANGUAGES %}
+{% get_language_info_list for LANGUAGES as languages %}
 <nav class='nav no-print'>
   <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('show')">
     <span class="bar"></span>
@@ -42,5 +45,18 @@
     {% if request.user.is_plant_profile_manager or request.user.is_image_manager or request.user.is_library_manager %}
       <li><a class='btn' href="{% url 'site-admin' %}">{% trans "Library Management" %}</a></li>
     {% endif %}
+
+    <li>
+      {% for language in languages %}
+        <span lang="{{ language.code }}">
+          <a href="/{{ language.code }}/"
+             {% if language.code == LANGUAGE_CODE %} class="selected"{% endif %}>
+            {{ language.name_local }}
+          </a>
+        </span>
+      {% endfor %}
+    </li>
+
+
   </ul>
 </nav>

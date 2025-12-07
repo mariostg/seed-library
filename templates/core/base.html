@@ -22,25 +22,8 @@
       </div>
 
       {% include "core/nav.html" %}
-
-      {% get_current_language as LANGUAGE_CODE %}
-      {% get_available_languages as LANGUAGES %}
-      {% get_language_info_list for LANGUAGES as languages %}
-      <div class="languages">
-        <ul class="languages">
-          {% for language in languages %}
-            <li>
-              <a href="/{{ language.code }}/"
-                 {% if language.code == LANGUAGE_CODE %} class="selected"{% endif %}>
-                {{ language.name_local }}
-              </a>
-            </li>
-          {% endfor %}
-        </ul>
-      </div>
-
-
     </header>
+
     {% if messages %}
       {% for message in messages %}
         <div class="container alert  alert--{{message.tags}}">
