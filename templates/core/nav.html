@@ -46,7 +46,7 @@
       <li><a class='btn' href="{% url 'site-admin' %}">{% trans "Library Management" %}</a></li>
     {% endif %}
 
-    <li>
+    {% comment %} <li>
       {% for language in languages %}
         <span lang="{{ language.code }}">
           <a href="/{{ language.code }}/"
@@ -55,7 +55,7 @@
           </a>
         </span>
       {% endfor %}
-    </li>
+    </li> {% endcomment %}
 
 
   </ul>
