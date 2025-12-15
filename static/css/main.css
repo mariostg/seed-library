@@ -173,6 +173,27 @@ header {
   margin-left: 1rem;
 }
 
+.info-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.info-box .box-title {
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+.info-box .box-content {
+  border: 1px solid light-dark(#79ac78, #79ac78);
+  background-color: #f9f9f9;
+  padding: 1rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  max-width: 600px;
+}
+
 form {
   display: flex;
   flex-direction: column;
