@@ -109,3 +109,24 @@ header {
 #aside-toggler {
   margin-left: 1rem;
 }
+
+.info-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  & .box-title {
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+  }
+  & .box-content {
+    border: $border;
+    background-color: #f9f9f9;
+    padding: 1rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+    max-width: 600px;
+  }
+}
