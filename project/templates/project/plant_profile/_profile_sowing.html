@@ -13,8 +13,10 @@
     <li>{% trans "Stratification duration:" %}
       {% if plant.double_dormancy %}
         2 {% trans "years" %}
-      {% else %}
+      {% elif plant.stratification_duration %}
         {{ plant.stratification_duration }}</li>
+      {% else %}
+        {% trans "Not Available" %}
       {% endif %}
       {% if plant.self_seeding %}
         <li>{% trans "Self-seeding" %}</li>

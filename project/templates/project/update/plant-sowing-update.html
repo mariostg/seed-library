@@ -37,11 +37,19 @@
                     <!--input text for stratification duration-->
             <div class="input-text">
               <label for="id_stratification_duration">{% trans "Stratification Duration (days)" %}</label>
-              <select name="stratification_duration" id="id_stratification_duration">
+              <div class="input-radio">
+                  <!-- include and radio button to reset the stratification duration to none-->
+                <div>
+                  <input type="radio" id="id_stratification_duration_none" name="stratification_duration" value="" {% if not plant.stratification_duration %}checked{% endif %}>
+                  <label for="id_stratification_duration_none">{% trans "None" %}</label>
+                </div>
                 {% for duration in stratification_duration %}
-                  <option value="{{ duration.pk }}" {% if plant.stratification_duration.pk == duration.pk %}selected{% endif %}>{{ duration }}</option>
+                  <div>
+                    <input type="radio" id="id_stratification_duration_{{ duration.pk }}" name="stratification_duration" value="{{ duration.pk }}" {% if plant.stratification_duration.pk == duration.pk %}checked{% endif %}>
+                    <label for="id_stratification_duration_{{ duration.pk }}">{{ duration }}</label>
+                  </div>
                 {% endfor %}
-              </select>
+              </div>
             </div>
                     <!--input checkbox for double dormancy-->
             <div class="input-checkbox">
