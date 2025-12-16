@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-06 00:02+0000\n"
+"POT-Creation-Date: 2025-12-16 14:46+0000\n"
 "PO-Revision-Date: 2025-12-10 02:49+0000\n"
 "Last-Translator: Mario St-Gelais <admin@mail.ca>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -615,8 +615,8 @@ msgstr ""
 
 #: project/forms.py:96
 msgid ""
-"Beginning of blooming period (%(bloom_start)) must be before end of blooming"
-" period (%(bloom_end))"
+"Beginning of blooming period (%(bloom_start)) must be before end of blooming "
+"period (%(bloom_end))"
 msgstr ""
 
 #: project/forms.py:178
@@ -636,22 +636,28 @@ msgid "Harvesting Mean (French)"
 msgstr ""
 
 #: project/forms.py:227
-#: project/templates/project/admin/admin-nav-plant-profile-manager.html:30
-msgid "Seed Storages"
+msgid "Seed Storages (English)"
 msgstr ""
 
-#: project/forms.py:239 project/models.py:194 project/models.py:1024
-#: project/templates/project/plant_profile/_profile_harvesting.html:58
-msgid "Cultivar"
+#: project/forms.py:228
+msgid "Seed Storages (French)"
 msgstr ""
 
-#: project/forms.py:393
+#: project/forms.py:240
+msgid "Cultivar (English)"
+msgstr ""
+
+#: project/forms.py:247
+msgid "Cultivar (French)"
+msgstr ""
+
+#: project/forms.py:402
 #: project/templates/project/users/project-group-page.html:21
 #: project/templates/project/users/project-user-groups-update.html:20
 msgid "Group Name"
 msgstr ""
 
-#: project/forms.py:398
+#: project/forms.py:407
 #: project/templates/project/users/project-user-groups-update.html:21
 msgid "Group Permissions"
 msgstr ""
@@ -693,6 +699,11 @@ msgstr ""
 msgid "Seed Storage"
 msgstr ""
 
+#: project/models.py:194 project/models.py:1024
+#: project/templates/project/plant_profile/_profile_harvesting.html:58
+msgid "Cultivar"
+msgstr ""
+
 #: project/models.py:220 project/models.py:1062
 #: project/templates/project/update/plant-seed-distribution-update.html:25
 msgid "Packaging Measure"
@@ -716,7 +727,8 @@ msgid "Stratification Duration"
 msgstr ""
 
 #: project/models.py:339
-msgid "%(stratification_duration) days"
+#, python-format
+msgid "%(stratification_duration)d days"
 msgstr ""
 
 #: project/models.py:362
@@ -879,6 +891,8 @@ msgid "Show Vascan Map Information"
 msgstr ""
 
 #: project/models.py:873
+#: project/templates/project/admin/admin-butterfly-species-page.html:20
+#: project/templates/project/admin/admin-non-native-species-page.html:20
 #: project/templates/project/plant-identification-information-create.html:53
 #: project/templates/project/update/plant-identification-information-update.html:40
 msgid "French Name"
@@ -1037,7 +1051,7 @@ msgstr ""
 
 #: project/models.py:1075
 #: project/templates/project/update/plant-seed-distribution-update.html:74
-#: project/templates/project/update/plant-sowing-update.html:55
+#: project/templates/project/update/plant-sowing-update.html:63
 msgid "Sowing Notes"
 msgstr ""
 
@@ -1047,7 +1061,7 @@ msgid "Envelope Label Link"
 msgstr ""
 
 #: project/models.py:1094
-#: project/templates/project/update/plant-sowing-update.html:53
+#: project/templates/project/update/plant-sowing-update.html:61
 msgid "Notes"
 msgstr ""
 
@@ -1298,7 +1312,7 @@ msgid "Add New Bee Species"
 msgstr ""
 
 #: project/templates/project/admin/admin-bee-species-page.html:19
-#: project/templates/project/admin/admin-butterfly-species-page.html:20
+#: project/templates/project/admin/admin-butterfly-species-page.html:21
 #: project/templates/project/admin/admin-colour-page.html:19
 #: project/templates/project/admin/admin-conservation-status-page.html:21
 #: project/templates/project/admin/admin-ecozones-page.html:19
@@ -1306,7 +1320,7 @@ msgstr ""
 #: project/templates/project/admin/admin-harvesting-indicator-page.html:21
 #: project/templates/project/admin/admin-harvesting-mean-page.html:21
 #: project/templates/project/admin/admin-lifespan-page.html:20
-#: project/templates/project/admin/admin-non-native-species-page.html:20
+#: project/templates/project/admin/admin-non-native-species-page.html:21
 #: project/templates/project/admin/admin-plant-morphology-page.html:19
 #: project/templates/project/admin/admin-seed-head-page.html:19
 #: project/templates/project/admin/admin-seed-storage-page.html:23
@@ -1317,10 +1331,10 @@ msgid "Plant Count"
 msgstr ""
 
 #: project/templates/project/admin/admin-bee-species-page.html:20
-#: project/templates/project/admin/admin-butterfly-species-page.html:21
+#: project/templates/project/admin/admin-butterfly-species-page.html:22
 #: project/templates/project/admin/admin-growth-habit-page.html:20
 #: project/templates/project/admin/admin-lifespan-page.html:21
-#: project/templates/project/admin/admin-non-native-species-page.html:21
+#: project/templates/project/admin/admin-non-native-species-page.html:22
 #: project/templates/project/admin/admin-plant-missing-inaturalist-taxon.html:14
 #: project/templates/project/admin/admin-plant-morphology-page.html:20
 #: project/templates/project/admin/admin-seed-head-page.html:20
@@ -1329,46 +1343,19 @@ msgid "Action"
 msgstr ""
 
 #: project/templates/project/admin/admin-bee-species-page.html:30
-#: project/templates/project/admin/admin-butterfly-species-page.html:32
+#: project/templates/project/admin/admin-butterfly-species-page.html:34
 #: project/templates/project/admin/admin-colour-page.html:31
 #: project/templates/project/admin/admin-conservation-status-page.html:33
-#: project/templates/project/admin/admin-ecozones-page.html:30
+#: project/templates/project/admin/admin-ecozones-page.html:31
 #: project/templates/project/admin/admin-growth-habit-page.html:31
 #: project/templates/project/admin/admin-harvesting-indicator-page.html:35
 #: project/templates/project/admin/admin-harvesting-mean-page.html:35
 #: project/templates/project/admin/admin-image-page-results.html:29
-#: project/templates/project/admin/admin-lifespan-page.html:32
-#: project/templates/project/admin/admin-non-native-species-page.html:32
-#: project/templates/project/admin/admin-one-cultivar-page.html:34
-#: project/templates/project/admin/admin-packaging-measure-page.html:32
-#: project/templates/project/admin/admin-plant-missing-inaturalist-taxon.html:23
-#: project/templates/project/admin/admin-plant-morphology-page.html:30
-#: project/templates/project/admin/admin-seed-event-table-page.html:35
-#: project/templates/project/admin/admin-seed-head-page.html:30
-#: project/templates/project/admin/admin-seed-preparation-page.html:32
-#: project/templates/project/admin/admin-seed-storage-page.html:36
-#: project/templates/project/admin/admin-seed-viability-test-page.html:34
-#: project/templates/project/admin/admin-sowing-depth-page.html:34
-#: project/templates/project/admin/admin-stratification-duration-page.html:34
-#: project/templates/project/admin/admin-toxicity-indicator-page.html:34
-#: project/templates/project/users/project-group-page.html:41
-#: project/templates/project/users/project-user-page.html:46
-msgid "Edit"
-msgstr ""
-
-#: project/templates/project/admin/admin-bee-species-page.html:31
-#: project/templates/project/admin/admin-butterfly-species-page.html:33
-#: project/templates/project/admin/admin-colour-page.html:32
-#: project/templates/project/admin/admin-conservation-status-page.html:34
-#: project/templates/project/admin/admin-ecozones-page.html:31
-#: project/templates/project/admin/admin-growth-habit-page.html:32
-#: project/templates/project/admin/admin-harvesting-indicator-page.html:36
-#: project/templates/project/admin/admin-harvesting-mean-page.html:36
-#: project/templates/project/admin/admin-image-page-results.html:30
-#: project/templates/project/admin/admin-lifespan-page.html:33
-#: project/templates/project/admin/admin-non-native-species-page.html:33
+#: project/templates/project/admin/admin-lifespan-page.html:34
+#: project/templates/project/admin/admin-non-native-species-page.html:34
 #: project/templates/project/admin/admin-one-cultivar-page.html:35
 #: project/templates/project/admin/admin-packaging-measure-page.html:33
+#: project/templates/project/admin/admin-plant-missing-inaturalist-taxon.html:23
 #: project/templates/project/admin/admin-plant-morphology-page.html:31
 #: project/templates/project/admin/admin-seed-event-table-page.html:36
 #: project/templates/project/admin/admin-seed-head-page.html:31
@@ -1376,8 +1363,35 @@ msgstr ""
 #: project/templates/project/admin/admin-seed-storage-page.html:37
 #: project/templates/project/admin/admin-seed-viability-test-page.html:35
 #: project/templates/project/admin/admin-sowing-depth-page.html:35
-#: project/templates/project/admin/admin-stratification-duration-page.html:35
+#: project/templates/project/admin/admin-stratification-duration-page.html:34
 #: project/templates/project/admin/admin-toxicity-indicator-page.html:35
+#: project/templates/project/users/project-group-page.html:41
+#: project/templates/project/users/project-user-page.html:46
+msgid "Edit"
+msgstr ""
+
+#: project/templates/project/admin/admin-bee-species-page.html:31
+#: project/templates/project/admin/admin-butterfly-species-page.html:35
+#: project/templates/project/admin/admin-colour-page.html:32
+#: project/templates/project/admin/admin-conservation-status-page.html:34
+#: project/templates/project/admin/admin-ecozones-page.html:32
+#: project/templates/project/admin/admin-growth-habit-page.html:32
+#: project/templates/project/admin/admin-harvesting-indicator-page.html:36
+#: project/templates/project/admin/admin-harvesting-mean-page.html:36
+#: project/templates/project/admin/admin-image-page-results.html:30
+#: project/templates/project/admin/admin-lifespan-page.html:35
+#: project/templates/project/admin/admin-non-native-species-page.html:35
+#: project/templates/project/admin/admin-one-cultivar-page.html:36
+#: project/templates/project/admin/admin-packaging-measure-page.html:34
+#: project/templates/project/admin/admin-plant-morphology-page.html:32
+#: project/templates/project/admin/admin-seed-event-table-page.html:37
+#: project/templates/project/admin/admin-seed-head-page.html:32
+#: project/templates/project/admin/admin-seed-preparation-page.html:34
+#: project/templates/project/admin/admin-seed-storage-page.html:38
+#: project/templates/project/admin/admin-seed-viability-test-page.html:36
+#: project/templates/project/admin/admin-sowing-depth-page.html:36
+#: project/templates/project/admin/admin-stratification-duration-page.html:35
+#: project/templates/project/admin/admin-toxicity-indicator-page.html:36
 #: project/templates/project/plant_profile/_profile_update_links.html:21
 #: project/templates/project/users/project-group-page.html:42
 #: project/templates/project/users/project-user-groups-update.html:41
@@ -1456,7 +1470,7 @@ msgstr ""
 #: project/templates/project/update/plant-introductory-gardening-experience-update.html:61
 #: project/templates/project/update/plant-landscape-use-and-application-update.html:90
 #: project/templates/project/update/plant-seed-distribution-update.html:94
-#: project/templates/project/update/plant-sowing-update.html:61
+#: project/templates/project/update/plant-sowing-update.html:69
 #: project/templates/project/update/plant-special-features-and-considerations-update.html:216
 msgid "Cancel"
 msgstr ""
@@ -1552,7 +1566,7 @@ msgid "Add Photo"
 msgstr ""
 
 #: project/templates/project/admin/admin-nav-library-manager.html:7
-#: templates/core/nav.html:44
+#: templates/core/nav.html:47
 msgid "Library Management"
 msgstr ""
 
@@ -1585,17 +1599,22 @@ msgstr ""
 msgid "Colours"
 msgstr ""
 
-#: project/templates/project/admin/admin-nav-plant-profile-manager.html:13
+#: project/templates/project/admin/admin-nav-plant-profile-manager.html:12
+#: project/views.py:3676
+msgid "Plant Morphology Elements"
+msgstr "Composants structurels de plante"
+
+#: project/templates/project/admin/admin-nav-plant-profile-manager.html:14
 #: project/views.py:1804
 msgid "Conservation Statuses"
 msgstr ""
 
-#: project/templates/project/admin/admin-nav-plant-profile-manager.html:16
+#: project/templates/project/admin/admin-nav-plant-profile-manager.html:17
 #: project/views.py:1718
 msgid "Toxicity Indicators"
 msgstr ""
 
-#: project/templates/project/admin/admin-nav-plant-profile-manager.html:19
+#: project/templates/project/admin/admin-nav-plant-profile-manager.html:20
 #: project/templates/project/filters/_filter_location.html:133
 #: project/templates/project/plant_profile/_profile_ecozone.html:4
 #: project/templates/project/plant_profile/_profile_icons_definition.html:828
@@ -1604,81 +1623,85 @@ msgstr ""
 msgid "Ecozones"
 msgstr ""
 
-#: project/templates/project/admin/admin-nav-plant-profile-manager.html:24
+#: project/templates/project/admin/admin-nav-plant-profile-manager.html:25
 msgid "Seeds & Propagation"
 msgstr ""
 
-#: project/templates/project/admin/admin-nav-plant-profile-manager.html:26
+#: project/templates/project/admin/admin-nav-plant-profile-manager.html:27
 #: project/views.py:942
 msgid "Seed Heads"
 msgstr ""
 
-#: project/templates/project/admin/admin-nav-plant-profile-manager.html:28
+#: project/templates/project/admin/admin-nav-plant-profile-manager.html:29
 #: project/views.py:1546
 msgid "Seed Preparations"
 msgstr ""
 
-#: project/templates/project/admin/admin-nav-plant-profile-manager.html:33
+#: project/templates/project/admin/admin-nav-plant-profile-manager.html:31
+msgid "Seed Storages"
+msgstr ""
+
+#: project/templates/project/admin/admin-nav-plant-profile-manager.html:34
 #: project/views.py:1114
 msgid "Seed Viability Tests"
 msgstr ""
 
-#: project/templates/project/admin/admin-nav-plant-profile-manager.html:37
+#: project/templates/project/admin/admin-nav-plant-profile-manager.html:38
 #: project/views.py:1632
 #, fuzzy
 #| msgid "Seed Event Table"
 msgid "Seed Event Tables"
 msgstr "Disponible à la table"
 
-#: project/templates/project/admin/admin-nav-plant-profile-manager.html:39
+#: project/templates/project/admin/admin-nav-plant-profile-manager.html:40
 #: project/views.py:1376
 msgid "Sowing Depths"
 msgstr ""
 
-#: project/templates/project/admin/admin-nav-plant-profile-manager.html:42
+#: project/templates/project/admin/admin-nav-plant-profile-manager.html:43
 #: project/views.py:1268
 msgid "Stratification Durations"
 msgstr ""
 
-#: project/templates/project/admin/admin-nav-plant-profile-manager.html:49
+#: project/templates/project/admin/admin-nav-plant-profile-manager.html:50
 msgid "Harvesting & Packaging"
 msgstr ""
 
-#: project/templates/project/admin/admin-nav-plant-profile-manager.html:53
+#: project/templates/project/admin/admin-nav-plant-profile-manager.html:54
 #: project/views.py:682
 msgid "Harvesting Indicators"
 msgstr ""
 
-#: project/templates/project/admin/admin-nav-plant-profile-manager.html:57
+#: project/templates/project/admin/admin-nav-plant-profile-manager.html:58
 #: project/views.py:697
 msgid "Harvesting Means"
 msgstr ""
 
-#: project/templates/project/admin/admin-nav-plant-profile-manager.html:60
+#: project/templates/project/admin/admin-nav-plant-profile-manager.html:61
 #: project/views.py:1462
 msgid "Packaging Measures"
 msgstr ""
 
-#: project/templates/project/admin/admin-nav-plant-profile-manager.html:62
+#: project/templates/project/admin/admin-nav-plant-profile-manager.html:63
 #: project/views.py:1200
 msgid "Cultivars"
 msgstr ""
 
-#: project/templates/project/admin/admin-nav-plant-profile-manager.html:67
+#: project/templates/project/admin/admin-nav-plant-profile-manager.html:68
 msgid "Wildlife"
 msgstr ""
 
-#: project/templates/project/admin/admin-nav-plant-profile-manager.html:70
+#: project/templates/project/admin/admin-nav-plant-profile-manager.html:71
 #: project/views.py:1890
 msgid "Butterfly Species"
 msgstr ""
 
-#: project/templates/project/admin/admin-nav-plant-profile-manager.html:72
+#: project/templates/project/admin/admin-nav-plant-profile-manager.html:73
 #: project/views.py:1976
 msgid "Bee Species"
 msgstr ""
 
-#: project/templates/project/admin/admin-nav-plant-profile-manager.html:73
+#: project/templates/project/admin/admin-nav-plant-profile-manager.html:74
 msgid "Non-Native Species"
 msgstr ""
 
@@ -1748,8 +1771,10 @@ msgstr ""
 #, python-format
 msgid ""
 "\n"
-"            This page lists all <strong>%(bee_count)s</strong> specialized bee species along with their supporting plants\n"
-"            that exist in the plant catalogue. Each plant species is linked to its\n"
+"            This page lists all <strong>%(bee_count)s</strong> specialized "
+"bee species along with their supporting plants\n"
+"            that exist in the plant catalogue. Each plant species is linked "
+"to its\n"
 "            profile page for more detailed information.\n"
 "          "
 msgstr ""
@@ -1762,8 +1787,10 @@ msgstr ""
 #, python-format
 msgid ""
 "\n"
-"            This page lists all <strong>%(butterfly_count)s</strong> butterfly species along with their supporting plants\n"
-"            that exist in the plant catalogue. Each plant species is linked to its\n"
+"            This page lists all <strong>%(butterfly_count)s</strong> "
+"butterfly species along with their supporting plants\n"
+"            that exist in the plant catalogue. Each plant species is linked "
+"to its\n"
 "            profile page for more detailed information.\n"
 "          "
 msgstr ""
@@ -2446,26 +2473,29 @@ msgstr ""
 
 #: project/templates/project/plant-catalogue-intro.html:18
 msgid ""
-"Use the filters and search options to find specific plants or browse through"
-" our categories to discover new species. Note the filters stack, meaning "
-"that if filters for Full Sun and Full Shade are selected, only plants that "
-"do well in both Full Sun and Full Shade conditions will appear; plants that "
+"Use the filters and search options to find specific plants or browse through "
+"our categories to discover new species. Note the filters stack, meaning that "
+"if filters for Full Sun and Full Shade are selected, only plants that do "
+"well in both Full Sun and Full Shade conditions will appear; plants that "
 "only do well in one or the other will not. To remove all the filters, click "
-"on the “Reset Filters” button. To see the full inventory, click on the “Show"
-" all plants” button."
+"on the “Reset Filters” button. To see the full inventory, click on the “Show "
+"all plants” button."
 msgstr ""
 
 #: project/templates/project/plant-catalogue-intro.html:21
 msgid ""
-"From the catalogue, click on any plant profile to view detailed information,"
-" images, and ecological data."
+"From the catalogue, click on any plant profile to view detailed information, "
+"images, and ecological data."
 msgstr ""
 
 #: project/templates/project/plant-catalogue-intro.html:23
 msgid ""
 "\n"
 "          <p>\n"
-"            If you'd like a summary of your filtered search, click on the \"Export to CSV\" button at the top of the Catalogue to download a summary of the currently filtered plants. If you are using MS Excel and see the French names without the accents, please follow this process:\n"
+"            If you'd like a summary of your filtered search, click on the "
+"\"Export to CSV\" button at the top of the Catalogue to download a summary "
+"of the currently filtered plants. If you are using MS Excel and see the "
+"French names without the accents, please follow this process:\n"
 "            <ul>\n"
 "              <li>Export the CVS to another blank spreadsheet</li>\n"
 "              <li>Select export to CSV file</li>\n"
@@ -2690,8 +2720,8 @@ msgstr ""
 
 #: project/templates/project/plant_profile/_profile-identification-status.html:61
 msgid ""
-"When selected, information about the ecozones this plant is found in will be"
-" displayed on the plant profile."
+"When selected, information about the ecozones this plant is found in will be "
+"displayed on the plant profile."
 msgstr ""
 
 #: project/templates/project/plant_profile/_profile-identification-status.html:66
@@ -2778,8 +2808,8 @@ msgstr ""
 
 #: project/templates/project/plant_profile/_profile-identification-status.html:106
 msgid ""
-"When selected, a VASCAN distribution map for this plant will be displayed on"
-" the plant profile."
+"When selected, a VASCAN distribution map for this plant will be displayed on "
+"the plant profile."
 msgstr ""
 
 #: project/templates/project/plant_profile/_profile-identification-status.html:111
@@ -2908,7 +2938,7 @@ msgid "Easy to germinate"
 msgstr "Facile à germer"
 
 #: project/templates/project/plant_profile/_profile_gardener_friendly_attributes.html:45
-#: project/templates/project/plant_profile/_profile_sowing.html:20
+#: project/templates/project/plant_profile/_profile_sowing.html:22
 msgid "Self-seeding"
 msgstr ""
 
@@ -3051,7 +3081,8 @@ msgstr ""
 msgid ""
 "\n"
 "            <span>Easy to Germinate:</span>\n"
-"            <span>Indicates if the plant is easy to germinate from seeds</span>\n"
+"            <span>Indicates if the plant is easy to germinate from seeds</"
+"span>\n"
 "          "
 msgstr ""
 "\n"
@@ -3062,7 +3093,8 @@ msgstr ""
 msgid ""
 "\n"
 "            <span>Self-Seeding:</span>\n"
-"            <span>Plants that will produce seeds abundantly resulting in new plants</span>\n"
+"            <span>Plants that will produce seeds abundantly resulting in new "
+"plants</span>\n"
 "          "
 msgstr ""
 
@@ -3076,8 +3108,8 @@ msgstr ""
 
 #: project/templates/project/plant_profile/_profile_icons_definition.html:169
 msgid ""
-"This section includes information on the expected growth, life span and soil"
-" tolerances."
+"This section includes information on the expected growth, life span and soil "
+"tolerances."
 msgstr ""
 
 #: project/templates/project/plant_profile/_profile_icons_definition.html:175
@@ -3101,11 +3133,14 @@ msgid ""
 "            <ul>\n"
 "              <li>Annual: plants that have a lifespan of one year</li>\n"
 "              <li>\n"
-"                Biennial: plants that will take two years to bloom, and then will die\n"
+"                Biennial: plants that will take two years to bloom, and then "
+"will die\n"
 "              </li>\n"
-"              <li>Perennial: plants that will come back year after year</li>\n"
+"              <li>Perennial: plants that will come back year after year</"
+"li>\n"
 "              <li>\n"
-"                Spring Ephemeral: plants that bloom in the spring that loose their leaves later in the year\n"
+"                Spring Ephemeral: plants that bloom in the spring that loose "
+"their leaves later in the year\n"
 "              </li>\n"
 "            </ul>\n"
 "          "
@@ -3225,7 +3260,8 @@ msgstr ""
 msgid ""
 "\n"
 "              <span>Container Garden:</span>\n"
-"              <span>Can be grown and left in containers all year round</span>\n"
+"              <span>Can be grown and left in containers all year round</"
+"span>\n"
 "            "
 msgstr ""
 
@@ -3256,7 +3292,8 @@ msgstr ""
 msgid ""
 "\n"
 "                <span>School Garden:</span>\n"
-"                <span>Short plants that can thrive in dry and sunny conditions</span>\n"
+"                <span>Short plants that can thrive in dry and sunny "
+"conditions</span>\n"
 "              "
 msgstr ""
 
@@ -3288,7 +3325,8 @@ msgid ""
 msgstr ""
 "\n"
 "<span>Jardin boisé:</span>\n"
-"<span>Prospère dans des conditions de partiellement ensoleillé à ombragé</span>"
+"<span>Prospère dans des conditions de partiellement ensoleillé à ombragé</"
+"span>"
 
 #: project/templates/project/plant_profile/_profile_icons_definition.html:487
 msgid ""
@@ -3330,7 +3368,8 @@ msgstr ""
 msgid ""
 "\n"
 "                <span>Juglone Tolerant:</span>\n"
-"                <span>Can tolerate juglone, a compound found in black walnut trees</span>\n"
+"                <span>Can tolerate juglone, a compound found in black walnut "
+"trees</span>\n"
 "              "
 msgstr ""
 
@@ -3418,7 +3457,8 @@ msgstr ""
 msgid ""
 "\n"
 "                <span>Endangered:</span>\n"
-"                <span>Species that live in the wild in Ontario but is facing imminent extinction or extirpation. For more information, please visit\n"
+"                <span>Species that live in the wild in Ontario but is facing "
+"imminent extinction or extirpation. For more information, please visit\n"
 "              "
 msgstr ""
 
@@ -3426,7 +3466,8 @@ msgstr ""
 msgid ""
 "\n"
 "              <span>GRASP Program Member:</span>\n"
-"              <span>Member of the Growing Rare and Significant Plants (GRASP) in Ottawa Program</span>\n"
+"              <span>Member of the Growing Rare and Significant Plants "
+"(GRASP) in Ottawa Program</span>\n"
 "            "
 msgstr ""
 
@@ -3450,7 +3491,8 @@ msgstr ""
 msgid ""
 "\n"
 "              <span>Has Burs or Needles:</span>\n"
-"              <span>May have burs or needles that can cause discomfort</span>\n"
+"              <span>May have burs or needles that can cause discomfort</"
+"span>\n"
 "            "
 msgstr ""
 
@@ -3466,7 +3508,8 @@ msgstr ""
 msgid ""
 "\n"
 "              <span>Toxic:</span>\n"
-"              <span>May be toxic if ingested or handled improperly as indicated on the plant profile that bears this warning.</span>\n"
+"              <span>May be toxic if ingested or handled improperly as "
+"indicated on the plant profile that bears this warning.</span>\n"
 "            "
 msgstr ""
 
@@ -3643,8 +3686,8 @@ msgstr ""
 
 #: project/templates/project/plant_profile/_profile_messages.html:34
 msgid ""
-"This plant profile is a draft and may be incomplete. Please help us complete"
-" it!"
+"This plant profile is a draft and may be incomplete. Please help us complete "
+"it!"
 msgstr ""
 
 #: project/templates/project/plant_profile/_profile_obsolete_names.html:4
@@ -3671,11 +3714,17 @@ msgstr ""
 msgid "years"
 msgstr ""
 
-#: project/templates/project/plant_profile/_profile_sowing.html:23
+#: project/templates/project/plant_profile/_profile_sowing.html:19
+#, fuzzy
+#| msgid "Update Availability"
+msgid "Not Available"
+msgstr "Actualisé disponibilité"
+
+#: project/templates/project/plant_profile/_profile_sowing.html:25
 msgid "Double dormancy required"
 msgstr ""
 
-#: project/templates/project/plant_profile/_profile_sowing.html:26
+#: project/templates/project/plant_profile/_profile_sowing.html:28
 msgid "Notes:"
 msgstr ""
 
@@ -3960,7 +4009,7 @@ msgstr ""
 #: project/templates/project/update/plant-identification-information-update.html:58
 #: project/templates/project/update/plant-landscape-use-and-application-update.html:89
 #: project/templates/project/update/plant-seed-distribution-update.html:93
-#: project/templates/project/update/plant-sowing-update.html:60
+#: project/templates/project/update/plant-sowing-update.html:68
 #: project/templates/project/update/plant-special-features-and-considerations-update.html:215
 msgid "Update"
 msgstr ""
@@ -4043,6 +4092,7 @@ msgstr ""
 #: project/templates/project/update/plant-harvesting-update.html:107
 #: project/templates/project/update/plant-harvesting-update.html:127
 #: project/templates/project/update/plant-harvesting-update.html:147
+#: project/templates/project/update/plant-sowing-update.html:44
 msgid "None"
 msgstr ""
 
@@ -4138,7 +4188,7 @@ msgstr ""
 msgid "Stratification Duration (days)"
 msgstr ""
 
-#: project/templates/project/update/plant-sowing-update.html:49
+#: project/templates/project/update/plant-sowing-update.html:57
 msgid "Double Dormancy Required"
 msgstr ""
 
@@ -4189,7 +4239,12 @@ msgstr ""
 #: project/templates/project/update/update-availability.html:10
 msgid ""
 "\n"
-"          Use this table to prepare a list of available plants for the next give away event.  Click on the plant to toggle its availailability.  Plants highlighted in green are marked available. View <a target='blank' href=\"/search-plant-name/?seed_availability=true#search-results\">available plants</a> in a new tab. From there, you can drill down further to refine the research.\"\n"
+"          Use this table to prepare a list of available plants for the next "
+"give away event.  Click on the plant to toggle its availailability.  Plants "
+"highlighted in green are marked available. View <a target='blank' href=\"/"
+"search-plant-name/?seed_availability=true#search-results\">available plants</"
+"a> in a new tab. From there, you can drill down further to refine the "
+"research.\"\n"
 "        "
 msgstr ""
 
@@ -4652,7 +4707,7 @@ msgstr ""
 #: project/views.py:2198
 #, python-format
 msgid "Ecozone %(ecozone)s exists already."
-msgstr "Écozone %(ecozone)% existe déjà!!!"
+msgstr "Écozone %(ecozone)s existe déjà!!!"
 
 #: project/views.py:2206
 msgid "Ecozone not valid."
@@ -4792,7 +4847,7 @@ msgstr "%(latin_name)s - Bensoins environnementaux"
 #: project/views.py:2850
 #, python-format
 msgid "%(latin_name)s - Identification Information"
-msgstr "Détails d'identification"
+msgstr "Détails d'identification - %(latin_name)s "
 
 #: project/views.py:2859
 msgid "Identification information updated successfully."
@@ -4812,7 +4867,7 @@ msgid ""
 "A plant with this Latin name %(latin_name)s already exists. Please choose a "
 "different name."
 msgstr ""
-"Une plante avec le nom latin %(latin_name) existe déjà.  Veuillez utiliser "
+"Une plante avec le nom latin %(latin_name)s existe déjà.  Veuillez utiliser "
 "un nom différent."
 
 #: project/views.py:2906
@@ -4822,7 +4877,7 @@ msgstr "Détail d'identification de plante créer avec succès."
 #: project/views.py:2930
 #, python-format
 msgid "%(latin_name)s - Growth Characteristics"
-msgstr "Caractéristiques de croissance de  %(latin_name)"
+msgstr "Caractéristiques de croissance de  %(latin_name)s"
 
 #: project/views.py:2967
 #, python-brace-format
@@ -4916,8 +4971,7 @@ msgstr "Aucun nom de cultivar n'existe.  Veuillez en ajouter pour débuter."
 
 #: project/views.py:3193
 msgid "No seed storage options available. Please add some first."
-msgstr ""
-"Aucune option de stockage n'existe.  Veuillez en ajouter pour débuter."
+msgstr "Aucune option de stockage n'existe.  Veuillez en ajouter pour débuter."
 
 #: project/views.py:3203
 msgid "No harvesting indicators available. Please add some first."
@@ -4951,8 +5005,7 @@ msgstr "%(latin_name)s - Méthodes de récolte et partage de semences"
 
 #: project/views.py:3279
 msgid "No sowing depth available. Please add some first."
-msgstr ""
-"Aucune profondeur de semence n'existe. Veuillez en créer pour débuter."
+msgstr "Aucune profondeur de semence n'existe. Veuillez en créer pour débuter."
 
 #: project/views.py:3287
 msgid "No stratification duration available. Please add some first."
@@ -5055,17 +5108,11 @@ msgstr "Les données GPS on été effacées avec succès"
 #: project/views.py:3615
 #, python-format
 msgid "Image for %(plant_profile)s added successfully. GPS Data: %(gps_data)s"
-msgstr ""
-"Image pour la plante %(plant_profile) ajoutée avec succès. Données GPS: "
-"%(gps_data)"
+msgstr "Image pour la plante %(plant_profile)s ajoutée avec succès. Données GPS: %(gps_data)s"
 
 #: project/views.py:3646
 msgid "Image Update"
 msgstr "Actualiser image"
-
-#: project/views.py:3676
-msgid "Plant Morphology Elements"
-msgstr "Composants structurels de plante"
 
 #: project/views.py:3686
 msgid "Register New Plant Morphology Element"
@@ -5074,7 +5121,7 @@ msgstr "Enregistrer un nouvel élément structurel de plante"
 #: project/views.py:3699
 #, python-format
 msgid "Plant Morphology Element %(element)s exists already."
-msgstr "Un élément structurel de plante nommé %(element) existe déjà"
+msgstr "Un élément structurel de plante nommé %(element)s existe déjà"
 
 #: project/views.py:3708
 msgid "Plant Morphology Element not valid."
@@ -5095,8 +5142,8 @@ msgid ""
 "gardening."
 msgstr ""
 "La Grainothèque de fleurs sauvages d'Ottawa - Un catalogue de semences de "
-"fleurs indigènes pour la communauté d'Ottawa pour promouvoir la biodiversité"
-" et le jardinage écologique."
+"fleurs indigènes pour la communauté d'Ottawa pour promouvoir la biodiversité "
+"et le jardinage écologique."
 
 #: templates/core/base.html:11
 msgid "Ottawa Wildflower Seed Library Catalogue"
@@ -5118,43 +5165,43 @@ msgstr "Retour"
 msgid "Confirm"
 msgstr " Confirmer"
 
-#: templates/core/nav.html:10
+#: templates/core/nav.html:13
 msgid "Learn about the plant catalogue"
 msgstr "En savoir plus sur le catalogue de plantes"
 
-#: templates/core/nav.html:14
+#: templates/core/nav.html:17
 msgid "Search Catalogue"
 msgstr "Rechercher dans le catalogue"
 
-#: templates/core/nav.html:18
+#: templates/core/nav.html:21
 msgid "Butterfly Plants"
 msgstr "Plantes à papillon"
 
-#: templates/core/nav.html:21
+#: templates/core/nav.html:24
 msgid "Specialized Bee Plants"
 msgstr "Plantes d'abeilles spécialisées"
 
-#: templates/core/nav.html:25
+#: templates/core/nav.html:28
 msgid "Ecozones (CSV)"
 msgstr "Écozones (CSV)"
 
-#: templates/core/nav.html:28
+#: templates/core/nav.html:31
 msgid "Plants Needing Seeds (CSV)"
 msgstr "Graines en demande (CSV)"
 
-#: templates/core/nav.html:30
+#: templates/core/nav.html:33
 msgid "Events"
 msgstr "Évenement"
 
-#: templates/core/nav.html:33
+#: templates/core/nav.html:36
 msgid "About Us"
 msgstr "À propos"
 
-#: templates/core/nav.html:39
+#: templates/core/nav.html:42
 msgid "Logout"
 msgstr "Déconnecter"
 
-#: templates/core/nav.html:41
+#: templates/core/nav.html:44
 msgid "Login"
 msgstr "Connexion"
 
