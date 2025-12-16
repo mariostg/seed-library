@@ -1986,6 +1986,7 @@ def admin_accept_all_seeds(request):
     context = {
         "title": _("Accept Seed from All Plants"),
         "unaccepted_seed_count": unaccepted_seed_count,
+        "back": "site-admin",
     }
     if request.method == "POST":
         # Set all plants to accepting seed and display how many were updated
@@ -2015,6 +2016,7 @@ def admin_refuse_all_seeds(request):
     context = {
         "title": _("Refuse Seed from All Plants"),
         "accepting_seed_count": accepting_seed_count,
+        "back": "site-admin",
     }
     if request.method == "POST":
         # Set all plants to not accepting seed and display how many were updated
