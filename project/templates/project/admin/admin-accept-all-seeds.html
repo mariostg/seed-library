@@ -1,0 +1,18 @@
+<!-- this is the template for refusing all seeds -->
+{% extends "core/base.html" %}
+{% load i18n %}
+{% block content %}
+  <div class="flex-col-center">
+    <section class="form">
+      <form method="POST">
+        <fieldset class="flex-col-center">
+          <legend class="form__header">{{title}}</legend>
+          <p>{% blocktrans %}{{ unaccepted_seed_count }} plants will be affected.{% endblocktrans %}</p>
+          {% csrf_token %}
+          <p class='alert alert--warning'>{% trans "Are you sure you want to do this?" %}</p>
+          <input type="submit" class="btn" value="{% trans "YES Accept All Seeds" %}">
+        </fieldset>
+      </form>
+    </section>
+  </div>
+{% endblock %}

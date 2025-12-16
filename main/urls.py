@@ -104,6 +104,11 @@ urlpatterns += i18n_patterns(
         views.admin_accept_all_seeds,
         name="admin-accept-all-seeds",
     ),
+    path(
+        _("admin-refuse-all-seeds/"),
+        views.admin_refuse_all_seeds,
+        name="admin-refuse-all-seeds",
+    ),
 )
 
 urlpatterns += i18n_patterns(

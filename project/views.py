@@ -1980,16 +1980,60 @@ def admin_bee_species_page(request):
 
 @group_required("Library Manager")
 def admin_accept_all_seeds(request):
-    # Set all plants to accepting seed and display how many were updated
-    updated_count = models.PlantProfile.objects.filter(accepting_seed=False).update(
-        accepting_seed=True
-    )
-    messages.success(
+    unaccepted_seed_count = models.PlantProfile.objects.filter(
+        accepting_seed=False
+    ).count()
+    context = {
+        "title": _("Accept Seed from All Plants"),
+        "unaccepted_seed_count": unaccepted_seed_count,
+    }
+    if request.method == "POST":
+        # Set all plants to accepting seed and display how many were updated
+        updated_count = models.PlantProfile.objects.filter(accepting_seed=False).update(
+            accepting_seed=True
+        )
+        messages.success(
+            request,
+            _(
+                "All plants set to accepting seed. %(updated_count)s plants were updated."
+            )
+            % {"updated_count": updated_count},
+        )
+        return redirect("site-admin")
+    return render(
         request,
-        _("All plants set to accepting seed. {updated_count} plants were updated.")
-        % {"updated_count": updated_count},
+        "project/admin/admin-accept-all-seeds.html",
+        context,
     )
-    return redirect("site-admin")
+
+
+@group_required("Library Manager")
+def admin_refuse_all_seeds(request):
+    accepting_seed_count = models.PlantProfile.objects.filter(
+        accepting_seed=True
+    ).count()
+    context = {
+        "title": _("Refuse Seed from All Plants"),
+        "accepting_seed_count": accepting_seed_count,
+    }
+    if request.method == "POST":
+        # Set all plants to not accepting seed and display how many were updated
+        updated_count = models.PlantProfile.objects.filter(accepting_seed=True).update(
+            accepting_seed=False
+        )
+        messages.success(
+            request,
+            _(
+                "All plants set to not accepting seed. %(updated_count)s plants were updated."
+            )
+            % {"updated_count": updated_count},
+        )
+        return redirect("site-admin")
+    return render(
+        request,
+        "project/admin/admin-refuse-all-seeds.html",
+        context,
+    )
 
 
 @group_required("Library Manager")
