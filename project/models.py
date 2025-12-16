@@ -336,7 +336,7 @@ class StratificationDuration(Base):
     )
 
     def __str__(self) -> str:
-        return _("%(stratification_duration) days") % {
+        return _("%(stratification_duration)d days") % {
             "stratification_duration": self.stratification_duration
         }
 
