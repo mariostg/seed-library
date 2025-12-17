@@ -566,6 +566,11 @@ urlpatterns += i18n_patterns(
         views.admin_image_delete,
         name="admin-image-delete",
     ),
+    path(
+        _("admin-plant-image-add/<int:pk>/"),
+        views.admin_plant_image_add,
+        name="admin-plant-image-add",
+    ),
 )
 
 urlpatterns += i18n_patterns(

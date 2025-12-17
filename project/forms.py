@@ -371,7 +371,10 @@ class AdminImageForm(forms.ModelForm):
         ]
 
     def __init__(self, *args, **kwargs):
+        plant_profile_pk = kwargs.pop("plant_profile_pk", None)
         super().__init__(*args, **kwargs)
+        if plant_profile_pk:
+            self.fields["plant_profile"].initial = plant_profile_pk
 
 
 class AdminPlantMorphologyForm(forms.ModelForm):

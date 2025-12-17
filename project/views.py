@@ -3682,11 +3682,11 @@ def admin_image_update(request, pk):
         form = forms.AdminImageForm(request.POST, request.FILES, instance=obj)
         if form.is_valid():
             form.save()
-            return redirect("admin-images-page")
+            return redirect("plant-profile-images", pk=obj.plant_profile.pk)
 
     return render(
         request,
-        "project/simple-form.html",
+        "project/admin/admin-image-form.html",
         {
             "form": form,
             "title": _("Image Update"),
@@ -3708,9 +3708,66 @@ def admin_image_delete(request, pk):
                 fkeys.append(fk.plant_profile)
             msg = msg + ", ".join(fkeys)
             messages.warning(request, msg)
-        return redirect("admin-images-page")
+        return redirect("plant-profile-images", pk=obj.plant_profile.pk)
     context = {"object": obj, "back": "admin-images-page"}
     return render(request, "core/delete-object.html", context)
+
+
+@group_required("Image Manager")
+def admin_plant_image_add(request, pk):
+    plant = models.PlantProfile.objects.get(id=pk)
+    context = {
+        "title": _("Add Image for %(latin_name)s") % {"latin_name": plant.latin_name},
+        "url_name": "plant-profile-page",
+        "plant": plant,
+    }
+    if request.method == "POST":
+        form = forms.AdminImageForm(request.POST, request.FILES)
+        if form.is_valid():
+            context["form"] = form
+            obj: models.PlantImage = form.save(commit=False)
+            obj.plant_profile = plant
+
+            # check if an image for this plant profile and morphology_aspect already exists
+            if models.PlantImage.objects.filter(
+                plant_profile=obj.plant_profile, morphology_aspect=obj.morphology_aspect
+            ).exists():
+                messages.error(
+                    request,
+                    _(
+                        "An image for the plant profile <em>%(plant_profile)s</em> and morphology aspect <em>%(morphology_aspect)s</em> already exists. Please update the existing image instead.  If you want to add a new image, please select a different morphology aspect."
+                    )
+                    % {
+                        "plant_profile": obj.plant_profile,
+                        "morphology_aspect": obj.morphology_aspect,
+                    },
+                )
+                return render(
+                    request,
+                    "project/admin/admin-image-form.html",
+                    context,
+                )
+            # set obj.photo_date to today if not set
+            if not obj.photo_date:
+                obj.photo_date = datetime.now().date()
+
+            extension = obj.image.name.split(".")[-1]
+            plant_name = obj.plant_profile.latin_name.replace(" ", "_").lower()
+
+            # Set the image name with the correct path
+            obj.image.name = f"{obj.plant_profile.pk}/{plant_name}.{extension}"
+
+            obj.save()
+            messages.success(
+                request,
+                _("Image for %(plant_profile)s added successfully.")
+                % {"plant_profile": obj.plant_profile},
+            )
+            return redirect("plant-profile-images", pk=plant.pk)
+    else:
+        context["form"] = forms.AdminImageForm(plant_profile_pk=plant.pk)
+
+    return render(request, "project/admin/admin-image-form.html", context)
 
 
 @group_required("Library Manager")

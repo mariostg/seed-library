@@ -16,7 +16,11 @@
         {{ form.as_p }}
         <div class='center'>
           <button type="submit" class='btn btn-submit'>{% trans "Submit" %}</button>
-          <a href="{% url 'admin-images-page' %}" class='btn btn-cancel'>{% trans "Cancel" %}</a>
+          {% if form.plant_profile.value %}
+            <a href="{% url 'plant-profile-images' form.plant_profile.value %}" class='btn btn-cancel'>{% trans "Cancel" %}</a>
+          {% else %}
+            <a href="{% url 'admin-images-page' %}" class='btn btn-cancel'>{% trans "Cancel" %}</a>
+          {% endif %}
         </div>
       </form>
     </fieldset>

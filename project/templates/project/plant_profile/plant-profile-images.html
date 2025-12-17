@@ -21,6 +21,16 @@
               {% else %}
                 <img src="{% static 'images/plant-placeholder.png' %}" alt="{% trans "No image available" %}">
               {% endif %}
+
+              {% if user.is_authenticated %}
+                <div class='row-spacer flex-row actions'>
+                  <a class='btn btn__view' target="_blank" href="{% url 'plant-profile-page' image.plant_profile.id %}">{% trans "View" %}</a>
+                  <a class='btn btn__edit' href="{% url "admin-image-update" image.id %}">{% trans "Edit" %}</a>
+                  <a class='btn btn__delete' href="{% url "admin-image-delete" image.id %}">{% trans "Delete" %}</a>
+                </div>
+              {% endif %}
+
+
             </div>
           {% endfor %}
         </div>
