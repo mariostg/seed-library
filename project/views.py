@@ -11,6 +11,7 @@ from django.db import IntegrityError
 from django.db.models import Count, RestrictedError
 from django.http import FileResponse, HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
+from django.urls import reverse
 from django.utils.translation import gettext as _
 from reportlab.lib.colors import black, pink, red
 from reportlab.lib.pagesizes import landscape, letter
@@ -339,6 +340,15 @@ def search_plant_name(request):
     ecozones = models.Ecozone.objects.all().order_by("ecozone")
     growth_habits = models.GrowthHabit.objects.all().order_by("growth_habit")
     bloom_colours = models.BloomColour.objects.all().order_by("bloom_colour")
+
+    # get a list of favourite plants for the logged in user that are contained in the object_list
+    if request.user.is_authenticated:
+        favourite_plants = models.PlantCollection.objects.filter(
+            owner=request.user, plants__in=object_list.qs
+        ).values_list("plants__id", flat=True)
+    else:
+        favourite_plants = None
+
     # Create lists of different filter categories
     sun_filters = [
         "#full_sun",
@@ -501,6 +511,7 @@ def search_plant_name(request):
             k: utils.MONTHS[k] for k in range(5, 12)
         },  # from April (index 3) to December (index 11)
         "object_list": object_list.qs,
+        "favourite_plants": favourite_plants,
         "url_name": "index",
         "title": _("Plant Profile Filter"),
         "item_count": item_count,
@@ -2328,7 +2339,7 @@ def user_logout(request):
     return redirect("login")
 
 
-@group_required("Library Manager")
+@login_required
 def user_plant_collection(request):
     obj = models.PlantCollection.objects.filter(owner=request.user)
 
@@ -2336,7 +2347,7 @@ def user_plant_collection(request):
     return render(request, "project/plant-collection.html", context)
 
 
-@group_required("Library Manager")
+@login_required
 def user_plant_update(request, pk):
     obj = models.PlantCollection.objects.get(id=pk)
     if obj.owner != request.user:
@@ -2360,7 +2371,7 @@ def user_plant_update(request, pk):
     )
 
 
-@group_required("Library Manager")
+@login_required
 def user_plant_toggle(request, pk):
     plant = utils.single_plant(pk, request)
     user = None
@@ -2370,18 +2381,30 @@ def user_plant_toggle(request, pk):
             user_plant = models.PlantCollection.objects.get(owner=user, plants=plant)
             user_plant.delete()
             user_plant = None
-            isowner = "No"
-            td_class = "toggler crossmark"
+            span_class = "plant-card-is-not-favourite"
         except models.PlantCollection.DoesNotExist:
             user_plant = models.PlantCollection(owner=user, plants=plant)
             user_plant.save()
-            isowner = "Yes"
-            td_class = "toggler checkmark"
-    context = {"isowner": isowner, "plant_pk": plant.pk, "td_class": td_class}
-    return JsonResponse(context)
+            span_class = "plant-card-is-favourite"
+        hx_get_url = reverse("user-plant-toggle", args=[plant.pk])
+        hx_target = f"#favourite-{plant.pk}"
+        html = """<span id="favourite-{plant_pk}"
+            class="{span_class}"
+            hx-get="{hx_get_url}"
+            hx-swap="outerHTML"
+            hx-trigger="click"
+            hx-target="{hx_target}"></span>""".format(
+            span_class=span_class,
+            plant_pk=plant.pk,
+            hx_get_url=hx_get_url,
+            hx_target=hx_target,
+        )
+
+    # return the html snippet
+    return HttpResponse(html)
 
 
-@group_required("Library Manager")
+@login_required
 def user_plant_delete(request, pk):
     obj: models.PlantCollection = models.PlantCollection.objects.get(id=pk)
     if obj.owner != request.user:
@@ -2682,16 +2705,76 @@ def group_permissions_matrix_update(request):
 def plant_collection_csv(request):
     data = models.PlantProfile.objects.filter(plantcollection__owner=request.user)
 
-    fields = [field.name for field in data.model._meta.fields]
+    row_header = [
+        "Latin Name",
+        "English Name",
+        "French Name",
+        "Max Height(feet)",
+        "Max Width(feet)",
+        "Bloom Start",
+        "Bloom End",
+        "Bloom Colour",
+        "Full Sun",
+        "Part Shade",
+        "Full Shade",
+        "Moisture Dry",
+        "Moisture Medium",
+        "Moisture Wet",
+        "Lifespan",
+        "Plant Type",
+        "Harvesting Start",
+        "Seed Event Table",
+        "Toxicity",
+        "Harvesting Indicator",
+        "Harvesting Mean",
+        "Seed Viability Test",
+        "Seed Storage",
+        "Packaging Measure",
+        "Stratification requirement",
+        "Sowing Depth (inches)",
+        "Plant Profile URL",
+    ]
     response = HttpResponse(
         content_type="text/csv",
         headers={"Content-Disposition": 'attachment; filename="plant-collection.csv"'},
     )
 
     writer = csv.writer(response)
-    writer.writerow(fields)
-    for obj in data:
-        writer.writerow([getattr(obj, field) for field in fields])
+    writer.writerow(row_header)
+    for plant in data:
+        plant: (
+            models.PlantProfile
+        )  # Type hint for better IDE support and code readability
+        row = [
+            plant.latin_name,
+            plant.english_name,
+            plant.french_name,
+            plant.max_height,
+            plant.max_width,
+            plant.bloom_start,
+            plant.bloom_end,
+            plant.bloom_colour,
+            "Yes" if plant.full_sun else "No",
+            "Yes" if plant.part_shade else "No",
+            "Yes" if plant.full_shade else "No",
+            "Yes" if plant.moisture_dry else "No",
+            "Yes" if plant.moisture_medium else "No",
+            "Yes" if plant.moisture_wet else "No",
+            plant.lifespan,
+            plant.growth_habit,
+            plant.harvesting_start,
+            plant.seed_event_table,
+            plant.toxicity_indicator,
+            plant.harvesting_indicator,
+            plant.harvesting_mean,
+            plant.seed_viability_test,
+            plant.seed_storage,
+            plant.packaging_measure,
+            f"{plant.stratification_duration},{plant.stratification_detail}",
+            plant.sowing_depth,
+            request.build_absolute_uri(redirect("plant-profile-page", pk=plant.pk).url),
+        ]
+        writer.writerow(row)
     return response
 
 

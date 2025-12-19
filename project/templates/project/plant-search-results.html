@@ -22,11 +22,19 @@
     <section id="plant-cards" class="plant-cards">
       {% for item in object_list  %}
         <div class="plant-card {% if not item.is_active %}plant-card-not-active{% endif %}">
-          {% comment %} {% if item.is_favorite %}
-            <span class="plant-card-is-favourite"></span>
-          {% else %}
-            <span class="plant-card-is-not-favourite"></span>
-          {% endif %} {% endcomment %}
+
+          {% if request.user.is_authenticated %}
+            <span
+              id="favourite-{{ item.pk }}"
+              class="plant-card-is-{% if item.pk in favourite_plants %}favourite{% else %}not-favourite{% endif %}"
+              hx-get="{% url 'user-plant-toggle' item.id %}"
+              hx-swap="outerHTML"
+              hx-target="#favourite-{{ item.pk }}"
+              hx-swap="innerHTML"
+              hx-trigger="click"
+            ></span>
+          {% endif %}
+
           <div>
             <a target="_blank" href="{% url 'plant-profile-page' item.id %}" class="plant-card-link">
               {% if item.images.first %}
