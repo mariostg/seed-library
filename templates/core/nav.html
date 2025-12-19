@@ -37,7 +37,7 @@
     </li>
 
     {% if request.user.is_authenticated %}
-      <li><a class='btn' href="{% url 'user-plant-collection' %}">My Collection</a></li>
+      <li><a class='btn' href="{% url 'user-plant-collection' %}">{% trans "My Seed Pack" %}</a></li>
       <li><a class='btn' href="{% url 'logout' %}">{% trans "Logout" %} {{request.user}}</a></li>
     {% else %}
       <a class='btn' href="{% url 'login' %}">{% trans "Login" %}</a>

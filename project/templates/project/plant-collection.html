@@ -4,8 +4,12 @@
 {% load months %}
 {% block content %}
   {% if object_list %}
+    <div class="flex-col-center">
+      <h1>{% trans "My Seed Pack" %}</h1>
+      <span></span>
+      <a class="no-print btn" href="{% url 'plant-collection-csv' %}">Export {{object_list.count}} species to CSV</a>
+    </div>
     <div id="search-results" class="table-overflow">
-      <p class="no-print"><a href="{% url 'plant-collection-csv' %}">{% trans "Export to CSV" %}</a></p>
       <table>
         <thead>
           <tr>
