@@ -2489,7 +2489,15 @@ def project_user_update(request, pk):
     if request.method == "POST":
         form = forms.ProjectUserForm(request.POST, instance=obj)
         if form.is_valid():
-            form.save()
+            obj: ProjectUser = form.save(commit=False)
+            if form.cleaned_data["password"]:
+                obj.set_password(form.cleaned_data["password"])
+                obj.save()
+                messages.success(
+                    request,
+                    _("Project User %(username)s updated successfully.")
+                    % {"username": obj.username},
+                )
             return redirect("project-user-page")
 
     return render(
