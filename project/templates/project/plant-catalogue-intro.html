@@ -5,50 +5,53 @@
     <div class="flex-col-center mb-2">
       <h1>{% trans "Plant Catalogue" %}</h1>
       <img src="/media/plant-catalogue-intro.jpg" alt="{% trans "Native Ontario wildflowers and plants in a natural setting, showcasing diverse species with various colors and growth forms. The lush vegetation demonstrates the beauty of local flora that can be found in the catalogue." %}">
-    </div>
-    <div class="card mb-4">
-      <div class="card-body">
-        <h2 class="card-title">{% trans "Welcome to our Plant Catalogue" %}</h2>
-        <p class="lead">
-          {% trans "Explore our comprehensive database of plant profiles, curated to help you identify and understand various plant species. Each profile provides detailed information about growth characteristics, habitat, and ecological significance, landscape uses, and more." %} </p>
-        <h2>{% trans "How to Use the Database" %}</h2>
-        <p>{% trans "To search for a plant by name, start typing it in the search field at the top of the catalogue. The Ottawa Wildflower Seed Library uses" %} <a target="_blank" href="https://data.canadensys.net/vascan/search">VASCAN</a> {% trans "to determine the correct names of species. We only accept species native to Ontario, as determined by" %} <a target="_blank" href="https://data.canadensys.net/vascan/search">VASCAN</a>. {% trans "As a result, the catalogue only includes plants that are determined by" %} <a target="_blank" href="https://data.canadensys.net/vascan/search">VASCAN</a> {% trans "as native to Ontario." %}</p>
-
-        <p>
-          {% trans "Use the filters and search options to find specific plants or browse through our categories to discover new species. Note the filters stack, meaning that if filters for Full Sun and Full Shade are selected, only plants that do well in both Full Sun and Full Shade conditions will appear; plants that only do well in one or the other will not. To remove all the filters, click on the “Reset Filters” button. To see the full inventory, click on the “Show all plants” button." %}
-        </p>
-        <p>
-          {% trans "From the catalogue, click on any plant profile to view detailed information, images, and ecological data." %}
-        </p>
-        {% blocktrans %}
-          <p>
-            If you'd like a summary of your filtered search, click on the "Export to CSV" button at the top of the Catalogue to download a summary of the currently filtered plants. If you are using MS Excel and see the French names without the accents, please follow this process:
-            <ul>
-              <li>Export the CVS to another blank spreadsheet</li>
-              <li>Select export to CSV file</li>
-              <li>Select Unicode UTF-8</li>
-            </ul>
-          </p>
-        {% endblocktrans %}
-        <p>
-          {% trans "If you have any questions, suggestions or found an error, please reach us at" %} <a href="mailto:catalogue@wildflowerseedlibrary.ca">catalogue@wildflowerseedlibrary.ca</a>. {% trans "We also welcome any high resolution pictures you might have of the species in the catalogue. Thanks for your help!" %}
-        </p>
-      </div>
-    </div>
-
-    <div class="card mb-4">
-      <div class="card-header">
-        <h2>{% trans "Understanding Plant Profile Filter Groups and Icons" %}</h2>
-      </div>
-      <div class="card-body">
-        {% include "project/plant_profile/_profile_icons_definition.html" %}
-      </div>
-    </div>
-
-    <div class="text-center mb-4">
       <a href="{% url 'search-plant-name' %}" class="btn btn-primary btn-lg"
       >{% trans "Explore the Catalogue" %}</a
         >
       </div>
-    </div>
+      <div class="card mb-4">
+        <div class="card-body">
+          <h2 class="card-title">{% trans "Welcome to our Plant Catalogue" %}</h2>
+          <p class="lead">
+            {% trans "Explore our comprehensive database of plant profiles, curated to help you identify and understand various plant species. Each profile provides detailed information about growth characteristics, habitat, and ecological significance, landscape uses, and more." %} </p>
+          <h2>{% trans "How to Use the Database" %}</h2>
+          <p>{% trans "To search for a plant by name, start typing it in the search field at the top of the catalogue. The Ottawa Wildflower Seed Library uses" %} <a target="_blank" href="https://data.canadensys.net/vascan/search">VASCAN</a> {% trans "to determine the correct names of species. We only accept species native to Ontario, as determined by" %} <a target="_blank" href="https://data.canadensys.net/vascan/search">VASCAN</a>. {% trans "As a result, the catalogue only includes plants that are determined by" %} <a target="_blank" href="https://data.canadensys.net/vascan/search">VASCAN</a> {% trans "as native to Ontario." %}</p>
+
+          <p>
+            {% trans "Use the filters and search options to find specific plants or browse through our categories to discover new species. Note the filters stack, meaning that if filters for Full Sun and Full Shade are selected, only plants that do well in both Full Sun and Full Shade conditions will appear; plants that only do well in one or the other will not. To remove all the filters, click on the “Reset Filters” button. To see the full inventory, click on the “Show all plants” button." %}
+          </p>
+          <p>
+            {% trans "From the catalogue, click on any plant profile to view detailed information, images, and ecological data." %}
+          </p>
+          {% blocktrans %}
+            <p>
+              If you'd like a summary of your filtered search, click on the "Export to CSV" button at the top of the Catalogue to download a summary of the currently filtered plants. If you are using MS Excel and see the French names without the accents, please follow this process:
+              <ul>
+                <li>Export the CVS to another blank spreadsheet</li>
+                <li>Select export to CSV file</li>
+                <li>Select Unicode UTF-8</li>
+              </ul>
+            </p>
+          {% endblocktrans %}
+          <p>
+            {% trans "If you have any questions, suggestions or found an error, please reach us at" %} <a href="mailto:catalogue@wildflowerseedlibrary.ca">catalogue@wildflowerseedlibrary.ca</a>. {% trans "We also welcome any high resolution pictures you might have of the species in the catalogue. Thanks for your help!" %}
+          </p>
+        </div>
+      </div>
+
+      <div class="card mb-4">
+        <div class="card-header">
+          <h2>{% trans "Understanding Plant Profile Filter Groups and Icons" %}</h2>
+        </div>
+        <div class="card-body">
+          {% include "project/plant_profile/_profile_icons_definition.html" %}
+        </div>
+      </div>
+
+      <div class="text-center mb-4">
+        <a href="{% url 'search-plant-name' %}" class="btn btn-primary btn-lg"
+        >{% trans "Explore the Catalogue" %}</a
+          >
+        </div>
+      </div>
 {% endblock %}
