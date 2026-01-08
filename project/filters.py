@@ -164,6 +164,11 @@ class PlantProfileFilter(django_filters.FilterSet):
     produces_burs = django_filters.CharFilter(
         method="filter_excludes",
     )
+
+    exclude_toxic = django_filters.CharFilter(
+        method="filter_excludes_toxic",
+    )
+
     foot_traffic_tolerant = django_filters.CharFilter(
         method="filter_boolean",
     )
@@ -388,6 +393,12 @@ class PlantProfileFilter(django_filters.FilterSet):
         )
         return queryset.filter(
             conservation_status__conservation_status_en__in=endangered_values
+        )
+
+    def filter_excludes_toxic(self, queryset, name, value):
+        toxicity_indicator = ("Known to be toxic", "Unknown")
+        return queryset.exclude(
+            toxicity_indicator__toxicity_indicator_en__in=toxicity_indicator
         )
 
     def filter_starter_pack(self, queryset, name, value):
