@@ -24,6 +24,17 @@
     </div>
   {% endif %}
 
+  {% if plant.spread_by_rhizome %}
+    <div class="tooltip">
+      <img
+        alt="plant spread by rhizome"
+        class="icon"
+        src="{% static 'images/plant-spread-by-rhizome.svg'  %}"
+      />
+      <span class="tooltiptext">{% trans "Spreads by rhizome" %}</span>
+    </div>
+  {% endif %}
+
   {% if plant.germinate_easy %}
     <div class="tooltip">
       <img
