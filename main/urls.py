@@ -715,6 +715,7 @@ urlpatterns += i18n_patterns(
         views.bee_supporting_plants,
         name="bee-supporting-plants",
     ),
+    path(_("blooming-calendar/"), views.blooming_calendar, name="blooming-calendar"),
     path(_("plant-ecozones/"), views.plant_ecozones, name="plant_ecozones"),
     path(
         _("plants-needing-seeds-csv/"),

@@ -1,0 +1,39 @@
+<!--A page that list all the plants in rows with an indicator of the blooming period.
+Blooming periods are months defined as bloom_start and bloom_end in the plant profile-->
+{% extends 'core/base.html' %}  {% load i18n %} {% load static %}
+{% block content %}
+  <main class="container">
+
+    <div class="flex-col-center">
+      <h1>{% trans "Blooming Calendar" %}</h1>
+
+      <p>{% trans "This calendar shows the blooming periods of various plants in the catalogue. Each row represents a plant, and the coloured cells indicate the months during which the plant is expected to bloom. The list is sorted by blooming start month, colour and Latin name." %}</p>
+    </div>
+
+    <table class="blooming-calendar-table">
+      <thead>
+        <tr>
+          <th>{% trans "Plant Name" %}</th>
+          {% for key, value in months.items %}<th>{{ value }}</th>{% endfor %}
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in object_list %}
+          <tr class="{% cycle 'even-row' 'odd-row' as rowcolors %}">
+            <td>
+              <a target="_blank" href="{% url 'plant-profile-page' item.pk %}">{{item.latin_name}}</a>
+              |{{item.english_name}}|{{item.french_name}}
+            </td>
+            {% for key, value in months.items %}
+              {% if key >= item.bloom_start and key <= item.bloom_end %}
+                <td class="blooming" style="background-color: {{ item.bloom_colour }};"></td>
+              {% else %}
+                <td class="not-blooming"></td>
+              {% endif %}
+            {% endfor %}
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </main>
+{% endblock content %}

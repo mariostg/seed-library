@@ -287,6 +287,22 @@ def bee_supporting_plants(request):
     return render(request, "project/bee_supporting_plants.html", context)
 
 
+def blooming_calendar(request):
+    # This view is used to display a blooming calendar
+    plants = models.PlantProfile.objects.all().order_by(
+        "bloom_start", "bloom_colour", "latin_name"
+    )
+    blooming_months = dict(list(utils.MONTHS.items())[4:12])
+
+    context = {
+        "object_list": plants,
+        "title": _("Blooming Calendar"),
+        "url_name": "blooming-calendar",
+        "months": blooming_months,
+    }
+    return render(request, "project/blooming-calendar.html", context)
+
+
 def plants_needing_seeds_csv(request):
     # export a csv file of all plants which seeds are needed.
     response = HttpResponse(

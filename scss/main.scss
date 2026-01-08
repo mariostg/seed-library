@@ -164,6 +164,45 @@ td {
   }
 }
 
+.blooming-calendar-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+  font-size: 0.9rem;
+
+  td {
+    border-bottom: solid 1px #ddd;
+    padding: 0.5rem;
+    border-radius: 0;
+  }
+}
+.blooming-calendar-table th:first-child,
+.blooming-calendar-table td:first-child {
+  white-space: nowrap;
+  width: 1%;
+}
+
+.blooming-calendar-table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background-color: inherit;
+}
+
+.blooming {
+  background-color: $green;
+  color: $white;
+  text-align: center;
+  padding: 0.2rem;
+  border-radius: $border-radius;
+}
+.not-blooming {
+  background-color: $none;
+  text-align: center;
+  padding: 0rem;
+  border: none;
+}
+
 .collapsed {
   display: none;
 }
