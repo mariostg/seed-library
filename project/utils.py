@@ -10,7 +10,7 @@ from PIL import Image as PILImage
 
 from project.models import PlantImage, PlantProfile
 
-logger = logging.getLogger("django")
+logger = logging.getLogger(__name__)
 
 MONTHS = {
     0: "",
@@ -644,6 +644,8 @@ def send_order_confirmation_email(order):
     from django.utils.translation import gettext as _
 
     try:
+        logger.debug("Preparing order confirmation email for Order #%s", order.id)
+
         # Prepare email context
         order_items = order.items.all().select_related("plant_profile")
         context = {
@@ -654,6 +656,7 @@ def send_order_confirmation_email(order):
 
         # Render email templates
         subject = _("Order Confirmation - Order #%(order_id)d") % {"order_id": order.id}
+        logger.debug("Rendering email templates for Order #%s", order.id)
         html_content = render_to_string(
             "project/emails/order_confirmation.html", context
         )
@@ -662,6 +665,7 @@ def send_order_confirmation_email(order):
         )
 
         # Create email
+        logger.debug("Creating email message for %s", order.customer.email)
         email = EmailMultiAlternatives(
             subject=subject,
             body=text_content,
@@ -671,11 +675,23 @@ def send_order_confirmation_email(order):
         email.attach_alternative(html_content, "text/html")
 
         # Send email
+        logger.info(
+            "Sending order confirmation email for Order #%s to %s",
+            order.id,
+            order.customer.email,
+        )
         email.send(fail_silently=False)
+        logger.info(
+            "Order confirmation email sent successfully for Order #%s", order.id
+        )
         return True
 
-    except Exception:
-        logger.exception("Error sending order confirmation email")
+    except Exception as e:
+        logger.exception(
+            "Error sending order confirmation email for Order #%s: %s",
+            order.id,
+            e,
+        )
         return False
 
 
@@ -694,9 +710,20 @@ def send_donation_thank_you_email(order):
     from django.utils.translation import gettext as _
 
     if order.donation_amount <= 0:
+        logger.debug(
+            "Skipping donation email for Order #%s: donation_amount is %s",
+            order.id,
+            order.donation_amount,
+        )
         return False
 
     try:
+        logger.debug(
+            "Preparing donation thank you email for Order #%s (Amount: $%s)",
+            order.id,
+            order.donation_amount,
+        )
+
         # Prepare email context
         context = {
             "order": order,
@@ -706,6 +733,7 @@ def send_donation_thank_you_email(order):
 
         # Render email templates
         subject = _("Thank You for Your Donation!")
+        logger.debug("Rendering donation email templates for Order #%s", order.id)
         html_content = render_to_string(
             "project/emails/donation_thank_you.html", context
         )
@@ -714,6 +742,7 @@ def send_donation_thank_you_email(order):
         )
 
         # Create email
+        logger.debug("Creating donation thank you email for %s", order.customer.email)
         email = EmailMultiAlternatives(
             subject=subject,
             body=text_content,
@@ -723,9 +752,24 @@ def send_donation_thank_you_email(order):
         email.attach_alternative(html_content, "text/html")
 
         # Send email
+        logger.info(
+            "Sending donation thank you email for Order #%s ($%s) to %s",
+            order.id,
+            order.donation_amount,
+            order.customer.email,
+        )
         email.send(fail_silently=False)
+        logger.info(
+            "Donation thank you email sent successfully for Order #%s (Amount: $%s)",
+            order.id,
+            order.donation_amount,
+        )
         return True
 
-    except Exception:
-        logger.exception("Error sending donation thank you email")
+    except Exception as e:
+        logger.exception(
+            "Error sending donation thank you email for Order #%s: %s",
+            order.id,
+            e,
+        )
         return False

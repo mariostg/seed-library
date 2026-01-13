@@ -178,7 +178,7 @@ LOGGING = {
     },
     "formatters": {
         "verbose": {
-            "format": "{asctime} {levelname} {module}.{funcName} {message}",
+            "format": "{asctime} {levelname} {module}.{funcName}:{lineno} {message}",
             "style": "{",
         },
         "simple": {
@@ -202,12 +202,64 @@ LOGGING = {
             "formatter": "verbose",
             "level": "WARNING",
         },
+        "project_file": {
+            "class": "logging.handlers.RotatingFileHandler",
+            "filename": BASE_DIR / "logs/project.log",
+            "formatter": "verbose",
+            "level": "INFO",
+            "maxBytes": 1024 * 1024 * 10,  # 10MB
+            "backupCount": 5,
+        },
+        "email_file": {
+            "class": "logging.handlers.RotatingFileHandler",
+            "filename": BASE_DIR / "logs/email.log",
+            "formatter": "verbose",
+            "level": "INFO",
+            "maxBytes": 1024 * 1024 * 5,  # 5MB
+            "backupCount": 3,
+        },
+        "signals_file": {
+            "class": "logging.handlers.RotatingFileHandler",
+            "filename": BASE_DIR / "logs/signals.log",
+            "formatter": "verbose",
+            "level": "INFO",
+            "maxBytes": 1024 * 1024 * 5,  # 5MB
+            "backupCount": 3,
+        },
     },
     "loggers": {
         "django": {
             "handlers": ["console", "file"],
             "level": "INFO",
-            "propagate": True,
+            "propagate": False,
+        },
+        "project": {
+            "handlers": ["console", "project_file"],
+            "level": "DEBUG" if DEBUG else "INFO",
+            "propagate": False,
+        },
+        "project.utils": {
+            "handlers": ["console", "email_file"],
+            "level": "DEBUG" if DEBUG else "INFO",
+            "propagate": False,
+        },
+        "project.signals": {
+            "handlers": ["console", "signals_file"],
+            "level": "INFO",
+            "propagate": False,
+        },
+        "project.views": {
+            "handlers": ["console", "project_file"],
+            "level": "INFO",
+            "propagate": False,
         },
     },
 }
+
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = os.environ.get("EMAIL_HOST")  # or your provider
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
