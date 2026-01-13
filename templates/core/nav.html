@@ -39,6 +39,9 @@
       <a target="_blank" href="https://wildflowerseedlibrary.ca/about-us/">{% trans "About Us" %}</a>
     </li>
 
+    <!--link for user shopping cart-->
+    <li><a class='btn' href="{% url 'shopping-cart' %}">{% trans "My Cart" %}</a></li>
+
     {% if request.user.is_authenticated %}
       <li><a class='btn' href="{% url 'user-plant-collection' %}">{% trans "My Seed Pack" %}</a></li>
       <li><a class='btn' href="{% url 'logout' %}">{% trans "Logout" %} {{request.user}}</a></li>
