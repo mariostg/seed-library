@@ -9,7 +9,11 @@
       <div class="cart-header">
         <h1>{% trans "Shopping Cart" %}</h1>
         <p class="cart-customer-info">
-          {% trans "Customer:" %} <strong>{{ customer.name }}</strong>
+          {% trans "Customer:" %} <strong>{{ customer.first_name }} {{ customer.last_name }} ({{ customer.email }})
+            {{ customer.phone_number }}
+            {{ customer.mailing_address }}
+            {{ customer.city }}, {{ customer.province }} {{ customer.postal_code }}
+          </strong>
         </p>
       </div>
 
