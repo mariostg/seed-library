@@ -1,0 +1,49 @@
+{% load i18n %}
+
+{% trans "Order Confirmation" %}
+
+{% blocktrans with order_id=order.id %}Dear {{ customer.name }},
+
+Thank you for ordering seeds from our library! Your order has been confirmed.
+
+ORDER DETAILS
+Order ID: #{{ order_id }}
+Order Date: {{ order.order_date|date:"F j, Y H:i" }}
+Status: {{ order.get_status_display }}
+
+SEEDS ORDERED
+{% endblocktrans %}
+
+{% for item in order_items %}
+  - {{ item.plant_profile.english_name }} ({{ item.plant_profile.latin_name }}): {{ item.quantity }} packet(s)
+{% endfor %}
+
+{% if order.donation_amount > 0 %}
+{% blocktrans with amount=order.donation_amount %}
+DONATION
+Thank you for your generous donation of ${{ amount }} to support our conservation efforts!
+{% endblocktrans %}
+{% endif %}
+
+{% if order.notes %}
+{% trans "NOTES" %}: {{ order.notes }}
+{% endif %}
+
+{% blocktrans %}
+WHAT'S NEXT?
+1. Seed Processing: Your seeds will be carefully prepared and packaged (typically 2-4 weeks)
+2. Shipment: You will receive tracking information once your order is sent
+3. Planting: Follow the seed care instructions in your package for best results
+
+DELIVERY INFORMATION
+{{ customer.name }}
+{{ customer.address }}
+{{ customer.postal_code }}
+
+Need help?
+If you have any questions about your order, please don't hesitate to contact us.
+We're here to help!
+
+Best regards,
+Wildflower Seed Library Team
+{% endblocktrans %}

@@ -56,6 +56,11 @@
               <span>{{item.latin_name}}</span>
               <span>{{item.french_name}}</span>
             </div>
+            <div class="plant-card-actions">
+              <a href="{% url 'add-to-cart' item.id %}" class="btn btn-add-to-cart">
+                {% trans "Add to Cart" %}
+              </a>
+            </div>
           </div>
         </div>
         {% if object_list.has_next and forloop.last %}

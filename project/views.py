@@ -3962,3 +3962,271 @@ def admin_plant_morphology_delete(request, pk):
         return redirect("admin-plant-morphology-page")
     context = {"object": obj, "back": "admin-plant-morphology-page"}
     return render(request, "core/delete-object.html", context)
+
+
+# ==============================
+# views to handle seed ordering
+# ==============================
+
+
+def create_customer(request):
+    """
+    Display a form for creating a new customer and initialize session.
+    GET: Display customer creation form
+    POST: Create customer, store in session, redirect to cart
+    """
+    if request.method == "POST":
+        form = forms.CustomerForm(request.POST)
+        if form.is_valid():
+            customer = form.save()
+            utils.set_customer_in_session(request, customer)
+            messages.success(request, _("Welcome! You can now start ordering seeds."))
+            return redirect("shopping-cart")
+        else:
+            messages.error(request, _("Please correct the errors below."))
+    else:
+        form = forms.CustomerForm()
+
+    context = {
+        "form": form,
+        "title": _("Create Customer Profile"),
+    }
+    return render(request, "project/customer-form.html", context)
+
+
+def shopping_cart(request):
+    """
+    Display the shopping cart with all items for current customer.
+    Shows cart summary and allows quantity updates.
+    """
+    customer = utils.get_or_create_customer_from_session(request)
+    if not customer:
+        return redirect("create-customer")
+
+    cart_items = utils.get_cart_items(request)
+    item_count = utils.get_cart_total(request)
+
+    context = {
+        "customer": customer,
+        "cart_items": cart_items,
+        "item_count": item_count,
+    }
+    return render(request, "project/shopping-cart.html", context)
+
+
+def add_to_cart(request, pk):
+    """
+    Add a plant to the shopping cart.
+    Expects customer_id in session.
+    GET: Add default quantity (1)
+    POST: Add with specified quantity from form
+    """
+    customer = utils.get_or_create_customer_from_session(request)
+    if not customer:
+        messages.info(request, _("Please create a customer profile first."))
+        return redirect("create-customer")
+
+    plant = utils.single_plant(pk, request)
+    if not plant:
+        messages.error(request, _("Plant not found."))
+        return redirect("plant-catalogue")
+
+    quantity = 1
+    if request.method == "POST":
+        try:
+            quantity = int(request.POST.get("quantity", 1))
+            if quantity < 1:
+                quantity = 1
+        except (ValueError, TypeError):
+            quantity = 1
+
+    cart_item = utils.add_to_cart(request, plant, quantity)
+    if cart_item:
+        messages.success(
+            request,
+            _("Added %(quantity)d %(plant)s to cart.")
+            % {"quantity": quantity, "plant": plant.latin_name},
+        )
+    else:
+        messages.error(request, _("Could not add item to cart."))
+
+    # Redirect based on referrer or default to cart
+    next_url = request.POST.get("next", request.GET.get("next", "shopping-cart"))
+    return redirect(next_url)
+
+
+def update_cart_item(request, pk):
+    """
+    Update the quantity of an item in the shopping cart.
+    POST only: Expects 'quantity' in POST data
+    """
+    customer = utils.get_or_create_customer_from_session(request)
+    if not customer:
+        return redirect("create-customer")
+
+    if request.method != "POST":
+        return redirect("shopping-cart")
+
+    plant = utils.single_plant(pk, request)
+    if not plant:
+        messages.error(request, _("Plant not found."))
+        return redirect("shopping-cart")
+
+    try:
+        quantity = int(request.POST.get("quantity", 0))
+    except (ValueError, TypeError):
+        quantity = 0
+
+    if quantity <= 0:
+        utils.remove_from_cart(request, plant)
+        messages.success(request, _("Item removed from cart."))
+    else:
+        utils.update_cart_item(request, plant, quantity)
+        messages.success(request, _("Cart updated."))
+
+    return redirect("shopping-cart")
+
+
+def remove_from_cart(request, pk):
+    """
+    Remove an item from the shopping cart.
+    POST only for safety.
+    """
+    customer = utils.get_or_create_customer_from_session(request)
+    if not customer:
+        return redirect("create-customer")
+
+    if request.method != "POST":
+        return redirect("shopping-cart")
+
+    plant = utils.single_plant(pk, request)
+    if not plant:
+        messages.error(request, _("Plant not found."))
+        return redirect("shopping-cart")
+
+    utils.remove_from_cart(request, plant)
+    messages.success(
+        request, _("%(plant)s removed from cart.") % {"plant": plant.latin_name}
+    )
+
+    return redirect("shopping-cart")
+
+
+def checkout(request):
+    """
+    Display checkout form for reviewing order and adding donation.
+    GET: Display checkout review page
+    POST: Process order creation
+    """
+    customer = utils.get_or_create_customer_from_session(request)
+    if not customer:
+        return redirect("create-customer")
+
+    cart_items = utils.get_cart_items(request)
+    if not cart_items.exists():
+        messages.warning(request, _("Your cart is empty. Add seeds before checkout."))
+        return redirect("shopping-cart")
+
+    if request.method == "POST":
+        try:
+            donation_str = request.POST.get("donation_amount", "0")
+            # Handle both comma and period as decimal separator
+            donation_str = donation_str.replace(",", ".")
+            donation_amount = float(donation_str) if donation_str else 0
+            if donation_amount < 0:
+                donation_amount = 0
+        except (ValueError, TypeError):
+            donation_amount = 0
+
+        notes = request.POST.get("notes", "").strip()
+
+        order = utils.create_order_from_cart(
+            request, donation_amount=donation_amount, notes=notes
+        )
+
+        if order:
+            messages.success(
+                request,
+                _("Order created successfully! Order #%(order_id)d")
+                % {"order_id": order.id},
+            )
+            return redirect("order-confirmation", pk=order.id)
+        else:
+            messages.error(request, _("Could not create order. Please try again."))
+
+    item_count = utils.get_cart_total(request)
+    context = {
+        "customer": customer,
+        "cart_items": cart_items,
+        "item_count": item_count,
+    }
+    return render(request, "project/checkout.html", context)
+
+
+def order_confirmation(request, pk):
+    """
+    Display order confirmation and summary.
+    Shows order details, items, and donation amount.
+    """
+    try:
+        order = models.Order.objects.get(id=pk)
+    except models.Order.DoesNotExist:
+        messages.error(request, _("Order not found."))
+        return redirect("shopping-cart")
+
+    # Verify customer match (security check)
+    customer = utils.get_or_create_customer_from_session(request)
+    if customer and customer.id != order.customer.id:
+        messages.error(request, _("You do not have permission to view this order."))
+        return redirect("shopping-cart")
+
+    order_items = order.items.all().select_related("plant_profile")
+
+    context = {
+        "order": order,
+        "order_items": order_items,
+    }
+    return render(request, "project/order-confirmation.html", context)
+
+
+def order_history(request):
+    """
+    Display order history for the current customer.
+    Shows all past orders with item counts and donation amounts.
+    """
+    customer = utils.get_or_create_customer_from_session(request)
+    if not customer:
+        return redirect("create-customer")
+
+    orders = models.Order.objects.filter(customer=customer).prefetch_related("items")
+
+    # Pagination
+    paginator = Paginator(orders, 10)
+    page_number = request.GET.get("page")
+    orders_page = paginator.get_page(page_number)
+
+    context = {
+        "customer": customer,
+        "orders": orders_page,
+    }
+    return render(request, "project/order-history.html", context)
+
+
+def clear_cart(request):
+    """
+    Clear all items from the shopping cart.
+    POST only for safety.
+    """
+    if request.method != "POST":
+        return redirect("shopping-cart")
+
+    customer = utils.get_or_create_customer_from_session(request)
+    if not customer:
+        return redirect("create-customer")
+
+    count = utils.clear_cart(request)
+    messages.success(
+        request,
+        _("Cleared %(count)d item(s) from cart.") % {"count": count},
+    )
+    return redirect("shopping-cart")

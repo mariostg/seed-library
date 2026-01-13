@@ -1,4 +1,5 @@
 import base64
+import logging
 from io import BytesIO
 from pathlib import Path
 
@@ -8,6 +9,8 @@ from exif import Image
 from PIL import Image as PILImage
 
 from project.models import PlantImage, PlantProfile
+
+logger = logging.getLogger("django")
 
 MONTHS = {
     0: "",
@@ -359,3 +362,370 @@ def get_inaturalist_taxon_id(plant_name: str) -> int | None:
             except ValueError:
                 return None
     return None
+
+
+# ============================================================================
+# SHOPPING CART & CHECKOUT UTILITIES
+# ============================================================================
+
+
+def get_or_create_customer_from_session(request):
+    """
+    Get the Customer object associated with the current session.
+    If no customer_id in session, returns None.
+
+    Args:
+        request: Django request object
+
+    Returns:
+        Customer object or None
+    """
+    from project.models import Customer
+
+    customer_id = request.session.get("customer_id")
+    if not customer_id:
+        return None
+
+    try:
+        return Customer.objects.get(id=customer_id)
+    except Customer.DoesNotExist:
+        return None
+
+
+def set_customer_in_session(request, customer):
+    """
+    Store customer ID in the session.
+
+    Args:
+        request: Django request object
+        customer: Customer object or customer ID
+    """
+    if isinstance(customer, int):
+        request.session["customer_id"] = customer
+    else:
+        request.session["customer_id"] = customer.id
+    request.session.modified = True
+
+
+def add_to_cart(request, plant_profile, quantity=1):
+    """
+    Add a plant to the shopping cart or update quantity if already exists.
+
+    Args:
+        request: Django request object
+        plant_profile: PlantProfile object or ID
+        quantity: Quantity to add (default 1)
+
+    Returns:
+        ShoppingCart object or None if customer not in session
+    """
+    from project.models import PlantProfile as PlantProfileModel
+    from project.models import ShoppingCart
+
+    customer = get_or_create_customer_from_session(request)
+    if not customer:
+        return None
+
+    if isinstance(plant_profile, int):
+        plant_profile = PlantProfileModel.objects.get(id=plant_profile)
+
+    cart_item, created = ShoppingCart.objects.get_or_create(
+        customer=customer, plant_profile=plant_profile, defaults={"quantity": quantity}
+    )
+
+    if not created:
+        cart_item.quantity += quantity
+        cart_item.save()
+
+    return cart_item
+
+
+def update_cart_item(request, plant_profile, quantity):
+    """
+    Update the quantity of an item in the shopping cart.
+
+    Args:
+        request: Django request object
+        plant_profile: PlantProfile object or ID
+        quantity: New quantity (0 or negative removes the item)
+
+    Returns:
+        ShoppingCart object or None
+    """
+    from project.models import PlantProfile as PlantProfileModel
+    from project.models import ShoppingCart
+
+    customer = get_or_create_customer_from_session(request)
+    if not customer:
+        return None
+
+    if isinstance(plant_profile, int):
+        plant_profile = PlantProfileModel.objects.get(id=plant_profile)
+
+    try:
+        cart_item = ShoppingCart.objects.get(
+            customer=customer, plant_profile=plant_profile
+        )
+
+        if quantity <= 0:
+            cart_item.delete()
+            return None
+
+        cart_item.quantity = quantity
+        cart_item.save()
+        return cart_item
+    except ShoppingCart.DoesNotExist:
+        return None
+
+
+def remove_from_cart(request, plant_profile):
+    """
+    Remove an item from the shopping cart.
+
+    Args:
+        request: Django request object
+        plant_profile: PlantProfile object or ID
+
+    Returns:
+        Boolean indicating if item was removed
+    """
+    from project.models import PlantProfile as PlantProfileModel
+    from project.models import ShoppingCart
+
+    customer = get_or_create_customer_from_session(request)
+    if not customer:
+        return False
+
+    if isinstance(plant_profile, int):
+        plant_profile = PlantProfileModel.objects.get(id=plant_profile)
+
+    try:
+        cart_item = ShoppingCart.objects.get(
+            customer=customer, plant_profile=plant_profile
+        )
+        cart_item.delete()
+        return True
+    except ShoppingCart.DoesNotExist:
+        return False
+
+
+def get_cart_items(request):
+    """
+    Get all items in the shopping cart for the current customer.
+
+    Args:
+        request: Django request object
+
+    Returns:
+        QuerySet of ShoppingCart items or empty QuerySet
+    """
+    from project.models import ShoppingCart
+
+    customer = get_or_create_customer_from_session(request)
+    if not customer:
+        return ShoppingCart.objects.none()
+
+    return ShoppingCart.objects.filter(customer=customer).select_related(
+        "plant_profile"
+    )
+
+
+def get_cart_total(request):
+    """
+    Get the item count in the cart.
+    Since seeds are free, this just returns the number of items.
+
+    Args:
+        request: Django request object
+
+    Returns:
+        Integer count of items in cart
+    """
+    cart_items = get_cart_items(request)
+    return sum(item.quantity for item in cart_items)
+
+
+def create_order_from_cart(request, donation_amount=0, notes=""):
+    """
+    Convert shopping cart items into an Order and OrderItems.
+    Clears the cart after order creation.
+    Seeds are free, but an optional donation can be included.
+
+    Args:
+        request: Django request object
+        donation_amount: Optional donation amount (default 0)
+        notes: Optional notes for the order
+
+    Returns:
+        Order object or None if cart is empty or customer not found
+    """
+    from decimal import Decimal
+
+    from project.models import Order, OrderItem
+
+    customer = get_or_create_customer_from_session(request)
+    if not customer:
+        return None
+
+    cart_items = get_cart_items(request)
+    if not cart_items.exists():
+        return None
+
+    # Ensure donation_amount is a Decimal
+    if not isinstance(donation_amount, Decimal):
+        donation_amount = Decimal(str(donation_amount))
+
+    # Create the order
+    order = Order.objects.create(
+        customer=customer,
+        donation_amount=donation_amount,
+        notes=notes,
+        status="pending",
+    )
+
+    # Create OrderItems from cart items (seeds are free)
+    for cart_item in cart_items:
+        OrderItem.objects.create(
+            order=order,
+            plant_profile=cart_item.plant_profile,
+            quantity=cart_item.quantity,
+        )
+
+    # Clear the shopping cart
+    cart_items.delete()
+
+    return order
+
+
+def clear_cart(request):
+    """
+    Clear all items from the shopping cart.
+
+    Args:
+        request: Django request object
+
+    Returns:
+        Number of items deleted
+    """
+    cart_items = get_cart_items(request)
+    count, _ = cart_items.delete()
+    return count
+
+
+def clear_session(request):
+    """
+    Clear customer ID from the session.
+
+    Args:
+        request: Django request object
+    """
+    if "customer_id" in request.session:
+        del request.session["customer_id"]
+    request.session.modified = True
+
+
+# ============================================================================
+# EMAIL UTILITIES
+# ============================================================================
+
+
+def send_order_confirmation_email(order):
+    """
+    Send order confirmation email to the customer.
+
+    Args:
+        order: Order object to send confirmation for
+
+    Returns:
+        Boolean indicating success
+    """
+    from django.core.mail import EmailMultiAlternatives
+    from django.template.loader import render_to_string
+    from django.utils.translation import gettext as _
+
+    try:
+        # Prepare email context
+        order_items = order.items.all().select_related("plant_profile")
+        context = {
+            "order": order,
+            "order_items": order_items,
+            "customer": order.customer,
+        }
+
+        # Render email templates
+        subject = _("Order Confirmation - Order #%(order_id)d") % {"order_id": order.id}
+        html_content = render_to_string(
+            "project/emails/order_confirmation.html", context
+        )
+        text_content = render_to_string(
+            "project/emails/order_confirmation.txt", context
+        )
+
+        # Create email
+        email = EmailMultiAlternatives(
+            subject=subject,
+            body=text_content,
+            from_email=None,  # Uses DEFAULT_FROM_EMAIL from settings
+            to=[order.customer.email],
+        )
+        email.attach_alternative(html_content, "text/html")
+
+        # Send email
+        email.send(fail_silently=False)
+        return True
+
+    except Exception:
+        logger.exception("Error sending order confirmation email")
+        return False
+
+
+def send_donation_thank_you_email(order):
+    """
+    Send thank you email for a donation.
+
+    Args:
+        order: Order object with donation_amount > 0
+
+    Returns:
+        Boolean indicating success
+    """
+    from django.core.mail import EmailMultiAlternatives
+    from django.template.loader import render_to_string
+    from django.utils.translation import gettext as _
+
+    if order.donation_amount <= 0:
+        return False
+
+    try:
+        # Prepare email context
+        context = {
+            "order": order,
+            "customer": order.customer,
+            "donation_amount": order.donation_amount,
+        }
+
+        # Render email templates
+        subject = _("Thank You for Your Donation!")
+        html_content = render_to_string(
+            "project/emails/donation_thank_you.html", context
+        )
+        text_content = render_to_string(
+            "project/emails/donation_thank_you.txt", context
+        )
+
+        # Create email
+        email = EmailMultiAlternatives(
+            subject=subject,
+            body=text_content,
+            from_email=None,  # Uses DEFAULT_FROM_EMAIL from settings
+            to=[order.customer.email],
+        )
+        email.attach_alternative(html_content, "text/html")
+
+        # Send email
+        email.send(fail_silently=False)
+        return True
+
+    except Exception:
+        logger.exception("Error sending donation thank you email")
+        return False

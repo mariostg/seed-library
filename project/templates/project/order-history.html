@@ -1,0 +1,510 @@
+{% extends "core/base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Order History" %}{% endblock title %}
+
+{% block content %}
+  <main class="main-content">
+    <section class="order-history-section">
+      <div class="history-header">
+        <h1>{% trans "Order History" %}</h1>
+        <p class="customer-name">
+          {% trans "Account for:" %} <strong>{{ customer.name }}</strong>
+        </p>
+      </div>
+
+      {% if messages %}
+        <div class="alerts-container">
+          {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+              {{ message }}
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      {% if orders %}
+        <div class="orders-container">
+          {% for order in orders %}
+            <div class="order-card">
+              <div class="order-card-header">
+                <div class="order-number-section">
+                  <h3 class="order-number">{% trans "Order" %} #{{ order.id }}</h3>
+                  <span class="order-date">{{ order.order_date|date:"F j, Y" }}</span>
+                </div>
+                <span class="status-badge status-{{ order.get_status_display|lower }}">
+                  {{ order.get_status_display }}
+                </span>
+              </div>
+
+              <div class="order-card-body">
+                <div class="order-section">
+                  <h4>{% trans "Seeds Ordered" %}</h4>
+                  <ul class="items-list">
+                    {% for item in order.items.all %}
+                      <li class="item">
+                        <span class="item-name">
+                          <strong>{{ item.plant_profile.english_name }}</strong>
+                          <em>{{ item.plant_profile.latin_name }}</em>
+                        </span>
+                        <span class="item-quantity">× {{ item.quantity }}</span>
+                      </li>
+                    {% endfor %}
+                  </ul>
+                  <div class="item-count">
+                    <small>
+                      {% blocktrans count items=order.items.count %}
+                        {{ items }} item
+                      {% plural %}
+                        {{ items }} items
+                      {% endblocktrans %}
+                    </small>
+                  </div>
+                </div>
+
+                {% if order.donation_amount > 0 %}
+                  <div class="order-section donation-section">
+                    <h4>{% trans "Donation" %}</h4>
+                    <p class="donation-amount">
+                      <strong>${{ order.donation_amount }}</strong>
+                    </p>
+                    <p class="donation-thanks">
+                      {% trans "Thank you for supporting our mission!" %}
+                    </p>
+                  </div>
+                {% endif %}
+
+                {% if order.notes %}
+                  <div class="order-section notes-section">
+                    <h4>{% trans "Order Notes" %}</h4>
+                    <p class="notes-text">{{ order.notes }}</p>
+                  </div>
+                {% endif %}
+              </div>
+
+              <div class="order-card-footer">
+                <a href="{% url 'order-confirmation' order.id %}" class="btn btn-small btn-primary">
+                  {% trans "View Details" %}
+                </a>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+
+        <!-- Pagination -->
+        {% if orders.has_other_pages %}
+          <div class="pagination">
+            <nav aria-label="Page navigation">
+              <ul class="pagination-list">
+                {% if orders.has_previous %}
+                  <li>
+                    <a href="?page=1" class="pagination-link">{% trans "First" %}</a>
+                  </li>
+                  <li>
+                    <a href="?page={{ orders.previous_page_number }}" class="pagination-link">{% trans "Previous" %}</a>
+                  </li>
+                {% endif %}
+
+                {% for num in orders.paginator.page_range %}
+                  {% if orders.number == num %}
+                    <li class="active">
+                      <span class="pagination-link current">{{ num }}</span>
+                    </li>
+                  {% elif num > orders.number|add:'-3' and num < orders.number|add:'3' %}
+                    <li>
+                      <a href="?page={{ num }}" class="pagination-link">{{ num }}</a>
+                    </li>
+                  {% endif %}
+                {% endfor %}
+
+                {% if orders.has_next %}
+                  <li>
+                    <a href="?page={{ orders.next_page_number }}" class="pagination-link">{% trans "Next" %}</a>
+                  </li>
+                  <li>
+                    <a href="?page={{ orders.paginator.num_pages }}" class="pagination-link">{% trans "Last" %}</a>
+                  </li>
+                {% endif %}
+              </ul>
+            </nav>
+          </div>
+        {% endif %}
+      {% else %}
+        <div class="empty-orders">
+          <div class="empty-icon">📭</div>
+          <h3>{% trans "No Orders Yet" %}</h3>
+          <p>{% trans "You haven't placed any orders yet. Start building your seed collection!" %}</p>
+          <a href="{% url 'shopping-cart' %}" class="btn btn-primary">
+            {% trans "Go to Shopping Cart" %}
+          </a>
+        </div>
+      {% endif %}
+
+      <div class="history-actions">
+        <a href="{% url 'shopping-cart' %}" class="btn btn-secondary">
+          {% trans "Continue Shopping" %}
+        </a>
+        <a href="{% url 'index' %}" class="btn btn-secondary">
+          {% trans "Return Home" %}
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <style>
+    .order-history-section {
+      max-width: 1000px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+
+    .history-header {
+      margin-bottom: 2rem;
+      border-bottom: 2px solid #ddd;
+      padding-bottom: 1rem;
+    }
+
+    .history-header h1 {
+      margin: 0 0 0.5rem 0;
+      font-size: 2rem;
+    }
+
+    .customer-name {
+      color: #666;
+      margin: 0;
+    }
+
+    .alerts-container {
+      margin-bottom: 2rem;
+    }
+
+    .alert {
+      padding: 1rem;
+      border-radius: 4px;
+      margin-bottom: 1rem;
+    }
+
+    .alert-success {
+      background-color: #d4edda;
+      border: 1px solid #c3e6cb;
+      color: #155724;
+    }
+
+    .orders-container {
+      margin-bottom: 2rem;
+    }
+
+    .order-card {
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      margin-bottom: 1.5rem;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      transition: box-shadow 0.3s ease;
+    }
+
+    .order-card:hover {
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    .order-card-header {
+      background-color: #f8f9fa;
+      padding: 1.5rem;
+      border-bottom: 1px solid #eee;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .order-number-section h3 {
+      margin: 0;
+      font-size: 1.3rem;
+      color: #007bff;
+    }
+
+    .order-date {
+      color: #666;
+      font-size: 0.9rem;
+      margin-top: 0.25rem;
+    }
+
+    .status-badge {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .status-pending {
+      background-color: #fff3cd;
+      color: #856404;
+    }
+
+    .status-completed {
+      background-color: #d4edda;
+      color: #155724;
+    }
+
+    .status-shipped {
+      background-color: #cfe2ff;
+      color: #084298;
+    }
+
+    .status-cancelled {
+      background-color: #f8d7da;
+      color: #842029;
+    }
+
+    .order-card-body {
+      padding: 1.5rem;
+    }
+
+    .order-section {
+      margin-bottom: 1.5rem;
+    }
+
+    .order-section:last-child {
+      margin-bottom: 0;
+    }
+
+    .order-section h4 {
+      margin: 0 0 1rem 0;
+      font-size: 1rem;
+      color: #333;
+      font-weight: 600;
+    }
+
+    .items-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 1rem 0;
+    }
+
+    .item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem;
+      background-color: #f8f9fa;
+      border-radius: 4px;
+      margin-bottom: 0.5rem;
+    }
+
+    .item:last-child {
+      margin-bottom: 0;
+    }
+
+    .item-name {
+      flex: 1;
+    }
+
+    .item-name strong {
+      display: block;
+      color: #333;
+    }
+
+    .item-name em {
+      display: block;
+      font-style: italic;
+      color: #999;
+      font-size: 0.9rem;
+    }
+
+    .item-quantity {
+      flex-shrink: 0;
+      margin-left: 1rem;
+      font-weight: 600;
+      color: #666;
+    }
+
+    .item-count {
+      color: #999;
+      font-size: 0.85rem;
+    }
+
+    .donation-section {
+      background-color: #fff3cd;
+      padding: 1rem;
+      border-radius: 4px;
+      border-left: 4px solid #ffc107;
+    }
+
+    .donation-section h4 {
+      color: #856404;
+    }
+
+    .donation-amount {
+      margin: 0 0 0.5rem 0;
+      font-size: 1.5rem;
+      color: #28a745;
+    }
+
+    .donation-thanks {
+      margin: 0;
+      color: #856404;
+      font-size: 0.9rem;
+    }
+
+    .notes-section {
+      background-color: #e7f3ff;
+      padding: 1rem;
+      border-radius: 4px;
+      border-left: 4px solid #007bff;
+    }
+
+    .notes-section h4 {
+      color: #004085;
+    }
+
+    .notes-text {
+      margin: 0;
+      color: #004085;
+      line-height: 1.6;
+    }
+
+    .order-card-footer {
+      padding: 1.5rem;
+      border-top: 1px solid #eee;
+      background-color: #fafafa;
+    }
+
+    .pagination {
+      margin: 2rem 0;
+      text-align: center;
+    }
+
+    .pagination-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .pagination-link {
+      display: inline-block;
+      padding: 0.5rem 0.75rem;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      text-decoration: none;
+      color: #007bff;
+      font-weight: 500;
+    }
+
+    .pagination-link:hover {
+      background-color: #e7f3ff;
+      border-color: #007bff;
+    }
+
+    .pagination-link.current {
+      background-color: #007bff;
+      color: white;
+      border-color: #007bff;
+      cursor: default;
+    }
+
+    .empty-orders {
+      text-align: center;
+      padding: 3rem 2rem;
+      background: white;
+      border: 2px dashed #ddd;
+      border-radius: 8px;
+      margin-bottom: 2rem;
+    }
+
+    .empty-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    .empty-orders h3 {
+      margin: 0 0 1rem 0;
+      font-size: 1.5rem;
+      color: #333;
+    }
+
+    .empty-orders p {
+      color: #666;
+      margin-bottom: 1.5rem;
+    }
+
+    .history-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 2rem;
+    }
+
+    .btn {
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+    }
+
+    .btn-small {
+      padding: 0.5rem 1rem;
+      font-size: 0.9rem;
+    }
+
+    .btn-primary {
+      background-color: #007bff;
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background-color: #0056b3;
+    }
+
+    .btn-secondary {
+      background-color: #6c757d;
+      color: white;
+    }
+
+    .btn-secondary:hover {
+      background-color: #5a6268;
+    }
+
+    @media (max-width: 768px) {
+      .order-card-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .status-badge {
+        margin-top: 1rem;
+      }
+
+      .item {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .item-quantity {
+        margin-left: 0;
+        margin-top: 0.5rem;
+      }
+
+      .history-actions {
+        flex-direction: column;
+      }
+
+      .history-actions .btn {
+        width: 100%;
+      }
+    }
+  </style>
+{% endblock content %}

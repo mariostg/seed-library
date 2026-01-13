@@ -787,6 +787,56 @@ urlpatterns += i18n_patterns(
     ),
 )
 
+
+urlpatterns += i18n_patterns(
+    # Customer & Shopping Cart URLs
+    path(
+        _("create-customer/"),
+        views.create_customer,
+        name="create-customer",
+    ),
+    path(
+        _("shopping-cart/"),
+        views.shopping_cart,
+        name="shopping-cart",
+    ),
+    path(
+        _("add-to-cart/<int:pk>/"),
+        views.add_to_cart,
+        name="add-to-cart",
+    ),
+    path(
+        _("update-cart-item/<int:pk>/"),
+        views.update_cart_item,
+        name="update-cart-item",
+    ),
+    path(
+        _("remove-from-cart/<int:pk>/"),
+        views.remove_from_cart,
+        name="remove-from-cart",
+    ),
+    path(
+        _("clear-cart/"),
+        views.clear_cart,
+        name="clear-cart",
+    ),
+    path(
+        _("checkout/"),
+        views.checkout,
+        name="checkout",
+    ),
+    path(
+        _("order-confirmation/<int:pk>/"),
+        views.order_confirmation,
+        name="order-confirmation",
+    ),
+    path(
+        _("order-history/"),
+        views.order_history,
+        name="order-history",
+    ),
+)
+
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

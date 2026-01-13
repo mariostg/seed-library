@@ -1,0 +1,501 @@
+{% extends "core/base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Order Confirmation" %}{% endblock title %}
+
+{% block content %}
+  <main class="main-content">
+    <section class="confirmation-section">
+      <div class="confirmation-header success">
+        <div class="success-icon">✓</div>
+        <h1>{% trans "Order Confirmed!" %}</h1>
+        <p class="confirmation-message">
+          {% trans "Thank you for ordering seeds from our library!" %}
+        </p>
+      </div>
+
+      {% if messages %}
+        <div class="alerts-container">
+          {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+              {{ message }}
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      <div class="confirmation-container">
+        <!-- Order Details -->
+        <div class="order-details">
+          <h2>{% trans "Order Details" %}</h2>
+
+          <div class="order-number">
+            <strong>{% trans "Order ID:" %}</strong>
+            <span class="order-id">#{{ order.id }}</span>
+          </div>
+
+          <div class="order-date">
+            <strong>{% trans "Order Date:" %}</strong>
+            <span>{{ order.order_date|date:"F j, Y \a\t H:i" }}</span>
+          </div>
+
+          <div class="order-status">
+            <strong>{% trans "Status:" %}</strong>
+            <span class="status-badge status-{{ order.get_status_display|lower }}">
+              {{ order.get_status_display }}
+            </span>
+          </div>
+
+          <hr>
+
+          <div class="customer-info">
+            <h3>{% trans "Delivery Information" %}</h3>
+            <div class="info-block">
+              <p>
+                <strong>{{ order.customer.first_name }} {{ order.customer.last_name }}</strong><br>
+                {{ order.customer.email }}<br>
+                {{ order.customer.phone_number }}<br>
+                {{ order.customer.address }}, {{ order.customer.city }} {{ order.customer.province }}<br>
+                {{ order.customer.postal_code }}
+              </p>
+            </div>
+          </div>
+          <hr>
+
+          <div class="items-info">
+            <h3>{% trans "Seeds Ordered" %}</h3>
+            <table class="items-table">
+              <thead>
+                <tr>
+                  <th>{% trans "Plant Name" %}</th>
+                  <th>{% trans "Latin Name" %}</th>
+                  <th>{% trans "Quantity" %}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for item in order_items %}
+                  <tr>
+                    <td>{{ item.plant_profile.english_name }}</td>
+                    <td><em>{{ item.plant_profile.latin_name }}</em></td>
+                    <td class="text-right">{{ item.quantity }}</td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+
+          {% if order.donation_amount > 0 %}
+            <hr>
+            <div class="donation-info">
+              <h3>{% trans "Donation" %}</h3>
+              <div class="donation-amount">
+                <strong>{% trans "Thank you for your generous donation of" %}</strong>
+                <span class="amount">${{ order.donation_amount }}</span>
+              </div>
+              <p class="donation-thanks">
+                {% trans "Your donation will help us continue our work to preserve and promote native plants." %}
+              </p>
+            </div>
+          {% endif %}
+
+          {% if order.notes %}
+            <hr>
+            <div class="notes-info">
+              <h3>{% trans "Order Notes" %}</h3>
+              <p class="notes-text">{{ order.notes }}</p>
+            </div>
+          {% endif %}
+        </div>
+
+        <!-- Next Steps -->
+        <div class="next-steps">
+          <h2>{% trans "What's Next?" %}</h2>
+
+          <div class="step">
+            <div class="step-number">1</div>
+            <div class="step-content">
+              <h4>{% trans "Confirmation Email" %}</h4>
+              <p>{% trans "A confirmation email has been sent to" %} <strong>{{ order.customer.email }}</strong>{% trans ". Please save this for your records." %}</p>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-number">2</div>
+            <div class="step-content">
+              <h4>{% trans "Seed Processing" %}</h4>
+              <p>{% trans "Your seeds will be carefully prepared and packaged. Processing typically takes 2-4 weeks depending on availability." %}</p>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-number">3</div>
+            <div class="step-content">
+              <h4>{% trans "Shipment" %}</h4>
+              <p>{% trans "You will receive a shipping notification with tracking information once your order is sent." %}</p>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-number">4</div>
+            <div class="step-content">
+              <h4>{% trans "Plant Your Seeds" %}</h4>
+              <p>{% trans "Follow the seed care instructions provided in your package for best results." %}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="confirmation-actions">
+        <a href="{% url 'order-history' %}" class="btn btn-primary">
+          {% trans "View All Orders" %}
+        </a>
+        <a href="{% url 'shopping-cart' %}" class="btn btn-secondary">
+          {% trans "Continue Shopping" %}
+        </a>
+        <a href="{% url 'index' %}" class="btn btn-secondary">
+          {% trans "Return Home" %}
+        </a>
+      </div>
+
+      <div class="confirmation-note">
+        <p>
+          <strong>{% trans "Need Help?" %}</strong><br>
+          {% trans "If you have any questions about your order, please contact us at our email address. We're here to help!" %}
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <style>
+    .confirmation-section {
+      max-width: 1000px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+
+    .confirmation-header {
+      text-align: center;
+      padding: 3rem 2rem;
+      border-radius: 8px;
+      margin-bottom: 3rem;
+      background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+      border: 2px solid #28a745;
+    }
+
+    .confirmation-header.success {
+      background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+      border-color: #28a745;
+      color: #155724;
+    }
+
+    .success-icon {
+      font-size: 3rem;
+      color: #28a745;
+      margin-bottom: 1rem;
+    }
+
+    .confirmation-header h1 {
+      margin: 0 0 0.5rem 0;
+      font-size: 2.5rem;
+      color: #155724;
+    }
+
+    .confirmation-message {
+      margin: 0;
+      font-size: 1.1rem;
+    }
+
+    .alerts-container {
+      margin-bottom: 2rem;
+    }
+
+    .alert {
+      padding: 1rem;
+      border-radius: 4px;
+      margin-bottom: 1rem;
+    }
+
+    .alert-success {
+      background-color: #d4edda;
+      border: 1px solid #c3e6cb;
+      color: #155724;
+    }
+
+    .confirmation-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .order-details,
+    .next-steps {
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      padding: 2rem;
+    }
+
+    .order-details h2,
+    .next-steps h2 {
+      margin-top: 0;
+      font-size: 1.5rem;
+      border-bottom: 2px solid #007bff;
+      padding-bottom: 1rem;
+      color: #007bff;
+    }
+
+    .order-number,
+    .order-date,
+    .order-status {
+      margin-bottom: 1rem;
+      padding: 1rem;
+      background-color: #f8f9fa;
+      border-radius: 4px;
+    }
+
+    .order-id {
+      font-size: 1.3rem;
+      font-weight: bold;
+      color: #007bff;
+    }
+
+    .status-badge {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .status-pending {
+      background-color: #fff3cd;
+      color: #856404;
+    }
+
+    .status-completed {
+      background-color: #d4edda;
+      color: #155724;
+    }
+
+    .status-shipped {
+      background-color: #cfe2ff;
+      color: #084298;
+    }
+
+    .status-cancelled {
+      background-color: #f8d7da;
+      color: #842029;
+    }
+
+    .customer-info,
+    .items-info,
+    .donation-info,
+    .notes-info {
+      margin-bottom: 1.5rem;
+    }
+
+    .customer-info h3,
+    .items-info h3,
+    .donation-info h3,
+    .notes-info h3 {
+      font-size: 1.1rem;
+      margin-top: 0;
+      margin-bottom: 1rem;
+      color: #333;
+    }
+
+    .info-block {
+      background-color: #f8f9fa;
+      padding: 1rem;
+      border-radius: 4px;
+    }
+
+    .info-block p {
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    .items-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 1rem;
+    }
+
+    .items-table thead {
+      background-color: #f8f9fa;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .items-table th {
+      padding: 0.75rem;
+      text-align: left;
+      font-weight: 600;
+    }
+
+    .items-table td {
+      padding: 0.75rem;
+      border-bottom: 1px solid #eee;
+    }
+
+    .text-right {
+      text-align: right;
+    }
+
+    .donation-amount {
+      background-color: #d4edda;
+      border: 1px solid #c3e6cb;
+      padding: 1rem;
+      border-radius: 4px;
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
+    .donation-amount strong {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: #155724;
+    }
+
+    .amount {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #28a745;
+    }
+
+    .donation-thanks {
+      color: #155724;
+      margin: 0;
+      font-style: italic;
+    }
+
+    .notes-text {
+      background-color: #f8f9fa;
+      padding: 1rem;
+      border-radius: 4px;
+      margin: 0;
+      color: #555;
+      line-height: 1.6;
+    }
+
+    hr {
+      border: none;
+      border-top: 1px solid #eee;
+      margin: 1.5rem 0;
+    }
+
+    .step {
+      display: flex;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .step-number {
+      flex-shrink: 0;
+      width: 40px;
+      height: 40px;
+      background-color: #007bff;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+
+    .step-content h4 {
+      margin: 0 0 0.5rem 0;
+      color: #333;
+    }
+
+    .step-content p {
+      margin: 0;
+      color: #666;
+      line-height: 1.6;
+    }
+
+    .confirmation-actions {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .btn {
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+    }
+
+    .btn-primary {
+      background-color: #007bff;
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background-color: #0056b3;
+    }
+
+    .btn-secondary {
+      background-color: #6c757d;
+      color: white;
+    }
+
+    .btn-secondary:hover {
+      background-color: #5a6268;
+    }
+
+    .confirmation-note {
+      background-color: #e7f3ff;
+      border-left: 4px solid #007bff;
+      padding: 1.5rem;
+      border-radius: 4px;
+      text-align: center;
+      color: #004085;
+    }
+
+    .confirmation-note p {
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 768px) {
+      .confirmation-header {
+        padding: 2rem 1rem;
+      }
+
+      .confirmation-header h1 {
+        font-size: 1.8rem;
+      }
+
+      .success-icon {
+        font-size: 2rem;
+      }
+
+      .confirmation-container {
+        grid-template-columns: 1fr;
+      }
+
+      .confirmation-actions {
+        flex-direction: column;
+      }
+
+      .confirmation-actions .btn {
+        width: 100%;
+      }
+
+      .step {
+        gap: 1rem;
+      }
+    }
+  </style>
+{% endblock content %}

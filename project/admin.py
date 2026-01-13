@@ -83,3 +83,11 @@ admin.site.register(models.BeeSpecies)
 admin.site.register(models.Ecozone)
 admin.site.register(models.StratificationDuration)
 admin.site.register(models.NonNativeSpecies)
+
+# ===============
+# Register customer and order models
+# ===============
+admin.site.register(models.Customer)
+admin.site.register(models.Order)
+admin.site.register(models.OrderItem)
+admin.site.register(models.ShoppingCart)

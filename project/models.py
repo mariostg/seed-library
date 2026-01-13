@@ -1654,3 +1654,162 @@ class PlantComplementary(models.Model):
             )
         ]
         ordering = ["plant_profile__latin_name", "complement__latin_name"]
+
+
+class Customer(Base):
+    """
+    A model representing a customer.
+
+    This model stores information about customers who may interact with the plant profiles
+    with the intent of ordering seeds defined in the PlantProfile model.  Orders should not
+    require the customer to create a user account.
+
+    Attributes:
+        name (CharField): The name of the customer (max 100 chars).
+        email (EmailField): The email address of the customer (max 100 chars).
+        phone (CharField): The phone number of the customer (max 15 chars).
+        address (CharField): The address of the customer (max 255 chars).
+
+    Returns:
+        str: String representation of the customer name.
+    """
+
+    first_name = models.CharField(max_length=100, verbose_name=_("First Name"))
+    last_name = models.CharField(max_length=100, verbose_name=_("Last Name"))
+    email = models.EmailField(max_length=100, verbose_name=_("Email"))
+    phone_number = models.CharField(max_length=15, verbose_name=_("Phone"))
+    address = models.CharField(max_length=255, verbose_name=_("Address"))
+    city = models.CharField(max_length=100, verbose_name=_("City"))
+    province = models.CharField(max_length=100, verbose_name=_("Province"))
+    postal_code = models.CharField(max_length=20, verbose_name=_("Postal Code"))
+
+    def __str__(self) -> str:
+        return f"{self.first_name} {self.last_name}"
+
+
+class ShoppingCart(models.Model):
+    """
+    A model representing a shopping cart for customers.
+
+    This model stores temporary plant seed selections before checkout.
+    Once the customer completes purchase, these items are moved to an Order.
+
+    Attributes:
+        customer (ForeignKey): Reference to the Customer who owns the cart.
+        plant_profile (ForeignKey): Reference to the PlantProfile in the cart.
+        quantity (IntegerField): The quantity of seeds in the cart.
+        added_date (DateTimeField): When the item was added to cart.
+    """
+
+    customer = models.ForeignKey(
+        Customer,
+        on_delete=models.CASCADE,
+        related_name="shopping_carts",
+        verbose_name=_("Customer"),
+    )
+    plant_profile = models.ForeignKey(
+        PlantProfile,
+        on_delete=models.CASCADE,
+        verbose_name=_("Plant Profile"),
+    )
+    quantity = models.IntegerField(verbose_name=_("Quantity"))
+    added_date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self) -> str:
+        return f"{self.customer.first_name} {self.customer.last_name} - {self.plant_profile.latin_name} (qty: {self.quantity})"
+
+    class Meta:
+        unique_together = ("customer", "plant_profile")
+        verbose_name_plural = "Shopping Carts"
+
+
+class Order(Base):
+    """
+    A model representing a customer order for plant seeds.
+
+    This model stores information about orders placed by customers. Each order
+    is associated with a customer and tracks the order date, status, and donation.
+    Individual items in the order are stored in the OrderItem model.
+
+    Attributes:
+        customer (ForeignKey): Reference to the Customer who placed the order.
+        order_date (DateTimeField): Timestamp when the order was created.
+        status (CharField): Current status of the order (pending, completed, cancelled, etc.).
+        donation_amount (DecimalField): Optional donation amount made with the order.
+        notes (TextField): Optional notes about the order.
+
+    Returns:
+        str: String representation of the order in the format "Order #ID - Customer - Date".
+    """
+
+    ORDER_STATUS_CHOICES = [
+        ("pending", _("Pending")),
+        ("completed", _("Completed")),
+        ("cancelled", _("Cancelled")),
+        ("shipped", _("Shipped")),
+    ]
+
+    customer = models.ForeignKey(
+        Customer,
+        on_delete=models.CASCADE,
+        related_name="orders",
+        verbose_name=_("Customer"),
+    )
+    order_date = models.DateTimeField(auto_now_add=True, verbose_name=_("Order Date"))
+    status = models.CharField(
+        max_length=20,
+        choices=ORDER_STATUS_CHOICES,
+        default="pending",
+        verbose_name=_("Status"),
+    )
+    donation_amount = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        default=0,
+        verbose_name=_("Donation Amount"),
+        help_text=_("Optional donation amount in addition to seed order."),
+    )
+    notes = models.TextField(blank=True, verbose_name=_("Notes"))
+
+    def __str__(self) -> str:
+        return f"Order #{self.id} - {self.customer.first_name} {self.customer.last_name} - {self.order_date.strftime('%Y-%m-%d')}"
+
+    class Meta:
+        ordering = ["-order_date"]
+
+
+class OrderItem(Base):
+    """
+    A model representing individual items in an order.
+
+    This model stores details about each plant profile in an order, including
+    the quantity ordered. Seeds are free, but the quantity is tracked for record-keeping.
+
+    Attributes:
+        order (ForeignKey): Reference to the Order this item belongs to.
+        plant_profile (ForeignKey): Reference to the PlantProfile being ordered.
+        quantity (IntegerField): The quantity of seeds ordered.
+
+    Returns:
+        str: String representation in the format "Order #ID - Plant".
+    """
+
+    order = models.ForeignKey(
+        Order,
+        on_delete=models.CASCADE,
+        related_name="items",
+        verbose_name=_("Order"),
+    )
+    plant_profile = models.ForeignKey(
+        PlantProfile,
+        on_delete=models.PROTECT,
+        verbose_name=_("Plant Profile"),
+    )
+    quantity = models.IntegerField(verbose_name=_("Quantity"))
+
+    def __str__(self) -> str:
+        return f"Order #{self.order.id} - {self.plant_profile.latin_name} (qty: {self.quantity})"
+
+    class Meta:
+        verbose_name_plural = "Order Items"
+        unique_together = ("order", "plant_profile")

@@ -1,0 +1,421 @@
+{% extends "core/base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Checkout" %}{% endblock title %}
+
+{% block content %}
+  <main class="main-content">
+    <section class="checkout-section">
+      <div class="checkout-header">
+        <h1>{% trans "Review Your Order" %}</h1>
+      </div>
+
+      {% if messages %}
+        <div class="alerts-container">
+          {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+              {{ message }}
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      <div class="checkout-container">
+        <!-- Order Review -->
+        <div class="order-review">
+          <h2>{% trans "Order Summary" %}</h2>
+
+          <div class="customer-info-section">
+            <h3>{% trans "Delivery Information" %}</h3>
+            <div class="info-item">
+              <strong>{% trans "Name:" %}</strong>
+              <span>{{ customer.first_name }} {{ customer.last_name }}</span>
+            </div>
+            <div class="info-item">
+              <strong>{% trans "Email:" %}</strong>
+              <span>{{ customer.email }}</span>
+            </div>
+            <div class="info-item">
+              <strong>{% trans "Phone:" %}</strong>
+              <span>{{ customer.phone_number }}</span>
+            </div>
+            <div class="info-item">
+              <strong>{% trans "Address:" %}</strong>
+              <span>{{ customer.address }}, {{ customer.city }} {{ customer.province }}<br> {{ customer.postal_code }}</span>
+            </div>
+          </div>
+
+          <div class="items-section">
+            <h3>{% trans "Seeds Ordered" %}</h3>
+            <table class="items-table">
+              <thead>
+                <tr>
+                  <th>{% trans "Plant Name" %}</th>
+                  <th>{% trans "Latin Name" %}</th>
+                  <th>{% trans "Quantity" %}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for item in cart_items %}
+                  <tr>
+                    <td>{{ item.plant_profile.english_name }}</td>
+                    <td><em>{{ item.plant_profile.latin_name }}</em></td>
+                    <td class="text-right">{{ item.quantity }}</td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+            <div class="items-summary">
+              <div class="summary-row">
+                <span>{% trans "Total Items:" %}</span>
+                <strong>{{ item_count }}</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Donation Form -->
+        <div class="donation-form">
+          <h2>{% trans "Optional Donation" %}</h2>
+          <p class="donation-help">
+            {% trans "Help us continue our seed conservation efforts with an optional donation. All proceeds support our mission to preserve and promote native plants." %}
+          </p>
+
+          <form method="POST" class="checkout-form">
+            {% csrf_token %}
+
+            <div class="form-group">
+              <label for="donation_amount">
+                {% trans "Donation Amount" %} <span class="optional">({% trans "optional" %})</span>
+              </label>
+              <div class="input-group">
+                <span class="currency">$</span>
+                <input type="number"
+                       id="donation_amount"
+                       name="donation_amount"
+                       value="0"
+                       min="0"
+                       step="0.01"
+                       max="99999.99"
+                       class="form-control donation-input"
+                       placeholder="0.00">
+              </div>
+              <small class="form-text text-muted">
+                {% trans "Examples: 5, 10, 25, 50" %}
+              </small>
+            </div>
+
+            <div class="form-group">
+              <label for="notes">
+                {% trans "Order Notes" %} <span class="optional">({% trans "optional" %})</span>
+              </label>
+              <textarea id="notes"
+                        name="notes"
+                        rows="4"
+                        class="form-control notes-textarea"
+                        placeholder="{% trans 'Any special instructions or requests?' %}"></textarea>
+            </div>
+
+            <div class="checkout-notice">
+              <h4>{% trans "Important Information" %}</h4>
+              <ul>
+                <li>{% trans "All seeds are provided free of charge." %}</li>
+                <li>{% trans "Donations are voluntary and greatly appreciated." %}</li>
+                <li>{% trans "You will receive a confirmation email at" %} <strong>{{ customer.email }}</strong></li>
+                <li>{% trans "Seeds will be shipped based on availability and season." %}</li>
+              </ul>
+            </div>
+
+            <div class="checkout-actions">
+              <a href="{% url 'shopping-cart' %}" class="btn btn-secondary">
+                {% trans "Back to Cart" %}
+              </a>
+              <button type="submit" class="btn btn-primary btn-lg">
+                {% trans "Complete Order" %}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <style>
+    .checkout-section {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+
+    .checkout-header {
+      margin-bottom: 2rem;
+      border-bottom: 2px solid #ddd;
+      padding-bottom: 1rem;
+    }
+
+    .checkout-header h1 {
+      margin: 0;
+      font-size: 2rem;
+    }
+
+    .alerts-container {
+      margin-bottom: 2rem;
+    }
+
+    .alert {
+      padding: 1rem;
+      border-radius: 4px;
+      margin-bottom: 1rem;
+    }
+
+    .alert-success {
+      background-color: #d4edda;
+      border: 1px solid #c3e6cb;
+      color: #155724;
+    }
+
+    .alert-error {
+      background-color: #f8d7da;
+      border: 1px solid #f5c6cb;
+      color: #721c24;
+    }
+
+    .checkout-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .order-review,
+    .donation-form {
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      padding: 2rem;
+    }
+
+    .order-review h2,
+    .donation-form h2 {
+      margin-top: 0;
+      font-size: 1.5rem;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 1rem;
+    }
+
+    .customer-info-section,
+    .items-section {
+      margin-bottom: 2rem;
+    }
+
+    .customer-info-section h3,
+    .items-section h3 {
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+      color: #333;
+    }
+
+    .info-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid #eee;
+    }
+
+    .info-item strong {
+      color: #666;
+    }
+
+    .items-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 1rem;
+    }
+
+    .items-table thead {
+      background-color: #f8f9fa;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .items-table th {
+      padding: 0.75rem;
+      text-align: left;
+      font-weight: 600;
+    }
+
+    .items-table td {
+      padding: 0.75rem;
+      border-bottom: 1px solid #eee;
+    }
+
+    .text-right {
+      text-align: right;
+    }
+
+    .items-summary {
+      background-color: #f8f9fa;
+      padding: 1rem;
+      border-radius: 4px;
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      font-weight: 600;
+    }
+
+    .donation-help {
+      color: #666;
+      font-size: 0.95rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .checkout-form {
+      margin-top: 1.5rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      color: #333;
+    }
+
+    .optional {
+      color: #999;
+      font-weight: normal;
+      font-size: 0.9rem;
+    }
+
+    .input-group {
+      display: flex;
+      align-items: center;
+      position: relative;
+    }
+
+    .currency {
+      position: absolute;
+      left: 12px;
+      font-weight: 600;
+      color: #666;
+    }
+
+    .donation-input {
+      padding-left: 2rem;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 1rem;
+      font-family: inherit;
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: #007bff;
+      box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+    }
+
+    .notes-textarea {
+      resize: vertical;
+    }
+
+    .form-text {
+      display: block;
+      margin-top: 0.25rem;
+      font-size: 0.875rem;
+      color: #999;
+    }
+
+    .checkout-notice {
+      background-color: #fff3cd;
+      border: 1px solid #ffeeba;
+      border-radius: 4px;
+      padding: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .checkout-notice h4 {
+      margin-top: 0;
+      color: #856404;
+    }
+
+    .checkout-notice ul {
+      margin: 1rem 0;
+      padding-left: 1.5rem;
+    }
+
+    .checkout-notice li {
+      margin-bottom: 0.5rem;
+      color: #856404;
+    }
+
+    .checkout-actions {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .btn {
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+    }
+
+    .btn-primary {
+      background-color: #007bff;
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background-color: #0056b3;
+    }
+
+    .btn-lg {
+      padding: 1rem 2rem;
+      font-size: 1.1rem;
+      flex: 1;
+    }
+
+    .btn-secondary {
+      background-color: #6c757d;
+      color: white;
+    }
+
+    .btn-secondary:hover {
+      background-color: #5a6268;
+    }
+
+    @media (max-width: 768px) {
+      .checkout-container {
+        grid-template-columns: 1fr;
+      }
+
+      .checkout-actions {
+        flex-direction: column;
+      }
+
+      .checkout-actions .btn {
+        width: 100%;
+      }
+
+      .btn-lg {
+        flex: none;
+      }
+    }
+  </style>
+{% endblock content %}
