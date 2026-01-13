@@ -57,9 +57,14 @@
               <span>{{item.french_name}}</span>
             </div>
             <div class="plant-card-actions">
-              <a href="{% url 'add-to-cart' item.id %}" class="btn btn-add-to-cart">
+              <button
+                hx-post="{% url 'add-to-cart' item.id %}"
+                hx-swap="none"
+                class="btn btn-add-to-cart"
+                hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
+              >
                 {% trans "Add to Cart" %}
-              </a>
+              </button>
             </div>
           </div>
         </div>
