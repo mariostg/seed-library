@@ -7,6 +7,31 @@ from django.utils.translation import gettext_lazy as _
 from PIL import Image, ImageOps
 
 
+class LibrarySetting(models.Model):
+    """A model representing miscellaneous boolean settings for the plant library.
+    Exemples include whether the online shop is open or closed for orders,
+    whether the library is accepting seeds without having to specify it to all plant profiles, etc.
+    There can be only one instance of this model in the database.  The number of records is limited to one.
+    """
+
+    is_shop_open = models.BooleanField(
+        default=True, verbose_name=_("Shop Open for Orders")
+    )
+    is_accepting_seeds = models.BooleanField(
+        default=False, verbose_name=_("Accepting Seeds")
+    )
+
+    def __str__(self) -> str:
+        return str(_("Library Status"))
+
+    def save(self, *args, **kwargs):
+        if not self.pk and LibrarySetting.objects.exists():
+            raise ValidationError(
+                _("There can be only one LibrarySetting instance in the database.")
+            )
+        return super().save(*args, **kwargs)
+
+
 class Base(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)

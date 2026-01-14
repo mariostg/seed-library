@@ -56,16 +56,18 @@
               <span>{{item.latin_name}}</span>
               <span>{{item.french_name}}</span>
             </div>
-            <div class="plant-card-actions">
-              <button
-                hx-post="{% url 'add-to-cart' item.id %}"
-                hx-swap="none"
-                class="btn btn-add-to-cart"
-                hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
-              >
-                {% trans "Add to Cart" %}
-              </button>
-            </div>
+            {% if request.library_settings.is_shop_open %}
+              <div class="plant-card-actions">
+                <button
+                  hx-post="{% url 'add-to-cart' item.id %}"
+                  hx-swap="none"
+                  class="btn btn-add-to-cart"
+                  hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
+                >
+                  {% trans "Add to Cart" %}
+                </button>
+              </div>
+            {% endif %}
           </div>
         </div>
         {% if object_list.has_next and forloop.last %}

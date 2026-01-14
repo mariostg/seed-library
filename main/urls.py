@@ -100,6 +100,11 @@ urlpatterns += i18n_patterns(
 
 urlpatterns += i18n_patterns(
     path(
+        _("admin-library-settings/"),
+        views.admin_library_settings,
+        name="admin-library-settings",
+    ),
+    path(
         _("admin-accept-all-seeds/"),
         views.admin_accept_all_seeds,
         name="admin-accept-all-seeds",

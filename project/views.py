@@ -699,6 +699,28 @@ def update_availability(request):
 
 
 @group_required("Library Manager")
+def admin_library_settings(request):
+    settings, created = models.LibrarySetting.objects.get_or_create(id=1)
+    context = {
+        "title": _("Library Settings"),
+        "url_name": "admin-library-settings",
+    }
+    if request.method == "POST":
+        form = forms.AdminLibrarySettingForm(request.POST, instance=settings)
+        if form.is_valid():
+            form.save()
+            messages.success(request, _("Library settings updated successfully."))
+            return redirect("admin-library-settings")
+        else:
+            messages.error(request, _("Please correct the errors below."))
+            context["form"] = form
+    else:
+        context["form"] = forms.AdminLibrarySettingForm(instance=settings)
+
+    return render(request, "project/simple-form.html", context)
+
+
+@group_required("Library Manager")
 def admin_harvesting_indicator_page(request):
     data = models.HarvestingIndicator.objects.annotate(
         plant_count=Count("plantprofile")

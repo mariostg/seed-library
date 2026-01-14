@@ -1,4 +1,5 @@
 {% load i18n %}
+{% load static %}
 {% get_current_language as LANGUAGE_CODE %}
 {% get_available_languages as LANGUAGES %}
 {% get_language_info_list for LANGUAGES as languages %}
@@ -40,7 +41,15 @@
     </li>
 
     <!--link for user shopping cart-->
-    <li><a class='btn' href="{% url 'shopping-cart' %}">{% trans "My Cart" %}</a></li>
+    {% if request.library_settings.is_shop_open %}
+      <li><a class='btn' href="{% url 'shopping-cart' %}">
+        <img src="{% static 'images/shopping-cart.svg' %}" alt="{% trans "Shopping Cart" %}">
+        {% if request.cart_item_count and request.cart_item_count > 0 %}
+          ({{ request.cart_item_count }})
+        {% endif %}
+      </a>
+      </li>
+    {% endif %}
 
     {% if request.user.is_authenticated %}
       <li><a class='btn' href="{% url 'user-plant-collection' %}">{% trans "My Seed Pack" %}</a></li>

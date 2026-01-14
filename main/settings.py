@@ -69,6 +69,7 @@ MIDDLEWARE = [
     "django_browser_reload.middleware.BrowserReloadMiddleware",
     "django_htmx.middleware.HtmxMiddleware",
     "project.acl_handler.UserAdminCheckMiddleware",
+    "project.librarysettings.LibrarySettingsMiddleware",
 ]
 
 ROOT_URLCONF = "main.urls"

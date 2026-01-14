@@ -131,6 +131,15 @@ class SearchPlantForm(forms.ModelForm):
             field.required = False
 
 
+class AdminLibrarySettingForm(forms.ModelForm):
+    class Meta:
+        model = models.LibrarySetting
+        fields = ["is_shop_open", "is_accepting_seeds"]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+
 class AdminColourForm(forms.ModelForm):
     class Meta:
         model = models.BloomColour
