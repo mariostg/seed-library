@@ -26,7 +26,12 @@ def send_order_confirmation(sender, instance, created, **kwargs):
         **kwargs: Additional keyword arguments
     """
     if created:
-        logger.info("Order created: #%s by %s", instance.id, instance.customer.name)
+        logger.info(
+            "Order created: #%s by %s %s",
+            instance.id,
+            instance.customer.first_name,
+            instance.customer.last_name,
+        )
 
         # Send order confirmation email
         try:
