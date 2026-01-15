@@ -840,6 +840,26 @@ urlpatterns += i18n_patterns(
         views.order_history,
         name="order-history",
     ),
+    path(
+        _("admin-order-seed-application-page/"),
+        views.admin_order_seed_application_page,
+        name="admin-order-seed-application-page",
+    ),
+    path(
+        _("admin-order-seed-application-add/"),
+        views.admin_order_seed_application_add,
+        name="admin-order-seed-application-add",
+    ),
+    path(
+        "admin-order-seed-application-update/<int:pk>/",
+        views.admin_order_seed_application_update,
+        name="admin-order-seed-application-update",
+    ),
+    path(
+        "admin-order-seed-application-delete/<int:pk>/",
+        views.admin_order_seed_application_delete,
+        name="admin-order-seed-application-delete",
+    ),
 )
 
 if settings.DEBUG:

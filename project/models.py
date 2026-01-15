@@ -1748,6 +1748,26 @@ class ShoppingCart(models.Model):
         verbose_name_plural = "Shopping Carts"
 
 
+class OrderSeedApplication(models.Model):
+    """A model that describes how the customer intends to use the seeds.
+    Typical exemples include restoration project, personal garden, school project, etc.
+    It provides options that can be selected when placing an order.
+
+    Attributes:
+        seed_application (TextField): A brief description of the application (max 255 chars).
+    """
+
+    seed_application = models.CharField(
+        max_length=255, blank=True, verbose_name=_("Seed Application")
+    )
+
+    def __str__(self) -> str:
+        return self.seed_application
+
+    class Meta:
+        ordering = ["seed_application"]
+
+
 class Order(Base):
     """
     A model representing a customer order for plant seeds.
@@ -1795,6 +1815,14 @@ class Order(Base):
         help_text=_("Optional donation amount in addition to seed order."),
     )
     notes = models.TextField(blank=True, verbose_name=_("Notes"))
+    application = models.ForeignKey(
+        OrderSeedApplication,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name=_("Order Application"),
+        related_name="orders",
+    )
 
     def __str__(self) -> str:
         return f"Order #{self.id} - {self.customer.first_name} {self.customer.last_name} - {self.order_date.strftime('%Y-%m-%d')}"

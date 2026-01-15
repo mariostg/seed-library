@@ -140,6 +140,15 @@ class AdminLibrarySettingForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
 
 
+class AdminOrderSeedApplicationForm(forms.ModelForm):
+    class Meta:
+        model = models.OrderSeedApplication
+        fields = ["seed_application"]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+
 class AdminColourForm(forms.ModelForm):
     class Meta:
         model = models.BloomColour

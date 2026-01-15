@@ -545,7 +545,9 @@ def get_cart_total(request):
     return sum(item.quantity for item in cart_items)
 
 
-def create_order_from_cart(request, donation_amount=0, notes=""):
+def create_order_from_cart(
+    request, donation_amount=0, notes="", order_application=None
+):
     """
     Convert shopping cart items into an Order and OrderItems.
     Clears the cart after order creation.
@@ -555,6 +557,7 @@ def create_order_from_cart(request, donation_amount=0, notes=""):
         request: Django request object
         donation_amount: Optional donation amount (default 0)
         notes: Optional notes for the order
+        order_application: Optional OrderSeedApplication object
 
     Returns:
         Order object or None if cart is empty or customer not found
@@ -580,6 +583,7 @@ def create_order_from_cart(request, donation_amount=0, notes=""):
         customer=customer,
         donation_amount=donation_amount,
         notes=notes,
+        application=order_application,
         status="pending",
     )
 

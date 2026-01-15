@@ -1,0 +1,45 @@
+{% extends "core/base.html" %}
+{% load i18n %}
+{% load static %}
+{% block title %}{{ title }} {% trans "Management" %}{% endblock title %}
+{% block content %}
+  {% include "project/admin/admin_links.html" %}
+  <div class='flex-col-center'>
+    <fieldset class="flex-col-center">
+      <legend>{{ title }}</legend>
+      {% if user.is_authenticated %}
+        <div class="center">
+          <a href="{% url 'admin-order-seed-application-add' %}" class="btn btn-add">Add new Option</a>
+        </div>
+      {% endif %}
+      <table class=''>
+        <thead>
+          <tr>
+            <th>{% trans "Seed Application" %}</th>
+            <th>{% trans "Order Count" %}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in object_list %}
+            <tr class="{% cycle 'odd-row' 'even-row' %}">
+              <td>{{ item.seed_application }}</td>
+              <td>{{ item.order_count }}</td>
+              {% if user.is_authenticated %}
+                <td class='actions'>
+                  <a class='btn btn-edit' href="{% url "admin-order-seed-application-update" item.id %}">{% trans "Edit" %}</a>
+                  <a class='btn btn-delete' href="{% url "admin-order-seed-application-delete" item.id %}">{% trans "Delete" %}</a>
+                </td>
+              {% endif %}
+            </tr>
+          {% empty %}
+            <tr>
+              <td colspan="3">{% trans "No seed applications found." %}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </fieldset>
+  </div>
+  </body>
+  </html>
+{% endblock content %}

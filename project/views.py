@@ -4211,6 +4211,113 @@ def order_confirmation(request, pk):
     return render(request, "project/order-confirmation.html", context)
 
 
+@group_required("Library Manager")
+def admin_order_seed_application_page(request):
+    """Dsisplay the use or application for seed ordering used to populate the selection options in the order seed application form."""
+    data = models.OrderSeedApplication.objects.annotate(
+        order_count=Count("orders")
+    ).order_by("seed_application")
+    context = {
+        "object_list": data,
+        "title": _("Seed Order Application"),
+        "url_name": "admin-order-seed-application-page",
+    }
+
+    if request.method == "POST":
+        form = forms.AdminOrderSeedApplicationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(
+                request, _("Seed order application submitted successfully.")
+            )
+            return redirect("plant-catalogue")
+        else:
+            messages.error(request, _("Please correct the errors below."))
+    else:
+        form = forms.AdminOrderSeedApplicationForm()
+
+    context["form"] = form
+    return render(
+        request, "project/admin/admin-order-seed-application-page.html", context
+    )
+
+
+@group_required("Library Manager")
+def admin_order_seed_application_add(request):
+    context = {
+        "title": _("Register New Seed Order Application"),
+        "url_name": "admin-order-seed-application-page",
+    }
+    if request.method == "POST":
+        form = forms.AdminOrderSeedApplicationForm(request.POST)
+        if form.is_valid():
+            context["form"] = form
+            obj: models.OrderSeedApplication = form.save(commit=False)
+            try:
+                form.save()
+            except IntegrityError:
+                messages.error(
+                    request,
+                    _("Seed Order Application %(application)s exists already.")
+                    % {"application": obj.use_or_application},
+                )
+                return render(
+                    request,
+                    "project/simple-form.html",
+                    context,
+                )
+        else:
+            messages.error(request, _("Seed Order Application not valid."))
+            context["form"] = form
+    else:
+        context["form"] = forms.AdminOrderSeedApplicationForm()
+
+    return render(request, "project/simple-form.html", context)
+
+
+@group_required("Library Manager")
+def admin_order_seed_application_update(request, pk):
+    """Update an existing seed order application used to populate the selection options in the order seed application form."""
+    obj = models.OrderSeedApplication.objects.get(id=pk)
+    form = forms.AdminOrderSeedApplicationForm(instance=obj)
+
+    if request.method == "POST":
+        form = forms.AdminOrderSeedApplicationForm(request.POST, instance=obj)
+        if form.is_valid():
+            form.save()
+            messages.success(request, _("Seed order application updated successfully."))
+            return redirect("admin-order-seed-application-page")
+
+    return render(
+        request,
+        "project/simple-form.html",
+        {
+            "form": form,
+            "title": _("Update Seed Order Application"),
+            "url_name": "admin-order-seed-application-page",
+        },
+    )
+
+
+@group_required("Library Manager")
+def admin_order_seed_application_delete(request, pk):
+    """Delete an existing seed order application used to populate the selection options in the order seed application form."""
+    obj: models.OrderSeedApplication = models.OrderSeedApplication.objects.get(id=pk)
+    if request.method == "POST":
+        try:
+            obj.delete()
+        except RestrictedError as e:
+            msg = e.args[0].split(":")[0] + " : "
+            fkeys = []
+            for fk in e.restricted_objects:
+                fkeys.append(fk.use_or_application)
+            msg = msg + ", ".join(fkeys)
+            messages.warning(request, msg)
+        return redirect("admin-order-seed-application-page")
+    context = {"object": obj, "back": "admin-order-seed-application-page"}
+    return render(request, "core/delete-object.html", context)
+
+
 def order_history(request):
     """
     Display order history for the current customer.
