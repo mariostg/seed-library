@@ -17,10 +17,9 @@ class LibrarySettingsMiddleware:
     def __call__(self, request):
         # Attach library settings to the request object
         request.library_settings = self.get_library_settings()
-        if request.library_settings.is_shop_open:
-            request.cart_item_count = self.get_cart_item_count(
-                request.session["customer_id"]
-            )
+        customer_id = request.session.get("customer_id")
+        if request.library_settings.is_shop_open and customer_id:
+            request.cart_item_count = self.get_cart_item_count(customer_id)
         response = self.get_response(request)
         return response
 
