@@ -10,21 +10,12 @@ The layout and styling are designed for printing-->
 {% block content %}
   {% include "project/admin/admin_links.html" %}
 
-  <section class="flex-col-center print-friendly">
+  <section class="container flex-col-center">
 
     <h1>{{ title }}</h1>
 
-    {% if messages %}
-      <div>
-        {% for message in messages %}
-          <div class="alert alert--{{ message.tags }}">{{ message }}</div>
-        {% endfor %}
-      </div>
-    {% endif %}
-
-    <article class="flex-row">
+    <article class="flex-row wide">
       <div class="customer-details">
-        <h2>{% trans "Customer Information" %}</h2>
         <address>
           {{ order.customer.first_name }} {{ order.customer.last_name }}<br>
           {{ order.customer.address }}<br>
@@ -33,19 +24,23 @@ The layout and styling are designed for printing-->
           {% endif %}
           {{ order.customer.city }}, {{ order.customer.province }}<br>
           {{ order.customer.postal_code }}<br>
+        </address>
+        <br>
+        <div>
           {{ order.customer.email }}<br>
           {{ order.customer.phone_number }}<br>
-        </address>
+        </div>
       </div>
       <div class="order-details">
-        <h2>{% trans "Order Information" %}</h2>
-        <p><strong>{% trans "Order ID:" %}</strong> {{ order.id }}</p>
         <p><strong>{% trans "Order Date:" %}</strong> {{ order.order_date }}</p>
         <p><strong>{% trans "Donation Amount:" %}</strong> {{ order.donation }}</p>
         <p><strong>{% trans "Order Application:" %}</strong> {{ order.application }}</p>
       </div>
     </article>
-    <p><strong>{% trans "Notes:" %}</strong> {{ order.notes }}</p>
+    <article class="flex-row">
+      <p><strong>{% trans "Comments:" %}</strong> {{ order.notes }}</p>
+
+    </article>
 
     <div class="order-items">
       <h2>{% trans "Ordered Items" %}</h2>

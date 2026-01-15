@@ -55,6 +55,9 @@ td {
     flex-direction: column;
     gap: 1rem;
   }
+  @media print {
+    display: none;
+  }
 }
 
 .bar {

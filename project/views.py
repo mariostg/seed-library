@@ -4369,9 +4369,9 @@ def admin_order_detail_page(request, pk):
         return redirect("admin-order-management-page")
 
     context = {
-        "title": _("Order #%(order_id)d Details") % {"order_id": order.id},
+        "title": _("Order #%(order_id)d") % {"order_id": order.id},
         "order": order,
-        "order_items": order.items.all(),
+        "order_items": order.items.all().order_by("plant_profile__english_name"),
         "url_name": "admin-order-management-page",
     }
     return render(request, "project/admin/admin-order-detail-page.html", context)
