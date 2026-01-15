@@ -1,0 +1,18 @@
+{% load i18n %}
+{% if request.user.is_authenticated %}
+
+  <nav class="flex-row xcenter row-spacer">
+
+    {% if request.user.is_access_administrator %}
+      <div class="flex-col-center">
+        <div class="title">{% trans "Online Seed Order" %}</div>
+        <div>
+          <div>
+            <a href="{% url 'admin-order-seed-application-page' %}">{% trans "Manage Seed Applications" %}</a>
+          </div>
+        </div>
+      </div>
+    {% endif %}
+
+{% endif %}
+</nav>
