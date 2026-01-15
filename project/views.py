@@ -4334,6 +4334,27 @@ def admin_order_seed_application_delete(request, pk):
     return render(request, "core/delete-object.html", context)
 
 
+@group_required("Library Manager")
+def admin_order_management_page(request):
+    """Display all orders placed by customers for management purposes."""
+    orders = (
+        models.Order.objects.select_related("customer")
+        .prefetch_related("items__plant_profile")
+        .order_by("-order_date")
+    )
+    # Pagination
+    paginator = Paginator(orders, 20)
+    page_number = request.GET.get("page")
+    orders_page = paginator.get_page(page_number)
+
+    context = {
+        "title": _("Order Management"),
+        "orders": orders_page,
+        "url_name": "admin-order-management-page",
+    }
+    return render(request, "project/admin/admin-order-management-page.html", context)
+
+
 def order_history(request):
     """
     Display order history for the current customer.

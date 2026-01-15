@@ -860,6 +860,11 @@ urlpatterns += i18n_patterns(
         views.admin_order_seed_application_delete,
         name="admin-order-seed-application-delete",
     ),
+    path(
+        _("admin-order-management-page/"),
+        views.admin_order_management_page,
+        name="admin-order-management-page",
+    ),
 )
 
 if settings.DEBUG:
