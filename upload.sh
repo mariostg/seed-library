@@ -1,7 +1,7 @@
 #!/bin/sh
 DEVSITE='mariost-gelais@mariostg.com:~/owsl.mariostg.com'
 PRODSITE='mariost-gelais@mariostg.com:~/catalogue.wildflowerseedlibrary.ca'
-SOURCE="/Users/mariost-gelais/Documents/gitprojects/owsl/djbp/*"
+SOURCE="."
 if [ $# -eq 0 ]; then #execute a dry run to dev site
     rsync -avzn \
     --filter 'protect /media/*' \
