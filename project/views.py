@@ -4149,6 +4149,8 @@ def checkout(request):
         messages.warning(request, _("Your cart is empty. Add seeds before checkout."))
         return redirect("shopping-cart")
 
+    order_seed_application = models.OrderSeedApplication.objects.all()
+
     if request.method == "POST":
         try:
             donation_str = request.POST.get("donation_amount", "0")
@@ -4162,8 +4164,21 @@ def checkout(request):
 
         notes = request.POST.get("notes", "").strip()
 
+        order_seed_application_id = request.POST.get("application")
+        order_seed_application = None
+        if order_seed_application_id:
+            try:
+                order_seed_application = models.OrderSeedApplication.objects.get(
+                    id=order_seed_application_id
+                )
+            except models.OrderSeedApplication.DoesNotExist:
+                order_seed_application = None
+
         order = utils.create_order_from_cart(
-            request, donation_amount=donation_amount, notes=notes
+            request,
+            donation_amount=donation_amount,
+            notes=notes,
+            order_application=order_seed_application,
         )
 
         if order:
@@ -4178,6 +4193,7 @@ def checkout(request):
 
     item_count = utils.get_cart_total(request)
     context = {
+        "order_seed_application": order_seed_application,
         "customer": customer,
         "cart_items": cart_items,
         "item_count": item_count,
