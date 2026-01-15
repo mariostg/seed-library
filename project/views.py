@@ -4355,6 +4355,28 @@ def admin_order_management_page(request):
     return render(request, "project/admin/admin-order-management-page.html", context)
 
 
+@group_required("Library Manager")
+def admin_order_detail_page(request, pk):
+    """Display detailed information about a specific order for management purposes."""
+    try:
+        order = (
+            models.Order.objects.select_related("customer")
+            .prefetch_related("items__plant_profile")
+            .get(id=pk)
+        )
+    except models.Order.DoesNotExist:
+        messages.error(request, _("Order not found."))
+        return redirect("admin-order-management-page")
+
+    context = {
+        "title": _("Order #%(order_id)d Details") % {"order_id": order.id},
+        "order": order,
+        "order_items": order.items.all(),
+        "url_name": "admin-order-management-page",
+    }
+    return render(request, "project/admin/admin-order-detail-page.html", context)
+
+
 def order_history(request):
     """
     Display order history for the current customer.

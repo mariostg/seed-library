@@ -1,0 +1,74 @@
+<!--A template that displays the details of an order for the admin user.
+The layout and styling are designed for printing-->
+
+{% extends "core/base.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}{{title}}{% endblock %}
+
+{% block content %}
+  {% include "project/admin/admin_links.html" %}
+
+  <section class="flex-col-center print-friendly">
+
+    <h1>{{ title }}</h1>
+
+    {% if messages %}
+      <div>
+        {% for message in messages %}
+          <div class="alert alert--{{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <article class="flex-row">
+      <div class="customer-details">
+        <h2>{% trans "Customer Information" %}</h2>
+        <address>
+          {{ order.customer.first_name }} {{ order.customer.last_name }}<br>
+          {{ order.customer.address }}<br>
+          {% if order.customer.address_line2 %}
+            {{ order.customer.address_line2 }}<br>
+          {% endif %}
+          {{ order.customer.city }}, {{ order.customer.province }}<br>
+          {{ order.customer.postal_code }}<br>
+          {{ order.customer.email }}<br>
+          {{ order.customer.phone_number }}<br>
+        </address>
+      </div>
+      <div class="order-details">
+        <h2>{% trans "Order Information" %}</h2>
+        <p><strong>{% trans "Order ID:" %}</strong> {{ order.id }}</p>
+        <p><strong>{% trans "Order Date:" %}</strong> {{ order.order_date }}</p>
+        <p><strong>{% trans "Donation Amount:" %}</strong> {{ order.donation }}</p>
+        <p><strong>{% trans "Order Application:" %}</strong> {{ order.application }}</p>
+      </div>
+    </article>
+    <p><strong>{% trans "Notes:" %}</strong> {{ order.notes }}</p>
+
+    <div class="order-items">
+      <h2>{% trans "Ordered Items" %}</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>{% trans "Plant" %}</th>
+            <th>{% trans "Quantity" %}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in order_items %}
+            <tr>
+              <td>{{ item.plant_profile.english_name }} ({{ item.plant_profile.latin_name }})</td>
+              <td>{{ item.quantity }}</td>
+            </tr>
+          {% empty %}
+            <tr>
+              <td colspan="2">{% trans "No items found in this order." %}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </section>
+{% endblock content %}

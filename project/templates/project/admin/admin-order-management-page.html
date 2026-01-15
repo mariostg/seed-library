@@ -41,7 +41,7 @@
               <td>{{ order.donation }}</td>
               <td>{{ order.application }}</td>
               <td>
-                  {% comment %} <a href="{% url 'admin-order-detail-page' order.id %}">{% trans "View Details" %}</a> {% endcomment %}
+                <a href="{% url 'admin-order-detail-page' order.id %}">{% trans "View Details" %}</a>
               </td>
             </tr>
           {% empty %}
