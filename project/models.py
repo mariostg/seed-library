@@ -19,7 +19,8 @@ class LibrarySetting(models.Model):
     )
     is_accepting_seeds = models.BooleanField(
         default=False, verbose_name=_("Accepting Seeds")
-    )
+    )  # a convenience setting to indicate whether the library is accepting seeds in general
+    # without having to specify it to all plant profiles
 
     def __str__(self) -> str:
         return str(_("Library Status"))
