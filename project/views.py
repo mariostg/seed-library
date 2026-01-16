@@ -3997,6 +3997,10 @@ def create_customer(request):
     GET: Display customer creation form
     POST: Create customer, store in session, redirect to cart
     """
+    if not request.library_settings.is_shop_open:
+        messages.info(request, _("The seed shop is currently closed."))
+        return redirect("index")
+
     if request.method == "POST":
         form = forms.CustomerForm(request.POST)
         if form.is_valid():
@@ -4021,6 +4025,10 @@ def shopping_cart(request):
     Display the shopping cart with all items for current customer.
     Shows cart summary and allows quantity updates.
     """
+    if not request.library_settings.is_shop_open:
+        messages.info(request, _("The seed shop is currently closed."))
+        return redirect("index")
+
     customer = utils.get_or_create_customer_from_session(request)
     if not customer:
         return redirect("create-customer")
@@ -4043,6 +4051,10 @@ def add_to_cart(request, pk):
     GET: Add default quantity (1)
     POST: Add with specified quantity from form
     """
+    if not request.library_settings.is_shop_open:
+        messages.info(request, _("The seed shop is currently closed."))
+        return redirect("index")
+
     customer = utils.get_or_create_customer_from_session(request)
     if not customer:
         messages.info(request, _("Please create a customer profile first."))
@@ -4082,6 +4094,10 @@ def update_cart_item(request, pk):
     Update the quantity of an item in the shopping cart.
     POST only: Expects 'quantity' in POST data
     """
+    if not request.library_settings.is_shop_open:
+        messages.info(request, _("The seed shop is currently closed."))
+        return redirect("index")
+
     customer = utils.get_or_create_customer_from_session(request)
     if not customer:
         return redirect("create-customer")
@@ -4114,6 +4130,10 @@ def remove_from_cart(request, pk):
     Remove an item from the shopping cart.
     POST only for safety.
     """
+    if not request.library_settings.is_shop_open:
+        messages.info(request, _("The seed shop is currently closed."))
+        return redirect("index")
+
     customer = utils.get_or_create_customer_from_session(request)
     if not customer:
         return redirect("create-customer")
@@ -4140,6 +4160,10 @@ def checkout(request):
     GET: Display checkout review page
     POST: Process order creation
     """
+    if not request.library_settings.is_shop_open:
+        messages.info(request, _("The seed shop is currently closed."))
+        return redirect("index")
+
     customer = utils.get_or_create_customer_from_session(request)
     if not customer:
         return redirect("create-customer")
@@ -4206,6 +4230,10 @@ def order_confirmation(request, pk):
     Display order confirmation and summary.
     Shows order details, items, and donation amount.
     """
+    if not request.library_settings.is_shop_open:
+        messages.info(request, _("The seed shop is currently closed."))
+        return redirect("index")
+
     try:
         order = models.Order.objects.get(id=pk)
     except models.Order.DoesNotExist:
