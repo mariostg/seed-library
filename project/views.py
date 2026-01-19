@@ -4048,21 +4048,37 @@ def add_to_cart(request, pk):
     """
     Add a plant to the shopping cart.
     Expects customer_id in session.
+    if no customer in session, redirect to create customer page.
+    if shop is closed, redirect to index page.
     GET: Add default quantity (1)
     POST: Add with specified quantity from form
     """
+    is_htmx = request.headers.get("HX-Request") == "true"
+
     if not request.library_settings.is_shop_open:
         messages.info(request, _("The seed shop is currently closed."))
+        if is_htmx:
+            response = HttpResponse(status=200)
+            response["HX-Redirect"] = reverse("index")
+            return response
         return redirect("index")
 
     customer = utils.get_or_create_customer_from_session(request)
     if not customer:
         messages.info(request, _("Please create a customer profile first."))
+        if is_htmx:
+            response = HttpResponse(status=200)
+            response["HX-Redirect"] = reverse("create-customer")
+            return response
         return redirect("create-customer")
 
     plant = utils.single_plant(pk, request)
     if not plant:
         messages.error(request, _("Plant not found."))
+        if is_htmx:
+            response = HttpResponse(status=200)
+            response["HX-Redirect"] = reverse("plant-catalogue")
+            return response
         return redirect("plant-catalogue")
 
     quantity = 1
@@ -4084,7 +4100,11 @@ def add_to_cart(request, pk):
     else:
         messages.error(request, _("Could not add item to cart."))
 
-    # Redirect based on referrer or default to cart
+    if is_htmx:
+        # For HTMX requests, return empty response (messages handled by middleware)
+        return HttpResponse(status=200)
+
+    # For regular requests, redirect
     next_url = request.POST.get("next", request.GET.get("next", "shopping-cart"))
     return redirect(next_url)
 
