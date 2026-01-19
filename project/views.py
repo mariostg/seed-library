@@ -1,5 +1,6 @@
 import csv
 import io
+import json
 from datetime import datetime
 
 from django.contrib import messages
@@ -4101,8 +4102,12 @@ def add_to_cart(request, pk):
         messages.error(request, _("Could not add item to cart."))
 
     if is_htmx:
-        # For HTMX requests, return empty response (messages handled by middleware)
-        return HttpResponse(status=200)
+        # For HTMX requests, return a small trigger header with the updated cart count
+        # so client can update the cart indicator without a full page refresh.
+        new_count = utils.get_cart_total(request)
+        response = HttpResponse(status=200)
+        response["HX-Trigger"] = json.dumps({"cartChanged": new_count})
+        return response
 
     # For regular requests, redirect
     next_url = request.POST.get("next", request.GET.get("next", "shopping-cart"))

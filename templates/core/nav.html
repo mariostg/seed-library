@@ -44,9 +44,11 @@
     {% if request.library_settings.is_shop_open %}
       <li><a class='btn' href="{% url 'shopping-cart' %}">
         <img src="{% static 'images/shopping-cart.svg' %}" alt="{% trans "Shopping Cart" %}">
-        {% if request.cart_item_count and request.cart_item_count > 0 %}
-          ({{ request.cart_item_count }})
-        {% endif %}
+        <span id="shopping-cart-indicator">
+          {% if request.cart_item_count and request.cart_item_count > 0 %}
+            ({{ request.cart_item_count }})
+          {% endif %}
+        </span>
       </a>
       </li>
     {% endif %}
@@ -75,3 +77,16 @@
 
   </ul>
 </nav>
+<script>
+  document.body.addEventListener('cartChanged', function(e){
+    var count = e.detail.value;
+    console.log("cartChanged event received, new count: " + count);
+    var el = document.getElementById('shopping-cart-indicator');
+    if(!el) return;
+    el.textContent = '';
+
+    if(count && count > 0){
+      el.innerHTML = ' (' + count + ')';
+    }
+  });
+</script>
