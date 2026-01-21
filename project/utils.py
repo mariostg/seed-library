@@ -4,6 +4,7 @@ from io import BytesIO
 from pathlib import Path
 
 import qrcode
+from django.conf import settings
 from django.http import HttpRequest
 from exif import Image
 from PIL import Image as PILImage
@@ -578,25 +579,36 @@ def create_order_from_cart(
     if not isinstance(donation_amount, Decimal):
         donation_amount = Decimal(str(donation_amount))
 
-    # Create the order
-    order = Order.objects.create(
-        customer=customer,
-        donation_amount=donation_amount,
-        notes=notes,
-        application=order_application,
-        status="pending",
-    )
+    from django.db import transaction
 
-    # Create OrderItems from cart items (seeds are free)
-    for cart_item in cart_items:
-        OrderItem.objects.create(
-            order=order,
-            plant_profile=cart_item.plant_profile,
-            quantity=cart_item.quantity,
+    from project.tasks import send_donation_thank_you_task, send_order_confirmation_task
+
+    # Create the order and items inside an atomic transaction, and
+    # enqueue email tasks after the transaction commits to avoid races.
+    with transaction.atomic():
+        order = Order.objects.create(
+            customer=customer,
+            donation_amount=donation_amount,
+            notes=notes,
+            application=order_application,
+            status="pending",
         )
 
-    # Clear the shopping cart
-    cart_items.delete()
+        # Create OrderItems from cart items (seeds are free)
+        for cart_item in cart_items:
+            OrderItem.objects.create(
+                order=order,
+                plant_profile=cart_item.plant_profile,
+                quantity=cart_item.quantity,
+            )
+
+        # Clear the shopping cart
+        cart_items.delete()
+
+        # Schedule Celery tasks to run after successful commit
+        transaction.on_commit(lambda: send_order_confirmation_task.delay(order.id))
+        if order.donation_amount and order.donation_amount > 0:
+            transaction.on_commit(lambda: send_donation_thank_you_task.delay(order.id))
 
     return order
 
@@ -649,7 +661,6 @@ def send_order_confirmation_email(order):
 
     try:
         logger.debug("Preparing order confirmation email for Order #%s", order.id)
-
         # Prepare email context
         order_items = order.items.all().select_related("plant_profile")
         context = {
@@ -675,6 +686,7 @@ def send_order_confirmation_email(order):
             body=text_content,
             from_email=None,  # Uses DEFAULT_FROM_EMAIL from settings
             to=[order.customer.email],
+            bcc=[settings.DEFAULT_BCC_EMAIL],
         )
         email.attach_alternative(html_content, "text/html")
 

@@ -4,6 +4,8 @@
 #
 #    pip-compile --cert=None --client-cert=None --index-url=None --pip-args=None
 #
+amqp==5.3.1
+    # via kombu
 annotated-types==0.7.0
     # via pydantic
 asgiref==3.10.0
@@ -13,11 +15,17 @@ asgiref==3.10.0
     #   django-htmx
 asttokens==3.0.0
     # via stack-data
+async-timeout==5.0.1
+    # via redis
 attrs==25.4.0
     # via flake8-bugbear
 beautifulsoup4==4.14.2
     # via -r requirements.in
+billiard==4.2.4
+    # via celery
 black==25.9.0
+    # via -r requirements.in
+celery==5.6.2
     # via -r requirements.in
 certifi==2025.11.12
     # via requests
@@ -28,7 +36,18 @@ charset-normalizer==3.4.4
     #   reportlab
     #   requests
 click==8.3.0
-    # via black
+    # via
+    #   black
+    #   celery
+    #   click-didyoumean
+    #   click-plugins
+    #   click-repl
+click-didyoumean==0.3.1
+    # via celery
+click-plugins==1.1.1.2
+    # via celery
+click-repl==0.3.0
+    # via celery
 coverage==7.11.0
     # via -r requirements.in
 decorator==5.2.1
@@ -108,6 +127,8 @@ isort==7.0.0
     # via -r requirements.in
 jedi==0.19.2
     # via ipython
+kombu==5.6.2
+    # via celery
 markdown-it-py==4.0.0
     # via rich
 matplotlib-inline==0.2.1
@@ -128,6 +149,7 @@ packaging==25.0
     # via
     #   black
     #   gunicorn
+    #   kombu
     #   pytest
 pandas==2.3.3
     # via -r requirements.in
@@ -156,7 +178,9 @@ polib==1.2.0
 pre-commit==4.3.0
     # via -r requirements.in
 prompt-toolkit==3.0.52
-    # via ipython
+    # via
+    #   click-repl
+    #   ipython
 ptyprocess==0.7.0
     # via pexpect
 pure-eval==0.2.3
@@ -186,7 +210,9 @@ pytest==8.4.2
 pytest-django==4.11.1
     # via -r requirements.in
 python-dateutil==2.9.0.post0
-    # via pandas
+    # via
+    #   celery
+    #   pandas
 python-dotenv==1.2.1
     # via -r requirements.in
 pytokens==0.2.0
@@ -198,6 +224,8 @@ pyupgrade==3.21.0
 pyyaml==6.0.3
     # via pre-commit
 qrcode==8.2
+    # via -r requirements.in
+redis==7.1.0
     # via -r requirements.in
 reportlab==4.4.4
     # via -r requirements.in
@@ -233,9 +261,18 @@ typing-extensions==4.15.0
 typing-inspection==0.4.2
     # via pydantic
 tzdata==2025.2
-    # via pandas
+    # via
+    #   kombu
+    #   pandas
+tzlocal==5.3.1
+    # via celery
 urllib3==2.5.0
     # via requests
+vine==5.1.0
+    # via
+    #   amqp
+    #   celery
+    #   kombu
 virtualenv==20.35.4
     # via pre-commit
 wcwidth==0.2.14

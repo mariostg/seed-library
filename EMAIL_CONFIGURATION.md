@@ -1,177 +1,112 @@
+<!--
+Email configuration and testing guide for the project.
+
+This file documents the current implementation: emails are sent by Celery tasks
+that are enqueued from `create_order_from_cart()` using `transaction.on_commit()`.
+-->
+
 # Email Configuration Guide
 
 This guide explains how to configure email sending for order confirmations and donation thank you emails.
 
 ## Overview
 
-The application automatically sends emails when:
+The application sends two kinds of transactional emails related to orders:
 
-1. A new order is created (order confirmation)
-2. A donation is included with an order (donation thank you email)
+- Order confirmation (when an order is placed)
+- Donation thank-you (only if a donation amount > 0)
+
+Notes about implementation (current codebase):
+
+- Email sending is performed asynchronously by Celery tasks defined in `project/tasks.py`.
+- Orders and their `OrderItem`s are created inside a database transaction; Celery tasks are enqueued using `transaction.on_commit(...)` to ensure tasks are scheduled only after the DB commit.
 
 ## Configuration
 
 ### 1. Required Settings in `main/settings.py`
 
-Add or modify the following email configuration settings:
+Add or verify the following email-related settings (examples):
 
 ```python
 # Email Configuration
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = "your-email-provider.com"  # e.g., 'smtp.gmail.com', 'smtp.sendgrid.net'
-EMAIL_PORT = 587  # Use 587 for TLS, 465 for SSL
-EMAIL_USE_TLS = True  # Set to False if using SSL
-EMAIL_USE_SSL = False  # Set to True if using SSL on port 465
-EMAIL_HOST_USER = "your-email@example.com"
-EMAIL_HOST_PASSWORD = "your-app-password-or-api-key"
-DEFAULT_FROM_EMAIL = "noreply@example.com"  # The "From" address in emails
-```
+EMAIL_HOST = os.environ.get("EMAIL_HOST")  # e.g., 'smtp.gmail.com'
 
-### 2. Email Provider Examples
-
-#### Gmail
-
-```python
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = "smtp.gmail.com"
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = "your-email@gmail.com"
-EMAIL_HOST_PASSWORD = "your-app-specific-password"  # NOT your regular password
-DEFAULT_FROM_EMAIL = "noreply@example.com"
-```
-
-**Note:** For Gmail, you need to:
-
-1. Enable 2-factor authentication
-2. Generate an "App Password" at https://myaccount.google.com/apppasswords
-3. Use the App Password (not your regular password)
-
-#### SendGrid
-
-```python
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = "smtp.sendgrid.net"
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = "apikey"
-EMAIL_HOST_PASSWORD = "your-sendgrid-api-key"
-DEFAULT_FROM_EMAIL = "noreply@example.com"
-```
-
-#### AWS SES
-
-```python
-EMAIL_BACKEND = "django_ses.SESBackend"  # Requires django-ses package
-AWS_SES_REGION_NAME = "us-east-1"
-AWS_SES_REGION_ENDPOINT = "email.us-east-1.amazonaws.com"
-AWS_ACCESS_KEY_ID = "your-aws-access-key"
-AWS_SECRET_ACCESS_KEY = "your-aws-secret-key"
-DEFAULT_FROM_EMAIL = "noreply@example.com"
-```
-
-#### Console Backend (Development Only)
-
-For testing without actually sending emails:
-
-```python
-EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
-```
-
-This prints emails to the console instead of sending them.
-
-### 3. Environment Variables (Recommended)
-
-For security, store sensitive information in environment variables:
-
-```python
-import os
-
-EMAIL_HOST = os.environ.get("EMAIL_HOST")
 EMAIL_PORT = int(os.environ.get("EMAIL_PORT", 587))
+EMAIL_USE_TLS = True
 EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER")
+
 EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
-DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL", "noreply@example.com")
+DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL", EMAIL_HOST_USER)
+DEFAULT_BCC_EMAIL = os.environ.get("DEFAULT_BCC_EMAIL")
+
+# Celery broker (Redis example)
+CELERY_BROKER_URL = os.environ.get("CELERY_BROKER_URL", "redis://localhost:6379/0")
+CELERY_RESULT_BACKEND = os.environ.get(
+    "CELERY_RESULT_BACKEND", "redis://localhost:6379/0"
+)
 ```
 
-Then set environment variables:
+### 2. Environment Variables (Recommended)
+
+Store credentials in environment variables or a `.env` file (project uses python-dotenv):
 
 ```bash
-export EMAIL_HOST=smtp.gmail.com
-export EMAIL_PORT=587
-export EMAIL_HOST_USER=your-email@gmail.com
-export EMAIL_HOST_PASSWORD=your-app-specific-password
-export DEFAULT_FROM_EMAIL=noreply@example.com
-```
-
-Or in `.env` file (with python-dotenv):
-
-```
 EMAIL_HOST=smtp.gmail.com
 EMAIL_PORT=587
+
 EMAIL_HOST_USER=your-email@gmail.com
 EMAIL_HOST_PASSWORD=your-app-specific-password
 DEFAULT_FROM_EMAIL=noreply@example.com
+
+DEFAULT_BCC_EMAIL=ops@example.com
+CELERY_BROKER_URL=redis://localhost:6379/0
+CELERY_RESULT_BACKEND=redis://localhost:6379/0
 ```
 
-## How It Works
+## How It Works (current implementation)
 
-### Signal Handler
+- The checkout code calls `create_order_from_cart()` in `project/utils.py`.
+- `create_order_from_cart()` wraps creation of the `Order` and its `OrderItem` rows inside a `transaction.atomic()` block.
 
-When an Order is created, Django signals automatically trigger email sending:
+- After creating the order and items, it schedules Celery tasks using `transaction.on_commit(...)`:
+  - `send_order_confirmation_task.delay(order.id)` — enqueues order confirmation email
+  - `send_donation_thank_you_task.delay(order.id)` — enqueues donation email (only if donation_amount > 0)
 
-1. **Order Confirmation Email** - Always sent
+- The Celery tasks are defined in `project/tasks.py` and send emails by calling the helpers in `project/utils.py`.
 
-   - Includes order ID, date, and items ordered
-   - Shows delivery address
-   - Contains next steps information
-   - Template: `project/templates/project/emails/order_confirmation.html`
+This approach avoids the race condition of sending emails from Django `post_save` signals before related `OrderItem`s exist.
 
-2. **Donation Thank You Email** - Only if donation_amount > 0
-   - Thanks customer for donation
-   - Explains impact of donation
-   - Shows donation amount
-   - Template: `project/templates/project/emails/donation_thank_you.html`
-
-### Email Templates
+## Email Templates
 
 Located in `project/templates/project/emails/`:
 
-- `order_confirmation.html` - HTML version of order confirmation
-- `order_confirmation.txt` - Plain text version
-- `donation_thank_you.html` - HTML version of donation thank you
-- `donation_thank_you.txt` - Plain text version
+- `order_confirmation.html` (HTML)
+- `order_confirmation.txt` (plain text)
+- `donation_thank_you.html` (HTML)
+- `donation_thank_you.txt` (plain text)
 
 ## Testing
 
-### Test Email Configuration
+### Quick SMTP test
 
 ```bash
 python manage.py shell
 ```
 
-Then in the Python shell:
+Then in the shell:
 
 ```python
 from django.core.mail import send_mail
 
 send_mail(
-    "Test Subject",
-    "Test message body",
-    "from@example.com",
-    ["to@example.com"],
-    fail_silently=False,
+    "Test", "Test body", "from@example.com", ["to@example.com"], fail_silently=False
 )
 ```
 
-### View Sent Emails in Console (Development)
+### Test order email path (without Celery worker)
 
-```python
-# In settings.py
-EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
-```
-
-### Send Test Order Email
+You can call the helper directly to verify template rendering:
 
 ```python
 from project.models import Order
@@ -181,66 +116,61 @@ order = Order.objects.first()
 send_order_confirmation_email(order)
 ```
 
-## Troubleshooting
+### Test enqueueing with Celery
 
-### "SMTP authentication failed"
+1. Ensure Redis is running and a Celery worker is started (see Async Email Sending below).
+2. Place an order via the app or call `create_order_from_cart()` in a Django shell — the Celery tasks should be enqueued after commit and the worker will process them.
 
-- Check EMAIL_HOST_USER and EMAIL_HOST_PASSWORD
-- Verify the credentials are correct
-- For Gmail, ensure you're using an App Password, not your regular password
+## Async Email Sending (Celery)
 
-### "Connection refused" or timeout
+The project now uses Celery to send emails asynchronously. Minimal steps to run locally:
 
-- Verify EMAIL_HOST and EMAIL_PORT are correct
-- Check firewall settings
-- Ensure EMAIL_USE_TLS/EMAIL_USE_SSL matches the provider
-
-### Emails not being sent
-
-- Check EMAIL_BACKEND is set correctly
-- Verify DEFAULT_FROM_EMAIL is set
-- Check Django logs for errors
-- Use console backend to see if emails are being generated
-
-### HTML Not Displaying in Email Client
-
-- Some email clients don't support CSS well
-- Check the email in different clients
-- Consider using inline CSS or email-specific CSS frameworks
-
-## Additional Configuration
-
-### Email Rate Limiting
-
-If using a service with rate limits, consider adding delay:
-
-```python
-# In utils.py, modify send_order_confirmation_email
-import time
-
-time.sleep(0.5)  # Add 500ms delay between emails
-```
-
-### Async Email Sending
-
-For better performance, use Celery for async email:
+1. Install packages:
 
 ```bash
-pip install celery django-celery-beat
+pip install celery redis
 ```
+
+2. Start Redis (macOS example):
+
+```bash
+# Homebrew
+brew install redis
+brew services start redis
+# or run in foreground
+redis-server
+```
+
+3. Start a Celery worker from the project root (venv active):
+
+```bash
+celery -A main.celery worker --loglevel=info
+```
+
+4. Verify tasks are processed in the worker logs when orders are placed.
+
+If you prefer not to run a worker, you can still test email rendering by calling the sending helpers directly (see Testing above).
+
+## Troubleshooting
+
+- Redis connection refused: ensure Redis is running and `CELERY_BROKER_URL` points to the correct host/port. Try `redis-cli ping` — expect `PONG`.
+- Celery cannot import tasks: ensure `main/celery.py` exists and `main.__init__.py` exposes the app (`from .celery import app as celery_app`).
+
+- Emails not sent: check Django logs, Celery worker logs, and SMTP provider errors. Use console backend for local inspection.
 
 ## Security Best Practices
 
-1. **Never commit credentials** - Use environment variables
-2. **Use app-specific passwords** - Don't use your main account password
-3. **Enable TLS/SSL** - Always encrypt email transmission
-4. **Monitor email logs** - Track sent/failed emails
-5. **Test with console backend first** - Before going live
+1. **Never commit credentials** — Use environment variables.
+2. **Use app-specific passwords** — Don't use your main account password.
+3. **Enable TLS/SSL** — Always encrypt email transmission.
+4. **Use a worker queue for reliability** — Celery + Redis provides retries and persistence.
+5. **Monitor email logs** — Track sent/failed emails and worker health.
 
 ## Support
 
 For issues or questions:
 
-- Check Django email documentation: https://docs.djangoproject.com/en/stable/topics/email/
-- Verify your email provider's SMTP settings
-- Check application logs for detailed error messages
+- Check Django email docs: https://docs.djangoproject.com/en/stable/topics/email/
+- Check Celery docs: https://docs.celeryproject.org/
+- Verify your SMTP provider's settings and credentials
+- Inspect application and worker logs for errors
