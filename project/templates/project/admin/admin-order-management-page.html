@@ -29,6 +29,7 @@
             <th>{% trans "Order Date" %}</th>
             <th>{% trans "Donation" %}</th>
             <th>{% trans "Application" %}</th>
+            <th>{% trans "Status" %}</th>
             <th>{% trans "Actions" %}</th>
           </tr>
         </thead>
@@ -40,6 +41,7 @@
               <td>{{ order.order_date }}</td>
               <td>{{ order.donation }}</td>
               <td>{{ order.application }}</td>
+              <td>{{ order.status }}</td>
               <td>
                 <a href="{% url 'admin-order-detail-page' order.id %}">{% trans "View Details" %}</a>
               </td>
