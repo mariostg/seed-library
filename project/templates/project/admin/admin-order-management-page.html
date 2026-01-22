@@ -8,7 +8,7 @@
 {% block content %}
   {% include "project/admin/admin_links.html" %}
 
-  <section class="admin-page-content">
+  <section class="container admin-page-content">
 
     <h1>{{ title }}</h1>
 
@@ -20,6 +20,22 @@
       </div>
     {% endif %}
 
+    <nav class="nav">
+      <!--navigation of orders by status-->
+      <ul class="nav-links admin-order-status-nav">
+        {% for status in order_status_choices %}
+          <li>
+            <a href="{% url 'admin-order-management-page' %}?status={{ status.0 }}">
+              {% if status.0 == request.GET.status %}
+                <strong>{{ status.1 }}</strong>
+              {% else %}
+                {{ status.1 }}
+              {% endif %}
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
+    </nav>
     <div>
       <table>
         <thead>

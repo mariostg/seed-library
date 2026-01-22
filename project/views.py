@@ -4389,12 +4389,17 @@ def admin_order_seed_application_delete(request, pk):
 
 @group_required("Library Manager")
 def admin_order_management_page(request):
-    """Display all orders placed by customers for management purposes."""
+    """Display orders placed by customers for management purposes. Includes pagination and order status filtering."""
+    status_filter = request.GET.get("status")
     orders = (
         models.Order.objects.select_related("customer")
         .prefetch_related("items__plant_profile")
         .order_by("-order_date")
     )
+    if status_filter in dict(models.Order.ORDER_STATUS_CHOICES):
+        orders = orders.filter(status=status_filter)
+
+    order_status_choices = models.Order.ORDER_STATUS_CHOICES
     # Pagination
     paginator = Paginator(orders, 20)
     page_number = request.GET.get("page")
@@ -4403,6 +4408,7 @@ def admin_order_management_page(request):
     context = {
         "title": _("Order Management"),
         "orders": orders_page,
+        "order_status_choices": order_status_choices,
         "url_name": "admin-order-management-page",
     }
     return render(request, "project/admin/admin-order-management-page.html", context)
