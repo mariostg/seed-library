@@ -1712,6 +1712,18 @@ class Customer(Base):
     def __str__(self) -> str:
         return f"{self.first_name} {self.last_name}"
 
+    def shipping_address(self) -> str:
+        """
+        Returns the full shipping address of the customer.
+
+        This method constructs a formatted string representing the customer's
+        complete shipping address, including customer name, street address, city, province, and postal code.
+
+        Returns:
+            str: The full shipping address in the format " first_name last_name, address, city, province, postal_code".
+        """
+        return f"{self.first_name} {self.last_name},{self.address}, {self.city}, {self.province}, {self.postal_code}"
+
 
 class ShoppingCart(models.Model):
     """

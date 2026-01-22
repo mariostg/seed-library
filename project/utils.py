@@ -9,7 +9,7 @@ from django.http import HttpRequest
 from exif import Image
 from PIL import Image as PILImage
 
-from project.models import PlantImage, PlantProfile
+from project.models import Order, PlantImage, PlantProfile
 
 logger = logging.getLogger(__name__)
 
@@ -638,6 +638,83 @@ def clear_session(request):
     if "customer_id" in request.session:
         del request.session["customer_id"]
     request.session.modified = True
+
+
+# ============================================================================
+# Order management utilities
+# ============================================================================
+def render_to_pdf(order: Order) -> BytesIO:
+    """
+    Render a customer order as defined in Order model using reportlab.
+
+    Args:
+        order: Order object to render
+
+    Returns:
+        PDF as BytesIO object
+    """
+    from reportlab.lib import colors
+    from reportlab.lib.pagesizes import letter
+    from reportlab.lib.styles import getSampleStyleSheet
+    from reportlab.platypus import Paragraph, SimpleDocTemplate, Table, TableStyle
+
+    buffer = BytesIO()
+    doc = SimpleDocTemplate(buffer, pagesize=letter)
+    elements = []
+    styles = getSampleStyleSheet()
+
+    # Order title
+    title = Paragraph(f"Order #{order.id} Details", styles["Title"])
+    elements.append(title)
+    elements.append(Paragraph(f"Order Date: {order.order_date}", styles["Normal"]))
+
+    # customer info
+    elements.append(
+        Paragraph(
+            f"Customer: {order.customer.first_name} {order.customer.last_name} ({order.customer.email})",
+            styles["Normal"],
+        )
+    )
+
+    # customer full shipping label address, one line per field
+    elements.append(Paragraph("Shipping Address:", styles["Heading2"]))
+    shipping_address = order.customer.shipping_address()
+    for line in shipping_address.split(","):
+        elements.append(Paragraph(line, styles["Normal"]))
+    # place a border line around the shipping address
+
+    elements.append(Paragraph(" ", styles["Normal"]))
+
+    elements.append(Paragraph("Order Items:", styles["Heading2"]))
+    # Table of order items
+    data = [["Plant", "Quantity"]]
+    for item in order.items.all():
+        data.append([item.plant_profile.english_name, str(item.quantity)])
+    table = Table(data)
+    table.setStyle(
+        TableStyle(
+            [
+                ("BACKGROUND", (0, 0), (-1, 0), colors.white),
+                ("TEXTCOLOR", (0, 0), (-1, 0), colors.black),
+                ("ALIGN", (0, 0), (-1, -1), "CENTER"),
+                ("FONTNAME", (0, 0), (-1, 0), "Helvetica-Bold"),
+                ("BOTTOMPADDING", (0, 0), (-1, 0), 12),
+                ("BACKGROUND", (0, 1), (-1, -1), colors.white),
+                ("GRID", (0, 0), (-1, -1), 1, colors.black),
+            ]
+        )
+    )
+    elements.append(table)
+
+    if order.notes:
+        elements.append(Paragraph(" ", styles["Normal"]))
+        elements.append(Paragraph("Order Notes:", styles["Heading2"]))
+        elements.append(Paragraph(order.notes, styles["Normal"]))
+
+    doc.build(elements)
+    pdf = buffer.getvalue()
+    buffer.close()
+    return pdf
 
 
 # ============================================================================

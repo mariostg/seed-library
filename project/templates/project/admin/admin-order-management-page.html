@@ -30,7 +30,7 @@
             <th>{% trans "Donation" %}</th>
             <th>{% trans "Application" %}</th>
             <th>{% trans "Status" %}</th>
-            <th>{% trans "Actions" %}</th>
+            <th>{% trans "Views" %}</th>
           </tr>
         </thead>
         <tbody>
@@ -43,7 +43,9 @@
               <td>{{ order.application }}</td>
               <td>{{ order.status }}</td>
               <td>
-                <a href="{% url 'admin-order-detail-page' order.id %}">{% trans "View Details" %}</a>
+                <a href="{% url 'admin-order-detail-page' order.id %}">{% trans "HTML" %}</a>
+                <span> | </span>
+                <a href="{% url 'admin-order-detail-pdf' order.id %}">{% trans "PDF" %}</a>
               </td>
             </tr>
           {% empty %}

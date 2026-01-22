@@ -4430,6 +4430,30 @@ def admin_order_detail_page(request, pk):
     return render(request, "project/admin/admin-order-detail-page.html", context)
 
 
+@group_required("Library Manager")
+def admin_order_detail_pdf(request, pk):
+    """Generate a PDF summary of a specific order for management purposes."""
+    try:
+        order = (
+            models.Order.objects.select_related("customer")
+            .prefetch_related("items__plant_profile")
+            .get(id=pk)
+        )
+    except models.Order.DoesNotExist:
+        messages.error(request, _("Order not found."))
+        return redirect("admin-order-management-page")
+
+    pdf = utils.render_to_pdf(order)
+    if pdf:
+        response = HttpResponse(pdf, content_type="application/pdf")
+        filename = f"Order_{order.id}.pdf"
+        content = f"inline; filename={filename}"
+        response["Content-Disposition"] = content
+        return response
+    messages.error(request, _("Could not generate PDF."))
+    return redirect("admin-order-detail-page", pk=order.id)
+
+
 def order_history(request):
     """
     Display order history for the current customer.

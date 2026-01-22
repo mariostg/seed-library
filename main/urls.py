@@ -870,6 +870,11 @@ urlpatterns += i18n_patterns(
         views.admin_order_detail_page,
         name="admin-order-detail-page",
     ),
+    path(
+        "admin-order-detail-pdf/<int:pk>/",
+        views.admin_order_detail_pdf,
+        name="admin-order-detail-pdf",
+    ),
 )
 
 if settings.DEBUG:
