@@ -4460,6 +4460,18 @@ def admin_order_detail_pdf(request, pk):
     return redirect("admin-order-detail-page", pk=order.id)
 
 
+@group_required("Library Manager")
+def admin_order_statistics_page(request):
+    """Display order statistics for management purposes."""
+    stats = utils.get_order_statistics()
+    context = {
+        "title": _("Order Statistics"),
+        "order_statistics": stats,
+        "url_name": "admin-order-statistics-page",
+    }
+    return render(request, "project/admin/admin-order-statistics-page.html", context)
+
+
 def order_history(request):
     """
     Display order history for the current customer.

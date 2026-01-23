@@ -5,6 +5,8 @@ from pathlib import Path
 
 import qrcode
 from django.conf import settings
+from django.db.models import Count, Q, Sum
+from django.db.models.functions import ExtractYear
 from django.http import HttpRequest
 from exif import Image
 from PIL import Image as PILImage
@@ -724,6 +726,28 @@ def render_to_pdf(order: Order) -> BytesIO:
     pdf = buffer.getvalue()
     buffer.close()
     return pdf
+
+
+def get_order_statistics():
+    """Get order statistics for dashboard display.
+    Returns the following totals by year:
+        total orders, pending orders, completed orders, cancelled orders and shipped orders, and total donations by year.
+    """
+
+    orders = (
+        Order.objects.annotate(year=ExtractYear("order_date"))
+        .values("year")
+        .annotate(
+            total_orders=Count("id"),
+            pending_orders=Count("id", filter=Q(status="pending")),
+            completed_orders=Count("id", filter=Q(status="completed")),
+            cancelled_orders=Count("id", filter=Q(status="cancelled")),
+            shipped_orders=Count("id", filter=Q(status="shipped")),
+            total_donations=Sum("donation_amount"),
+        )
+        .order_by("-year")
+    )
+    return orders
 
 
 # ============================================================================
