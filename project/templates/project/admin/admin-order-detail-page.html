@@ -12,8 +12,10 @@ The layout and styling are designed for printing-->
 
   <section class="container flex-col-center">
 
-    <h1>{{ title }}</h1>
-
+    <div class="flex-row center wide">
+      <h1>{{ title }}</h1>
+      <a href="{% url 'admin-order-detail-pdf' order.id %}">{% trans "PDF" %}</a>
+    </div>
     <article class="flex-row wide">
       <div class="customer-details">
         <address>
