@@ -676,6 +676,15 @@ def render_to_pdf(order: Order) -> BytesIO:
         )
     )
 
+    # order application info
+    if order.application:
+        elements.append(
+            Paragraph(
+                f"Order Application: {order.application}",
+                styles["Normal"],
+            )
+        )
+
     # customer full shipping label address, one line per field
     elements.append(Paragraph("Shipping Address:", styles["Heading2"]))
     shipping_address = order.customer.shipping_address()
