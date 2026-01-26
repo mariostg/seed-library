@@ -4472,6 +4472,18 @@ def admin_order_statistics_page(request):
     return render(request, "project/admin/admin-order-statistics-page.html", context)
 
 
+@group_required("Library Manager")
+def admin_most_ordered_seeds_page(request):
+    """Display the most ordered seeds for management purposes."""
+    most_ordered_seeds = utils.get_most_ordered_seeds()
+    context = {
+        "title": _("Most Ordered Seeds"),
+        "most_ordered_seeds": most_ordered_seeds,
+        "url_name": "admin-most-ordered-seeds-page",
+    }
+    return render(request, "project/admin/admin-most-ordered-seeds-page.html", context)
+
+
 def order_history(request):
     """
     Display order history for the current customer.

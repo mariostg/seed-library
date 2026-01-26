@@ -750,6 +750,25 @@ def get_order_statistics():
     return orders
 
 
+def get_most_ordered_seeds(top_n=10):
+    """Get the most ordered seed plant profiles.
+
+    Args:
+        top_n: Number of top ordered seeds to return (default 10)
+
+    Returns:
+        QuerySet of PlantProfile with annotated order_count
+    """
+    from project.models import PlantProfile
+
+    most_ordered = (
+        PlantProfile.objects.annotate(order_count=Sum("orderitem__quantity"))
+        .filter(order_count__gt=0)
+        .order_by("-order_count")[:top_n]
+    )
+    return most_ordered
+
+
 # ============================================================================
 # EMAIL UTILITIES
 # ============================================================================

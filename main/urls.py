@@ -880,6 +880,11 @@ urlpatterns += i18n_patterns(
         views.admin_order_statistics_page,
         name="admin-order-statistics-page",
     ),
+    path(
+        "admin-most-ordered-seeds-page/",
+        views.admin_most_ordered_seeds_page,
+        name="admin-most-ordered-seeds-page",
+    ),
 )
 
 if settings.DEBUG:
