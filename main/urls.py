@@ -876,6 +876,11 @@ urlpatterns += i18n_patterns(
         name="admin-order-detail-pdf",
     ),
     path(
+        "admin-order-pending-to-pdf/",
+        views.admin_order_pending_to_pdf,
+        name="admin-order-pending-to-pdf",
+    ),
+    path(
         "admin-order-statistics-page/",
         views.admin_order_statistics_page,
         name="admin-order-statistics-page",

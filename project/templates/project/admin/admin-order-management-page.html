@@ -23,6 +23,7 @@
     <nav class="nav">
       <!--navigation of orders by status-->
       <ul class="nav-links admin-order-status-nav">
+        <li><a href="{% url 'admin-order-pending-to-pdf' %}">{% trans "PDF Pending orders" %}</a></li>
         {% for status in order_status_choices %}
           <li>
             <a href="{% url 'admin-order-management-page' %}?status={{ status.0 }}">

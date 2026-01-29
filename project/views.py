@@ -4461,6 +4461,27 @@ def admin_order_detail_pdf(request, pk):
 
 
 @group_required("Library Manager")
+def admin_order_pending_to_pdf(request):
+    """Generate a PDF document containing all pending orders for management purposes."""
+    orders = (
+        models.Order.objects.select_related("customer")
+        .prefetch_related("items__plant_profile")
+        .filter(status=models.Order.ORDER_STATUS_CHOICES[0][0])
+        .order_by("pk")
+    )
+
+    pdf = utils.render_many_orders_to_pdf(orders)
+    if pdf:
+        response = HttpResponse(pdf, content_type="application/pdf")
+        filename = "Pending_Orders.pdf"
+        content = f"inline; filename={filename}"
+        response["Content-Disposition"] = content
+        return response
+    messages.error(request, _("Could not generate PDF."))
+    return redirect("admin-order-management-page")
+
+
+@group_required("Library Manager")
 def admin_order_statistics_page(request):
     """Display order statistics for management purposes."""
     stats = utils.get_order_statistics()

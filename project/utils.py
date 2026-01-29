@@ -10,6 +10,16 @@ from django.db.models.functions import ExtractYear
 from django.http import HttpRequest
 from exif import Image
 from PIL import Image as PILImage
+from reportlab.lib import colors
+from reportlab.lib.pagesizes import letter
+from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.platypus import (
+    PageBreak,
+    Paragraph,
+    SimpleDocTemplate,
+    Table,
+    TableStyle,
+)
 
 from project.models import Order, PlantImage, PlantProfile
 
@@ -645,83 +655,135 @@ def clear_session(request):
 # ============================================================================
 # Order management utilities
 # ============================================================================
-def render_to_pdf(order: Order) -> BytesIO:
+def render_to_pdf(
+    order: Order,
+    elements: list | None = None,
+    styles=None,
+    add_page_break: bool = False,
+) -> bytes | None:
     """
-    Render a customer order as defined in Order model using reportlab.
+    Render a customer Order to PDF using reportlab.
 
     Args:
-        order: Order object to render
+        order: Order instance to render.
+        elements: Optional list of reportlab flowables to append to. If None,
+            this function creates a new document and returns the PDF bytes.
+        styles: Optional reportlab stylesheet. If None, a sample stylesheet is used.
+        add_page_break: If True and elements is provided, append a PageBreak.
 
+    Returns:
+        bytes | None: PDF bytes when ``elements`` is None; otherwise ``None`` after
+        appending flowables.
+    """
+
+    def _append_order_elements(target_elements, target_styles):
+        # Order title
+        title = Paragraph(f"Order #{order.id} Details", target_styles["Title"])
+        target_elements.append(title)
+        target_elements.append(
+            Paragraph(f"Order Date: {order.order_date}", target_styles["Normal"])
+        )
+
+        # customer info
+        target_elements.append(
+            Paragraph(
+                f"Customer: {order.customer.first_name} {order.customer.last_name} ({order.customer.email})",
+                target_styles["Normal"],
+            )
+        )
+
+        # order application info
+        if order.application:
+            target_elements.append(
+                Paragraph(
+                    f"Order Application: {order.application}",
+                    target_styles["Normal"],
+                )
+            )
+
+        # customer full shipping label address, one line per field
+        target_elements.append(
+            Paragraph("Shipping Address:", target_styles["Heading2"])
+        )
+        shipping_address = order.customer.shipping_address()
+        for line in shipping_address.split(","):
+            target_elements.append(Paragraph(line, target_styles["Normal"]))
+        # place a border line around the shipping address
+
+        target_elements.append(Paragraph(" ", target_styles["Normal"]))
+
+        target_elements.append(Paragraph("Order Items:", target_styles["Heading2"]))
+        # Table of order items
+        data = [["Plant", "Quantity"]]
+        for item in order.items.all():
+            data.append([item.plant_profile.english_name, str(item.quantity)])
+        table = Table(data)
+        table.setStyle(
+            TableStyle(
+                [
+                    ("BACKGROUND", (0, 0), (-1, 0), colors.white),
+                    ("TEXTCOLOR", (0, 0), (-1, 0), colors.black),
+                    ("ALIGN", (0, 0), (-1, -1), "CENTER"),
+                    ("FONTNAME", (0, 0), (-1, 0), "Helvetica-Bold"),
+                    ("BOTTOMPADDING", (0, 0), (-1, 0), 12),
+                    ("BACKGROUND", (0, 1), (-1, -1), colors.white),
+                    ("GRID", (0, 0), (-1, -1), 1, colors.black),
+                ]
+            )
+        )
+        target_elements.append(table)
+
+        if order.notes:
+            target_elements.append(Paragraph(" ", target_styles["Normal"]))
+            target_elements.append(Paragraph("Order Notes:", target_styles["Heading2"]))
+            target_elements.append(Paragraph(order.notes, target_styles["Normal"]))
+
+    if elements is None:
+        buffer = BytesIO()
+        doc = SimpleDocTemplate(buffer, pagesize=letter)
+        elements = []
+        styles = getSampleStyleSheet()
+        _append_order_elements(elements, styles)
+        doc.build(elements)
+        pdf = buffer.getvalue()
+        buffer.close()
+        return pdf
+
+    if styles is None:
+        styles = getSampleStyleSheet()
+
+    _append_order_elements(elements, styles)
+    if add_page_break:
+        elements.append(PageBreak())
+    return None
+
+
+def render_many_orders_to_pdf(orders: list[Order]) -> BytesIO:
+    """
+    Render multiple customer orders as defined in Order model using reportlab.
+
+    Args:
+        orders: List of Order objects to render
     Returns:
         PDF as BytesIO object
     """
-    from reportlab.lib import colors
     from reportlab.lib.pagesizes import letter
     from reportlab.lib.styles import getSampleStyleSheet
-    from reportlab.platypus import Paragraph, SimpleDocTemplate, Table, TableStyle
+    from reportlab.platypus import SimpleDocTemplate
 
     buffer = BytesIO()
     doc = SimpleDocTemplate(buffer, pagesize=letter)
     elements = []
     styles = getSampleStyleSheet()
 
-    # Order title
-    title = Paragraph(f"Order #{order.id} Details", styles["Title"])
-    elements.append(title)
-    elements.append(Paragraph(f"Order Date: {order.order_date}", styles["Normal"]))
-
-    # customer info
-    elements.append(
-        Paragraph(
-            f"Customer: {order.customer.first_name} {order.customer.last_name} ({order.customer.email})",
-            styles["Normal"],
+    orders = list(orders)
+    for index, order in enumerate(orders):
+        render_to_pdf(
+            order,
+            elements=elements,
+            styles=styles,
+            add_page_break=index < len(orders) - 1,
         )
-    )
-
-    # order application info
-    if order.application:
-        elements.append(
-            Paragraph(
-                f"Order Application: {order.application}",
-                styles["Normal"],
-            )
-        )
-
-    # customer full shipping label address, one line per field
-    elements.append(Paragraph("Shipping Address:", styles["Heading2"]))
-    shipping_address = order.customer.shipping_address()
-    for line in shipping_address.split(","):
-        elements.append(Paragraph(line, styles["Normal"]))
-    # place a border line around the shipping address
-
-    elements.append(Paragraph(" ", styles["Normal"]))
-
-    elements.append(Paragraph("Order Items:", styles["Heading2"]))
-    # Table of order items
-    data = [["Plant", "Quantity"]]
-    for item in order.items.all():
-        data.append([item.plant_profile.english_name, str(item.quantity)])
-    table = Table(data)
-    table.setStyle(
-        TableStyle(
-            [
-                ("BACKGROUND", (0, 0), (-1, 0), colors.white),
-                ("TEXTCOLOR", (0, 0), (-1, 0), colors.black),
-                ("ALIGN", (0, 0), (-1, -1), "CENTER"),
-                ("FONTNAME", (0, 0), (-1, 0), "Helvetica-Bold"),
-                ("BOTTOMPADDING", (0, 0), (-1, 0), 12),
-                ("BACKGROUND", (0, 1), (-1, -1), colors.white),
-                ("GRID", (0, 0), (-1, -1), 1, colors.black),
-            ]
-        )
-    )
-    elements.append(table)
-
-    if order.notes:
-        elements.append(Paragraph(" ", styles["Normal"]))
-        elements.append(Paragraph("Order Notes:", styles["Heading2"]))
-        elements.append(Paragraph(order.notes, styles["Normal"]))
-
     doc.build(elements)
     pdf = buffer.getvalue()
     buffer.close()
