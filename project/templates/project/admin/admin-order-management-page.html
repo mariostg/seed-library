@@ -47,6 +47,7 @@
             <th>{% trans "Donation" %}</th>
             <th>{% trans "Application" %}</th>
             <th>{% trans "Status" %}</th>
+            <th>{% trans "Priority" %}</th>
             <th>{% trans "Views" %}</th>
           </tr>
         </thead>
@@ -59,6 +60,7 @@
               <td>{{ order.donation }}</td>
               <td>{{ order.application }}</td>
               <td>{{ order.status }}</td>
+              <td>{{ order.application.priority }}</td>
               <td>
                 <a href="{% url 'admin-order-detail-page' order.id %}">{% trans "HTML" %}</a>
                 <span> | </span>
@@ -67,7 +69,7 @@
             </tr>
           {% empty %}
             <tr>
-              <td colspan="6">{% trans "No orders found." %}</td>
+              <td colspan="8">{% trans "No orders found." %}</td>
             </tr>
           {% endfor %}
         </tbody>

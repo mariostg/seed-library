@@ -143,7 +143,7 @@ class AdminLibrarySettingForm(forms.ModelForm):
 class AdminOrderSeedApplicationForm(forms.ModelForm):
     class Meta:
         model = models.OrderSeedApplication
-        fields = ["seed_application"]
+        fields = ["seed_application", "priority"]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

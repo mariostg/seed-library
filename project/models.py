@@ -1773,6 +1773,11 @@ class OrderSeedApplication(models.Model):
     seed_application = models.CharField(
         max_length=255, blank=True, verbose_name=_("Seed Application")
     )
+    priority = models.SmallIntegerField(
+        default=0,
+        verbose_name=_("Priority"),
+        help_text=_("Lower numbers indicate higher priority. 0 means no priority."),
+    )
 
     def __str__(self) -> str:
         return self.seed_application

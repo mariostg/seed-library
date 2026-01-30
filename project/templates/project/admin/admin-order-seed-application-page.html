@@ -15,13 +15,16 @@
       <table class=''>
         <thead>
           <tr>
+            <th>{% trans "Priority" %}</th>
             <th>{% trans "Seed Application" %}</th>
             <th>{% trans "Order Count" %}</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
           {% for item in object_list %}
             <tr class="{% cycle 'odd-row' 'even-row' %}">
+              <td>{{item.priority}}</td>
               <td>{{ item.seed_application }}</td>
               <td>{{ item.order_count }}</td>
               {% if user.is_authenticated %}
