@@ -4211,7 +4211,7 @@ def checkout(request):
         except (ValueError, TypeError):
             donation_amount = 0
 
-        notes = request.POST.get("notes", "").strip()
+        customer_note = request.POST.get("customer_note", "").strip()
 
         order_seed_application_id = request.POST.get("application")
         order_seed_application = None
@@ -4226,7 +4226,7 @@ def checkout(request):
         order = utils.create_order_from_cart(
             request,
             donation_amount=donation_amount,
-            notes=notes,
+            customer_note=customer_note,
             order_application=order_seed_application,
         )
 

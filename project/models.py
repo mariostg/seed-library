@@ -1832,7 +1832,7 @@ class Order(Base):
         verbose_name=_("Donation Amount"),
         help_text=_("Optional donation amount in addition to seed order."),
     )
-    notes = models.TextField(blank=True, verbose_name=_("Notes"))
+    customer_note = models.TextField(blank=True, verbose_name=_("Customer Notes"))
     application = models.ForeignKey(
         OrderSeedApplication,
         on_delete=models.SET_NULL,
