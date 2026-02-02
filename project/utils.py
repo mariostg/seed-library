@@ -655,7 +655,7 @@ def clear_session(request):
 # ============================================================================
 # Order management utilities
 # ============================================================================
-def render_to_pdf(
+def order_to_pdf(
     order: Order,
     elements: list | None = None,
     styles=None,
@@ -780,7 +780,7 @@ def render_many_orders_to_pdf(orders: list[Order]) -> BytesIO:
 
     orders = list(orders)
     for index, order in enumerate(orders):
-        render_to_pdf(
+        order_to_pdf(
             order,
             elements=elements,
             styles=styles,
