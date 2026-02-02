@@ -733,10 +733,12 @@ def render_to_pdf(
         )
         target_elements.append(table)
 
-        if order.notes:
+        if order.customer_note:
             target_elements.append(Paragraph(" ", target_styles["Normal"]))
             target_elements.append(Paragraph("Order Notes:", target_styles["Heading2"]))
-            target_elements.append(Paragraph(order.notes, target_styles["Normal"]))
+            target_elements.append(
+                Paragraph(order.customer_note, target_styles["Normal"])
+            )
 
     if elements is None:
         buffer = BytesIO()
