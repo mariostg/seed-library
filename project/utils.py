@@ -1,5 +1,6 @@
 import base64
 import logging
+from datetime import datetime
 from io import BytesIO
 from pathlib import Path
 
@@ -17,6 +18,7 @@ from reportlab.platypus import (
     PageBreak,
     Paragraph,
     SimpleDocTemplate,
+    Spacer,
     Table,
     TableStyle,
 )
@@ -680,43 +682,72 @@ def order_to_pdf(
         # Order title
         title = Paragraph(f"Order #{order.id} Details", target_styles["Title"])
         target_elements.append(title)
-        target_elements.append(
-            Paragraph(f"Order Date: {order.order_date}", target_styles["Normal"])
-        )
 
-        # customer info
+        # Order Date & pdf generation date
+        pdf_generation_date = datetime.now().strftime("%Y-%m-%d")
         target_elements.append(
             Paragraph(
-                f"Customer: {order.customer.first_name} {order.customer.last_name} ({order.customer.email})",
+                f"<b>Order Date:</b> {order.order_date.strftime('%Y-%m-%d')}, <b>PDF Generated:</b> {pdf_generation_date} ",
                 target_styles["Normal"],
             )
         )
 
-        # order application info
-        if order.application:
-            target_elements.append(
-                Paragraph(
-                    f"Order Application: {order.application}",
-                    target_styles["Normal"],
-                )
-            )
+        # Order Priority
+        try:
+            _priority = f"<b>Priority</b>: {order.application.priority} "
+        except AttributeError:
+            _priority = "<b>Priority</b>: N/A "
+        priority = Paragraph(_priority, target_styles["Normal"])
+        target_elements.append(priority)
 
-        # customer full shipping label address, one line per field
-        target_elements.append(
-            Paragraph("Shipping Address:", target_styles["Heading2"])
+        # Application Type
+        application_type = Paragraph(
+            f"<b>Application Type</b>: {order.application} ",
+            target_styles["Normal"],
         )
-        shipping_address = order.customer.shipping_address()
-        for line in shipping_address.split(","):
-            target_elements.append(Paragraph(line, target_styles["Normal"]))
-        # place a border line around the shipping address
+        target_elements.append(application_type)
 
-        target_elements.append(Paragraph(" ", target_styles["Normal"]))
+        target_elements.append(Spacer(1, 12))
+
+        # shipping and billing addresses
+        shipping_data = [["Bill To:", "Ship To:"]]
+        bill_to_address = order.customer.shipping_address().split(",")
+
+        address = order.customer.shipping_address()
+        ship_to = []
+
+        for line in address.split(","):
+            ship_to.append(Paragraph(line, target_styles["Normal"]))
+
+        # put shipping_data, customer_full_name and addess into a table
+        shipping_data.append(
+            [
+                Paragraph("<br/>".join(bill_to_address), target_styles["Normal"]),
+                ship_to,
+            ]
+        )
+        shipping_table = Table(shipping_data, colWidths=[220, 220])
+        shipping_table.setStyle(
+            TableStyle(
+                [
+                    ("BACKGROUND", (0, 0), (-1, 0), colors.white),
+                    ("TEXTCOLOR", (0, 0), (-1, 0), colors.black),
+                    ("ALIGN", (0, 0), (-1, -1), "LEFT"),
+                    ("FONTNAME", (0, 0), (-1, 0), "Helvetica-Bold"),
+                    ("BOTTOMPADDING", (0, 0), (-1, 0), 12),
+                    ("BACKGROUND", (0, 1), (-1, -1), colors.white),
+                    ("GRID", (0, 0), (-1, -1), 1, colors.black),
+                ]
+            )
+        )
+
+        target_elements.append(shipping_table)
 
         target_elements.append(Paragraph("Order Items:", target_styles["Heading2"]))
         # Table of order items
-        data = [["Plant", "Quantity"]]
-        for item in order.items.all():
-            data.append([item.plant_profile.english_name, str(item.quantity)])
+        data = [["No", "Plant", "Quantity"]]
+        for index, item in enumerate(order.items.all(), start=1):
+            data.append([index, item.plant_profile.english_name, str(item.quantity)])
         table = Table(data)
         table.setStyle(
             TableStyle(
@@ -734,7 +765,7 @@ def order_to_pdf(
         target_elements.append(table)
 
         if order.customer_note:
-            target_elements.append(Paragraph(" ", target_styles["Normal"]))
+            target_elements.append(Spacer(1, 12))
             target_elements.append(Paragraph("Order Notes:", target_styles["Heading2"]))
             target_elements.append(
                 Paragraph(order.customer_note, target_styles["Normal"])
@@ -742,7 +773,14 @@ def order_to_pdf(
 
     if elements is None:
         buffer = BytesIO()
-        doc = SimpleDocTemplate(buffer, pagesize=letter)
+        doc = SimpleDocTemplate(
+            buffer,
+            pagesize=letter,
+            rightMargin=30,
+            leftMargin=30,
+            topMargin=30,
+            bottomMargin=18,
+        )
         elements = []
         styles = getSampleStyleSheet()
         _append_order_elements(elements, styles)
