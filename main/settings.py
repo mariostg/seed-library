@@ -166,6 +166,7 @@ STATICFILES_FINDERS = [
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 LOGIN_URL = "/login/"
 AUTH_USER_MODEL = "project.ProjectUser"
+MAPBOX_ACCESS_TOKEN = os.environ.get("MAPBOX_ACCESS_TOKEN", "")
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,

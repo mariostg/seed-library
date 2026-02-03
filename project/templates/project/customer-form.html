@@ -11,7 +11,7 @@
         <form method="POST" class="customer-form">
 
           <p>{% trans "Please select the application that best describes your seed order." %}</p>
-          <div class="form-group">
+          <div class="input-text">
             <label for="{{ form.application.id_for_label }}">{{ form.application.label }}</label>
             <select id="{{ form.application.id_for_label }}"
                     name="{{ form.application.name }}"
@@ -47,7 +47,7 @@
             </div>
           {% endif %}
 
-          <div class="form-group">
+          <div class="input-text">
             <label for="{{ form.first_name.id_for_label }}">{{ form.first_name.label }}</label>
             <input type="text"
                    name="{{ form.first_name.name }}"
@@ -63,7 +63,7 @@
               </div>
             {% endif %}
           </div>
-          <div class="form-group">
+          <div class="input-text">
             <label for="{{ form.last_name.id_for_label }}">{{ form.last_name.label }}</label>
             <input type="text"
                    name="{{ form.last_name.name }}"
@@ -80,7 +80,7 @@
             {% endif %}
           </div>
 
-          <div class="form-group">
+          <div class="input-text">
             <label for="{{ form.email.id_for_label }}">{{ form.email.label }}</label>
             <input type="email"
                    name="{{ form.email.name }}"
@@ -97,7 +97,7 @@
             {% endif %}
           </div>
 
-          <div class="form-group">
+          <div class="input-text">
             <label for="{{ form.phone_number.id_for_label }}">{{ form.phone_number.label }}</label>
             <input type="tel"
                    name="{{ form.phone_number.name }}"
@@ -114,14 +114,16 @@
             {% endif %}
           </div>
 
-          <div class="form-group">
+          <div class="input-text">
             <label for="{{ form.address.id_for_label }}">{{ form.address.label }}</label>
             <input type="text"
                    name="{{ form.address.name }}"
                    id="{{ form.address.id_for_label }}"
                    class="form-control {% if form.address.errors %}is-invalid{% endif %}"
                    value="{{ form.address.value|default:'' }}"
+                   autocomplete="street-address"
                    required>
+            <div id="address-suggestions" class="address-suggestions" role="listbox" aria-label="Address suggestions"></div>
             {% if form.address.errors %}
               <div class="invalid-feedback">
                 {% for error in form.address.errors %}
@@ -132,13 +134,14 @@
           </div>
 
           <!--div for city-->
-          <div class="form-group">
+          <div class="input-text">
             <label for="{{ form.city.id_for_label }}">{{ form.city.label }}</label>
             <input type="text"
                    name="{{ form.city.name }}"
                    id="{{ form.city.id_for_label }}"
                    class="form-control {% if form.city.errors %}is-invalid{% endif %}"
                    value="{{ form.city.value|default:'' }}"
+                   autocomplete="address-level2"
                    required>
             {% if form.city.errors %}
               <div class="invalid-feedback">
@@ -150,13 +153,14 @@
           </div>
 
         <!--div for province-->
-          <div class="form-group">
+          <div class="input-text">
             <label for="{{ form.province.id_for_label }}">{{ form.province.label }}</label>
             <input type="text"
                    name="{{ form.province.name }}"
                    id="{{ form.province.id_for_label }}"
                    class="form-control {% if form.province.errors %}is-invalid{% endif %}"
                    value="{{ form.province.value|default:'' }}"
+                   autocomplete="address-level1"
                    required>
             {% if form.province.errors %}
               <div class="invalid-feedback">
@@ -167,13 +171,14 @@
             {% endif %}
           </div>
 
-          <div class="form-group">
+          <div class="input-text">
             <label for="{{ form.postal_code.id_for_label }}">{{ form.postal_code.label }}</label>
             <input type="text"
                    name="{{ form.postal_code.name }}"
                    id="{{ form.postal_code.id_for_label }}"
                    class="form-control {% if form.postal_code.errors %}is-invalid{% endif %}"
                    value="{{ form.postal_code.value|default:'' }}"
+                   autocomplete="postal-code"
                    required>
             {% if form.postal_code.errors %}
               <div class="invalid-feedback">
@@ -192,6 +197,117 @@
     </section>
   </main>
 {% endblock content %}
+
+{% block extrajs %}
+  {% if mapbox_access_token %}
+    <script>
+      (function () {
+        var addressInput = document.getElementById("{{ form.address.id_for_label }}");
+        var cityInput = document.getElementById("{{ form.city.id_for_label }}");
+        var provinceInput = document.getElementById("{{ form.province.id_for_label }}");
+        var postalInput = document.getElementById("{{ form.postal_code.id_for_label }}");
+        var suggestions = document.getElementById("address-suggestions");
+        var token = "{{ mapbox_access_token|escapejs }}";
+
+        if (!addressInput || !suggestions || !token) return;
+
+        var debounceTimer = null;
+
+        var clearSuggestions = function () {
+          suggestions.innerHTML = "";
+          suggestions.classList.remove("is-open");
+        };
+
+        var getContextValue = function (context, prefix) {
+          if (!context) return "";
+          for (var i = 0; i < context.length; i++) {
+            if (context[i].id && context[i].id.indexOf(prefix) === 0) {
+              return context[i].text || "";
+            }
+          }
+          return "";
+        };
+        var splitPlaceName = function (placeName) {
+          var parts = placeName.split(",").map(function (part) { return part.trim(); });
+          return parts;
+        };
+        var renderSuggestions = function (features) {
+          suggestions.innerHTML = "";
+          if (!features || !features.length) {
+            clearSuggestions();
+            return;
+          }
+
+          features.forEach(function (feature) {
+            var btn = document.createElement("button");
+            btn.type = "button";
+            btn.className = "address-suggestion";
+            btn.setAttribute("role", "option");
+            //Make the btn.textContent display on two lines.  first line: street address, second line: city, province, postal code
+            var parts = splitPlaceName(feature.place_name);
+            var firstLine = parts[0] || "";
+            var secondLine = parts.slice(1).join(", ");
+            btn.innerHTML =
+              "<span class=\"address-suggestion-line address-suggestion-line--primary\"><strong>" +
+            firstLine +
+            "</strong></span>" +
+            "<span class=\"address-suggestion-line\">" +
+            secondLine +
+            "</span>";
+            btn.addEventListener("click", function () {
+              var street = feature.address ? feature.address + " " + feature.text : feature.text;
+              addressInput.value = street || feature.place_name;
+
+              var city = getContextValue(feature.context, "place.") || getContextValue(feature.context, "locality.");
+              var region = getContextValue(feature.context, "region.");
+              var postcode = getContextValue(feature.context, "postcode.");
+
+              if (cityInput && city) cityInput.value = city;
+              if (provinceInput && region) provinceInput.value = region;
+              if (postalInput && postcode) postalInput.value = postcode;
+
+              clearSuggestions();
+            });
+            suggestions.appendChild(btn);
+          });
+
+          suggestions.classList.add("is-open");
+        };
+
+        var fetchSuggestions = function (query) {
+          if (!query || query.length < 6) {
+            clearSuggestions();
+            return;
+          }
+
+          var url = "https://api.mapbox.com/geocoding/v5/mapbox.places/" +
+          encodeURIComponent(query) +
+          ".json?autocomplete=true&country=CA&types=address&limit=5&access_token=" +
+          encodeURIComponent(token);
+
+          fetch(url)
+            .then(function (response) { return response.json(); })
+            .then(function (data) { renderSuggestions(data.features); })
+            .catch(function () { clearSuggestions(); });
+        };
+
+        addressInput.addEventListener("input", function (event) {
+          var value = event.target.value || "";
+          if (debounceTimer) clearTimeout(debounceTimer);
+          debounceTimer = setTimeout(function () {
+            fetchSuggestions(value.trim());
+          }, 400);
+        });
+
+        document.addEventListener("click", function (event) {
+          if (!suggestions.contains(event.target) && event.target !== addressInput) {
+            clearSuggestions();
+          }
+        });
+      })();
+    </script>
+  {% endif %}
+{% endblock extrajs %}
 
 <style>
   .form-group {
@@ -251,5 +367,42 @@
 
   .btn-primary:hover {
     background-color: #0056b3;
+  }
+
+  .address-suggestions {
+    display: none;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-top: 0.5rem;
+    background: #fff;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+  }
+
+  .address-suggestions.is-open {
+    display: block;
+  }
+
+  .address-suggestion {
+    width: 100%;
+    text-align: left;
+    padding: 0.5rem 0.75rem;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-size: 0.95rem;
+  }
+
+  .address-suggestion-line {
+    display: block;
+    line-height: 1.2;
+  }
+
+  .address-suggestion-line--primary {
+    font-weight: 700;
+  }
+
+  .address-suggestion:hover,
+  .address-suggestion:focus {
+    background: #f5f5f5;
   }
 </style>

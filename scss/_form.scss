@@ -70,3 +70,29 @@ input#max_width {
 input.wide textarea.wide {
   width: 100%;
 }
+
+.address-suggestions {
+  display: flex;
+  flex-direction: column;
+  max-height: 150px;
+  overflow-y: auto;
+  background-color: white;
+  width: 100%;
+  z-index: 10;
+
+  .suggestion {
+    padding: 0.5rem;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #f0f0f0;
+    }
+  }
+}
+
+.address-suggestion {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: baseline;
+}

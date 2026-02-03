@@ -3,6 +3,7 @@ import io
 import json
 from datetime import datetime
 
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -4017,6 +4018,7 @@ def create_customer(request):
     context = {
         "form": form,
         "title": _("Create Customer Profile"),
+        "mapbox_access_token": getattr(settings, "MAPBOX_ACCESS_TOKEN", ""),
     }
     return render(request, "project/customer-form.html", context)
 
