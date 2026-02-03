@@ -7,10 +7,36 @@
     <section class="flex-col-center">
       <fieldset>
         <legend class="form__legend">{{ title }}</legend>
-        <p class="form-help-text">
-          {% trans "Please provide your contact information to proceed with seed ordering." %}
-        </p>
+
         <form method="POST" class="customer-form">
+
+          <p>{% trans "Please select the application that best describes your seed order." %}</p>
+          <div class="form-group">
+            <label for="{{ form.application.id_for_label }}">{{ form.application.label }}</label>
+            <select id="{{ form.application.id_for_label }}"
+                    name="{{ form.application.name }}"
+                    class="form-control {% if form.application.errors %}is-invalid{% endif %}"
+                    required>
+              <option value="" disabled {% if not form.application.value %}selected{% endif %}>{% trans "Select an application" %}</option>
+              {% for application in form.application.field.queryset %}
+                <option value="{{ application.id }}"
+                        {% if form.application.value|stringformat:"s" == application.id|stringformat:"s" %}selected{% endif %}>
+                  {{ application.seed_application }}
+                </option>
+              {% endfor %}
+            </select>
+            {% if form.application.errors %}
+              <div class="invalid-feedback">
+                {% for error in form.application.errors %}
+                  <p>{{ error }}</p>
+                {% endfor %}
+              </div>
+            {% endif %}
+          </div>
+
+          <p class="form-help-text">
+            {% trans "Please provide your contact information to proceed with seed ordering." %}
+          </p>
           {% csrf_token %}
 
           {% if form.non_field_errors %}

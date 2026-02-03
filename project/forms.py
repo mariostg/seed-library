@@ -710,6 +710,7 @@ class CustomerForm(forms.ModelForm):
             "last_name",
             "email",
             "phone_number",
+            "application",
             "address",
             "city",
             "province",
@@ -727,6 +728,9 @@ class CustomerForm(forms.ModelForm):
             ),
             "phone_number": forms.TextInput(
                 attrs={"class": "form-control", "placeholder": _("Phone Number")}
+            ),
+            "application": forms.Select(
+                attrs={"class": "form-control", "required": "required"}
             ),
             "address": forms.TextInput(
                 attrs={"class": "form-control", "placeholder": _("Street Address")}
@@ -746,6 +750,7 @@ class CustomerForm(forms.ModelForm):
             "last_name": _("Last Name"),
             "email": _("Email Address"),
             "phone_number": _("Phone Number"),
+            "application": _("Order Application"),
             "address": _("Street Address"),
             "postal_code": _("Postal Code"),
         }
@@ -763,3 +768,9 @@ class CustomerForm(forms.ModelForm):
         if not phone:
             raise ValidationError(_("Phone number is required."))
         return phone
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["application"].queryset = (
+            models.OrderSeedApplication.objects.order_by("priority", "seed_application")
+        )

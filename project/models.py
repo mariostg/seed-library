@@ -1708,6 +1708,14 @@ class Customer(Base):
     city = models.CharField(max_length=100, verbose_name=_("City"))
     province = models.CharField(max_length=100, verbose_name=_("Province"))
     postal_code = models.CharField(max_length=20, verbose_name=_("Postal Code"))
+    application = models.ForeignKey(
+        "OrderSeedApplication",
+        on_delete=models.PROTECT,
+        null=False,
+        blank=False,
+        verbose_name=_("Order Application"),
+        related_name="customers",
+    )
 
     def __str__(self) -> str:
         return f"{self.first_name} {self.last_name}"
@@ -1833,14 +1841,6 @@ class Order(Base):
         help_text=_("Optional donation amount in addition to seed order."),
     )
     customer_note = models.TextField(blank=True, verbose_name=_("Customer Notes"))
-    application = models.ForeignKey(
-        OrderSeedApplication,
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True,
-        verbose_name=_("Order Application"),
-        related_name="orders",
-    )
 
     def __str__(self) -> str:
         return f"Order #{self.id} - {self.customer.first_name} {self.customer.last_name} - {self.order_date.strftime('%Y-%m-%d')}"

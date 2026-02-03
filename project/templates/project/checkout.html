@@ -43,6 +43,10 @@
               <strong>{% trans "Address:" %}</strong>
               <span>{{ customer.address }}, {{ customer.city }} {{ customer.province }}<br> {{ customer.postal_code }}</span>
             </div>
+            <div class="info-item">
+              <strong>{% trans "Order Application:" %}</strong>
+              <span>{% if customer.application %}{{ customer.application }}{% else %}{% trans "N/A" %}{% endif %}</span>
+            </div>
           </div>
 
           <div class="items-section">
@@ -114,21 +118,6 @@
                         rows="4"
                         class="form-control customer-note-textarea"
                         placeholder="{% trans 'Any special instructions or requests?' %}"></textarea>
-            </div>
-
-            <!--form-group select list for order seed application-->
-            <div class="form-group">
-              <label for="application">
-                {% trans "Order Seed Application" %} <span class="optional">({% trans "optional" %})</span>
-              </label>
-              <select id="application"
-                      name="application"
-                      class="form-control">
-                <option value="">{% trans "Select an application" %}</option>
-                {% for application in order_seed_application %}
-                  <option value="{{ application.id }}">{{ application.seed_application }}</option>
-                {% endfor %}
-              </select>
             </div>
 
             <div class="checkout-notice">

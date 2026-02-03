@@ -43,6 +43,8 @@ MONTHS = {
     12: "Dec",
 }
 
+MAX_NON_PRIORITY_CART_ITEMS = 15
+
 
 def all_plants(request):
     return PlantProfile.objects.all()
@@ -441,6 +443,16 @@ def add_to_cart(request, plant_profile, quantity=1):
     if not customer:
         return None
 
+    max_items = (
+        None
+        if customer.application and customer.application.priority == 1
+        else MAX_NON_PRIORITY_CART_ITEMS
+    )
+    if max_items is not None:
+        current_total = get_cart_total(request)
+        if current_total + quantity > max_items:
+            return None
+
     if isinstance(plant_profile, int):
         plant_profile = PlantProfileModel.objects.get(id=plant_profile)
 
@@ -485,6 +497,17 @@ def update_cart_item(request, plant_profile, quantity):
         if quantity <= 0:
             cart_item.delete()
             return None
+
+        max_items = (
+            None
+            if customer.application and customer.application.priority == 1
+            else MAX_NON_PRIORITY_CART_ITEMS
+        )
+        if max_items is not None:
+            current_total = get_cart_total(request)
+            desired_total = current_total - cart_item.quantity + quantity
+            if desired_total > max_items:
+                return None
 
         cart_item.quantity = quantity
         cart_item.save()
@@ -560,9 +583,7 @@ def get_cart_total(request):
     return sum(item.quantity for item in cart_items)
 
 
-def create_order_from_cart(
-    request, donation_amount=0, customer_note="", order_application=None
-):
+def create_order_from_cart(request, donation_amount=0, customer_note=""):
     """
     Convert shopping cart items into an Order and OrderItems.
     Clears the cart after order creation.
@@ -572,8 +593,6 @@ def create_order_from_cart(
         request: Django request object
         donation_amount: Optional donation amount (default 0)
         customer_note: Optional customer note for the order
-        order_application: Optional OrderSeedApplication object
-
     Returns:
         Order object or None if cart is empty or customer not found
     """
@@ -604,7 +623,6 @@ def create_order_from_cart(
             customer=customer,
             donation_amount=donation_amount,
             customer_note=customer_note,
-            application=order_application,
             status="pending",
         )
 
@@ -694,15 +712,18 @@ def order_to_pdf(
 
         # Order Priority
         try:
-            _priority = f"<b>Priority</b>: {order.application.priority} "
+            _priority = f"<b>Priority</b>: {order.customer.application.priority} "
         except AttributeError:
             _priority = "<b>Priority</b>: N/A "
         priority = Paragraph(_priority, target_styles["Normal"])
         target_elements.append(priority)
 
         # Application Type
+        application_value = (
+            str(order.customer.application) if order.customer.application else "N/A"
+        )
         application_type = Paragraph(
-            f"<b>Application Type</b>: {order.application} ",
+            f"<b>Application Type</b>: {application_value} ",
             target_styles["Normal"],
         )
         target_elements.append(application_type)

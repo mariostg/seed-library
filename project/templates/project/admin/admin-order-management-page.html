@@ -58,9 +58,9 @@
               <td>{{ order.customer.first_name }} {{ order.customer.last_name }}</td>
               <td>{{ order.order_date }}</td>
               <td>{{ order.donation }}</td>
-              <td>{{ order.application }}</td>
+              <td>{{ order.customer.application }}</td>
               <td>{{ order.status }}</td>
-              <td>{{ order.application.priority }}</td>
+              <td>{% if order.customer.application %}{{ order.customer.application.priority }}{% else %}{% trans "N/A" %}{% endif %}</td>
               <td>
                 <a href="{% url 'admin-order-detail-page' order.id %}">{% trans "HTML" %}</a>
                 <span> | </span>

@@ -36,7 +36,7 @@ The layout and styling are designed for printing-->
       <div class="order-details">
         <p><strong>{% trans "Order Date:" %}</strong> {{ order.order_date }}</p>
         <p><strong>{% trans "Donation Amount:" %}</strong> {{ order.donation }}</p>
-        <p><strong>{% trans "Order Application:" %}</strong> {{ order.application }}</p>
+        <p><strong>{% trans "Order Application:" %}</strong> {% if order.customer.application %}{{ order.customer.application }}{% else %}{% trans "N/A" %}{% endif %}</p>
       </div>
     </article>
     <article class="flex-row">

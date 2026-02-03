@@ -4091,6 +4091,29 @@ def add_to_cart(request, pk):
         except (ValueError, TypeError):
             quantity = 1
 
+    max_items = (
+        None
+        if customer.application and customer.application.priority == 1
+        else utils.MAX_NON_PRIORITY_CART_ITEMS
+    )
+    if max_items is not None:
+        current_total = utils.get_cart_total(request)
+        if current_total + quantity > max_items:
+            messages.error(
+                request,
+                _(
+                    "You can only order up to %(max_items)d items with your current application."
+                )
+                % {"max_items": max_items},
+            )
+            if is_htmx:
+                response = render(request, "core/_messages.html", status=200)
+                response["HX-Trigger"] = json.dumps({"cartChanged": current_total})
+                response["HX-Retarget"] = "#messages"
+                response["HX-Reswap"] = "innerHTML"
+                return response
+            return redirect("shopping-cart")
+
     cart_item = utils.add_to_cart(request, plant, quantity)
     if cart_item:
         messages.success(
@@ -4144,8 +4167,25 @@ def update_cart_item(request, pk):
         utils.remove_from_cart(request, plant)
         messages.success(request, _("Item removed from cart."))
     else:
-        utils.update_cart_item(request, plant, quantity)
-        messages.success(request, _("Cart updated."))
+        updated_item = utils.update_cart_item(request, plant, quantity)
+        if updated_item:
+            messages.success(request, _("Cart updated."))
+        else:
+            max_items = (
+                None
+                if customer.application and customer.application.priority == 1
+                else utils.MAX_NON_PRIORITY_CART_ITEMS
+            )
+            if max_items is None:
+                messages.error(request, _("Could not update cart."))
+            else:
+                messages.error(
+                    request,
+                    _(
+                        "You can only order up to %(max_items)d items with your current application."
+                    )
+                    % {"max_items": max_items},
+                )
 
     return redirect("shopping-cart")
 
@@ -4198,8 +4238,6 @@ def checkout(request):
         messages.warning(request, _("Your cart is empty. Add seeds before checkout."))
         return redirect("shopping-cart")
 
-    order_seed_application = models.OrderSeedApplication.objects.all()
-
     if request.method == "POST":
         try:
             donation_str = request.POST.get("donation_amount", "0")
@@ -4213,21 +4251,10 @@ def checkout(request):
 
         customer_note = request.POST.get("customer_note", "").strip()
 
-        order_seed_application_id = request.POST.get("application")
-        order_seed_application = None
-        if order_seed_application_id:
-            try:
-                order_seed_application = models.OrderSeedApplication.objects.get(
-                    id=order_seed_application_id
-                )
-            except models.OrderSeedApplication.DoesNotExist:
-                order_seed_application = None
-
         order = utils.create_order_from_cart(
             request,
             donation_amount=donation_amount,
             customer_note=customer_note,
-            order_application=order_seed_application,
         )
 
         if order:
@@ -4242,7 +4269,6 @@ def checkout(request):
 
     item_count = utils.get_cart_total(request)
     context = {
-        "order_seed_application": order_seed_application,
         "customer": customer,
         "cart_items": cart_items,
         "item_count": item_count,
