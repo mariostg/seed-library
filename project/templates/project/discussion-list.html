@@ -1,0 +1,47 @@
+{% extends 'core/base.html' %}
+{% load i18n %}
+{% block title %}{% trans "Discussions" %}{% endblock title %}
+{% block content %}
+  <main class='main-content'>
+    <section class="flex-col-center">
+      <fieldset>
+        <legend class='form__legend'>{% trans "Discussions" %}</legend>
+        {% if request.user.is_authenticated %}
+          <div class='center'>
+            <a class='btn btn-add' href="{% url 'discussion-create' %}">{% trans "Start a Discussion" %}</a>
+          </div>
+        {% endif %}
+        {% if discussions %}
+          <table>
+            <thead>
+              <tr>
+                <th>{% trans "Title" %}</th>
+                <th>{% trans "Plant" %}</th>
+                <th>{% trans "Author" %}</th>
+                <th>{% trans "Date" %}</th>
+                <th>{% trans "Replies" %}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for discussion in discussions %}
+                <tr class="{% cycle 'odd-row' 'even-row' %}">
+                  <td><a href="{% url 'discussion-detail' discussion.pk %}">{{ discussion.title }}</a></td>
+                  <td>
+                    {% if discussion.plant %}
+                      <a href="{% url 'plant-profile-page' discussion.plant.pk %}">{{ discussion.plant.latin_name }}</a>
+                    {% endif %}
+                  </td>
+                  <td>{{ discussion.author }}</td>
+                  <td>{{ discussion.created|date:"Y-m-d" }}</td>
+                  <td>{{ discussion.replies.count }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        {% else %}
+          <p>{% trans "No discussions yet. Be the first to start one!" %}</p>
+        {% endif %}
+      </fieldset>
+    </section>
+  </main>
+{% endblock content %}

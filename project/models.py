@@ -1654,3 +1654,70 @@ class PlantComplementary(models.Model):
             )
         ]
         ordering = ["plant_profile__latin_name", "complement__latin_name"]
+
+
+class Discussion(Base):
+    """A model representing a community discussion thread.
+
+    Users can create discussion threads, optionally linking them to a specific
+    plant profile. Other users can reply to these discussions.
+
+    Attributes:
+        title (CharField): The title of the discussion thread.
+        body (TextField): The main content of the discussion.
+        author (ForeignKey): The user who created the discussion.
+        plant (ForeignKey): Optional plant profile this discussion relates to.
+    """
+
+    title = models.CharField(max_length=200, verbose_name=_("Title"))
+    body = models.TextField(verbose_name=_("Body"))
+    author = models.ForeignKey(
+        ProjectUser,
+        on_delete=models.CASCADE,
+        related_name="discussions",
+        verbose_name=_("Author"),
+    )
+    plant = models.ForeignKey(
+        PlantProfile,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="discussions",
+        verbose_name=_("Plant"),
+    )
+
+    def __str__(self) -> str:
+        return self.title
+
+    class Meta:
+        ordering = ["-created"]
+
+
+class DiscussionReply(Base):
+    """A model representing a reply to a discussion thread.
+
+    Attributes:
+        discussion (ForeignKey): The discussion this reply belongs to.
+        body (TextField): The content of the reply.
+        author (ForeignKey): The user who wrote the reply.
+    """
+
+    discussion = models.ForeignKey(
+        Discussion,
+        on_delete=models.CASCADE,
+        related_name="replies",
+        verbose_name=_("Discussion"),
+    )
+    body = models.TextField(verbose_name=_("Body"))
+    author = models.ForeignKey(
+        ProjectUser,
+        on_delete=models.CASCADE,
+        related_name="discussion_replies",
+        verbose_name=_("Author"),
+    )
+
+    def __str__(self) -> str:
+        return f"{self.author} - {self.discussion.title}"
+
+    class Meta:
+        ordering = ["created"]

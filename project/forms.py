@@ -652,3 +652,26 @@ class PlantIntroductoryGardeningExperienceForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
+
+class DiscussionForm(forms.ModelForm):
+    class Meta:
+        model = models.Discussion
+        fields = ["title", "body", "plant"]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs.update({"class": "input"})
+            field.required = field_name != "plant"
+
+
+class DiscussionReplyForm(forms.ModelForm):
+    class Meta:
+        model = models.DiscussionReply
+        fields = ["body"]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for _field_name, field in self.fields.items():
+            field.widget.attrs.update({"class": "input"})

@@ -794,5 +794,35 @@ if settings.DEBUG:
 urlpatterns += i18n_patterns(
     path("api/v1/", api.urls),
 )
+
+urlpatterns += i18n_patterns(
+    path(_("discussions/"), views.discussion_list, name="discussion-list"),
+    path(
+        _("discussions/<int:pk>/"),
+        views.discussion_detail,
+        name="discussion-detail",
+    ),
+    path(
+        _("discussions/create/"),
+        views.discussion_create,
+        name="discussion-create",
+    ),
+    path(
+        _("discussions/<int:pk>/reply/"),
+        views.discussion_reply_create,
+        name="discussion-reply-create",
+    ),
+    path(
+        _("discussions/<int:pk>/delete/"),
+        views.discussion_delete,
+        name="discussion-delete",
+    ),
+    path(
+        _("discussions/reply/<int:pk>/delete/"),
+        views.discussion_reply_delete,
+        name="discussion-reply-delete",
+    ),
+)
+
 if "rosetta" in settings.INSTALLED_APPS:
     urlpatterns += [path("rosetta/", include("rosetta.urls"))]
