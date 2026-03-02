@@ -10,7 +10,7 @@ from django.core.paginator import Paginator
 from django.db import IntegrityError
 from django.db.models import Count, RestrictedError
 from django.http import FileResponse, HttpResponse, JsonResponse
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.utils.translation import gettext as _
 from reportlab.lib.colors import black, pink, red
@@ -3961,4 +3961,93 @@ def admin_plant_morphology_delete(request, pk):
             messages.warning(request, msg)
         return redirect("admin-plant-morphology-page")
     context = {"object": obj, "back": "admin-plant-morphology-page"}
+    return render(request, "core/delete-object.html", context)
+
+
+def discussion_list(request):
+    discussions = models.Discussion.objects.select_related("author", "plant").all()
+    context = {
+        "discussions": discussions,
+        "title": _("Discussions"),
+    }
+    return render(request, "project/discussion-list.html", context)
+
+
+def discussion_detail(request, pk):
+    discussion = get_object_or_404(models.Discussion.objects.select_related("author", "plant"), id=pk)
+    replies = discussion.replies.select_related("author").all()
+    reply_form = forms.DiscussionReplyForm()
+    context = {
+        "discussion": discussion,
+        "replies": replies,
+        "reply_form": reply_form,
+        "title": discussion.title,
+    }
+    return render(request, "project/discussion-detail.html", context)
+
+
+@login_required
+def discussion_create(request):
+    context = {
+        "title": _("Start a Discussion"),
+        "url_name": "discussion-list",
+    }
+    if request.method == "POST":
+        form = forms.DiscussionForm(request.POST)
+        if form.is_valid():
+            discussion = form.save(commit=False)
+            discussion.author = request.user
+            discussion.save()
+            messages.success(request, _("Discussion created successfully."))
+            return redirect("discussion-detail", pk=discussion.pk)
+        else:
+            messages.error(request, _("Please correct the errors below."))
+            context["form"] = form
+    else:
+        context["form"] = forms.DiscussionForm()
+    return render(request, "project/simple-form.html", context)
+
+
+@login_required
+def discussion_reply_create(request, pk):
+    discussion = get_object_or_404(models.Discussion, id=pk)
+    if request.method == "POST":
+        form = forms.DiscussionReplyForm(request.POST)
+        if form.is_valid():
+            reply = form.save(commit=False)
+            reply.discussion = discussion
+            reply.author = request.user
+            reply.save()
+            messages.success(request, _("Reply added successfully."))
+        else:
+            messages.error(request, _("Please correct the errors below."))
+    return redirect("discussion-detail", pk=pk)
+
+
+@login_required
+def discussion_delete(request, pk):
+    discussion = get_object_or_404(models.Discussion, id=pk)
+    if request.user != discussion.author and not request.user.is_superuser:
+        messages.error(request, _("You do not have permission to delete this discussion."))
+        return redirect("discussion-detail", pk=pk)
+    if request.method == "POST":
+        discussion.delete()
+        messages.success(request, _("Discussion deleted successfully."))
+        return redirect("discussion-list")
+    context = {"object": discussion, "back": "discussion-list"}
+    return render(request, "core/delete-object.html", context)
+
+
+@login_required
+def discussion_reply_delete(request, pk):
+    reply = get_object_or_404(models.DiscussionReply.objects.select_related("discussion"), id=pk)
+    discussion_pk = reply.discussion.pk
+    if request.user != reply.author and not request.user.is_superuser:
+        messages.error(request, _("You do not have permission to delete this reply."))
+        return redirect("discussion-detail", pk=discussion_pk)
+    if request.method == "POST":
+        reply.delete()
+        messages.success(request, _("Reply deleted successfully."))
+        return redirect("discussion-detail", pk=discussion_pk)
+    context = {"object": reply, "back": "discussion-detail", "pk": discussion_pk}
     return render(request, "core/delete-object.html", context)

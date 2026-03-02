@@ -1,0 +1,55 @@
+{% extends 'core/base.html' %}
+{% load i18n %}
+{% block title %}{{ discussion.title }}{% endblock title %}
+{% block content %}
+  <main class='main-content'>
+    <section class="flex-col-center">
+      <fieldset>
+        <legend class='form__legend'>{{ discussion.title }}</legend>
+        <div>
+          <p><strong>{% trans "Author" %}:</strong> {{ discussion.author }} &mdash; {{ discussion.created|date:"Y-m-d" }}</p>
+          {% if discussion.plant %}
+            <p><strong>{% trans "Plant" %}:</strong>
+              <a href="{% url 'plant-profile-page' discussion.plant.pk %}">{{ discussion.plant.latin_name }}</a>
+            </p>
+          {% endif %}
+          <p>{{ discussion.body }}</p>
+          {% if request.user == discussion.author or request.user.is_superuser %}
+            <a class='btn btn-delete' href="{% url 'discussion-delete' discussion.pk %}">{% trans "Delete Discussion" %}</a>
+          {% endif %}
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend class='form__legend'>{% trans "Replies" %} ({{ replies.count }})</legend>
+        {% for reply in replies %}
+          <div class="discussion-reply">
+            <p><strong>{{ reply.author }}</strong> &mdash; {{ reply.created|date:"Y-m-d" }}</p>
+            <p>{{ reply.body }}</p>
+            {% if request.user == reply.author or request.user.is_superuser %}
+              <a class='btn btn-delete' href="{% url 'discussion-reply-delete' reply.pk %}">{% trans "Delete Reply" %}</a>
+            {% endif %}
+          </div>
+        {% empty %}
+          <p>{% trans "No replies yet." %}</p>
+        {% endfor %}
+      </fieldset>
+
+      {% if request.user.is_authenticated %}
+        <fieldset>
+          <legend class='form__legend'>{% trans "Add a Reply" %}</legend>
+          <form method="POST" action="{% url 'discussion-reply-create' discussion.pk %}">
+            {% csrf_token %}
+            {% include 'core/form-fields.html' with form=reply_form %}
+            <div class="btn-row">
+              <a class='btn btn-back' href="{% url 'discussion-list' %}" style='text-decoration:none;'>{% trans "Back" %}</a>
+              <input class='btn' type="submit" value="{% trans "Reply" %}" />
+            </div>
+          </form>
+        </fieldset>
+      {% else %}
+        <p><a href="{% url 'login' %}">{% trans "Log in to reply" %}</a></p>
+      {% endif %}
+    </section>
+  </main>
+{% endblock content %}
