@@ -33,7 +33,19 @@ EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = os.environ.get("EMAIL_HOST")  # e.g., 'smtp.gmail.com'
 
 EMAIL_PORT = int(os.environ.get("EMAIL_PORT", 587))
-EMAIL_USE_TLS = True
+EMAIL_USE_TLS = os.environ.get("EMAIL_USE_TLS", "true").lower() in {
+    "1",
+    "true",
+    "yes",
+    "on",
+}
+EMAIL_USE_SSL = os.environ.get("EMAIL_USE_SSL", "false").lower() in {
+    "1",
+    "true",
+    "yes",
+    "on",
+}
+# Note: EMAIL_USE_TLS and EMAIL_USE_SSL must not both be True.
 EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER")
 
 EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
@@ -54,6 +66,8 @@ Store credentials in environment variables or a `.env` file (project uses python
 ```bash
 EMAIL_HOST=smtp.gmail.com
 EMAIL_PORT=587
+EMAIL_USE_TLS=true
+EMAIL_USE_SSL=false
 
 EMAIL_HOST_USER=your-email@gmail.com
 EMAIL_HOST_PASSWORD=your-app-specific-password
@@ -63,6 +77,11 @@ DEFAULT_BCC_EMAIL=ops@example.com
 CELERY_BROKER_URL=redis://localhost:6379/0
 CELERY_RESULT_BACKEND=redis://localhost:6379/0
 ```
+
+Common SMTP combinations:
+
+- STARTTLS (most providers): `EMAIL_PORT=587`, `EMAIL_USE_TLS=true`, `EMAIL_USE_SSL=false`
+- Implicit SSL: `EMAIL_PORT=465`, `EMAIL_USE_TLS=false`, `EMAIL_USE_SSL=true`
 
 ## How It Works (current implementation)
 
@@ -155,6 +174,11 @@ If you prefer not to run a worker, you can still test email rendering by calling
 
 - Redis connection refused: ensure Redis is running and `CELERY_BROKER_URL` points to the correct host/port. Try `redis-cli ping` — expect `PONG`.
 - Celery cannot import tasks: ensure `main/celery.py` exists and `main.__init__.py` exposes the app (`from .celery import app as celery_app`).
+
+- `STARTTLS extension not supported` or `server did not reply to HELO greeting`:
+  - Verify SMTP host/port/encryption mode match provider docs.
+  - Check outbound SMTP ports are open from your deployed host (587/465 may be blocked by provider/firewall).
+  - If local works but production fails, suspect network/provider restrictions in production before credentials.
 
 - Emails not sent: check Django logs, Celery worker logs, and SMTP provider errors. Use console backend for local inspection.
 
