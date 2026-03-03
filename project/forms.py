@@ -709,7 +709,6 @@ class CustomerForm(forms.ModelForm):
             "first_name",
             "last_name",
             "email",
-            "phone_number",
             "application",
             "address",
             "city",
@@ -725,9 +724,6 @@ class CustomerForm(forms.ModelForm):
             ),
             "email": forms.EmailInput(
                 attrs={"class": "form-control", "placeholder": _("Email Address")}
-            ),
-            "phone_number": forms.TextInput(
-                attrs={"class": "form-control", "placeholder": _("Phone Number")}
             ),
             "application": forms.Select(
                 attrs={"class": "form-control", "required": "required"}
@@ -749,7 +745,6 @@ class CustomerForm(forms.ModelForm):
             "first_name": _("First Name"),
             "last_name": _("Last Name"),
             "email": _("Email Address"),
-            "phone_number": _("Phone Number"),
             "application": _("Order Application"),
             "address": _("Street Address"),
             "postal_code": _("Postal Code"),
@@ -761,13 +756,6 @@ class CustomerForm(forms.ModelForm):
         if not email:
             raise ValidationError(_("Email is required."))
         return email
-
-    def clean_phone(self):
-        """Validate phone number is not empty."""
-        phone = self.cleaned_data.get("phone", "").strip()
-        if not phone:
-            raise ValidationError(_("Phone number is required."))
-        return phone
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

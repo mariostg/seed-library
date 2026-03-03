@@ -14,7 +14,6 @@ class OrderCeleryEnqueueTests(TransactionTestCase):
             first_name="Test",
             last_name="User",
             email="test@example.com",
-            phone_number="1234567890",
             address="1 Test St",
             city="City",
             province="State",

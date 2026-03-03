@@ -1693,7 +1693,6 @@ class Customer(Base):
     Attributes:
         name (CharField): The name of the customer (max 100 chars).
         email (EmailField): The email address of the customer (max 100 chars).
-        phone (CharField): The phone number of the customer (max 15 chars).
         address (CharField): The address of the customer (max 255 chars).
 
     Returns:
@@ -1703,7 +1702,6 @@ class Customer(Base):
     first_name = models.CharField(max_length=100, verbose_name=_("First Name"))
     last_name = models.CharField(max_length=100, verbose_name=_("Last Name"))
     email = models.EmailField(max_length=100, verbose_name=_("Email"))
-    phone_number = models.CharField(max_length=15, verbose_name=_("Phone"))
     address = models.CharField(max_length=255, verbose_name=_("Address"))
     city = models.CharField(max_length=100, verbose_name=_("City"))
     province = models.CharField(max_length=100, verbose_name=_("Province"))
