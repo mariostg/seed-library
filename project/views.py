@@ -4011,7 +4011,9 @@ def create_customer(request):
             messages.success(request, _("Welcome! You can now start ordering seeds."))
             return redirect("shopping-cart")
         else:
-            messages.error(request, _("Please correct the errors below."))
+            for field, errors in form.errors.items():
+                for error in errors:
+                    messages.error(request, f"Error in {field}: {error}")
     else:
         form = forms.CustomerForm()
 
