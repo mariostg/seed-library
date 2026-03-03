@@ -1,5 +1,5 @@
 #!/bin/sh
-DEVSITE='mariost-gelais@mariostg.com:~/owsl.mariostg.com'
+DEVSITE='django@shop-sandbox.wildflowerseedlibrary.ca:~/wildflowerseedlibrary.ca'
 PRODSITE='mariost-gelais@mariostg.com:~/catalogue.wildflowerseedlibrary.ca'
 SOURCE="."
 if [ $# -eq 0 ]; then #execute a dry run to dev site
