@@ -933,16 +933,26 @@ def send_order_confirmation_email(order):
 
         # Create email
         logger.debug("Creating email message for %s", order.customer.email)
+        bcc_email = getattr(settings, "DEFAULT_BCC_EMAIL", None) or getattr(
+            settings, "EMAIL_BCC", None
+        )
         email = EmailMultiAlternatives(
             subject=subject,
             body=text_content,
             from_email=None,  # Uses DEFAULT_FROM_EMAIL from settings
             to=[order.customer.email],
-            bcc=[settings.DEFAULT_BCC_EMAIL],
+            bcc=[bcc_email] if bcc_email else None,
         )
         email.attach_alternative(html_content, "text/html")
 
         # Send email
+        logger.info(
+            "Email backend=%s host=%s port=%s bcc=%s",
+            settings.EMAIL_BACKEND,
+            getattr(settings, "EMAIL_HOST", None),
+            getattr(settings, "EMAIL_PORT", None),
+            bool(bcc_email),
+        )
         logger.info(
             "Sending order confirmation email for Order #%s to %s",
             order.id,
