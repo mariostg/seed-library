@@ -266,17 +266,43 @@ LOGGING = {
     },
 }
 
+# Mail settings
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = os.environ.get("EMAIL_HOST")  # or your provider
-EMAIL_PORT = int(os.environ.get("EMAIL_PORT", 587))
-EMAIL_USE_TLS = env_bool("EMAIL_USE_TLS", default=True)
-EMAIL_USE_SSL = env_bool("EMAIL_USE_SSL", default=False)
+EMAIL_MODE = os.environ.get("EMAIL_MODE", "smtp").strip().lower()
+
+if EMAIL_MODE == "sandbox":
+    _default_email_host = os.environ.get(
+        "SANDBOX_EMAIL_HOST", "sandbox.smtp.mailtrap.io"
+    )
+    _default_email_user = os.environ.get("SANDBOX_EMAIL_HOST_USER", "")
+    _default_email_password = os.environ.get("SANDBOX_EMAIL_HOST_PASSWORD", "")
+    _default_email_port = os.environ.get("SANDBOX_EMAIL_PORT", "2525")
+    _default_email_use_tls = env_bool("SANDBOX_EMAIL_USE_TLS", default=True)
+    _default_email_use_ssl = env_bool("SANDBOX_EMAIL_USE_SSL", default=False)
+elif EMAIL_MODE in {"smtp", "live"}:
+    _default_email_host = os.environ.get("SMTP_EMAIL_HOST", "live.smtp.mailtrap.io")
+    _default_email_user = os.environ.get("SMTP_EMAIL_HOST_USER", "api")
+    _default_email_password = os.environ.get(
+        "SMTP_EMAIL_HOST_PASSWORD", os.environ.get("MAILTRAP_TOKEN", "")
+    )
+    _default_email_port = os.environ.get("SMTP_EMAIL_PORT", "587")
+    _default_email_use_tls = env_bool("SMTP_EMAIL_USE_TLS", default=True)
+    _default_email_use_ssl = env_bool("SMTP_EMAIL_USE_SSL", default=False)
+else:
+    raise ImproperlyConfigured("EMAIL_MODE must be one of: smtp, live, sandbox")
+
+DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL", "hello@mariostg.com")
+EMAIL_HOST = os.environ.get("EMAIL_HOST", _default_email_host)
+EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER", _default_email_user)
+EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD", _default_email_password)
+EMAIL_PORT = int(os.environ.get("EMAIL_PORT", _default_email_port))
+EMAIL_USE_TLS = env_bool("EMAIL_USE_TLS", default=_default_email_use_tls)
+EMAIL_USE_SSL = env_bool("EMAIL_USE_SSL", default=_default_email_use_ssl)
 if EMAIL_USE_TLS and EMAIL_USE_SSL:
     raise ImproperlyConfigured("EMAIL_USE_TLS and EMAIL_USE_SSL cannot both be True.")
-EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER")
-EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
-DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL", EMAIL_HOST_USER)
-DEFAULT_BCC_EMAIL = os.environ.get("DEFAULT_BCC_EMAIL")
+DEFAULT_BCC_EMAIL = os.environ.get("DEFAULT_BCC_EMAIL") or os.environ.get("EMAIL_BCC")
+EMAIL_BCC = os.environ.get("EMAIL_BCC", DEFAULT_BCC_EMAIL)
+
 
 # in main/settings.py
 CELERY_BROKER_URL = "redis://localhost:6379/0"
