@@ -26,10 +26,11 @@ Blooming periods are months defined as bloom_start and bloom_end in the plant pr
             </td>
             {% for key, value in months.items %}
               {% if key >= item.bloom_start and key <= item.bloom_end %}
-                <td class="blooming" style="background-color: {{ item.bloom_colour }};"></td>
+                <td class="blooming" style="background-color: {{ item.bloom_colour }};">
               {% else %}
-                <td class="not-blooming"></td>
+                <td class="not-blooming">
               {% endif %}
+                {% comment %} {% if key == item.harvesting_start %} <img src="{% static 'images/plant-self-seeding.svg' %}" alt=""> {% endif %}  </td> {% endcomment %}
             {% endfor %}
           </tr>
         {% endfor %}
