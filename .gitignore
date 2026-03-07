@@ -18,3 +18,4 @@ media/*
 static/images/plants/
 
 logs/
+.backup-state/
