@@ -1,0 +1,38 @@
+{% extends 'core/base.html' %}
+{% load i18n %}
+{% load static %}
+{% block title %}{{title}} Management{% endblock title %}
+{% block content %}
+  {% include "project/admin/admin_links.html" %}
+  <div class='flex-col-center'>
+    <fieldset class="flex-col-center">
+      <legend>{{title}} Management</legend>
+      {% if user.is_authenticated %}
+        <div class='center'>
+          <a class='btn btn-add' href="{% url 'admin-narrative-type-add' %}">{% trans "Add New Narrative Type" %}</a>
+        </div>
+      {% endif %}
+      <table class=''>
+        <thead>
+          <tr>
+            <th colspan="2">{% trans "Narrative Type" %}</th>
+            <th colspan="2">{% trans "Actions" %}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in object_list %}
+            <tr class="{% cycle 'odd-row' 'even-row' %}">
+              <td>{{item.narrative_type_en}}</td>
+              <td>{{item.narrative_type_fr}}</td>
+              {% if user.is_authenticated %}
+                <td class="actions">
+                  <a class='btn btn-edit' href="{% url "admin-narrative-type-update" item.id %}">{% trans "Edit" %}</a>
+                </td>
+              {% endif %}
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </fieldset>
+  </div>
+{% endblock content %}

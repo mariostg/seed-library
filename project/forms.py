@@ -652,3 +652,29 @@ class PlantIntroductoryGardeningExperienceForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
+
+class AdminPlantNarrativeForm(forms.ModelForm):
+    class Meta:
+        model = models.PlantNarrative
+        fields = [
+            "plant_profile",
+            "narrative_type",
+            "description",
+            "published",
+        ]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+
+class AdminPlantNarrativeTypeForm(forms.ModelForm):
+    class Meta:
+        model = models.NarrativeType
+        fields = [
+            "narrative_type_en",
+            "narrative_type_fr",
+        ]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)

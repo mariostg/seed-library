@@ -146,8 +146,13 @@ def plant_profile_page(request, pk):
     is_valid_video_url = utils.is_valid_url(plant.harvesting_video_link)
     if not is_valid_video_url:
         plant.harvesting_video_link = ""
+
+    # check if plant narrative exists for the plant profile page, if it does, get the narrative type and content for display
+    plant_narratives = models.PlantNarrative.objects.filter(plant_profile=plant)
+
     context = {
         "plant": plant,
+        "plant_narratives": plant_narratives,
         "image_count": image_count,
         "title": plant.latin_name,
         "bloom_start": bloom_start,
@@ -3961,4 +3966,202 @@ def admin_plant_morphology_delete(request, pk):
             messages.warning(request, msg)
         return redirect("admin-plant-morphology-page")
     context = {"object": obj, "back": "admin-plant-morphology-page"}
+    return render(request, "core/delete-object.html", context)
+
+
+@group_required("Library Manager")
+def admin_narrative_type_page(request):
+    obj = models.NarrativeType.objects.annotate(
+        plant_narrative_count=Count("plantnarrative")
+    ).order_by("narrative_type")
+    context = {
+        "title": _("Narrative Types"),
+        "object_list": obj,
+        "url_name": "admin-narrative-type-page",
+    }
+    return render(request, "project/admin/admin-narrative-type-page.html", context)
+
+
+@group_required("Library Manager")
+def admin_narrative_type_add(request):
+    context = {
+        "title": _("Register New Narrative Type"),
+        "url_name": "admin-narrative-type-page",
+    }
+    if request.method == "POST":
+        form = forms.AdminPlantNarrativeTypeForm(request.POST)
+        if form.is_valid():
+            context["form"] = form
+            obj: models.NarrativeType = form.save(commit=False)
+            try:
+                form.save()
+            except IntegrityError:
+                messages.error(
+                    request,
+                    _("Narrative Type %(narrative_type)s exists already.")
+                    % {"narrative_type": obj.narrative_type},
+                )
+                return render(
+                    request,
+                    "project/simple-form.html",
+                    context,
+                )
+        else:
+            messages.error(request, _("Narrative Type not valid."))
+            context["form"] = form
+    else:
+        context["form"] = forms.AdminPlantNarrativeTypeForm()
+
+    return render(request, "project/simple-form.html", context)
+
+
+@group_required("Library Manager")
+def admin_narrative_type_update(request, pk):
+    obj = models.NarrativeType.objects.get(id=pk)
+    form = forms.AdminPlantNarrativeTypeForm(instance=obj)
+
+    if request.method == "POST":
+        form = forms.AdminPlantNarrativeTypeForm(request.POST, instance=obj)
+        if form.is_valid():
+            form.save()
+            messages.success(request, _("Narrative type updated successfully."))
+            return redirect("admin-narrative-type-page")
+
+    return render(
+        request,
+        "project/simple-form.html",
+        {
+            "form": form,
+            "title": _("Update Narrative Type"),
+            "url_name": "admin-narrative-type-page",
+        },
+    )
+
+
+@group_required("Library Manager")
+def admin_narrative_type_delete(request, pk):
+    obj: models.NarrativeType = models.NarrativeType.objects.get(id=pk)
+    if request.method == "POST":
+        try:
+            obj.delete()
+        except RestrictedError as e:
+            msg = e.args[0].split(":")[0] + " : "
+            fkeys = []
+            for fk in e.restricted_objects:
+                fkeys.append(fk.narrative_type)
+            msg = msg + ", ".join(fkeys)
+            messages.warning(request, msg)
+        return redirect("admin-narrative-type-page")
+    context = {"object": obj, "back": "admin-narrative-type-page"}
+    return render(request, "core/delete-object.html", context)
+
+
+@group_required("Library Manager")
+def admin_plant_narrative_page(request, pk):
+    plant = models.PlantProfile.objects.get(id=pk)
+    obj = models.PlantNarrative.objects.filter(plant_profile=plant).order_by(
+        "narrative_type__narrative_type"
+    )
+    context = {
+        "title": _("Plant Narratives for %(latin_name)s")
+        % {"latin_name": plant.latin_name},
+        "object_list": obj,
+        "url_name": "admin-plant-narrative-page",
+        "plant": plant,
+    }
+    return render(request, "project/admin/admin-plant-narrative-page.html", context)
+
+
+@group_required("Library Manager")
+def admin_plant_narrative_add(request, pk):
+    plant = models.PlantProfile.objects.get(id=pk)
+    context = {
+        "title": _("Add Plant Narrative for %(latin_name)s")
+        % {"latin_name": plant.latin_name},
+        "url_name": "admin-plant-narrative-page",
+        "url_item": plant.pk,
+        "plant": plant,
+    }
+    if request.method == "POST":
+        form = forms.AdminPlantNarrativeForm(
+            request.POST, initial={"plant_profile": plant}
+        )
+        if form.is_valid():
+            context["form"] = form
+            obj: models.PlantNarrative = form.save(commit=False)
+            obj.plant_profile = plant
+            try:
+                obj.save()
+            except IntegrityError:
+                messages.error(
+                    request,
+                    _(
+                        "A narrative of type <em>%(narrative_type)s</em> already exists for this plant profile. Please update the existing narrative instead.  If you want to add a new narrative, please select a different narrative type."
+                    )
+                    % {
+                        "narrative_type": obj.narrative_type,
+                    },
+                )
+                return render(
+                    request,
+                    "project/admin/admin-plant-narrative-page.html",
+                    context,
+                )
+        else:
+            messages.error(request, _("Plant narrative not valid."))
+            context["form"] = form
+    else:
+        context["form"] = forms.AdminPlantNarrativeForm(
+            initial={"plant_profile": plant}
+        )
+
+    return render(request, "project/simple-form.html", context)
+
+
+@group_required("Library Manager")
+def admin_plant_narrative_update(request, pk):
+    obj = models.PlantNarrative.objects.get(id=pk)
+    plant = obj.plant_profile
+    form = forms.AdminPlantNarrativeForm(instance=obj)
+
+    if request.method == "POST":
+        form = forms.AdminPlantNarrativeForm(request.POST, instance=obj)
+        if form.is_valid():
+            form.save()
+            messages.success(request, _("Plant narrative updated successfully."))
+            return redirect("admin-plant-narrative-page", pk=plant.pk)
+
+    return render(
+        request,
+        "project/simple-form.html",
+        {
+            "form": form,
+            "title": _("Update Plant Narrative for %(latin_name)s")
+            % {"latin_name": plant.latin_name},
+            "url_name": "admin-plant-narrative-page",
+            "url_item": plant.pk,
+        },
+    )
+
+
+@group_required("Library Manager")
+def admin_plant_narrative_delete(request, pk):
+    obj: models.PlantNarrative = models.PlantNarrative.objects.get(id=pk)
+    plant = obj.plant_profile
+    if request.method == "POST":
+        try:
+            obj.delete()
+        except RestrictedError as e:
+            msg = e.args[0].split(":")[0] + " : "
+            fkeys = []
+            for fk in e.restricted_objects:
+                fkeys.append(fk.narrative_type)
+            msg = msg + ", ".join(fkeys)
+            messages.warning(request, msg)
+        return redirect("admin-plant-narrative-page", pk=plant.pk)
+    context = {
+        "object": obj,
+        "back": "admin-plant-narrative-page",
+        "pk": plant.pk,
+    }
     return render(request, "core/delete-object.html", context)

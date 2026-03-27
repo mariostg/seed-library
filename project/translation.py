@@ -110,6 +110,12 @@ class ToxicityIndicatorTranslationOptions(TranslationOptions):
     required_languages = ("fr",)
 
 
+# Plant Narrative Types
+class NarrativeTypeTranslationOptions(TranslationOptions):
+    fields = ("narrative_type",)
+    required_languages = ("fr",)
+
+
 # Register the models
 translator.register(models.BloomColour, BloomColourTranslationOptions)
 translator.register(models.ButterflySpecies, ButterflyTranslationOptions)
@@ -130,3 +136,4 @@ translator.register(models.SeedStorage, SeedStorageTranslationOptions)
 translator.register(models.SeedViabilityTest, SeedViabilityTestTranslationOptions)
 translator.register(models.SowingDepth, SowingDepthTranslationOptions)
 translator.register(models.ToxicityIndicator, ToxicityIndicatorTranslationOptions)
+translator.register(models.NarrativeType, NarrativeTypeTranslationOptions)
