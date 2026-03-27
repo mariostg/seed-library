@@ -26,7 +26,10 @@ staticfiles/
 README.md
 rsync-exclude.txt
 upload.sh
+scripts/pull-locale.sh
+scripts/push-locale.sh
 scss/
+locale/
 db.sqlite3
 media/project/images/plants/
 logs/*

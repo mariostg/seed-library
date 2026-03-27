@@ -64,6 +64,39 @@ There is no need to execute command **django-admin startproject <your project na
 
 Additionally, skip the command **django-admin startapp**. App project has been created.
 
+## Deployment and translations
+
+- The deploy script excludes `locale/` from rsync so Rosetta changes made on the server are not overwritten during deploy.
+- If a deploy adds or changes translatable strings in Python, templates, or URL translations, run `python manage.py makemessages -a` on the server.
+- After Rosetta updates translations, run `python manage.py compilemessages` on the server so Django refreshes the compiled gettext files.
+- Because `locale/` is excluded from deploy, the server copy can diverge from the repository. Pull the server locale files back into this repo regularly and push them to GitHub so the repository remains a backup of the live translations.
+
+### Pull locale from server
+
+- Use `scripts/pull-locale.sh` to sync `locale/` from server to local.
+- Default behavior is a dry-run against dev:
+  - `sh scripts/pull-locale.sh`
+- Dry-run against production:
+  - `sh scripts/pull-locale.sh prod`
+- Apply changes locally:
+  - `sh scripts/pull-locale.sh prod --apply`
+- Mirror exactly (also delete local files not present on server):
+  - `sh scripts/pull-locale.sh prod --apply --delete`
+- After pulling, commit updated `locale/**/*.po` and `locale/**/*.mo` files and push to GitHub.
+
+### Push locale to server
+
+- Use `scripts/push-locale.sh` to sync local `locale/` to server.
+- Default behavior is a dry-run against dev:
+  - `sh scripts/push-locale.sh`
+- Dry-run against production:
+  - `sh scripts/push-locale.sh prod`
+- Apply changes to server:
+  - `sh scripts/push-locale.sh prod --apply`
+- Mirror exactly (also delete server files not present locally):
+  - `sh scripts/push-locale.sh prod --apply --delete`
+- After pushing locale changes, run `python manage.py compilemessages` on the server if translations do not appear immediately.
+
 ### Setup manage.py
 
 Just in case I need to modify my manage.py.  manage.py on this project has been modified.
