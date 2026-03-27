@@ -1,5 +1,6 @@
 .venv-*/
 /.env
+scripts/.env.media-archive
 
 db.sqlite3
 
