@@ -28,8 +28,11 @@ rsync-exclude.txt
 upload.sh
 scripts/pull-locale.sh
 scripts/push-locale.sh
+scripts/sync-rosetta-po.sh
 scss/
 locale/
+**/*.po
+**/*.mo
 db.sqlite3
 media/project/images/plants/
 logs/*
