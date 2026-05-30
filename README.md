@@ -84,6 +84,23 @@ Additionally, skip the command **django-admin startapp**. App project has been c
   - `sh scripts/pull-locale.sh prod --apply --delete`
 - After pulling, commit updated `locale/**/*.po` and `locale/**/*.mo` files and push to GitHub.
 
+### Recommended Rosetta sync workflow
+
+- Rosetta on server is the source of truth for translations.
+- Use `scripts/sync-rosetta-po.sh` for one-way sync from server to local repo.
+- This script syncs only `.po` files by default, so local files are not pushed back to server.
+- Default behavior is a dry-run against dev:
+  - `sh scripts/sync-rosetta-po.sh`
+- Dry-run against production:
+  - `sh scripts/sync-rosetta-po.sh prod`
+- Apply changes locally:
+  - `sh scripts/sync-rosetta-po.sh prod --apply`
+- Mirror exactly (also delete local files not present on server):
+  - `sh scripts/sync-rosetta-po.sh prod --apply --delete`
+- Optionally sync compiled `.mo` files too:
+  - `sh scripts/sync-rosetta-po.sh prod --apply --include-mo`
+- After sync, commit and push locale updates to GitHub.
+
 ### Push locale to server
 
 - Use `scripts/push-locale.sh` to sync local `locale/` to server.
@@ -99,7 +116,7 @@ Additionally, skip the command **django-admin startapp**. App project has been c
 
 ### Setup manage.py
 
-Just in case I need to modify my manage.py.  manage.py on this project has been modified.
+Just in case I need to modify my manage.py. manage.py on this project has been modified.
 
 ```bash
 diff manage.py _manage.py
