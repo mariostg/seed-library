@@ -497,6 +497,9 @@ def search_plant_name(request):
         "#is_accepted",
         "#has_notice",
     ]
+    stratification_filters = [
+        "#no_stratification_required",
+    ]
 
     # Merge all filter lists and join with commas
     hx_include = ",".join(
@@ -524,6 +527,7 @@ def search_plant_name(request):
         + region_filters
         + ecozones_filters
         + admin_controls_filters
+        + stratification_filters
     )
     item_count = object_list.qs.count()
     stratification_durations = models.StratificationDuration.objects.all().order_by(

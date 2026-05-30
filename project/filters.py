@@ -43,6 +43,11 @@ class PlantProfileFilter(django_filters.FilterSet):
     accepting_seed = django_filters.CharFilter(
         method="filter_accepting_seed",
     )
+
+    no_stratification_required = django_filters.CharFilter(
+        method="filter_no_stratification_required",
+    )
+
     native_to_ottawa_region = django_filters.CharFilter(
         method="filter_boolean",
     )
@@ -266,11 +271,14 @@ class PlantProfileFilter(django_filters.FilterSet):
             method="filter_boolean"
         )
 
-    # Ecozones
-    for ecozone in models.Ecozone.objects.all():
-        locals()[f"ecozone_{ecozone.id}"] = django_filters.CharFilter(
-            method="filter_ecozones"
-        )
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Build ecozone filters at runtime to avoid DB access during module import.
+        for ecozone in models.Ecozone.objects.all():
+            self.filters.setdefault(
+                f"ecozone_{ecozone.id}",
+                django_filters.CharFilter(method="filter_ecozones"),
+            )
 
     # Admin Filters
     is_draft = django_filters.CharFilter(
@@ -383,6 +391,15 @@ class PlantProfileFilter(django_filters.FilterSet):
             )
         else:
             return queryset.none()
+
+    def filter_no_stratification_required(self, queryset, name, value):
+        if value:
+            return queryset.filter(
+                Q(stratification_duration__isnull=True)
+                | Q(stratification_duration__stratification_duration__lte=0),
+                double_dormancy=False,
+            )
+        return queryset
 
     def filter_endangered_species(self, queryset, name, value):
         endangered_values = (
