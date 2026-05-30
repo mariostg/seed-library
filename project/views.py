@@ -150,6 +150,13 @@ def plant_profile_page(request, pk):
     # check if plant narrative exists for the plant profile page, if it does, get the narrative type and content for display
     plant_narratives = models.PlantNarrative.objects.filter(plant_profile=plant)
 
+    # Show the snowflake icon for stratification or double dormancy requirements.
+    has_snowflake_icon = plant.double_dormancy or (
+        plant.stratification_duration.stratification_duration > 0
+        if plant.stratification_duration
+        else False
+    )
+
     context = {
         "plant": plant,
         "plant_narratives": plant_narratives,
@@ -167,6 +174,7 @@ def plant_profile_page(request, pk):
         "seed_storage_list": seed_storage_list,
         "harvesting_mean_list": harvesting_mean_list,
         "harvesting_indicator_list": harvesting_indicator_list,
+        "has_snowflake_icon": has_snowflake_icon,
     }
     return render(request, "project/plant_profile/plant-profile-page.html", context)
 

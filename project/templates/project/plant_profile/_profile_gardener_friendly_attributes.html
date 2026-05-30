@@ -56,4 +56,14 @@
       <span class="tooltiptext">{% trans "Self-seeding" %}</span>
     </div>
   {% endif %}
+  {% if has_snowflake_icon %}
+    <div class="tooltip">
+      <img
+        alt="plant stratification"
+        class="icon"
+        src="{% static 'images/plant-snow-flake.svg'  %}"
+      />
+      <span class="tooltiptext">{% trans "Requires stratification" %}</span>
+    </div>
+  {% endif %}
 </div>
