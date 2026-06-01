@@ -2,7 +2,7 @@ from django.db.models import QuerySet
 from django.test import TestCase
 
 from project.filters import PlantProfileFilter
-from project.models import PlantProfile, StratificationDuration
+from project.models import NonNativeSpecies, PlantProfile, StratificationDuration
 
 
 class TestPlantProfileFilter(TestCase):
@@ -55,3 +55,29 @@ class TestPlantProfileFilter(TestCase):
         self.assertIn(zero_day_plant, filtered)
         self.assertNotIn(requires_strat, filtered)
         self.assertNotIn(double_dormant, filtered)
+
+    def test_filter_non_native_name_matches_non_native_alternatives(self):
+        native_alternative = PlantProfile.objects.create(latin_name="Asclepias syriaca")
+        non_native = NonNativeSpecies.objects.create(
+            latin_name="Buddleja davidii", english_name="Butterfly Bush"
+        )
+        native_alternative.substitute_for_non_native.add(non_native)
+
+        filtered = self.filter.filter_non_native_name(
+            self.queryset, "non_native_name", "butterfly bush"
+        )
+
+        self.assertIn(native_alternative, filtered)
+
+    def test_filter_normalized_plant_name_does_not_match_non_native_alternatives(self):
+        native_alternative = PlantProfile.objects.create(latin_name="Asclepias syriaca")
+        non_native = NonNativeSpecies.objects.create(
+            latin_name="Buddleja davidii", english_name="Butterfly Bush"
+        )
+        native_alternative.substitute_for_non_native.add(non_native)
+
+        filtered = self.filter.filter_normalized_plant_name(
+            self.queryset, "any_plant_name", "butterfly bush"
+        )
+
+        self.assertNotIn(native_alternative, filtered)

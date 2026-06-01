@@ -366,6 +366,7 @@ def search_plant_name(request):
         data = models.PlantProfile.objects.all().order_by("latin_name")
 
     object_list = filters.PlantProfileFilter(request.GET, queryset=data)
+    non_native_name = request.GET.get("non_native_name", "")
     ecozones = models.Ecozone.objects.all().order_by("ecozone")
     growth_habits = models.GrowthHabit.objects.all().order_by("growth_habit")
     bloom_colours = models.BloomColour.objects.all().order_by("bloom_colour")
@@ -503,7 +504,7 @@ def search_plant_name(request):
 
     # Merge all filter lists and join with commas
     hx_include = ",".join(
-        ["#any_plant_name"]
+        ["#any_plant_name", "#non_native_name"]
         + ["#is_active"]
         + sun_filters
         + moisture_filters
@@ -549,6 +550,8 @@ def search_plant_name(request):
         "title": _("Plant Profile Filter"),
         "item_count": item_count,
         "hx_include": hx_include,
+        "any_plant_name": request.GET.get("any_plant_name", ""),
+        "non_native_name": non_native_name,
     }
     template = (
         "project/plant-search-results.html"

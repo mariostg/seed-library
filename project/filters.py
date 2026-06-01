@@ -36,6 +36,11 @@ class PlantProfileFilter(django_filters.FilterSet):
         strip=False,
     )
 
+    non_native_name = django_filters.CharFilter(
+        method="filter_non_native_name",
+        strip=False,
+    )
+
     seed_availability = django_filters.CharFilter(
         method="filter_seed_availability",
     )
@@ -316,11 +321,8 @@ class PlantProfileFilter(django_filters.FilterSet):
             return queryset
 
     def filter_normalized_plant_name(self, queryset, name, value):
-        normalized_value = (
-            normalize("NFKD", value).encode("ASCII", "ignore").decode("ASCII").lower()
-        )
+        normalized_value = self._normalize_value(value)
 
-        # Get all plant profiles
         all_plants = queryset.all()
         matching_ids = []
 
@@ -328,41 +330,57 @@ class PlantProfileFilter(django_filters.FilterSet):
         for plant in all_plants:
             # Check french_name
             if plant.french_name:
-                normalized_name = (
-                    normalize("NFKD", plant.french_name)
-                    .encode("ASCII", "ignore")
-                    .decode("ASCII")
-                    .lower()
-                )
+                normalized_name = self._normalize_value(plant.french_name)
                 if normalized_value in normalized_name:
                     matching_ids.append(plant.id)
                     continue
 
             # Check latin_name
             if plant.latin_name:
-                normalized_name = (
-                    normalize("NFKD", plant.latin_name)
-                    .encode("ASCII", "ignore")
-                    .decode("ASCII")
-                    .lower()
-                )
+                normalized_name = self._normalize_value(plant.latin_name)
                 if normalized_value in normalized_name:
                     matching_ids.append(plant.id)
                     continue
 
             # Check english_name
             if plant.english_name:
-                normalized_name = (
-                    normalize("NFKD", plant.english_name)
-                    .encode("ASCII", "ignore")
-                    .decode("ASCII")
-                    .lower()
-                )
+                normalized_name = self._normalize_value(plant.english_name)
                 if normalized_value in normalized_name:
                     matching_ids.append(plant.id)
                     continue
 
         return queryset.filter(id__in=matching_ids)
+
+    def filter_non_native_name(self, queryset, name, value):
+        normalized_value = self._normalize_value(value)
+
+        # Prefetch alternatives to avoid an extra DB query for each plant.
+        all_plants = queryset.prefetch_related("substitute_for_non_native").all()
+        matching_ids = []
+
+        for plant in all_plants:
+            for non_native in plant.substitute_for_non_native.all():
+                names_to_check = [
+                    non_native.latin_name,
+                    non_native.english_name,
+                    getattr(non_native, "english_name_en", ""),
+                    getattr(non_native, "english_name_fr", ""),
+                ]
+                if any(
+                    normalized_value in self._normalize_value(candidate)
+                    for candidate in names_to_check
+                    if candidate
+                ):
+                    matching_ids.append(plant.id)
+                    break
+
+        return queryset.filter(id__in=matching_ids)
+
+    @staticmethod
+    def _normalize_value(value):
+        return (
+            normalize("NFKD", value).encode("ASCII", "ignore").decode("ASCII").lower()
+        )
 
     def filter_any_name(self, queryset, name, value):
         return queryset.filter(

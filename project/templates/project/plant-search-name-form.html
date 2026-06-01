@@ -10,6 +10,7 @@
           <span class="tooltiptext">{% trans "Enter 4 or more letters of the plant's latin, english, or french name" %}</span>
         </label>
         <input id="any_plant_name" class="name-search-input"
+               placeholder="{% trans "Enter a plant name..." %}"
                name="any_plant_name"
                hx-get="{% url 'search-plant-name' %}"
                hx-trigger="keyup[target.value.length >= 4] changed delay:500ms, keyup[key=='Enter']"
@@ -22,6 +23,28 @@
                class="form-input"
         >
       </div>
+
+      <div class="form__field">
+        <label for="non_native_name" class="form-label tooltip info">{% trans "Search by non-native name" %}
+          <span class="tooltiptext">{% trans "Enter 4 or more letters of a non-native species name to find native alternatives" %}</span>
+        </label>
+        <input id="non_native_name" class="name-search-input"
+               placeholder="{% trans "Enter a non-native plant name..." %}"
+               name="non_native_name"
+               hx-get="{% url 'search-plant-name' %}"
+               hx-trigger="keyup[target.value.length >= 4] changed delay:500ms, keyup[key=='Enter']"
+               hx-target="#search-results"
+               hx-push-url="true"
+               hx-include="{{hx_include}}"
+               hx-indicator=".htmx-indicator"
+               type="text"
+               value="{{ non_native_name }}"
+               class="form-input"
+        >
+      </div>
+
+    </div>
+    <div class="flex-row center">
       <!--Input checkbox to filter for plants that are available only (is_active)-->
       <div class="form__field">
         <input type="checkbox" id="seed_availability" name="seed_availability"
@@ -36,7 +59,9 @@
       </div>
 
     </div>
-    <div class="flex-row center"><a href="{% url 'search-plant-name' %}?any_plant_name=" class="btn btn-primary">{% trans "Show all plants" %}</a></div>
+
+    <div class="flex-row center"><a href="{% url 'search-plant-name' %}?any_plant_name=&non_native_name=" class="btn btn-primary">{% trans "Show all plants" %}</a></div>
+
     <div class="flex-row center htmx-indicator">
       <img src="{% static 'images/searching.svg' %}"/> {% trans "Searching..." %}
     </div>
