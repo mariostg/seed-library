@@ -2,9 +2,9 @@
 {% if request.user.is_authenticated %}
 
   <nav class="flex-row xcenter row-spacer">
-    {% if request.user.is_library_manager %}
+    {% if request.user.is_plant_profile_manager %}
       <div class="flex-col-center">
-        <div class="title">{% trans "Library Management" %}</div>
+        <div class="title">{% trans "Plant Profile" %}</div>
         <div>
           <div>
             <a href="{% url 'plant-identification-information-create' %}">{% trans "Record new plant" %}</a>

@@ -325,7 +325,7 @@ class AdminConservationStatusForm(forms.ModelForm):
 class AdminButterflySpeciesForm(forms.ModelForm):
     class Meta:
         model = models.ButterflySpecies
-        fields = ["latin_name", "english_name_en", "english_name_fr"]
+        fields = ["latin_name", "english_name", "french_name"]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

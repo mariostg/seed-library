@@ -557,6 +557,9 @@ class ButterflySpecies(models.Model):
     english_name = models.CharField(
         max_length=75, blank=True, verbose_name=_("English Name")
     )
+    french_name = models.CharField(
+        max_length=75, blank=True, verbose_name=_("French Name")
+    )
 
     def __str__(self) -> str:
         return self.latin_name

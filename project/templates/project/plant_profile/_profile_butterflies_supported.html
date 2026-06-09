@@ -8,7 +8,10 @@
           <i class="fas fa-butterfly text-primary me-2"></i>
           {{ butterfly.latin_name }}
           {% if butterfly.english_name %}
-            <span class="text-muted fst-italic">({{ butterfly.english_name }})</span>
+            <br><span class="text-muted fst-italic">{{ butterfly.english_name }}</span>
+          {% endif %}
+          {% if butterfly.french_name %}
+            <span class="text-muted fst-italic"> - {{ butterfly.french_name }}</span>
           {% endif %}
         </li>
       {% endfor %}
