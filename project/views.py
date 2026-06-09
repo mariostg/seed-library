@@ -575,10 +575,10 @@ def search_vascan_taxon_id(request):
 
         return HttpResponse(
             f"""
-            <input id="id_taxon" value="{taxon_id}" hx-swap-oob="true">
-            <input id="id_english_name" value="{english_name}" hx-swap-oob="true">
-            <input id="id_french_name" value="{french_name}" hx-swap-oob="true">
-            <input id="id_inaturalist_taxon" value="{inaturalist_taxon}" hx-swap-oob="true">
+            <input type="text" id="id_taxon" name="taxon" value="{taxon_id}" hx-swap-oob="true">
+            <input type="text" id="id_english_name" name="english_name" value="{english_name}" hx-swap-oob="true">
+            <input type="text" id="id_french_name" name="french_name" value="{french_name}" hx-swap-oob="true">
+            <input type="text" id="id_inaturalist_taxon" name="inaturalist_taxon" value="{inaturalist_taxon}" hx-swap-oob="true">
         """
         )
 
@@ -3019,6 +3019,7 @@ def plant_environmental_requirement_update(request, pk):
 @group_required(["Plant Profile Manager", "Library Manager"])
 def plant_identification_information_update(request, pk):
     plant = utils.single_plant(pk, request)
+    original_latin_name = plant.latin_name
     context = {
         "title": _("%(latin_name)s - Identification Information")
         % {"latin_name": plant.latin_name},
@@ -3027,7 +3028,19 @@ def plant_identification_information_update(request, pk):
     if request.method == "POST":
         form = forms.PlantIdentificationInformationForm(request.POST, instance=plant)
         if form.is_valid():
-            form.save()
+            updated_plant: models.PlantProfile = form.save(commit=False)
+            latin_name = form.cleaned_data["latin_name"]
+
+            if latin_name != original_latin_name:
+                vascan_result = vascan.vascan_query(latin_name)
+                updated_plant.taxon = vascan.extract_taxon_id(vascan_result)
+                updated_plant.english_name = vascan.extract_english_name(vascan_result)
+                updated_plant.french_name = vascan.extract_french_name(vascan_result)
+                updated_plant.inaturalist_taxon = utils.get_inaturalist_taxon_id(
+                    latin_name
+                )
+
+            updated_plant.save()
             messages.success(
                 request, _("Identification information updated successfully.")
             )
