@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-16 14:46+0000\n"
-"PO-Revision-Date: 2025-12-10 02:49+0000\n"
-"Last-Translator: Mario St-Gelais <admin@mail.ca>\n"
+"POT-Creation-Date: 2026-06-09 19:30+0000\n"
+"PO-Revision-Date: 2026-06-04 00:53+0000\n"
+"Last-Translator: Mario  <>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -95,528 +95,586 @@ msgstr "plante-profile-images/<int:pk>"
 msgid "plant-seed-box-label-pdf/<int:pk>"
 msgstr "plante-etiquette/<int:pk>"
 
-#: main/urls.py:103
+#: main/urls.py:102
+#, fuzzy
+#| msgid "admin-harvesting-mean-page/"
+msgid "admin-narrative-type-page/"
+msgstr "admin-recolte-page/"
+
+#: main/urls.py:107
+#, fuzzy
+#| msgid "admin-lifespan-add/"
+msgid "admin-narrative-type-add/"
+msgstr "admin-duree-de-vie-ajoute/"
+
+#: main/urls.py:112
+#, fuzzy
+#| msgid "admin-harvesting-mean-update/<int:pk>/"
+msgid "admin-narrative-type-update/<int:pk>/"
+msgstr "admin-recolte-actualise/<int:pk>"
+
+#: main/urls.py:117
+#, fuzzy
+#| msgid "admin-harvesting-mean-delete/<int:pk>"
+msgid "admin-narrative-type-delete/<int:pk>/"
+msgstr "admin-recolte-efface/<int:pk>"
+
+#: main/urls.py:122
+#, fuzzy
+#| msgid "admin-lifespan-update/<int:pk>/"
+msgid "admin-plant-narrative-add/<int:pk>/"
+msgstr "admin-duree-de-vie-actualise/<int:pk>/"
+
+#: main/urls.py:127
+#, fuzzy
+#| msgid "admin-lifespan-update/<int:pk>/"
+msgid "admin-plant-narrative-update/<int:pk>/"
+msgstr "admin-duree-de-vie-actualise/<int:pk>/"
+
+#: main/urls.py:132
+#, fuzzy
+#| msgid "plant-profile-delete/<int:pk>"
+msgid "admin-plant-narrative-delete/<int:pk>/"
+msgstr "plante-profile-efface/<int:pk>"
+
+#: main/urls.py:137
+#, fuzzy
+#| msgid "plant-profile-page/<int:pk>"
+msgid "admin-plant-narrative-page/<int:pk>/"
+msgstr "plante-profile/<int:pk>"
+
+#: main/urls.py:145
 msgid "admin-accept-all-seeds/"
 msgstr ""
 
-#: main/urls.py:110
+#: main/urls.py:150
+msgid "admin-refuse-all-seeds/"
+msgstr ""
+
+#: main/urls.py:157
 msgid "admin-colour-add/"
 msgstr "admin-couleur-ajoute/"
 
-#: main/urls.py:111
+#: main/urls.py:158
 msgid "admin-colour-page/"
 msgstr "admin-couleur-page/"
 
-#: main/urls.py:113
+#: main/urls.py:160
 msgid "admin-colour-delete/<int:pk>"
 msgstr "admin-couleur-efface/<int:pk>"
 
-#: main/urls.py:118
+#: main/urls.py:165
 msgid "admin-colour-update/<int:pk>/"
 msgstr "admin-couleur-actualise/<int:pk>/"
 
-#: main/urls.py:125
+#: main/urls.py:172
 msgid "admin-lifespan-add/"
 msgstr "admin-duree-de-vie-ajoute/"
 
-#: main/urls.py:127
+#: main/urls.py:174
 msgid "admin-lifespan-page/"
 msgstr "admin-dure-de-vie-page"
 
-#: main/urls.py:130
+#: main/urls.py:177
 msgid "admin-lifespan-delete/<int:pk>"
 msgstr "admin-duree-de-vie-efface/<int:pk>/"
 
-#: main/urls.py:135
+#: main/urls.py:182
 msgid "admin-lifespan-update/<int:pk>/"
 msgstr "admin-duree-de-vie-actualise/<int:pk>/"
 
-#: main/urls.py:143
+#: main/urls.py:190
 msgid "admin-growth-habit-add/"
 msgstr ""
 
-#: main/urls.py:148
+#: main/urls.py:195
 msgid "admin-growth-habit-page/"
 msgstr ""
 
-#: main/urls.py:153
+#: main/urls.py:200
 msgid "admin-growth-habit-delete/<int:pk>"
 msgstr ""
 
-#: main/urls.py:158
+#: main/urls.py:205
 msgid "admin-growth-habit-update/<int:pk>/"
 msgstr ""
 
-#: main/urls.py:166
+#: main/urls.py:213
 msgid "admin-harvesting-indicator-add/"
 msgstr ""
 
-#: main/urls.py:171
+#: main/urls.py:218
 msgid "admin-harvesting-indicator-page/"
 msgstr ""
 
-#: main/urls.py:176
+#: main/urls.py:223
 msgid "admin-harvesting-indicator-delete/<int:pk>"
 msgstr ""
 
-#: main/urls.py:181
+#: main/urls.py:228
 msgid "admin-harvesting-indicator-update/<int:pk>/"
 msgstr ""
 
-#: main/urls.py:189
+#: main/urls.py:236
 msgid "admin-harvesting-mean-add/"
 msgstr ""
 
-#: main/urls.py:194
+#: main/urls.py:241
 msgid "admin-harvesting-mean-page/"
 msgstr "admin-recolte-page/"
 
-#: main/urls.py:199
+#: main/urls.py:246
 msgid "admin-harvesting-mean-delete/<int:pk>"
 msgstr "admin-recolte-efface/<int:pk>"
 
-#: main/urls.py:204
+#: main/urls.py:251
 msgid "admin-harvesting-mean-update/<int:pk>/"
 msgstr "admin-recolte-actualise/<int:pk>"
 
-#: main/urls.py:212
+#: main/urls.py:259
 msgid "admin-seed-head-add/"
 msgstr ""
 
-#: main/urls.py:217
+#: main/urls.py:264
 msgid "admin-seed-head-page/"
 msgstr ""
 
-#: main/urls.py:222
+#: main/urls.py:269
 msgid "admin-seed-head-delete/<int:pk>"
 msgstr ""
 
-#: main/urls.py:227
+#: main/urls.py:274
 msgid "admin-seed-head-update/<int:pk>/"
 msgstr ""
 
-#: main/urls.py:235
+#: main/urls.py:282
 #, fuzzy
 #| msgid "Seed Event Table"
 msgid "admin-seed-viability-test-add/"
 msgstr "Disponible à la table"
 
-#: main/urls.py:240
+#: main/urls.py:287
 #, fuzzy
 #| msgid "Seed Event Table"
 msgid "admin-seed-viability-test-page/"
 msgstr "Disponible à la table"
 
-#: main/urls.py:245
+#: main/urls.py:292
 msgid "admin-seed-viability-test-delete/<int:pk>"
 msgstr ""
 
-#: main/urls.py:250
+#: main/urls.py:297
 msgid "admin-seed-viability-test-update/<int:pk>/"
 msgstr ""
 
-#: main/urls.py:258
+#: main/urls.py:305
 msgid "admin-seed-storage-add/"
 msgstr ""
 
-#: main/urls.py:263
+#: main/urls.py:310
 msgid "admin-seed-storage-page/"
 msgstr ""
 
-#: main/urls.py:268
+#: main/urls.py:315
 msgid "admin-seed-storage-delete/<int:pk>"
 msgstr ""
 
-#: main/urls.py:273
+#: main/urls.py:320
 msgid "admin-seed-storage-update/<int:pk>/"
 msgstr ""
 
-#: main/urls.py:281
+#: main/urls.py:328
 msgid "admin-one-cultivar-add/"
 msgstr ""
 
-#: main/urls.py:286
+#: main/urls.py:333
 msgid "admin-one-cultivar-page/"
 msgstr ""
 
-#: main/urls.py:291
+#: main/urls.py:338
 msgid "admin-one-cultivar-update/<int:pk>/"
 msgstr ""
 
-#: main/urls.py:296
+#: main/urls.py:343
 msgid "admin-one-cultivar-delete/<int:pk>/"
 msgstr ""
 
-#: main/urls.py:304
+#: main/urls.py:351
 msgid "admin-stratification-duration-add/"
 msgstr ""
 
-#: main/urls.py:309
+#: main/urls.py:356
 msgid "admin-stratification-duration-page/"
 msgstr ""
 
-#: main/urls.py:314
+#: main/urls.py:361
 msgid "admin-stratification-duration-update/<int:pk>/"
 msgstr ""
 
-#: main/urls.py:319
+#: main/urls.py:366
 msgid "admin-stratification-duration-delete/<int:pk>/"
 msgstr ""
 
-#: main/urls.py:327
+#: main/urls.py:374
 msgid "admin-sowing-depth-add/"
 msgstr ""
 
-#: main/urls.py:332
+#: main/urls.py:379
 msgid "admin-sowing-depth-page/"
 msgstr ""
 
-#: main/urls.py:337
+#: main/urls.py:384
 msgid "admin-sowing-depth-update/<int:pk>/"
 msgstr ""
 
-#: main/urls.py:342
+#: main/urls.py:389
 msgid "admin-sowing-depth-delete/<int:pk>/"
 msgstr ""
 
-#: main/urls.py:350
+#: main/urls.py:397
 msgid "admin-packaging-measure-add/"
 msgstr ""
 
-#: main/urls.py:355
+#: main/urls.py:402
 msgid "admin-packaging-measure-page/"
 msgstr ""
 
-#: main/urls.py:360
+#: main/urls.py:407
 msgid "admin-packaging-measure-update/<int:pk>/"
 msgstr ""
 
-#: main/urls.py:365
+#: main/urls.py:412
 msgid "admin-packaging-measure-delete/<int:pk>/"
 msgstr ""
 
-#: main/urls.py:373
+#: main/urls.py:420
 msgid "admin-seed-preparation-add/"
 msgstr ""
 
-#: main/urls.py:378
+#: main/urls.py:425
 msgid "admin-seed-preparation-page/"
 msgstr ""
 
-#: main/urls.py:383
+#: main/urls.py:430
 msgid "admin-seed-preparation-update/<int:pk>/"
 msgstr ""
 
-#: main/urls.py:388
+#: main/urls.py:435
 msgid "admin-seed-preparation-delete/<int:pk>/"
 msgstr ""
 
-#: main/urls.py:396
+#: main/urls.py:443
 msgid "admin-seed-event-table-add/"
 msgstr ""
 
-#: main/urls.py:401
+#: main/urls.py:448
 msgid "admin-seed-event-table-page/"
 msgstr ""
 
-#: main/urls.py:406
+#: main/urls.py:453
 msgid "admin-seed-event-table-update/<int:pk>/"
 msgstr ""
 
-#: main/urls.py:411
+#: main/urls.py:458
 msgid "admin-seed-event-table-delete/<int:pk>/"
 msgstr ""
 
-#: main/urls.py:419
+#: main/urls.py:466
 msgid "admin-toxicity-indicator-add/"
 msgstr ""
 
-#: main/urls.py:424
+#: main/urls.py:471
 msgid "admin-toxicity-indicator-page/"
 msgstr ""
 
-#: main/urls.py:429
+#: main/urls.py:476
 msgid "admin-toxicity-indicator-update/<int:pk>/"
 msgstr ""
 
-#: main/urls.py:434
+#: main/urls.py:481
 msgid "admin-toxicity-indicator-delete/<int:pk>/"
 msgstr ""
 
-#: main/urls.py:442
+#: main/urls.py:489
 msgid "admin-conservation-status-add/"
 msgstr ""
 
-#: main/urls.py:447
+#: main/urls.py:494
 msgid "admin-conservation-status-page/"
 msgstr ""
 
-#: main/urls.py:452
+#: main/urls.py:499
 msgid "admin-conservation-status-update/<int:pk>/"
 msgstr ""
 
-#: main/urls.py:457
+#: main/urls.py:504
 msgid "admin-conservation-status-delete/<int:pk>/"
 msgstr ""
 
-#: main/urls.py:465
+#: main/urls.py:512
 msgid "admin-butterfly-species-page/"
 msgstr ""
 
-#: main/urls.py:470
+#: main/urls.py:517
 msgid "admin-butterfly-species-add/"
 msgstr ""
 
-#: main/urls.py:475
+#: main/urls.py:522
 msgid "admin-butterfly-species-update/<int:pk>/"
 msgstr ""
 
-#: main/urls.py:480
+#: main/urls.py:527
 msgid "admin-butterfly-species-delete/<int:pk>/"
 msgstr ""
 
-#: main/urls.py:488
+#: main/urls.py:535
 msgid "admin-bee-species-page/"
 msgstr ""
 
-#: main/urls.py:493
+#: main/urls.py:540
 msgid "admin-bee-species-add/"
 msgstr ""
 
-#: main/urls.py:498
+#: main/urls.py:545
 msgid "admin-bee-species-update/<int:pk>/"
 msgstr ""
 
-#: main/urls.py:503
+#: main/urls.py:550
 msgid "admin-bee-species-delete/<int:pk>/"
 msgstr ""
 
-#: main/urls.py:511
+#: main/urls.py:558
 msgid "admin-non-native-species-page/"
 msgstr ""
 
-#: main/urls.py:516
+#: main/urls.py:563
 msgid "admin-non-native-species-add/"
 msgstr ""
 
-#: main/urls.py:521
+#: main/urls.py:568
 msgid "admin-non-native-species-update/<int:pk>/"
 msgstr ""
 
-#: main/urls.py:526
+#: main/urls.py:573
 msgid "admin-non-native-species-delete/<int:pk>/"
 msgstr ""
 
-#: main/urls.py:533
+#: main/urls.py:580
 msgid "admin-ecozone-page/"
 msgstr ""
 
-#: main/urls.py:535
+#: main/urls.py:582
 msgid "admin-ecozone-add/"
 msgstr ""
 
-#: main/urls.py:540
+#: main/urls.py:587
 msgid "admin-ecozone-update/<int:pk>/"
 msgstr ""
 
-#: main/urls.py:545
+#: main/urls.py:592
 msgid "admin-ecozone-delete/<int:pk>/"
 msgstr ""
 
-#: main/urls.py:552
+#: main/urls.py:599
 msgid "admin-images-page/"
 msgstr ""
 
-#: main/urls.py:553
+#: main/urls.py:600
 msgid "admin-image-add/"
 msgstr ""
 
-#: main/urls.py:555
+#: main/urls.py:602
 msgid "admin-image-update/<int:pk>/"
 msgstr ""
 
-#: main/urls.py:560
+#: main/urls.py:607
 msgid "admin-image-delete/<int:pk>/"
 msgstr ""
 
-#: main/urls.py:568
+#: main/urls.py:612
+#, fuzzy
+#| msgid "admin-lifespan-update/<int:pk>/"
+msgid "admin-plant-image-add/<int:pk>/"
+msgstr "admin-duree-de-vie-actualise/<int:pk>/"
+
+#: main/urls.py:620
 msgid "admin-plant-morphology-page/"
 msgstr ""
 
-#: main/urls.py:573
+#: main/urls.py:625
 msgid "admin-plant-morphology-add/"
 msgstr ""
 
-#: main/urls.py:578
+#: main/urls.py:630
 msgid "admin-plant-morphology-update/<int:pk>/"
 msgstr ""
 
-#: main/urls.py:583
+#: main/urls.py:635
 msgid "admin-plant-morphology-delete/<int:pk>/"
 msgstr ""
 
-#: main/urls.py:590
+#: main/urls.py:642
 msgid "login/"
 msgstr ""
 
-#: main/urls.py:591
+#: main/urls.py:643
 msgid "logout/"
 msgstr ""
 
-#: main/urls.py:593
+#: main/urls.py:645
 #, fuzzy
 #| msgid "search-plant-name/"
 msgid "user-plant-collection/"
 msgstr "cherche-plante/"
 
-#: main/urls.py:598
+#: main/urls.py:650
 msgid "user-plant-toggle/<int:pk>"
 msgstr ""
 
-#: main/urls.py:603
+#: main/urls.py:655
 msgid "user-plant-update/<int:pk>"
 msgstr ""
 
-#: main/urls.py:608
+#: main/urls.py:660
 msgid "user-plant-delete/<int:pk>"
 msgstr ""
 
-#: main/urls.py:613
+#: main/urls.py:665
 msgid "plant-collection-csv/"
 msgstr ""
 
-#: main/urls.py:617
+#: main/urls.py:669
 msgid "site-admin/"
 msgstr ""
 
-#: main/urls.py:621
+#: main/urls.py:673
 msgid "plant-label-pdf/<int:pk>"
 msgstr ""
 
-#: main/urls.py:626
+#: main/urls.py:678
 msgid "plant-environmental-requirement-update/<int:pk>"
 msgstr ""
 
-#: main/urls.py:631
+#: main/urls.py:683
 msgid "plant-identification-information-update/<int:pk>"
 msgstr ""
 
-#: main/urls.py:637
+#: main/urls.py:689
 msgid "plant-identification-information-create/"
 msgstr ""
 
-#: main/urls.py:643
+#: main/urls.py:695
 msgid "admin-plant-missing-inaturalist-taxon/"
 msgstr ""
 
-#: main/urls.py:648
+#: main/urls.py:700
 msgid "plant-growth-characteristics-update/<int:pk>"
 msgstr ""
 
-#: main/urls.py:653
+#: main/urls.py:705
 msgid "plant-introductory-gardening-experience-update/<int:pk>"
 msgstr ""
 
-#: main/urls.py:658
+#: main/urls.py:710
 msgid "plant-landscape-use-and-application-update/<int:pk>"
 msgstr ""
 
-#: main/urls.py:663
+#: main/urls.py:715
 msgid "plant-ecological-benefits-update/<int:pk>"
 msgstr ""
 
-#: main/urls.py:668
+#: main/urls.py:720
 msgid "plant-special-features-and-considerations-update/<int:pk>"
 msgstr ""
 
-#: main/urls.py:673
+#: main/urls.py:725
 msgid "plant-harvesting-update/<int:pk>"
 msgstr ""
 
-#: main/urls.py:678
+#: main/urls.py:730
 msgid "plant-sowing-update/<int:pk>"
 msgstr ""
 
-#: main/urls.py:683
+#: main/urls.py:735
 msgid "plant-seed-distribution-update/<int:pk>"
 msgstr ""
 
-#: main/urls.py:691
+#: main/urls.py:743
 msgid "plant-substitute-to-update/<int:pk>"
 msgstr ""
 
-#: main/urls.py:699
+#: main/urls.py:751
 msgid "butterfly-supporting-plants/"
 msgstr ""
 
-#: main/urls.py:704
+#: main/urls.py:756
 msgid "bee-supporting-plants/"
 msgstr ""
 
-#: main/urls.py:708
+#: main/urls.py:760
+msgid "blooming-calendar/"
+msgstr ""
+
+#: main/urls.py:761
 msgid "plant-ecozones/"
 msgstr ""
 
-#: main/urls.py:710
+#: main/urls.py:763
 msgid "plants-needing-seeds-csv/"
 msgstr ""
 
-#: main/urls.py:719
+#: main/urls.py:772
 #, fuzzy
 #| msgid "Seed Event Table"
 msgid "project-user-page/"
 msgstr "Disponible à la table"
 
-#: main/urls.py:724
+#: main/urls.py:777
 msgid "project-user-add/"
 msgstr ""
 
-#: main/urls.py:729
+#: main/urls.py:782
 msgid "project-user-update/<int:pk>/"
 msgstr ""
 
-#: main/urls.py:734
+#: main/urls.py:787
 msgid "project-user-delete/<int:pk>/"
 msgstr ""
 
-#: main/urls.py:739
+#: main/urls.py:792
 msgid "project-user-groups-update/<int:pk>/"
 msgstr ""
 
-#: main/urls.py:744
+#: main/urls.py:797
 msgid "project-user-groups-delete/<int:user_pk>/<int:group_pk>/"
 msgstr ""
 
-#: main/urls.py:749
+#: main/urls.py:802
 msgid "group-permissions-matrix-update/"
 msgstr ""
 
-#: main/urls.py:758
+#: main/urls.py:811
 msgid "project-group-page/"
 msgstr ""
 
-#: main/urls.py:763
+#: main/urls.py:816
 msgid "project-group-add/"
 msgstr ""
 
-#: main/urls.py:768
+#: main/urls.py:821
 msgid "project-group-update/<int:pk>/"
 msgstr ""
 
-#: main/urls.py:773
+#: main/urls.py:826
 msgid "project-group-delete/<int:pk>/"
 msgstr ""
 
 #: project/forms.py:82
-msgid ""
-"%(latin_name): Minimum height (%(min_height)) must be smaller than maximum "
-"height (%(max_height))"
+msgid "%(latin_name): Minimum height (%(min_height)) must be smaller than maximum height (%(max_height))"
 msgstr ""
 
 #: project/forms.py:96
-msgid ""
-"Beginning of blooming period (%(bloom_start)) must be before end of blooming "
-"period (%(bloom_end))"
+msgid "Beginning of blooming period (%(bloom_start)) must be before end of blooming period (%(bloom_end))"
 msgstr ""
 
 #: project/forms.py:178
@@ -651,29 +709,28 @@ msgstr ""
 msgid "Cultivar (French)"
 msgstr ""
 
-#: project/forms.py:402
+#: project/forms.py:405
 #: project/templates/project/users/project-group-page.html:21
 #: project/templates/project/users/project-user-groups-update.html:20
 msgid "Group Name"
 msgstr ""
 
-#: project/forms.py:407
+#: project/forms.py:410
 #: project/templates/project/users/project-user-groups-update.html:21
 msgid "Group Permissions"
 msgstr ""
 
-#: project/models.py:34 project/models.py:1092
+#: project/models.py:34 project/models.py:1156
 #: project/templates/project/update/plant-seed-distribution-update.html:37
 msgid "Seed Event Table"
 msgstr "Disponible à la table"
 
-#: project/models.py:59 project/models.py:988
+#: project/models.py:59 project/models.py:1052
 #: project/templates/project/update/plant-harvesting-update.html:30
 msgid "Harvesting Indicator"
 msgstr ""
 
-#: project/models.py:89 project/models.py:995
-#: project/templates/project/plant-collection.html:12
+#: project/models.py:89 project/models.py:1059
 #: project/templates/project/plant_profile/_profile_harvesting.html:23
 #: project/templates/project/plant_profile/_profile_update_links.html:16
 #: project/templates/project/update/plant-harvesting-update.html:5
@@ -681,48 +738,48 @@ msgstr ""
 msgid "Harvesting"
 msgstr ""
 
-#: project/models.py:117 project/models.py:1002
+#: project/models.py:117 project/models.py:1066
 #: project/templates/project/admin/admin-seed-head-page.html:18
 #: project/templates/project/update/plant-harvesting-update.html:71
 msgid "Seed Head"
 msgstr ""
 
-#: project/models.py:141 project/models.py:1010
+#: project/models.py:141 project/models.py:1074
 #: project/templates/project/update/plant-harvesting-update.html:143
 msgid "Seed Viability Test"
 msgstr ""
 
-#: project/models.py:168 project/models.py:1017
+#: project/models.py:168 project/models.py:1081
 #: project/templates/project/update/plant-harvesting-update.html:103
 #: project/templates/project/update/plant-seed-distribution-update.html:84
-#: project/views.py:1028
+#: project/views.py:1075
 msgid "Seed Storage"
 msgstr ""
 
-#: project/models.py:194 project/models.py:1024
+#: project/models.py:194 project/models.py:1088
 #: project/templates/project/plant_profile/_profile_harvesting.html:58
 msgid "Cultivar"
 msgstr ""
 
-#: project/models.py:220 project/models.py:1062
+#: project/models.py:220 project/models.py:1126
 #: project/templates/project/update/plant-seed-distribution-update.html:25
 msgid "Packaging Measure"
 msgstr ""
 
-#: project/models.py:247 project/models.py:1069
+#: project/models.py:247 project/models.py:1133
 #: project/templates/project/update/plant-seed-distribution-update.html:60
 msgid "Seed Preparation"
 msgstr ""
 
-#: project/models.py:275 project/models.py:1085
+#: project/models.py:275 project/models.py:1149
 msgid "Seed Storage Label Info"
 msgstr ""
 
-#: project/models.py:303 project/models.py:1053
+#: project/models.py:303 project/models.py:1117
 msgid "Sowing Depth"
 msgstr ""
 
-#: project/models.py:335 project/models.py:1042
+#: project/models.py:335 project/models.py:1106
 msgid "Stratification Duration"
 msgstr ""
 
@@ -740,16 +797,16 @@ msgstr ""
 msgid "Definition"
 msgstr ""
 
-#: project/models.py:387 project/models.py:929
+#: project/models.py:387 project/models.py:993
 #: project/templates/project/plant_profile/_profile_env_requirements_growth_characteristics.html:5
 #: project/templates/project/update/plant-growth-characteristics-update.html:146
 msgid "Bloom Colour"
 msgstr "Couleur de floraison"
 
-#: project/models.py:414 project/models.py:944
+#: project/models.py:414 project/models.py:1008
 #: project/templates/project/admin/admin-growth-habit-page.html:18
 #: project/templates/project/update/plant-growth-characteristics-update.html:51
-#: project/views.py:3456
+#: project/views.py:3629
 msgid "Growth Habit"
 msgstr ""
 
@@ -761,18 +818,18 @@ msgstr ""
 msgid "Lifespan"
 msgstr ""
 
-#: project/models.py:460 project/models.py:1220
+#: project/models.py:460 project/models.py:1284
 #: project/templates/project/filters/_filter_special_features_and_considerations.html:2
 #: project/templates/project/plant_profile/_profile_icons_definition.html:692
 msgid "Conservation Status"
 msgstr ""
 
-#: project/models.py:508 project/models.py:1201
+#: project/models.py:508 project/models.py:1265
 msgid "Toxicity Indicator"
 msgstr ""
 
-#: project/models.py:529 project/models.py:555 project/models.py:582
-#: project/models.py:867
+#: project/models.py:529 project/models.py:555 project/models.py:585
+#: project/models.py:931
 #: project/templates/project/admin/admin-bee-species-page.html:18
 #: project/templates/project/admin/admin-butterfly-species-page.html:18
 #: project/templates/project/admin/admin-non-native-species-page.html:18
@@ -781,7 +838,7 @@ msgstr ""
 msgid "Latin Name"
 msgstr ""
 
-#: project/models.py:558 project/models.py:585 project/models.py:870
+#: project/models.py:558 project/models.py:588 project/models.py:934
 #: project/templates/project/admin/admin-butterfly-species-page.html:19
 #: project/templates/project/admin/admin-non-native-species-page.html:19
 #: project/templates/project/plant-identification-information-create.html:48
@@ -789,511 +846,548 @@ msgstr ""
 msgid "English Name"
 msgstr ""
 
-#: project/models.py:599
-#: project/templates/project/admin/admin-ecozones-page.html:18
-msgid "Ecozone"
-msgstr ""
-
-#: project/models.py:800
-#: project/templates/project/plant_profile/_profile-identification-status.html:13
-msgid "Is Active"
-msgstr ""
-
-#: project/models.py:802
-#: project/templates/project/plant_profile/_profile-identification-status.html:23
-msgid "Is Accepted"
-msgstr ""
-
-#: project/models.py:805
-#: project/templates/project/filters/_filter_admin_controls.html:16
-#: project/templates/project/plant_profile/_profile-identification-status.html:8
-msgid "Is Draft"
-msgstr ""
-
-#: project/models.py:808
-#: project/templates/project/plant_profile/_profile-identification-status.html:18
-msgid "Is Needed"
-msgstr ""
-
-#: project/models.py:811
-#: project/templates/project/filters/_filter_admin_controls.html:61
-#: project/templates/project/plant_profile/_profile-identification-status.html:32
-msgid "Has Notice"
-msgstr ""
-
-#: project/models.py:814
-msgid "Notice Detail"
-msgstr ""
-
-#: project/models.py:817
-msgid "Not Accepted Reason"
-msgstr ""
-
-#: project/models.py:820
-msgid "Show Bees Supported Information"
-msgstr ""
-
-#: project/models.py:823
-msgid "Show Butterflies Supported Information"
-msgstr ""
-
-#: project/models.py:826
-msgid "Show Complementary Plants Information"
-msgstr ""
-
-#: project/models.py:829
-msgid "Show Alternative To Information"
-msgstr ""
-
-#: project/models.py:832
-msgid "Show Ecological Benefits Information"
-msgstr ""
-
-#: project/models.py:835
-msgid "Show Ecozones Information"
-msgstr ""
-
-#: project/models.py:838
-#: project/templates/project/plant_profile/_profile-identification-status.html:66
-msgid "Show Environmental Requirements Information"
-msgstr "Afficher les informations de besoins environnementaux"
-
-#: project/models.py:841
-msgid "Show Gardener Friendly Information"
-msgstr ""
-
-#: project/models.py:844
-msgid "Show Harvesting Information"
-msgstr ""
-
-#: project/models.py:847
-msgid "Show iNaturalist Link Information"
-msgstr ""
-
-#: project/models.py:850
-msgid "Show Landscape Uses Information"
-msgstr ""
-
-#: project/models.py:853
-msgid "Show Obsolete Names Information"
-msgstr ""
-
-#: project/models.py:856
-msgid "Show Sowing Information"
-msgstr ""
-
-#: project/models.py:859
-msgid "Show Tolerates Information"
-msgstr ""
-
-#: project/models.py:862
-msgid "Show Vascan Map Information"
-msgstr ""
-
-#: project/models.py:873
+#: project/models.py:561 project/models.py:937
 #: project/templates/project/admin/admin-butterfly-species-page.html:20
 #: project/templates/project/admin/admin-non-native-species-page.html:20
 #: project/templates/project/plant-identification-information-create.html:53
 #: project/templates/project/update/plant-identification-information-update.html:40
 msgid "French Name"
+msgstr "Nom Français"
+
+#: project/models.py:602
+#: project/templates/project/admin/admin-ecozones-page.html:18
+msgid "Ecozone"
+msgstr ""
+
+#: project/models.py:864
+#: project/templates/project/plant_profile/_profile-identification-status.html:13
+msgid "Is Active"
+msgstr ""
+
+#: project/models.py:866
+#: project/templates/project/plant_profile/_profile-identification-status.html:23
+msgid "Is Accepted"
+msgstr ""
+
+#: project/models.py:869
+#: project/templates/project/filters/_filter_admin_controls.html:16
+#: project/templates/project/plant_profile/_profile-identification-status.html:8
+msgid "Is Draft"
+msgstr ""
+
+#: project/models.py:872
+#: project/templates/project/plant_profile/_profile-identification-status.html:18
+msgid "Is Needed"
 msgstr ""
 
 #: project/models.py:875
+#: project/templates/project/filters/_filter_admin_controls.html:61
+#: project/templates/project/plant_profile/_profile-identification-status.html:32
+msgid "Has Notice"
+msgstr ""
+
+#: project/models.py:878
+msgid "Notice Detail"
+msgstr ""
+
+#: project/models.py:881
+msgid "Not Accepted Reason"
+msgstr ""
+
+#: project/models.py:884
+msgid "Show Bees Supported Information"
+msgstr ""
+
+#: project/models.py:887
+msgid "Show Butterflies Supported Information"
+msgstr ""
+
+#: project/models.py:890
+msgid "Show Complementary Plants Information"
+msgstr ""
+
+#: project/models.py:893
+msgid "Show Alternative To Information"
+msgstr ""
+
+#: project/models.py:896
+msgid "Show Ecological Benefits Information"
+msgstr ""
+
+#: project/models.py:899
+msgid "Show Ecozones Information"
+msgstr ""
+
+#: project/models.py:902
+#: project/templates/project/plant_profile/_profile-identification-status.html:66
+msgid "Show Environmental Requirements Information"
+msgstr "Afficher les informations de besoins environnementaux"
+
+#: project/models.py:905
+msgid "Show Gardener Friendly Information"
+msgstr ""
+
+#: project/models.py:908
+msgid "Show Harvesting Information"
+msgstr ""
+
+#: project/models.py:911
+msgid "Show iNaturalist Link Information"
+msgstr ""
+
+#: project/models.py:914
+msgid "Show Landscape Uses Information"
+msgstr ""
+
+#: project/models.py:917
+msgid "Show Obsolete Names Information"
+msgstr ""
+
+#: project/models.py:920
+msgid "Show Sowing Information"
+msgstr ""
+
+#: project/models.py:923
+msgid "Show Tolerates Information"
+msgstr ""
+
+#: project/models.py:926
+msgid "Show Vascan Map Information"
+msgstr ""
+
+#: project/models.py:939
 msgid "Taxon"
 msgstr ""
 
-#: project/models.py:877
+#: project/models.py:941
 msgid "iNaturalist Taxon"
 msgstr ""
 
-#: project/models.py:883
+#: project/models.py:947
 #: project/templates/project/filters/_filter_environmental_requirements.html:16
 #: project/templates/project/update/plant-environmental-requirement-update.html:22
 msgid "Full Sun"
 msgstr "Soleil"
 
-#: project/models.py:886
+#: project/models.py:950
 #: project/templates/project/filters/_filter_environmental_requirements.html:34
 #: project/templates/project/update/plant-environmental-requirement-update.html:26
 msgid "Part Shade"
 msgstr "Partiellement ensoleillé"
 
-#: project/models.py:889
+#: project/models.py:953
 #: project/templates/project/filters/_filter_environmental_requirements.html:53
 #: project/templates/project/update/plant-environmental-requirement-update.html:30
 msgid "Full Shade"
 msgstr "Ombre"
 
-#: project/models.py:898
+#: project/models.py:962
 msgid "Moisture Dry"
 msgstr "Sol sec"
 
-#: project/models.py:901
+#: project/models.py:965
 msgid "Moisture Wet"
 msgstr "Sol humide"
 
-#: project/models.py:904
+#: project/models.py:968
 msgid "Moisture Medium"
 msgstr ""
 
-#: project/models.py:907
+#: project/models.py:971
 #: project/templates/project/plant_profile/_profile_tolerates.html:53
 #: project/templates/project/update/plant-environmental-requirement-update.html:52
 msgid "Limestone Tolerant"
 msgstr ""
 
-#: project/models.py:910
+#: project/models.py:974
 #: project/templates/project/plant_profile/_profile_tolerates.html:62
 #: project/templates/project/update/plant-environmental-requirement-update.html:56
 msgid "Sand Tolerant"
 msgstr ""
 
-#: project/models.py:913
+#: project/models.py:977
 #: project/templates/project/plant_profile/_profile_tolerates.html:71
 #: project/templates/project/update/plant-environmental-requirement-update.html:60
 msgid "Acidic Soil Tolerant"
 msgstr ""
 
-#: project/models.py:919
+#: project/models.py:983
 msgid "Bloom Start"
 msgstr ""
 
-#: project/models.py:922
+#: project/models.py:986
 msgid "Bloom End"
 msgstr ""
 
-#: project/models.py:937
+#: project/models.py:1001
 #: project/templates/project/filters/_filter_growth_characteristics.html:85
 #: project/templates/project/plant_profile/_profile_env_requirements_growth_characteristics.html:85
 #: project/templates/project/update/plant-growth-characteristics-update.html:102
 msgid "Spring Ephemeral"
 msgstr ""
 
-#: project/models.py:947
+#: project/models.py:1011
 #: project/templates/project/update/plant-growth-characteristics-update.html:72
 msgid "Spread by Rhizome"
 msgstr ""
 
-#: project/models.py:950
+#: project/models.py:1014
 #: project/templates/project/update/plant-growth-characteristics-update.html:68
 #: project/templates/project/update/plant-introductory-gardening-experience-update.html:27
 msgid "Does Not Spread"
 msgstr "Ne se propage pas"
 
-#: project/models.py:952
+#: project/models.py:1016
 #: project/templates/project/update/plant-growth-characteristics-update.html:106
 msgid "Dioecious"
 msgstr ""
 
-#: project/models.py:954
+#: project/models.py:1018
 #: project/templates/project/update/plant-growth-characteristics-update.html:77
 msgid "Germinate Easy"
 msgstr ""
 
-#: project/models.py:956
+#: project/models.py:1020
 #: project/templates/project/update/plant-growth-characteristics-update.html:82
 #: project/templates/project/update/plant-introductory-gardening-experience-update.html:37
 msgid "Self Seeding"
 msgstr ""
 
-#: project/models.py:958
+#: project/models.py:1022
 #: project/templates/project/filters/_filter_gardening_experience.html:16
 #: project/templates/project/update/plant-growth-characteristics-update.html:87
 #: project/templates/project/update/plant-introductory-gardening-experience-update.html:22
 msgid "Beginner Friendly"
 msgstr "Débutant"
 
-#: project/models.py:961
+#: project/models.py:1025
 #: project/templates/project/plant_profile/_profile_tolerates.html:89
 #: project/templates/project/update/plant-growth-characteristics-update.html:92
 msgid "Transplantation Tolerant"
 msgstr ""
 
-#: project/models.py:964
+#: project/models.py:1028
 msgid "Starter Pack Shade"
 msgstr ""
 
-#: project/models.py:967
+#: project/models.py:1031
 msgid "Starter Pack Sun Dry"
 msgstr "Ensemble de débutants ensoleillé et sec"
 
-#: project/models.py:970
+#: project/models.py:1034
 msgid "Starter Pack Sun Wet"
 msgstr "Ensemble de débutants ensoleillé avec sol humide"
 
-#: project/models.py:981
+#: project/models.py:1045
 msgid "Harvesting Start"
 msgstr ""
 
-#: project/models.py:1027
+#: project/models.py:1091
 #: project/templates/project/update/plant-harvesting-update.html:163
 msgid "Harvesting Video Link"
 msgstr ""
 
-#: project/models.py:1030
+#: project/models.py:1094
 #: project/templates/project/update/plant-harvesting-update.html:169
 msgid "Harvesting Notes"
 msgstr ""
 
-#: project/models.py:1035
+#: project/models.py:1099
 #: project/templates/project/update/plant-sowing-update.html:34
 msgid "Stratification Detail"
 msgstr ""
 
-#: project/models.py:1045
+#: project/models.py:1109
 msgid "Double Dormancy"
 msgstr ""
 
-#: project/models.py:1072
+#: project/models.py:1136
 #: project/templates/project/update/plant-seed-distribution-update.html:69
 msgid "Sowing Label Instructions"
 msgstr ""
 
-#: project/models.py:1075
+#: project/models.py:1139
 #: project/templates/project/update/plant-seed-distribution-update.html:74
 #: project/templates/project/update/plant-sowing-update.html:63
 msgid "Sowing Notes"
 msgstr ""
 
-#: project/models.py:1078
+#: project/models.py:1142
 #: project/templates/project/update/plant-seed-distribution-update.html:79
 msgid "Envelope Label Link"
 msgstr ""
 
-#: project/models.py:1094
+#: project/models.py:1158 project/templates/project/plant-collection.html:24
 #: project/templates/project/update/plant-sowing-update.html:61
 msgid "Notes"
 msgstr ""
 
-#: project/models.py:1096
+#: project/models.py:1160
 #: project/templates/project/update/plant-seed-distribution-update.html:21
 msgid "Accepting Seed"
 msgstr ""
 
-#: project/models.py:1099
+#: project/models.py:1163
 #: project/templates/project/update/plant-seed-distribution-update.html:47
 #: project/templates/project/update/update-availability.html:20
 msgid "Seed Availability"
 msgstr ""
 
-#: project/models.py:1106
+#: project/models.py:1170
 #: project/templates/project/update/plant-landscape-use-and-application-update.html:23
 msgid "Pollinator Garden"
 msgstr ""
 
-#: project/models.py:1108
+#: project/models.py:1172
 #: project/templates/project/update/plant-landscape-use-and-application-update.html:28
 msgid "Rock Garden"
 msgstr ""
 
-#: project/models.py:1109
+#: project/models.py:1173
 #: project/templates/project/update/plant-landscape-use-and-application-update.html:33
 msgid "Rain Garden"
 msgstr ""
 
-#: project/models.py:1110
+#: project/models.py:1174
 #: project/templates/project/update/plant-landscape-use-and-application-update.html:37
 msgid "School Garden"
 msgstr ""
 
-#: project/models.py:1112
+#: project/models.py:1176
 #: project/templates/project/update/plant-landscape-use-and-application-update.html:42
 msgid "Wetland Garden"
 msgstr "Jardin de zone humide"
 
-#: project/models.py:1115
+#: project/models.py:1179
 #: project/templates/project/update/plant-landscape-use-and-application-update.html:47
 msgid "Woodland Garden"
 msgstr ""
 
-#: project/models.py:1118
+#: project/models.py:1182
 msgid "Boulevard Garden Tolerant"
 msgstr ""
 
-#: project/models.py:1122
+#: project/models.py:1186
 msgid "Shoreline Rehab"
 msgstr ""
 
-#: project/models.py:1125
+#: project/models.py:1189
 #: project/templates/project/update/plant-landscape-use-and-application-update.html:60
 msgid "Container Suitable"
 msgstr ""
 
-#: project/models.py:1127
+#: project/models.py:1191
 #: project/templates/project/update/plant-landscape-use-and-application-update.html:70
 msgid "Ground Cover"
 msgstr ""
 
-#: project/models.py:1129
+#: project/models.py:1193
 #: project/templates/project/update/plant-landscape-use-and-application-update.html:65
 msgid "Easy to Contain"
 msgstr ""
 
-#: project/models.py:1131
+#: project/models.py:1195
 #: project/templates/project/filters/_filter_landscape_uses_and_applications.html:174
 #: project/templates/project/update/plant-landscape-use-and-application-update.html:75
 msgid "Hedge"
 msgstr ""
 
-#: project/models.py:1134
+#: project/models.py:1198
 #: project/templates/project/plant_profile/_profile_tolerates.html:44
 #: project/templates/project/update/plant-landscape-use-and-application-update.html:85
 msgid "Foot Traffic Tolerant"
 msgstr ""
 
-#: project/models.py:1140
+#: project/models.py:1204
 msgid "Bees"
 msgstr ""
 
-#: project/models.py:1142
+#: project/models.py:1206
 msgid "Bee Host"
 msgstr ""
 
-#: project/models.py:1143
+#: project/models.py:1207
 msgid "Bird Friendly"
 msgstr ""
 
-#: project/models.py:1148
+#: project/models.py:1212
 msgid "Butterflies"
 msgstr ""
 
-#: project/models.py:1151
+#: project/models.py:1215
 msgid "Butterfly Host"
 msgstr ""
 
-#: project/models.py:1154
+#: project/models.py:1218
 msgid "Hummingbird Friendly"
 msgstr ""
 
-#: project/models.py:1158
+#: project/models.py:1222
 msgid "Keystones Species"
 msgstr ""
 
-#: project/models.py:1161
+#: project/models.py:1225
 msgid "Deer Tolerant"
 msgstr ""
 
-#: project/models.py:1163
+#: project/models.py:1227
 msgid "Rabbit Tolerant"
 msgstr ""
 
-#: project/models.py:1167
+#: project/models.py:1231
 msgid "Drought Tolerant"
 msgstr ""
 
-#: project/models.py:1169
+#: project/models.py:1233
 #: project/templates/project/plant_profile/_profile_tolerates.html:17
 msgid "Salt Tolerant"
 msgstr ""
 
-#: project/models.py:1171
+#: project/models.py:1235
 #: project/templates/project/plant_profile/_profile_tolerates.html:80
 msgid "Juglone Tolerant"
 msgstr ""
 
-#: project/models.py:1174
+#: project/models.py:1238
 msgid "Nitrogen Fixer"
 msgstr ""
 
-#: project/models.py:1181
+#: project/models.py:1245
 msgid "Substitute for Non Native"
 msgstr ""
 
-#: project/models.py:1188
+#: project/models.py:1252
 msgid "Septic Tank Safe"
 msgstr ""
 
-#: project/models.py:1191
+#: project/models.py:1255
 msgid "Produces Burs"
 msgstr ""
 
-#: project/models.py:1193
+#: project/models.py:1257
 msgid "Cause Skin Rashes"
 msgstr ""
 
-#: project/models.py:1205
+#: project/models.py:1269
 msgid "Alternative To Notes"
 msgstr ""
 
-#: project/models.py:1209
-#: project/templates/project/plant_profile/plant-profile-page.html:169
+#: project/models.py:1273
+#: project/templates/project/plant_profile/plant-profile-page.html:213
 msgid "GRASP Candidate"
 msgstr ""
 
-#: project/models.py:1212
+#: project/models.py:1276
 msgid "GRASP Candidate Notes"
 msgstr ""
 
-#: project/models.py:1224
+#: project/models.py:1288
 msgid "Is the plant native to the Ottawa region?"
 msgstr ""
 
-#: project/models.py:1230
+#: project/models.py:1294
 msgid "Ecozones where the plant thrives."
 msgstr ""
 
-#: project/models.py:1349 project/models.py:1379
+#: project/models.py:1413 project/models.py:1443
 msgid "Plants"
 msgstr ""
 
-#: project/models.py:1376
+#: project/models.py:1440
 msgid "Owner"
 msgstr ""
 
-#: project/models.py:1381 project/templates/project/plant-collection.html:12
+#: project/models.py:1445
 msgid "Details"
 msgstr ""
 
-#: project/models.py:1412
+#: project/models.py:1476
 msgid "Element"
 msgstr ""
 
-#: project/models.py:1420
+#: project/models.py:1484
 msgid "plant morphology"
 msgstr ""
 
-#: project/models.py:1459 project/models.py:1607 project/models.py:1636
+#: project/models.py:1523 project/models.py:1671 project/models.py:1700
+#: project/models.py:1741
+#: project/templates/project/admin/admin-nav-library-manager.html:7
 #: project/templates/project/update/plant-environmental-requirement-update.html:7
 #: project/templates/project/update/plant-identification-information-update.html:13
 #: project/templates/project/update/plant-landscape-use-and-application-update.html:7
 msgid "Plant Profile"
 msgstr ""
 
-#: project/models.py:1462
+#: project/models.py:1526
 #: project/templates/project/admin/admin-image-page-results.html:10
 msgid "Morphology Aspect"
 msgstr ""
 
-#: project/models.py:1464
+#: project/models.py:1528
 #: project/templates/project/admin/admin-image-page-results.html:16
 msgid "Title"
 msgstr ""
 
-#: project/models.py:1466
+#: project/models.py:1530 project/models.py:1750
 #: project/templates/project/admin/admin-image-page-results.html:19
 #: project/templates/project/users/project-group-page.html:22
 msgid "Description"
 msgstr ""
 
-#: project/models.py:1468
+#: project/models.py:1532
 msgid "Author"
 msgstr ""
 
-#: project/models.py:1470
+#: project/models.py:1534
 msgid "Photo Date"
 msgstr ""
 
-#: project/models.py:1518
+#: project/models.py:1582
 #, python-brace-format
 msgid "Error deleting image file: {e}"
 msgstr ""
 
-#: project/models.py:1610
+#: project/models.py:1674
 msgid "Obsolete Name"
 msgstr ""
 
-#: project/models.py:1642
+#: project/models.py:1706
 msgid "Complement"
+msgstr ""
+
+#: project/models.py:1727
+msgid "Type"
+msgstr ""
+
+#: project/models.py:1748
+#: project/templates/project/admin/admin-narrative-type-page.html:18
+msgid "Narrative Type"
+msgstr ""
+
+#: project/models.py:1751
+#: project/templates/project/admin/admin-plant-narrative-page.html:19
+msgid "Published"
+msgstr ""
+
+#: project/templates/project/admin/admin-accept-all-seeds.html:10
+#, python-format
+msgid "%(unaccepted_seed_count)s plants will be affected."
+msgstr ""
+
+#: project/templates/project/admin/admin-accept-all-seeds.html:12
+#: project/templates/project/admin/admin-refuse-all-seeds.html:12
+#, fuzzy
+#| msgid "Are you sure you want to delete"
+msgid "Are you sure you want to do this?"
+msgstr "Êtes-vous certains de vouloir effacer"
+
+#: project/templates/project/admin/admin-accept-all-seeds.html:13
+#: project/templates/project/admin/admin-refuse-all-seeds.html:13
+msgid "NO Cancel"
+msgstr ""
+
+#: project/templates/project/admin/admin-accept-all-seeds.html:14
+msgid "YES Accept All Seeds"
 msgstr ""
 
 #: project/templates/project/admin/admin-bee-species-page.html:4
@@ -1337,8 +1431,9 @@ msgstr ""
 #: project/templates/project/admin/admin-non-native-species-page.html:22
 #: project/templates/project/admin/admin-plant-missing-inaturalist-taxon.html:14
 #: project/templates/project/admin/admin-plant-morphology-page.html:20
+#: project/templates/project/admin/admin-plant-narrative-page.html:20
 #: project/templates/project/admin/admin-seed-head-page.html:20
-#: project/templates/project/plant-collection.html:12
+#: project/templates/project/plant-collection.html:25
 msgid "Action"
 msgstr ""
 
@@ -1352,11 +1447,13 @@ msgstr ""
 #: project/templates/project/admin/admin-harvesting-mean-page.html:35
 #: project/templates/project/admin/admin-image-page-results.html:29
 #: project/templates/project/admin/admin-lifespan-page.html:34
+#: project/templates/project/admin/admin-narrative-type-page.html:29
 #: project/templates/project/admin/admin-non-native-species-page.html:34
 #: project/templates/project/admin/admin-one-cultivar-page.html:35
 #: project/templates/project/admin/admin-packaging-measure-page.html:33
 #: project/templates/project/admin/admin-plant-missing-inaturalist-taxon.html:23
 #: project/templates/project/admin/admin-plant-morphology-page.html:31
+#: project/templates/project/admin/admin-plant-narrative-page.html:31
 #: project/templates/project/admin/admin-seed-event-table-page.html:36
 #: project/templates/project/admin/admin-seed-head-page.html:31
 #: project/templates/project/admin/admin-seed-preparation-page.html:33
@@ -1365,6 +1462,7 @@ msgstr ""
 #: project/templates/project/admin/admin-sowing-depth-page.html:35
 #: project/templates/project/admin/admin-stratification-duration-page.html:34
 #: project/templates/project/admin/admin-toxicity-indicator-page.html:35
+#: project/templates/project/plant_profile/plant-profile-images.html:28
 #: project/templates/project/users/project-group-page.html:41
 #: project/templates/project/users/project-user-page.html:46
 msgid "Edit"
@@ -1384,6 +1482,7 @@ msgstr ""
 #: project/templates/project/admin/admin-one-cultivar-page.html:36
 #: project/templates/project/admin/admin-packaging-measure-page.html:34
 #: project/templates/project/admin/admin-plant-morphology-page.html:32
+#: project/templates/project/admin/admin-plant-narrative-page.html:32
 #: project/templates/project/admin/admin-seed-event-table-page.html:37
 #: project/templates/project/admin/admin-seed-head-page.html:32
 #: project/templates/project/admin/admin-seed-preparation-page.html:34
@@ -1392,7 +1491,8 @@ msgstr ""
 #: project/templates/project/admin/admin-sowing-depth-page.html:36
 #: project/templates/project/admin/admin-stratification-duration-page.html:35
 #: project/templates/project/admin/admin-toxicity-indicator-page.html:36
-#: project/templates/project/plant_profile/_profile_update_links.html:21
+#: project/templates/project/plant_profile/_profile_update_links.html:25
+#: project/templates/project/plant_profile/plant-profile-images.html:29
 #: project/templates/project/users/project-group-page.html:42
 #: project/templates/project/users/project-user-groups-update.html:41
 #: project/templates/project/users/project-user-page.html:47
@@ -1416,6 +1516,7 @@ msgstr ""
 #: project/templates/project/admin/admin-ecozones-page.html:20
 #: project/templates/project/admin/admin-harvesting-indicator-page.html:23
 #: project/templates/project/admin/admin-harvesting-mean-page.html:23
+#: project/templates/project/admin/admin-narrative-type-page.html:19
 #: project/templates/project/admin/admin-packaging-measure-page.html:22
 #: project/templates/project/admin/admin-seed-storage-page.html:25
 #: project/templates/project/admin/admin-seed-viability-test-page.html:23
@@ -1448,9 +1549,7 @@ msgid "Add Harvesting Mean"
 msgstr ""
 
 #: project/templates/project/admin/admin-image-form.html:13
-msgid ""
-"The image should be in jpeg format. Dimensions should be 450x600 pixels "
-"(0.75 aspect ratio) portrait style."
+msgid "The image should be in jpeg format. Dimensions should be 450x600 pixels (0.75 aspect ratio) portrait style."
 msgstr ""
 
 #: project/templates/project/admin/admin-image-form.html:13
@@ -1461,7 +1560,8 @@ msgstr ""
 msgid "Submit"
 msgstr ""
 
-#: project/templates/project/admin/admin-image-form.html:19
+#: project/templates/project/admin/admin-image-form.html:20
+#: project/templates/project/admin/admin-image-form.html:22
 #: project/templates/project/update/plant-ecological-benefits-update.html:149
 #: project/templates/project/update/plant-environmental-requirement-update.html:65
 #: project/templates/project/update/plant-growth-characteristics-update.html:190
@@ -1484,6 +1584,7 @@ msgid "Photo Author"
 msgstr ""
 
 #: project/templates/project/admin/admin-image-page-results.html:28
+#: project/templates/project/plant_profile/plant-profile-images.html:27
 msgid "View"
 msgstr ""
 
@@ -1503,7 +1604,7 @@ msgstr ""
 
 #: project/templates/project/admin/admin-images-page.html:43
 #: project/templates/project/plant-identification-information-create.html:44
-#: project/templates/project/plant-search-name-form.html:41
+#: project/templates/project/plant-search-name-form.html:66
 msgid "Searching..."
 msgstr ""
 
@@ -1535,8 +1636,12 @@ msgstr ""
 msgid "Add New Lifespan element"
 msgstr ""
 
+#: project/templates/project/admin/admin-narrative-type-page.html:12
+msgid "Add New Narrative Type"
+msgstr ""
+
 #: project/templates/project/admin/admin-nav-access-administrator.html:8
-#: project/views.py:2369
+#: project/views.py:2474
 msgid "Project Users"
 msgstr ""
 
@@ -1565,11 +1670,6 @@ msgstr ""
 msgid "Add Photo"
 msgstr ""
 
-#: project/templates/project/admin/admin-nav-library-manager.html:7
-#: templates/core/nav.html:47
-msgid "Library Management"
-msgstr ""
-
 #: project/templates/project/admin/admin-nav-library-manager.html:10
 msgid "Record new plant"
 msgstr ""
@@ -1579,6 +1679,14 @@ msgid "Update Availability"
 msgstr "Actualisé disponibilité"
 
 #: project/templates/project/admin/admin-nav-library-manager.html:16
+msgid "Accept All Seeds"
+msgstr ""
+
+#: project/templates/project/admin/admin-nav-library-manager.html:19
+msgid "Refuse All Seeds"
+msgstr ""
+
+#: project/templates/project/admin/admin-nav-library-manager.html:22
 msgid "Plants missing iNaturalist Taxon"
 msgstr ""
 
@@ -1595,113 +1703,118 @@ msgid "Lifespans"
 msgstr ""
 
 #: project/templates/project/admin/admin-nav-plant-profile-manager.html:11
-#: project/views.py:710
+#: project/views.py:757
 msgid "Colours"
 msgstr ""
 
 #: project/templates/project/admin/admin-nav-plant-profile-manager.html:12
-#: project/views.py:3676
+#: project/views.py:3906
 msgid "Plant Morphology Elements"
 msgstr "Composants structurels de plante"
 
-#: project/templates/project/admin/admin-nav-plant-profile-manager.html:14
-#: project/views.py:1804
+#: project/templates/project/admin/admin-nav-plant-profile-manager.html:13
+#: project/views.py:3993
+msgid "Narrative Types"
+msgstr ""
+
+#: project/templates/project/admin/admin-nav-plant-profile-manager.html:15
+#: project/views.py:1851
 msgid "Conservation Statuses"
 msgstr ""
 
-#: project/templates/project/admin/admin-nav-plant-profile-manager.html:17
-#: project/views.py:1718
+#: project/templates/project/admin/admin-nav-plant-profile-manager.html:18
+#: project/views.py:1765
 msgid "Toxicity Indicators"
 msgstr ""
 
-#: project/templates/project/admin/admin-nav-plant-profile-manager.html:20
+#: project/templates/project/admin/admin-nav-plant-profile-manager.html:21
 #: project/templates/project/filters/_filter_location.html:133
 #: project/templates/project/plant_profile/_profile_ecozone.html:4
 #: project/templates/project/plant_profile/_profile_icons_definition.html:828
 #: project/templates/project/update/plant-special-features-and-considerations-update.html:87
-#: project/views.py:2162
+#: project/views.py:2255
 msgid "Ecozones"
 msgstr ""
 
-#: project/templates/project/admin/admin-nav-plant-profile-manager.html:25
+#: project/templates/project/admin/admin-nav-plant-profile-manager.html:26
 msgid "Seeds & Propagation"
 msgstr ""
 
-#: project/templates/project/admin/admin-nav-plant-profile-manager.html:27
-#: project/views.py:942
+#: project/templates/project/admin/admin-nav-plant-profile-manager.html:28
+#: project/views.py:989
 msgid "Seed Heads"
 msgstr ""
 
-#: project/templates/project/admin/admin-nav-plant-profile-manager.html:29
-#: project/views.py:1546
+#: project/templates/project/admin/admin-nav-plant-profile-manager.html:30
+#: project/views.py:1593
 msgid "Seed Preparations"
 msgstr ""
 
-#: project/templates/project/admin/admin-nav-plant-profile-manager.html:31
+#: project/templates/project/admin/admin-nav-plant-profile-manager.html:32
 msgid "Seed Storages"
 msgstr ""
 
-#: project/templates/project/admin/admin-nav-plant-profile-manager.html:34
-#: project/views.py:1114
+#: project/templates/project/admin/admin-nav-plant-profile-manager.html:35
+#: project/views.py:1161
 msgid "Seed Viability Tests"
 msgstr ""
 
-#: project/templates/project/admin/admin-nav-plant-profile-manager.html:38
-#: project/views.py:1632
+#: project/templates/project/admin/admin-nav-plant-profile-manager.html:39
+#: project/views.py:1679
 #, fuzzy
 #| msgid "Seed Event Table"
 msgid "Seed Event Tables"
 msgstr "Disponible à la table"
 
-#: project/templates/project/admin/admin-nav-plant-profile-manager.html:40
-#: project/views.py:1376
+#: project/templates/project/admin/admin-nav-plant-profile-manager.html:41
+#: project/views.py:1423
 msgid "Sowing Depths"
 msgstr ""
 
-#: project/templates/project/admin/admin-nav-plant-profile-manager.html:43
-#: project/views.py:1268
+#: project/templates/project/admin/admin-nav-plant-profile-manager.html:44
+#: project/views.py:1315
 msgid "Stratification Durations"
 msgstr ""
 
-#: project/templates/project/admin/admin-nav-plant-profile-manager.html:50
+#: project/templates/project/admin/admin-nav-plant-profile-manager.html:51
 msgid "Harvesting & Packaging"
 msgstr ""
 
-#: project/templates/project/admin/admin-nav-plant-profile-manager.html:54
-#: project/views.py:682
+#: project/templates/project/admin/admin-nav-plant-profile-manager.html:55
+#: project/views.py:729
 msgid "Harvesting Indicators"
 msgstr ""
 
-#: project/templates/project/admin/admin-nav-plant-profile-manager.html:58
-#: project/views.py:697
+#: project/templates/project/admin/admin-nav-plant-profile-manager.html:59
+#: project/views.py:744
 msgid "Harvesting Means"
 msgstr ""
 
-#: project/templates/project/admin/admin-nav-plant-profile-manager.html:61
-#: project/views.py:1462
+#: project/templates/project/admin/admin-nav-plant-profile-manager.html:62
+#: project/views.py:1509
 msgid "Packaging Measures"
 msgstr ""
 
-#: project/templates/project/admin/admin-nav-plant-profile-manager.html:63
-#: project/views.py:1200
+#: project/templates/project/admin/admin-nav-plant-profile-manager.html:64
+#: project/views.py:1247
 msgid "Cultivars"
 msgstr ""
 
-#: project/templates/project/admin/admin-nav-plant-profile-manager.html:68
+#: project/templates/project/admin/admin-nav-plant-profile-manager.html:69
 msgid "Wildlife"
 msgstr ""
 
-#: project/templates/project/admin/admin-nav-plant-profile-manager.html:71
-#: project/views.py:1890
+#: project/templates/project/admin/admin-nav-plant-profile-manager.html:72
+#: project/views.py:1937
 msgid "Butterfly Species"
 msgstr ""
 
-#: project/templates/project/admin/admin-nav-plant-profile-manager.html:73
-#: project/views.py:1976
+#: project/templates/project/admin/admin-nav-plant-profile-manager.html:74
+#: project/views.py:2023
 msgid "Bee Species"
 msgstr ""
 
-#: project/templates/project/admin/admin-nav-plant-profile-manager.html:74
+#: project/templates/project/admin/admin-nav-plant-profile-manager.html:75
 msgid "Non-Native Species"
 msgstr ""
 
@@ -1718,6 +1831,7 @@ msgid "Add Packaging Measure"
 msgstr ""
 
 #: project/templates/project/admin/admin-plant-missing-inaturalist-taxon.html:13
+#: project/templates/project/blooming-calendar.html:16
 msgid "Plant Name"
 msgstr ""
 
@@ -1727,6 +1841,27 @@ msgstr ""
 
 #: project/templates/project/admin/admin-plant-morphology-page.html:18
 msgid "Plant Morphology Element"
+msgstr ""
+
+#: project/templates/project/admin/admin-plant-narrative-page.html:12
+msgid "Add Narrative to Plant Profile"
+msgstr ""
+
+#: project/templates/project/admin/admin-plant-narrative-page.html:18
+msgid "Narratives"
+msgstr ""
+
+#: project/templates/project/admin/admin-plant-narrative-page.html:28
+msgid "Yes,No"
+msgstr ""
+
+#: project/templates/project/admin/admin-refuse-all-seeds.html:10
+#, python-format
+msgid "%(accepting_seed_count)s plants will be affected."
+msgstr ""
+
+#: project/templates/project/admin/admin-refuse-all-seeds.html:14
+msgid "YES Refuse All Seeds"
 msgstr ""
 
 #: project/templates/project/admin/admin-seed-event-table-page.html:14
@@ -1771,12 +1906,21 @@ msgstr ""
 #, python-format
 msgid ""
 "\n"
-"            This page lists all <strong>%(bee_count)s</strong> specialized "
-"bee species along with their supporting plants\n"
-"            that exist in the plant catalogue. Each plant species is linked "
-"to its\n"
+"            This page lists all <strong>%(bee_count)s</strong> specialized bee species along with their supporting plants\n"
+"            that exist in the plant catalogue. Each plant species is linked to its\n"
 "            profile page for more detailed information.\n"
 "          "
+msgstr ""
+
+#: project/templates/project/blooming-calendar.html:8 project/views.py:312
+#: templates/core/nav.html:21
+#, fuzzy
+#| msgid "Bloom Colour"
+msgid "Blooming Calendar"
+msgstr "Couleur de floraison"
+
+#: project/templates/project/blooming-calendar.html:10
+msgid "This calendar shows the blooming periods of various plants in the catalogue. Each row represents a plant, and the coloured cells indicate the months during which the plant is expected to bloom. The list is sorted by blooming start month, colour and Latin name."
 msgstr ""
 
 #: project/templates/project/butterfly_supporting_plants.html:7
@@ -1787,10 +1931,8 @@ msgstr ""
 #, python-format
 msgid ""
 "\n"
-"            This page lists all <strong>%(butterfly_count)s</strong> "
-"butterfly species along with their supporting plants\n"
-"            that exist in the plant catalogue. Each plant species is linked "
-"to its\n"
+"            This page lists all <strong>%(butterfly_count)s</strong> butterfly species along with their supporting plants\n"
+"            that exist in the plant catalogue. Each plant species is linked to its\n"
 "            profile page for more detailed information.\n"
 "          "
 msgstr ""
@@ -1800,12 +1942,8 @@ msgid "Reset Filters"
 msgstr "Réinitialiser les filtres"
 
 #: project/templates/project/filters/_filter.html:4
-msgid ""
-"Reset all filters to their default values and preserve the current search "
-"results."
-msgstr ""
-"Réinitialiser tous les filtres à leurs valeurs par défaut et conserver les "
-"résultats de recherche"
+msgid "Reset all filters to their default values and preserve the current search results."
+msgstr "Réinitialiser tous les filtres à leurs valeurs par défaut et conserver les résultats de recherche"
 
 #: project/templates/project/filters/_filter.html:6
 msgid "Filter by:"
@@ -1833,7 +1971,7 @@ msgstr ""
 #: project/templates/project/filters/_filter.html:46
 #: project/templates/project/filters/_filter_harvesting_and_seed_sharing.html:2
 #: project/templates/project/plant_profile/_profile_icons_definition.html:317
-#: project/templates/project/plant_profile/plant-profile-page.html:156
+#: project/templates/project/plant_profile/plant-profile-page.html:192
 msgid "Harvesting and Seed Sharing"
 msgstr ""
 
@@ -1845,7 +1983,7 @@ msgstr ""
 #: project/templates/project/filters/_filter.html:67
 #: project/templates/project/plant_profile/_profile_icons_definition.html:573
 #: project/templates/project/plant_profile/_profile_update_links.html:13
-#: project/templates/project/plant_profile/plant-profile-page.html:115
+#: project/templates/project/plant_profile/plant-profile-page.html:141
 #: project/templates/project/update/plant-ecological-benefits-update.html:7
 msgid "Ecological Benefits"
 msgstr ""
@@ -1955,16 +2093,19 @@ msgid "Light Preferences"
 msgstr "Préférences d'ensoleillement"
 
 #: project/templates/project/filters/_filter_environmental_requirements.html:17
+#: project/templates/project/plant-collection.html:43
 #: project/templates/project/plant_profile/_profile_env_requirements_growth_characteristics.html:23
 msgid "More than 6 hours of direct sun a day"
 msgstr "Plus de 6 heures d'ensoleillement par jour"
 
 #: project/templates/project/filters/_filter_environmental_requirements.html:36
+#: project/templates/project/plant-collection.html:53
 #: project/templates/project/plant_profile/_profile_env_requirements_growth_characteristics.html:33
 msgid "More than 2 or 3 hours but less than 6 hours of direct sun a day"
 msgstr ""
 
 #: project/templates/project/filters/_filter_environmental_requirements.html:54
+#: project/templates/project/plant-collection.html:64
 #: project/templates/project/plant_profile/_profile_env_requirements_growth_characteristics.html:44
 msgid "Less than 2 or 3 hours of direct sun a day"
 msgstr ""
@@ -2082,8 +2223,7 @@ msgid "Plants that will come back year after year"
 msgstr ""
 
 #: project/templates/project/filters/_filter_growth_characteristics.html:85
-msgid ""
-"Plants that bloom in the spring then lose their leaves later in the season"
+msgid "Plants that bloom in the spring then lose their leaves later in the season"
 msgstr ""
 
 #: project/templates/project/filters/_filter_growth_characteristics.html:89
@@ -2127,6 +2267,20 @@ msgstr ""
 
 #: project/templates/project/filters/_filter_growth_characteristics.html:235
 msgid "Sand"
+msgstr ""
+
+#: project/templates/project/filters/_filter_growth_characteristics.html:237
+#: project/templates/project/plant_profile/_profile_update_links.html:17
+#: project/templates/project/update/plant-sowing-update.html:18
+msgid "Sowing"
+msgstr ""
+
+#: project/templates/project/filters/_filter_growth_characteristics.html:251
+msgid "No stratification required"
+msgstr ""
+
+#: project/templates/project/filters/_filter_growth_characteristics.html:251
+msgid "Plants that do not require a period of cold treatment to germinate"
 msgstr ""
 
 #: project/templates/project/filters/_filter_harvesting_and_seed_sharing.html:5
@@ -2429,146 +2583,132 @@ msgid "Plant Catalogue"
 msgstr "Catalogue de plantes"
 
 #: project/templates/project/plant-catalogue-intro.html:7
-msgid ""
-"Native Ontario wildflowers and plants in a natural setting, showcasing "
-"diverse species with various colors and growth forms. The lush vegetation "
-"demonstrates the beauty of local flora that can be found in the catalogue."
+msgid "Native Ontario wildflowers and plants in a natural setting, showcasing diverse species with various colors and growth forms. The lush vegetation demonstrates the beauty of local flora that can be found in the catalogue."
 msgstr ""
 
-#: project/templates/project/plant-catalogue-intro.html:11
-msgid "Welcome to our Plant Catalogue"
-msgstr ""
-
-#: project/templates/project/plant-catalogue-intro.html:13
-msgid ""
-"Explore our comprehensive database of plant profiles, curated to help you "
-"identify and understand various plant species. Each profile provides "
-"detailed information about growth characteristics, habitat, and ecological "
-"significance, landscape uses, and more."
-msgstr ""
-
-#: project/templates/project/plant-catalogue-intro.html:14
-msgid "How to Use the Database"
-msgstr ""
-
-#: project/templates/project/plant-catalogue-intro.html:15
-msgid ""
-"To search for a plant by name, start typing it in the search field at the "
-"top of the catalogue. The Ottawa Wildflower Seed Library uses"
-msgstr ""
-
-#: project/templates/project/plant-catalogue-intro.html:15
-msgid ""
-"to determine the correct names of species. We only accept species native to "
-"Ontario, as determined by"
-msgstr ""
-
-#: project/templates/project/plant-catalogue-intro.html:15
-msgid "As a result, the catalogue only includes plants that are determined by"
-msgstr ""
-
-#: project/templates/project/plant-catalogue-intro.html:15
-msgid "as native to Ontario."
-msgstr ""
-
-#: project/templates/project/plant-catalogue-intro.html:18
-msgid ""
-"Use the filters and search options to find specific plants or browse through "
-"our categories to discover new species. Note the filters stack, meaning that "
-"if filters for Full Sun and Full Shade are selected, only plants that do "
-"well in both Full Sun and Full Shade conditions will appear; plants that "
-"only do well in one or the other will not. To remove all the filters, click "
-"on the “Reset Filters” button. To see the full inventory, click on the “Show "
-"all plants” button."
-msgstr ""
-
-#: project/templates/project/plant-catalogue-intro.html:21
-msgid ""
-"From the catalogue, click on any plant profile to view detailed information, "
-"images, and ecological data."
-msgstr ""
-
-#: project/templates/project/plant-catalogue-intro.html:23
-msgid ""
-"\n"
-"          <p>\n"
-"            If you'd like a summary of your filtered search, click on the "
-"\"Export to CSV\" button at the top of the Catalogue to download a summary "
-"of the currently filtered plants. If you are using MS Excel and see the "
-"French names without the accents, please follow this process:\n"
-"            <ul>\n"
-"              <li>Export the CVS to another blank spreadsheet</li>\n"
-"              <li>Select export to CSV file</li>\n"
-"              <li>Select Unicode UTF-8</li>\n"
-"            </ul>\n"
-"          </p>\n"
-"        "
-msgstr ""
-
-#: project/templates/project/plant-catalogue-intro.html:34
-msgid ""
-"If you have any questions, suggestions or found an error, please reach us at"
-msgstr ""
-
-#: project/templates/project/plant-catalogue-intro.html:34
-msgid ""
-"We also welcome any high resolution pictures you might have of the species "
-"in the catalogue. Thanks for your help!"
-msgstr ""
-
-#: project/templates/project/plant-catalogue-intro.html:41
-msgid "Understanding Plant Profile Filter Groups and Icons"
-msgstr ""
-
-#: project/templates/project/plant-catalogue-intro.html:50
+#: project/templates/project/plant-catalogue-intro.html:9
+#: project/templates/project/plant-catalogue-intro.html:53
 msgid "Explore the Catalogue"
 msgstr ""
 
-#: project/templates/project/plant-collection.html:8
-#: project/templates/project/plant-search-results.html:17
-msgid "Export to CSV"
+#: project/templates/project/plant-catalogue-intro.html:14
+msgid "Welcome to our Plant Catalogue"
 msgstr ""
 
-#: project/templates/project/plant-collection.html:8
-msgid "Lots of columns"
+#: project/templates/project/plant-catalogue-intro.html:16
+msgid "Explore our comprehensive database of plant profiles, curated to help you identify and understand various plant species. Each profile provides detailed information about growth characteristics, habitat, and ecological significance, landscape uses, and more."
 msgstr ""
 
-#: project/templates/project/plant-collection.html:12
+#: project/templates/project/plant-catalogue-intro.html:17
+msgid "How to Use the Database"
+msgstr ""
+
+#: project/templates/project/plant-catalogue-intro.html:18
+msgid "To search for a plant by name, start typing it in the search field at the top of the catalogue. The Ottawa Wildflower Seed Library uses"
+msgstr ""
+
+#: project/templates/project/plant-catalogue-intro.html:18
+msgid "to determine the correct names of species. We only accept species native to Ontario, as determined by"
+msgstr ""
+
+#: project/templates/project/plant-catalogue-intro.html:18
+msgid "As a result, the catalogue only includes plants that are determined by"
+msgstr ""
+
+#: project/templates/project/plant-catalogue-intro.html:18
+msgid "as native to Ontario."
+msgstr ""
+
+#: project/templates/project/plant-catalogue-intro.html:21
+msgid "Use the filters and search options to find specific plants or browse through our categories to discover new species. Note the filters stack, meaning that if filters for Full Sun and Full Shade are selected, only plants that do well in both Full Sun and Full Shade conditions will appear; plants that only do well in one or the other will not. To remove all the filters, click on the “Reset Filters” button. To see the full inventory, click on the “Show all plants” button."
+msgstr ""
+
+#: project/templates/project/plant-catalogue-intro.html:24
+msgid "From the catalogue, click on any plant profile to view detailed information, images, and ecological data."
+msgstr ""
+
+#: project/templates/project/plant-catalogue-intro.html:26
+msgid ""
+"\n"
+"            <p>\n"
+"              If you'd like a summary of your filtered search, click on the \"Export to CSV\" button at the top of the Catalogue to download a summary of the currently filtered plants. If you are using MS Excel and see the French names without the accents, please follow this process:\n"
+"              <ul>\n"
+"                <li>Export the CVS to another blank spreadsheet</li>\n"
+"                <li>Select export to CSV file</li>\n"
+"                <li>Select Unicode UTF-8</li>\n"
+"              </ul>\n"
+"            </p>\n"
+"          "
+msgstr ""
+
+#: project/templates/project/plant-catalogue-intro.html:37
+msgid "If you have any questions, suggestions or found an error, please reach us at"
+msgstr ""
+
+#: project/templates/project/plant-catalogue-intro.html:37
+msgid "We also welcome any high resolution pictures you might have of the species in the catalogue. Thanks for your help!"
+msgstr ""
+
+#: project/templates/project/plant-catalogue-intro.html:44
+msgid "Understanding Plant Profile Filter Groups and Icons"
+msgstr ""
+
+#: project/templates/project/plant-collection.html:8 templates/core/nav.html:43
+msgid "My Seed Pack"
+msgstr ""
+
+#: project/templates/project/plant-collection.html:16
 #: project/templates/project/update/update-availability.html:18
 msgid "Names"
 msgstr ""
 
-#: project/templates/project/plant-collection.html:12
-msgid "Sun"
+#: project/templates/project/plant-collection.html:17
+#, fuzzy
+#| msgid "Environmental Requirements"
+msgid "Sun Requirement"
+msgstr "Besoins environnementaux"
+
+#: project/templates/project/plant-collection.html:18
+msgid "Soil Condition"
 msgstr ""
 
-#: project/templates/project/plant-collection.html:12
-msgid "Requirement"
+#: project/templates/project/plant-collection.html:19
+#: project/templates/project/plant_profile/_profile_env_requirements_growth_characteristics.html:6
+#: project/templates/project/plant_profile/_profile_icons_definition.html:200
+msgid "Bloom Period"
 msgstr ""
 
-#: project/templates/project/plant-collection.html:12
-msgid "Bloom"
+#: project/templates/project/plant-collection.html:20
+msgid "Harvesting Period"
 msgstr ""
 
-#: project/templates/project/plant-collection.html:12
-msgid "Period"
-msgstr ""
+#: project/templates/project/plant-collection.html:21
+#: project/templates/project/plant_profile/_profile_env_requirements_growth_characteristics.html:10
+msgid "Max Height"
+msgstr "Hauteur max"
 
-#: project/templates/project/plant-collection.html:12
-msgid "Max"
-msgstr ""
-
-#: project/templates/project/plant-collection.html:12
-msgid "Height"
-msgstr ""
-
-#: project/templates/project/plant-collection.html:12
+#: project/templates/project/plant-collection.html:22
 msgid "Stratification"
 msgstr ""
 
-#: project/templates/project/plant-collection.html:12
+#: project/templates/project/plant-collection.html:23
 msgid "Sowing depth"
 msgstr ""
+
+#: project/templates/project/plant-collection.html:79
+#: project/templates/project/plant_profile/_profile_env_requirements_growth_characteristics.html:58
+msgid "Tolerates dry soil condition"
+msgstr "Tolère des conditions de sol sec"
+
+#: project/templates/project/plant-collection.html:88
+#: project/templates/project/plant_profile/_profile_env_requirements_growth_characteristics.html:67
+msgid "Tolerates medium soil condition"
+msgstr ""
+
+#: project/templates/project/plant-collection.html:97
+#: project/templates/project/plant_profile/_profile_env_requirements_growth_characteristics.html:76
+msgid "Tolerates wet soil condition"
+msgstr "Tolère des conditions de sol humide"
 
 #: project/templates/project/plant-identification-information-create.html:13
 msgid "Record New Plant"
@@ -2579,9 +2719,7 @@ msgid "Record New Plant Identification Information"
 msgstr ""
 
 #: project/templates/project/plant-identification-information-create.html:20
-msgid ""
-"You can search for the Latin Name of the plant to autofill the Taxon ID, "
-"English Name, and French Name fields using data from the VASCAN database."
+msgid "You can search for the Latin Name of the plant to autofill the Taxon ID, English Name, and French Name fields using data from the VASCAN database."
 msgstr ""
 
 #: project/templates/project/plant-identification-information-create.html:27
@@ -2607,36 +2745,54 @@ msgstr ""
 msgid "Create"
 msgstr ""
 
-#: project/templates/project/plant-search-name-form.html:35
+#: project/templates/project/plant-search-name-form.html:13
+msgid "Enter a plant name..."
+msgstr ""
+
+#: project/templates/project/plant-search-name-form.html:28
+msgid "Search by non-native name"
+msgstr ""
+
+#: project/templates/project/plant-search-name-form.html:29
+msgid "Enter 4 or more letters of a non-native species name to find native alternatives"
+msgstr ""
+
+#: project/templates/project/plant-search-name-form.html:32
+msgid "Enter a non-native plant name..."
+msgstr ""
+
+#: project/templates/project/plant-search-name-form.html:58
 msgid "Show Plants that are Available Only"
 msgstr ""
 
-#: project/templates/project/plant-search-name-form.html:39
+#: project/templates/project/plant-search-name-form.html:63
 msgid "Show all plants"
 msgstr ""
 
 #: project/templates/project/plant-search-results.html:9
-msgid ""
-"No plant matches your search, try resetting the filters or verify your "
-"search term."
+msgid "No plant matches your search, try resetting the filters or verify your search term."
 msgstr ""
 
 #: project/templates/project/plant-search-results.html:15
+msgid "Showing native alternatives for your non-native search."
+msgstr ""
+
+#: project/templates/project/plant-search-results.html:20
 msgid "Search Results: Found"
 msgstr ""
 
-#: project/templates/project/plant-search-results.html:15
+#: project/templates/project/plant-search-results.html:20
 msgid "matches"
 msgstr ""
 
-#: project/templates/project/plant-search-results.html:40
+#: project/templates/project/plant-search-results.html:22
+msgid "Export to CSV"
+msgstr ""
+
+#: project/templates/project/plant-search-results.html:52
 #: project/templates/project/plant_profile/plant-profile-images.html:17
 #: project/templates/project/plant_profile/plant-profile-page.html:17
 msgid "Source"
-msgstr ""
-
-#: project/templates/project/plant-search-results.html:56
-msgid "Labels"
 msgstr ""
 
 #: project/templates/project/plant_profile/_profile-identification-status.html:4
@@ -2656,9 +2812,7 @@ msgid "When Is Needed is selected, seeds are required for this plant."
 msgstr ""
 
 #: project/templates/project/plant_profile/_profile-identification-status.html:23
-msgid ""
-"When Accepted is selected, the plant profile is approved by OWSL for public "
-"viewing. If not accepted, please provide a reason in the field below."
+msgid "When Accepted is selected, the plant profile is approved by OWSL for public viewing. If not accepted, please provide a reason in the field below."
 msgstr ""
 
 #: project/templates/project/plant_profile/_profile-identification-status.html:26
@@ -2666,8 +2820,7 @@ msgid "Reason for Not Accepting (if applicable)"
 msgstr ""
 
 #: project/templates/project/plant_profile/_profile-identification-status.html:32
-msgid ""
-"When Has Notice is selected, please provide a description of the notice."
+msgid "When Has Notice is selected, please provide a description of the notice."
 msgstr ""
 
 #: project/templates/project/plant_profile/_profile-identification-status.html:35
@@ -2679,9 +2832,7 @@ msgid "Show Supported Bees Info"
 msgstr ""
 
 #: project/templates/project/plant_profile/_profile-identification-status.html:41
-msgid ""
-"When selected, information about supported bee species will be displayed on "
-"the plant profile."
+msgid "When selected, information about supported bee species will be displayed on the plant profile."
 msgstr ""
 
 #: project/templates/project/plant_profile/_profile-identification-status.html:46
@@ -2689,9 +2840,7 @@ msgid "Show Supported Butterflies Info"
 msgstr ""
 
 #: project/templates/project/plant_profile/_profile-identification-status.html:46
-msgid ""
-"When selected, information about supported butterfly species will be "
-"displayed on the plant profile."
+msgid "When selected, information about supported butterfly species will be displayed on the plant profile."
 msgstr ""
 
 #: project/templates/project/plant_profile/_profile-identification-status.html:51
@@ -2699,9 +2848,7 @@ msgid "Show Complementary Plants Info"
 msgstr ""
 
 #: project/templates/project/plant_profile/_profile-identification-status.html:51
-msgid ""
-"When selected, information about complementary plants will be displayed on "
-"the plant profile."
+msgid "When selected, information about complementary plants will be displayed on the plant profile."
 msgstr ""
 
 #: project/templates/project/plant_profile/_profile-identification-status.html:56
@@ -2709,9 +2856,7 @@ msgid "Show Ecological Benefits Info"
 msgstr ""
 
 #: project/templates/project/plant_profile/_profile-identification-status.html:56
-msgid ""
-"When selected, information about the ecological benefits of this plant will "
-"be displayed on the plant profile."
+msgid "When selected, information about the ecological benefits of this plant will be displayed on the plant profile."
 msgstr ""
 
 #: project/templates/project/plant_profile/_profile-identification-status.html:61
@@ -2719,27 +2864,19 @@ msgid "Show Ecozones Info"
 msgstr ""
 
 #: project/templates/project/plant_profile/_profile-identification-status.html:61
-msgid ""
-"When selected, information about the ecozones this plant is found in will be "
-"displayed on the plant profile."
+msgid "When selected, information about the ecozones this plant is found in will be displayed on the plant profile."
 msgstr ""
 
 #: project/templates/project/plant_profile/_profile-identification-status.html:66
-msgid ""
-"When selected, information about the environmental requirements of this "
-"plant will be displayed on the plant profile."
-msgstr ""
-"Lorsque sélectionnées, les informations de besoins environnementaux seront "
-"affichées dans le profil de plante"
+msgid "When selected, information about the environmental requirements of this plant will be displayed on the plant profile."
+msgstr "Lorsque sélectionnées, les informations de besoins environnementaux seront affichées dans le profil de plante"
 
 #: project/templates/project/plant_profile/_profile-identification-status.html:71
 msgid "Show Gardener Friendly Attributes Info"
 msgstr ""
 
 #: project/templates/project/plant_profile/_profile-identification-status.html:71
-msgid ""
-"When selected, information about the gardener-friendly attributes of this "
-"plant will be displayed on the plant profile."
+msgid "When selected, information about the gardener-friendly attributes of this plant will be displayed on the plant profile."
 msgstr ""
 
 #: project/templates/project/plant_profile/_profile-identification-status.html:76
@@ -2747,9 +2884,7 @@ msgid "Show Harvesting Info"
 msgstr ""
 
 #: project/templates/project/plant_profile/_profile-identification-status.html:76
-msgid ""
-"When selected, information about the harvesting of this plant will be "
-"displayed on the plant profile."
+msgid "When selected, information about the harvesting of this plant will be displayed on the plant profile."
 msgstr ""
 
 #: project/templates/project/plant_profile/_profile-identification-status.html:81
@@ -2757,9 +2892,7 @@ msgid "Show iNaturalist Link Info"
 msgstr ""
 
 #: project/templates/project/plant_profile/_profile-identification-status.html:81
-msgid ""
-"When selected, a link to the iNaturalist page for this plant will be "
-"displayed on the plant profile."
+msgid "When selected, a link to the iNaturalist page for this plant will be displayed on the plant profile."
 msgstr ""
 
 #: project/templates/project/plant_profile/_profile-identification-status.html:86
@@ -2767,9 +2900,7 @@ msgid "Show Landscape Uses Info"
 msgstr ""
 
 #: project/templates/project/plant_profile/_profile-identification-status.html:86
-msgid ""
-"When selected, information about the landscape uses of this plant will be "
-"displayed on the plant profile."
+msgid "When selected, information about the landscape uses of this plant will be displayed on the plant profile."
 msgstr ""
 
 #: project/templates/project/plant_profile/_profile-identification-status.html:91
@@ -2777,9 +2908,7 @@ msgid "Show Synonyms Info"
 msgstr ""
 
 #: project/templates/project/plant_profile/_profile-identification-status.html:91
-msgid ""
-"When selected, information about the synonyms of this plant will be "
-"displayed on the plant profile."
+msgid "When selected, information about the synonyms of this plant will be displayed on the plant profile."
 msgstr ""
 
 #: project/templates/project/plant_profile/_profile-identification-status.html:96
@@ -2787,9 +2916,7 @@ msgid "Show Sowing Info"
 msgstr ""
 
 #: project/templates/project/plant_profile/_profile-identification-status.html:96
-msgid ""
-"When selected, information about the sowing of this plant will be displayed "
-"on the plant profile."
+msgid "When selected, information about the sowing of this plant will be displayed on the plant profile."
 msgstr ""
 
 #: project/templates/project/plant_profile/_profile-identification-status.html:101
@@ -2797,9 +2924,7 @@ msgid "Show Tolerates Info"
 msgstr ""
 
 #: project/templates/project/plant_profile/_profile-identification-status.html:101
-msgid ""
-"When selected, information about the tolerances of this plant will be "
-"displayed on the plant profile."
+msgid "When selected, information about the tolerances of this plant will be displayed on the plant profile."
 msgstr ""
 
 #: project/templates/project/plant_profile/_profile-identification-status.html:106
@@ -2807,9 +2932,7 @@ msgid "Show VASCAN Map Info"
 msgstr ""
 
 #: project/templates/project/plant_profile/_profile-identification-status.html:106
-msgid ""
-"When selected, a VASCAN distribution map for this plant will be displayed on "
-"the plant profile."
+msgid "When selected, a VASCAN distribution map for this plant will be displayed on the plant profile."
 msgstr ""
 
 #: project/templates/project/plant_profile/_profile-identification-status.html:111
@@ -2817,16 +2940,14 @@ msgid "Show Substitute For Info"
 msgstr ""
 
 #: project/templates/project/plant_profile/_profile-identification-status.html:111
-msgid ""
-"When selected, information about the substitute plants for this plant will "
-"be displayed on the plant profile."
+msgid "When selected, information about the substitute plants for this plant will be displayed on the plant profile."
 msgstr ""
 
 #: project/templates/project/plant_profile/_profile_butterflies_supported.html:3
 msgid "Butterflies Supported by"
 msgstr ""
 
-#: project/templates/project/plant_profile/_profile_butterflies_supported.html:17
+#: project/templates/project/plant_profile/_profile_butterflies_supported.html:20
 msgid "No butterfly data available for this plant."
 msgstr ""
 
@@ -2867,15 +2988,6 @@ msgstr ""
 msgid "No ecozone information available for this plant."
 msgstr ""
 
-#: project/templates/project/plant_profile/_profile_env_requirements_growth_characteristics.html:6
-#: project/templates/project/plant_profile/_profile_icons_definition.html:200
-msgid "Bloom Period"
-msgstr ""
-
-#: project/templates/project/plant_profile/_profile_env_requirements_growth_characteristics.html:10
-msgid "Max Height"
-msgstr ""
-
 #: project/templates/project/plant_profile/_profile_env_requirements_growth_characteristics.html:10
 #: project/templates/project/plant_profile/_profile_env_requirements_growth_characteristics.html:11
 msgid "feet"
@@ -2896,18 +3008,6 @@ msgstr ""
 #: project/templates/project/plant_profile/_profile_env_requirements_growth_characteristics.html:51
 msgid "Soil conditions"
 msgstr ""
-
-#: project/templates/project/plant_profile/_profile_env_requirements_growth_characteristics.html:58
-msgid "Tolerates dry soil condition"
-msgstr "Tolère des conditions de sol sec"
-
-#: project/templates/project/plant_profile/_profile_env_requirements_growth_characteristics.html:67
-msgid "Tolerates medium soil condition"
-msgstr ""
-
-#: project/templates/project/plant_profile/_profile_env_requirements_growth_characteristics.html:76
-msgid "Tolerates wet soil condition"
-msgstr "Tolère des conditions de sol humide"
 
 #: project/templates/project/plant_profile/_profile_env_requirements_growth_characteristics.html:88
 msgid "Plant is"
@@ -2934,12 +3034,20 @@ msgid "Does not spread uncontrollably"
 msgstr "Ne se propage pas de manière incontrôlable"
 
 #: project/templates/project/plant_profile/_profile_gardener_friendly_attributes.html:34
+msgid "Spreads by rhizome"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_gardener_friendly_attributes.html:45
 msgid "Easy to germinate"
 msgstr "Facile à germer"
 
-#: project/templates/project/plant_profile/_profile_gardener_friendly_attributes.html:45
+#: project/templates/project/plant_profile/_profile_gardener_friendly_attributes.html:56
 #: project/templates/project/plant_profile/_profile_sowing.html:22
 msgid "Self-seeding"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_gardener_friendly_attributes.html:66
+msgid "Requires stratification"
 msgstr ""
 
 #: project/templates/project/plant_profile/_profile_harvesting.html:8
@@ -3081,8 +3189,7 @@ msgstr ""
 msgid ""
 "\n"
 "            <span>Easy to Germinate:</span>\n"
-"            <span>Indicates if the plant is easy to germinate from seeds</"
-"span>\n"
+"            <span>Indicates if the plant is easy to germinate from seeds</span>\n"
 "          "
 msgstr ""
 "\n"
@@ -3093,29 +3200,20 @@ msgstr ""
 msgid ""
 "\n"
 "            <span>Self-Seeding:</span>\n"
-"            <span>Plants that will produce seeds abundantly resulting in new "
-"plants</span>\n"
+"            <span>Plants that will produce seeds abundantly resulting in new plants</span>\n"
 "          "
 msgstr ""
 
 #: project/templates/project/plant_profile/_profile_icons_definition.html:159
-msgid ""
-"Starter Packs provide ideas for plants that go well together in the "
-"specified conditions (e.g. Shade, Sun Dry, Sun Wet)"
-msgstr ""
-"les ensembles de débutants offrent un aperçu des plantes qui poussent bien "
-"ensemble dans les conditions données"
+msgid "Starter Packs provide ideas for plants that go well together in the specified conditions (e.g. Shade, Sun Dry, Sun Wet)"
+msgstr "les ensembles de débutants offrent un aperçu des plantes qui poussent bien ensemble dans les conditions données"
 
 #: project/templates/project/plant_profile/_profile_icons_definition.html:169
-msgid ""
-"This section includes information on the expected growth, life span and soil "
-"tolerances."
+msgid "This section includes information on the expected growth, life span and soil tolerances."
 msgstr ""
 
 #: project/templates/project/plant_profile/_profile_icons_definition.html:175
-msgid ""
-"While exact heights and widths will vary, this section gives the typically "
-"observed maximums for the plant."
+msgid "While exact heights and widths will vary, this section gives the typically observed maximums for the plant."
 msgstr ""
 
 #: project/templates/project/plant_profile/_profile_icons_definition.html:178
@@ -3133,23 +3231,18 @@ msgid ""
 "            <ul>\n"
 "              <li>Annual: plants that have a lifespan of one year</li>\n"
 "              <li>\n"
-"                Biennial: plants that will take two years to bloom, and then "
-"will die\n"
+"                Biennial: plants that will take two years to bloom, and then will die\n"
 "              </li>\n"
-"              <li>Perennial: plants that will come back year after year</"
-"li>\n"
+"              <li>Perennial: plants that will come back year after year</li>\n"
 "              <li>\n"
-"                Spring Ephemeral: plants that bloom in the spring that loose "
-"their leaves later in the year\n"
+"                Spring Ephemeral: plants that bloom in the spring that loose their leaves later in the year\n"
 "              </li>\n"
 "            </ul>\n"
 "          "
 msgstr ""
 
 #: project/templates/project/plant_profile/_profile_icons_definition.html:202
-msgid ""
-"While exact bloom times will vary, this section gives the months blooms are "
-"typically observed for the plant."
+msgid "While exact bloom times will vary, this section gives the months blooms are typically observed for the plant."
 msgstr ""
 
 #: project/templates/project/plant_profile/_profile_icons_definition.html:207
@@ -3217,35 +3310,23 @@ msgid "Harvesting Period Start"
 msgstr ""
 
 #: project/templates/project/plant_profile/_profile_icons_definition.html:322
-msgid ""
-"While exact harvest times will vary, this section gives the months the "
-"plants can usually be harvested."
+msgid "While exact harvest times will vary, this section gives the months the plants can usually be harvested."
 msgstr ""
 
 #: project/templates/project/plant_profile/_profile_icons_definition.html:329
-msgid ""
-"Indicates the minimum amount of Cold Moist Stratification required, as well "
-"as the corresponding month in Ottawa. See"
+msgid "Indicates the minimum amount of Cold Moist Stratification required, as well as the corresponding month in Ottawa. See"
 msgstr ""
 
 #: project/templates/project/plant_profile/_profile_icons_definition.html:341
-msgid ""
-"This section confirms if the seeds are accepted by the Ottawa Wildflower "
-"Seed Library for donation, as well as if the seeds are available to be "
-"requested."
+msgid "This section confirms if the seeds are accepted by the Ottawa Wildflower Seed Library for donation, as well as if the seeds are available to be requested."
 msgstr ""
 
 #: project/templates/project/plant_profile/_profile_icons_definition.html:344
-msgid ""
-"Show seeds accepted for donations - if you are looking to donate seeds and "
-"do not see the species when this filter is applied, we have reached "
-"sufficient inventory of these seeds."
+msgid "Show seeds accepted for donations - if you are looking to donate seeds and do not see the species when this filter is applied, we have reached sufficient inventory of these seeds."
 msgstr ""
 
 #: project/templates/project/plant_profile/_profile_icons_definition.html:355
-msgid ""
-"This section indicates if the plants will be suitable to the conditions "
-"present in the specified garden type"
+msgid "This section indicates if the plants will be suitable to the conditions present in the specified garden type"
 msgstr ""
 
 #: project/templates/project/plant_profile/_profile_icons_definition.html:365
@@ -3260,8 +3341,7 @@ msgstr ""
 msgid ""
 "\n"
 "              <span>Container Garden:</span>\n"
-"              <span>Can be grown and left in containers all year round</"
-"span>\n"
+"              <span>Can be grown and left in containers all year round</span>\n"
 "            "
 msgstr ""
 
@@ -3292,8 +3372,7 @@ msgstr ""
 msgid ""
 "\n"
 "                <span>School Garden:</span>\n"
-"                <span>Short plants that can thrive in dry and sunny "
-"conditions</span>\n"
+"                <span>Short plants that can thrive in dry and sunny conditions</span>\n"
 "              "
 msgstr ""
 
@@ -3325,8 +3404,7 @@ msgid ""
 msgstr ""
 "\n"
 "<span>Jardin boisé:</span>\n"
-"<span>Prospère dans des conditions de partiellement ensoleillé à ombragé</"
-"span>"
+"<span>Prospère dans des conditions de partiellement ensoleillé à ombragé</span>"
 
 #: project/templates/project/plant_profile/_profile_icons_definition.html:487
 msgid ""
@@ -3368,8 +3446,7 @@ msgstr ""
 msgid ""
 "\n"
 "                <span>Juglone Tolerant:</span>\n"
-"                <span>Can tolerate juglone, a compound found in black walnut "
-"trees</span>\n"
+"                <span>Can tolerate juglone, a compound found in black walnut trees</span>\n"
 "              "
 msgstr ""
 
@@ -3457,8 +3534,7 @@ msgstr ""
 msgid ""
 "\n"
 "                <span>Endangered:</span>\n"
-"                <span>Species that live in the wild in Ontario but is facing "
-"imminent extinction or extirpation. For more information, please visit\n"
+"                <span>Species that live in the wild in Ontario but is facing imminent extinction or extirpation. For more information, please visit\n"
 "              "
 msgstr ""
 
@@ -3466,8 +3542,7 @@ msgstr ""
 msgid ""
 "\n"
 "              <span>GRASP Program Member:</span>\n"
-"              <span>Member of the Growing Rare and Significant Plants "
-"(GRASP) in Ottawa Program</span>\n"
+"              <span>Member of the Growing Rare and Significant Plants (GRASP) in Ottawa Program</span>\n"
 "            "
 msgstr ""
 
@@ -3491,8 +3566,7 @@ msgstr ""
 msgid ""
 "\n"
 "              <span>Has Burs or Needles:</span>\n"
-"              <span>May have burs or needles that can cause discomfort</"
-"span>\n"
+"              <span>May have burs or needles that can cause discomfort</span>\n"
 "            "
 msgstr ""
 
@@ -3508,8 +3582,7 @@ msgstr ""
 msgid ""
 "\n"
 "              <span>Toxic:</span>\n"
-"              <span>May be toxic if ingested or handled improperly as "
-"indicated on the plant profile that bears this warning.</span>\n"
+"              <span>May be toxic if ingested or handled improperly as indicated on the plant profile that bears this warning.</span>\n"
 "            "
 msgstr ""
 
@@ -3522,10 +3595,7 @@ msgid ""
 msgstr ""
 
 #: project/templates/project/plant_profile/_profile_icons_definition.html:801
-msgid ""
-"This section allows to filter by different location options, including by "
-"geographic location or by terrestrial ecozones and ecoprovinces, as defined "
-"by"
+msgid "This section allows to filter by different location options, including by geographic location or by terrestrial ecozones and ecoprovinces, as defined by"
 msgstr ""
 
 #: project/templates/project/plant_profile/_profile_icons_definition.html:802
@@ -3537,9 +3607,7 @@ msgid "Note: Distribution for this section is according to"
 msgstr ""
 
 #: project/templates/project/plant_profile/_profile_icons_definition.html:830
-msgid ""
-"Terrestrial ecozones and ecoprovinces of Canada as defined by Statistics "
-"Canada. For more information on Ecozones, visit:"
+msgid "Terrestrial ecozones and ecoprovinces of Canada as defined by Statistics Canada. For more information on Ecozones, visit:"
 msgstr ""
 
 #: project/templates/project/plant_profile/_profile_icons_definition.html:838
@@ -3675,9 +3743,7 @@ msgid "Reason:"
 msgstr ""
 
 #: project/templates/project/plant_profile/_profile_messages.html:15
-msgid ""
-"This plant profile is not active. Activate it through the Information "
-"Identification tab"
+msgid "This plant profile is not active. Activate it through the Information Identification tab"
 msgstr ""
 
 #: project/templates/project/plant_profile/_profile_messages.html:28
@@ -3685,9 +3751,7 @@ msgid "Notice:"
 msgstr ""
 
 #: project/templates/project/plant_profile/_profile_messages.html:34
-msgid ""
-"This plant profile is a draft and may be incomplete. Please help us complete "
-"it!"
+msgid "This plant profile is a draft and may be incomplete. Please help us complete it!"
 msgstr ""
 
 #: project/templates/project/plant_profile/_profile_obsolete_names.html:4
@@ -3824,14 +3888,17 @@ msgstr ""
 msgid "Substitutes To"
 msgstr ""
 
-#: project/templates/project/plant_profile/_profile_update_links.html:17
-#: project/templates/project/update/plant-sowing-update.html:18
-msgid "Sowing"
-msgstr ""
-
 #: project/templates/project/plant_profile/_profile_update_links.html:18
 #: project/templates/project/update/plant-seed-distribution-update.html:56
 msgid "Seed Distribution"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_update_links.html:26
+msgid "View Narratives of Plant"
+msgstr ""
+
+#: project/templates/project/plant_profile/_profile_update_links.html:31
+msgid "Add Image to Plant Profile"
 msgstr ""
 
 #: project/templates/project/plant_profile/_profile_vascan_map.html:5
@@ -3914,52 +3981,63 @@ msgstr ""
 msgid "images"
 msgstr ""
 
-#: project/templates/project/plant_profile/plant-profile-page.html:55
-msgid "Seeds in stock"
-msgstr "Semences disponible"
-
-#: project/templates/project/plant_profile/plant-profile-page.html:55
-msgid "Available at table"
-msgstr "Disponible à la table"
-
-#: project/templates/project/plant_profile/plant-profile-page.html:55
-msgid "Unconfirmed"
-msgstr ""
-
-#: project/templates/project/plant_profile/plant-profile-page.html:57
-msgid "No seeds available for this plant."
+#: project/templates/project/plant_profile/plant-profile-page.html:38
+#: project/templates/project/update/plant-identification-information-update.html:26
+msgid "Plant Names"
 msgstr ""
 
 #: project/templates/project/plant_profile/plant-profile-page.html:60
+#, fuzzy
+#| msgid "%(latin_name)s - Growth Characteristics"
+msgid "Plant Characteristics"
+msgstr "Caractéristiques de croissance de  %(latin_name)s"
+
+#: project/templates/project/plant_profile/plant-profile-page.html:85
+msgid "Seed and plant distribution status"
+msgstr ""
+
+#: project/templates/project/plant_profile/plant-profile-page.html:88
+msgid "Seeds in stock"
+msgstr "Semences disponible"
+
+#: project/templates/project/plant_profile/plant-profile-page.html:88
+msgid "Available at table"
+msgstr "Disponible à la table"
+
+#: project/templates/project/plant_profile/plant-profile-page.html:88
+msgid "Unconfirmed"
+msgstr ""
+
+#: project/templates/project/plant_profile/plant-profile-page.html:90
+msgid "No seeds available for this plant."
+msgstr ""
+
+#: project/templates/project/plant_profile/plant-profile-page.html:93
 msgid "We currently accept seeds for this plant"
 msgstr "Nous acceptions les semences de cette plante"
 
-#: project/templates/project/plant_profile/plant-profile-page.html:62
+#: project/templates/project/plant_profile/plant-profile-page.html:95
 msgid "We are not accepting seeds for this plant at the moment."
 msgstr ""
 
-#: project/templates/project/plant_profile/plant-profile-page.html:96
+#: project/templates/project/plant_profile/plant-profile-page.html:121
 msgid "Plant Location"
 msgstr ""
 
-#: project/templates/project/plant_profile/plant-profile-page.html:129
-msgid "Plants that grow in similar conditions, that bloom at the same time."
-msgstr ""
-
-#: project/templates/project/plant_profile/plant-profile-page.html:131
+#: project/templates/project/plant_profile/plant-profile-page.html:156
 msgid "Complementary Plants"
 msgstr ""
 
-#: project/templates/project/plant_profile/plant-profile-page.html:139
+#: project/templates/project/plant_profile/plant-profile-page.html:167
 msgid "Substitute For Non-Native Plants"
 msgstr ""
 
-#: project/templates/project/plant_profile/plant-profile-page.html:147
+#: project/templates/project/plant_profile/plant-profile-page.html:180
 #: project/templates/project/update/plant-sowing-update.html:5
 msgid "Sowing Information"
 msgstr ""
 
-#: project/templates/project/plant_profile/plant-profile-page.html:165
+#: project/templates/project/plant_profile/plant-profile-page.html:204
 msgid "Toxicity Notes"
 msgstr ""
 
@@ -4112,10 +4190,6 @@ msgstr ""
 msgid "Update Plant Identification Information"
 msgstr ""
 
-#: project/templates/project/update/plant-identification-information-update.html:26
-msgid "Plant Names"
-msgstr ""
-
 #: project/templates/project/update/plant-introductory-gardening-experience-update.html:11
 msgid "Update Introductory Gardening Experience"
 msgstr ""
@@ -4239,12 +4313,7 @@ msgstr ""
 #: project/templates/project/update/update-availability.html:10
 msgid ""
 "\n"
-"          Use this table to prepare a list of available plants for the next "
-"give away event.  Click on the plant to toggle its availailability.  Plants "
-"highlighted in green are marked available. View <a target='blank' href=\"/"
-"search-plant-name/?seed_availability=true#search-results\">available plants</"
-"a> in a new tab. From there, you can drill down further to refine the "
-"research.\"\n"
+"          Use this table to prepare a list of available plants for the next give away event.  Click on the plant to toggle its availailability.  Plants highlighted in green are marked available. View <a target='blank' href=\"/search-plant-name/?seed_availability=true#search-results\">available plants</a> in a new tab. From there, you can drill down further to refine the research.\"\n"
 "        "
 msgstr ""
 
@@ -4336,814 +4405,877 @@ msgstr ""
 msgid "No Groups"
 msgstr ""
 
-#: project/views.py:171
+#: project/views.py:185
 msgid "Create Plant Profile"
 msgstr ""
 
-#: project/views.py:188
+#: project/views.py:202
 #, fuzzy, python-brace-format
 #| msgid "Ecozone %(ecozone)s exists already."
 msgid "Plant {latin_name} exists already."
 msgstr "Écozone %(ecozone)% existe déjà!!!"
 
-#: project/views.py:210
+#: project/views.py:224
 msgid "Update Plant Profile"
 msgstr ""
 
-#: project/views.py:234
+#: project/views.py:248
 #, python-format
-msgid ""
-"Plant Profile %(name)s ne peut-être effacée car il existe des éléments "
-"associés."
+msgid "Plant Profile %(name)s ne peut-être effacée car il existe des éléments associés."
 msgstr ""
 
-#: project/views.py:253
+#: project/views.py:267
 #, python-format
 msgid "Image Gallery for %(latin_name)s"
 msgstr ""
 
-#: project/views.py:261
+#: project/views.py:275
 msgid "Plant Catalogue Introduction"
 msgstr ""
 
-#: project/views.py:271
+#: project/views.py:285
 msgid "Butterfly Supporting Plants"
 msgstr ""
 
-#: project/views.py:282
+#: project/views.py:296
 msgid "Bee Supporting Plants"
 msgstr ""
 
-#: project/views.py:505
+#: project/views.py:550
 msgid "Plant Profile Filter"
 msgstr ""
 
-#: project/views.py:718
+#: project/views.py:765
 msgid "Register New Colour"
 msgstr ""
 
-#: project/views.py:731
+#: project/views.py:778
 #, python-format
 msgid "Colour %(colour)s exists already."
 msgstr ""
 
-#: project/views.py:740
+#: project/views.py:787
 msgid "Colour not valid."
 msgstr ""
 
-#: project/views.py:764 project/views.py:2311
+#: project/views.py:811 project/views.py:2404
 msgid "Colour Update"
 msgstr ""
 
-#: project/views.py:791
+#: project/views.py:838
 msgid "Register New Harvesting Indicator"
 msgstr ""
 
-#: project/views.py:804
+#: project/views.py:851
 #, python-format
 msgid "Harvesting Indicator %(indicator)s exists already."
 msgstr ""
 
-#: project/views.py:813
+#: project/views.py:860
 msgid "Harvesting Indicator not valid."
 msgstr ""
 
-#: project/views.py:824
+#: project/views.py:871
 msgid "Register New Harvesting Mean Statement"
 msgstr ""
 
-#: project/views.py:837
+#: project/views.py:884
 #, python-format
 msgid "Harvesting Mean %(harvesting_mean)s exists already."
 msgstr ""
 
-#: project/views.py:846
+#: project/views.py:893
 msgid "Harvesting Mean not valid."
 msgstr ""
 
-#: project/views.py:870
+#: project/views.py:917
 msgid "Harvesting Indicator Update"
 msgstr ""
 
-#: project/views.py:892
+#: project/views.py:939
 msgid "Harvesting Mean Update"
 msgstr ""
 
-#: project/views.py:950
+#: project/views.py:997
 msgid "Register New Seed Head"
 msgstr ""
 
-#: project/views.py:963
+#: project/views.py:1010
 #, python-brace-format
 msgid "Seed Head {seed_head} exists already."
 msgstr ""
 
-#: project/views.py:972
+#: project/views.py:1019
 #, fuzzy
 #| msgid "Seed Event Table"
 msgid "Seed Head not valid."
 msgstr "Disponible à la table"
 
-#: project/views.py:996
+#: project/views.py:1043
 #, fuzzy
 #| msgid "Seed Event Table"
 msgid "Seed Head Update"
 msgstr "Disponible à la table"
 
-#: project/views.py:1036
+#: project/views.py:1083
 msgid "Register New Seed Storage"
 msgstr ""
 
-#: project/views.py:1049
+#: project/views.py:1096
 #, python-format
 msgid "Seed Storage %(seed_storage)s exists already."
 msgstr ""
 
-#: project/views.py:1058
+#: project/views.py:1105
 msgid "Seed Storage not valid."
 msgstr ""
 
-#: project/views.py:1082
+#: project/views.py:1129
 msgid "Seed Storage Update"
 msgstr ""
 
-#: project/views.py:1122
+#: project/views.py:1169
 #, fuzzy
 #| msgid "Seed Event Table"
 msgid "Register New Seed Viability Test"
 msgstr "Disponible à la table"
 
-#: project/views.py:1135
+#: project/views.py:1182
 #, python-format
 msgid "Seed Viability Test %(seed_viability_test)s exists already."
 msgstr ""
 
-#: project/views.py:1144
+#: project/views.py:1191
 #, fuzzy
 #| msgid "Seed Event Table"
 msgid "Seed Viability Test not valid."
 msgstr "Disponible à la table"
 
-#: project/views.py:1168
+#: project/views.py:1215
 #, fuzzy
 #| msgid "Seed Event Table"
 msgid "Seed Viability Test Update"
 msgstr "Disponible à la table"
 
-#: project/views.py:1208
+#: project/views.py:1255
 msgid "Register New Cultivar"
 msgstr ""
 
-#: project/views.py:1221
+#: project/views.py:1268
 #, python-format
 msgid "Cultivar %(cultivar)s exists already."
 msgstr ""
 
-#: project/views.py:1230
+#: project/views.py:1277
 msgid "Cultivar not valid."
 msgstr ""
 
-#: project/views.py:1254
+#: project/views.py:1301
 msgid "Cultivar Update"
 msgstr ""
 
-#: project/views.py:1278
+#: project/views.py:1325
 msgid "Register New Stratification Duration"
 msgstr ""
 
-#: project/views.py:1291
+#: project/views.py:1338
 #, python-format
 msgid "Stratification Duration %(duration)s exists already."
 msgstr ""
 
-#: project/views.py:1300
+#: project/views.py:1347
 msgid "Stratification Detail not valid."
 msgstr ""
 
-#: project/views.py:1324
+#: project/views.py:1371
 msgid "Stratification Duration Update"
 msgstr ""
 
-#: project/views.py:1384
+#: project/views.py:1431
 msgid "Register New Sowing Depth"
 msgstr ""
 
-#: project/views.py:1397
+#: project/views.py:1444
 #, python-brace-format
 msgid "Sowing Depth {sowing_depth} exists already."
 msgstr ""
 
-#: project/views.py:1406
+#: project/views.py:1453
 msgid "Sowing Depth not valid."
 msgstr ""
 
-#: project/views.py:1430
+#: project/views.py:1477
 msgid "Sowing Depth Update"
 msgstr ""
 
-#: project/views.py:1470
+#: project/views.py:1517
 msgid "Register New Packaging Measure"
 msgstr ""
 
-#: project/views.py:1483
+#: project/views.py:1530
 #, python-brace-format
 msgid "Packaging Measure {packaging_measure} exists already."
 msgstr ""
 
-#: project/views.py:1492
+#: project/views.py:1539
 msgid "Packaging Measure not valid."
 msgstr ""
 
-#: project/views.py:1516
+#: project/views.py:1563
 msgid "Packaging Measure Update"
 msgstr ""
 
-#: project/views.py:1554
+#: project/views.py:1601
 msgid "Register New Seed Preparation"
 msgstr ""
 
-#: project/views.py:1567
+#: project/views.py:1614
 #, python-brace-format
 msgid "Seed Preparation {seed_preparation} exists already."
 msgstr ""
 
-#: project/views.py:1576
+#: project/views.py:1623
 msgid "Seed Preparation not valid."
 msgstr ""
 
-#: project/views.py:1600
+#: project/views.py:1647
 msgid "Seed Preparation Update"
 msgstr ""
 
-#: project/views.py:1640
+#: project/views.py:1687
 #, fuzzy
 #| msgid "Seed Event Table"
 msgid "Register New Seed Event Table"
 msgstr "Disponible à la table"
 
-#: project/views.py:1653
+#: project/views.py:1700
 #, python-brace-format
 msgid "Seed Event Table {seed_event_table} exists already."
 msgstr ""
 
-#: project/views.py:1662
+#: project/views.py:1709
 #, fuzzy
 #| msgid "Seed Event Table"
 msgid "Seed Event Table not valid."
 msgstr "Disponible à la table"
 
-#: project/views.py:1686
+#: project/views.py:1733
 #, fuzzy
 #| msgid "Seed Event Table"
 msgid "Seed Event Table Update"
 msgstr "Disponible à la table"
 
-#: project/views.py:1726
+#: project/views.py:1773
 msgid "Register New Toxicity Indicator"
 msgstr ""
 
-#: project/views.py:1739
+#: project/views.py:1786
 #, python-format
 msgid "Toxicity Indicator %(toxicity_indicator)s exists already."
 msgstr ""
 
-#: project/views.py:1748
+#: project/views.py:1795
 msgid "Toxicity Indicator not valid."
 msgstr ""
 
-#: project/views.py:1772
+#: project/views.py:1819
 msgid "Toxicity Indicator Update"
 msgstr ""
 
-#: project/views.py:1812
+#: project/views.py:1859
 msgid "Register New Conservation Status"
 msgstr ""
 
-#: project/views.py:1825
+#: project/views.py:1872
 #, python-format
 msgid "Conservation Status %(conservation_status)s exists already."
 msgstr ""
 
-#: project/views.py:1834
+#: project/views.py:1881
 msgid "Conservation Status not valid."
 msgstr ""
 
-#: project/views.py:1858
+#: project/views.py:1905
 msgid "Conservation Status Update"
 msgstr ""
 
-#: project/views.py:1898
+#: project/views.py:1945
 msgid "Register New Butterfly Species"
 msgstr ""
 
-#: project/views.py:1911
+#: project/views.py:1958
 #, python-format
 msgid "Butterfly Species %(butterfly_species)s exists already."
 msgstr ""
 
-#: project/views.py:1920
+#: project/views.py:1967
 msgid "Butterfly Species not valid."
 msgstr ""
 
-#: project/views.py:1944
+#: project/views.py:1991
 msgid "Butterfly Species Update"
 msgstr ""
 
-#: project/views.py:1989
-#, python-brace-format
-msgid "All plants set to accepting seed. {updated_count} plants were updated."
+#: project/views.py:2034
+msgid "Accept Seed from All Plants"
 msgstr ""
 
-#: project/views.py:1998
+#: project/views.py:2046
+#, python-format
+msgid "All plants set to accepting seed. %(updated_count)s plants were updated."
+msgstr ""
+
+#: project/views.py:2064
+msgid "Refuse Seed from All Plants"
+msgstr ""
+
+#: project/views.py:2076
+#, python-format
+msgid "All plants set to not accepting seed. %(updated_count)s plants were updated."
+msgstr ""
+
+#: project/views.py:2091
 msgid "Register New Bee Species"
 msgstr ""
 
-#: project/views.py:2011
+#: project/views.py:2104
 #, python-format
 msgid "Bee Species %(bee_species)s exists already."
 msgstr ""
 
-#: project/views.py:2020
+#: project/views.py:2113
 #, fuzzy
 #| msgid "Seed Event Table"
 msgid "Bee Species not valid."
 msgstr "Disponible à la table"
 
-#: project/views.py:2044
+#: project/views.py:2137
 #, fuzzy
 #| msgid "Seed Event Table"
 msgid "Bee Species Update"
 msgstr "Disponible à la table"
 
-#: project/views.py:2076
+#: project/views.py:2169
 msgid "Non-Native Plants"
 msgstr ""
 
-#: project/views.py:2084
+#: project/views.py:2177
 msgid "Register New Non-Native Plant"
 msgstr ""
 
-#: project/views.py:2097
+#: project/views.py:2190
 #, python-format
 msgid "Non-Native Plant %(non_native_plant)s exists already."
 msgstr ""
 
-#: project/views.py:2106
+#: project/views.py:2199
 msgid "Non-Native Species not valid."
 msgstr ""
 
-#: project/views.py:2130
+#: project/views.py:2223
 msgid "Non-Native Species Update"
 msgstr ""
 
-#: project/views.py:2175
+#: project/views.py:2268
 msgid "Plants missing iNaturalist Taxon ID"
 msgstr ""
 
-#: project/views.py:2185
+#: project/views.py:2278
 msgid "Register New Ecozone"
 msgstr ""
 
-#: project/views.py:2198
+#: project/views.py:2291
 #, python-format
 msgid "Ecozone %(ecozone)s exists already."
 msgstr "Écozone %(ecozone)s existe déjà!!!"
 
-#: project/views.py:2206
+#: project/views.py:2299
 msgid "Ecozone not valid."
 msgstr "Écozone non valide"
 
-#: project/views.py:2230
+#: project/views.py:2323
 msgid "Ecozone Update"
 msgstr ""
 
-#: project/views.py:2267
+#: project/views.py:2360
 msgid "Username does not exist"
 msgstr ""
 
-#: project/views.py:2275
+#: project/views.py:2368
 msgid "Username OR password is incorrect"
 msgstr ""
 
-#: project/views.py:2297
+#: project/views.py:2390
 msgid "You are not allowed to modify this user plant"
 msgstr ""
 
-#: project/views.py:2344
+#: project/views.py:2449
 msgid "You are not allowed to delete this plant from the user collection"
 msgstr ""
 
-#: project/views.py:2378
+#: project/views.py:2483
 msgid "Create Project User"
 msgstr ""
 
-#: project/views.py:2391
+#: project/views.py:2496
 #, python-format
 msgid "Project User %(username)s created successfully."
 msgstr ""
 
-#: project/views.py:2398
+#: project/views.py:2503
 #, fuzzy, python-format
 #| msgid "Ecozone %(ecozone)s exists already."
 msgid "Project User %(username)s exists already."
 msgstr "Écozone %(ecozone)% existe déjà!!!"
 
-#: project/views.py:2407
+#: project/views.py:2512
 #, fuzzy
 #| msgid "Seed Event Table"
 msgid "Project User not valid."
 msgstr "Disponible à la table"
 
-#: project/views.py:2431
+#: project/views.py:2534
+#, fuzzy, python-format
+#| msgid "Ecozone %(ecozone)s exists already."
+msgid "Project User %(username)s updated successfully."
+msgstr "Écozone %(ecozone)% existe déjà!!!"
+
+#: project/views.py:2544
 #, fuzzy
 #| msgid "Seed Event Table"
 msgid "Project User Update"
 msgstr "Disponible à la table"
 
-#: project/views.py:2448
+#: project/views.py:2561
 #, fuzzy
 #| msgid "Seed Event Table"
 msgid "Project User Delete"
 msgstr "Disponible à la table"
 
-#: project/views.py:2464
+#: project/views.py:2577
 #, python-format
 msgid "Manage Groups for %(username)s"
 msgstr ""
 
-#: project/views.py:2473
+#: project/views.py:2586
 #, python-format
 msgid "Groups updated successfully for user %(username)s."
 msgstr ""
 
-#: project/views.py:2489
+#: project/views.py:2602
 #, python-format
 msgid "Group %(group_name)s removed successfully from user %(username)s."
 msgstr ""
 
-#: project/views.py:2494
+#: project/views.py:2607
 #, python-format
 msgid "Remove Group %(group_name)s from User %(username)s"
 msgstr ""
 
-#: project/views.py:2508
+#: project/views.py:2621
 msgid "Project Group Management"
 msgstr ""
 
-#: project/views.py:2516
+#: project/views.py:2629
 msgid "Register New Group"
 msgstr ""
 
-#: project/views.py:2529
+#: project/views.py:2642
 #, python-format
 msgid "Group %(group_name)s created successfully."
 msgstr ""
 
-#: project/views.py:2536
+#: project/views.py:2649
 #, fuzzy, python-format
 #| msgid "Ecozone %(ecozone)s exists already."
 msgid "Group %(group_name)s exists already."
 msgstr "Écozone %(ecozone)% existe déjà!!!"
 
-#: project/views.py:2545
+#: project/views.py:2658
 #, fuzzy
 #| msgid "Ecozone not valid."
 msgid "Group not valid."
 msgstr "Écozone non valide"
 
-#: project/views.py:2564
+#: project/views.py:2677
 msgid "Group updated successfully."
 msgstr ""
 
-#: project/views.py:2572
+#: project/views.py:2685
 msgid "Group Update"
 msgstr ""
 
-#: project/views.py:2589
+#: project/views.py:2702
 msgid "Group Delete"
 msgstr ""
 
-#: project/views.py:2621
+#: project/views.py:2734
 msgid "Permissions updated successfully."
 msgstr ""
 
-#: project/views.py:2628
+#: project/views.py:2741
 msgid "All Permissions"
 msgstr "Toutes les permissions"
 
-#: project/views.py:2809
+#: project/views.py:2982
 msgid "Plant Catalog"
 msgstr "Catalogue de plantes"
 
-#: project/views.py:2834
+#: project/views.py:3007
 msgid "Environmental requirements updated successfully."
 msgstr "Besoins environnementaux actualisé avec succès"
 
-#: project/views.py:2837
+#: project/views.py:3010
 #, python-format
 msgid "%(latin_name)s - Environmental Requirements"
 msgstr "%(latin_name)s - Bensoins environnementaux"
 
-#: project/views.py:2850
+#: project/views.py:3023
 #, python-format
 msgid "%(latin_name)s - Identification Information"
 msgstr "Détails d'identification - %(latin_name)s "
 
-#: project/views.py:2859
+#: project/views.py:3032
 msgid "Identification information updated successfully."
 msgstr "Détail d'identification actualisé avec succès"
 
-#: project/views.py:2863
+#: project/views.py:3036
 msgid "Error updating identification information."
 msgstr "Erreur d'actualisation du détail d'identification"
 
-#: project/views.py:2872
+#: project/views.py:3045
 msgid "Create Plant Identification Information"
 msgstr "Ajouter des détails d'identification de plante"
 
-#: project/views.py:2884
+#: project/views.py:3057
 #, python-format
-msgid ""
-"A plant with this Latin name %(latin_name)s already exists. Please choose a "
-"different name."
-msgstr ""
-"Une plante avec le nom latin %(latin_name)s existe déjà.  Veuillez utiliser "
-"un nom différent."
+msgid "A plant with this Latin name %(latin_name)s already exists. Please choose a different name."
+msgstr "Une plante avec le nom latin %(latin_name)s existe déjà.  Veuillez utiliser un nom différent."
 
-#: project/views.py:2906
+#: project/views.py:3079
 msgid "Plant identification information created successfully."
 msgstr "Détail d'identification de plante créer avec succès."
 
-#: project/views.py:2930
+#: project/views.py:3103
 #, python-format
 msgid "%(latin_name)s - Growth Characteristics"
 msgstr "Caractéristiques de croissance de  %(latin_name)s"
 
-#: project/views.py:2967
+#: project/views.py:3140
 #, python-brace-format
 msgid "Complementary plant ID {complement_id} already exists."
 msgstr "Une plante complémentaire portant l'ID  {complement_id} existe déjà"
 
-#: project/views.py:2974
+#: project/views.py:3147
 #, python-brace-format
 msgid "Complementary plant ID {complement_id} not found."
 msgstr ""
 
-#: project/views.py:2977
+#: project/views.py:3150
 msgid "Growth characteristics updated successfully."
 msgstr ""
 
-#: project/views.py:2993
+#: project/views.py:3166
 #, python-brace-format
 msgid "{field}: {error}"
 msgstr ""
 
-#: project/views.py:3007
+#: project/views.py:3180
 #, python-format
 msgid "%(latin_name)s - Landscape Use and Application"
 msgstr ""
 
-#: project/views.py:3016
+#: project/views.py:3189
 msgid "Landscape use and application updated successfully."
 msgstr ""
 
-#: project/views.py:3020
+#: project/views.py:3193
 msgid "Error updating landscape use and application."
 msgstr ""
 
-#: project/views.py:3038
+#: project/views.py:3211
 #, python-format
 msgid "%(latin_name)s - Alternative To"
 msgstr ""
 
-#: project/views.py:3047
+#: project/views.py:3220
 msgid "Substitutes updated successfully."
 msgstr ""
 
-#: project/views.py:3050
+#: project/views.py:3223
 msgid "Error updating substitutes."
 msgstr ""
 
-#: project/views.py:3065
+#: project/views.py:3238
 #, python-format
 msgid "%(latin_name)s - Ecological Benefits"
 msgstr ""
 
-#: project/views.py:3075
+#: project/views.py:3248
 msgid "Ecological benefits updated successfully."
 msgstr "Avantages écologiques mis à jour avec succès."
 
-#: project/views.py:3078
+#: project/views.py:3251
 msgid "Error updating ecological benefits."
 msgstr "Erreur d'actualisation des avantages écologiques"
 
-#: project/views.py:3091
+#: project/views.py:3264
 #, python-format
 msgid "%(latin_name)s - Introductory Gardening Experience"
 msgstr "%(latin_name)s - Expérience de jardinage introductive"
 
-#: project/views.py:3102
+#: project/views.py:3275
 msgid "Introductory gardening experience updated successfully."
 msgstr "Expérience de jardinage introductive actualisée avec succès"
 
-#: project/views.py:3107
+#: project/views.py:3280
 msgid "Error updating introductory gardening experience."
 msgstr "Erreur d'actualisation de l'expérience introductive de jardinage"
 
-#: project/views.py:3123
+#: project/views.py:3296
 #, python-format
 msgid "%(latin_name)s - Special Features and Considerations"
 msgstr "%(latin_name)s - caractéristiques et considérations particulières"
 
-#: project/views.py:3134
+#: project/views.py:3307
 msgid "Special features and considerations updated successfully."
-msgstr ""
-"Caractéristiques et considérations particulières actualisées avec succès."
+msgstr "Caractéristiques et considérations particulières actualisées avec succès."
 
-#: project/views.py:3139
+#: project/views.py:3312
 msgid "Error updating special features and considerations."
-msgstr ""
-"erreur d'actualisation des caractéristiques et considérations particulières"
+msgstr "erreur d'actualisation des caractéristiques et considérations particulières"
 
-#: project/views.py:3175
+#: project/views.py:3348
 msgid "No on cultivars available. Please add some first."
 msgstr "Aucun nom de cultivar n'existe.  Veuillez en ajouter pour débuter."
 
-#: project/views.py:3193
+#: project/views.py:3366
 msgid "No seed storage options available. Please add some first."
 msgstr "Aucune option de stockage n'existe.  Veuillez en ajouter pour débuter."
 
-#: project/views.py:3203
+#: project/views.py:3376
 msgid "No harvesting indicators available. Please add some first."
 msgstr "Aucun indicateur de récolte n’existe.  Veuillez en créer pour débuter"
 
-#: project/views.py:3211
+#: project/views.py:3384
 msgid "No harvesting means available. Please add some first."
 msgstr "Aucune méthode de récolte n’existe.  Veuillez en créer pour débuter."
 
-#: project/views.py:3218
+#: project/views.py:3391
 msgid "No seed heads available. Please add some first."
 msgstr "Aucun porte-graines n'existe.  Veuillez en créer pour débuter."
 
-#: project/views.py:3227
+#: project/views.py:3400
 msgid "No seed viability tests available. Please add some first."
 msgstr "Aucun test de viabilité n'existe. Veuillez en créer pour débuter."
 
-#: project/views.py:3245
+#: project/views.py:3418
 msgid "Harvesting and seed sharing updated successfully."
 msgstr "Méthodes de récolte et partage de graines actualisé avec succès"
 
-#: project/views.py:3249
+#: project/views.py:3422
 msgid "Error updating harvesting and seed sharing."
-msgstr ""
-"Erreur d'actualisation des méthodes de récolte et de partage de semences."
+msgstr "Erreur d'actualisation des méthodes de récolte et de partage de semences."
 
-#: project/views.py:3254
+#: project/views.py:3427
 #, python-format
 msgid "%(latin_name)s - Harvesting and Seed Sharing"
 msgstr "%(latin_name)s - Méthodes de récolte et partage de semences"
 
-#: project/views.py:3279
+#: project/views.py:3452
 msgid "No sowing depth available. Please add some first."
 msgstr "Aucune profondeur de semence n'existe. Veuillez en créer pour débuter."
 
-#: project/views.py:3287
+#: project/views.py:3460
 msgid "No stratification duration available. Please add some first."
-msgstr ""
-"Aucune durée de stratification n'existe.  Veuillez en créer pour débuter."
+msgstr "Aucune durée de stratification n'existe.  Veuillez en créer pour débuter."
 
-#: project/views.py:3295
+#: project/views.py:3468
 msgid "Sowing information updated successfully."
 msgstr "Information d'ensemencement actualisé avec succès"
 
-#: project/views.py:3298
+#: project/views.py:3471
 msgid "Error updating sowing information."
 msgstr "Erreur d'actualisation du détail de mise en terre"
 
-#: project/views.py:3303
+#: project/views.py:3476
 #, python-format
 msgid "%(latin_name)s - Sowing Information"
 msgstr "Détail de mise en terre pour %(latin_name)s"
 
-#: project/views.py:3322
+#: project/views.py:3495
 msgid "Seed distribution information updated successfully."
 msgstr "Détail de distribution de semence actualisé avec succès."
 
-#: project/views.py:3326
+#: project/views.py:3499
 msgid "Error updating seed distribution information."
 msgstr "Erreur d'actualisation du détail de distribution de semence."
 
-#: project/views.py:3331
+#: project/views.py:3504
 #, python-format
 msgid "%(latin_name)s - Seed Distribution Information"
 msgstr "%(latin_name)s - Informations sur la distribution des semences"
 
-#: project/views.py:3374
+#: project/views.py:3547
 msgid "Plant Lifespans"
 msgstr "Durée de vie de plante"
 
-#: project/views.py:3384
+#: project/views.py:3557
 msgid "Register New Plant Lifespan"
 msgstr "Ajouter une durée de vie"
 
-#: project/views.py:3402
-#, fuzzy
-#| msgid "Seed Event Table"
+#: project/views.py:3575
 msgid "Lifespan not valid."
-msgstr "Disponible à la table"
+msgstr ""
 
-#: project/views.py:3426
+#: project/views.py:3599
 msgid "Lifespan Update"
 msgstr "Actualiser la durée de vie"
 
-#: project/views.py:3466
+#: project/views.py:3639
 msgid "Create Growth Habit"
 msgstr "Ajouter un mode de croissance"
 
-#: project/views.py:3479
+#: project/views.py:3652
 #, fuzzy, python-format
 #| msgid "Ecozone %(ecozone)s exists already."
 msgid "Habit %(obj)s exists already."
 msgstr "Écozone %(ecozone)% existe déjà!!!"
 
-#: project/views.py:3487
-#, fuzzy
-#| msgid "Seed Event Table"
+#: project/views.py:3660
 msgid "Habit not valid."
-msgstr "Disponible à la table"
+msgstr ""
 
-#: project/views.py:3511
+#: project/views.py:3684
 msgid "Habit Update"
 msgstr "Actualiser le mode de croissance"
 
-#: project/views.py:3548
+#: project/views.py:3721
 msgid "Images"
 msgstr "Images"
 
-#: project/views.py:3559
+#: project/views.py:3732
 msgid "Register New Image"
 msgstr "Enregistrer une nouvelle image"
 
-#: project/views.py:3575
+#: project/views.py:3748 project/views.py:3865
 #, python-format
-msgid ""
-"An image for the plant profile <em>%(plant_profile)s</em> and morphology "
-"aspect <em>%(morphology_aspect)s</em> already exists. Please update the "
-"existing image instead.  If you want to add a new image, please select a "
-"different morphology aspect."
-msgstr ""
-"Une image pour le profil de plante <em>%(plant_profile)s</em> portant "
-"l'étiquette de morphologie <em>%(morphology_aspect)s</em> existe déjà. "
-"Veuillez plutôt mettre à jour l'image qui existe. Si vous désirez ajouter "
-"une image à la place, utiliser une étiquette de morphologie différente. "
+msgid "An image for the plant profile <em>%(plant_profile)s</em> and morphology aspect <em>%(morphology_aspect)s</em> already exists. Please update the existing image instead.  If you want to add a new image, please select a different morphology aspect."
+msgstr "Une image pour le profil de plante <em>%(plant_profile)s</em> portant l'étiquette de morphologie <em>%(morphology_aspect)s</em> existe déjà. Veuillez plutôt mettre à jour l'image qui existe. Si vous désirez ajouter une image à la place, utiliser une étiquette de morphologie différente. "
 
-#: project/views.py:3606
+#: project/views.py:3779
 msgid "GPS data not deleted successfully."
 msgstr "Les données GPS n'ont pas pu être effacées."
 
-#: project/views.py:3609
+#: project/views.py:3782
 msgid "GPS data deleted successfully."
 msgstr "Les données GPS on été effacées avec succès"
 
-#: project/views.py:3615
+#: project/views.py:3788
 #, python-format
 msgid "Image for %(plant_profile)s added successfully. GPS Data: %(gps_data)s"
 msgstr "Image pour la plante %(plant_profile)s ajoutée avec succès. Données GPS: %(gps_data)s"
 
-#: project/views.py:3646
+#: project/views.py:3819
 msgid "Image Update"
 msgstr "Actualiser image"
 
-#: project/views.py:3686
+#: project/views.py:3847
+#, python-format
+msgid "Add Image for %(latin_name)s"
+msgstr ""
+
+#: project/views.py:3890
+#, fuzzy, python-format
+#| msgid "Image for %(plant_profile)s added successfully. GPS Data: %(gps_data)s"
+msgid "Image for %(plant_profile)s added successfully."
+msgstr "Image pour la plante %(plant_profile)s ajoutée avec succès. Données GPS: %(gps_data)s"
+
+#: project/views.py:3916
 msgid "Register New Plant Morphology Element"
 msgstr "Enregistrer un nouvel élément structurel de plante"
 
-#: project/views.py:3699
+#: project/views.py:3929
 #, python-format
 msgid "Plant Morphology Element %(element)s exists already."
 msgstr "Un élément structurel de plante nommé %(element)s existe déjà"
 
-#: project/views.py:3708
+#: project/views.py:3938
 msgid "Plant Morphology Element not valid."
 msgstr "Élément structurel de la plante non valide"
 
-#: project/views.py:3725
+#: project/views.py:3955
 msgid "Plant morphology updated successfully."
 msgstr "Élément structurel actualisé avec succès"
 
-#: project/views.py:3733
+#: project/views.py:3963
 msgid "Update Plant Morphology"
 msgstr "Actualiser un élément structurel"
 
-#: templates/core/base.html:10
-msgid ""
-"Ottawa Wildflower Seed Library - A catalogue of native wildflower seeds "
-"available for the Ottawa community to promote biodiversity and ecological "
-"gardening."
+#: project/views.py:4003
+#, fuzzy
+#| msgid "Register New Plant Lifespan"
+msgid "Register New Narrative Type"
+msgstr "Ajouter une durée de vie"
+
+#: project/views.py:4016
+#, fuzzy, python-format
+#| msgid "Ecozone %(ecozone)s exists already."
+msgid "Narrative Type %(narrative_type)s exists already."
+msgstr "Écozone %(ecozone)% existe déjà!!!"
+
+#: project/views.py:4025
+#, fuzzy
+#| msgid "Seed Event Table"
+msgid "Narrative Type not valid."
+msgstr "Disponible à la table"
+
+#: project/views.py:4042
+#, fuzzy
+#| msgid "Plant morphology updated successfully."
+msgid "Narrative type updated successfully."
+msgstr "Élément structurel actualisé avec succès"
+
+#: project/views.py:4050
+msgid "Update Narrative Type"
 msgstr ""
-"La Grainothèque de fleurs sauvages d'Ottawa - Un catalogue de semences de "
-"fleurs indigènes pour la communauté d'Ottawa pour promouvoir la biodiversité "
-"et le jardinage écologique."
+
+#: project/views.py:4081
+#, python-format
+msgid "Plant Narratives for %(latin_name)s"
+msgstr ""
+
+#: project/views.py:4094
+#, python-format
+msgid "Add Plant Narrative for %(latin_name)s"
+msgstr ""
+
+#: project/views.py:4114
+#, fuzzy, python-format
+#| msgid "An image for the plant profile <em>%(plant_profile)s</em> and morphology aspect <em>%(morphology_aspect)s</em> already exists. Please update the existing image instead.  If you want to add a new image, please select a different morphology aspect."
+msgid "A narrative of type <em>%(narrative_type)s</em> already exists for this plant profile. Please update the existing narrative instead.  If you want to add a new narrative, please select a different narrative type."
+msgstr "Une image pour le profil de plante <em>%(plant_profile)s</em> portant l'étiquette de morphologie <em>%(morphology_aspect)s</em> existe déjà. Veuillez plutôt mettre à jour l'image qui existe. Si vous désirez ajouter une image à la place, utiliser une étiquette de morphologie différente. "
+
+#: project/views.py:4126
+#, fuzzy
+#| msgid "Plant Morphology Element not valid."
+msgid "Plant narrative not valid."
+msgstr "Élément structurel de la plante non valide"
+
+#: project/views.py:4146
+#, fuzzy
+#| msgid "Plant morphology updated successfully."
+msgid "Plant narrative updated successfully."
+msgstr "Élément structurel actualisé avec succès"
+
+#: project/views.py:4154
+#, python-format
+msgid "Update Plant Narrative for %(latin_name)s"
+msgstr ""
+
+#: templates/core/base.html:10
+msgid "Ottawa Wildflower Seed Library - A catalogue of native wildflower seeds available for the Ottawa community to promote biodiversity and ecological gardening."
+msgstr "La Grainothèque de fleurs sauvages d'Ottawa - Un catalogue de semences de fleurs indigènes pour la communauté d'Ottawa pour promouvoir la biodiversité et le jardinage écologique."
 
 #: templates/core/base.html:11
 msgid "Ottawa Wildflower Seed Library Catalogue"
@@ -5173,37 +5305,41 @@ msgstr "En savoir plus sur le catalogue de plantes"
 msgid "Search Catalogue"
 msgstr "Rechercher dans le catalogue"
 
-#: templates/core/nav.html:21
+#: templates/core/nav.html:24
 msgid "Butterfly Plants"
 msgstr "Plantes à papillon"
 
-#: templates/core/nav.html:24
+#: templates/core/nav.html:27
 msgid "Specialized Bee Plants"
 msgstr "Plantes d'abeilles spécialisées"
 
-#: templates/core/nav.html:28
+#: templates/core/nav.html:31
 msgid "Ecozones (CSV)"
 msgstr "Écozones (CSV)"
 
-#: templates/core/nav.html:31
+#: templates/core/nav.html:34
 msgid "Plants Needing Seeds (CSV)"
 msgstr "Graines en demande (CSV)"
 
-#: templates/core/nav.html:33
+#: templates/core/nav.html:36
 msgid "Events"
 msgstr "Évenement"
 
-#: templates/core/nav.html:36
+#: templates/core/nav.html:39
 msgid "About Us"
 msgstr "À propos"
 
-#: templates/core/nav.html:42
+#: templates/core/nav.html:44
 msgid "Logout"
 msgstr "Déconnecter"
 
-#: templates/core/nav.html:44
+#: templates/core/nav.html:46
 msgid "Login"
 msgstr "Connexion"
+
+#: templates/core/nav.html:49
+msgid "Library Management"
+msgstr ""
 
 #~ msgid "Show Environmental Requirements Info"
 #~ msgstr "Afficher les informations de besoins environnementaux"
