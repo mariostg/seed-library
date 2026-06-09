@@ -21,6 +21,8 @@ diff_remote_file() {
         exit 1
     fi
 
+    echo "Comparing local and remote file: $relpath"
+
     tmp_remote_file=$(mktemp)
     if [ $? -ne 0 ]; then
         echo "Failed to create temp file"
@@ -38,6 +40,15 @@ diff_remote_file() {
     diff -u "$local_file" "$tmp_remote_file"
     diff_exit_code=$?
     rm -f "$tmp_remote_file"
+
+    if [ $diff_exit_code -eq 0 ]; then
+        echo "No differences found."
+    elif [ $diff_exit_code -eq 1 ]; then
+        echo "Differences found."
+    else
+        echo "Diff failed with exit code $diff_exit_code"
+    fi
+
     return $diff_exit_code
 }
 
