@@ -55,7 +55,7 @@ diff_remote_file() {
 print_translation_note() {
     echo "Translation note: locale/ is excluded from rsync to preserve Rosetta edits on the server."
     echo "If new translatable strings were deployed, run on the server:"
-    echo "  python manage.py makemessages -a"
+    echo "  python manage.py makemessages -a --no-wrap"
     echo "  python manage.py compilemessages"
     echo "Back up locale/*.po and locale/*.mo from the server into this repo and push them to GitHub."
 }
