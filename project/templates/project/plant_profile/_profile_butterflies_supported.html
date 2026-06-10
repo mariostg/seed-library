@@ -6,7 +6,11 @@
       {% for butterfly in plant.butterflies.all %}
         <li>
           <i class="fas fa-butterfly text-primary me-2"></i>
-          {{ butterfly.latin_name }}
+          {% if butterfly.inaturalist_taxon_id %}
+            <a href="https://www.inaturalist.org/taxa/{{ butterfly.inaturalist_taxon_id }}" target="_blank">{{ butterfly.latin_name }}</a>
+          {% else %}
+            {{ butterfly.latin_name }}
+          {% endif %}
           {% if butterfly.english_name %}
             <br><span class="text-muted fst-italic">{{ butterfly.english_name }}</span>
           {% endif %}
