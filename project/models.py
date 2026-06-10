@@ -560,6 +560,9 @@ class ButterflySpecies(models.Model):
     french_name = models.CharField(
         max_length=75, blank=True, verbose_name=_("French Name")
     )
+    inaturalist_taxon_id = models.CharField(
+        max_length=50, blank=True, verbose_name=_("iNaturalist Taxon ID")
+    )
 
     def __str__(self) -> str:
         return self.latin_name

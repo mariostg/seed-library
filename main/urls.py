@@ -528,6 +528,11 @@ urlpatterns += i18n_patterns(
         views.admin_butterfly_species_delete,
         name="admin-butterfly-species-delete",
     ),
+    path(
+        _("admin-butterfly-species-fetch-inaturalist-taxon-id/<str:latin_name>/"),
+        views.admin_butterfly_species_fetch_inaturalist_taxon_id,
+        name="admin-butterfly-species-fetch-inaturalist-taxon-id",
+    ),
 )
 
 urlpatterns += i18n_patterns(
