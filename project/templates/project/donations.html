@@ -1,0 +1,239 @@
+{% extends "core/base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Make a Donation" %}{% endblock title %}
+
+{% block content %}
+  <main class="donation-page">
+    <section class="donation-card">
+      <header class="donation-header">
+        <h1>{% trans "Make a Donation" %}</h1>
+        <p class="eyebrow">{% trans "Support Native Plant Conservation" %}</p>
+        <p>
+          {% trans "Thank you for your interest in donating to the Ottawa Wildflower Seed Library! Your help will support building interconnected, ecologically-robust native plant habitats – one seed, one plant, one person at a time." %}
+        </p>
+        <p>{% trans "While we have a lot of volunteer support, there are significant costs in holding plant and seed giveaways and in postage for a massive mailout campaign at end of the year. With postage increasing 25% this year, we are welcoming recurring donations to ensure we can continue serving the need for reliable native seed supply throughout Eastern Canada." %}
+        </p>
+        <p>{% trans "Your donation goes directly towards putting seeds in the ground, to plant, grow and share. We welcome you in joining our thriving community on Facebook, and sharing this project with your friends. Thank you for your gift!" %}</p>
+      </header>
+
+      <form method="post" action="{% url 'donation-checkout-session' %}" class="donation-form" id="donation-form">
+        {% csrf_token %}
+
+        <div class="field-group">
+          <label for="donation_amount">{% trans "Donation Amount (CAD)" %}</label>
+          <div class="amount-buttons" aria-label="{% trans 'Quick donation amounts' %}">
+            {% for amount in preset_amounts %}
+              <button type="button" class="amount-btn" data-amount="{{ amount }}">${{ amount }}</button>
+            {% endfor %}
+          </div>
+
+          <div class="amount-input-wrap">
+            <span class="currency">$</span>
+            <input
+              id="donation_amount"
+              name="donation_amount"
+              type="number"
+              min="{{ min_amount }}"
+              step="0.01"
+              value="10.00"
+              required
+              inputmode="decimal"
+            >
+          </div>
+          <small>{% blocktrans with min_amount=min_amount %}Minimum donation: ${{ min_amount }}{% endblocktrans %}</small>
+        </div>
+
+        <div class="field-group recurring-group">
+          <input id="is_recurring" name="is_recurring" type="checkbox">
+          <label for="is_recurring">{% trans "Make this a monthly recurring donation" %}</label>
+        </div>
+
+        <button type="submit" class="donate-submit">{% trans "Continue to Stripe" %}</button>
+
+        <p class="secure-note">
+          {% trans "Payments are securely processed by Stripe." %}
+        </p>
+      </form>
+    </section>
+  </main>
+{% endblock content %}
+
+{% block extrajs %}
+  <script>
+    (function () {
+      var amountButtons = document.querySelectorAll('.amount-btn');
+      var amountInput = document.getElementById('donation_amount');
+
+      function setActive(btn) {
+        amountButtons.forEach(function (item) {
+          item.classList.remove('is-active');
+        });
+        if (btn) {
+          btn.classList.add('is-active');
+        }
+      }
+
+      amountButtons.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          amountInput.value = btn.getAttribute('data-amount');
+          setActive(btn);
+        });
+      });
+
+      amountInput.addEventListener('input', function () {
+        setActive(null);
+      });
+    })();
+  </script>
+{% endblock extrajs %}
+
+{% block extracss %}
+  <style>
+    .donation-page {
+      display: flex;
+      align-items: center;
+      padding: 2rem 1rem 3rem;
+      background: radial-gradient(circle at 10% 10%, #f1f7e8 0%, #f7f6ef 60%, #f5efe0 100%);
+    }
+
+    .donation-card {
+      width: min(680px, 100%);
+      background: #ffffff;
+      border: 1px solid #d8d3c2;
+      border-radius: 14px;
+      box-shadow: 0 14px 34px rgba(42, 54, 32, 0.12);
+      padding: 2rem;
+    }
+
+    .donation-header {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .donation-header h1 {
+      margin: 0.25rem 0 0.5rem;
+      font-size: clamp(1.8rem, 2.8vw, 2.6rem);
+      color: #243019;
+    }
+
+    .eyebrow {
+      margin: 0;
+      font-size: 0.88rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #5a6d47;
+      font-weight: 700;
+    }
+
+    .donation-form {
+      margin-top: 1.5rem;
+      display: grid;
+      gap: 1rem;
+    }
+
+    .field-group {
+      display: grid;
+      gap: 0.65rem;
+    }
+
+    .field-group label {
+      font-weight: 700;
+      color: #29351e;
+    }
+
+    .amount-buttons {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 0.55rem;
+    }
+
+    .amount-btn {
+      border: 1px solid #88a06d;
+      background: #f7fbf2;
+      color: #355122;
+      border-radius: 10px;
+      padding: 0.55rem 0.3rem;
+      cursor: pointer;
+      transition: transform 140ms ease, background 140ms ease, color 140ms ease;
+    }
+
+    .amount-btn:hover,
+    .amount-btn.is-active {
+      background: #4f6f37;
+      color: #fff;
+      transform: translateY(-1px);
+    }
+
+    .amount-input-wrap {
+      display: flex;
+      align-items: center;
+      border: 1px solid #b8c5a6;
+      border-radius: 10px;
+      overflow: hidden;
+      width: 220px;
+      max-width: 100%;
+    }
+
+    .amount-input-wrap .currency {
+      padding: 0.75rem 0.8rem;
+      background: #f0f5e9;
+      color: #3a4d2a;
+      font-weight: 700;
+      border-right: 1px solid #cbd8bc;
+    }
+
+    .amount-input-wrap input {
+      border: 0;
+      width: 100%;
+      padding: 0.75rem;
+      font-size: 1rem;
+      outline: none;
+    }
+
+    .recurring-group {
+      grid-template-columns: auto 1fr;
+      align-items: center;
+      gap: 0.7rem;
+      margin-top: 0.5rem;
+    }
+
+    .recurring-group input {
+      width: 18px;
+      height: 18px;
+      accent-color: #4f6f37;
+    }
+
+    .donate-submit {
+      margin-top: 0.25rem;
+      border: 0;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #496a31 0%, #2a4b14 100%);
+      color: #fff;
+      font-weight: 700;
+      padding: 0.9rem 1rem;
+      cursor: pointer;
+      font-size: 1.04rem;
+    }
+
+    .donate-submit:hover {
+      filter: brightness(1.06);
+    }
+
+    .secure-note {
+      margin: 0;
+      color: #4d5941;
+      font-size: 0.92rem;
+    }
+
+    @media (max-width: 640px) {
+      .donation-card {
+        padding: 1.2rem;
+      }
+
+      .amount-buttons {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+  </style>
+{% endblock extracss %}

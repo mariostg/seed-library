@@ -2,6 +2,7 @@ import csv
 import io
 import json
 from datetime import datetime
+from decimal import Decimal, InvalidOperation
 
 from django.conf import settings
 from django.contrib import messages
@@ -11,14 +12,22 @@ from django.contrib.auth.models import Group, Permission
 from django.core.paginator import Paginator
 from django.db import IntegrityError
 from django.db.models import Count, RestrictedError
+from django.db.utils import IntegrityError as DbIntegrityError
 from django.http import FileResponse, HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse
+from django.utils import timezone
 from django.utils.translation import gettext as _
+from django.views.decorators.csrf import csrf_exempt
 from reportlab.lib.colors import black, pink, red
 from reportlab.lib.pagesizes import landscape, letter
 from reportlab.lib.units import inch
 from reportlab.pdfgen import canvas
+
+try:
+    import stripe
+except ImportError:  # pragma: no cover - dependency should be available in runtime
+    stripe = None
 
 from project import filters, forms, models, utils, vascan
 from project.acl_handler import group_required
@@ -4278,6 +4287,265 @@ def checkout(request):
         "item_count": item_count,
     }
     return render(request, "project/checkout.html", context)
+
+
+def _parse_donation_amount(raw_amount):
+    normalized = (raw_amount or "").strip().replace(",", ".")
+    if not normalized:
+        return None
+
+    try:
+        amount = Decimal(normalized)
+    except (InvalidOperation, ValueError):
+        return None
+
+    if amount <= 0:
+        return None
+
+    return amount.quantize(Decimal("0.01"))
+
+
+def _get_min_donation_amount():
+    raw_min = getattr(settings, "STRIPE_DONATION_MIN_AMOUNT", Decimal("1.00"))
+    try:
+        return Decimal(str(raw_min)).quantize(Decimal("0.01"))
+    except (InvalidOperation, ValueError):
+        return Decimal("1.00")
+
+
+def _amount_from_minor_units(minor_units):
+    if minor_units is None:
+        return Decimal("0.00")
+    return (Decimal(minor_units) / Decimal("100")).quantize(Decimal("0.01"))
+
+
+def _is_true(value):
+    return str(value).strip().lower() in {"1", "true", "yes", "on"}
+
+
+def _upsert_donation_from_checkout_session(session):
+    amount = _amount_from_minor_units(session.get("amount_total"))
+    metadata = session.get("metadata") or {}
+    customer_details = session.get("customer_details") or {}
+
+    donation, _ = models.Donation.objects.get_or_create(
+        stripe_checkout_session_id=session.get("id", ""),
+        defaults={
+            "amount": amount,
+            "currency": (session.get("currency") or settings.STRIPE_DONATION_CURRENCY),
+            "status": models.Donation.STATUS_SUCCEEDED,
+            "is_recurring": session.get("mode") == "subscription"
+            or _is_true(metadata.get("is_recurring")),
+            "stripe_payment_intent_id": session.get("payment_intent") or "",
+            "stripe_subscription_id": session.get("subscription") or "",
+            "stripe_customer_id": session.get("customer") or "",
+            "donor_email": customer_details.get("email", ""),
+            "donor_name": customer_details.get("name", ""),
+            "metadata": metadata,
+            "paid_at": timezone.now(),
+        },
+    )
+
+    # Keep checkout-linked donation current if later session payload has more details.
+    donation.amount = amount
+    donation.currency = session.get("currency") or settings.STRIPE_DONATION_CURRENCY
+    donation.status = models.Donation.STATUS_SUCCEEDED
+    donation.is_recurring = session.get("mode") == "subscription" or _is_true(
+        metadata.get("is_recurring")
+    )
+    donation.stripe_payment_intent_id = session.get("payment_intent") or ""
+    donation.stripe_subscription_id = session.get("subscription") or ""
+    donation.stripe_customer_id = session.get("customer") or ""
+    donation.donor_email = customer_details.get("email", "")
+    donation.donor_name = customer_details.get("name", "")
+    donation.metadata = metadata
+    donation.paid_at = donation.paid_at or timezone.now()
+    donation.save()
+
+
+def _upsert_donation_from_invoice(invoice, status):
+    amount = _amount_from_minor_units(
+        invoice.get("amount_paid") or invoice.get("amount_due")
+    )
+    invoice_id = invoice.get("id") or ""
+    if not invoice_id:
+        return
+
+    donation, _ = models.Donation.objects.get_or_create(
+        stripe_invoice_id=invoice_id,
+        defaults={
+            "amount": amount,
+            "currency": (invoice.get("currency") or settings.STRIPE_DONATION_CURRENCY),
+            "status": status,
+            "is_recurring": bool(invoice.get("subscription")),
+            "stripe_subscription_id": invoice.get("subscription") or "",
+            "stripe_customer_id": invoice.get("customer") or "",
+            "stripe_payment_intent_id": invoice.get("payment_intent") or "",
+            "paid_at": (
+                timezone.now() if status == models.Donation.STATUS_SUCCEEDED else None
+            ),
+            "metadata": {"billing_reason": invoice.get("billing_reason", "")},
+        },
+    )
+
+    donation.amount = amount
+    donation.currency = invoice.get("currency") or settings.STRIPE_DONATION_CURRENCY
+    donation.status = status
+    donation.is_recurring = bool(invoice.get("subscription"))
+    donation.stripe_subscription_id = invoice.get("subscription") or ""
+    donation.stripe_customer_id = invoice.get("customer") or ""
+    donation.stripe_payment_intent_id = invoice.get("payment_intent") or ""
+    donation.metadata = {"billing_reason": invoice.get("billing_reason", "")}
+    if status == models.Donation.STATUS_SUCCEEDED:
+        donation.paid_at = donation.paid_at or timezone.now()
+    donation.save()
+
+
+def _process_donation_webhook_event(event):
+    event_type = event.get("type", "")
+    data_object = (event.get("data") or {}).get("object") or {}
+
+    if event_type == "checkout.session.completed":
+        _upsert_donation_from_checkout_session(data_object)
+    elif event_type == "invoice.paid":
+        _upsert_donation_from_invoice(data_object, models.Donation.STATUS_SUCCEEDED)
+    elif event_type == "invoice.payment_failed":
+        _upsert_donation_from_invoice(data_object, models.Donation.STATUS_FAILED)
+
+
+@csrf_exempt
+def stripe_webhook(request):
+    if request.method != "POST":
+        return HttpResponse(status=405)
+
+    if stripe is None:
+        return HttpResponse(status=503)
+
+    payload = request.body
+    signature = request.headers.get("stripe-signature", "")
+    webhook_secret = settings.STRIPE_WEBHOOK_SECRET
+    if not webhook_secret:
+        return HttpResponse(status=503)
+
+    try:
+        event = stripe.Webhook.construct_event(payload, signature, webhook_secret)
+    except Exception:
+        return HttpResponse(status=400)
+
+    try:
+        webhook_event, created = models.StripeWebhookEvent.objects.get_or_create(
+            stripe_event_id=event.get("id", ""),
+            defaults={
+                "event_type": event.get("type", ""),
+                "livemode": bool(event.get("livemode", False)),
+                "payload": event,
+            },
+        )
+    except DbIntegrityError:
+        return HttpResponse(status=200)
+
+    if not created:
+        return HttpResponse(status=200)
+
+    try:
+        _process_donation_webhook_event(event)
+    except Exception as exc:
+        webhook_event.processing_error = str(exc)
+        webhook_event.save(update_fields=["processing_error", "modified"])
+        return HttpResponse(status=500)
+
+    return HttpResponse(status=200)
+
+
+def donation_page(request):
+    min_amount = _get_min_donation_amount()
+    context = {
+        "preset_amounts": (5, 10, 20, 50, 100),
+        "min_amount": min_amount,
+        "stripe_publishable_key": settings.STRIPE_PUBLISHABLE_KEY,
+    }
+    return render(request, "project/donations.html", context)
+
+
+def create_donation_checkout_session(request):
+    if request.method != "POST":
+        return redirect("donation-page")
+
+    if stripe is None:
+        messages.error(
+            request,
+            _("Donation system is currently unavailable. Please try again later."),
+        )
+        return redirect("donation-page")
+
+    amount = _parse_donation_amount(request.POST.get("donation_amount"))
+    min_amount = _get_min_donation_amount()
+    if amount is None or amount < min_amount:
+        messages.error(
+            request,
+            _("Please enter a valid donation amount of at least $%(amount)s.")
+            % {"amount": min_amount},
+        )
+        return redirect("donation-page")
+
+    if not settings.STRIPE_SECRET_KEY or not settings.STRIPE_PUBLISHABLE_KEY:
+        messages.error(
+            request,
+            _("Donations are temporarily unavailable. Stripe keys are not configured."),
+        )
+        return redirect("donation-page")
+
+    is_recurring = request.POST.get("is_recurring") == "on"
+    stripe.api_key = settings.STRIPE_SECRET_KEY
+
+    donation_name = (
+        _("Monthly Donation - Ottawa Wildflower Seed Library")
+        if is_recurring
+        else _("One-time Donation - Ottawa Wildflower Seed Library")
+    )
+
+    line_item = {
+        "price_data": {
+            "currency": settings.STRIPE_DONATION_CURRENCY,
+            "unit_amount": int(amount * 100),
+            "product_data": {
+                "name": donation_name,
+            },
+        },
+        "quantity": 1,
+    }
+
+    if is_recurring:
+        line_item["price_data"]["recurring"] = {"interval": "month"}
+
+    try:
+        session = stripe.checkout.Session.create(
+            mode="subscription" if is_recurring else "payment",
+            payment_method_types=["card"],
+            line_items=[line_item],
+            success_url=request.build_absolute_uri(reverse("donation-success")),
+            cancel_url=request.build_absolute_uri(reverse("donation-cancel")),
+            metadata={
+                "is_recurring": str(is_recurring).lower(),
+                "donation_amount": str(amount),
+            },
+        )
+    except Exception:
+        messages.error(
+            request,
+            _("We could not start Stripe checkout. Please try again in a moment."),
+        )
+        return redirect("donation-page")
+
+    return redirect(session.url, permanent=False)
+
+
+def donation_success(request):
+    return render(request, "project/donation-success.html")
+
+
+def donation_cancel(request):
+    return render(request, "project/donation-cancel.html")
 
 
 def order_confirmation(request, pk):

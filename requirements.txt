@@ -243,6 +243,8 @@ sqlparse==0.5.3
     # via django
 stack-data==0.6.3
     # via ipython
+stripe==11.6.0
+    # via -r requirements.in
 tokenize-rt==6.2.0
     # via
     #   django-upgrade

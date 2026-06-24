@@ -1943,3 +1943,59 @@ class OrderItem(Base):
     class Meta:
         verbose_name_plural = "Order Items"
         unique_together = ("order", "plant_profile")
+
+
+class StripeWebhookEvent(Base):
+    """Track Stripe webhook events for idempotent processing."""
+
+    stripe_event_id = models.CharField(max_length=255, unique=True)
+    event_type = models.CharField(max_length=255)
+    livemode = models.BooleanField(default=False)
+    payload = models.JSONField(default=dict)
+    processing_error = models.TextField(blank=True)
+
+    def __str__(self) -> str:
+        return f"{self.event_type} ({self.stripe_event_id})"
+
+    class Meta:
+        ordering = ["-created"]
+
+
+class Donation(Base):
+    """Persist successful and failed donation payment attempts from Stripe."""
+
+    STATUS_PENDING = "pending"
+    STATUS_SUCCEEDED = "succeeded"
+    STATUS_FAILED = "failed"
+    STATUS_CANCELLED = "cancelled"
+
+    STATUS_CHOICES = [
+        (STATUS_PENDING, _("Pending")),
+        (STATUS_SUCCEEDED, _("Succeeded")),
+        (STATUS_FAILED, _("Failed")),
+        (STATUS_CANCELLED, _("Cancelled")),
+    ]
+
+    stripe_checkout_session_id = models.CharField(max_length=255, blank=True)
+    stripe_payment_intent_id = models.CharField(max_length=255, blank=True)
+    stripe_subscription_id = models.CharField(max_length=255, blank=True)
+    stripe_customer_id = models.CharField(max_length=255, blank=True)
+    stripe_invoice_id = models.CharField(max_length=255, blank=True, unique=True)
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    currency = models.CharField(max_length=10, default="cad")
+    status = models.CharField(
+        max_length=20,
+        choices=STATUS_CHOICES,
+        default=STATUS_PENDING,
+    )
+    is_recurring = models.BooleanField(default=False)
+    donor_email = models.EmailField(blank=True)
+    donor_name = models.CharField(max_length=255, blank=True)
+    metadata = models.JSONField(default=dict, blank=True)
+    paid_at = models.DateTimeField(null=True, blank=True)
+
+    def __str__(self) -> str:
+        return f"Donation {self.id} - {self.amount} {self.currency} ({self.status})"
+
+    class Meta:
+        ordering = ["-created"]

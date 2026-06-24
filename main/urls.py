@@ -15,6 +15,7 @@ api.add_router("/", home_router)
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("__reload__/", include("django_browser_reload.urls")),
+    path("stripe/webhook/", views.stripe_webhook, name="stripe-webhook"),
 ]
 
 urlpatterns += i18n_patterns(
@@ -829,6 +830,26 @@ urlpatterns += i18n_patterns(
         _("checkout/"),
         views.checkout,
         name="checkout",
+    ),
+    path(
+        _("donate/"),
+        views.donation_page,
+        name="donation-page",
+    ),
+    path(
+        _("donate/checkout/"),
+        views.create_donation_checkout_session,
+        name="donation-checkout-session",
+    ),
+    path(
+        _("donate/success/"),
+        views.donation_success,
+        name="donation-success",
+    ),
+    path(
+        _("donate/cancel/"),
+        views.donation_cancel,
+        name="donation-cancel",
     ),
     path(
         _("order-confirmation/<int:pk>/"),

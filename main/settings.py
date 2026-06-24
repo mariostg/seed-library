@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 import os
 import sys
+from decimal import Decimal
 from pathlib import Path
 
 import dotenv
@@ -175,6 +176,15 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 LOGIN_URL = "/login/"
 AUTH_USER_MODEL = "project.ProjectUser"
 MAPBOX_ACCESS_TOKEN = os.environ.get("MAPBOX_ACCESS_TOKEN", "")
+
+# Stripe donation settings
+STRIPE_PUBLISHABLE_KEY = os.environ.get("STRIPE_PUBLISHABLE_KEY", "")
+STRIPE_SECRET_KEY = os.environ.get("STRIPE_SECRET_KEY", "")
+STRIPE_WEBHOOK_SECRET = os.environ.get("STRIPE_WEBHOOK_SECRET", "")
+STRIPE_DONATION_CURRENCY = os.environ.get("STRIPE_DONATION_CURRENCY", "cad").lower()
+STRIPE_DONATION_MIN_AMOUNT = Decimal(
+    os.environ.get("STRIPE_DONATION_MIN_AMOUNT", "1.00")
+)
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,

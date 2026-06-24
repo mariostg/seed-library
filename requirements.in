@@ -43,3 +43,4 @@ django-rosetta
 django-modeltranslation
 celery
 redis
+stripe
