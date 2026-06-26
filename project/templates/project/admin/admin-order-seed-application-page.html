@@ -17,7 +17,7 @@
           <tr>
             <th>{% trans "Priority" %}</th>
             <th>{% trans "Seed Application" %}</th>
-            <th>{% trans "Order Count" %}</th>
+            <th>{% trans "Customer Count" %}</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -26,7 +26,7 @@
             <tr class="{% cycle 'odd-row' 'even-row' %}">
               <td>{{item.priority}}</td>
               <td>{{ item.seed_application }}</td>
-              <td>{{ item.order_count }}</td>
+              <td>{{ item.customers_count }}</td>
               {% if user.is_authenticated %}
                 <td class='actions'>
                   <a class='btn btn-edit' href="{% url "admin-order-seed-application-update" item.id %}">{% trans "Edit" %}</a>

@@ -3,7 +3,7 @@
 
   <nav class="flex-row xcenter row-spacer">
 
-    {% if request.user.is_access_administrator %}
+    {% if request.user.is_shop_manager %}
       <div class="flex-col-center">
         <div class="title">{% trans "Online Seed Order" %}</div>
         <div>

@@ -4582,7 +4582,7 @@ def order_confirmation(request, pk):
 def admin_order_seed_application_page(request):
     """Dsisplay the use or application for seed ordering used to populate the selection options in the order seed application form."""
     data = models.OrderSeedApplication.objects.annotate(
-        order_count=Count("orders")
+        customers_count=Count("customers")
     ).order_by("priority", "seed_application")
     context = {
         "object_list": data,
