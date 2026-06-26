@@ -343,7 +343,13 @@ class AdminConservationStatusForm(forms.ModelForm):
 class AdminButterflySpeciesForm(forms.ModelForm):
     class Meta:
         model = models.ButterflySpecies
-        fields = ["latin_name", "english_name_en", "english_name_fr"]
+        fields = [
+            "latin_name",
+            "english_name",
+            "french_name",
+            "french_name_source",
+            "inaturalist_taxon_id",
+        ]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -691,6 +697,32 @@ class ShoppingCartForm(forms.ModelForm):
             "customer",
             "plant_profile",
             "quantity",
+        ]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+
+class AdminPlantNarrativeForm(forms.ModelForm):
+    class Meta:
+        model = models.PlantNarrative
+        fields = [
+            "plant_profile",
+            "narrative_type",
+            "description",
+            "published",
+        ]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+
+class AdminPlantNarrativeTypeForm(forms.ModelForm):
+    class Meta:
+        model = models.NarrativeType
+        fields = [
+            "narrative_type_en",
+            "narrative_type_fr",
         ]
 
     def __init__(self, *args, **kwargs):

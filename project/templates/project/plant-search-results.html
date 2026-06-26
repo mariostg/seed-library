@@ -10,6 +10,11 @@
     </div>
   {% endif %}
   <div id='search-results'>
+    {% if non_native_name %}
+      <div class="alert alert--info">
+        {% trans "Showing native alternatives for your non-native search." %}
+      </div>
+    {% endif %}
     {% if object_list %}
       <div>
         <div class='flex-col-center'>{% trans "Search Results: Found" %} {{item_count}} {% trans "matches" %}</div>

@@ -1,6 +1,6 @@
 {% load i18n static %}
 
-<div class="plant-profile-characteristics-item">
+<div class="plant-profile-characteristics-item element">
   <span>{% trans "Gardener Experience" %}:</span>
   {% if plant.beginner_friendly %}
     <div class="tooltip">
@@ -54,6 +54,16 @@
         src="{% static 'images/plant-self-seeding.svg'  %}"
       />
       <span class="tooltiptext">{% trans "Self-seeding" %}</span>
+    </div>
+  {% endif %}
+  {% if has_snowflake_icon %}
+    <div class="tooltip">
+      <img
+        alt="plant stratification"
+        class="icon"
+        src="{% static 'images/plant-snow-flake.svg'  %}"
+      />
+      <span class="tooltiptext">{% trans "Requires stratification" %}</span>
     </div>
   {% endif %}
 </div>

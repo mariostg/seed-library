@@ -18,7 +18,14 @@
     <div>
       {% for butterfly in butterflies %}
         <article>
-          <div>{{ butterfly.latin_name }} - {{ butterfly.english_name }}</div>
+          <div>
+            {% if butterfly.inaturalist_taxon_id %}
+              <a target="_blank" href="https://www.inaturalist.org/taxa/{{butterfly.inaturalist_taxon_id}}">{{ butterfly.latin_name }}</a>
+            {% else %}
+              {{ butterfly.latin_name }}
+            {% endif %}
+            - {{ butterfly.english_name }} - {{ butterfly.french_name|default:"" }}
+          </div>
           <div>
             <ul>
               {% for plant in butterfly.plants.all %}

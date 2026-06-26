@@ -19,14 +19,17 @@
   </div>
 {% endif %}
 
-<div class="flex-row center">
+<div class="flex-row center mb-1">
 
   {% if request.user.is_plant_profile_manager %}
     <a class="alert alert--warning" href="{% url 'plant-profile-delete' plant.pk %}">{% trans "Delete" %} {{ plant.latin_name }}</a>
+    <a class="alert alert--success" href="{% url 'admin-plant-narrative-page' plant.pk %}">{% trans "View Narratives of Plant" %}</a>
   {% endif %}
 
   {% if request.user.is_image_manager %}
   <!-- link to add an image to the plant profile -->
     <a class="alert alert--info" href="{% url 'admin-plant-image-add' plant.pk %}">{% trans "Add Image to Plant Profile" %}</a>
   {% endif %}
+
+
 </div>

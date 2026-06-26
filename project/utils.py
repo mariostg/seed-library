@@ -5,6 +5,7 @@ from io import BytesIO
 from pathlib import Path
 
 import qrcode
+import requests
 from django.conf import settings
 from django.db.models import Count, Q, Sum
 from django.db.models.functions import ExtractYear
@@ -348,37 +349,15 @@ def create_qr_code_image(data: str, box_size: int = 10, border: int = 4):
     return img
 
 
-# define a method that searches the html content on iNaturalist for a given plant name and searches the iNaturalist taxon ID of the plant.
-# Exemple, when searching for "Quercus muehlenbergii" on inaturalist, a list of results is returned as a web page, and
-# within the html content of the page, we can find the taxon id of the plant.
-# the taxon id is embeded in the page results as https://www.inaturalist.org/taxa/54783-Quercus-muehlenbergii
-def get_inaturalist_taxon_id(plant_name: str) -> int | None:
-    import requests
-    from bs4 import BeautifulSoup
-
-    search_url = f"https://www.inaturalist.org/search?q={plant_name}&search_type=taxa"
+def get_inaturalist_taxon_id(plant_name: str) -> str:
+    search_url = f"https://api.inaturalist.org/v1/taxa?q={plant_name}&rank=species"
     response = requests.get(search_url)
-
     if response.status_code == 200:
-        soup = BeautifulSoup(response.content, "html.parser")
-        # taxon_link is in the format <a href="/taxa/54783-Quercus-muehlenbergii">Quercus muehlenbergii</a>
-        # Find the first link matches anchor tag with href containing /taxa/ followed by digits and a hyphen
-        taxon_link = soup.find(
-            "a",
-            href=lambda href: href
-            and "/taxa/" in href
-            and any(char.isdigit() for char in href.split("/")[2].split("-")[0]),
-        )
-
-        if taxon_link:
-            href = taxon_link["href"]
-            taxon_id_str = href.split("/")[2].split("-")[0]
-            try:
-                taxon_id = int(taxon_id_str)
-                return taxon_id
-            except ValueError:
-                return None
-    return None
+        data = response.json()
+        if data["total_results"] > 0:
+            taxon_id = data["results"][0]["id"]
+            return str(taxon_id)
+    return ""
 
 
 # ============================================================================

@@ -28,7 +28,16 @@
                 <!--latin_name-->
             <div class="input-text">
               <label for="id_latin_name">{% trans "Latin Name" %}</label>
-              <input type="text" id="id_latin_name" name="latin_name" value="{{ plant.latin_name }}" required>
+              <input type="text"
+                     hx-get="{% url 'search-vascan-taxon-id' %}"
+                     hx-target="#id_taxon, #id_english_name, #id_french_name,#id_inaturalist_taxon"
+                     hx-trigger="change delay:500ms"
+                     hx-swap="value"
+                     hx-include="this"
+                     hx-indicator=".htmx-indicator"
+                     id="id_latin_name"
+                     name="latin_name"
+                     value="{{ plant.latin_name }}" required>
             </div>
                 <!--english_name-->
             <div class="input-text">

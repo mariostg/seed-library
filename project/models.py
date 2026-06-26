@@ -583,6 +583,16 @@ class ButterflySpecies(models.Model):
     english_name = models.CharField(
         max_length=75, blank=True, verbose_name=_("English Name")
     )
+    french_name = models.CharField(
+        max_length=75, blank=True, verbose_name=_("French Name")
+    )
+    # source from where the french_name was obtained.
+    french_name_source = models.CharField(
+        max_length=100, blank=True, verbose_name=_("French Name Source")
+    )
+    inaturalist_taxon_id = models.CharField(
+        max_length=50, blank=True, verbose_name=_("iNaturalist Taxon ID")
+    )
 
     def __str__(self) -> str:
         return self.latin_name
@@ -1741,6 +1751,43 @@ class PlantComplementary(models.Model):
             )
         ]
         ordering = ["plant_profile__latin_name", "complement__latin_name"]
+
+
+class NarrativeType(models.Model):
+    """A model representing the type of narrative for a plant profile such as Overall description, Pollinator information, etc.  Each narrative type can be associated with multiple plant profiles through the PlantNarrative model."""
+
+    narrative_type = models.CharField(
+        max_length=75, blank=True, unique=True, verbose_name=_("Type")
+    )
+
+    def __str__(self) -> str:
+        return self.narrative_type
+
+
+class PlantNarrative(models.Model):
+    """A model representing a description of a plant profile with a specific narrative type such as Overall description, Pollinator information, etc.  Narrative types are defined in the NarrativeType model which is a foreign key in this model."""
+
+    plant_profile = models.ForeignKey(
+        PlantProfile,
+        on_delete=models.CASCADE,
+        related_name="narratives",
+        verbose_name=_("Plant Profile"),
+    )
+    narrative_type = models.ForeignKey(
+        NarrativeType,
+        on_delete=models.RESTRICT,
+        null=True,
+        blank=True,
+        verbose_name=_("Narrative Type"),
+    )
+    description = models.TextField(blank=True, verbose_name=_("Description"))
+    published = models.BooleanField(default=False, verbose_name=_("Published"))
+
+    def __str__(self) -> str:
+        narrative_label = (
+            self.narrative_type.narrative_type if self.narrative_type else ""
+        )
+        return f"{self.plant_profile.latin_name} - {narrative_label}"
 
 
 class Customer(Base):

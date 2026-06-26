@@ -1,13 +1,6 @@
 /*0 3px 5px rgba(75, 85, 68, 0.8);*/
 /*Wildflower theme colors*/
 /*blue theme*/
-.plant-profile {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 1rem;
-  background-color: #f7f7f7;
-}
 .plant-profile-characteristics {
   display: flex;
   flex: 1;
@@ -16,7 +9,6 @@
 .plant-profile-characteristics-item {
   display: flex;
   align-items: center;
-  padding: 1rem 0;
 }
 .plant-profile-characteristics-item > span {
   padding-right: 0.5rem;
@@ -59,10 +51,44 @@
 .plant-profile-section {
   max-width: 600px;
 }
+.plant-profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  background-color: #f7f7f7;
+}
 
 img {
   height: auto;
   max-width: 100%;
+}
+
+.profile-section {
+  border: 1px solid light-dark(#79ac78, #79ac78);
+  border-radius: 0.5rem;
+}
+.profile-section h2 {
+  background-color: rgba(121, 172, 120, 0.4);
+  color: #fff;
+  padding: 0.5rem;
+  margin: 0;
+}
+.profile-section .element {
+  margin: 10px;
+}
+
+.plant-names-group {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.plant-names-synonyms {
+  display: flex;
+  flex-direction: column;
 }
 
 .plant-image {

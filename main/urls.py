@@ -98,6 +98,48 @@ urlpatterns += i18n_patterns(
     ),
 )
 
+urlpatterns += i18n_patterns(
+    path(
+        _("admin-narrative-type-page/"),
+        views.admin_narrative_type_page,
+        name="admin-narrative-type-page",
+    ),
+    path(
+        _("admin-narrative-type-add/"),
+        views.admin_narrative_type_add,
+        name="admin-narrative-type-add",
+    ),
+    path(
+        _("admin-narrative-type-update/<int:pk>/"),
+        views.admin_narrative_type_update,
+        name="admin-narrative-type-update",
+    ),
+    path(
+        _("admin-narrative-type-delete/<int:pk>/"),
+        views.admin_narrative_type_delete,
+        name="admin-narrative-type-delete",
+    ),
+    path(
+        _("admin-plant-narrative-add/<int:pk>/"),
+        views.admin_plant_narrative_add,
+        name="admin-plant-narrative-add",
+    ),
+    path(
+        _("admin-plant-narrative-update/<int:pk>/"),
+        views.admin_plant_narrative_update,
+        name="admin-plant-narrative-update",
+    ),
+    path(
+        _("admin-plant-narrative-delete/<int:pk>/"),
+        views.admin_plant_narrative_delete,
+        name="admin-plant-narrative-delete",
+    ),
+    path(
+        _("admin-plant-narrative-page/<int:pk>/"),
+        views.admin_plant_narrative_page,
+        name="admin-plant-narrative-page",
+    ),
+)
 
 urlpatterns += i18n_patterns(
     path(
@@ -491,6 +533,11 @@ urlpatterns += i18n_patterns(
         _("admin-butterfly-species-delete/<int:pk>/"),
         views.admin_butterfly_species_delete,
         name="admin-butterfly-species-delete",
+    ),
+    path(
+        _("admin-butterfly-species-fetch-inaturalist-taxon-id/<str:latin_name>/"),
+        views.admin_butterfly_species_fetch_inaturalist_taxon_id,
+        name="admin-butterfly-species-fetch-inaturalist-taxon-id",
     ),
 )
 

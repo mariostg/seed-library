@@ -254,6 +254,8 @@ admin.site.register(models.BeeSpecies)
 admin.site.register(models.Ecozone)
 admin.site.register(models.StratificationDuration)
 admin.site.register(models.NonNativeSpecies)
+admin.site.register(models.NarrativeType)
+admin.site.register(models.PlantNarrative)
 
 # ===============
 # Register customer and order models
