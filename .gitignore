@@ -20,3 +20,6 @@ static/images/plants/
 
 logs/
 .backup-state/
+
+scripts/data/
+scripts/.env
