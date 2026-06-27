@@ -4252,9 +4252,9 @@ def checkout(request):
     GET: Display checkout review page
     POST: Process order creation
     """
-    if not request.library_settings.is_shop_open:
-        messages.info(request, _("The seed shop is currently closed."))
-        return redirect("index")
+    if not request.library_settings.is_accepting_donations:
+        messages.info(request, _("Donations are currently not accepted."))
+        return redirect("shopping-cart")
 
     customer = utils.get_or_create_customer_from_session(request)
     if not customer:
@@ -4472,6 +4472,9 @@ def stripe_webhook(request):
 
 
 def donation_page(request):
+    if not request.library_settings.is_accepting_donations:
+        messages.info(request, _("Donations are currently not being accepted."))
+        return redirect("index")
     min_amount = _get_min_donation_amount()
     context = {
         "preset_amounts": (5, 10, 20, 50, 100),

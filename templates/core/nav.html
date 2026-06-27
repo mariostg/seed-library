@@ -39,9 +39,11 @@
     <li>
       <a target="_blank" href="https://wildflowerseedlibrary.ca/about-us/">{% trans "About Us" %}</a>
     </li>
-    <li>
-      <a href="{% url 'donation-page' %}">{% trans "Donate" %}</a>
-    </li>
+    {% if request.library_settings.is_accepting_donations %}
+      <li>
+        <a href="{% url 'donation-page' %}">{% trans "Donate" %}</a>
+      </li>
+    {% endif %}
 
     <!--link for user shopping cart-->
     {% if request.library_settings.is_shop_open %}

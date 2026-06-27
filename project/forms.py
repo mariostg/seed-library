@@ -134,7 +134,7 @@ class SearchPlantForm(forms.ModelForm):
 class AdminLibrarySettingForm(forms.ModelForm):
     class Meta:
         model = models.LibrarySetting
-        fields = ["is_shop_open", "is_accepting_seeds"]
+        fields = ["is_shop_open", "is_accepting_seeds", "is_accepting_donations"]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
