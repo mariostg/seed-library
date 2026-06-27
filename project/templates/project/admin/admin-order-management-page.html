@@ -19,7 +19,7 @@
         {% endfor %}
       </div>
     {% endif %}
-
+    {% include 'core/paginator.html' %}
     <nav class="nav">
       <!--navigation of orders by status-->
       <ul class="nav-links admin-order-status-nav">
@@ -52,7 +52,7 @@
           </tr>
         </thead>
         <tbody>
-          {% for order in orders %}
+          {% for order in page_obj %}
             <tr>
               <td>{{ order.id }}</td>
               <td>{{ order.customer.first_name }} {{ order.customer.last_name }}</td>
@@ -76,4 +76,5 @@
       </table>
     </div>
   </section>
+  {% include 'core/paginator.html' %}
 {% endblock content %}

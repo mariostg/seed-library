@@ -4916,11 +4916,11 @@ def admin_order_management_page(request):
     # Pagination
     paginator = Paginator(orders, 20)
     page_number = request.GET.get("page")
-    orders_page = paginator.get_page(page_number)
+    page_obj = paginator.get_page(page_number)
 
     context = {
         "title": _("Order Management"),
-        "orders": orders_page,
+        "page_obj": page_obj,
         "order_status_choices": order_status_choices,
         "url_name": "admin-order-management-page",
     }

@@ -366,3 +366,54 @@ td {
     background-color: #0056b3;
   }
 }
+
+.paginator {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 1.5rem 0;
+  padding: 0.5rem;
+
+  .page-item {
+    display: flex;
+    list-style: none;
+  }
+
+  .page-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2.25rem;
+    height: 2.25rem;
+    padding: 0 0.75rem;
+    border: 1px solid $link-color;
+    border-radius: 999px;
+    background-color: #fff;
+    color: $link-color;
+    font-weight: 600;
+    text-decoration: none;
+    transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+
+    &:hover,
+    &:focus-visible {
+      background-color: $link-color;
+      color: #fff;
+      text-decoration: none;
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(121, 172, 120, 0.2);
+    }
+  }
+
+  .page-item.active .page-link {
+    background-color: $link-color;
+    color: #fff;
+    cursor: default;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+  }
+}
