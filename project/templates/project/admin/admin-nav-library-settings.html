@@ -6,9 +6,14 @@
       <div class="flex-col-center">
         <div class="title">{% trans "Plant Profile" %}</div>
         <div>
-
+          <div>
+            <a href="{% url 'admin-library-settings' %}">{% trans "Library Settings" %}</a>
+          </div>
           <div>
             <a href="{% url 'plant-identification-information-create' %}">{% trans "Record new plant" %}</a>
+          </div>
+          <div>
+            <a href="{% url 'update-availability' %}">{% trans "Update Availability" %}</a>
           </div>
 
           <div>
