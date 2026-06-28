@@ -4598,11 +4598,26 @@ def order_confirmation(request, pk):
 @group_required("Library Manager")
 def admin_order_seed_application_page(request):
     """Dsisplay the use or application for seed ordering used to populate the selection options in the order seed application form."""
-    data = models.OrderSeedApplication.objects.annotate(
-        customers_count=Count("customers")
-    ).order_by("priority", "seed_application")
+
+    # Get all orders grouped by application and count the number of orders for each application.  Orders has a foreing key for customer which has a foreign key for application.  We want to count the number of orders for each application.  We can do this by using the values() method to group by application and then use annotate() to count the number of orders for each application.
+
+    # we need also to get the seed application even if there are no orders for that application.  We can do this by using the values() method to group by application and then use annotate() to count the number of orders for each application.  We can then use the union() method to combine the two querysets.
+
+    application_orders_breakdown = (
+        models.OrderSeedApplication.objects.annotate(
+            orders_count=Count("customers__orders")
+        )
+        .values(
+            "orders_count",
+            "seed_application",
+            "priority",
+            "id",
+        )
+        .order_by("priority")
+    )
+
     context = {
-        "object_list": data,
+        "object_list": application_orders_breakdown,
         "title": _("Seed Order Application"),
         "url_name": "admin-order-seed-application-page",
     }
