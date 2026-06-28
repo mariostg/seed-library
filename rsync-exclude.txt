@@ -22,6 +22,7 @@ staticfiles/
 .env
 .vscode
 .DS_Store
+.pytest_cache/
 *__pycache__*
 README.md
 rsync-exclude.txt
@@ -29,6 +30,9 @@ upload.sh
 scripts/pull-locale.sh
 scripts/push-locale.sh
 scripts/sync-rosetta-po.sh
+scripts/dump-data.py
+scripts/load-data.py
+scripts/data/
 scss/
 locale/
 **/*.po
