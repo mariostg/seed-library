@@ -48,7 +48,7 @@
     <!--link for user shopping cart-->
     {% if request.library_settings.is_shop_open %}
       <li><a class='btn' href="{% url 'shopping-cart' %}">
-        <img src="{% static 'images/shopping-cart.svg' %}" alt="{% trans "Shopping Cart" %}">
+        <img id="shopping-cart-icon" src="{% static 'images/shopping-cart.svg' %}" alt="{% trans "Shopping Cart" %}">
         <span id="shopping-cart-indicator">
           {% if request.cart_item_count and request.cart_item_count > 0 %}
             ({{ request.cart_item_count }})
