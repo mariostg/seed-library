@@ -162,14 +162,12 @@ textarea {
   padding: 0.5rem 0;
 }
 
-.flex-col,
-.flex-col-center {
+.flex-col, .flex-col-center {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
 }
-.flex-col .title,
-.flex-col-center .title {
+.flex-col .title, .flex-col-center .title {
   border-top: 1px solid light-dark(#79ac78, #79ac78);
   border-bottom: 1px solid light-dark(#79ac78, #79ac78);
   font-weight: 300;
@@ -248,16 +246,12 @@ form .input-radio-group {
   flex-direction: column;
   gap: 0.5rem;
 }
-form .input-text,
-form .input-select,
-form .input-textarea {
+form .input-text, form .input-select, form .input-textarea {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
 }
-form .input-text label,
-form .input-select label,
-form .input-textarea label {
+form .input-text label, form .input-select label, form .input-textarea label {
   font-weight: bold;
 }
 
@@ -517,8 +511,7 @@ td.actions {
   background-color: red;
   color: white;
 }
-.plant-card-is-favourite,
-.plant-card-is-not-favourite {
+.plant-card-is-favourite, .plant-card-is-not-favourite {
   cursor: pointer;
   position: absolute;
   right: 30px;
@@ -539,6 +532,10 @@ td.actions {
 .plant-type-icon {
   width: 36px;
   height: 36px;
+}
+.plant-type-icon-mini {
+  width: 18px;
+  height: 18px;
 }
 
 .blooming-calendar-table {
@@ -753,14 +750,9 @@ td.actions {
   color: #79ac78;
   font-weight: 600;
   text-decoration: none;
-  transition:
-  background-color 0.2s ease,
-  color 0.2s ease,
-  border-color 0.2s ease,
-  box-shadow 0.2s ease;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
-.paginator .page-link:hover,
-.paginator .page-link:focus-visible {
+.paginator .page-link:hover, .paginator .page-link:focus-visible {
   background-color: #79ac78;
   color: #fff;
   text-decoration: none;
