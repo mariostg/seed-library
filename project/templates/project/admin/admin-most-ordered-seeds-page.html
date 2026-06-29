@@ -17,13 +17,15 @@
         <tr>
           <th>{% trans "Seed Profile" %}</th>
           <th>{% trans "Total Orders" %}</th>
+          <th>{% trans "Total Items Ordered" %}</th>
         </tr>
       </thead>
       <tbody>
         {% for seed in most_ordered_seeds %}
           <tr>
-            <td>{{ seed.english_name }} ({{ seed.latin_name }})</td>
+            <td>{{ seed.plant_profile__english_name }} (<em>{{ seed.plant_profile__latin_name }}</em>)</td>
             <td>{{ seed.order_count }}</td>
+            <td>{{ seed.order_item_count }}</td>
           </tr>
         {% empty %}
           <tr>

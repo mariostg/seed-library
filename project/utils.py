@@ -859,14 +859,17 @@ def get_most_ordered_seeds(top_n=10):
         top_n: Number of top ordered seeds to return (default 10)
 
     Returns:
-        QuerySet of PlantProfile with annotated order_count
+        QuerySet of OrderItem with annotated order_count
     """
-    from project.models import PlantProfile
+    from project.models import OrderItem
 
     most_ordered = (
-        PlantProfile.objects.annotate(order_count=Sum("orderitem__quantity"))
-        .filter(order_count__gt=0)
-        .order_by("-order_count")[:top_n]
+        OrderItem.objects.values(
+            "plant_profile__english_name", "plant_profile__latin_name"
+        )
+        .annotate(order_item_count=Sum("quantity"), order_count=Count("order"))
+        .filter(order_item_count__gt=0)
+        .order_by("-order_item_count")[:top_n]
     )
     return most_ordered
 
