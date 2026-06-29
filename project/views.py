@@ -364,6 +364,10 @@ def search_plant_name(request):
         data = models.PlantProfile.objects.all().order_by("latin_name")
 
     object_list = filters.PlantProfileFilter(request.GET, queryset=data)
+    paginator = Paginator(object_list.qs, 24)  # Show 24 plants per page
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
     ecozones = models.Ecozone.objects.all().order_by("ecozone")
     growth_habits = models.GrowthHabit.objects.all().order_by("growth_habit")
     bloom_colours = models.BloomColour.objects.all().order_by("bloom_colour")
@@ -371,7 +375,7 @@ def search_plant_name(request):
     # get a list of favourite plants for the logged in user that are contained in the object_list
     if request.user.is_authenticated:
         favourite_plants = models.PlantCollection.objects.filter(
-            owner=request.user, plants__in=object_list.qs
+            owner=request.user, plants__in=page_obj.object_list
         ).values_list("plants__id", flat=True)
     else:
         favourite_plants = None
@@ -537,7 +541,7 @@ def search_plant_name(request):
         "harvesting_period": {
             k: utils.MONTHS[k] for k in range(5, 12)
         },  # from April (index 3) to December (index 11)
-        "object_list": object_list.qs,
+        "page_obj": page_obj,
         "favourite_plants": favourite_plants,
         "url_name": "index",
         "title": _("Plant Profile Filter"),
