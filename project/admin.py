@@ -257,11 +257,24 @@ admin.site.register(models.NonNativeSpecies)
 admin.site.register(models.NarrativeType)
 admin.site.register(models.PlantNarrative)
 
+
 # ===============
 # Register customer and order models
 # ===============
+class OrderItemAdmin(admin.ModelAdmin):
+    list_display = [
+        "id",
+        "order__order_date",
+        "order__id",
+        "order__customer",
+        "plant_profile",
+        "quantity",
+    ]
+    search_fields = ["order__id", "plant_profile__latin_name"]
+
+
 admin.site.register(models.Customer)
 admin.site.register(models.Order)
-admin.site.register(models.OrderItem)
+admin.site.register(models.OrderItem, OrderItemAdmin)
 admin.site.register(models.ShoppingCart)
 admin.site.register(models.OrderSeedApplication)
