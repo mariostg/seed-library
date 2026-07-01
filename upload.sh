@@ -79,6 +79,7 @@ print_usage() {
 
 if [ $# -eq 0 ]; then #execute a dry run to dev site
     rsync -avzn \
+    --checksum \
     --filter 'protect /media/*' \
     --exclude-from=rsync-exclude.txt \
     --update \
@@ -89,6 +90,7 @@ if [ $# -eq 0 ]; then #execute a dry run to dev site
     echo "--------------------"
 elif [ $1 = 'sync-test' ];then #push codes to devsite
     rsync -avz \
+    --checksum \
     --filter 'protect /media/*' \
     --exclude-from=rsync-exclude.txt \
     --update \
@@ -100,6 +102,7 @@ elif [ $1 = 'sync-test' ];then #push codes to devsite
     print_translation_note
 elif [ $1 = 'dryrun-prod' ]; then #execute a dry run on production site
     rsync -avzn \
+    --checksum \
     --exclude-from=rsync-exclude.txt \
     --update \
     --delete \
@@ -109,6 +112,7 @@ elif [ $1 = 'dryrun-prod' ]; then #execute a dry run on production site
     echo "--------------------"
 elif [ $1 = 'sync-prod' ];then #push code to prod site
     rsync -avz \
+    --checksum \
     --exclude-from=rsync-exclude.txt \
     --update \
     --delete \
