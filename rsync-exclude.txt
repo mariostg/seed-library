@@ -31,7 +31,6 @@ scripts/pull-locale.sh
 scripts/push-locale.sh
 scripts/sync-rosetta-po.sh
 scripts/dump-data.py
-scripts/load-data.py
 scripts/data/
 scss/
 locale/
