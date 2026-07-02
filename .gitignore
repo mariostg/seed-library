@@ -18,7 +18,7 @@ media/*
 *.min.js
 static/images/plants/
 
-logs/
+logs/*
 .backup-state/
 
 scripts/data/
