@@ -31,6 +31,9 @@ rich
 django-browser-reload
 python-dotenv
 gunicorn
+whitenoise
+dj-database-url
+psycopg[binary]
 Pillow
 reportlab
 pre-commit
