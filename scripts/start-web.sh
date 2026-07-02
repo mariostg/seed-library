@@ -1,6 +1,9 @@
 #!/usr/bin/env sh
 set -eu
 
+mkdir -p logs
+touch logs/django.log logs/project.log logs/email.log logs/signals.log
+
 python manage.py collectstatic --noinput
 python manage.py migrate --noinput
 
