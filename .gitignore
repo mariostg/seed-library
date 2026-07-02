@@ -19,6 +19,7 @@ media/*
 static/images/plants/
 
 logs/*
+!logs/.gitkeep
 .backup-state/
 
 scripts/data/
