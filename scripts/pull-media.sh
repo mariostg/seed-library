@@ -38,15 +38,24 @@ done
 SCRIPT_DIR=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
 ENV_FILE="$SCRIPT_DIR/.env"
 
-if [ -f "$ENV_FILE" ]; then
-	# shellcheck disable=SC1090
-	. "$ENV_FILE"
+if [ ! -f "$ENV_FILE" ]; then
+	echo "Missing env file: $ENV_FILE"
+	exit 1
 fi
 
-: "${REMOTE_USER:?REMOTE_USER is not set. Define it in scripts/.env}"
-: "${REMOTE_HOST:?REMOTE_HOST is not set. Define it in scripts/.env}"
-: "${REMOTE_PATH:?REMOTE_PATH is not set. Define it in scripts/.env}"
+# shellcheck disable=SC1090
+. "$ENV_FILE"
+
 : "${LOCAL_PATH:=media/project/images/plants}"
+
+if [ -n "$REMOTE_USER" ] && [ -n "$REMOTE_HOST" ] && [ -n "$REMOTE_PATH" ]; then
+	SOURCE_SPEC="${REMOTE_USER}@${REMOTE_HOST}:${REMOTE_PATH}"
+elif [ -n "$DEVSITE" ]; then
+	SOURCE_SPEC="$DEVSITE/media/project/images/plants"
+else
+	echo "Set REMOTE_USER, REMOTE_HOST, and REMOTE_PATH or set DEVSITE in scripts/.env"
+	exit 1
+fi
 
 RSYNC_ARGS="-avz --progress"
 if [ "$DRY_RUN" -eq 1 ]; then
@@ -58,7 +67,7 @@ if [ "$DELETE" -eq 1 ]; then
 	echo "Delete mode enabled (local files missing on remote will be removed)."
 fi
 
-echo "Source: ${REMOTE_USER}@${REMOTE_HOST}:${REMOTE_PATH}/"
+echo "Source: ${SOURCE_SPEC}/"
 echo "Target: ${LOCAL_PATH}/"
 
-rsync $RSYNC_ARGS "${REMOTE_USER}@${REMOTE_HOST}:${REMOTE_PATH}/" "${LOCAL_PATH}/"
+rsync $RSYNC_ARGS "${SOURCE_SPEC}/" "${LOCAL_PATH}/"

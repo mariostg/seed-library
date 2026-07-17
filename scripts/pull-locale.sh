@@ -1,11 +1,21 @@
 #!/bin/sh
 
-DEVSITE='mariost-gelais@mariostg.com:~/owsl.mariostg.com'
-PRODSITE='mariost-gelais@mariostg.com:~/catalogue.wildflowerseedlibrary.ca'
-
 SCRIPT_DIR="$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)"
+ENV_FILE="$SCRIPT_DIR/.env"
 ROOT_DIR="$(CDPATH= cd -- "$SCRIPT_DIR/.." && pwd)"
 TARGET_LOCALE="$ROOT_DIR/locale/"
+
+if [ ! -f "$ENV_FILE" ]; then
+    echo "Missing env file: $ENV_FILE"
+    exit 1
+fi
+
+. "$ENV_FILE"
+
+if [ -z "$DEVSITE" ] || [ -z "$PRODSITE" ]; then
+    echo "DEVSITE and PRODSITE must be set in $ENV_FILE"
+    exit 1
+fi
 
 usage() {
     echo "Usage: sh scripts/pull-locale.sh [dev|prod] [--apply] [--delete]"
