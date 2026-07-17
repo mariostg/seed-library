@@ -2878,8 +2878,7 @@ def plant_seed_box_label_pdf(request, pk):
 
     qrcode_img = utils.create_qr_code_image(plant_profile_url)
 
-    plant_info: list[str] = utils.plant_label_info(plant, request)
-    plant_info.reverse()
+    plant_lines = utils.plant_label_lines(plant, request)
 
     buffer = io.BytesIO()
     c = canvas.Canvas(buffer, pagesize=letter)
@@ -2908,16 +2907,16 @@ def plant_seed_box_label_pdf(request, pk):
     text_object = c.beginText(
         margin_left + 20, margin_top + label_height - image_height - 10
     )
-    text_object.setFont("Times-Roman", 10)
-    for idx, line in enumerate(plant_info):
-        text_object.textLine(line)
-        if idx == 2:  # After the 3rd item (index 2)
+
+    for idx, line in enumerate(plant_lines):
+        text_object.setFont(line["font_name"], 10)
+        text_object.textLine(line["text"])
+        if idx == 2:
             c.drawText(text_object)
             y_pos = margin_top + label_height - image_height - ((idx + 1) * 12)
             c.line(margin_left, y_pos - 2, margin_left + label_width, y_pos - 2)
             text_object = c.beginText(margin_left + 20, y_pos - 15)
-            text_object.setFont("Times-Roman", 10)
-    c.drawText(text_object)
+        c.drawText(text_object)
 
     # Draw QR code just below the plant information
     c.drawInlineImage(
@@ -2941,9 +2940,9 @@ def plant_seed_box_label_pdf(request, pk):
 
 def plant_label_pdf(request, pk):
     plant = utils.single_plant(pk, request)
-    plant_info: list[str] = utils.plant_label_info(plant, request)
-    plant_info_len = len(plant_info)
-    plant_longest_string = max(plant_info, key=len)
+    plant_lines = utils.plant_label_lines(plant, request)
+    plant_info_len = len(plant_lines)
+    plant_longest_string = max((line["text"] for line in plant_lines), key=len)
     buffer = io.BytesIO()
 
     c = canvas.Canvas(buffer, pagesize=landscape(letter))
@@ -2966,15 +2965,15 @@ def plant_label_pdf(request, pk):
 
     c.grid(x_positions, y_positions)
     c.setStrokeColor(black)
-    c.setFont("Times-Roman", 10)
 
     def draw_plant_info(
         c, x_position, y_position, label_margin_x, label_margin_y, line_spacing, info
     ):
-        for idx, text in enumerate(info):
+        for idx, line in enumerate(reversed(info)):
             xpos = x_position + label_margin_x * inch
             ypos = y_position + (label_margin_y + line_spacing * idx) * inch
-            c.drawString(xpos, ypos, text)
+            c.setFont(line["font_name"], 10)
+            c.drawString(xpos, ypos, line["text"])
 
     for x in range(len(x_positions) - 1):
         for y in range(y_range - 1):
@@ -2985,7 +2984,7 @@ def plant_label_pdf(request, pk):
                 label_margin_x,
                 label_margin_y,
                 line_spacing,
-                plant_info,
+                plant_lines,
             )
 
     # Draw packaging size on just above the largest y_positions value and centered

@@ -3,6 +3,7 @@ import logging
 from datetime import datetime
 from io import BytesIO
 from pathlib import Path
+from typing import Literal, TypedDict
 
 import qrcode
 import requests
@@ -45,6 +46,25 @@ MONTHS = {
 }
 
 MAX_NON_PRIORITY_CART_ITEMS = 15
+
+LABEL_FONT_ROMAN = "Times-Roman"
+LABEL_FONT_BOLD = "Times-Bold"
+LABEL_FONT_ITALIC = "Times-Italic"
+
+LabelFontName = Literal[
+    "Times-Roman",
+    "Times-Bold",
+    "Times-Italic",
+]
+
+
+class LabelLine(TypedDict):
+    text: str
+    font_name: LabelFontName
+
+
+def _label_line(text: str, font_name: LabelFontName = LABEL_FONT_ROMAN) -> LabelLine:
+    return {"text": text, "font_name": font_name}
 
 
 def all_plants(request):
@@ -133,11 +153,8 @@ def plant_sowing_notes(plant: PlantProfile):
     return []
 
 
-def plant_label_info(plant: PlantProfile, request: HttpRequest) -> list[str]:
+def plant_label_lines(plant: PlantProfile, request: HttpRequest) -> list[LabelLine]:
     double_dormancy = None
-    latin_name = plant.latin_name
-    english_name = plant.english_name
-    french_name = plant.french_name
     light_range = plant_light_range(plant)
     moisture_range = f"Moisture: {plant_moisture_range(plant)}"
     plant_size = f"{str(plant.max_height)}' tall, {str(plant.max_width)}' wide"
@@ -149,32 +166,35 @@ def plant_label_info(plant: PlantProfile, request: HttpRequest) -> list[str]:
     if plant.double_dormancy:
         double_dormancy = "Double Dormancy"
 
-    label_info = [
-        latin_name,
-        english_name,
-        french_name,
-        light_range,
-        moisture_range,
-        plant_size,
-        bloom_period,
-        *sowing_notes,  # Unpack the list items individually
+    label_lines = [
+        _label_line(plant.latin_name, LABEL_FONT_ITALIC),
+        _label_line(plant.english_name, LABEL_FONT_BOLD),
+        _label_line(plant.french_name),
+        _label_line(light_range),
+        _label_line(moisture_range),
+        _label_line(plant_size),
+        _label_line(bloom_period),
+        *[_label_line(note) for note in sowing_notes],
     ]
 
     if sowing_time:
-        label_info.append(sowing_time)
+        label_lines.append(_label_line(sowing_time))
 
     if sowing_depth:
-        label_info.append(sowing_depth)
+        label_lines.append(_label_line(sowing_depth))
 
     _stratification_need = stratification_need(plant)
     if _stratification_need:
-        label_info.append(_stratification_need)
+        label_lines.append(_label_line(_stratification_need))
 
     if double_dormancy:
-        label_info.append(double_dormancy)
+        label_lines.append(_label_line(double_dormancy))
 
-    label_info.reverse()
-    return label_info
+    return [line for line in label_lines if line["text"]]
+
+
+def plant_label_info(plant: PlantProfile, request: HttpRequest) -> list[str]:
+    return [line["text"] for line in reversed(plant_label_lines(plant, request))]
 
 
 def stratification_need(plant: PlantProfile):
