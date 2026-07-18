@@ -1,11 +1,11 @@
 #!/bin/sh
 DEVSITE='mariost-gelais@mariostg.com:~/owsl.mariostg.com'
 PRODSITE='mariost-gelais@mariostg.com:~/catalogue.wildflowerseedlibrary.ca'
-SOURCE="/Users/mariost-gelais/Documents/gitprojects/owsl/djbp/*"
-LOCALROOT="/Users/mariost-gelais/Documents/gitprojects/owsl/djbp"
+SOURCE="."
+LOCALROOT=$(pwd)
 
 diff_remote_file() {
-    target_site="$1"
+    target_spec="$1"
     relpath="$2"
 
     if [ -z "$relpath" ]; then
@@ -15,24 +15,28 @@ diff_remote_file() {
     fi
 
     local_file="$LOCALROOT/$relpath"
-
     if [ ! -f "$local_file" ]; then
         echo "Local file not found: $local_file"
         exit 1
     fi
 
-    echo "Comparing local and remote file: $relpath"
+    remote_host="${target_spec%%:*}"
+    remote_base="${target_spec#*:}"
+    if [ -z "$remote_host" ] || [ -z "$remote_base" ] || [ "$remote_host" = "$target_spec" ]; then
+        echo "Invalid remote target: $target_spec"
+        exit 1
+    fi
 
+    echo "Comparing local and remote file: $relpath"
     tmp_remote_file=$(mktemp)
     if [ $? -ne 0 ]; then
         echo "Failed to create temp file"
         exit 1
     fi
 
-    # Fetch remote file then compare using POSIX-compatible diff.
-    ssh mariost-gelais@mariostg.com "cat $target_site/$relpath" > "$tmp_remote_file"
+    ssh "$remote_host" "cat $remote_base/$relpath" > "$tmp_remote_file"
     if [ $? -ne 0 ]; then
-        echo "Failed to read remote file: $target_site/$relpath"
+        echo "Failed to read remote file: $remote_base/$relpath"
         rm -f "$tmp_remote_file"
         exit 1
     fi
@@ -75,6 +79,7 @@ print_usage() {
 
 if [ $# -eq 0 ]; then #execute a dry run to dev site
     rsync -avzn \
+    --checksum \
     --filter 'protect /media/*' \
     --exclude-from=rsync-exclude.txt \
     --update \
@@ -85,6 +90,7 @@ if [ $# -eq 0 ]; then #execute a dry run to dev site
     echo "--------------------"
 elif [ $1 = 'sync-test' ];then #push codes to devsite
     rsync -avz \
+    --checksum \
     --filter 'protect /media/*' \
     --exclude-from=rsync-exclude.txt \
     --update \
@@ -96,6 +102,7 @@ elif [ $1 = 'sync-test' ];then #push codes to devsite
     print_translation_note
 elif [ $1 = 'dryrun-prod' ]; then #execute a dry run on production site
     rsync -avzn \
+    --checksum \
     --exclude-from=rsync-exclude.txt \
     --update \
     --delete \
@@ -105,6 +112,7 @@ elif [ $1 = 'dryrun-prod' ]; then #execute a dry run on production site
     echo "--------------------"
 elif [ $1 = 'sync-prod' ];then #push code to prod site
     rsync -avz \
+    --checksum \
     --exclude-from=rsync-exclude.txt \
     --update \
     --delete \
@@ -114,9 +122,9 @@ elif [ $1 = 'sync-prod' ];then #push code to prod site
     echo "--------------------"
     print_translation_note
 elif [ "$1" = 'diff-dev' ]; then
-    diff_remote_file "~/owsl.mariostg.com" "$2"
+    diff_remote_file "$DEVSITE" "$2"
 elif [ "$1" = 'diff-prod' ]; then
-    diff_remote_file "~/catalogue.wildflowerseedlibrary.ca" "$2"
+    diff_remote_file "$PRODSITE" "$2"
 elif [ "$1" = 'help' ] || [ "$1" = '-h' ] || [ "$1" = '--help' ]; then
     print_usage
 else
