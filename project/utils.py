@@ -88,10 +88,14 @@ def single_plant(pk, request: HttpRequest):
 
 
 def plant_primary_image(plant: PlantProfile):
+    # Avoid hardcoded FK IDs; they can differ between environments.
     plant_image = PlantImage.objects.filter(
-        plant_profile=plant, morphology_aspect=7
+        plant_profile=plant, morphology_aspect__element__iexact="Plant"
     ).first()
-    return plant_image
+    if plant_image:
+        return plant_image
+
+    return PlantImage.objects.filter(plant_profile=plant).first()
 
 
 def resize_image(image_path: str, max_width: int, max_height: int):

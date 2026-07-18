@@ -158,8 +158,8 @@ def plant_profile_page(request, pk):
     if not is_valid_video_url:
         plant.harvesting_video_link = ""
 
-    # get the plant image whose morphology_aspect is "plant"
-    plant_image = plant.images.filter(morphology_aspect__element="Plant").first()
+    # Keep primary image selection logic centralized in utils for consistency.
+    plant_image = utils.plant_primary_image(plant)
 
     context = {
         "plant": plant,
