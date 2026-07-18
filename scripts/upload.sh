@@ -1,6 +1,20 @@
 #!/bin/sh
-DEVSITE='mariost-gelais@mariostg.com:~/owsl.mariostg.com'
-PRODSITE='mariost-gelais@mariostg.com:~/catalogue.wildflowerseedlibrary.ca'
+# Load deployment targets from scripts/.env, regardless of current working directory.
+SCRIPT_DIR=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+ENV_FILE="$SCRIPT_DIR/.env"
+
+if [ ! -f "$ENV_FILE" ]; then
+    echo "Missing env file: $ENV_FILE"
+    exit 1
+fi
+
+. "$ENV_FILE"
+
+if [ -z "$DEVSITE" ] || [ -z "$PRODSITE" ]; then
+    echo "DEVSITE and PRODSITE must be set in $ENV_FILE"
+    exit 1
+fi
+
 SOURCE="."
 LOCALROOT=$(pwd)
 
@@ -69,7 +83,9 @@ print_usage() {
     echo
     echo "Commands:"
     echo "  (no command)            Dry-run sync to dev site"
+    echo "  dryrun-test-safe        Dry-run safe sync to dev site (skip newer remote files)"
     echo "  sync-test               Sync code to dev site"
+    echo "  sync-test-safe          Sync code to dev site (skip newer remote files)"
     echo "  dryrun-prod             Dry-run sync to prod site"
     echo "  sync-prod               Sync code to prod site"
     echo "  diff-dev <relative>     Diff local file against dev site file"
@@ -82,13 +98,34 @@ if [ $# -eq 0 ]; then #execute a dry run to dev site
     --checksum \
     --filter 'protect /media/*' \
     --exclude-from=rsync-exclude.txt \
-    --update \
     --delete \
     $SOURCE $DEVSITE
     echo "--------------------"
     echo "Performed dry run on on dev site $DEVSITE"
     echo "--------------------"
+elif [ "$1" = 'dryrun-test-safe' ]; then #execute a safe dry run to dev site
+    rsync -avzn \
+    --checksum \
+    --filter 'protect /media/*' \
+    --exclude-from=rsync-exclude.txt \
+    --update \
+    --delete \
+    $SOURCE $DEVSITE
+    echo "--------------------"
+    echo "Performed safe dry run on dev site $DEVSITE (would skip newer remote files)"
+    echo "--------------------"
 elif [ $1 = 'sync-test' ];then #push codes to devsite
+    rsync -avz \
+    --checksum \
+    --filter 'protect /media/*' \
+    --exclude-from=rsync-exclude.txt \
+    --delete \
+    $SOURCE $DEVSITE
+    echo "--------------------"
+    echo "Performed sync code to dev site $DEVSITE"
+    echo "--------------------"
+    print_translation_note
+elif [ "$1" = 'sync-test-safe' ]; then #push code to devsite, but never overwrite newer remote files
     rsync -avz \
     --checksum \
     --filter 'protect /media/*' \
@@ -97,14 +134,13 @@ elif [ $1 = 'sync-test' ];then #push codes to devsite
     --delete \
     $SOURCE $DEVSITE
     echo "--------------------"
-    echo "Performed sync code to dev site $DEVSITE"
+    echo "Performed safe sync code to dev site $DEVSITE (skipped newer remote files)"
     echo "--------------------"
     print_translation_note
 elif [ $1 = 'dryrun-prod' ]; then #execute a dry run on production site
     rsync -avzn \
     --checksum \
     --exclude-from=rsync-exclude.txt \
-    --update \
     --delete \
     $SOURCE $PRODSITE
     echo "--------------------"
@@ -114,7 +150,6 @@ elif [ $1 = 'sync-prod' ];then #push code to prod site
     rsync -avz \
     --checksum \
     --exclude-from=rsync-exclude.txt \
-    --update \
     --delete \
     $SOURCE $PRODSITE
     echo "--------------------"

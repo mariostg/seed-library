@@ -21,6 +21,9 @@ Blooming periods are months defined as bloom_start and bloom_end in the plant pr
         {% for item in object_list %}
           <tr class="{% cycle 'even-row' 'odd-row' as rowcolors %}">
             <td>
+              {% if item.growth_habit %}
+                <span><img class="plant-type-icon-mini" src="{% static 'images/' %}plant-type-{{ item.growth_habit.growth_habit_en }}.svg" alt="image of {{item.growth_habit}}" /></span>
+              {% endif %}
               <a target="_blank" href="{% url 'plant-profile-page' item.pk %}">{{item.latin_name}}</a>
               |{{item.english_name}}|{{item.french_name}}
             </td>

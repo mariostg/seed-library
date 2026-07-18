@@ -15,17 +15,17 @@
         {% trans "Showing native alternatives for your non-native search." %}
       </div>
     {% endif %}
-    {% if object_list %}
+    {% if page_obj.object_list %}
       <div>
         <div class='flex-col-center'>{% trans "Search Results: Found" %} {{item_count}} {% trans "matches" %}</div>
         <div class='flex-col-center'>
           <a href="{% url 'export-plant-search-results' %}?{{ request.GET.urlencode }}" class="btn btn-primary">{% trans "Export to CSV" %}</a>
         </div>
       </div>
-
     {% endif %}
+    {% include 'core/paginator.html' %}
     <section id="plant-cards" class="plant-cards">
-      {% for item in object_list  %}
+      {% for item in page_obj.object_list %}
         <div class="plant-card {% if not item.is_active %}plant-card-not-active{% endif %}">
 
           {% if request.user.is_authenticated %}
@@ -61,6 +61,18 @@
               <span>{{item.latin_name}}</span>
               <span>{{item.french_name}}</span>
             </div>
+            {% if request.library_settings.is_shop_open %}
+              <div class="plant-card-actions">
+                <button
+                  hx-post="{% url 'add-to-cart' item.id %}"
+                  hx-swap="none"
+                  class="btn btn-add-to-cart"
+                  hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
+                >
+                  {% trans "Add to Cart" %}
+                </button>
+              </div>
+            {% endif %}
           </div>
         </div>
         {% if object_list.has_next and forloop.last %}
@@ -78,5 +90,5 @@
     </section>
 
   </div>
-
+  {% include 'core/paginator.html' %}
 </div>

@@ -20,5 +20,9 @@ media/*
 *.min.js
 static/images/plants/
 
-logs/
+logs/*
+!logs/.gitkeep
 .backup-state/
+
+scripts/data/
+scripts/.env

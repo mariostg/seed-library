@@ -1,0 +1,29 @@
+{% load i18n %}
+
+{% trans "Thank You for Your Donation!" %}
+
+{% blocktrans with name=customer.name %}Dear {{ name }},{% endblocktrans %}
+
+{% trans "We are deeply grateful for your generous donation!" %}
+
+{% blocktrans with amount=order.donation_amount %}
+DONATION DETAILS
+Donation Amount: ${{ amount }}
+Date: {{ order.order_date|date:"F j, Y" }}
+Order ID: #{{ order.id }}
+{% endblocktrans %}
+
+{% trans "Your donation will directly support our mission to:" %}
+- {% trans "Preserve and promote native plant species" %}
+- {% trans "Educate the community about local biodiversity" %}
+- {% trans "Maintain and expand our seed library" %}
+- {% trans "Support conservation efforts in our region" %}
+
+{% trans "Every donation, no matter the size, makes a real difference and helps us continue our important work." %}
+
+{% trans "Thank you for being part of our conservation community!" %}
+
+{% trans "Best regards," %}
+{% trans "Wildflower Seed Library Team" %}
+
+{% trans "P.S. If you have any questions or would like to learn more about our work, please visit our website or contact us directly." %}

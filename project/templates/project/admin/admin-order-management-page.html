@@ -1,0 +1,80 @@
+<!--A template to display order management information-->
+{% extends "core/base.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}{{title}}{% endblock %}
+
+{% block content %}
+  {% include "project/admin/admin_links.html" %}
+
+  <section class="container admin-page-content">
+
+    <h1>{{ title }}</h1>
+
+    {% if messages %}
+      <div>
+        {% for message in messages %}
+          <div class="alert alert--{{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+      </div>
+    {% endif %}
+    {% include 'core/paginator.html' %}
+    <nav class="nav">
+      <!--navigation of orders by status-->
+      <ul class="nav-links admin-order-status-nav">
+        <li><a href="{% url 'admin-order-pending-to-pdf' %}">{% trans "PDF Pending orders" %}</a></li>
+        {% for status in order_status_choices %}
+          <li>
+            <a href="{% url 'admin-order-management-page' %}?status={{ status.0 }}">
+              {% if status.0 == request.GET.status %}
+                <strong>{{ status.1 }}</strong>
+              {% else %}
+                {{ status.1 }}
+              {% endif %}
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
+    </nav>
+    <div>
+      <table>
+        <thead>
+          <tr>
+            <th>{% trans "Order ID" %}</th>
+            <th>{% trans "Customer" %}</th>
+            <th>{% trans "Order Date" %}</th>
+            <th>{% trans "Donation" %}</th>
+            <th>{% trans "Application" %}</th>
+            <th>{% trans "Status" %}</th>
+            <th>{% trans "Priority" %}</th>
+            <th>{% trans "Views" %}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for order in page_obj %}
+            <tr>
+              <td>{{ order.id }}</td>
+              <td>{{ order.customer.first_name }} {{ order.customer.last_name }}</td>
+              <td>{{ order.order_date }}</td>
+              <td>{{ order.donation }}</td>
+              <td>{{ order.customer.application }}</td>
+              <td>{{ order.status }}</td>
+              <td>{% if order.customer.application %}{{ order.customer.application.priority }}{% else %}{% trans "N/A" %}{% endif %}</td>
+              <td>
+                <a href="{% url 'admin-order-detail-page' order.id %}">{% trans "HTML" %}</a>
+                <span> | </span>
+                <a href="{% url 'admin-order-detail-pdf' order.id %}">{% trans "PDF" %}</a>
+              </td>
+            </tr>
+          {% empty %}
+            <tr>
+              <td colspan="8">{% trans "No orders found." %}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </section>
+  {% include 'core/paginator.html' %}
+{% endblock content %}

@@ -1,0 +1,38 @@
+
+{% extends "core/base.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}{{title}}{% endblock %}
+
+{% block content %}
+  {% include "project/admin/admin_links.html" %}
+
+  <section class="container admin-page-content">
+
+    <h1>{{ title }}</h1>
+
+    <table>
+      <thead>
+        <tr>
+          <th>{% trans "Seed Profile" %}</th>
+          <th>{% trans "Total Orders" %}</th>
+          <th>{% trans "Total Items Ordered" %}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for seed in most_ordered_seeds %}
+          <tr>
+            <td>{{ seed.plant_profile__english_name }} (<em>{{ seed.plant_profile__latin_name }}</em>)</td>
+            <td>{{ seed.order_count }}</td>
+            <td>{{ seed.order_item_count }}</td>
+          </tr>
+        {% empty %}
+          <tr>
+            <td colspan="2">{% trans "No seed orders available." %}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </section>
+{% endblock %}

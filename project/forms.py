@@ -131,6 +131,24 @@ class SearchPlantForm(forms.ModelForm):
             field.required = False
 
 
+class AdminLibrarySettingForm(forms.ModelForm):
+    class Meta:
+        model = models.LibrarySetting
+        fields = ["is_shop_open", "is_accepting_seeds", "is_accepting_donations"]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+
+class AdminOrderSeedApplicationForm(forms.ModelForm):
+    class Meta:
+        model = models.OrderSeedApplication
+        fields = ["seed_application", "priority"]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+
 class AdminColourForm(forms.ModelForm):
     class Meta:
         model = models.BloomColour
@@ -660,6 +678,31 @@ class PlantIntroductoryGardeningExperienceForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
 
 
+class ShoppingCartForm(forms.ModelForm):
+    """
+    Form for managing shopping cart items.
+
+    This form allows users to create and update shopping cart entries by selecting
+    a customer, a plant profile, and specifying the desired quantity.
+
+    Attributes:
+        customer: ForeignKey field linking to the Customer model.
+        plant_profile: ForeignKey field linking to the PlantProfile model.
+        quantity: IntegerField representing the number of items in the cart.
+    """
+
+    class Meta:
+        model = models.ShoppingCart
+        fields = [
+            "customer",
+            "plant_profile",
+            "quantity",
+        ]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+
 class AdminPlantNarrativeForm(forms.ModelForm):
     class Meta:
         model = models.PlantNarrative
@@ -684,3 +727,70 @@ class AdminPlantNarrativeTypeForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
+
+class CustomerForm(forms.ModelForm):
+    """
+    Form for creating a customer profile.
+    Used for customers who want to order seeds without creating a user account.
+    """
+
+    class Meta:
+        model = models.Customer
+        fields = [
+            "first_name",
+            "last_name",
+            "email",
+            "application",
+            "address",
+            "city",
+            "province",
+            "postal_code",
+        ]
+        widgets = {
+            "first_name": forms.TextInput(
+                attrs={"class": "form-control", "placeholder": _("First Name")}
+            ),
+            "last_name": forms.TextInput(
+                attrs={"class": "form-control", "placeholder": _("Last Name")}
+            ),
+            "email": forms.EmailInput(
+                attrs={"class": "form-control", "placeholder": _("Email Address")}
+            ),
+            "application": forms.Select(
+                attrs={"class": "form-control", "required": "required"}
+            ),
+            "address": forms.TextInput(
+                attrs={"class": "form-control", "placeholder": _("Street Address")}
+            ),
+            "city": forms.TextInput(
+                attrs={"class": "form-control", "placeholder": _("City")}
+            ),
+            "province": forms.TextInput(
+                attrs={"class": "form-control", "placeholder": _("Province")}
+            ),
+            "postal_code": forms.TextInput(
+                attrs={"class": "form-control", "placeholder": _("Postal Code")}
+            ),
+        }
+        labels = {
+            "first_name": _("First Name"),
+            "last_name": _("Last Name"),
+            "email": _("Email Address"),
+            "application": _("Order Application"),
+            "address": _("Street Address"),
+            "postal_code": _("Postal Code"),
+        }
+
+    def clean_email(self):
+        """Validate email format."""
+        email = self.cleaned_data.get("email", "").strip()
+        if not email:
+            raise ValidationError(_("Email is required."))
+        return email
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["application"].queryset = (
+            models.OrderSeedApplication.objects.order_by("priority", "seed_application")
+        )

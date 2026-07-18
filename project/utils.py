@@ -1,14 +1,33 @@
 import base64
+import logging
+from datetime import datetime
 from io import BytesIO
 from pathlib import Path
+from typing import Literal, TypedDict
 
 import qrcode
 import requests
+from django.conf import settings
+from django.db.models import Count, Q, Sum
+from django.db.models.functions import ExtractYear
 from django.http import HttpRequest
 from exif import Image
 from PIL import Image as PILImage
+from reportlab.lib import colors
+from reportlab.lib.pagesizes import letter
+from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.platypus import (
+    PageBreak,
+    Paragraph,
+    SimpleDocTemplate,
+    Spacer,
+    Table,
+    TableStyle,
+)
 
-from project.models import PlantImage, PlantProfile
+from project.models import Order, PlantImage, PlantProfile
+
+logger = logging.getLogger(__name__)
 
 MONTHS = {
     0: "",
@@ -25,6 +44,27 @@ MONTHS = {
     11: "Nov",
     12: "Dec",
 }
+
+MAX_NON_PRIORITY_CART_ITEMS = 15
+
+LABEL_FONT_ROMAN = "Times-Roman"
+LABEL_FONT_BOLD = "Times-Bold"
+LABEL_FONT_ITALIC = "Times-Italic"
+
+LabelFontName = Literal[
+    "Times-Roman",
+    "Times-Bold",
+    "Times-Italic",
+]
+
+
+class LabelLine(TypedDict):
+    text: str
+    font_name: LabelFontName
+
+
+def _label_line(text: str, font_name: LabelFontName = LABEL_FONT_ROMAN) -> LabelLine:
+    return {"text": text, "font_name": font_name}
 
 
 def all_plants(request):
@@ -48,10 +88,14 @@ def single_plant(pk, request: HttpRequest):
 
 
 def plant_primary_image(plant: PlantProfile):
+    # Avoid hardcoded FK IDs; they can differ between environments.
     plant_image = PlantImage.objects.filter(
-        plant_profile=plant, morphology_aspect=7
+        plant_profile=plant, morphology_aspect__element__iexact="Plant"
     ).first()
-    return plant_image
+    if plant_image:
+        return plant_image
+
+    return PlantImage.objects.filter(plant_profile=plant).first()
 
 
 def resize_image(image_path: str, max_width: int, max_height: int):
@@ -113,11 +157,8 @@ def plant_sowing_notes(plant: PlantProfile):
     return []
 
 
-def plant_label_info(plant: PlantProfile, request: HttpRequest) -> list[str]:
+def plant_label_lines(plant: PlantProfile, request: HttpRequest) -> list[LabelLine]:
     double_dormancy = None
-    latin_name = plant.latin_name
-    english_name = plant.english_name
-    french_name = plant.french_name
     light_range = plant_light_range(plant)
     moisture_range = f"Moisture: {plant_moisture_range(plant)}"
     plant_size = f"{str(plant.max_height)}' tall, {str(plant.max_width)}' wide"
@@ -129,32 +170,35 @@ def plant_label_info(plant: PlantProfile, request: HttpRequest) -> list[str]:
     if plant.double_dormancy:
         double_dormancy = "Double Dormancy"
 
-    label_info = [
-        latin_name,
-        english_name,
-        french_name,
-        light_range,
-        moisture_range,
-        plant_size,
-        bloom_period,
-        *sowing_notes,  # Unpack the list items individually
+    label_lines = [
+        _label_line(plant.latin_name, LABEL_FONT_ITALIC),
+        _label_line(plant.english_name, LABEL_FONT_BOLD),
+        _label_line(plant.french_name),
+        _label_line(light_range),
+        _label_line(moisture_range),
+        _label_line(plant_size),
+        _label_line(bloom_period),
+        *[_label_line(note) for note in sowing_notes],
     ]
 
     if sowing_time:
-        label_info.append(sowing_time)
+        label_lines.append(_label_line(sowing_time))
 
     if sowing_depth:
-        label_info.append(sowing_depth)
+        label_lines.append(_label_line(sowing_depth))
 
     _stratification_need = stratification_need(plant)
     if _stratification_need:
-        label_info.append(_stratification_need)
+        label_lines.append(_label_line(_stratification_need))
 
     if double_dormancy:
-        label_info.append(double_dormancy)
+        label_lines.append(_label_line(double_dormancy))
 
-    label_info.reverse()
-    return label_info
+    return [line for line in label_lines if line["text"]]
+
+
+def plant_label_info(plant: PlantProfile, request: HttpRequest) -> list[str]:
+    return [line["text"] for line in reversed(plant_label_lines(plant, request))]
 
 
 def stratification_need(plant: PlantProfile):
@@ -329,10 +373,7 @@ def create_qr_code_image(data: str, box_size: int = 10, border: int = 4):
     return img
 
 
-# use the iNaturalist API to get the taxon ID for a given plant name
-# return the taxon ID as a string, or an empty string if not found or if there was an error
 def get_inaturalist_taxon_id(plant_name: str) -> str:
-
     search_url = f"https://api.inaturalist.org/v1/taxa?q={plant_name}&rank=species"
     response = requests.get(search_url)
     if response.status_code == 200:
@@ -341,3 +382,678 @@ def get_inaturalist_taxon_id(plant_name: str) -> str:
             taxon_id = data["results"][0]["id"]
             return str(taxon_id)
     return ""
+
+
+# ============================================================================
+# SHOPPING CART & CHECKOUT UTILITIES
+# ============================================================================
+
+
+def get_or_create_customer_from_session(request):
+    """
+    Get the Customer object associated with the current session.
+    If no customer_id in session, returns None.
+
+    Args:
+        request: Django request object
+
+    Returns:
+        Customer object or None
+    """
+    from project.models import Customer
+
+    customer_id = request.session.get("customer_id")
+    if not customer_id:
+        return None
+
+    try:
+        return Customer.objects.get(id=customer_id)
+    except Customer.DoesNotExist:
+        return None
+
+
+def set_customer_in_session(request, customer):
+    """
+    Store customer ID in the session.
+
+    Args:
+        request: Django request object
+        customer: Customer object or customer ID
+    """
+    if isinstance(customer, int):
+        request.session["customer_id"] = customer
+    else:
+        request.session["customer_id"] = customer.id
+    request.session.modified = True
+
+
+def add_to_cart(request, plant_profile, quantity=1):
+    """
+    Add a plant to the shopping cart or update quantity if already exists.
+
+    Args:
+        request: Django request object
+        plant_profile: PlantProfile object or ID
+        quantity: Quantity to add (default 1)
+
+    Returns:
+        ShoppingCart object or None if customer not in session
+    """
+    from project.models import PlantProfile as PlantProfileModel
+    from project.models import ShoppingCart
+
+    customer = get_or_create_customer_from_session(request)
+    if not customer:
+        return None
+
+    max_items = (
+        None
+        if customer.application and customer.application.priority == 1
+        else MAX_NON_PRIORITY_CART_ITEMS
+    )
+    if max_items is not None:
+        current_total = get_cart_total(request)
+        if current_total + quantity > max_items:
+            return None
+
+    if isinstance(plant_profile, int):
+        plant_profile = PlantProfileModel.objects.get(id=plant_profile)
+
+    cart_item, created = ShoppingCart.objects.get_or_create(
+        customer=customer, plant_profile=plant_profile, defaults={"quantity": quantity}
+    )
+
+    if not created:
+        cart_item.quantity += quantity
+        cart_item.save()
+
+    return cart_item
+
+
+def update_cart_item(request, plant_profile, quantity):
+    """
+    Update the quantity of an item in the shopping cart.
+
+    Args:
+        request: Django request object
+        plant_profile: PlantProfile object or ID
+        quantity: New quantity (0 or negative removes the item)
+
+    Returns:
+        ShoppingCart object or None
+    """
+    from project.models import PlantProfile as PlantProfileModel
+    from project.models import ShoppingCart
+
+    customer = get_or_create_customer_from_session(request)
+    if not customer:
+        return None
+
+    if isinstance(plant_profile, int):
+        plant_profile = PlantProfileModel.objects.get(id=plant_profile)
+
+    try:
+        cart_item = ShoppingCart.objects.get(
+            customer=customer, plant_profile=plant_profile
+        )
+
+        if quantity <= 0:
+            cart_item.delete()
+            return None
+
+        max_items = (
+            None
+            if customer.application and customer.application.priority == 1
+            else MAX_NON_PRIORITY_CART_ITEMS
+        )
+        if max_items is not None:
+            current_total = get_cart_total(request)
+            desired_total = current_total - cart_item.quantity + quantity
+            if desired_total > max_items:
+                return None
+
+        cart_item.quantity = quantity
+        cart_item.save()
+        return cart_item
+    except ShoppingCart.DoesNotExist:
+        return None
+
+
+def remove_from_cart(request, plant_profile):
+    """
+    Remove an item from the shopping cart.
+
+    Args:
+        request: Django request object
+        plant_profile: PlantProfile object or ID
+
+    Returns:
+        Boolean indicating if item was removed
+    """
+    from project.models import PlantProfile as PlantProfileModel
+    from project.models import ShoppingCart
+
+    customer = get_or_create_customer_from_session(request)
+    if not customer:
+        return False
+
+    if isinstance(plant_profile, int):
+        plant_profile = PlantProfileModel.objects.get(id=plant_profile)
+
+    try:
+        cart_item = ShoppingCart.objects.get(
+            customer=customer, plant_profile=plant_profile
+        )
+        cart_item.delete()
+        return True
+    except ShoppingCart.DoesNotExist:
+        return False
+
+
+def get_cart_items(request):
+    """
+    Get all items in the shopping cart for the current customer.
+
+    Args:
+        request: Django request object
+
+    Returns:
+        QuerySet of ShoppingCart items or empty QuerySet
+    """
+    from project.models import ShoppingCart
+
+    customer = get_or_create_customer_from_session(request)
+    if not customer:
+        return ShoppingCart.objects.none()
+
+    return ShoppingCart.objects.filter(customer=customer).select_related(
+        "plant_profile"
+    )
+
+
+def get_cart_total(request):
+    """
+    Get the item count in the cart.
+    Since seeds are free, this just returns the number of items.
+
+    Args:
+        request: Django request object
+
+    Returns:
+        Integer count of items in cart
+    """
+    cart_items = get_cart_items(request)
+    return sum(item.quantity for item in cart_items)
+
+
+def create_order_from_cart(request, donation_amount=0, customer_note=""):
+    """
+    Convert shopping cart items into an Order and OrderItems.
+    Clears the cart after order creation.
+    Seeds are free, but an optional donation can be included.
+
+    Args:
+        request: Django request object
+        donation_amount: Optional donation amount (default 0)
+        customer_note: Optional customer note for the order
+    Returns:
+        Order object or None if cart is empty or customer not found
+    """
+    from decimal import Decimal
+
+    from project.models import Order, OrderItem
+
+    customer = get_or_create_customer_from_session(request)
+    if not customer:
+        return None
+
+    cart_items = get_cart_items(request)
+    if not cart_items.exists():
+        return None
+
+    # Ensure donation_amount is a Decimal
+    if not isinstance(donation_amount, Decimal):
+        donation_amount = Decimal(str(donation_amount))
+
+    from django.db import transaction
+
+    from project.tasks import send_donation_thank_you_task, send_order_confirmation_task
+
+    # Create the order and items inside an atomic transaction, and
+    # enqueue email tasks after the transaction commits to avoid races.
+    with transaction.atomic():
+        order = Order.objects.create(
+            customer=customer,
+            donation_amount=donation_amount,
+            customer_note=customer_note,
+            status="pending",
+        )
+
+        # Create OrderItems from cart items (seeds are free)
+        for cart_item in cart_items:
+            OrderItem.objects.create(
+                order=order,
+                plant_profile=cart_item.plant_profile,
+                quantity=cart_item.quantity,
+            )
+
+        # Clear the shopping cart
+        cart_items.delete()
+
+        # Schedule Celery tasks to run after successful commit
+        transaction.on_commit(lambda: send_order_confirmation_task.delay(order.id))
+        if order.donation_amount and order.donation_amount > 0:
+            transaction.on_commit(lambda: send_donation_thank_you_task.delay(order.id))
+
+    return order
+
+
+def clear_cart(request):
+    """
+    Clear all items from the shopping cart.
+
+    Args:
+        request: Django request object
+
+    Returns:
+        Number of items deleted
+    """
+    cart_items = get_cart_items(request)
+    count, _ = cart_items.delete()
+    return count
+
+
+def clear_session(request):
+    """
+    Clear customer ID from the session.
+
+    Args:
+        request: Django request object
+    """
+    if "customer_id" in request.session:
+        del request.session["customer_id"]
+    request.session.modified = True
+
+
+# ============================================================================
+# Order management utilities
+# ============================================================================
+def order_to_pdf(
+    order: Order,
+    elements: list | None = None,
+    styles=None,
+    add_page_break: bool = False,
+) -> bytes | None:
+    """
+    Render a customer Order to PDF using reportlab.
+
+    Args:
+        order: Order instance to render.
+        elements: Optional list of reportlab flowables to append to. If None,
+            this function creates a new document and returns the PDF bytes.
+        styles: Optional reportlab stylesheet. If None, a sample stylesheet is used.
+        add_page_break: If True and elements is provided, append a PageBreak.
+
+    Returns:
+        bytes | None: PDF bytes when ``elements`` is None; otherwise ``None`` after
+        appending flowables.
+    """
+
+    def _append_order_elements(target_elements, target_styles):
+        # Order title
+        title = Paragraph(f"Order #{order.id} Details", target_styles["Title"])
+        target_elements.append(title)
+
+        # Order Date & pdf generation date
+        pdf_generation_date = datetime.now().strftime("%Y-%m-%d")
+        target_elements.append(
+            Paragraph(
+                f"<b>Order Date:</b> {order.order_date.strftime('%Y-%m-%d')}, <b>PDF Generated:</b> {pdf_generation_date} ",
+                target_styles["Normal"],
+            )
+        )
+
+        # Order Priority
+        try:
+            _priority = f"<b>Priority</b>: {order.customer.application.priority} "
+        except AttributeError:
+            _priority = "<b>Priority</b>: N/A "
+        priority = Paragraph(_priority, target_styles["Normal"])
+        target_elements.append(priority)
+
+        # Application Type
+        application_value = (
+            str(order.customer.application) if order.customer.application else "N/A"
+        )
+        application_type = Paragraph(
+            f"<b>Application Type</b>: {application_value} ",
+            target_styles["Normal"],
+        )
+        target_elements.append(application_type)
+
+        target_elements.append(Spacer(1, 12))
+
+        # shipping and billing addresses
+        shipping_data = [["Bill To:", "Ship To:"]]
+        bill_to_address = order.customer.shipping_address().split(",")
+
+        address = order.customer.shipping_address()
+        ship_to = []
+
+        for line in address.split(","):
+            ship_to.append(Paragraph(line, target_styles["Normal"]))
+
+        # put shipping_data, customer_full_name and addess into a table
+        shipping_data.append(
+            [
+                Paragraph("<br/>".join(bill_to_address), target_styles["Normal"]),
+                ship_to,
+            ]
+        )
+        shipping_table = Table(shipping_data, colWidths=[220, 220])
+        shipping_table.setStyle(
+            TableStyle(
+                [
+                    ("BACKGROUND", (0, 0), (-1, 0), colors.white),
+                    ("TEXTCOLOR", (0, 0), (-1, 0), colors.black),
+                    ("ALIGN", (0, 0), (-1, -1), "LEFT"),
+                    ("FONTNAME", (0, 0), (-1, 0), "Helvetica-Bold"),
+                    ("BOTTOMPADDING", (0, 0), (-1, 0), 12),
+                    ("BACKGROUND", (0, 1), (-1, -1), colors.white),
+                    ("GRID", (0, 0), (-1, -1), 1, colors.black),
+                ]
+            )
+        )
+
+        target_elements.append(shipping_table)
+
+        target_elements.append(Paragraph("Order Items:", target_styles["Heading2"]))
+        # Table of order items
+        data = [["No", "Plant", "Quantity"]]
+        for index, item in enumerate(order.items.all(), start=1):
+            data.append([index, item.plant_profile.english_name, str(item.quantity)])
+        table = Table(data)
+        table.setStyle(
+            TableStyle(
+                [
+                    ("BACKGROUND", (0, 0), (-1, 0), colors.white),
+                    ("TEXTCOLOR", (0, 0), (-1, 0), colors.black),
+                    ("ALIGN", (0, 0), (-1, -1), "CENTER"),
+                    ("FONTNAME", (0, 0), (-1, 0), "Helvetica-Bold"),
+                    ("BOTTOMPADDING", (0, 0), (-1, 0), 12),
+                    ("BACKGROUND", (0, 1), (-1, -1), colors.white),
+                    ("GRID", (0, 0), (-1, -1), 1, colors.black),
+                ]
+            )
+        )
+        target_elements.append(table)
+
+        if order.customer_note:
+            target_elements.append(Spacer(1, 12))
+            target_elements.append(Paragraph("Order Notes:", target_styles["Heading2"]))
+            target_elements.append(
+                Paragraph(order.customer_note, target_styles["Normal"])
+            )
+
+    if elements is None:
+        buffer = BytesIO()
+        doc = SimpleDocTemplate(
+            buffer,
+            pagesize=letter,
+            rightMargin=30,
+            leftMargin=30,
+            topMargin=30,
+            bottomMargin=18,
+        )
+        elements = []
+        styles = getSampleStyleSheet()
+        _append_order_elements(elements, styles)
+        doc.build(elements)
+        pdf = buffer.getvalue()
+        buffer.close()
+        return pdf
+
+    if styles is None:
+        styles = getSampleStyleSheet()
+
+    _append_order_elements(elements, styles)
+    if add_page_break:
+        elements.append(PageBreak())
+    return None
+
+
+def render_many_orders_to_pdf(orders: list[Order]) -> BytesIO:
+    """
+    Render multiple customer orders as defined in Order model using reportlab.
+
+    Args:
+        orders: List of Order objects to render
+    Returns:
+        PDF as BytesIO object
+    """
+    from reportlab.lib.pagesizes import letter
+    from reportlab.lib.styles import getSampleStyleSheet
+    from reportlab.platypus import SimpleDocTemplate
+
+    buffer = BytesIO()
+    doc = SimpleDocTemplate(buffer, pagesize=letter)
+    elements = []
+    styles = getSampleStyleSheet()
+
+    orders = list(orders)
+    for index, order in enumerate(orders):
+        order_to_pdf(
+            order,
+            elements=elements,
+            styles=styles,
+            add_page_break=index < len(orders) - 1,
+        )
+    doc.build(elements)
+    pdf = buffer.getvalue()
+    buffer.close()
+    return pdf
+
+
+def get_order_statistics():
+    """Get order statistics for dashboard display.
+    Returns the following totals by year:
+        total orders, pending orders, completed orders, cancelled orders and shipped orders, and total donations by year.
+    """
+
+    orders = (
+        Order.objects.annotate(year=ExtractYear("order_date"))
+        .values("year")
+        .annotate(
+            total_orders=Count("id"),
+            pending_orders=Count("id", filter=Q(status="pending")),
+            completed_orders=Count("id", filter=Q(status="completed")),
+            cancelled_orders=Count("id", filter=Q(status="cancelled")),
+            shipped_orders=Count("id", filter=Q(status="shipped")),
+            total_donations=Sum("donation_amount"),
+        )
+        .order_by("-year")
+    )
+    return orders
+
+
+def get_most_ordered_seeds(top_n=10):
+    """Get the most ordered seed plant profiles.
+
+    Args:
+        top_n: Number of top ordered seeds to return (default 10)
+
+    Returns:
+        QuerySet of OrderItem with annotated order_count
+    """
+    from project.models import OrderItem
+
+    most_ordered = (
+        OrderItem.objects.values(
+            "plant_profile__english_name", "plant_profile__latin_name"
+        )
+        .annotate(order_item_count=Sum("quantity"), order_count=Count("order"))
+        .filter(order_item_count__gt=0)
+        .order_by("-order_item_count")[:top_n]
+    )
+    return most_ordered
+
+
+# ============================================================================
+# EMAIL UTILITIES
+# ============================================================================
+
+
+def send_order_confirmation_email(order):
+    """
+    Send order confirmation email to the customer.
+
+    Args:
+        order: Order object to send confirmation for
+
+    Returns:
+        Boolean indicating success
+    """
+    from django.core.mail import EmailMultiAlternatives
+    from django.template.loader import render_to_string
+    from django.utils.translation import gettext as _
+
+    try:
+        logger.debug("Preparing order confirmation email for Order #%s", order.id)
+        # Prepare email context
+        order_items = order.items.all().select_related("plant_profile")
+        context = {
+            "order": order,
+            "order_items": order_items,
+            "customer": order.customer,
+        }
+
+        # Render email templates
+        subject = _("Order Confirmation - Order #%(order_id)d") % {"order_id": order.id}
+        logger.debug("Rendering email templates for Order #%s", order.id)
+        html_content = render_to_string(
+            "project/emails/order_confirmation.html", context
+        )
+        text_content = render_to_string(
+            "project/emails/order_confirmation.txt", context
+        )
+
+        # Create email
+        logger.debug("Creating email message for %s", order.customer.email)
+        bcc_email = getattr(settings, "DEFAULT_BCC_EMAIL", None) or getattr(
+            settings, "EMAIL_BCC", None
+        )
+        email = EmailMultiAlternatives(
+            subject=subject,
+            body=text_content,
+            from_email=None,  # Uses DEFAULT_FROM_EMAIL from settings
+            to=[order.customer.email],
+            bcc=[bcc_email] if bcc_email else None,
+        )
+        email.attach_alternative(html_content, "text/html")
+
+        # Send email
+        logger.info(
+            "Email backend=%s host=%s port=%s bcc=%s",
+            settings.EMAIL_BACKEND,
+            getattr(settings, "EMAIL_HOST", None),
+            getattr(settings, "EMAIL_PORT", None),
+            bool(bcc_email),
+        )
+        logger.info(
+            "Sending order confirmation email for Order #%s to %s",
+            order.id,
+            order.customer.email,
+        )
+        email.send(fail_silently=False)
+        logger.info(
+            "Order confirmation email sent successfully for Order #%s", order.id
+        )
+        return True
+
+    except Exception as e:
+        logger.exception(
+            "Error sending order confirmation email for Order #%s: %s",
+            order.id,
+            e,
+        )
+        return False
+
+
+def send_donation_thank_you_email(order):
+    """
+    Send thank you email for a donation.
+
+    Args:
+        order: Order object with donation_amount > 0
+
+    Returns:
+        Boolean indicating success
+    """
+    from django.core.mail import EmailMultiAlternatives
+    from django.template.loader import render_to_string
+    from django.utils.translation import gettext as _
+
+    if order.donation_amount <= 0:
+        logger.debug(
+            "Skipping donation email for Order #%s: donation_amount is %s",
+            order.id,
+            order.donation_amount,
+        )
+        return False
+
+    try:
+        logger.debug(
+            "Preparing donation thank you email for Order #%s (Amount: $%s)",
+            order.id,
+            order.donation_amount,
+        )
+
+        # Prepare email context
+        context = {
+            "order": order,
+            "customer": order.customer,
+            "donation_amount": order.donation_amount,
+        }
+
+        # Render email templates
+        subject = _("Thank You for Your Donation!")
+        logger.debug("Rendering donation email templates for Order #%s", order.id)
+        html_content = render_to_string(
+            "project/emails/donation_thank_you.html", context
+        )
+        text_content = render_to_string(
+            "project/emails/donation_thank_you.txt", context
+        )
+
+        # Create email
+        logger.debug("Creating donation thank you email for %s", order.customer.email)
+        email = EmailMultiAlternatives(
+            subject=subject,
+            body=text_content,
+            from_email=None,  # Uses DEFAULT_FROM_EMAIL from settings
+            to=[order.customer.email],
+        )
+        email.attach_alternative(html_content, "text/html")
+
+        # Send email
+        logger.info(
+            "Sending donation thank you email for Order #%s ($%s) to %s",
+            order.id,
+            order.donation_amount,
+            order.customer.email,
+        )
+        email.send(fail_silently=False)
+        logger.info(
+            "Donation thank you email sent successfully for Order #%s (Amount: $%s)",
+            order.id,
+            order.donation_amount,
+        )
+        return True
+
+    except Exception as e:
+        logger.exception(
+            "Error sending donation thank you email for Order #%s: %s",
+            order.id,
+            e,
+        )
+        return False

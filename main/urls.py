@@ -2,6 +2,7 @@ from django.conf import settings
 from django.conf.urls.i18n import i18n_patterns
 from django.conf.urls.static import static
 from django.contrib import admin
+from django.http import HttpResponse
 from django.urls import include, path
 from django.utils.translation import gettext_lazy as _
 from ninja import NinjaAPI
@@ -14,8 +15,12 @@ api.add_router("/", home_router)
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("__reload__/", include("django_browser_reload.urls")),
+    path("healthz/", lambda request: HttpResponse("ok", content_type="text/plain")),
+    path("stripe/webhook/", views.stripe_webhook, name="stripe-webhook"),
 ]
+
+if settings.DEBUG:
+    urlpatterns.append(path("__reload__/", include("django_browser_reload.urls")))
 
 urlpatterns += i18n_patterns(
     path("en/", include("django.contrib.auth.urls")),
@@ -141,6 +146,11 @@ urlpatterns += i18n_patterns(
 )
 
 urlpatterns += i18n_patterns(
+    path(
+        _("admin-library-settings/"),
+        views.admin_library_settings,
+        name="admin-library-settings",
+    ),
     path(
         _("admin-accept-all-seeds/"),
         views.admin_accept_all_seeds,
@@ -831,6 +841,126 @@ urlpatterns += i18n_patterns(
         _("project-group-delete/<int:pk>/"),
         views.project_group_delete,
         name="project-group-delete",
+    ),
+)
+
+
+urlpatterns += i18n_patterns(
+    # Customer & Shopping Cart URLs
+    path(
+        _("create-customer/"),
+        views.create_customer,
+        name="create-customer",
+    ),
+    path(
+        _("shopping-cart/"),
+        views.shopping_cart,
+        name="shopping-cart",
+    ),
+    path(
+        _("add-to-cart/<int:pk>/"),
+        views.add_to_cart,
+        name="add-to-cart",
+    ),
+    path(
+        _("update-cart-item/<int:pk>/"),
+        views.update_cart_item,
+        name="update-cart-item",
+    ),
+    path(
+        _("remove-from-cart/<int:pk>/"),
+        views.remove_from_cart,
+        name="remove-from-cart",
+    ),
+    path(
+        _("clear-cart/"),
+        views.clear_cart,
+        name="clear-cart",
+    ),
+    path(
+        _("checkout/"),
+        views.checkout,
+        name="checkout",
+    ),
+    path(
+        _("donate/"),
+        views.donation_page,
+        name="donation-page",
+    ),
+    path(
+        _("donate/checkout/"),
+        views.create_donation_checkout_session,
+        name="donation-checkout-session",
+    ),
+    path(
+        _("donate/success/"),
+        views.donation_success,
+        name="donation-success",
+    ),
+    path(
+        _("donate/cancel/"),
+        views.donation_cancel,
+        name="donation-cancel",
+    ),
+    path(
+        _("order-confirmation/<int:pk>/"),
+        views.order_confirmation,
+        name="order-confirmation",
+    ),
+    path(
+        _("order-history/"),
+        views.order_history,
+        name="order-history",
+    ),
+    path(
+        _("admin-order-seed-application-page/"),
+        views.admin_order_seed_application_page,
+        name="admin-order-seed-application-page",
+    ),
+    path(
+        _("admin-order-seed-application-add/"),
+        views.admin_order_seed_application_add,
+        name="admin-order-seed-application-add",
+    ),
+    path(
+        "admin-order-seed-application-update/<int:pk>/",
+        views.admin_order_seed_application_update,
+        name="admin-order-seed-application-update",
+    ),
+    path(
+        "admin-order-seed-application-delete/<int:pk>/",
+        views.admin_order_seed_application_delete,
+        name="admin-order-seed-application-delete",
+    ),
+    path(
+        _("admin-order-management-page/"),
+        views.admin_order_management_page,
+        name="admin-order-management-page",
+    ),
+    path(
+        _("admin-order-detail-page/<int:pk>/"),
+        views.admin_order_detail_page,
+        name="admin-order-detail-page",
+    ),
+    path(
+        "admin-order-detail-pdf/<int:pk>/",
+        views.admin_order_detail_pdf,
+        name="admin-order-detail-pdf",
+    ),
+    path(
+        "admin-order-pending-to-pdf/",
+        views.admin_order_pending_to_pdf,
+        name="admin-order-pending-to-pdf",
+    ),
+    path(
+        "admin-order-statistics-page/",
+        views.admin_order_statistics_page,
+        name="admin-order-statistics-page",
+    ),
+    path(
+        "admin-most-ordered-seeds-page/",
+        views.admin_most_ordered_seeds_page,
+        name="admin-most-ordered-seeds-page",
     ),
 )
 

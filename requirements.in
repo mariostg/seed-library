@@ -31,6 +31,9 @@ rich
 django-browser-reload
 python-dotenv
 gunicorn
+whitenoise
+dj-database-url
+psycopg[binary]
 Pillow
 reportlab
 pre-commit
@@ -41,3 +44,6 @@ requests
 beautifulsoup4
 django-rosetta
 django-modeltranslation
+celery
+redis
+stripe

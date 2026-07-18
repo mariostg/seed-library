@@ -1,4 +1,5 @@
 {% load i18n %}
+{% load static %}
 {% get_current_language as LANGUAGE_CODE %}
 {% get_available_languages as LANGUAGES %}
 {% get_language_info_list for LANGUAGES as languages %}
@@ -38,6 +39,24 @@
     <li>
       <a target="_blank" href="https://wildflowerseedlibrary.ca/about-us/">{% trans "About Us" %}</a>
     </li>
+    {% if request.library_settings.is_accepting_donations %}
+      <li>
+        <a href="{% url 'donation-page' %}">{% trans "Donate" %}</a>
+      </li>
+    {% endif %}
+
+    <!--link for user shopping cart-->
+    {% if request.library_settings.is_shop_open %}
+      <li><a class='btn' href="{% url 'shopping-cart' %}">
+        <img id="shopping-cart-icon" src="{% static 'images/shopping-cart.svg' %}" alt="{% trans "Shopping Cart" %}">
+        <span id="shopping-cart-indicator">
+          {% if request.cart_item_count and request.cart_item_count > 0 %}
+            ({{ request.cart_item_count }})
+          {% endif %}
+        </span>
+      </a>
+      </li>
+    {% endif %}
 
     {% if request.user.is_authenticated %}
       <li><a class='btn' href="{% url 'user-plant-collection' %}">{% trans "My Seed Pack" %}</a></li>
@@ -63,3 +82,16 @@
 
   </ul>
 </nav>
+<script>
+  document.body.addEventListener('cartChanged', function(e){
+    var count = e.detail.value;
+    console.log("cartChanged event received, new count: " + count);
+    var el = document.getElementById('shopping-cart-indicator');
+    if(!el) return;
+    el.textContent = '';
+
+    if(count && count > 0){
+      el.innerHTML = ' (' + count + ')';
+    }
+  });
+</script>

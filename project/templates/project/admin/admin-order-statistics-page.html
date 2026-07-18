@@ -1,0 +1,52 @@
+<!--this template is a dashboard presenting order statistics including total donations, total orders, pending orders, completed orders, cancelled orders, shipped orders, and total donations by year.-->
+
+{% extends "core/base.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}{{title}}{% endblock %}
+
+{% block content %}
+  {% include "project/admin/admin_links.html" %}
+
+  <section class="container admin-page-content">
+
+    <h1>{{ title }}</h1>
+
+    <table>
+      <thead>
+        <tr>
+          <th>{% trans "Year" %}</th>
+          <th>{% trans "Total Donations" %}</th>
+          <th colspan="5">{% trans "Orders" %}</th>
+        </tr>
+        <tr>
+          <th></th>
+          <th></th>
+          <th>{% trans "Total" %}</th>
+          <th>{% trans "Pending" %}</th>
+          <th>{% trans "Completed" %}</th>
+          <th>{% trans "Cancelled" %}</th>
+          <th>{% trans "Shipped" %}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for stat in order_statistics %}
+          <tr>
+            <td>{{ stat.year }}</td>
+            <td>{{ stat.total_donations }}</td>
+            <td>{{ stat.total_orders }}</td>
+            <td>{{ stat.pending_orders }}</td>
+            <td>{{ stat.completed_orders }}</td>
+            <td>{{ stat.cancelled_orders }}</td>
+            <td>{{ stat.shipped_orders }}</td>
+          </tr>
+        {% empty %}
+          <tr>
+            <td colspan="7">{% trans "No statistics available." %}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </section>
+{% endblock %}

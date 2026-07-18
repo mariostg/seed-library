@@ -143,3 +143,9 @@ header {
     max-width: 600px;
   }
 }
+
+.no-print {
+  @media print {
+    display: none;
+  }
+}

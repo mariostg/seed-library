@@ -12,9 +12,12 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 import os
 import sys
+from decimal import Decimal
 from pathlib import Path
 
+import dj_database_url
 import dotenv
+from django.core.exceptions import ImproperlyConfigured
 from django.utils.translation import gettext_lazy as _
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -24,6 +27,13 @@ if "pytest" not in sys.modules:
     dotenv.load_dotenv(dotenv_path=BASE_DIR / ".env")
 
 
+def env_bool(name, default=False):
+    value = os.environ.get(name)
+    if value is None:
+        return default
+    return str(value).strip().lower() in {"1", "true", "yes", "on"}
+
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
@@ -31,9 +41,19 @@ if "pytest" not in sys.modules:
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get("DEBUG")
+DEBUG = env_bool("DEBUG", default=False)
 
-ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(",")
+ALLOWED_HOSTS = [
+    host.strip()
+    for host in os.environ.get("ALLOWED_HOSTS", "localhost,127.0.0.1").split(",")
+    if host.strip()
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    origin.strip()
+    for origin in os.environ.get("CSRF_TRUSTED_ORIGINS", "").split(",")
+    if origin.strip()
+]
 
 INTERNAL_IPS = [
     "127.0.0.1",
@@ -51,14 +71,17 @@ INSTALLED_APPS = [
     "django.forms",
     "django_htmx",
     "django_filters",
-    "django_browser_reload",
     "project",
     "rosetta",
 ]
 
+if DEBUG:
+    INSTALLED_APPS.append("django_browser_reload")
+
 MIDDLEWARE = [
     # "debug_toolbar.middleware.DebugToolbarMiddleware",
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.locale.LocaleMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -66,10 +89,13 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "django_browser_reload.middleware.BrowserReloadMiddleware",
     "django_htmx.middleware.HtmxMiddleware",
     "project.acl_handler.UserAdminCheckMiddleware",
+    "project.librarysettings.LibrarySettingsMiddleware",
 ]
+
+if DEBUG:
+    MIDDLEWARE.append("django_browser_reload.middleware.BrowserReloadMiddleware")
 
 ROOT_URLCONF = "main.urls"
 
@@ -103,6 +129,14 @@ DATABASES = {
         "NAME": BASE_DIR / "db.sqlite3",
     }
 }
+
+DATABASE_URL = os.environ.get("DATABASE_URL")
+if DATABASE_URL:
+    DATABASES["default"] = dj_database_url.parse(
+        DATABASE_URL,
+        conn_max_age=600,
+        ssl_require=not DEBUG,
+    )
 
 
 # Password validation
@@ -159,12 +193,30 @@ STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.FileSystemFinder",
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
 ]
+STORAGES = {
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 LOGIN_URL = "/login/"
 AUTH_USER_MODEL = "project.ProjectUser"
+MAPBOX_ACCESS_TOKEN = os.environ.get("MAPBOX_ACCESS_TOKEN", "")
+
+# Stripe donation settings
+STRIPE_PUBLISHABLE_KEY = os.environ.get("STRIPE_PUBLISHABLE_KEY", "")
+STRIPE_SECRET_KEY = os.environ.get("STRIPE_SECRET_KEY", "")
+STRIPE_WEBHOOK_SECRET = os.environ.get("STRIPE_WEBHOOK_SECRET", "")
+STRIPE_DONATION_CURRENCY = os.environ.get("STRIPE_DONATION_CURRENCY", "cad").lower()
+STRIPE_DONATION_MIN_AMOUNT = Decimal(
+    os.environ.get("STRIPE_DONATION_MIN_AMOUNT", "1.00")
+)
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
@@ -178,7 +230,7 @@ LOGGING = {
     },
     "formatters": {
         "verbose": {
-            "format": "{asctime} {levelname} {module}.{funcName} {message}",
+            "format": "{asctime} {levelname} {module}.{funcName}:{lineno} {message}",
             "style": "{",
         },
         "simple": {
@@ -202,12 +254,103 @@ LOGGING = {
             "formatter": "verbose",
             "level": "WARNING",
         },
+        "project_file": {
+            "class": "logging.handlers.RotatingFileHandler",
+            "filename": BASE_DIR / "logs/project.log",
+            "formatter": "verbose",
+            "level": "INFO",
+            "maxBytes": 1024 * 1024 * 10,  # 10MB
+            "backupCount": 5,
+        },
+        "email_file": {
+            "class": "logging.handlers.RotatingFileHandler",
+            "filename": BASE_DIR / "logs/email.log",
+            "formatter": "verbose",
+            "level": "INFO",
+            "maxBytes": 1024 * 1024 * 5,  # 5MB
+            "backupCount": 3,
+        },
+        "signals_file": {
+            "class": "logging.handlers.RotatingFileHandler",
+            "filename": BASE_DIR / "logs/signals.log",
+            "formatter": "verbose",
+            "level": "INFO",
+            "maxBytes": 1024 * 1024 * 5,  # 5MB
+            "backupCount": 3,
+        },
     },
     "loggers": {
         "django": {
             "handlers": ["console", "file"],
             "level": "INFO",
-            "propagate": True,
+            "propagate": False,
+        },
+        "project": {
+            "handlers": ["console", "project_file"],
+            "level": "DEBUG" if DEBUG else "INFO",
+            "propagate": False,
+        },
+        "project.utils": {
+            "handlers": ["console", "email_file"],
+            "level": "DEBUG" if DEBUG else "INFO",
+            "propagate": False,
+        },
+        "project.signals": {
+            "handlers": ["console", "signals_file"],
+            "level": "INFO",
+            "propagate": False,
+        },
+        "project.views": {
+            "handlers": ["console", "project_file"],
+            "level": "INFO",
+            "propagate": False,
         },
     },
 }
+
+# Mail settings
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_MODE = os.environ.get("EMAIL_MODE", "smtp").strip().lower()
+
+if EMAIL_MODE == "sandbox":
+    _default_email_host = os.environ.get(
+        "SANDBOX_EMAIL_HOST", "sandbox.smtp.mailtrap.io"
+    )
+    _default_email_user = os.environ.get("SANDBOX_EMAIL_HOST_USER", "")
+    _default_email_password = os.environ.get("SANDBOX_EMAIL_HOST_PASSWORD", "")
+    _default_email_port = os.environ.get("SANDBOX_EMAIL_PORT", "2525")
+    _default_email_use_tls = env_bool("SANDBOX_EMAIL_USE_TLS", default=True)
+    _default_email_use_ssl = env_bool("SANDBOX_EMAIL_USE_SSL", default=False)
+elif EMAIL_MODE in {"smtp", "live"}:
+    _default_email_host = os.environ.get("SMTP_EMAIL_HOST", "live.smtp.mailtrap.io")
+    _default_email_user = os.environ.get("SMTP_EMAIL_HOST_USER", "api")
+    _default_email_password = os.environ.get(
+        "SMTP_EMAIL_HOST_PASSWORD", os.environ.get("MAILTRAP_TOKEN", "")
+    )
+    _default_email_port = os.environ.get("SMTP_EMAIL_PORT", "587")
+    _default_email_use_tls = env_bool("SMTP_EMAIL_USE_TLS", default=True)
+    _default_email_use_ssl = env_bool("SMTP_EMAIL_USE_SSL", default=False)
+else:
+    raise ImproperlyConfigured("EMAIL_MODE must be one of: smtp, live, sandbox")
+
+DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL", "hello@mariostg.com")
+EMAIL_HOST = os.environ.get("EMAIL_HOST", _default_email_host)
+EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER", _default_email_user)
+EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD", _default_email_password)
+EMAIL_PORT = int(os.environ.get("EMAIL_PORT", _default_email_port))
+EMAIL_USE_TLS = env_bool("EMAIL_USE_TLS", default=_default_email_use_tls)
+EMAIL_USE_SSL = env_bool("EMAIL_USE_SSL", default=_default_email_use_ssl)
+if EMAIL_USE_TLS and EMAIL_USE_SSL:
+    raise ImproperlyConfigured("EMAIL_USE_TLS and EMAIL_USE_SSL cannot both be True.")
+DEFAULT_BCC_EMAIL = os.environ.get("DEFAULT_BCC_EMAIL") or os.environ.get("EMAIL_BCC")
+EMAIL_BCC = os.environ.get("EMAIL_BCC", DEFAULT_BCC_EMAIL)
+
+
+# in main/settings.py
+REDIS_URL = os.environ.get("REDIS_URL", "redis://localhost:6379/0")
+CELERY_BROKER_URL = os.environ.get("CELERY_BROKER_URL", REDIS_URL)
+CELERY_RESULT_BACKEND = os.environ.get("CELERY_RESULT_BACKEND", REDIS_URL)
+
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+SESSION_COOKIE_SECURE = not DEBUG
+CSRF_COOKIE_SECURE = not DEBUG

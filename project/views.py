@@ -1,7 +1,10 @@
 import csv
 import io
+import json
 from datetime import datetime
+from decimal import Decimal, InvalidOperation
 
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -9,14 +12,22 @@ from django.contrib.auth.models import Group, Permission
 from django.core.paginator import Paginator
 from django.db import IntegrityError
 from django.db.models import Count, RestrictedError
+from django.db.utils import IntegrityError as DbIntegrityError
 from django.http import FileResponse, HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse
+from django.utils import timezone
 from django.utils.translation import gettext as _
+from django.views.decorators.csrf import csrf_exempt
 from reportlab.lib.colors import black, pink, red
 from reportlab.lib.pagesizes import landscape, letter
 from reportlab.lib.units import inch
 from reportlab.pdfgen import canvas
+
+try:
+    import stripe
+except ImportError:  # pragma: no cover - dependency should be available in runtime
+    stripe = None
 
 from project import filters, forms, models, utils, vascan
 from project.acl_handler import group_required
@@ -147,19 +158,11 @@ def plant_profile_page(request, pk):
     if not is_valid_video_url:
         plant.harvesting_video_link = ""
 
-    # check if plant narrative exists for the plant profile page, if it does, get the narrative type and content for display
-    plant_narratives = models.PlantNarrative.objects.filter(plant_profile=plant)
-
-    # Show the snowflake icon for stratification or double dormancy requirements.
-    has_snowflake_icon = plant.double_dormancy or (
-        plant.stratification_duration.stratification_duration > 0
-        if plant.stratification_duration
-        else False
-    )
+    # Keep primary image selection logic centralized in utils for consistency.
+    plant_image = utils.plant_primary_image(plant)
 
     context = {
         "plant": plant,
-        "plant_narratives": plant_narratives,
         "image_count": image_count,
         "title": plant.latin_name,
         "bloom_start": bloom_start,
@@ -174,7 +177,7 @@ def plant_profile_page(request, pk):
         "seed_storage_list": seed_storage_list,
         "harvesting_mean_list": harvesting_mean_list,
         "harvesting_indicator_list": harvesting_indicator_list,
-        "has_snowflake_icon": has_snowflake_icon,
+        "plant_image": plant_image,
     }
     return render(request, "project/plant_profile/plant-profile-page.html", context)
 
@@ -366,7 +369,10 @@ def search_plant_name(request):
         data = models.PlantProfile.objects.all().order_by("latin_name")
 
     object_list = filters.PlantProfileFilter(request.GET, queryset=data)
-    non_native_name = request.GET.get("non_native_name", "")
+    paginator = Paginator(object_list.qs, 24)  # Show 24 plants per page
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
     ecozones = models.Ecozone.objects.all().order_by("ecozone")
     growth_habits = models.GrowthHabit.objects.all().order_by("growth_habit")
     bloom_colours = models.BloomColour.objects.all().order_by("bloom_colour")
@@ -374,7 +380,7 @@ def search_plant_name(request):
     # get a list of favourite plants for the logged in user that are contained in the object_list
     if request.user.is_authenticated:
         favourite_plants = models.PlantCollection.objects.filter(
-            owner=request.user, plants__in=object_list.qs
+            owner=request.user, plants__in=page_obj.object_list
         ).values_list("plants__id", flat=True)
     else:
         favourite_plants = None
@@ -498,13 +504,10 @@ def search_plant_name(request):
         "#is_accepted",
         "#has_notice",
     ]
-    stratification_filters = [
-        "#no_stratification_required",
-    ]
 
     # Merge all filter lists and join with commas
     hx_include = ",".join(
-        ["#any_plant_name", "#non_native_name"]
+        ["#any_plant_name"]
         + ["#is_active"]
         + sun_filters
         + moisture_filters
@@ -528,7 +531,6 @@ def search_plant_name(request):
         + region_filters
         + ecozones_filters
         + admin_controls_filters
-        + stratification_filters
     )
     item_count = object_list.qs.count()
     stratification_durations = models.StratificationDuration.objects.all().order_by(
@@ -544,14 +546,12 @@ def search_plant_name(request):
         "harvesting_period": {
             k: utils.MONTHS[k] for k in range(5, 12)
         },  # from April (index 3) to December (index 11)
-        "object_list": object_list.qs,
+        "page_obj": page_obj,
         "favourite_plants": favourite_plants,
         "url_name": "index",
         "title": _("Plant Profile Filter"),
         "item_count": item_count,
         "hx_include": hx_include,
-        "any_plant_name": request.GET.get("any_plant_name", ""),
-        "non_native_name": non_native_name,
     }
     template = (
         "project/plant-search-results.html"
@@ -575,10 +575,10 @@ def search_vascan_taxon_id(request):
 
         return HttpResponse(
             f"""
-            <input type="text" id="id_taxon" name="taxon" value="{taxon_id}" hx-swap-oob="true">
-            <input type="text" id="id_english_name" name="english_name" value="{english_name}" hx-swap-oob="true">
-            <input type="text" id="id_french_name" name="french_name" value="{french_name}" hx-swap-oob="true">
-            <input type="text" id="id_inaturalist_taxon" name="inaturalist_taxon" value="{inaturalist_taxon}" hx-swap-oob="true">
+            <input id="id_taxon" value="{taxon_id}" hx-swap-oob="true">
+            <input id="id_english_name" value="{english_name}" hx-swap-oob="true">
+            <input id="id_french_name" value="{french_name}" hx-swap-oob="true">
+            <input id="id_inaturalist_taxon" value="{inaturalist_taxon}" hx-swap-oob="true">
         """
         )
 
@@ -716,6 +716,28 @@ def update_availability(request):
     )
     context = {"object_list": plants}
     return render(request, "project/update/update-availability.html", context)
+
+
+@group_required("Library Manager")
+def admin_library_settings(request):
+    settings, created = models.LibrarySetting.objects.get_or_create(id=1)
+    context = {
+        "title": _("Library Settings"),
+        "url_name": "admin-library-settings",
+    }
+    if request.method == "POST":
+        form = forms.AdminLibrarySettingForm(request.POST, instance=settings)
+        if form.is_valid():
+            form.save()
+            messages.success(request, _("Library settings updated successfully."))
+            return redirect("admin-library-settings")
+        else:
+            messages.error(request, _("Please correct the errors below."))
+            context["form"] = form
+    else:
+        context["form"] = forms.AdminLibrarySettingForm(instance=settings)
+
+    return render(request, "project/simple-form.html", context)
 
 
 @group_required("Library Manager")
@@ -2014,18 +2036,16 @@ def admin_butterfly_species_delete(request, pk):
 
 @group_required("Library Manager")
 def admin_butterfly_species_fetch_inaturalist_taxon_id(request, latin_name: str):
-    # Using an htmx call, get the iNaturalist taxon ID for the given Latin name from iNaturalist API and return it as JSON
+    # Using an htmx call, get the iNaturalist taxon ID for the given Latin name.
     taxon_id = utils.get_inaturalist_taxon_id(latin_name)
     if taxon_id:
-        # update the butterfly species with the given Latin name to have the iNaturalist taxon ID
         models.ButterflySpecies.objects.filter(latin_name=latin_name).update(
             inaturalist_taxon_id=taxon_id
         )
         href = f"https://www.inaturalist.org/taxa/{taxon_id}"
         anchor = f'<a href="{href}" target="_blank">{taxon_id}</a>'
         return HttpResponse(anchor)
-    else:
-        return HttpResponse("")
+    return HttpResponse("")
 
 
 @group_required("Library Manager")
@@ -2863,8 +2883,7 @@ def plant_seed_box_label_pdf(request, pk):
 
     qrcode_img = utils.create_qr_code_image(plant_profile_url)
 
-    plant_info: list[str] = utils.plant_label_info(plant, request)
-    plant_info.reverse()
+    plant_lines = utils.plant_label_lines(plant, request)
 
     buffer = io.BytesIO()
     c = canvas.Canvas(buffer, pagesize=letter)
@@ -2893,16 +2912,16 @@ def plant_seed_box_label_pdf(request, pk):
     text_object = c.beginText(
         margin_left + 20, margin_top + label_height - image_height - 10
     )
-    text_object.setFont("Times-Roman", 10)
-    for idx, line in enumerate(plant_info):
-        text_object.textLine(line)
-        if idx == 2:  # After the 3rd item (index 2)
+
+    for idx, line in enumerate(plant_lines):
+        text_object.setFont(line["font_name"], 10)
+        text_object.textLine(line["text"])
+        if idx == 2:
             c.drawText(text_object)
             y_pos = margin_top + label_height - image_height - ((idx + 1) * 12)
             c.line(margin_left, y_pos - 2, margin_left + label_width, y_pos - 2)
             text_object = c.beginText(margin_left + 20, y_pos - 15)
-            text_object.setFont("Times-Roman", 10)
-    c.drawText(text_object)
+        c.drawText(text_object)
 
     # Draw QR code just below the plant information
     c.drawInlineImage(
@@ -2926,9 +2945,9 @@ def plant_seed_box_label_pdf(request, pk):
 
 def plant_label_pdf(request, pk):
     plant = utils.single_plant(pk, request)
-    plant_info: list[str] = utils.plant_label_info(plant, request)
-    plant_info_len = len(plant_info)
-    plant_longest_string = max(plant_info, key=len)
+    plant_lines = utils.plant_label_lines(plant, request)
+    plant_info_len = len(plant_lines)
+    plant_longest_string = max((line["text"] for line in plant_lines), key=len)
     buffer = io.BytesIO()
 
     c = canvas.Canvas(buffer, pagesize=landscape(letter))
@@ -2951,15 +2970,15 @@ def plant_label_pdf(request, pk):
 
     c.grid(x_positions, y_positions)
     c.setStrokeColor(black)
-    c.setFont("Times-Roman", 10)
 
     def draw_plant_info(
         c, x_position, y_position, label_margin_x, label_margin_y, line_spacing, info
     ):
-        for idx, text in enumerate(info):
+        for idx, line in enumerate(reversed(info)):
             xpos = x_position + label_margin_x * inch
             ypos = y_position + (label_margin_y + line_spacing * idx) * inch
-            c.drawString(xpos, ypos, text)
+            c.setFont(line["font_name"], 10)
+            c.drawString(xpos, ypos, line["text"])
 
     for x in range(len(x_positions) - 1):
         for y in range(y_range - 1):
@@ -2970,7 +2989,7 @@ def plant_label_pdf(request, pk):
                 label_margin_x,
                 label_margin_y,
                 line_spacing,
-                plant_info,
+                plant_lines,
             )
 
     # Draw packaging size on just above the largest y_positions value and centered
@@ -3035,7 +3054,6 @@ def plant_environmental_requirement_update(request, pk):
 @group_required(["Plant Profile Manager", "Library Manager"])
 def plant_identification_information_update(request, pk):
     plant = utils.single_plant(pk, request)
-    original_latin_name = plant.latin_name
     context = {
         "title": _("%(latin_name)s - Identification Information")
         % {"latin_name": plant.latin_name},
@@ -3044,19 +3062,7 @@ def plant_identification_information_update(request, pk):
     if request.method == "POST":
         form = forms.PlantIdentificationInformationForm(request.POST, instance=plant)
         if form.is_valid():
-            updated_plant: models.PlantProfile = form.save(commit=False)
-            latin_name = form.cleaned_data["latin_name"]
-
-            if latin_name != original_latin_name:
-                vascan_result = vascan.vascan_query(latin_name)
-                updated_plant.taxon = vascan.extract_taxon_id(vascan_result)
-                updated_plant.english_name = vascan.extract_english_name(vascan_result)
-                updated_plant.french_name = vascan.extract_french_name(vascan_result)
-                updated_plant.inaturalist_taxon = utils.get_inaturalist_taxon_id(
-                    latin_name
-                )
-
-            updated_plant.save()
+            form.save()
             messages.success(
                 request, _("Identification information updated successfully.")
             )
@@ -4013,6 +4019,712 @@ def admin_plant_morphology_delete(request, pk):
     return render(request, "core/delete-object.html", context)
 
 
+# ==============================
+# views to handle seed ordering
+# ==============================
+
+
+def create_customer(request):
+    """
+    Display a form for creating a new customer and initialize session.
+    GET: Display customer creation form
+    POST: Create customer, store in session, redirect to cart
+    """
+    if not request.library_settings.is_shop_open:
+        messages.info(request, _("The seed shop is currently closed."))
+        return redirect("index")
+
+    if request.method == "POST":
+        form = forms.CustomerForm(request.POST)
+        if form.is_valid():
+            customer = form.save()
+            utils.set_customer_in_session(request, customer)
+            messages.success(request, _("Welcome! You can now start ordering seeds."))
+            return redirect("shopping-cart")
+        else:
+            for field, errors in form.errors.items():
+                for error in errors:
+                    messages.error(request, f"Error in {field}: {error}")
+    else:
+        form = forms.CustomerForm()
+
+    context = {
+        "form": form,
+        "title": _("Create Customer Profile"),
+        "mapbox_access_token": getattr(settings, "MAPBOX_ACCESS_TOKEN", ""),
+    }
+    return render(request, "project/customer-form.html", context)
+
+
+def shopping_cart(request):
+    """
+    Display the shopping cart with all items for current customer.
+    Shows cart summary and allows quantity updates.
+    """
+    if not request.library_settings.is_shop_open:
+        messages.info(request, _("The seed shop is currently closed."))
+        return redirect("index")
+
+    customer = utils.get_or_create_customer_from_session(request)
+    if not customer:
+        return redirect("create-customer")
+
+    cart_items = utils.get_cart_items(request)
+    item_count = utils.get_cart_total(request)
+
+    context = {
+        "customer": customer,
+        "cart_items": cart_items,
+        "item_count": item_count,
+    }
+    return render(request, "project/shopping-cart.html", context)
+
+
+def add_to_cart(request, pk):
+    """
+    Add a plant to the shopping cart.
+    Expects customer_id in session.
+    if no customer in session, redirect to create customer page.
+    if shop is closed, redirect to index page.
+    GET: Add default quantity (1)
+    POST: Add with specified quantity from form
+    """
+    is_htmx = request.headers.get("HX-Request") == "true"
+
+    if not request.library_settings.is_shop_open:
+        messages.info(request, _("The seed shop is currently closed."))
+        if is_htmx:
+            response = HttpResponse(status=200)
+            response["HX-Redirect"] = reverse("index")
+            return response
+        return redirect("index")
+
+    customer = utils.get_or_create_customer_from_session(request)
+    if not customer:
+        messages.info(request, _("Please create a customer profile first."))
+        if is_htmx:
+            response = HttpResponse(status=200)
+            response["HX-Redirect"] = reverse("create-customer")
+            return response
+        return redirect("create-customer")
+
+    plant = utils.single_plant(pk, request)
+    if not plant:
+        messages.error(request, _("Plant not found."))
+        if is_htmx:
+            response = HttpResponse(status=200)
+            response["HX-Redirect"] = reverse("plant-catalogue")
+            return response
+        return redirect("plant-catalogue")
+
+    quantity = 1
+    if request.method == "POST":
+        try:
+            quantity = int(request.POST.get("quantity", 1))
+            if quantity < 1:
+                quantity = 1
+        except (ValueError, TypeError):
+            quantity = 1
+
+    max_items = (
+        None
+        if customer.application and customer.application.priority == 1
+        else utils.MAX_NON_PRIORITY_CART_ITEMS
+    )
+    if max_items is not None:
+        current_total = utils.get_cart_total(request)
+        if current_total + quantity > max_items:
+            messages.error(
+                request,
+                _(
+                    "You can only order up to %(max_items)d items with your current application."
+                )
+                % {"max_items": max_items},
+            )
+            if is_htmx:
+                response = render(request, "core/_messages.html", status=200)
+                response["HX-Trigger"] = json.dumps({"cartChanged": current_total})
+                response["HX-Retarget"] = "#messages"
+                response["HX-Reswap"] = "innerHTML"
+                return response
+            return redirect("shopping-cart")
+
+    cart_item = utils.add_to_cart(request, plant, quantity)
+    if cart_item:
+        messages.success(
+            request,
+            _("Added %(quantity)d %(plant)s to cart.")
+            % {"quantity": quantity, "plant": plant.latin_name},
+        )
+    else:
+        messages.error(request, _("Could not add item to cart."))
+
+    if is_htmx:
+        # For HTMX requests, return a small trigger header with the updated cart count
+        # so client can update the cart indicator without a full page refresh.
+        new_count = utils.get_cart_total(request)
+        response = HttpResponse(status=200)
+        response["HX-Trigger"] = json.dumps({"cartChanged": new_count})
+        return response
+
+    # For regular requests, redirect
+    next_url = request.POST.get("next", request.GET.get("next", "shopping-cart"))
+    return redirect(next_url)
+
+
+def update_cart_item(request, pk):
+    """
+    Update the quantity of an item in the shopping cart.
+    POST only: Expects 'quantity' in POST data
+    """
+    if not request.library_settings.is_shop_open:
+        messages.info(request, _("The seed shop is currently closed."))
+        return redirect("index")
+
+    customer = utils.get_or_create_customer_from_session(request)
+    if not customer:
+        return redirect("create-customer")
+
+    if request.method != "POST":
+        return redirect("shopping-cart")
+
+    plant = utils.single_plant(pk, request)
+    if not plant:
+        messages.error(request, _("Plant not found."))
+        return redirect("shopping-cart")
+
+    try:
+        quantity = int(request.POST.get("quantity", 0))
+    except (ValueError, TypeError):
+        quantity = 0
+
+    if quantity <= 0:
+        utils.remove_from_cart(request, plant)
+        messages.success(request, _("Item removed from cart."))
+    else:
+        updated_item = utils.update_cart_item(request, plant, quantity)
+        if updated_item:
+            messages.success(request, _("Cart updated."))
+        else:
+            max_items = (
+                None
+                if customer.application and customer.application.priority == 1
+                else utils.MAX_NON_PRIORITY_CART_ITEMS
+            )
+            if max_items is None:
+                messages.error(request, _("Could not update cart."))
+            else:
+                messages.error(
+                    request,
+                    _(
+                        "You can only order up to %(max_items)d items with your current application."
+                    )
+                    % {"max_items": max_items},
+                )
+
+    return redirect("shopping-cart")
+
+
+def remove_from_cart(request, pk):
+    """
+    Remove an item from the shopping cart.
+    POST only for safety.
+    """
+    if not request.library_settings.is_shop_open:
+        messages.info(request, _("The seed shop is currently closed."))
+        return redirect("index")
+
+    customer = utils.get_or_create_customer_from_session(request)
+    if not customer:
+        return redirect("create-customer")
+
+    if request.method != "POST":
+        return redirect("shopping-cart")
+
+    plant = utils.single_plant(pk, request)
+    if not plant:
+        messages.error(request, _("Plant not found."))
+        return redirect("shopping-cart")
+
+    utils.remove_from_cart(request, plant)
+    messages.success(
+        request, _("%(plant)s removed from cart.") % {"plant": plant.latin_name}
+    )
+
+    return redirect("shopping-cart")
+
+
+def checkout(request):
+    """
+    Display checkout form for reviewing order and adding donation.
+    GET: Display checkout review page
+    POST: Process order creation
+    """
+    if not request.library_settings.is_accepting_donations:
+        messages.info(request, _("Donations are currently not accepted."))
+        return redirect("shopping-cart")
+
+    customer = utils.get_or_create_customer_from_session(request)
+    if not customer:
+        return redirect("create-customer")
+
+    cart_items = utils.get_cart_items(request)
+    if not cart_items.exists():
+        messages.warning(request, _("Your cart is empty. Add seeds before checkout."))
+        return redirect("shopping-cart")
+
+    if request.method == "POST":
+        try:
+            donation_str = request.POST.get("donation_amount", "0")
+            # Handle both comma and period as decimal separator
+            donation_str = donation_str.replace(",", ".")
+            donation_amount = float(donation_str) if donation_str else 0
+            if donation_amount < 0:
+                donation_amount = 0
+        except (ValueError, TypeError):
+            donation_amount = 0
+
+        customer_note = request.POST.get("customer_note", "").strip()
+
+        order = utils.create_order_from_cart(
+            request,
+            donation_amount=donation_amount,
+            customer_note=customer_note,
+        )
+
+        if order:
+            messages.success(
+                request,
+                _("Order created successfully! Order #%(order_id)d")
+                % {"order_id": order.id},
+            )
+            return redirect("order-confirmation", pk=order.id)
+        else:
+            messages.error(request, _("Could not create order. Please try again."))
+
+    item_count = utils.get_cart_total(request)
+    context = {
+        "customer": customer,
+        "cart_items": cart_items,
+        "item_count": item_count,
+    }
+    return render(request, "project/checkout.html", context)
+
+
+def _parse_donation_amount(raw_amount):
+    normalized = (raw_amount or "").strip().replace(",", ".")
+    if not normalized:
+        return None
+
+    try:
+        amount = Decimal(normalized)
+    except (InvalidOperation, ValueError):
+        return None
+
+    if amount <= 0:
+        return None
+
+    return amount.quantize(Decimal("0.01"))
+
+
+def _get_min_donation_amount():
+    raw_min = getattr(settings, "STRIPE_DONATION_MIN_AMOUNT", Decimal("1.00"))
+    try:
+        return Decimal(str(raw_min)).quantize(Decimal("0.01"))
+    except (InvalidOperation, ValueError):
+        return Decimal("1.00")
+
+
+def _amount_from_minor_units(minor_units):
+    if minor_units is None:
+        return Decimal("0.00")
+    return (Decimal(minor_units) / Decimal("100")).quantize(Decimal("0.01"))
+
+
+def _is_true(value):
+    return str(value).strip().lower() in {"1", "true", "yes", "on"}
+
+
+def _upsert_donation_from_checkout_session(session):
+    amount = _amount_from_minor_units(session.get("amount_total"))
+    metadata = session.get("metadata") or {}
+    customer_details = session.get("customer_details") or {}
+
+    donation, _ = models.Donation.objects.get_or_create(
+        stripe_checkout_session_id=session.get("id", ""),
+        defaults={
+            "amount": amount,
+            "currency": (session.get("currency") or settings.STRIPE_DONATION_CURRENCY),
+            "status": models.Donation.STATUS_SUCCEEDED,
+            "is_recurring": session.get("mode") == "subscription"
+            or _is_true(metadata.get("is_recurring")),
+            "stripe_payment_intent_id": session.get("payment_intent") or "",
+            "stripe_subscription_id": session.get("subscription") or "",
+            "stripe_customer_id": session.get("customer") or "",
+            "donor_email": customer_details.get("email", ""),
+            "donor_name": customer_details.get("name", ""),
+            "metadata": metadata,
+            "paid_at": timezone.now(),
+        },
+    )
+
+    # Keep checkout-linked donation current if later session payload has more details.
+    donation.amount = amount
+    donation.currency = session.get("currency") or settings.STRIPE_DONATION_CURRENCY
+    donation.status = models.Donation.STATUS_SUCCEEDED
+    donation.is_recurring = session.get("mode") == "subscription" or _is_true(
+        metadata.get("is_recurring")
+    )
+    donation.stripe_payment_intent_id = session.get("payment_intent") or ""
+    donation.stripe_subscription_id = session.get("subscription") or ""
+    donation.stripe_customer_id = session.get("customer") or ""
+    donation.donor_email = customer_details.get("email", "")
+    donation.donor_name = customer_details.get("name", "")
+    donation.metadata = metadata
+    donation.paid_at = donation.paid_at or timezone.now()
+    donation.save()
+
+
+def _upsert_donation_from_invoice(invoice, status):
+    amount = _amount_from_minor_units(
+        invoice.get("amount_paid") or invoice.get("amount_due")
+    )
+    invoice_id = invoice.get("id") or ""
+    if not invoice_id:
+        return
+
+    donation, _ = models.Donation.objects.get_or_create(
+        stripe_invoice_id=invoice_id,
+        defaults={
+            "amount": amount,
+            "currency": (invoice.get("currency") or settings.STRIPE_DONATION_CURRENCY),
+            "status": status,
+            "is_recurring": bool(invoice.get("subscription")),
+            "stripe_subscription_id": invoice.get("subscription") or "",
+            "stripe_customer_id": invoice.get("customer") or "",
+            "stripe_payment_intent_id": invoice.get("payment_intent") or "",
+            "paid_at": (
+                timezone.now() if status == models.Donation.STATUS_SUCCEEDED else None
+            ),
+            "metadata": {"billing_reason": invoice.get("billing_reason", "")},
+        },
+    )
+
+    donation.amount = amount
+    donation.currency = invoice.get("currency") or settings.STRIPE_DONATION_CURRENCY
+    donation.status = status
+    donation.is_recurring = bool(invoice.get("subscription"))
+    donation.stripe_subscription_id = invoice.get("subscription") or ""
+    donation.stripe_customer_id = invoice.get("customer") or ""
+    donation.stripe_payment_intent_id = invoice.get("payment_intent") or ""
+    donation.metadata = {"billing_reason": invoice.get("billing_reason", "")}
+    if status == models.Donation.STATUS_SUCCEEDED:
+        donation.paid_at = donation.paid_at or timezone.now()
+    donation.save()
+
+
+def _process_donation_webhook_event(event):
+    event_type = event.get("type", "")
+    data_object = (event.get("data") or {}).get("object") or {}
+
+    if event_type == "checkout.session.completed":
+        _upsert_donation_from_checkout_session(data_object)
+    elif event_type == "invoice.paid":
+        _upsert_donation_from_invoice(data_object, models.Donation.STATUS_SUCCEEDED)
+    elif event_type == "invoice.payment_failed":
+        _upsert_donation_from_invoice(data_object, models.Donation.STATUS_FAILED)
+
+
+@csrf_exempt
+def stripe_webhook(request):
+    if request.method != "POST":
+        return HttpResponse(status=405)
+
+    if stripe is None:
+        return HttpResponse(status=503)
+
+    payload = request.body
+    signature = request.headers.get("stripe-signature", "")
+    webhook_secret = settings.STRIPE_WEBHOOK_SECRET
+    if not webhook_secret:
+        return HttpResponse(status=503)
+
+    try:
+        event = stripe.Webhook.construct_event(payload, signature, webhook_secret)
+    except Exception:
+        return HttpResponse(status=400)
+
+    try:
+        webhook_event, created = models.StripeWebhookEvent.objects.get_or_create(
+            stripe_event_id=event.get("id", ""),
+            defaults={
+                "event_type": event.get("type", ""),
+                "livemode": bool(event.get("livemode", False)),
+                "payload": event,
+            },
+        )
+    except DbIntegrityError:
+        return HttpResponse(status=200)
+
+    if not created:
+        return HttpResponse(status=200)
+
+    try:
+        _process_donation_webhook_event(event)
+    except Exception as exc:
+        webhook_event.processing_error = str(exc)
+        webhook_event.save(update_fields=["processing_error", "modified"])
+        return HttpResponse(status=500)
+
+    return HttpResponse(status=200)
+
+
+def donation_page(request):
+    if not request.library_settings.is_accepting_donations:
+        messages.info(request, _("Donations are currently not being accepted."))
+        return redirect("index")
+    min_amount = _get_min_donation_amount()
+    context = {
+        "preset_amounts": (5, 10, 20, 50, 100),
+        "min_amount": min_amount,
+        "stripe_publishable_key": settings.STRIPE_PUBLISHABLE_KEY,
+    }
+    return render(request, "project/donations.html", context)
+
+
+def create_donation_checkout_session(request):
+    if request.method != "POST":
+        return redirect("donation-page")
+
+    if stripe is None:
+        messages.error(
+            request,
+            _("Donation system is currently unavailable. Please try again later."),
+        )
+        return redirect("donation-page")
+
+    amount = _parse_donation_amount(request.POST.get("donation_amount"))
+    min_amount = _get_min_donation_amount()
+    if amount is None or amount < min_amount:
+        messages.error(
+            request,
+            _("Please enter a valid donation amount of at least $%(amount)s.")
+            % {"amount": min_amount},
+        )
+        return redirect("donation-page")
+
+    if not settings.STRIPE_SECRET_KEY or not settings.STRIPE_PUBLISHABLE_KEY:
+        messages.error(
+            request,
+            _("Donations are temporarily unavailable. Stripe keys are not configured."),
+        )
+        return redirect("donation-page")
+
+    is_recurring = request.POST.get("is_recurring") == "on"
+    stripe.api_key = settings.STRIPE_SECRET_KEY
+
+    donation_name = (
+        _("Monthly Donation - Ottawa Wildflower Seed Library")
+        if is_recurring
+        else _("One-time Donation - Ottawa Wildflower Seed Library")
+    )
+
+    line_item = {
+        "price_data": {
+            "currency": settings.STRIPE_DONATION_CURRENCY,
+            "unit_amount": int(amount * 100),
+            "product_data": {
+                "name": donation_name,
+            },
+        },
+        "quantity": 1,
+    }
+
+    if is_recurring:
+        line_item["price_data"]["recurring"] = {"interval": "month"}
+
+    try:
+        session = stripe.checkout.Session.create(
+            mode="subscription" if is_recurring else "payment",
+            payment_method_types=["card"],
+            line_items=[line_item],
+            success_url=request.build_absolute_uri(reverse("donation-success")),
+            cancel_url=request.build_absolute_uri(reverse("donation-cancel")),
+            metadata={
+                "is_recurring": str(is_recurring).lower(),
+                "donation_amount": str(amount),
+            },
+        )
+    except Exception:
+        messages.error(
+            request,
+            _("We could not start Stripe checkout. Please try again in a moment."),
+        )
+        return redirect("donation-page")
+
+    return redirect(session.url, permanent=False)
+
+
+def donation_success(request):
+    return render(request, "project/donation-success.html")
+
+
+def donation_cancel(request):
+    return render(request, "project/donation-cancel.html")
+
+
+def order_confirmation(request, pk):
+    """
+    Display order confirmation and summary.
+    Shows order details, items, and donation amount.
+    """
+    if not request.library_settings.is_shop_open:
+        messages.info(request, _("The seed shop is currently closed."))
+        return redirect("index")
+
+    try:
+        order = models.Order.objects.get(id=pk)
+    except models.Order.DoesNotExist:
+        messages.error(request, _("Order not found."))
+        return redirect("shopping-cart")
+
+    # Verify customer match (security check)
+    customer = utils.get_or_create_customer_from_session(request)
+    if customer and customer.id != order.customer.id:
+        messages.error(request, _("You do not have permission to view this order."))
+        return redirect("shopping-cart")
+
+    order_items = order.items.all().select_related("plant_profile")
+
+    context = {
+        "order": order,
+        "order_items": order_items,
+    }
+    return render(request, "project/order-confirmation.html", context)
+
+
+@group_required("Library Manager")
+def admin_order_seed_application_page(request):
+    """Dsisplay the use or application for seed ordering used to populate the selection options in the order seed application form."""
+
+    # Get all orders grouped by application and count the number of orders for each application.  Orders has a foreing key for customer which has a foreign key for application.  We want to count the number of orders for each application.  We can do this by using the values() method to group by application and then use annotate() to count the number of orders for each application.
+
+    # we need also to get the seed application even if there are no orders for that application.  We can do this by using the values() method to group by application and then use annotate() to count the number of orders for each application.  We can then use the union() method to combine the two querysets.
+
+    application_orders_breakdown = (
+        models.OrderSeedApplication.objects.annotate(
+            orders_count=Count("customers__orders")
+        )
+        .values(
+            "orders_count",
+            "seed_application",
+            "priority",
+            "id",
+        )
+        .order_by("priority")
+    )
+
+    context = {
+        "object_list": application_orders_breakdown,
+        "title": _("Seed Order Application"),
+        "url_name": "admin-order-seed-application-page",
+    }
+
+    if request.method == "POST":
+        form = forms.AdminOrderSeedApplicationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(
+                request, _("Seed order application submitted successfully.")
+            )
+            return redirect("plant-catalogue")
+        else:
+            messages.error(request, _("Please correct the errors below."))
+    else:
+        form = forms.AdminOrderSeedApplicationForm()
+
+    context["form"] = form
+    return render(
+        request, "project/admin/admin-order-seed-application-page.html", context
+    )
+
+
+@group_required("Library Manager")
+def admin_order_seed_application_add(request):
+    context = {
+        "title": _("Register New Seed Order Application"),
+        "url_name": "admin-order-seed-application-page",
+    }
+    if request.method == "POST":
+        form = forms.AdminOrderSeedApplicationForm(request.POST)
+        if form.is_valid():
+            context["form"] = form
+            obj: models.OrderSeedApplication = form.save(commit=False)
+            try:
+                form.save()
+            except IntegrityError:
+                messages.error(
+                    request,
+                    _("Seed Order Application %(application)s exists already.")
+                    % {"application": obj.use_or_application},
+                )
+                return render(
+                    request,
+                    "project/simple-form.html",
+                    context,
+                )
+        else:
+            messages.error(request, _("Seed Order Application not valid."))
+            context["form"] = form
+    else:
+        context["form"] = forms.AdminOrderSeedApplicationForm()
+
+    return render(request, "project/simple-form.html", context)
+
+
+@group_required("Library Manager")
+def admin_order_seed_application_update(request, pk):
+    """Update an existing seed order application used to populate the selection options in the order seed application form."""
+    obj = models.OrderSeedApplication.objects.get(id=pk)
+    form = forms.AdminOrderSeedApplicationForm(instance=obj)
+
+    if request.method == "POST":
+        form = forms.AdminOrderSeedApplicationForm(request.POST, instance=obj)
+        if form.is_valid():
+            form.save()
+            messages.success(request, _("Seed order application updated successfully."))
+            return redirect("admin-order-seed-application-page")
+
+    return render(
+        request,
+        "project/simple-form.html",
+        {
+            "form": form,
+            "title": _("Update Seed Order Application"),
+            "url_name": "admin-order-seed-application-page",
+        },
+    )
+
+
+@group_required("Library Manager")
+def admin_order_seed_application_delete(request, pk):
+    """Delete an existing seed order application used to populate the selection options in the order seed application form."""
+    obj: models.OrderSeedApplication = models.OrderSeedApplication.objects.get(id=pk)
+    if request.method == "POST":
+        try:
+            obj.delete()
+        except RestrictedError as e:
+            msg = e.args[0].split(":")[0] + " : "
+            fkeys = []
+            for fk in e.restricted_objects:
+                fkeys.append(fk.use_or_application)
+            msg = msg + ", ".join(fkeys)
+            messages.warning(request, msg)
+        return redirect("admin-order-seed-application-page")
+    context = {"object": obj, "back": "admin-order-seed-application-page"}
+    return render(request, "core/delete-object.html", context)
+
+
 @group_required("Library Manager")
 def admin_narrative_type_page(request):
     obj = models.NarrativeType.objects.annotate(
@@ -4209,3 +4921,164 @@ def admin_plant_narrative_delete(request, pk):
         "pk": plant.pk,
     }
     return render(request, "core/delete-object.html", context)
+
+
+@group_required("Library Manager")
+def admin_order_management_page(request):
+    """Display orders placed by customers for management purposes. Includes pagination and order status filtering."""
+    status_filter = request.GET.get("status")
+    orders = (
+        models.Order.objects.select_related("customer")
+        .prefetch_related("items__plant_profile")
+        .order_by("-order_date")
+    )
+    if status_filter in dict(models.Order.ORDER_STATUS_CHOICES):
+        orders = orders.filter(status=status_filter)
+
+    order_status_choices = models.Order.ORDER_STATUS_CHOICES
+    # Pagination
+    paginator = Paginator(orders, 20)
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
+    context = {
+        "title": _("Order Management"),
+        "page_obj": page_obj,
+        "order_status_choices": order_status_choices,
+        "url_name": "admin-order-management-page",
+    }
+    return render(request, "project/admin/admin-order-management-page.html", context)
+
+
+@group_required("Library Manager")
+def admin_order_detail_page(request, pk):
+    """Display detailed information about a specific order for management purposes."""
+    try:
+        order = (
+            models.Order.objects.select_related("customer")
+            .prefetch_related("items__plant_profile")
+            .get(id=pk)
+        )
+    except models.Order.DoesNotExist:
+        messages.error(request, _("Order not found."))
+        return redirect("admin-order-management-page")
+
+    context = {
+        "title": _("Order #%(order_id)d") % {"order_id": order.id},
+        "order": order,
+        "order_items": order.items.all().order_by("plant_profile__english_name"),
+        "url_name": "admin-order-management-page",
+    }
+    return render(request, "project/admin/admin-order-detail-page.html", context)
+
+
+@group_required("Library Manager")
+def admin_order_detail_pdf(request, pk):
+    """Generate a PDF summary of a specific order for management purposes."""
+    try:
+        order = (
+            models.Order.objects.select_related("customer")
+            .prefetch_related("items__plant_profile")
+            .get(id=pk)
+        )
+    except models.Order.DoesNotExist:
+        messages.error(request, _("Order not found."))
+        return redirect("admin-order-management-page")
+
+    pdf = utils.order_to_pdf(order)
+    if pdf:
+        response = HttpResponse(pdf, content_type="application/pdf")
+        filename = f"Order_{order.id}.pdf"
+        content = f"inline; filename={filename}"
+        response["Content-Disposition"] = content
+        return response
+    messages.error(request, _("Could not generate PDF."))
+    return redirect("admin-order-detail-page", pk=order.id)
+
+
+@group_required("Library Manager")
+def admin_order_pending_to_pdf(request):
+    """Generate a PDF document containing all pending orders for management purposes."""
+    orders = (
+        models.Order.objects.select_related("customer")
+        .prefetch_related("items__plant_profile")
+        .filter(status=models.Order.ORDER_STATUS_CHOICES[0][0])
+        .order_by("pk")
+    )
+
+    pdf = utils.render_many_orders_to_pdf(orders)
+    if pdf:
+        response = HttpResponse(pdf, content_type="application/pdf")
+        filename = "Pending_Orders.pdf"
+        content = f"inline; filename={filename}"
+        response["Content-Disposition"] = content
+        return response
+    messages.error(request, _("Could not generate PDF."))
+    return redirect("admin-order-management-page")
+
+
+@group_required("Library Manager")
+def admin_order_statistics_page(request):
+    """Display order statistics for management purposes."""
+    stats = utils.get_order_statistics()
+    context = {
+        "title": _("Order Statistics"),
+        "order_statistics": stats,
+        "url_name": "admin-order-statistics-page",
+    }
+    return render(request, "project/admin/admin-order-statistics-page.html", context)
+
+
+@group_required("Library Manager")
+def admin_most_ordered_seeds_page(request):
+    """Display the most ordered seeds for management purposes."""
+    most_ordered_seeds = utils.get_most_ordered_seeds(top_n=25)
+    context = {
+        "title": _("Most Ordered Seeds"),
+        "most_ordered_seeds": most_ordered_seeds,
+        "url_name": "admin-most-ordered-seeds-page",
+    }
+    return render(request, "project/admin/admin-most-ordered-seeds-page.html", context)
+
+
+def order_history(request):
+    """
+    Display order history for the current customer.
+    Shows all past orders with item counts and donation amounts.
+    """
+    customer = utils.get_or_create_customer_from_session(request)
+    if not customer:
+        return redirect("create-customer")
+
+    orders = models.Order.objects.filter(customer=customer).prefetch_related("items")
+
+    # Pagination
+    paginator = Paginator(orders, 10)
+    page_number = request.GET.get("page")
+    orders_page = paginator.get_page(page_number)
+
+    context = {
+        "customer": customer,
+        "orders": orders_page,
+    }
+    return render(request, "project/order-history.html", context)
+
+
+def clear_cart(request):
+    """
+    Clear all items from the shopping cart.
+    POST only for safety.
+    """
+    if request.method != "POST":
+        return redirect("shopping-cart")
+
+    customer = utils.get_or_create_customer_from_session(request)
+    if not customer:
+        return redirect("create-customer")
+
+    count = utils.clear_cart(request)
+    messages.success(
+        request,
+        _("Cleared %(count)d item(s) from cart.") % {"count": count},
+    )
+    return redirect("shopping-cart")

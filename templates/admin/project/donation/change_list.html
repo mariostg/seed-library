@@ -1,0 +1,16 @@
+{% extends "admin/change_list.html" %}
+
+{% block content_title %}
+  {{ block.super }}
+  {% if donation_totals %}
+    <div style="margin-top: 12px; padding: 12px; border: 1px solid #d0d7de; background: #f8fbff; border-radius: 6px;">
+      <strong>Filtered Donation Summary</strong>
+      <div style="margin-top: 8px; display: flex; gap: 18px; flex-wrap: wrap;">
+        <span>Count: {{ donation_totals.count }}</span>
+        <span>Total: {{ donation_totals.total_amount }}</span>
+        <span>Recurring: {{ donation_totals.recurring_amount }}</span>
+        <span>One-time: {{ donation_totals.one_time_amount }}</span>
+      </div>
+    </div>
+  {% endif %}
+{% endblock %}

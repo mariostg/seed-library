@@ -1,0 +1,44 @@
+{% load i18n %}
+{% if request.user.is_authenticated %}
+
+  <nav class="flex-row xcenter row-spacer">
+
+    {% if request.user.is_shop_manager %}
+      <div class="flex-col-center">
+        <div class="title">{% trans "Online Seed Order" %}</div>
+        <div>
+          <div>
+            <a href="{% url 'admin-order-seed-application-page' %}">{% trans "Manage Seed Applications" %}</a>
+          </div>
+          <div>
+            <a href="{% url 'admin-order-management-page' %}">{% trans "Manage Orders" %}</a>
+          </div>
+          <div>
+            <a href="{% url 'admin-order-statistics-page' %}">{% trans "Order Statistics" %}</a>
+          </div>
+          <div>
+            <a href="{% url 'admin-most-ordered-seeds-page' %}">{% trans "Most Ordered Seeds" %}</a>
+          </div>
+        </div>
+      </div>
+      <div class="flex-col-center">
+        <div class="title">{% trans "Shop Settings" %}</div>
+        <div>
+          <div>
+            <a href="{% url 'admin-library-settings' %}">{% trans "Library Settings" %}</a>
+          </div>
+          <div>
+            <a href="{% url 'admin-accept-all-seeds' %}">{% trans "Accept All Seeds" %}</a>
+          </div>
+          <div>
+            <a href="{% url 'admin-refuse-all-seeds' %}">{% trans "Refuse All Seeds" %}</a>
+          </div>
+          <div>
+            <a href="{% url 'update-availability' %}">{% trans "Update Availability" %}</a>
+          </div>
+        </div>
+      </div>
+    {% endif %}
+
+{% endif %}
+</nav>

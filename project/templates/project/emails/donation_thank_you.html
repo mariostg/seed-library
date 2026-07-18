@@ -1,0 +1,145 @@
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        background-color: #f9f9f9;
+      }
+      .email-container {
+        max-width: 600px;
+        margin: 0 auto;
+        background-color: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      }
+      .header {
+        background-color: #ffc107;
+        color: #333;
+        padding: 20px;
+        border-radius: 8px 8px 0 0;
+        text-align: center;
+        margin: -20px -20px 20px -20px;
+      }
+      .header h1 {
+        margin: 0;
+        font-size: 28px;
+        color: #856404;
+      }
+      .section {
+        margin-bottom: 20px;
+        padding: 15px;
+        background-color: #fff9e6;
+        border-left: 4px solid #ffc107;
+      }
+      .section h3 {
+        margin-top: 0;
+        color: #856404;
+      }
+      .donation-highlight {
+        background-color: #fff3cd;
+        border: 2px solid #ffc107;
+        padding: 15px;
+        border-radius: 4px;
+        text-align: center;
+        margin: 20px 0;
+      }
+      .donation-amount {
+        font-size: 32px;
+        font-weight: bold;
+        color: #28a745;
+        margin: 10px 0;
+      }
+      .impact-list {
+        list-style: none;
+        padding: 0;
+        margin: 15px 0;
+      }
+      .impact-list li {
+        padding: 10px;
+        background-color: white;
+        border-radius: 4px;
+        margin-bottom: 8px;
+        border-left: 4px solid #28a745;
+      }
+      .impact-list li::before {
+        content: "✓ ";
+        color: #28a745;
+        font-weight: bold;
+        margin-right: 8px;
+      }
+      .footer {
+        text-align: center;
+        padding-top: 20px;
+        border-top: 1px solid #eee;
+        font-size: 12px;
+        color: #666;
+      }
+      .heart {
+        color: #e74c3c;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="email-container">
+      <div class="header">
+        <h1>{% trans "Thank You!" %} <span class="heart">❤</span></h1>
+        <p>{% trans "Your generosity means the world to us" %}</p>
+      </div>
+
+      <p>{% blocktrans with name=customer.name %}Dear {{ name }},{% endblocktrans %}</p>
+      <p>{% trans "We are deeply grateful for your generous donation to the Wildflower Seed Library. Your support helps us continue our vital conservation work." %}</p>
+
+      <div class="donation-highlight">
+        <div style="font-size: 14px; color: #666;">{% trans "Your Donation" %}</div>
+        <div class="donation-amount">${{ order.donation_amount }}</div>
+        <div style="font-size: 12px; color: #666;">{{ order.order_date|date:"F j, Y" }}</div>
+      </div>
+
+      <div class="section">
+        <h3>{% trans "Your Impact" %}</h3>
+        <p>{% trans "Your donation directly supports:" %}</p>
+        <ul class="impact-list">
+          <li>{% trans "Preserving and promoting native plant species" %}</li>
+          <li>{% trans "Educating the community about local biodiversity" %}</li>
+          <li>{% trans "Maintaining and expanding our seed library" %}</li>
+          <li>{% trans "Supporting conservation efforts in our region" %}</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h3>{% trans "What's Next?" %}</h3>
+        <p>{% trans "In addition to your donation, you've also ordered seeds from our library. Here's what you can expect:" %}</p>
+        <ul style="margin: 10px 0; padding-left: 20px;">
+          <li>{% trans "Your seeds will be prepared and packaged within 2-4 weeks" %}</li>
+          <li>{% trans "You'll receive shipping confirmation with tracking details" %}</li>
+          <li>{% trans "Enjoy growing your plants and helping restore local ecosystems!" %}</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h3>{% trans "Join Our Community" %}</h3>
+        <p>{% trans "Your donation makes you an important part of our conservation mission. Stay connected to learn more about:" %}</p>
+        <ul style="margin: 10px 0; padding-left: 20px;">
+          <li>{% trans "Upcoming seed distribution events" %}</li>
+          <li>{% trans "Native plant conservation tips" %}</li>
+          <li>{% trans "Community gardening initiatives" %}</li>
+        </ul>
+      </div>
+
+      <div class="footer">
+        <p style="margin: 10px 0;">{% trans "From the bottom of our hearts, thank you!" %}</p>
+        <p style="margin: 10px 0; font-weight: bold;">{% trans "Wildflower Seed Library Team" %}</p>
+        <p style="margin: 20px 0 0 0; font-size: 11px; color: #999;">
+          {% trans "If you have any questions about your donation or order, please don't hesitate to contact us." %}
+        </p>
+      </div>
+    </div>
+  </body>
+</html>
