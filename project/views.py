@@ -5032,7 +5032,7 @@ def admin_order_statistics_page(request):
 @group_required("Library Manager")
 def admin_most_ordered_seeds_page(request):
     """Display the most ordered seeds for management purposes."""
-    most_ordered_seeds = utils.get_most_ordered_seeds()
+    most_ordered_seeds = utils.get_most_ordered_seeds(top_n=25)
     context = {
         "title": _("Most Ordered Seeds"),
         "most_ordered_seeds": most_ordered_seeds,
