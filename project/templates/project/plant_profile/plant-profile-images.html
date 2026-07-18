@@ -19,6 +19,9 @@
                 <div class="plant-card-info"> {{ image.title|default:"&nbsp;" }}</div>
                 <div class="plant-card-info"> {{ image.description|default:"&nbsp;" }}</div>
                 <div class="plant-card-info">{% trans "Morphology Aspect" %}: {{ image.morphology_aspect|default:"&nbsp;" }}</div>
+                {% if request.user.is_image_manager %}
+                  <div class="plant-card-info">{% trans "File path" %}: {{ image.image }}</div>
+                {% endif %}
               {% else %}
                 <img src="{% static 'images/plant-placeholder.png' %}" alt="{% trans "No image available" %}">
               {% endif %}
