@@ -157,6 +157,10 @@ def plant_profile_page(request, pk):
     is_valid_video_url = utils.is_valid_url(plant.harvesting_video_link)
     if not is_valid_video_url:
         plant.harvesting_video_link = ""
+
+    # get the plant image whose morphology_aspect is "plant"
+    plant_image = plant.images.filter(morphology_aspect__element="Plant").first()
+
     context = {
         "plant": plant,
         "image_count": image_count,
@@ -173,6 +177,7 @@ def plant_profile_page(request, pk):
         "seed_storage_list": seed_storage_list,
         "harvesting_mean_list": harvesting_mean_list,
         "harvesting_indicator_list": harvesting_indicator_list,
+        "plant_image": plant_image,
     }
     return render(request, "project/plant_profile/plant-profile-page.html", context)
 

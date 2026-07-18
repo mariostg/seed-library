@@ -11,13 +11,13 @@
         <!-- Plant Profile Header -->
       <div class="plant-profile-header">
         <div class="plant-profile-image">
-          {% if plant.images.first.image %}
-            <img src="{{ plant.images.first.image.url }}" alt="{% trans "Image of" %} {{plant.latin_name}}">
-            {% if plant.images.first.photo_author %}
-              <div class="plant-card-source">{% trans "Source" %}: {{ plant.images.first.photo_author }}</div>
+          {% if plant_image %}
+            <img src="{{ plant_image.image.url }}" alt="{% trans "Image of" %} {{plant.latin_name}}">
+            {% if plant_image.photo_author %}
+              <div class="plant-card-source">{% trans "Source" %}: {{ plant_image.photo_author }}</div>
             {% endif %}
-            {% if plant.images.first.title %}<div class="plant-card-source"> {{ plant.images.first.title }}</div>{% endif %}
-            {% if plant.images.first.description %}<div class="plant-card-source"> {{ plant.images.first.description }}</div>{% endif %}
+            {% if plant_image.title %}<div class="plant-card-source"> {{ plant_image.title }}</div>{% endif %}
+            {% if plant_image.description %}<div class="plant-card-source"> {{ plant_image.description }}</div>{% endif %}
           {% else %}
             <img src="{% static 'images/plant-placeholder.png' %}" alt="{% trans "No image available" %}">
           {% endif %}
