@@ -1749,7 +1749,7 @@ class PlantComplementary(models.Model):
         unique_together = ("plant_profile", "complement")
         constraints = [
             models.CheckConstraint(
-                check=~models.Q(plant_profile=models.F("complement")),
+                condition=~models.Q(plant_profile=models.F("complement")),
                 name="different_plants",
             )
         ]
