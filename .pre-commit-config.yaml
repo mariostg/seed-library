@@ -41,8 +41,11 @@ repos:
     rev: 3.0.6
     hooks:
       - id: djcss
+        exclude: ^static/vendor/
       - id: djjs
+        exclude: ^static/vendor/
       - id: djhtml
+        exclude: ^static/vendor/
         args:
           - --tabwidth=2
 
