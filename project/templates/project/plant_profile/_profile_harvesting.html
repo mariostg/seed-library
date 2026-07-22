@@ -7,6 +7,9 @@
     {% if plant.harvesting_start %}
       <li>{% trans "Harvest start month" %}: {{ plant.harvesting_start|month_name }}</li>
     {% endif %}
+    {% if plant.seed_per_envelope%}
+      <li>{% trans "Seed per envelope" %}: {{ plant.seed_per_envelope }}</li>
+    {% endif %}
 
     <li>{% trans "Harvesting indicator" %}:
       {% if harvesting_indicator_list %}

@@ -14,17 +14,23 @@
         {% csrf_token %}
         <div class="inputs">
 
-          <fieldset class="form-group">
-            <legend>{% trans "Harvesting Start Month" %}</legend>
-            <div class="input-select">
-              <select id="id_harvesting_start" name="harvesting_start" class="input">
-                <option value="">---------</option>
-                {% for month_number, month_name in harvesting_months.items %}
-                  <option value="{{ month_number }}" {% if plant.harvesting_start == month_number %}selected{% endif %}>{{ month_name }}</option>
-                {% endfor %}
-              </select>
-            </div>
-          </fieldset>
+          <div class="flex-row">
+            <fieldset class="form-group">
+              <legend>{% trans "Harvesting Start Month" %}</legend>
+              <div class="input-select">
+                <select id="id_harvesting_start" name="harvesting_start" class="input">
+                  <option value="">---------</option>
+                  {% for month_number, month_name in harvesting_months.items %}
+                    <option value="{{ month_number }}" {% if plant.harvesting_start == month_number %}selected{% endif %}>{{ month_name }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </fieldset>
+            <fieldset class="form-group">
+              <legend>{% trans "Seed Per Envelope" %}</legend>
+              <input class='wide' type="number" id="id_seed_per_envelope" name="seed_per_envelope" value="{{ plant.seed_per_envelope }}">
+            </fieldset>
+          </div>
 
           <fieldset class="form-group">
             <legend>{% trans "Harvesting Indicator" %}</legend>

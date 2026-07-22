@@ -614,6 +614,7 @@ class PlantHarvestingForm(forms.ModelForm):
         model = models.PlantProfile
         fields = [
             "harvesting_start",
+            "seed_per_envelope",
             "harvesting_indicator",
             "harvesting_mean",
             "seed_viability_test",

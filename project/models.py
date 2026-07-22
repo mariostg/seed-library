@@ -793,6 +793,8 @@ class PlantProfile(Base):
             seed_storage (ForeignKey): Reference to SeedStorage model
             one_cultivar (ForeignKey): Reference to OneCultivar model
             seed_storage_label_info (ForeignKey): Reference to SeedStorageLabelInfo model
+            seed_per_envelope (IntegerField): Number of seeds per envelope (optional, can be null, default 0)
+
 
         ## Sowing Information
             stratification_detail (CharField): Details about cold stratification requirements (max 55 chars)
@@ -1115,6 +1117,9 @@ class PlantProfile(Base):
         null=True,
         blank=True,
         verbose_name=_("Seed Storage"),
+    )
+    seed_per_envelope = models.IntegerField(
+        blank=True, null=True, default=0, verbose_name=_("Seed Per Envelope")
     )
     one_cultivar = models.ForeignKey(
         OneCultivar,
