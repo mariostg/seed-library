@@ -2,9 +2,16 @@ from io import StringIO
 
 from django.core.management import call_command
 from django.core.management.base import CommandError
-from django.test import TestCase
+from django.test import TestCase, override_settings
 
-from project.models import PlantProfile, StratificationDuration
+from project.models import (
+    Customer,
+    Order,
+    OrderItem,
+    OrderSeedApplication,
+    PlantProfile,
+    StratificationDuration,
+)
 
 
 class AnalyzePlantProfilesCommandTest(TestCase):
@@ -103,3 +110,96 @@ class AnalyzePlantProfilesCommandTest(TestCase):
         self.assertIn("Missing vascan taxon", output)
         self.assertNotIn("Has vascan taxon", output)
         self.assertIn("1 issue(s) found", output)
+
+
+class CreateDummyOrdersCommandTest(TestCase):
+    @override_settings(DEBUG=True)
+    def test_creates_orders_with_on_qc_and_varied_years(self):
+        for i in range(12):
+            PlantProfile.objects.create(
+                latin_name=f"Debug Seed Plant {i}",
+                inaturalist_taxon=str(10000 + i),
+            )
+
+        call_command(
+            "create_dummy_orders",
+            "--count",
+            "50",
+            "--seed",
+            "777",
+            "--from-year",
+            "2021",
+            "--to-year",
+            "2026",
+        )
+
+        self.assertEqual(Order.objects.count(), 50)
+        self.assertGreater(OrderItem.objects.count(), 0)
+
+        provinces = set(Customer.objects.values_list("province", flat=True))
+        self.assertIn("Ontario", provinces)
+        self.assertIn("Quebec", provinces)
+
+        years = set(Order.objects.values_list("order_date__year", flat=True).distinct())
+        self.assertGreaterEqual(len(years), 3)
+
+
+class DeleteDebugOrdersCommandTest(TestCase):
+    @override_settings(DEBUG=True)
+    def test_dry_run_does_not_delete_data(self):
+        for i in range(10):
+            PlantProfile.objects.create(
+                latin_name=f"Dry Run Plant {i}",
+                inaturalist_taxon=str(20000 + i),
+            )
+
+        call_command("create_dummy_orders", "--count", "8", "--seed", "5")
+        before = Order.objects.count()
+
+        call_command("delete_debug_orders", "--dry-run")
+
+        self.assertEqual(Order.objects.count(), before)
+
+    @override_settings(DEBUG=True)
+    def test_deletes_only_debug_generated_orders(self):
+        for i in range(10):
+            PlantProfile.objects.create(
+                latin_name=f"Delete Debug Plant {i}",
+                inaturalist_taxon=str(30000 + i),
+            )
+
+        call_command("create_dummy_orders", "--count", "6", "--seed", "9")
+
+        app = OrderSeedApplication.objects.create(
+            seed_application="Real user application",
+            priority=5,
+        )
+        real_customer = Customer.objects.create(
+            first_name="Real",
+            last_name="User",
+            email="real.user@example.org",
+            address="1 Main Street",
+            city="Ottawa",
+            province="Ontario",
+            postal_code="K1A 0A1",
+            application=app,
+        )
+        real_order = Order.objects.create(
+            customer=real_customer,
+            status="pending",
+            customer_note="Real order - keep me",
+        )
+        OrderItem.objects.create(
+            order=real_order,
+            plant_profile=PlantProfile.objects.first(),
+            quantity=2,
+        )
+
+        call_command("delete_debug_orders", "--delete-debug-customers")
+
+        self.assertEqual(Order.objects.filter(id=real_order.id).count(), 1)
+        self.assertEqual(Customer.objects.filter(id=real_customer.id).count(), 1)
+        self.assertEqual(
+            Order.objects.exclude(id=real_order.id).count(),
+            0,
+        )
