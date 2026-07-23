@@ -17,6 +17,7 @@ from django.http import FileResponse, HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.utils import timezone
+from django.utils.html import format_html
 from django.utils.translation import gettext as _
 from django.views.decorators.csrf import csrf_exempt
 from reportlab.lib.colors import black, pink, red
@@ -4821,9 +4822,10 @@ def admin_plant_narrative_page(request, pk):
     obj = models.PlantNarrative.objects.filter(plant_profile=plant).order_by(
         "narrative_type__narrative_type"
     )
+    plant_profile_url = reverse("plant-profile-page", kwargs={"pk": plant.pk})
+    ahref = format_html('<a href="{}">{}</a>', plant_profile_url, plant.latin_name)
     context = {
-        "title": _("Plant Narratives for %(latin_name)s")
-        % {"latin_name": plant.latin_name},
+        "title": format_html(_("Plant Narratives for {}"), ahref),
         "object_list": obj,
         "url_name": "admin-plant-narrative-page",
         "plant": plant,

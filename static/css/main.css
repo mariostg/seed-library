@@ -280,6 +280,10 @@ legend {
   color: white;
   padding: 3px 6px;
 }
+legend a {
+  color: white;
+  text-decoration: underline;
+}
 
 input {
   font-size: 1rem;
