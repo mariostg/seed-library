@@ -35,6 +35,11 @@ class Command(BaseCommand):
             help="Earliest year for generated orders (default: current year - 5).",
         )
         parser.add_argument(
+            "--city",
+            type=str,
+            help="City for generated orders (default: random).",
+        )
+        parser.add_argument(
             "--to-year",
             type=int,
             default=timezone.now().year,
@@ -55,6 +60,7 @@ class Command(BaseCommand):
         seed = options["seed"]
         from_year = options["from_year"]
         to_year = options["to_year"]
+        city = options["city"]
         clear_existing = options["clear_existing"]
 
         if count <= 0:
@@ -109,9 +115,10 @@ class Command(BaseCommand):
 
         for idx in range(count):
             province = "Ontario" if idx % 2 == 0 else "Quebec"
-            city = rng.choice(
-                ontario_cities if province == "Ontario" else quebec_cities
-            )
+            if not city:
+                city = rng.choice(
+                    ontario_cities if province == "Ontario" else quebec_cities
+                )
 
             customer = models.Customer.objects.create(
                 first_name=rng.choice(first_names),

@@ -1,0 +1,53 @@
+{% extends "core/base.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+  {% include "project/admin/admin_links.html" %}
+
+  <section class="container admin-page-content">
+    <h1>{{ title }}</h1>
+
+    <p>
+      {% blocktrans %}
+        This report groups orders by province, city, and postal code.
+      {% endblocktrans %}
+    </p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>{% trans "Province" %}</th>
+          <th>{% trans "City" %}</th>
+          <th>{% trans "Postal Code" %}</th>
+          <th>{% trans "Number of Orders" %}</th>
+          <th>{% trans "Order Volume" %}</th>
+          <th>{% trans "Total Donation Amount" %}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for stat in order_statistics %}
+          <tr>
+            <td>{{ stat.customer__province|default:"-" }}</td>
+            <td>{{ stat.customer__city|default:"-" }}</td>
+            <td>{{ stat.customer__postal_code|default:"-" }}</td>
+            <td>{{ stat.number_of_orders }}</td>
+            <td>
+              <div
+                style="display:inline-block; height:0.8rem; min-width:0.8rem; width:{% widthratio stat.number_of_orders 1 12 %}px; background:#4a7f52; border-radius:2px;"
+                title="{{ stat.number_of_orders }}"
+              ></div>
+            </td>
+            <td>{{ stat.total_donation_amount|default_if_none:0|floatformat:2 }}</td>
+          </tr>
+        {% empty %}
+          <tr>
+            <td colspan="6">{% trans "No location statistics available." %}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </section>
+{% endblock %}

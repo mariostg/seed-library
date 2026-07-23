@@ -898,6 +898,22 @@ def get_most_ordered_seeds(top_n=10):
     return most_ordered
 
 
+# order statistics by cities and postal codes.  The view should display a table with the following columns: city, postal code, number of orders, total donation amount.
+def get_order_statistics_by_location():
+    """Get order statistics by city and postal code."""
+    orders = (
+        Order.objects.values(
+            "customer__province", "customer__city", "customer__postal_code"
+        )
+        .annotate(
+            number_of_orders=Count("id"),
+            total_donation_amount=Sum("donation_amount"),
+        )
+        .order_by("customer__province", "customer__city", "customer__postal_code")
+    )
+    return orders
+
+
 # ============================================================================
 # EMAIL UTILITIES
 # ============================================================================

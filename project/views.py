@@ -5049,6 +5049,21 @@ def admin_order_statistics_page(request):
     return render(request, "project/admin/admin-order-statistics-page.html", context)
 
 
+# a view to display the order statistics by cities and postal codes.  The view should display a table with the following columns: city, postal code, number of orders, total donation amount.  The view should also display a chart with the number of orders by city and postal code.
+@group_required("Library Manager")
+def admin_order_statistics_by_location_page(request):
+    """Display order statistics by city and postal code for management purposes."""
+    stats = utils.get_order_statistics_by_location()
+    context = {
+        "title": _("Order Statistics by Location"),
+        "order_statistics": stats,
+        "url_name": "admin-order-statistics-by-location-page",
+    }
+    return render(
+        request, "project/admin/admin-order-statistics-by-location-page.html", context
+    )
+
+
 @group_required("Library Manager")
 def admin_most_ordered_seeds_page(request):
     """Display the most ordered seeds for management purposes."""

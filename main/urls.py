@@ -967,6 +967,11 @@ urlpatterns += i18n_patterns(
         views.admin_most_ordered_seeds_page,
         name="admin-most-ordered-seeds-page",
     ),
+    path(
+        _("admin-order-statistics-by-location-page/"),
+        views.admin_order_statistics_by_location_page,
+        name="admin-order-statistics-by-location-page",
+    ),
 )
 
 if settings.DEBUG:
