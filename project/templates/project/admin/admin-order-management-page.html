@@ -44,6 +44,8 @@
             <th>{% trans "Order ID" %}</th>
             <th>{% trans "Customer" %}</th>
             <th>{% trans "Order Date" %}</th>
+            <th>{% trans "Order Items" %}</th>
+            <th>{% trans "Seed Quantity" %}</th>
             <th>{% trans "Donation" %}</th>
             <th>{% trans "Application" %}</th>
             <th>{% trans "Status" %}</th>
@@ -57,7 +59,9 @@
               <td>{{ order.id }}</td>
               <td>{{ order.customer.first_name }} {{ order.customer.last_name }}</td>
               <td>{{ order.order_date }}</td>
-              <td>{{ order.donation }}</td>
+              <td>{{ order.orderitem_count }}</td>
+              <td>{{ order.total_seed_quantity|default_if_none:0 }}</td>
+              <td>{{ order.donation_amount }}</td>
               <td>{{ order.customer.application }}</td>
               <td>{{ order.status }}</td>
               <td>{% if order.customer.application %}{{ order.customer.application.priority }}{% else %}{% trans "N/A" %}{% endif %}</td>
@@ -69,7 +73,7 @@
             </tr>
           {% empty %}
             <tr>
-              <td colspan="8">{% trans "No orders found." %}</td>
+              <td colspan="10">{% trans "No orders found." %}</td>
             </tr>
           {% endfor %}
         </tbody>

@@ -11,7 +11,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Group, Permission
 from django.core.paginator import Paginator
 from django.db import IntegrityError
-from django.db.models import Count, RestrictedError
+from django.db.models import Count, RestrictedError, Sum
 from django.db.utils import IntegrityError as DbIntegrityError
 from django.http import FileResponse, HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
@@ -4950,6 +4950,10 @@ def admin_order_management_page(request):
     orders = (
         models.Order.objects.select_related("customer")
         .prefetch_related("items__plant_profile")
+        .annotate(
+            orderitem_count=Count("items", distinct=True),
+            total_seed_quantity=Sum("items__quantity"),
+        )
         .order_by("-order_date")
     )
     if status_filter in dict(models.Order.ORDER_STATUS_CHOICES):
