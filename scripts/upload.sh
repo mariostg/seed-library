@@ -83,9 +83,12 @@ print_usage() {
     echo
     echo "Commands:"
     echo "  (no command)            Dry-run sync to dev site"
-    echo "  dryrun-test-safe        Dry-run safe sync to dev site (skip newer remote files)"
-    echo "  sync-test               Sync code to dev site"
-    echo "  sync-test-safe          Sync code to dev site (skip newer remote files)"
+    echo "  dryrun-dev              Dry-run sync to dev site"
+    echo "  dryrun-test             Dry-run sync to test site"
+    echo "  dryrun-test-safe        Dry-run safe sync to test site (skip newer remote files)"
+    echo "  sync-dev                Sync code to dev site"
+    echo "  sync-test               Sync code to test site"
+    echo "  sync-test-safe          Sync code to test site (skip newer remote files)"
     echo "  dryrun-prod             Dry-run sync to prod site"
     echo "  sync-prod               Sync code to prod site"
     echo "  diff-dev <relative>     Diff local file against dev site file"
@@ -103,18 +106,46 @@ if [ $# -eq 0 ]; then #execute a dry run to dev site
     echo "--------------------"
     echo "Performed dry run on on dev site $DEVSITE"
     echo "--------------------"
+elif [ "$1" = 'dryrun-dev' ]; then #execute a dry run to dev site
+    rsync -avzn \
+    --checksum \
+    --filter 'protect /media/*' \
+    --exclude-from=rsync-exclude.txt \
+    --delete \
+    $SOURCE $DEVSITE
+    echo "--------------------"
+    echo "Performed dry run on dev site $DEVSITE"
+    echo "--------------------"
+elif [ "$1" = 'dryrun-test' ]; then #execute a dry run to test site
+    if [ -z "$TESTSITE" ]; then
+        echo "TESTSITE must be set in $ENV_FILE for test commands"
+        exit 1
+    fi
+    rsync -avzn \
+    --checksum \
+    --filter 'protect /media/*' \
+    --exclude-from=rsync-exclude.txt \
+    --delete \
+    $SOURCE $TESTSITE
+    echo "--------------------"
+    echo "Performed dry run on test site $TESTSITE"
+    echo "--------------------"
 elif [ "$1" = 'dryrun-test-safe' ]; then #execute a safe dry run to dev site
+    if [ -z "$TESTSITE" ]; then
+        echo "TESTSITE must be set in $ENV_FILE for test commands"
+        exit 1
+    fi
     rsync -avzn \
     --checksum \
     --filter 'protect /media/*' \
     --exclude-from=rsync-exclude.txt \
     --update \
     --delete \
-    $SOURCE $DEVSITE
+    $SOURCE $TESTSITE
     echo "--------------------"
-    echo "Performed safe dry run on dev site $DEVSITE (would skip newer remote files)"
+    echo "Performed safe dry run on test site $TESTSITE (would skip newer remote files)"
     echo "--------------------"
-elif [ $1 = 'sync-test' ];then #push codes to devsite
+elif [ "$1" = 'sync-dev' ]; then #push codes to devsite
     rsync -avz \
     --checksum \
     --filter 'protect /media/*' \
@@ -125,16 +156,35 @@ elif [ $1 = 'sync-test' ];then #push codes to devsite
     echo "Performed sync code to dev site $DEVSITE"
     echo "--------------------"
     print_translation_note
+elif [ "$1" = 'sync-test' ]; then #push code to test site
+    if [ -z "$TESTSITE" ]; then
+        echo "TESTSITE must be set in $ENV_FILE for test commands"
+        exit 1
+    fi
+    rsync -avz \
+    --checksum \
+    --filter 'protect /media/*' \
+    --exclude-from=rsync-exclude.txt \
+    --delete \
+    $SOURCE $TESTSITE
+    echo "--------------------"
+    echo "Performed sync code to test site $TESTSITE"
+    echo "--------------------"
+    print_translation_note
 elif [ "$1" = 'sync-test-safe' ]; then #push code to devsite, but never overwrite newer remote files
+    if [ -z "$TESTSITE" ]; then
+        echo "TESTSITE must be set in $ENV_FILE for test commands"
+        exit 1
+    fi
     rsync -avz \
     --checksum \
     --filter 'protect /media/*' \
     --exclude-from=rsync-exclude.txt \
     --update \
     --delete \
-    $SOURCE $DEVSITE
+    $SOURCE $TESTSITE
     echo "--------------------"
-    echo "Performed safe sync code to dev site $DEVSITE (skipped newer remote files)"
+    echo "Performed safe sync code to test site $TESTSITE (skipped newer remote files)"
     echo "--------------------"
     print_translation_note
 elif [ $1 = 'dryrun-prod' ]; then #execute a dry run on production site
