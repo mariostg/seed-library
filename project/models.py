@@ -1946,7 +1946,6 @@ class Order(Base):
         ("pending", _("Pending")),
         ("completed", _("Completed")),
         ("cancelled", _("Cancelled")),
-        ("shipped", _("Shipped")),
     ]
 
     customer = models.ForeignKey(
