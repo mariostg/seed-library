@@ -1,9 +1,6 @@
 {% extends "core/base.html" %}
 {% load i18n %}
 {% load static %}
-{% block extracss %}
-  <link rel="stylesheet" href="{% static 'project/css/plant-ecological-benefits.css' %}">
-{% endblock extracss %}
 {% block title %}{{ plant_profile.latin_name }} - {% trans "Ecological Benefits" %}{% endblock title %}
 {{ title }}
 {% block content %}
