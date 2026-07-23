@@ -95,6 +95,8 @@ def plant_profile_page(request, pk):
     if not plant:
         return render(request, "core/404.html", status=404)
 
+    plant_narratives = models.PlantNarrative.objects.filter(plant_profile=plant)
+
     image_count = plant.images.all().count()
 
     is_row_garden = plant.boulevard_garden_tolerant and plant.max_height <= 2
@@ -178,6 +180,7 @@ def plant_profile_page(request, pk):
         "harvesting_mean_list": harvesting_mean_list,
         "harvesting_indicator_list": harvesting_indicator_list,
         "plant_image": plant_image,
+        "plant_narratives": plant_narratives,
     }
     return render(request, "project/plant_profile/plant-profile-page.html", context)
 

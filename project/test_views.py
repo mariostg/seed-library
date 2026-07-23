@@ -4,7 +4,7 @@ from django.test import Client, TestCase, override_settings
 from django.urls import reverse
 from django.utils.translation import override
 
-from project.models import PlantProfile
+from project.models import PlantNarrative, PlantProfile
 
 
 class SearchPlantNameTest(TestCase):
@@ -129,3 +129,23 @@ class DonationViewsTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "project/donations.html")
         mock_stripe.checkout.Session.create.assert_not_called()
+
+
+class PlantProfilePageContextTest(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.plant = PlantProfile.objects.create(latin_name="Abies balsamea")
+        self.narrative = PlantNarrative.objects.create(
+            plant_profile=self.plant,
+            description="Narrative for profile page context test.",
+            published=True,
+        )
+        self.url = reverse("plant-profile-page", kwargs={"pk": self.plant.pk})
+
+    def test_context_contains_plant_narratives(self):
+        response = self.client.get(self.url)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertIn("plant_narratives", response.context)
+        narratives = response.context["plant_narratives"]
+        self.assertIn(self.narrative, narratives)
