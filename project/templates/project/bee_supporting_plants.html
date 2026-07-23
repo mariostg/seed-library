@@ -19,7 +19,14 @@
     <div>
       {% for bee in bees %}
         <article>
-          <div>{{ bee.latin_name }}</div>
+          <div>
+            {% if bee.inaturalist_taxon_id %}
+              <a target="_blank" href="https://www.inaturalist.org/taxa/{{bee.inaturalist_taxon_id}}">{{ bee.latin_name }}</a>
+            {% else %}
+              {{ bee.latin_name }}
+            {% endif %}
+            - {{ bee.english_name }} - {{ bee.french_name|default:"" }}
+          </div>
           <div>
             <ul>
               {% for plant in bee.plants.all %}

@@ -358,7 +358,13 @@ class AdminButterflySpeciesForm(forms.ModelForm):
 class AdminBeeSpeciesForm(forms.ModelForm):
     class Meta:
         model = models.BeeSpecies
-        fields = ["latin_name"]
+        fields = [
+            "latin_name",
+            "english_name",
+            "french_name",
+            "french_name_source",
+            "inaturalist_taxon_id",
+        ]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

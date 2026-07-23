@@ -547,6 +547,8 @@ class BeeSpecies(models.Model):
     This model stores the name of the bee species and provides a string representation.
     Attributes:
         latin_name (CharField): The scientific name of the bee species, max length 75 characters, unique.
+        english_name (CharField): The common name of the bee species in English, max length 75 characters, can be blank.
+        french_name (CharField): The common name of the bee species in French, max length 75 characters, can be blank.
     Returns:
         str: String representation of the bee species, which is its Latin name.
     Meta:
@@ -556,6 +558,19 @@ class BeeSpecies(models.Model):
 
     latin_name = models.CharField(
         max_length=75, blank=True, unique=True, verbose_name=_("Latin Name")
+    )
+    english_name = models.CharField(
+        max_length=75, blank=True, verbose_name=_("English Name")
+    )
+    french_name = models.CharField(
+        max_length=75, blank=True, verbose_name=_("French Name")
+    )
+    # source from where the french name was obtained.
+    french_name_source = models.CharField(
+        max_length=100, blank=True, verbose_name=_("French Name Source")
+    )
+    inaturalist_taxon_id = models.CharField(
+        max_length=50, blank=True, verbose_name=_("iNaturalist Taxon ID")
     )
 
     def __str__(self) -> str:

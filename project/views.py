@@ -2053,6 +2053,20 @@ def admin_butterfly_species_fetch_inaturalist_taxon_id(request, latin_name: str)
 
 
 @group_required("Library Manager")
+def admin_bee_species_fetch_inaturalist_taxon_id(request, latin_name: str):
+    # Using an htmx call, get the iNaturalist taxon ID for the given Latin name.
+    taxon_id = utils.get_inaturalist_taxon_id(latin_name)
+    if taxon_id:
+        models.BeeSpecies.objects.filter(latin_name=latin_name).update(
+            inaturalist_taxon_id=taxon_id
+        )
+        href = f"https://www.inaturalist.org/taxa/{taxon_id}"
+        anchor = f'<a href="{href}" target="_blank">{taxon_id}</a>'
+        return HttpResponse(anchor)
+    return HttpResponse("")
+
+
+@group_required("Library Manager")
 def admin_bee_species_page(request):
     data = models.BeeSpecies.objects.annotate(plant_count=Count("plants")).order_by(
         "latin_name"

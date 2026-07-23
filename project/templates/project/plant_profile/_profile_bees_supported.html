@@ -3,7 +3,20 @@
   {% if plant.bees.all %}
     <ul>
       {% for bee in plant.bees.all %}
-        <li>{{ bee.latin_name }}</li>
+        <li>
+          <i class="fas fa-bug text-primary me-2"></i>
+          {% if bee.inaturalist_taxon_id %}
+            <a href="https://www.inaturalist.org/taxa/{{ bee.inaturalist_taxon_id }}" target="_blank">{{ bee.latin_name }}</a>
+          {% else %}
+            {{ bee.latin_name }}
+          {% endif %}
+          {% if bee.english_name %}
+            <br><span class="text-muted fst-italic">{{ bee.english_name }}</span>
+          {% endif %}
+          {% if bee.french_name %}
+            <span class="text-muted fst-italic"> - {{ bee.french_name }}</span>
+          {% endif %}
+        </li>
       {% endfor %}
     </ul>
   {% else %}

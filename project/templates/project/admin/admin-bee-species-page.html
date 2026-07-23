@@ -16,6 +16,9 @@
         <thead>
           <tr></tr>
           <th>{% trans "Latin Name" %}</th>
+          <th>{% trans "English Name" %}</th>
+          <th>{% trans "French Name & Source" %}</th>
+          <th>{% trans "iNaturalist Taxon ID" %}</th>
           <th>{% trans "Plant Count" %}</th>
           <th>{% trans "Action" %}</th>
         </tr>
@@ -24,6 +27,23 @@
         {% for item in object_list %}
           <tr class="{% cycle 'odd-row' 'even-row' %}">
             <td>{{item.latin_name}}</td>
+            <td>{{item.english_name}}</td>
+            <td>{{item.french_name}}{% if item.french_name_source %} ({{item.french_name_source}}){% endif %}</td>
+            {% if item.inaturalist_taxon_id %}
+              <td> <a target="_blank" href="https://www.inaturalist.org/taxa/{{item.inaturalist_taxon_id}}">{{item.inaturalist_taxon_id}}</a></td>
+            {% else %}
+            <!--a url using htmx relying on inaturalist to attempt to get the inaturalist taxon_id. if successful, display it-->
+              <td>
+                <button
+                  class="btn btn-secondary btn-sm"
+                  hx-get="{% url 'admin-bee-species-fetch-inaturalist-taxon-id' item.latin_name %}"
+                  hx-target="this"
+                  hx-swap="outerHTML"
+                >
+                  {% trans "Fetch from iNaturalist" %}
+                </button>
+              </td>
+            {% endif %}
             <td>{{item.plant_count}}</td>
             {% if user.is_authenticated %}
               <td class="actions">

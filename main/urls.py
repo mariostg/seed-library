@@ -566,6 +566,11 @@ urlpatterns += i18n_patterns(
         views.admin_bee_species_delete,
         name="admin-bee-species-delete",
     ),
+    path(
+        _("admin-bee-species-fetch-inaturalist-taxon-id/<str:latin_name>/"),
+        views.admin_bee_species_fetch_inaturalist_taxon_id,
+        name="admin-bee-species-fetch-inaturalist-taxon-id",
+    ),
 )
 
 urlpatterns += i18n_patterns(
