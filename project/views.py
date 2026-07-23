@@ -4854,6 +4854,7 @@ def admin_plant_narrative_add(request, pk):
         "title": _("Add Plant Narrative for %(latin_name)s")
         % {"latin_name": plant.latin_name},
         "url_name": "admin-plant-narrative-page",
+        "url_plant_profile": reverse("plant-profile-page", kwargs={"pk": plant.pk}),
         "url_item": plant.pk,
         "plant": plant,
     }

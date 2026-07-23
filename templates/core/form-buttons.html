@@ -1,4 +1,7 @@
 <div class="btn-row">
   <a class='btn btn-back' href="{% if url_item %}{% url url_name url_item %}{% else %}{% url url_name %}{% endif %}" style='text-decoration:none;'>Table</a>
+  {% if url_plant_profile %}
+    <a class='btn btn-back' href="{{ url_plant_profile }}" style='text-decoration:none;'>Plant Profile</a>
+  {% endif %}
   <input class='btn' type="submit" value="Confirm" />
 </div>
