@@ -336,6 +336,10 @@ input.wide textarea.wide {
   background-color: #2196f3;
   color: #f3f3f3;
 }
+.alert--info a {
+  color: #f3f3f3;
+  text-decoration: underline;
+}
 
 .alert--success {
   background-color: #359e64;

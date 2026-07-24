@@ -1,10 +1,13 @@
+import io
 from unittest.mock import patch
 
+from django.contrib import messages as django_messages
+from django.contrib.auth.models import Group
 from django.test import Client, TestCase, override_settings
 from django.urls import reverse
 from django.utils.translation import override
 
-from project.models import PlantNarrative, PlantProfile
+from project.models import PlantNarrative, PlantProfile, ProjectUser
 
 
 class SearchPlantNameTest(TestCase):
@@ -149,3 +152,94 @@ class PlantProfilePageContextTest(TestCase):
         self.assertIn("plant_narratives", response.context)
         narratives = response.context["plant_narratives"]
         self.assertIn(self.narrative, narratives)
+
+
+class AdminPendingOrdersPdfAsyncTest(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.user = ProjectUser.objects.create_user(
+            username="manager",
+            password="test-pass-123",
+        )
+        library_manager_group, _ = Group.objects.get_or_create(name="Library Manager")
+        self.user.groups.add(library_manager_group)
+        self.client.force_login(self.user)
+
+    @patch("project.views.generate_pending_orders_pdf_task.delay")
+    def test_pending_pdf_enqueue_redirects_with_download_link(self, mock_delay):
+        mock_delay.return_value.id = "task-123"
+        with override("en"):
+            enqueue_url = reverse("admin-order-pending-to-pdf")
+            download_url = reverse(
+                "admin-order-pending-pdf-download",
+                kwargs={"task_id": "task-123"},
+            )
+
+        response = self.client.get(enqueue_url, follow=True)
+
+        self.assertEqual(response.status_code, 200)
+        mock_delay.assert_called_once_with()
+
+        messages = [str(message) for message in response.context["messages"]]
+        self.assertTrue(
+            any(
+                "Pending-orders PDF generation started." in message
+                for message in messages
+            )
+        )
+        self.assertTrue(any(download_url in message for message in messages))
+
+    @patch("project.views.AsyncResult")
+    def test_pending_pdf_download_not_ready_redirects_with_message(
+        self,
+        mock_async_result,
+    ):
+        mock_async_result.return_value.ready.return_value = False
+        with override("en"):
+            download_url = reverse(
+                "admin-order-pending-pdf-download", kwargs={"task_id": "task-123"}
+            )
+            order_management_url = reverse("admin-order-management-page")
+
+        response = self.client.get(
+            download_url,
+        )
+
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, order_management_url)
+        messages = [
+            str(message)
+            for message in django_messages.get_messages(response.wsgi_request)
+        ]
+        self.assertTrue(
+            any(
+                "Pending-orders PDF is still generating." in message
+                for message in messages
+            )
+        )
+
+    @patch("project.views.default_storage.open")
+    @patch("project.views.default_storage.exists")
+    @patch("project.views.AsyncResult")
+    def test_pending_pdf_download_ready_returns_pdf_response(
+        self,
+        mock_async_result,
+        mock_exists,
+        mock_open,
+    ):
+        mock_task = mock_async_result.return_value
+        mock_task.ready.return_value = True
+        mock_task.failed.return_value = False
+        mock_task.result = "generated/pending-orders/pending_orders_task-123.pdf"
+        mock_exists.return_value = True
+        mock_open.return_value = io.BytesIO(b"%PDF-1.4\n")
+        with override("en"):
+            download_url = reverse(
+                "admin-order-pending-pdf-download", kwargs={"task_id": "task-123"}
+            )
+
+        response = self.client.get(download_url)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response["Content-Type"], "application/pdf")
+        self.assertIn("Pending_Orders.pdf", response["Content-Disposition"])

@@ -4,11 +4,13 @@ import json
 from datetime import datetime
 from decimal import Decimal, InvalidOperation
 
+from celery.result import AsyncResult
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Group, Permission
+from django.core.files.storage import default_storage
 from django.core.paginator import Paginator
 from django.db import IntegrityError
 from django.db.models import Count, RestrictedError, Sum
@@ -33,6 +35,7 @@ except ImportError:  # pragma: no cover - dependency should be available in runt
 from project import filters, forms, models, utils, vascan
 from project.acl_handler import group_required
 from project.models import ProjectUser
+from project.tasks import generate_pending_orders_pdf_task
 
 
 # Create your views here.
@@ -5022,23 +5025,46 @@ def admin_order_detail_pdf(request, pk):
 
 @group_required("Library Manager")
 def admin_order_pending_to_pdf(request):
-    """Generate a PDF document containing all pending orders for management purposes."""
-    orders = (
-        models.Order.objects.select_related("customer")
-        .prefetch_related("items__plant_profile")
-        .filter(status=models.Order.ORDER_STATUS_CHOICES[0][0])
-        .order_by("pk")
+    """Queue generation of pending-orders PDF and return to order management page."""
+    task = generate_pending_orders_pdf_task.delay()
+    download_url = reverse(
+        "admin-order-pending-pdf-download", kwargs={"task_id": task.id}
     )
-
-    pdf = utils.render_many_orders_to_pdf(orders)
-    if pdf:
-        response = HttpResponse(pdf, content_type="application/pdf")
-        filename = "Pending_Orders.pdf"
-        content = f"inline; filename={filename}"
-        response["Content-Disposition"] = content
-        return response
-    messages.error(request, _("Could not generate PDF."))
+    messages.info(
+        request,
+        format_html(
+            '{} <a href="{}">{}</a>',
+            _("Pending-orders PDF generation started."),
+            download_url,
+            _("Download when ready"),
+        ),
+    )
     return redirect("admin-order-management-page")
+
+
+@group_required("Library Manager")
+def admin_order_pending_pdf_download(request, task_id):
+    """Download a generated pending-orders PDF when the Celery task is complete."""
+    task_result = AsyncResult(task_id)
+
+    if not task_result.ready():
+        messages.info(request, _("Pending-orders PDF is still generating."))
+        return redirect("admin-order-management-page")
+
+    if task_result.failed():
+        messages.error(request, _("Could not generate PDF."))
+        return redirect("admin-order-management-page")
+
+    file_path = task_result.result
+    if not file_path or not default_storage.exists(file_path):
+        messages.error(request, _("Generated PDF file is no longer available."))
+        return redirect("admin-order-management-page")
+
+    response = FileResponse(
+        default_storage.open(file_path, "rb"), content_type="application/pdf"
+    )
+    response["Content-Disposition"] = 'inline; filename="Pending_Orders.pdf"'
+    return response
 
 
 @group_required("Library Manager")

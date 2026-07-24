@@ -958,6 +958,11 @@ urlpatterns += i18n_patterns(
         name="admin-order-pending-to-pdf",
     ),
     path(
+        "admin-order-pending-pdf-download/<str:task_id>/",
+        views.admin_order_pending_pdf_download,
+        name="admin-order-pending-pdf-download",
+    ),
+    path(
         "admin-order-statistics-page/",
         views.admin_order_statistics_page,
         name="admin-order-statistics-page",
