@@ -4949,7 +4949,6 @@ def admin_plant_narrative_delete(request, pk):
 @group_required("Library Manager")
 def admin_order_management_page(request):
     """Display orders placed by customers for management purposes. Includes pagination and order status filtering."""
-    status_filter = request.GET.get("status")
     orders = (
         models.Order.objects.select_related("customer")
         .prefetch_related("items__plant_profile")
@@ -4959,19 +4958,30 @@ def admin_order_management_page(request):
         )
         .order_by("-order_date")
     )
-    if status_filter in dict(models.Order.ORDER_STATUS_CHOICES):
-        orders = orders.filter(status=status_filter)
+
+    sanitized_params = request.GET.copy()
+
+    order_filter = filters.OrderFilter(sanitized_params, queryset=orders)
+    filtered_orders = order_filter.qs
 
     order_status_choices = models.Order.ORDER_STATUS_CHOICES
+
+    # Preserve active filter query parameters in pagination links.
+    query_params = request.GET.copy()
+    query_params.pop("page", None)
+    query_string = query_params.urlencode()
+
     # Pagination
-    paginator = Paginator(orders, 20)
+    paginator = Paginator(filtered_orders, 20)
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
 
     context = {
         "title": _("Order Management"),
         "page_obj": page_obj,
+        "order_filter": order_filter,
         "order_status_choices": order_status_choices,
+        "query_string": query_string,
         "url_name": "admin-order-management-page",
     }
     return render(request, "project/admin/admin-order-management-page.html", context)

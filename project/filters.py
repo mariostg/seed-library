@@ -511,3 +511,44 @@ class PlantProfileFilter(django_filters.FilterSet):
             "bloom_end",
             "seed_availability",
         ]
+
+
+class OrderFilter(django_filters.FilterSet):
+    """Filters used on order management page"""
+
+    status = django_filters.CharFilter(
+        method="filter_status",
+    )
+    # filter for the year of the order's created_at date
+    order_year = django_filters.NumberFilter(
+        field_name="order_date",
+        lookup_expr="year",
+    )
+
+    # filter for customer first name
+    customer_first_name = django_filters.CharFilter(
+        field_name="customer__first_name",
+        lookup_expr="icontains",
+    )
+
+    # filter for customer last name
+    customer_last_name = django_filters.CharFilter(
+        field_name="customer__last_name",
+        lookup_expr="icontains",
+    )
+
+    # filter for an order date range, using the order_date field
+    order_date_after = django_filters.DateFilter(
+        field_name="order_date",
+        lookup_expr="gte",
+    )
+    order_date_before = django_filters.DateFilter(
+        field_name="order_date",
+        lookup_expr="lte",
+    )
+
+    def filter_status(self, queryset, name, value):
+        if value:
+            return queryset.filter(status=value)
+        else:
+            return queryset

@@ -1,13 +1,22 @@
 import io
+from datetime import datetime
 from unittest.mock import patch
 
 from django.contrib import messages as django_messages
 from django.contrib.auth.models import Group
 from django.test import Client, TestCase, override_settings
 from django.urls import reverse
+from django.utils import timezone
 from django.utils.translation import override
 
-from project.models import PlantNarrative, PlantProfile, ProjectUser
+from project.models import (
+    Customer,
+    Order,
+    OrderSeedApplication,
+    PlantNarrative,
+    PlantProfile,
+    ProjectUser,
+)
 
 
 class SearchPlantNameTest(TestCase):
@@ -243,3 +252,104 @@ class AdminPendingOrdersPdfAsyncTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response["Content-Type"], "application/pdf")
         self.assertIn("Pending_Orders.pdf", response["Content-Disposition"])
+
+
+class AdminOrderManagementFilterTest(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.user = ProjectUser.objects.create_user(
+            username="order-manager",
+            password="test-pass-123",
+        )
+        library_manager_group, _ = Group.objects.get_or_create(name="Library Manager")
+        self.user.groups.add(library_manager_group)
+        self.client.force_login(self.user)
+
+        self.application = OrderSeedApplication.objects.create(
+            seed_application="Personal Garden"
+        )
+
+        self.customer_one = Customer.objects.create(
+            first_name="John",
+            last_name="Smith",
+            email="john@example.com",
+            address="1 Main St",
+            city="Ottawa",
+            province="ON",
+            postal_code="A1A1A1",
+            application=self.application,
+        )
+        self.customer_two = Customer.objects.create(
+            first_name="Alice",
+            last_name="Brown",
+            email="alice@example.com",
+            address="2 Main St",
+            city="Ottawa",
+            province="ON",
+            postal_code="B2B2B2",
+            application=self.application,
+        )
+
+        self.order_pending = Order.objects.create(
+            customer=self.customer_one,
+            status="pending",
+        )
+        self.order_completed = Order.objects.create(
+            customer=self.customer_two,
+            status="completed",
+        )
+
+        Order.objects.filter(pk=self.order_pending.pk).update(
+            order_date=timezone.make_aware(datetime(2025, 6, 1, 12, 0, 0))
+        )
+        Order.objects.filter(pk=self.order_completed.pk).update(
+            order_date=timezone.make_aware(datetime(2024, 6, 1, 12, 0, 0))
+        )
+
+        self.order_pending.refresh_from_db()
+        self.order_completed.refresh_from_db()
+
+    def test_order_management_renders_filter_form(self):
+        with override("en"):
+            url = reverse("admin-order-management-page")
+
+        response = self.client.get(url)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'name="status"')
+        self.assertContains(response, 'name="order_year"')
+        self.assertContains(response, 'name="customer_first_name"')
+        self.assertContains(response, 'name="customer_last_name"')
+
+    def test_filter_by_status(self):
+        with override("en"):
+            url = reverse("admin-order-management-page")
+
+        response = self.client.get(url, {"status": "completed"})
+
+        self.assertEqual(response.status_code, 200)
+        orders = list(response.context["page_obj"].object_list)
+        self.assertEqual(len(orders), 1)
+        self.assertEqual(orders[0].id, self.order_completed.id)
+
+    def test_filter_by_order_year(self):
+        with override("en"):
+            url = reverse("admin-order-management-page")
+
+        response = self.client.get(url, {"order_year": "2025"})
+
+        self.assertEqual(response.status_code, 200)
+        orders = list(response.context["page_obj"].object_list)
+        self.assertEqual(len(orders), 1)
+        self.assertEqual(orders[0].id, self.order_pending.id)
+
+    def test_filter_by_customer_name(self):
+        with override("en"):
+            url = reverse("admin-order-management-page")
+
+        response = self.client.get(url, {"customer_last_name": "bro"})
+
+        self.assertEqual(response.status_code, 200)
+        orders = list(response.context["page_obj"].object_list)
+        self.assertEqual(len(orders), 1)
+        self.assertEqual(orders[0].id, self.order_completed.id)
