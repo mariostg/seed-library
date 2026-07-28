@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.core.exceptions import ValidationError
 from django.db import models
@@ -1923,7 +1924,7 @@ class OrderSeedApplication(models.Model):
         ordering = ["seed_application"]
 
 
-class Order(Base):
+class Order(models.Model):
     """
     A model representing a customer order for plant seeds.
 
@@ -1969,6 +1970,15 @@ class Order(Base):
         help_text=_("Optional donation amount in addition to seed order."),
     )
     customer_note = models.TextField(blank=True, verbose_name=_("Customer Notes"))
+    pdf_generated_at = models.DateTimeField(null=True, blank=True)
+    pdf_generated_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="generated_order_pdfs",
+    )
+    pdf_generated_count = models.PositiveIntegerField(default=0)
 
     def __str__(self) -> str:
         return f"Order #{self.id} - {self.customer.first_name} {self.customer.last_name} - {self.order_date.strftime('%Y-%m-%d')}"

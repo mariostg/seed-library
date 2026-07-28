@@ -4959,6 +4959,12 @@ def admin_order_management_page(request):
         .order_by("-order_date")
     )
 
+    pdf_status = request.GET.get("pdf_status")
+    if pdf_status == "printed":
+        orders = orders.filter(pdf_generated_at__isnull=False)
+    elif pdf_status == "not_printed":
+        orders = orders.filter(pdf_generated_at__isnull=True)
+
     sanitized_params = request.GET.copy()
 
     order_filter = filters.OrderFilter(sanitized_params, queryset=orders)
@@ -5036,7 +5042,7 @@ def admin_order_detail_pdf(request, pk):
 @group_required("Library Manager")
 def admin_order_pending_to_pdf(request):
     """Queue generation of pending-orders PDF and return to order management page."""
-    task = generate_pending_orders_pdf_task.delay()
+    task = generate_pending_orders_pdf_task.delay(generated_by_user_id=request.user.id)
     download_url = reverse(
         "admin-order-pending-pdf-download", kwargs={"task_id": task.id}
     )

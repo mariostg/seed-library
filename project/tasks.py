@@ -2,6 +2,7 @@ from datetime import timedelta
 
 from celery import shared_task
 from django.conf import settings
+from django.contrib.auth import get_user_model
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
@@ -86,7 +87,7 @@ def send_donation_thank_you_task(order_id):
 
 
 @shared_task(bind=True)
-def generate_pending_orders_pdf_task(self):
+def generate_pending_orders_pdf_task(self, generated_by_user_id=None):
     """Build a pending-orders PDF in the background and save it to storage."""
     cleanup_generated_pending_orders_pdfs()
 
@@ -97,7 +98,15 @@ def generate_pending_orders_pdf_task(self):
         .order_by("pk")
     )
 
-    pdf = render_many_orders_to_pdf(orders)
+    generated_by_user = None
+    if generated_by_user_id is not None:
+        User = get_user_model()
+        try:
+            generated_by_user = User.objects.get(id=generated_by_user_id)
+        except User.DoesNotExist:
+            pass
+
+    pdf = render_many_orders_to_pdf(orders, generated_by=generated_by_user)
     timestamp = timezone.now().strftime("%Y%m%d_%H%M%S")
     file_name = (
         f"{PENDING_ORDERS_PDF_DIR}/pending_orders_{timestamp}_{self.request.id}.pdf"

@@ -8,9 +8,10 @@ from typing import Literal, TypedDict
 import qrcode
 import requests
 from django.conf import settings
-from django.db.models import Count, Q, Sum
+from django.db.models import Count, F, Q, Sum
 from django.db.models.functions import ExtractYear
 from django.http import HttpRequest
+from django.utils import timezone
 from exif import Image
 from PIL import Image as PILImage
 from reportlab.lib import colors
@@ -822,7 +823,21 @@ def order_to_pdf(
     return None
 
 
-def render_many_orders_to_pdf(orders: list[Order]) -> BytesIO:
+def mark_orders_pdf_generated(orders: list[Order], generated_by=None):
+    """
+    Mark one or more orders as having a generated PDF.
+    """
+    if not orders:
+        return
+
+    Order.objects.filter(pk__in=[order.pk for order in orders]).update(
+        pdf_generated_at=timezone.now(),
+        pdf_generated_by=generated_by,
+        pdf_generated_count=F("pdf_generated_count") + 1,
+    )
+
+
+def render_many_orders_to_pdf(orders: list[Order], generated_by=None) -> BytesIO:
     """
     Render multiple customer orders as defined in Order model using reportlab.
 
@@ -849,6 +864,10 @@ def render_many_orders_to_pdf(orders: list[Order]) -> BytesIO:
             add_page_break=index < len(orders) - 1,
         )
     doc.build(elements)
+
+    if generated_by is not None:
+        mark_orders_pdf_generated(orders, generated_by=generated_by)
+
     pdf = buffer.getvalue()
     buffer.close()
     return pdf

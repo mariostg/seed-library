@@ -41,6 +41,7 @@
             <th>{% trans "Donation" %}</th>
             <th>{% trans "Application" %}</th>
             <th>{% trans "Status" %}</th>
+            <th>{% trans "PDF Generated" %}</th>
             <th>{% trans "Priority" %}</th>
             <th>{% trans "Views" %}</th>
           </tr>
@@ -56,6 +57,12 @@
               <td>{{ order.donation_amount }}</td>
               <td>{{ order.customer.application }}</td>
               <td>{{ order.status }}</td>
+              <td>{% if order.pdf_generated_at %}
+                {{ order.pdf_generated_at|date:"Y-m-d H:i" }} {{ order.pdf_generated_by }}
+              {% else %}
+                {% trans "Not Generated" %}
+              {% endif %}
+              </td>
               <td>{% if order.customer.application %}{{ order.customer.application.priority }}{% else %}{% trans "N/A" %}{% endif %}</td>
               <td>
                 <a href="{% url 'admin-order-detail-page' order.id %}">{% trans "HTML" %}</a>

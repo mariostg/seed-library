@@ -1,58 +1,94 @@
 {% load i18n %}
 
 <form method="get" action="{% url 'admin-order-management-page' %}" class="order-filter-form">
-  <fieldset>
+  <fieldset class="inputs">
     <legend>{% trans "Filter orders" %}</legend>
 
-    <label for="id_status">{% trans "Status" %}</label>
-    <select id="id_status" name="status">
-      <option value="">{% trans "All statuses" %}</option>
-      {% for status in order_status_choices %}
-        <option value="{{ status.0 }}" {% if request.GET.status == status.0 %}selected{% endif %}>{{ status.1 }}</option>
-      {% endfor %}
-    </select>
+    <fieldset>
+      <legend>Status</legend>
+      <div class="input-text">
+        <label for="id_status">{% trans "Order status" %}</label>
+        <select id="id_status" name="status">
+          <option value="">{% trans "All statuses" %}</option>
+          {% for status in order_status_choices %}
+            <option value="{{ status.0 }}" {% if request.GET.status == status.0 %}selected{% endif %}>{{ status.1 }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="input-select">
+        <label for="id_pdf_status">{% trans "PDF status" %}</label>
+        <select id="id_pdf_status" name="pdf_status">
+          <option value="">{% trans "All" %}</option>
+          <option value="printed" {% if request.GET.pdf_status == "printed" %}selected{% endif %}>
+            {% trans "Printed (PDF created)" %}
+          </option>
+          <option value="not_printed" {% if request.GET.pdf_status == "not_printed" %}selected{% endif %}>
+            {% trans "Not printed" %}
+          </option>
+        </select>
+      </div>
+    </fieldset>
 
-    <label for="id_customer_first_name">{% trans "Customer first name" %}</label>
-    <input
-      id="id_customer_first_name"
-      name="customer_first_name"
-      type="text"
-      value="{{ request.GET.customer_first_name|default:'' }}"
-    >
-    <label for="id_customer_last_name">{% trans "Customer last name" %}</label>
-    <input
-      id="id_customer_last_name"
-      name="customer_last_name"
-      type="text"
-      value="{{ request.GET.customer_last_name|default:'' }}"
-    >
+    <fieldset>
+      <legend>Customer</legend>
+      <div class="input-text">
+        <label for="id_customer_first_name">{% trans "Customer first name" %}</label>
+        <input
+          id="id_customer_first_name"
+          name="customer_first_name"
+          type="text"
+          value="{{ request.GET.customer_first_name|default:'' }}"
+        >
+      </div>
+      <div class="input-text">
+        <label for="id_customer_last_name">{% trans "Customer last name" %}</label>
+        <input
+          id="id_customer_last_name"
+          name="customer_last_name"
+          type="text"
+          value="{{ request.GET.customer_last_name|default:'' }}"
+        >
+      </div>
+    </fieldset>
 
-    <label for="id_order_year">{% trans "Order year" %}</label>
-    <input
-      id="id_order_year"
-      name="order_year"
-      type="number"
-      min="2000"
-      max="2100"
-      value="{{ request.GET.order_year|default:'' }}"
-    >
+    <fieldset>
+      <legend>Dates</legend>
+      <div class="input-text">
+        <label for="id_order_year">{% trans "Order year" %}</label>
+        <input
+          id="id_order_year"
+          name="order_year"
+          type="number"
+          min="2000"
+          max="2100"
+          value="{{ request.GET.order_year|default:'' }}"
+        >
+      </div>
+      <div class="input-text">
+        <label for="id_order_date_after">{% trans "Order date after" %}</label>
+        <input
+          id="id_order_date_after"
+          name="order_date_after"
+          type="date"
+          value="{{ request.GET.order_date_after|default:'' }}"
+        >
+      </div>
+      <div class="input-text">
+        <label for="id_order_date_before">{% trans "Order date before" %}</label>
+        <input
+          id="id_order_date_before"
+          name="order_date_before"
+          type="date"
+          value="{{ request.GET.order_date_before|default:'' }}"
+        >
+      </div>
+    </fieldset>
 
-    <label for="id_order_date_after">{% trans "Order date after" %}</label>
-    <input
-      id="id_order_date_after"
-      name="order_date_after"
-      type="date"
-      value="{{ request.GET.order_date_after|default:'' }}"
-    >
-    <label for="id_order_date_before">{% trans "Order date before" %}</label>
-    <input
-      id="id_order_date_before"
-      name="order_date_before"
-      type="date"
-      value="{{ request.GET.order_date_before|default:'' }}"
-    >
-
+  </fieldset>
+  <div class="btn-row">
     <button type="submit" class="btn">{% trans "Apply filters" %}</button>
     <a class="btn" href="{% url 'admin-order-management-page' %}">{% trans "Reset" %}</a>
-  </fieldset>
+  </div>
+
+
 </form>
