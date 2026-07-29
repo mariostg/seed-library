@@ -4946,7 +4946,7 @@ def admin_plant_narrative_delete(request, pk):
     return render(request, "core/delete-object.html", context)
 
 
-@group_required("Library Manager")
+@group_required("Shop Manager")
 def admin_order_management_page(request):
     """Display orders placed by customers for management purposes. Includes pagination and order status filtering."""
     orders = (
@@ -4993,7 +4993,7 @@ def admin_order_management_page(request):
     return render(request, "project/admin/admin-order-management-page.html", context)
 
 
-@group_required("Library Manager")
+@group_required("Shop Manager")
 def admin_order_filtered_to_pdf(request):
     """Queue generation of filtered-orders PDF and return to order management page."""
     task = generate_filtered_orders_pdf_task.delay(
@@ -5015,7 +5015,7 @@ def admin_order_filtered_to_pdf(request):
     return redirect("admin-order-management-page")
 
 
-@group_required("Library Manager")
+@group_required("Shop Manager")
 def admin_order_filtered_pdf_download(request, task_id):
     """Download a generated filtered-orders PDF when the Celery task is complete."""
     task_result = AsyncResult(task_id)
@@ -5062,7 +5062,7 @@ def admin_order_detail_page(request, pk):
     return render(request, "project/admin/admin-order-detail-page.html", context)
 
 
-@group_required("Library Manager")
+@group_required("Shop Manager")
 def admin_order_detail_pdf(request, pk):
     """Generate a PDF summary of a specific order for management purposes."""
     try:
@@ -5086,7 +5086,7 @@ def admin_order_detail_pdf(request, pk):
     return redirect("admin-order-detail-page", pk=order.id)
 
 
-@group_required("Library Manager")
+@group_required("Shop Manager")
 def admin_order_statistics_page(request):
     """Display order statistics for management purposes."""
     stats = utils.get_order_statistics()
@@ -5099,7 +5099,7 @@ def admin_order_statistics_page(request):
 
 
 # a view to display the order statistics by cities and postal codes.  The view should display a table with the following columns: city, postal code, number of orders, total donation amount.  The view should also display a chart with the number of orders by city and postal code.
-@group_required("Library Manager")
+@group_required("Shop Manager")
 def admin_order_statistics_by_location_page(request):
     """Display order statistics by city and postal code for management purposes."""
     stats = utils.get_order_statistics_by_location()
@@ -5113,7 +5113,7 @@ def admin_order_statistics_by_location_page(request):
     )
 
 
-@group_required("Library Manager")
+@group_required("Shop Manager")
 def admin_most_ordered_seeds_page(request):
     """Display the most ordered seeds for management purposes."""
     most_ordered_seeds = utils.get_most_ordered_seeds(top_n=25)
