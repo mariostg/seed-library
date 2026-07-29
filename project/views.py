@@ -4970,6 +4970,7 @@ def admin_order_management_page(request):
     order_filter = filters.OrderFilter(sanitized_params, queryset=orders)
     filtered_orders = order_filter.qs
 
+    order_count = filtered_orders.count()
     order_status_choices = models.Order.ORDER_STATUS_CHOICES
 
     # Preserve active filter query parameters in pagination links.
@@ -4989,6 +4990,7 @@ def admin_order_management_page(request):
         "order_status_choices": order_status_choices,
         "query_string": query_string,
         "url_name": "admin-order-management-page",
+        "order_count": order_count,
     }
     return render(request, "project/admin/admin-order-management-page.html", context)
 

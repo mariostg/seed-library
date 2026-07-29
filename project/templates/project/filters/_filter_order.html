@@ -85,6 +85,9 @@
     </fieldset>
 
   </fieldset>
+  <div>
+    Number of orders matching the current filters: {{ order_count }}
+  </div>
   <div class="btn-row">
     <button type="submit" class="btn">{% trans "Apply filters" %}</button>
     <a class="btn" href="{% url 'admin-order-management-page' %}">{% trans "Reset" %}</a>
