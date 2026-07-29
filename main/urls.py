@@ -963,6 +963,11 @@ urlpatterns += i18n_patterns(
         name="admin-order-filtered-pdf-download",
     ),
     path(
+        "admin-order-list-generated-pdfs/",
+        views.admin_order_list_generated_pdfs,
+        name="admin-order-list-generated-pdfs",
+    ),
+    path(
         "admin-order-statistics-page/",
         views.admin_order_statistics_page,
         name="admin-order-statistics-page",

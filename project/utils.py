@@ -873,6 +873,32 @@ def render_many_orders_to_pdf(orders: list[Order], generated_by=None) -> BytesIO
     return pdf
 
 
+def get_generated_filtered_orders_pdfs():
+    """
+    Get a list of generated filtered orders PDFs from the storage directory.
+    Returns a list of dictionaries with keys: 'filename', 'filepath', 'generated_at', 'generated_by'.
+    """
+    pdf_dir = Path(settings.MEDIA_ROOT, settings.GENERATED_ORDERS_PDF_DIR)
+    if not pdf_dir.exists():
+        return []
+
+    pdf_files = []
+    for pdf_file in pdf_dir.glob("*.pdf"):
+        generated_at = datetime.fromtimestamp(pdf_file.stat().st_mtime)
+        generated_by = (
+            None  # You may want to store this info in a metadata file or database
+        )
+        pdf_files.append(
+            {
+                "filename": pdf_file.name,
+                "filepath": str(pdf_file),
+                "generated_at": generated_at,
+                "generated_by": generated_by,
+            }
+        )
+    return sorted(pdf_files, key=lambda x: x["generated_at"], reverse=True)
+
+
 def get_order_statistics():
     """Get order statistics for dashboard display.
     Returns the following totals by year:

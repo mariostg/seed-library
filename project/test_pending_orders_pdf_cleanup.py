@@ -1,6 +1,7 @@
 from datetime import timedelta
 from unittest.mock import patch
 
+from django.conf import settings
 from django.test import SimpleTestCase
 from django.utils import timezone
 
@@ -15,9 +16,9 @@ class GeneratedOrdersPdfCleanupTests(SimpleTestCase):
         recent_time = now - timedelta(hours=12)
 
         def listdir_side_effect(path):
-            if path == tasks.GENERATED_ORDERS_PDF_DIR:
+            if path == settings.GENERATED_ORDERS_PDF_DIR:
                 return (["nested"], ["old.pdf", "recent.pdf"])
-            if path == f"{tasks.GENERATED_ORDERS_PDF_DIR}/nested":
+            if path == f"{settings.GENERATED_ORDERS_PDF_DIR}/nested":
                 return ([], ["old_nested.pdf"])
             return ([], [])
 
@@ -32,9 +33,11 @@ class GeneratedOrdersPdfCleanupTests(SimpleTestCase):
         deleted_count = tasks.cleanup_generated_orders_pdfs(retention_days=1)
 
         self.assertEqual(deleted_count, 2)
-        mock_storage.delete.assert_any_call(f"{tasks.GENERATED_ORDERS_PDF_DIR}/old.pdf")
         mock_storage.delete.assert_any_call(
-            f"{tasks.GENERATED_ORDERS_PDF_DIR}/nested/old_nested.pdf"
+            f"{settings.GENERATED_ORDERS_PDF_DIR}/old.pdf"
+        )
+        mock_storage.delete.assert_any_call(
+            f"{settings.GENERATED_ORDERS_PDF_DIR}/nested/old_nested.pdf"
         )
         self.assertEqual(mock_storage.delete.call_count, 2)
 

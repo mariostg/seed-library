@@ -17,7 +17,6 @@ from project.utils import (
     send_order_confirmation_email,
 )
 
-GENERATED_ORDERS_PDF_DIR = "generated/filtered-orders"
 DEFAULT_ORDERS_PDF_RETENTION_DAYS = 7
 
 
@@ -62,7 +61,9 @@ def cleanup_generated_orders_pdfs(retention_days=None):
     cutoff = timezone.now() - timedelta(days=retention_days)
     deleted_count = 0
 
-    for file_path in _iter_storage_files(default_storage, GENERATED_ORDERS_PDF_DIR):
+    for file_path in _iter_storage_files(
+        default_storage, settings.GENERATED_ORDERS_PDF_DIR
+    ):
         try:
             modified = default_storage.get_modified_time(file_path)
         except Exception:
@@ -134,9 +135,7 @@ def generate_filtered_orders_pdf_task(
 
     pdf = render_many_orders_to_pdf(orders, generated_by=generated_by_user)
     timestamp = timezone.now().strftime("%Y%m%d_%H%M%S")
-    file_name = (
-        f"{GENERATED_ORDERS_PDF_DIR}/filtered_orders_{timestamp}_{self.request.id}.pdf"
-    )
+    file_name = f"{settings.GENERATED_ORDERS_PDF_DIR}/filtered_orders_{timestamp}_{self.request.id}.pdf"
 
     return default_storage.save(file_name, ContentFile(pdf))
 

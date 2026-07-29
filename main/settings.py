@@ -186,6 +186,8 @@ STATIC_ROOT = BASE_DIR / "staticfiles/"
 MEDIA_ROOT = BASE_DIR / "media"
 MEDIA_URL = "/media/"
 
+GENERATED_ORDERS_PDF_DIR = "generated/filtered-orders"
+
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]

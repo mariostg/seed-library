@@ -5040,7 +5040,21 @@ def admin_order_filtered_pdf_download(request, task_id):
     return response
 
 
-@group_required("Library Manager")
+@group_required("Shop Manager")
+def admin_order_list_generated_pdfs(request):
+    """Display a list of generated filtered-orders PDFs for download."""
+    generated_pdfs = utils.get_generated_filtered_orders_pdfs()
+    context = {
+        "title": _("Generated Filtered Orders PDFs"),
+        "generated_pdfs": generated_pdfs,
+        "url_name": "admin-order-list-generated-pdfs",
+    }
+    return render(
+        request, "project/admin/admin-order-list-generated-pdfs.html", context
+    )
+
+
+@group_required("Shop Manager")
 def admin_order_detail_page(request, pk):
     """Display detailed information about a specific order for management purposes."""
     try:
