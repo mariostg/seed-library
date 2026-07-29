@@ -953,14 +953,14 @@ urlpatterns += i18n_patterns(
         name="admin-order-detail-pdf",
     ),
     path(
-        "admin-order-pending-to-pdf/",
-        views.admin_order_pending_to_pdf,
-        name="admin-order-pending-to-pdf",
+        "admin-order-filtered-to-pdf/",
+        views.admin_order_filtered_to_pdf,
+        name="admin-order-filtered-to-pdf",
     ),
     path(
-        "admin-order-pending-pdf-download/<str:task_id>/",
-        views.admin_order_pending_pdf_download,
-        name="admin-order-pending-pdf-download",
+        "admin-order-filtered-pdf-download/<str:task_id>/",
+        views.admin_order_filtered_pdf_download,
+        name="admin-order-filtered-pdf-download",
     ),
     path(
         "admin-order-statistics-page/",

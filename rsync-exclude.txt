@@ -42,5 +42,5 @@ locale/
 **/*.mo
 db.sqlite3
 media/project/images/plants/
-media/generated/pending-orders/
+media/generated/
 logs/*

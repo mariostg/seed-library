@@ -35,7 +35,7 @@ except ImportError:  # pragma: no cover - dependency should be available in runt
 from project import filters, forms, models, utils, vascan
 from project.acl_handler import group_required
 from project.models import ProjectUser
-from project.tasks import generate_pending_orders_pdf_task
+from project.tasks import generate_filtered_orders_pdf_task
 
 
 # Create your views here.
@@ -4994,6 +4994,53 @@ def admin_order_management_page(request):
 
 
 @group_required("Library Manager")
+def admin_order_filtered_to_pdf(request):
+    """Queue generation of filtered-orders PDF and return to order management page."""
+    task = generate_filtered_orders_pdf_task.delay(
+        filter_params=request.GET.dict(),
+        generated_by_user_id=request.user.id,
+    )
+    download_url = reverse(
+        "admin-order-filtered-pdf-download", kwargs={"task_id": task.id}
+    )
+    messages.info(
+        request,
+        format_html(
+            '{} <a href="{}">{}</a>',
+            _("Filtered-orders PDF generation started."),
+            download_url,
+            _("Download when ready"),
+        ),
+    )
+    return redirect("admin-order-management-page")
+
+
+@group_required("Library Manager")
+def admin_order_filtered_pdf_download(request, task_id):
+    """Download a generated filtered-orders PDF when the Celery task is complete."""
+    task_result = AsyncResult(task_id)
+
+    if not task_result.ready():
+        messages.info(request, _("Filtered-orders PDF is still generating."))
+        return redirect("admin-order-management-page")
+
+    if task_result.failed():
+        messages.error(request, _("Could not generate PDF."))
+        return redirect("admin-order-management-page")
+
+    file_path = task_result.result
+    if not file_path or not default_storage.exists(file_path):
+        messages.error(request, _("Generated PDF file is no longer available."))
+        return redirect("admin-order-management-page")
+
+    response = FileResponse(
+        default_storage.open(file_path, "rb"), content_type="application/pdf"
+    )
+    response["Content-Disposition"] = 'inline; filename="Filtered_Orders.pdf"'
+    return response
+
+
+@group_required("Library Manager")
 def admin_order_detail_page(request, pk):
     """Display detailed information about a specific order for management purposes."""
     try:
@@ -5037,50 +5084,6 @@ def admin_order_detail_pdf(request, pk):
         return response
     messages.error(request, _("Could not generate PDF."))
     return redirect("admin-order-detail-page", pk=order.id)
-
-
-@group_required("Library Manager")
-def admin_order_pending_to_pdf(request):
-    """Queue generation of pending-orders PDF and return to order management page."""
-    task = generate_pending_orders_pdf_task.delay(generated_by_user_id=request.user.id)
-    download_url = reverse(
-        "admin-order-pending-pdf-download", kwargs={"task_id": task.id}
-    )
-    messages.info(
-        request,
-        format_html(
-            '{} <a href="{}">{}</a>',
-            _("Pending-orders PDF generation started."),
-            download_url,
-            _("Download when ready"),
-        ),
-    )
-    return redirect("admin-order-management-page")
-
-
-@group_required("Library Manager")
-def admin_order_pending_pdf_download(request, task_id):
-    """Download a generated pending-orders PDF when the Celery task is complete."""
-    task_result = AsyncResult(task_id)
-
-    if not task_result.ready():
-        messages.info(request, _("Pending-orders PDF is still generating."))
-        return redirect("admin-order-management-page")
-
-    if task_result.failed():
-        messages.error(request, _("Could not generate PDF."))
-        return redirect("admin-order-management-page")
-
-    file_path = task_result.result
-    if not file_path or not default_storage.exists(file_path):
-        messages.error(request, _("Generated PDF file is no longer available."))
-        return redirect("admin-order-management-page")
-
-    response = FileResponse(
-        default_storage.open(file_path, "rb"), content_type="application/pdf"
-    )
-    response["Content-Disposition"] = 'inline; filename="Pending_Orders.pdf"'
-    return response
 
 
 @group_required("Library Manager")

@@ -163,97 +163,6 @@ class PlantProfilePageContextTest(TestCase):
         self.assertIn(self.narrative, narratives)
 
 
-class AdminPendingOrdersPdfAsyncTest(TestCase):
-    def setUp(self):
-        self.client = Client()
-        self.user = ProjectUser.objects.create_user(
-            username="manager",
-            password="test-pass-123",
-        )
-        library_manager_group, _ = Group.objects.get_or_create(name="Library Manager")
-        self.user.groups.add(library_manager_group)
-        self.client.force_login(self.user)
-
-    @patch("project.views.generate_pending_orders_pdf_task.delay")
-    def test_pending_pdf_enqueue_redirects_with_download_link(self, mock_delay):
-        mock_delay.return_value.id = "task-123"
-        with override("en"):
-            enqueue_url = reverse("admin-order-pending-to-pdf")
-            download_url = reverse(
-                "admin-order-pending-pdf-download",
-                kwargs={"task_id": "task-123"},
-            )
-
-        response = self.client.get(enqueue_url, follow=True)
-
-        self.assertEqual(response.status_code, 200)
-        mock_delay.assert_called_once_with()
-
-        messages = [str(message) for message in response.context["messages"]]
-        self.assertTrue(
-            any(
-                "Pending-orders PDF generation started." in message
-                for message in messages
-            )
-        )
-        self.assertTrue(any(download_url in message for message in messages))
-
-    @patch("project.views.AsyncResult")
-    def test_pending_pdf_download_not_ready_redirects_with_message(
-        self,
-        mock_async_result,
-    ):
-        mock_async_result.return_value.ready.return_value = False
-        with override("en"):
-            download_url = reverse(
-                "admin-order-pending-pdf-download", kwargs={"task_id": "task-123"}
-            )
-            order_management_url = reverse("admin-order-management-page")
-
-        response = self.client.get(
-            download_url,
-        )
-
-        self.assertEqual(response.status_code, 302)
-        self.assertEqual(response.url, order_management_url)
-        messages = [
-            str(message)
-            for message in django_messages.get_messages(response.wsgi_request)
-        ]
-        self.assertTrue(
-            any(
-                "Pending-orders PDF is still generating." in message
-                for message in messages
-            )
-        )
-
-    @patch("project.views.default_storage.open")
-    @patch("project.views.default_storage.exists")
-    @patch("project.views.AsyncResult")
-    def test_pending_pdf_download_ready_returns_pdf_response(
-        self,
-        mock_async_result,
-        mock_exists,
-        mock_open,
-    ):
-        mock_task = mock_async_result.return_value
-        mock_task.ready.return_value = True
-        mock_task.failed.return_value = False
-        mock_task.result = "generated/pending-orders/pending_orders_task-123.pdf"
-        mock_exists.return_value = True
-        mock_open.return_value = io.BytesIO(b"%PDF-1.4\n")
-        with override("en"):
-            download_url = reverse(
-                "admin-order-pending-pdf-download", kwargs={"task_id": "task-123"}
-            )
-
-        response = self.client.get(download_url)
-
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response["Content-Type"], "application/pdf")
-        self.assertIn("Pending_Orders.pdf", response["Content-Disposition"])
-
-
 class AdminOrderManagementFilterTest(TestCase):
     def setUp(self):
         self.client = Client()
@@ -353,3 +262,96 @@ class AdminOrderManagementFilterTest(TestCase):
         orders = list(response.context["page_obj"].object_list)
         self.assertEqual(len(orders), 1)
         self.assertEqual(orders[0].id, self.order_completed.id)
+
+    @patch("project.views.generate_filtered_orders_pdf_task.delay")
+    def test_filtered_pdf_enqueue_uses_active_filters(self, mock_delay):
+        mock_delay.return_value.id = "task-filtered-123"
+        with override("en"):
+            enqueue_url = reverse("admin-order-filtered-to-pdf")
+            download_url = reverse(
+                "admin-order-filtered-pdf-download",
+                kwargs={"task_id": "task-filtered-123"},
+            )
+
+        response = self.client.get(enqueue_url, {"status": "completed"}, follow=True)
+
+        self.assertEqual(response.status_code, 200)
+        mock_delay.assert_called_once_with(
+            filter_params={"status": "completed"},
+            generated_by_user_id=self.user.id,
+        )
+
+        messages = [str(message) for message in response.context["messages"]]
+        self.assertTrue(
+            any(
+                "Filtered-orders PDF generation started." in message
+                for message in messages
+            )
+        )
+        self.assertTrue(any(download_url in message for message in messages))
+
+
+class AdminFilteredOrdersPdfAsyncTest(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.user = ProjectUser.objects.create_user(
+            username="filtered-manager",
+            password="test-pass-123",
+        )
+        library_manager_group, _ = Group.objects.get_or_create(name="Library Manager")
+        self.user.groups.add(library_manager_group)
+        self.client.force_login(self.user)
+
+    @patch("project.views.AsyncResult")
+    def test_filtered_pdf_download_not_ready_redirects_with_message(
+        self,
+        mock_async_result,
+    ):
+        mock_async_result.return_value.ready.return_value = False
+        with override("en"):
+            download_url = reverse(
+                "admin-order-filtered-pdf-download", kwargs={"task_id": "task-123"}
+            )
+            order_management_url = reverse("admin-order-management-page")
+
+        response = self.client.get(download_url)
+
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, order_management_url)
+
+        messages = [
+            str(message)
+            for message in django_messages.get_messages(response.wsgi_request)
+        ]
+        self.assertTrue(
+            any(
+                "Filtered-orders PDF is still generating." in message
+                for message in messages
+            )
+        )
+
+    @patch("project.views.default_storage.open")
+    @patch("project.views.default_storage.exists")
+    @patch("project.views.AsyncResult")
+    def test_filtered_pdf_download_ready_returns_pdf_response(
+        self,
+        mock_async_result,
+        mock_exists,
+        mock_open,
+    ):
+        mock_task = mock_async_result.return_value
+        mock_task.ready.return_value = True
+        mock_task.failed.return_value = False
+        mock_task.result = "generated/filtered-orders/filtered_orders_task-123.pdf"
+        mock_exists.return_value = True
+        mock_open.return_value = io.BytesIO(b"%PDF-1.4\n")
+        with override("en"):
+            download_url = reverse(
+                "admin-order-filtered-pdf-download", kwargs={"task_id": "task-123"}
+            )
+
+        response = self.client.get(download_url)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response["Content-Type"], "application/pdf")
+        self.assertIn("Filtered_Orders.pdf", response["Content-Disposition"])
