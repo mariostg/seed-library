@@ -380,6 +380,11 @@ def search_plant_name(request):
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
 
+    # Preserve active filter query parameters in pagination links.
+    query_params = request.GET.copy()
+    query_params.pop("page", None)
+    query_string = query_params.urlencode()
+
     ecozones = models.Ecozone.objects.all().order_by("ecozone")
     growth_habits = models.GrowthHabit.objects.all().order_by("growth_habit")
     bloom_colours = models.BloomColour.objects.all().order_by("bloom_colour")
@@ -559,6 +564,7 @@ def search_plant_name(request):
         "title": _("Plant Profile Filter"),
         "item_count": item_count,
         "hx_include": hx_include,
+        "query_string": query_string,
     }
     template = (
         "project/plant-search-results.html"

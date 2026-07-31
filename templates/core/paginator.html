@@ -2,12 +2,12 @@
   <nav class="paginator">
     {% if page_obj.has_previous %}
       <span class="page-item">
-        <a class="page-link" href="?page=1&{{query_string}}">
+        <a class="page-link" href="?page=1{% if query_string %}&{{ query_string }}{% endif %}">
           <span>&laquo;&laquo;</span>
         </a>
       </span>
       <span class="page-item">
-        <a class="page-link" href="?page={{ page_obj.previous_page_number }}&{{ query_string }}">
+        <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if query_string %}&{{ query_string }}{% endif %}">
           <span>&laquo;</span>
         </a>
       </span>
@@ -20,19 +20,19 @@
         </span>
       {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
         <span class="page-item">
-          <a class="page-link" href="?page={{ num }}&{{ query_string }}">{{ num }}</a>
+          <a class="page-link" href="?page={{ num }}{% if query_string %}&{{ query_string }}{% endif %}">{{ num }}</a>
         </span>
       {% endif %}
     {% endfor %}
 
     {% if page_obj.has_next %}
       <span class="page-item">
-        <a class="page-link" href="?page={{ page_obj.next_page_number }}&{{ query_string }}">
+        <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if query_string %}&{{ query_string }}{% endif %}">
           <span>&raquo;</span>
         </a>
       </span>
       <span class="page-item">
-        <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}&{{ query_string }}">
+        <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}{% if query_string %}&{{ query_string }}{% endif %}">
           <span>&raquo;&raquo;</span>
         </a>
       </span>
