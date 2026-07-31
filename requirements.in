@@ -35,6 +35,7 @@ whitenoise
 dj-database-url
 psycopg[binary]
 Pillow
+cryptography
 reportlab
 pre-commit
 exif

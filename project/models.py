@@ -1,11 +1,13 @@
 from django.conf import settings
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, UserManager
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.urls import reverse
 from django.utils.dates import MONTHS
 from django.utils.translation import gettext_lazy as _
 from PIL import Image, ImageOps
+
+from project.email_security import decrypt_email, email_hash, encrypt_email
 
 
 class LibrarySetting(models.Model):
@@ -1469,9 +1471,31 @@ class ProjectUser(AbstractUser):
     plants = models.ManyToManyField(
         PlantProfile, through="PlantCollection", verbose_name=_("Plants")
     )
+    email_encrypted = models.TextField(
+        blank=True, default=""
+    )  # Store encrypted email for privacy
+    email_hash = models.CharField(
+        max_length=64, blank=True, default="", db_index=True
+    )  # Store SHA256 hash of the email for efficient lookups
+    objects = UserManager()
 
     def __str__(self):
         return str(self.username)
+
+    def save(self, *args, **kwargs):
+        # Override the save method to encrypt the email and store its hash before saving the user instance.
+        self.email_encrypted = encrypt_email(self.email)
+        self.email_hash = email_hash(self.email)
+        super().save(*args, **kwargs)
+
+    class Meta(AbstractUser.Meta):
+        constraints = [
+            models.UniqueConstraint(
+                fields=["email_hash"],
+                condition=~models.Q(email_hash=""),
+                name="projectuser_email_hash_unique_nonempty",
+            )
+        ]
 
 
 class PlantCollection(models.Model):
@@ -1814,6 +1838,29 @@ class PlantNarrative(models.Model):
         return f"{self.plant_profile.latin_name} - {narrative_label}"
 
 
+class CustomerManager(models.Manager):
+    def create(self, **kwargs):
+        """Create a new customer instance with the given email and other attributes."""
+        email = kwargs.pop("email", None)
+
+        if kwargs.get("application") is None:
+            default_application = OrderSeedApplication.objects.order_by(
+                "priority", "seed_application"
+            ).first()
+            if default_application is None:
+                default_application = OrderSeedApplication.objects.create(
+                    seed_application="Unspecified",
+                    priority=0,
+                )
+            kwargs["application"] = default_application
+
+        obj = self.model(**kwargs)
+        if email is not None:
+            obj.email = email
+        obj.save(force_insert=True, using=self._db)
+        return obj
+
+
 class Customer(Base):
     """
     A model representing a customer.
@@ -1833,7 +1880,8 @@ class Customer(Base):
 
     first_name = models.CharField(max_length=100, verbose_name=_("First Name"))
     last_name = models.CharField(max_length=100, verbose_name=_("Last Name"))
-    email = models.EmailField(max_length=100, verbose_name=_("Email"))
+    email_encrypted = models.TextField(blank=True, default="")
+    email_hash = models.CharField(max_length=64, blank=True, default="", db_index=True)
     address = models.CharField(max_length=255, verbose_name=_("Address"))
     city = models.CharField(max_length=100, verbose_name=_("City"))
     province = models.CharField(max_length=100, verbose_name=_("Province"))
@@ -1846,9 +1894,24 @@ class Customer(Base):
         verbose_name=_("Order Application"),
         related_name="customers",
     )
+    objects = CustomerManager()
 
     def __str__(self) -> str:
         return f"{self.first_name} {self.last_name}"
+
+    @property
+    def email(self) -> str:
+        return decrypt_email(self.email_encrypted)
+
+    @email.setter
+    def email(self, value: str):
+        self.email_encrypted = encrypt_email(value)
+        self.email_hash = email_hash(value)
+
+    def save(self, *args, **kwargs):
+        if self.email_encrypted and not self.email_hash:
+            self.email_hash = email_hash(decrypt_email(self.email_encrypted))
+        super().save(*args, **kwargs)
 
     def shipping_address(self) -> str:
         """

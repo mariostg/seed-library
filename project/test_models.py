@@ -1,7 +1,9 @@
 from django.core.exceptions import ValidationError
+from django.db import IntegrityError
 from django.test import TestCase
 
-from project.models import PlantProfile
+from project.email_security import email_hash
+from project.models import Customer, OrderSeedApplication, PlantProfile, ProjectUser
 
 
 class PlantProfileHeightValidationTest(TestCase):
@@ -160,3 +162,51 @@ class PlantProfileSearchTest(TestCase):
         """Test searching with text that should return no results."""
         results = PlantProfile.search_plant.plant_name("Pinaceae")
         self.assertEqual(results.count(), 0)
+
+
+class EmailHardeningModelTest(TestCase):
+    def setUp(self):
+        self.application = OrderSeedApplication.objects.create(
+            seed_application="Test Application",
+            priority=1,
+        )
+
+    def test_customer_email_property_and_hash_lookup(self):
+        customer = Customer.objects.create(
+            first_name="Jane",
+            last_name="Doe",
+            email="Jane.Doe@Example.org",
+            address="1 Main St",
+            city="Ottawa",
+            province="ON",
+            postal_code="K1A1A1",
+            application=self.application,
+        )
+
+        # Email is normalized and retrieved from encrypted storage.
+        self.assertEqual(customer.email, "jane.doe@example.org")
+        self.assertTrue(customer.email_encrypted)
+        self.assertTrue(customer.email_hash)
+
+        found = Customer.objects.get(email_hash=email_hash("JANE.DOE@example.ORG"))
+        self.assertEqual(found.id, customer.id)
+
+    def test_project_user_hash_lookup_and_unique_hash_constraint(self):
+        user = ProjectUser.objects.create_user(
+            username="alpha",
+            email="Alpha.User@Example.org",
+            password="test-pass-123",
+        )
+
+        self.assertTrue(user.email_hash)
+        self.assertEqual(
+            ProjectUser.objects.get(email_hash=email_hash("alpha.user@example.org")).id,
+            user.id,
+        )
+
+        with self.assertRaises(IntegrityError):
+            ProjectUser.objects.create_user(
+                username="beta",
+                email="ALPHA.USER@example.org",
+                password="test-pass-123",
+            )

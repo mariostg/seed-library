@@ -188,6 +188,10 @@ MEDIA_URL = "/media/"
 
 GENERATED_ORDERS_PDF_DIR = "generated/filtered-orders"
 
+# Email encryption configuration
+EMAIL_ENCRYPTION_KEY = os.environ.get("EMAIL_ENCRYPTION_KEY", "")
+EMAIL_HASH_KEY = os.environ.get("EMAIL_HASH_KEY", "")
+
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]

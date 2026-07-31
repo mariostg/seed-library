@@ -48,6 +48,8 @@ click-repl==0.3.0
     # via celery
 coverage==7.15.2
     # via -r requirements.in
+cryptography==46.0.1
+    # via -r requirements.in
 decorator==5.3.1
     # via ipython
 distlib==0.4.3

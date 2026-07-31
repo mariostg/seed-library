@@ -141,8 +141,6 @@ class Command(BaseCommand):
             order_dt = self._random_datetime_for_year_range(rng, from_year, to_year)
             models.Order.objects.filter(pk=order.pk).update(
                 order_date=order_dt,
-                created=order_dt,
-                modified=order_dt,
             )
 
             item_count = rng.randint(1, min(4, len(plants)))

@@ -1,12 +1,8 @@
 from django.core.management.base import BaseCommand
 from django.db import transaction
-from django.db.models import Q
 
 from project import models
-from project.management.commands.create_dummy_orders import (
-    DEBUG_CUSTOMER_EMAIL_PREFIX,
-    DEBUG_ORDER_NOTE,
-)
+from project.management.commands.create_dummy_orders import DEBUG_ORDER_NOTE
 
 
 class Command(BaseCommand):
@@ -29,10 +25,7 @@ class Command(BaseCommand):
         dry_run = options["dry_run"]
         delete_debug_customers = options["delete_debug_customers"]
 
-        debug_orders = models.Order.objects.filter(
-            Q(customer_note=DEBUG_ORDER_NOTE)
-            | Q(customer__email__startswith=DEBUG_CUSTOMER_EMAIL_PREFIX)
-        )
+        debug_orders = models.Order.objects.filter(customer_note=DEBUG_ORDER_NOTE)
 
         debug_order_ids = list(debug_orders.values_list("id", flat=True))
         debug_customer_ids = list(
@@ -61,7 +54,6 @@ class Command(BaseCommand):
         if delete_debug_customers and debug_customer_ids:
             customers_qs = models.Customer.objects.filter(
                 id__in=debug_customer_ids,
-                email__startswith=DEBUG_CUSTOMER_EMAIL_PREFIX,
                 orders__isnull=True,
             )
             deleted_customers, _ = customers_qs.delete()

@@ -742,12 +742,19 @@ class CustomerForm(forms.ModelForm):
     Used for customers who want to order seeds without creating a user account.
     """
 
+    email = forms.EmailField(
+        required=True,
+        label=_("Email Address"),
+        widget=forms.EmailInput(
+            attrs={"class": "form-control", "placeholder": _("Email Address")}
+        ),
+    )
+
     class Meta:
         model = models.Customer
         fields = [
             "first_name",
             "last_name",
-            "email",
             "application",
             "address",
             "city",
@@ -760,9 +767,6 @@ class CustomerForm(forms.ModelForm):
             ),
             "last_name": forms.TextInput(
                 attrs={"class": "form-control", "placeholder": _("Last Name")}
-            ),
-            "email": forms.EmailInput(
-                attrs={"class": "form-control", "placeholder": _("Email Address")}
             ),
             "application": forms.Select(
                 attrs={"class": "form-control", "required": "required"}
@@ -783,7 +787,6 @@ class CustomerForm(forms.ModelForm):
         labels = {
             "first_name": _("First Name"),
             "last_name": _("Last Name"),
-            "email": _("Email Address"),
             "application": _("Order Application"),
             "address": _("Street Address"),
             "postal_code": _("Postal Code"),
@@ -796,8 +799,20 @@ class CustomerForm(forms.ModelForm):
             raise ValidationError(_("Email is required."))
         return email
 
+    def save(self, commit=True):
+        """Override save method to handle email encryption and hashing."""
+        instance = super().save(commit=False)
+        instance.email = self.cleaned_data["email"]
+        if commit:
+            instance.save()
+        return instance
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields["application"].queryset = (
             models.OrderSeedApplication.objects.order_by("priority", "seed_application")
         )
+        if (
+            self.instance and self.instance.pk
+        ):  # If the instance exists (i.e., we are editing an existing customer), set the initial value of the email field to the decrypted email.
+            self.fields["email"].initial = self.instance.email
