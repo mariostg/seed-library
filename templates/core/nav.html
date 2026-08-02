@@ -85,7 +85,6 @@
 <script>
   document.body.addEventListener('cartChanged', function(e){
     var count = e.detail.value;
-    console.log("cartChanged event received, new count: " + count);
     var el = document.getElementById('shopping-cart-indicator');
     if(!el) return;
     el.textContent = '';
