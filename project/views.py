@@ -4158,23 +4158,6 @@ def add_to_cart(request, pk):
         if customer.application and customer.application.priority == 1
         else utils.MAX_NON_PRIORITY_CART_ITEMS
     )
-    if max_items is not None:
-        current_total = utils.get_cart_total(request)
-        if current_total + quantity > max_items:
-            messages.error(
-                request,
-                _(
-                    "You can only order up to %(max_items)d items with your current application."
-                )
-                % {"max_items": max_items},
-            )
-            if is_htmx:
-                response = render(request, "core/_messages.html", status=200)
-                response["HX-Trigger"] = json.dumps({"cartChanged": current_total})
-                response["HX-Retarget"] = "#messages"
-                response["HX-Reswap"] = "innerHTML"
-                return response
-            return redirect("shopping-cart")
 
     cart_item = utils.add_to_cart(request, plant, quantity)
     if not cart_item:
@@ -4191,11 +4174,29 @@ def add_to_cart(request, pk):
             response["HX-Reswap"] = "innerHTML"
             return response
 
+    new_count = utils.get_cart_total(request)
+    show_limit_message = False
+    if max_items is not None and new_count >= max_items:
+        current_total = new_count - quantity
+        if current_total < max_items:
+            messages.info(
+                request,
+                _(
+                    "You have reached the maximum of %(max_items)d items for your current application."
+                )
+                % {"max_items": max_items},
+            )
+            show_limit_message = True
+
     if is_htmx:
         # For HTMX requests, return a small trigger header with the updated cart count
         # so client can update the cart indicator without a full page refresh.
-        new_count = utils.get_cart_total(request)
-        response = HttpResponse(status=200)
+        if show_limit_message:
+            response = render(request, "core/_messages.html", status=200)
+            response["HX-Retarget"] = "#messages"
+            response["HX-Reswap"] = "innerHTML"
+        else:
+            response = HttpResponse(status=200)
         response["HX-Trigger"] = json.dumps({"cartChanged": new_count})
         return response
 

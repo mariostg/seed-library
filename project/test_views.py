@@ -3,12 +3,15 @@ from datetime import datetime
 from unittest.mock import patch
 
 from django.contrib import messages as django_messages
-from django.contrib.auth.models import Group
-from django.test import Client, TestCase, override_settings
+from django.contrib.auth.models import AnonymousUser, Group
+from django.contrib.messages.storage.fallback import FallbackStorage
+from django.contrib.sessions.middleware import SessionMiddleware
+from django.test import Client, RequestFactory, TestCase, override_settings
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import override
 
+from project import views as project_views
 from project.models import (
     Customer,
     Order,
@@ -16,6 +19,7 @@ from project.models import (
     PlantNarrative,
     PlantProfile,
     ProjectUser,
+    ShoppingCart,
 )
 
 
@@ -146,7 +150,10 @@ class DonationViewsTest(TestCase):
 class PlantProfilePageContextTest(TestCase):
     def setUp(self):
         self.client = Client()
-        self.plant = PlantProfile.objects.create(latin_name="Abies balsamea")
+        self.plant = PlantProfile.objects.create(
+            latin_name="Abies balsamea",
+            is_active=True,
+        )
         self.narrative = PlantNarrative.objects.create(
             plant_profile=self.plant,
             description="Narrative for profile page context test.",
@@ -355,3 +362,52 @@ class AdminFilteredOrdersPdfAsyncTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response["Content-Type"], "application/pdf")
         self.assertIn("Filtered_Orders.pdf", response["Content-Disposition"])
+
+
+class AddToCartLimitTest(TestCase):
+    def setUp(self):
+        self.factory = RequestFactory()
+        self.application = OrderSeedApplication.objects.create(
+            seed_application="Personal Garden"
+        )
+        self.customer = Customer.objects.create(
+            first_name="Jane",
+            last_name="Doe",
+            email="jane@example.com",
+            address="1 Main St",
+            city="Ottawa",
+            province="ON",
+            postal_code="A1A1A1",
+            application=self.application,
+        )
+        self.plant = PlantProfile.objects.create(latin_name="Abies balsamea")
+        self.url = reverse("add-to-cart", kwargs={"pk": self.plant.pk})
+        self.request = self.factory.post(
+            self.url,
+            data={"quantity": 26},
+            HTTP_HX_REQUEST="true",
+        )
+        SessionMiddleware(lambda request: None).process_request(self.request)
+        self.request.session["customer_id"] = self.customer.id
+        self.request.session.save()
+        self.request.user = AnonymousUser()
+        self.request._messages = FallbackStorage(self.request)
+        self.request.library_settings = type(
+            "LibrarySettings",
+            (),
+            {"is_shop_open": True, "is_accepting_donations": True},
+        )()
+
+    def test_adding_past_limit_still_updates_cart_and_shows_notice(self):
+        response = project_views.add_to_cart(self.request, self.plant.pk)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.headers["HX-Trigger"], '{"cartChanged": 26}')
+        self.assertContains(
+            response,
+            "You have reached the maximum of 25 items for your current application.",
+        )
+        cart_item = ShoppingCart.objects.get(
+            customer=self.customer, plant_profile=self.plant
+        )
+        self.assertEqual(cart_item.quantity, 26)

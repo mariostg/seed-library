@@ -447,16 +447,6 @@ def add_to_cart(request, plant_profile, quantity=1):
     if not customer:
         return None
 
-    max_items = (
-        None
-        if customer.application and customer.application.priority == 1
-        else MAX_NON_PRIORITY_CART_ITEMS
-    )
-    if max_items is not None:
-        current_total = get_cart_total(request)
-        if current_total + quantity > max_items:
-            return None
-
     if isinstance(plant_profile, int):
         plant_profile = PlantProfileModel.objects.get(id=plant_profile)
 
