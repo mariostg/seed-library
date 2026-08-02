@@ -4183,6 +4183,13 @@ def add_to_cart(request, pk):
             _("Added %(quantity)d %(plant)s to cart.")
             % {"quantity": quantity, "plant": plant.latin_name},
         )
+        if is_htmx:
+            new_count = utils.get_cart_total(request)
+            response = render(request, "core/_messages.html", status=200)
+            response["HX-Trigger"] = json.dumps({"cartChanged": new_count})
+            response["HX-Retarget"] = "#messages"
+            response["HX-Reswap"] = "innerHTML"
+            return response
     else:
         messages.error(request, _("Could not add item to cart."))
 
