@@ -892,7 +892,7 @@ def get_generated_filtered_orders_pdfs():
 def get_order_statistics():
     """Get order statistics for dashboard display.
     Returns the following totals by year:
-        total orders, pending orders, completed orders, cancelled orders and shipped orders, and total donations by year.
+        total orders, pending orders, completed orders, cancelled orders, and total donations by year.
     """
 
     orders = (
@@ -903,7 +903,6 @@ def get_order_statistics():
             pending_orders=Count("id", filter=Q(status="pending")),
             completed_orders=Count("id", filter=Q(status="completed")),
             cancelled_orders=Count("id", filter=Q(status="cancelled")),
-            shipped_orders=Count("id", filter=Q(status="shipped")),
             total_donations=Sum("donation_amount"),
         )
         .order_by("-year")

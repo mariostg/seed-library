@@ -27,7 +27,6 @@
           <th>{% trans "Pending" %}</th>
           <th>{% trans "Completed" %}</th>
           <th>{% trans "Cancelled" %}</th>
-          <th>{% trans "Shipped" %}</th>
         </tr>
       </thead>
       <tbody>
@@ -39,7 +38,6 @@
             <td>{{ stat.pending_orders }}</td>
             <td>{{ stat.completed_orders }}</td>
             <td>{{ stat.cancelled_orders }}</td>
-            <td>{{ stat.shipped_orders }}</td>
           </tr>
         {% empty %}
           <tr>
