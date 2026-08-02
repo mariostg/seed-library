@@ -4177,10 +4177,10 @@ def add_to_cart(request, pk):
             return redirect("shopping-cart")
 
     cart_item = utils.add_to_cart(request, plant, quantity)
-    if cart_item:
-        messages.success(
+    if not cart_item:
+        messages.error(
             request,
-            _("Added %(quantity)d %(plant)s to cart.")
+            _("Could not add %(quantity)d %(plant)s to cart.")
             % {"quantity": quantity, "plant": plant.latin_name},
         )
         if is_htmx:
@@ -4190,8 +4190,6 @@ def add_to_cart(request, pk):
             response["HX-Retarget"] = "#messages"
             response["HX-Reswap"] = "innerHTML"
             return response
-    else:
-        messages.error(request, _("Could not add item to cart."))
 
     if is_htmx:
         # For HTMX requests, return a small trigger header with the updated cart count
