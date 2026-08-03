@@ -760,6 +760,7 @@ class CustomerForm(forms.ModelForm):
             "city",
             "province",
             "postal_code",
+            "staying_in_touch",
         ]
         widgets = {
             "first_name": forms.TextInput(
@@ -783,6 +784,12 @@ class CustomerForm(forms.ModelForm):
             "postal_code": forms.TextInput(
                 attrs={"class": "form-control", "placeholder": _("Postal Code")}
             ),
+            "staying_in_touch": forms.CheckboxInput(
+                attrs={
+                    "class": "form-control",
+                    "id": "staying_in_touch",
+                }
+            ),
         }
         labels = {
             "first_name": _("First Name"),
@@ -790,6 +797,9 @@ class CustomerForm(forms.ModelForm):
             "application": _("Order Application"),
             "address": _("Street Address"),
             "postal_code": _("Postal Code"),
+            "staying_in_touch": _(
+                "I would like to stay in touch with the Ottawa Wildflower Seed Library.  I agree to be contacted to learn when the plant and seed giveaways will be next available, and to receive information about the Ottawa Wildflower Seed Library's activities and events."
+            ),
         }
 
     def clean_email(self):
@@ -803,6 +813,7 @@ class CustomerForm(forms.ModelForm):
         """Override save method to handle email encryption and hashing."""
         instance = super().save(commit=False)
         instance.email = self.cleaned_data["email"]
+        instance.staying_in_touch = self.cleaned_data.get("staying_in_touch", False)
         if commit:
             instance.save()
         return instance

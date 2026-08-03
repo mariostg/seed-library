@@ -1894,6 +1894,9 @@ class Customer(Base):
         verbose_name=_("Order Application"),
         related_name="customers",
     )
+    staying_in_touch = models.BooleanField(
+        default=False, verbose_name=_("Staying in Touch")
+    )
     objects = CustomerManager()
 
     def __str__(self) -> str:

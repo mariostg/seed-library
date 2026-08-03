@@ -1,0 +1,39 @@
+{% extends 'core/base.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}{{title}}{% endblock %}
+
+{% block content %}
+  {% include "project/admin/admin_links.html" %}
+
+  <section class="container admin-page-content">
+
+    <h1>{{ title }}</h1>
+    <p>{% trans "Customers who agreed to be contacted to learn when the plant and seed giveaways will be next available, and to receive information about the Ottawa Wildflower Seed Library's activities and events." %}</p>
+    <table>
+      <thead>
+        <tr>
+          <th>{% trans "First Name" %}</th>
+          <th>{% trans "Last Name" %}</th>
+          <th>{% trans "Email" %}</th>
+          <th>Created</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for customer in page_obj %}
+          <tr>
+            <td>{{ customer.first_name }}</td>
+            <td>{{ customer.last_name }}</td>
+            <td><a href="mailto:{{ customer.email }}">{{ customer.email }}</a></td>
+            <td>{{ customer.created }}</td>
+          </tr>
+        {% empty %}
+          <tr>
+            <td colspan="3">{% trans "No customers in touch." %}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </section>
+{% endblock %}

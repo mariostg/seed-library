@@ -943,6 +943,11 @@ urlpatterns += i18n_patterns(
         name="admin-order-management-page",
     ),
     path(
+        _("admin-customers-in-touch-page/"),
+        views.admin_customers_in_touch_page,
+        name="admin-customers-in-touch-page",
+    ),
+    path(
         _("admin-order-detail-page/<int:pk>/"),
         views.admin_order_detail_page,
         name="admin-order-detail-page",

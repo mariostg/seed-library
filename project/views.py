@@ -5008,6 +5008,26 @@ def admin_order_management_page(request):
 
 
 @group_required("Shop Manager")
+def admin_customers_in_touch_page(request):
+    """Display customers who wants to stay in touch."""
+    customers = models.Customer.objects.filter(staying_in_touch=True).order_by(
+        "last_name", "first_name"
+    )
+
+    # Pagination
+    paginator = Paginator(customers, 20)
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
+    context = {
+        "title": _("Customers In Touch"),
+        "page_obj": page_obj,
+        "url_name": "admin-customers-in-touch-page",
+    }
+    return render(request, "project/admin/admin-customers-in-touch-page.html", context)
+
+
+@group_required("Shop Manager")
 def admin_order_filtered_to_pdf(request):
     """Queue generation of filtered-orders PDF and return to order management page."""
     task = generate_filtered_orders_pdf_task.delay(
