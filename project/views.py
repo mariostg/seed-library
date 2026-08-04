@@ -22,7 +22,7 @@ from django.utils import timezone
 from django.utils.html import format_html
 from django.utils.translation import gettext as _
 from django.views.decorators.csrf import csrf_exempt
-from reportlab.lib.colors import black, pink, red
+from reportlab.lib.colors import black, red
 from reportlab.lib.pagesizes import landscape, letter
 from reportlab.lib.units import inch
 from reportlab.pdfgen import canvas
@@ -2978,7 +2978,7 @@ def plant_label_pdf(request, pk):
     buffer = io.BytesIO()
 
     c = canvas.Canvas(buffer, pagesize=landscape(letter))
-    c.setStrokeColor(pink)
+    c.setStrokeColor(black)
 
     label_width = len(plant_longest_string) * 0.06818  # 1.5
     label_margin_x = 0.1
