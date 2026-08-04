@@ -1,5 +1,6 @@
 from io import StringIO
 
+from django.contrib.auth import get_user_model
 from django.core.management import call_command
 from django.core.management.base import CommandError
 from django.test import TestCase, override_settings
@@ -203,3 +204,70 @@ class DeleteDebugOrdersCommandTest(TestCase):
             Order.objects.exclude(id=real_order.id).count(),
             0,
         )
+
+
+class ValidateEncryptedEmailsCommandTest(TestCase):
+    def setUp(self):
+        self.application = OrderSeedApplication.objects.create(
+            seed_application="Validation test application",
+            priority=10,
+        )
+
+    def test_reports_invalid_customer_token(self):
+        customer = Customer.objects.create(
+            first_name="Invalid",
+            last_name="Customer",
+            email="invalid.customer@example.org",
+            address="10 Broken Key Street",
+            city="Ottawa",
+            province="Ontario",
+            postal_code="K1A 0A1",
+            application=self.application,
+        )
+        Customer.objects.filter(pk=customer.pk).update(email_encrypted="not-a-token")
+
+        stdout = StringIO()
+        call_command("validate_encrypted_emails", "--scope", "customers", stdout=stdout)
+
+        output = stdout.getvalue()
+        self.assertIn(
+            "[customers] checked 1 encrypted email token(s); invalid token(s): 1",
+            output,
+        )
+        self.assertIn(f"Customer id={customer.pk} has an invalid token", output)
+
+    def test_fail_on_invalid_raises_command_error(self):
+        customer = Customer.objects.create(
+            first_name="Fail",
+            last_name="Case",
+            email="fail.case@example.org",
+            address="11 Broken Key Street",
+            city="Ottawa",
+            province="Ontario",
+            postal_code="K1A 0A1",
+            application=self.application,
+        )
+        Customer.objects.filter(pk=customer.pk).update(email_encrypted="not-a-token")
+
+        with self.assertRaisesMessage(
+            CommandError, "Invalid encrypted email token(s) found: 1"
+        ):
+            call_command("validate_encrypted_emails", "--fail-on-invalid")
+
+    def test_users_scope_reports_invalid_project_user_token(self):
+        user_model = get_user_model()
+        user = user_model.objects.create_user(
+            username="badtokenuser",
+            email="badtoken@example.org",
+            password="test-pass-123",
+        )
+        user_model.objects.filter(pk=user.pk).update(email_encrypted="not-a-token")
+
+        stdout = StringIO()
+        call_command("validate_encrypted_emails", "--scope", "users", stdout=stdout)
+
+        output = stdout.getvalue()
+        self.assertIn(
+            "[users] checked 1 encrypted email token(s); invalid token(s): 1", output
+        )
+        self.assertIn(f"ProjectUser id={user.pk} has an invalid token", output)

@@ -25,7 +25,13 @@
           <tr>
             <td>{{ customer.first_name }}</td>
             <td>{{ customer.last_name }}</td>
-            <td><a href="mailto:{{ customer.email }}">{{ customer.email }}</a></td>
+            <td>
+              {% if customer.safe_email %}
+                <a href="mailto:{{ customer.safe_email }}">{{ customer.safe_email }}</a>
+              {% else %}
+                {% trans "Unavailable" %}
+              {% endif %}
+            </td>
             <td>{{ customer.created }}</td>
           </tr>
         {% empty %}

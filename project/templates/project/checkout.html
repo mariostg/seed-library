@@ -33,7 +33,7 @@
             </div>
             <div class="info-item">
               <strong>{% trans "Email:" %}</strong>
-              <span>{{ customer.email }}</span>
+              <span>{{ customer.safe_email }}</span>
             </div>
             <div class="info-item">
               <strong>{% trans "Address:" %}</strong>
@@ -121,7 +121,7 @@
               <ul>
                 <li>{% trans "All seeds are provided free of charge." %}</li>
                 <li>{% trans "Donations are voluntary and greatly appreciated." %}</li>
-                <li>{% trans "You will receive a confirmation email at" %} <strong>{{ customer.email }}</strong></li>
+                <li>{% trans "You will receive a confirmation email at" %} <strong>{{ customer.safe_email }}</strong></li>
                 <li>{% trans "Seeds will be shipped based on availability and season." %}</li>
               </ul>
             </div>

@@ -1,6 +1,8 @@
+import logging
+
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser, UserManager
-from django.core.exceptions import ValidationError
+from django.core.exceptions import ImproperlyConfigured, ValidationError
 from django.db import models
 from django.urls import reverse
 from django.utils.dates import MONTHS
@@ -8,6 +10,14 @@ from django.utils.translation import gettext_lazy as _
 from PIL import Image, ImageOps
 
 from project.email_security import decrypt_email, email_hash, encrypt_email
+
+try:
+    from cryptography.fernet import InvalidToken
+except Exception:  # pragma: no cover
+    InvalidToken = ValueError
+
+
+logger = logging.getLogger(__name__)
 
 
 class LibrarySetting(models.Model):
@@ -1905,6 +1915,18 @@ class Customer(Base):
     @property
     def email(self) -> str:
         return decrypt_email(self.email_encrypted)
+
+    @property
+    def safe_email(self) -> str:
+        """Best-effort email for display contexts that should not crash on bad data."""
+        try:
+            return self.email
+        except (InvalidToken, ImproperlyConfigured):
+            logger.warning(
+                "Unable to decrypt customer email for display",
+                extra={"customer_id": self.pk},
+            )
+            return ""
 
     @email.setter
     def email(self, value: str):

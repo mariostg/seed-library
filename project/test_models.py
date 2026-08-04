@@ -210,3 +210,19 @@ class EmailHardeningModelTest(TestCase):
                 email="ALPHA.USER@example.org",
                 password="test-pass-123",
             )
+
+    def test_customer_safe_email_returns_empty_string_for_invalid_token(self):
+        customer = Customer.objects.create(
+            first_name="Broken",
+            last_name="Token",
+            email="broken.token@example.org",
+            address="12 Broken Key Street",
+            city="Ottawa",
+            province="ON",
+            postal_code="K1A1A1",
+            application=self.application,
+        )
+        Customer.objects.filter(pk=customer.pk).update(email_encrypted="not-a-token")
+        customer.refresh_from_db()
+
+        self.assertEqual(customer.safe_email, "")
