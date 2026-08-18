@@ -1,8 +1,10 @@
 import csv
 import io
 import json
+import re
 from datetime import datetime
 from decimal import Decimal, InvalidOperation
+from urllib.parse import urlparse
 
 from celery.result import AsyncResult
 from django.conf import settings
@@ -10,6 +12,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Group, Permission
+from django.core import signing
 from django.core.files.storage import default_storage
 from django.core.paginator import Paginator
 from django.db import IntegrityError
@@ -5110,6 +5113,202 @@ def admin_order_detail_page(request, pk):
     return render(request, "project/admin/admin-order-detail-page.html", context)
 
 
+def _resolve_admin_order_detail_redirect(scanned_value: str):
+    scanned_value = scanned_value.strip()
+    if not scanned_value:
+        return None
+
+    if scanned_value.isdigit():
+        return reverse("admin-order-detail-page", kwargs={"pk": scanned_value})
+
+    parsed_url = urlparse(scanned_value)
+    scanned_path = parsed_url.path or scanned_value
+    match = re.search(r"/admin-order-detail-page/(?P<pk>\d+)/?$", scanned_path)
+    if match:
+        return reverse("admin-order-detail-page", kwargs={"pk": match.group("pk")})
+
+    return None
+
+
+def _extract_order_id_from_scan_value(scanned_value: str) -> int | None:
+    scanned_value = scanned_value.strip()
+    if not scanned_value:
+        return None
+
+    if scanned_value.isdigit():
+        return int(scanned_value)
+
+    redirect_path = _resolve_admin_order_detail_redirect(scanned_value)
+    if not redirect_path:
+        return None
+
+    match = re.search(r"/admin-order-detail-page/(?P<pk>\d+)/?$", redirect_path)
+    if not match:
+        return None
+    return int(match.group("pk"))
+
+
+def _parse_scanned_order_payload(raw_payload: str) -> tuple[list[int], list[str]]:
+    order_ids: list[int] = []
+    invalid_entries: list[str] = []
+    seen_ids: set[int] = set()
+
+    for raw_line in raw_payload.splitlines():
+        line = raw_line.strip()
+        if not line:
+            continue
+
+        candidates = [line]
+        candidates.extend(part for part in re.split(r"[\s,;\t]+", line) if part)
+
+        extracted_id = None
+        for candidate in candidates:
+            extracted_id = _extract_order_id_from_scan_value(candidate)
+            if extracted_id is not None:
+                break
+
+        if extracted_id is None:
+            invalid_entries.append(line)
+            continue
+
+        if extracted_id not in seen_ids:
+            seen_ids.add(extracted_id)
+            order_ids.append(extracted_id)
+
+    return order_ids, invalid_entries
+
+
+def _build_order_scan_import_preview(raw_payload: str, source_filename: str):
+    parsed_order_ids, invalid_entries = _parse_scanned_order_payload(raw_payload)
+    order_rows = models.Order.objects.filter(id__in=parsed_order_ids).values(
+        "id", "status"
+    )
+    statuses_by_id = {row["id"]: row["status"] for row in order_rows}
+
+    closable_order_ids: list[int] = []
+    already_closed_order_ids: list[int] = []
+    skipped_order_ids: list[int] = []
+    missing_order_ids: list[int] = []
+
+    for order_id in parsed_order_ids:
+        status = statuses_by_id.get(order_id)
+        if status is None:
+            missing_order_ids.append(order_id)
+        elif status == "pending":
+            closable_order_ids.append(order_id)
+        elif status == "completed":
+            already_closed_order_ids.append(order_id)
+        else:
+            skipped_order_ids.append(order_id)
+
+    return {
+        "source_filename": source_filename,
+        "raw_payload": raw_payload,
+        "parsed_order_ids": parsed_order_ids,
+        "invalid_entries": invalid_entries,
+        "closable_order_ids": closable_order_ids,
+        "already_closed_order_ids": already_closed_order_ids,
+        "skipped_order_ids": skipped_order_ids,
+        "missing_order_ids": missing_order_ids,
+    }
+
+
+@group_required("Shop Manager")
+def admin_order_barcode_scan_page(request):
+    """Display a scan page that redirects a scanned order barcode to its detail page."""
+    if request.method == "POST":
+        scanned_value = request.POST.get("barcode_value", "")
+        redirect_url = _resolve_admin_order_detail_redirect(scanned_value)
+        if redirect_url:
+            return redirect(redirect_url)
+
+        messages.error(request, _("Could not recognize that order barcode."))
+        return redirect("admin-order-barcode-scan-page")
+
+    context = {
+        "title": _("Order Barcode Scan"),
+        "url_name": "admin-order-barcode-scan-page",
+    }
+    return render(request, "project/admin/admin-order-barcode-scan-page.html", context)
+
+
+@group_required("Shop Manager")
+def admin_order_scan_import_page(request):
+    """Import scanner-exported values, preview effects, and bulk-close pending orders."""
+    form = forms.AdminOrderScanImportForm()
+    preview = None
+    signed_preview_payload = ""
+
+    if request.method == "POST":
+        action = request.POST.get("action", "preview")
+
+        if action == "confirm":
+            signed_preview_payload = request.POST.get("preview_payload", "")
+            try:
+                preview = signing.loads(signed_preview_payload, max_age=3600)
+            except signing.BadSignature:
+                messages.error(
+                    request,
+                    _("The import preview expired. Please upload and preview again."),
+                )
+                return redirect("admin-order-scan-import-page")
+
+            closable_order_ids = preview.get("closable_order_ids", [])
+            pending_order_ids = list(
+                models.Order.objects.filter(
+                    id__in=closable_order_ids,
+                    status="pending",
+                ).values_list("id", flat=True)
+            )
+            models.Order.objects.filter(id__in=pending_order_ids).update(
+                status="completed"
+            )
+
+            models.OrderScanImportAudit.objects.create(
+                imported_by=request.user,
+                source_filename=preview.get("source_filename", ""),
+                raw_payload=preview.get("raw_payload", ""),
+                parsed_order_ids=preview.get("parsed_order_ids", []),
+                closed_order_ids=pending_order_ids,
+                already_closed_order_ids=preview.get("already_closed_order_ids", []),
+                skipped_order_ids=preview.get("skipped_order_ids", []),
+                missing_order_ids=preview.get("missing_order_ids", []),
+                invalid_entries=preview.get("invalid_entries", []),
+            )
+
+            messages.success(
+                request,
+                _("Closed %(count)d pending orders from scanner import.")
+                % {"count": len(pending_order_ids)},
+            )
+            return redirect("admin-order-management-page")
+
+        form = forms.AdminOrderScanImportForm(request.POST, request.FILES)
+        if form.is_valid():
+            scan_values = form.cleaned_data.get("scan_values", "").strip()
+            scan_file = form.cleaned_data.get("scan_file")
+            file_payload = ""
+            source_filename = ""
+
+            if scan_file:
+                source_filename = scan_file.name
+                file_payload = scan_file.read().decode("utf-8", errors="replace")
+
+            raw_payload_parts = [part for part in [file_payload, scan_values] if part]
+            raw_payload = "\n".join(raw_payload_parts)
+            preview = _build_order_scan_import_preview(raw_payload, source_filename)
+            signed_preview_payload = signing.dumps(preview)
+
+    context = {
+        "title": _("Import Scanned Orders"),
+        "url_name": "admin-order-scan-import-page",
+        "form": form,
+        "preview": preview,
+        "preview_payload": signed_preview_payload,
+    }
+    return render(request, "project/admin/admin-order-scan-import-page.html", context)
+
+
 @group_required("Shop Manager")
 def admin_order_detail_pdf(request, pk):
     """Generate a PDF summary of a specific order for management purposes."""
@@ -5123,7 +5322,10 @@ def admin_order_detail_pdf(request, pk):
         messages.error(request, _("Order not found."))
         return redirect("admin-order-management-page")
 
-    pdf = utils.order_to_pdf(order)
+    order_detail_url = request.build_absolute_uri(
+        reverse("admin-order-detail-page", kwargs={"pk": order.id})
+    )
+    pdf = utils.order_to_pdf(order, order_detail_url=order_detail_url)
     if pdf:
         response = HttpResponse(pdf, content_type="application/pdf")
         filename = f"Order_{order.id}.pdf"

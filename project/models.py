@@ -2075,6 +2075,32 @@ class Order(models.Model):
         ordering = ["-order_date"]
 
 
+class OrderScanImportAudit(Base):
+    """Audit scanner import batches used to close orders in bulk."""
+
+    imported_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="order_scan_import_audits",
+    )
+    source_filename = models.CharField(max_length=255, blank=True)
+    raw_payload = models.TextField(blank=True)
+    parsed_order_ids = models.JSONField(default=list, blank=True)
+    closed_order_ids = models.JSONField(default=list, blank=True)
+    already_closed_order_ids = models.JSONField(default=list, blank=True)
+    skipped_order_ids = models.JSONField(default=list, blank=True)
+    missing_order_ids = models.JSONField(default=list, blank=True)
+    invalid_entries = models.JSONField(default=list, blank=True)
+
+    def __str__(self) -> str:
+        return f"Order scan import #{self.id}"
+
+    class Meta:
+        ordering = ["-created"]
+
+
 class OrderItem(Base):
     """
     A model representing individual items in an order.

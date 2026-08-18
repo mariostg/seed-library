@@ -1,0 +1,89 @@
+{% extends "core/base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+  {% include "project/admin/admin_links.html" %}
+
+  <section class="container flex-col-center">
+    <div class="flex-row center wide">
+      <h1>{{ title }}</h1>
+    </div>
+
+    {% if messages %}
+      <div>
+        {% for message in messages %}
+          <div class="alert alert--{{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <article class="wide">
+      <p>{% trans "Upload a scanner export file or paste scanned values. Preview the results before confirming order closure." %}</p>
+
+      <!--bar code images to upload, read storage count and clear data from reader-->
+      <div class="flex-col-center">
+        <h3>{% trans "Upload data" %}</h3>
+        <img src="{% static 'images/scanner-upload-data.png' %}" alt="">
+      </div>
+      <p>&nbsp;</p>
+      <div class="flex-col-center">
+        <h3>{% trans "Read storage count" %}</h3>
+        <img src="{% static 'images/scanner-storage-count.png' %}" alt="">
+      </div>
+
+
+      <form method="post" enctype="multipart/form-data" class="flex-col-center">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="preview">
+
+        <div>
+          {{ form.scan_file.label_tag }}<br>
+          {{ form.scan_file }}
+        </div>
+
+        <div>
+          {{ form.scan_values.label_tag }}<br>
+          {{ form.scan_values }}
+          {% if form.scan_values.help_text %}
+            <p>{{ form.scan_values.help_text }}</p>
+          {% endif %}
+        </div>
+
+        {% if form.non_field_errors %}
+          <div>
+            {% for err in form.non_field_errors %}
+              <div class="alert alert--error">{{ err }}</div>
+            {% endfor %}
+          </div>
+        {% endif %}
+
+        <button type="submit">{% trans "Preview Import" %}</button>
+      </form>
+    </article>
+
+    {% if preview %}
+      <article class="wide">
+        <h2>{% trans "Preview" %}</h2>
+        <p>{% blocktrans with total=preview.parsed_order_ids|length %}Parsed {{ total }} unique order IDs.{% endblocktrans %}</p>
+
+        <ul>
+          <li>{% blocktrans with c=preview.closable_order_ids|length %}Closable pending orders: {{ c }}{% endblocktrans %}</li>
+          <li>{% blocktrans with c=preview.already_closed_order_ids|length %}Already completed: {{ c }}{% endblocktrans %}</li>
+          <li>{% blocktrans with c=preview.skipped_order_ids|length %}Skipped (not pending): {{ c }}{% endblocktrans %}</li>
+          <li>{% blocktrans with c=preview.missing_order_ids|length %}Missing orders: {{ c }}{% endblocktrans %}</li>
+          <li>{% blocktrans with c=preview.invalid_entries|length %}Invalid entries: {{ c }}{% endblocktrans %}</li>
+        </ul>
+
+        <form method="post" class="flex-col-center">
+          {% csrf_token %}
+          <input type="hidden" name="action" value="confirm">
+          <input type="hidden" name="preview_payload" value="{{ preview_payload }}">
+          <button type="submit">{% trans "Confirm Close Pending Orders" %}</button>
+        </form>
+      </article>
+    {% endif %}
+  </section>
+{% endblock content %}

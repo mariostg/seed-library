@@ -1,6 +1,7 @@
 import io
 from datetime import datetime
-from unittest.mock import patch
+from types import SimpleNamespace
+from unittest.mock import MagicMock, patch
 
 from django.contrib import messages as django_messages
 from django.contrib.auth.models import AnonymousUser, Group
@@ -362,6 +363,161 @@ class AdminFilteredOrdersPdfAsyncTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response["Content-Type"], "application/pdf")
         self.assertIn("Filtered_Orders.pdf", response["Content-Disposition"])
+
+
+class AdminOrderDetailPdfTest(TestCase):
+    def setUp(self):
+        self.factory = RequestFactory()
+        self.user = ProjectUser.objects.create_user(username="detail-pdf-manager")
+        shop_manager_group, _ = Group.objects.get_or_create(name="Shop Manager")
+        self.user.groups.add(shop_manager_group)
+        self.order = SimpleNamespace(id=123, pk=123)
+
+    @patch("project.views.utils.order_to_pdf")
+    @patch("project.views.models.Order.objects")
+    def test_admin_order_detail_pdf_uses_order_detail_url_for_barcode(
+        self,
+        mock_order_objects,
+        mock_order_to_pdf,
+    ):
+        mock_order_to_pdf.return_value = b"%PDF-1.4\n"
+        mock_queryset = mock_order_objects.select_related.return_value
+        mock_queryset.prefetch_related.return_value.get.return_value = self.order
+        pdf_url = reverse("admin-order-detail-pdf", kwargs={"pk": self.order.pk})
+
+        request = self.factory.get(pdf_url)
+        request.user = self.user
+        expected_absolute_url = request.build_absolute_uri(
+            reverse("admin-order-detail-page", kwargs={"pk": self.order.pk})
+        )
+
+        response = project_views.admin_order_detail_pdf(request, self.order.pk)
+
+        self.assertEqual(response.status_code, 200)
+        mock_order_to_pdf.assert_called_once()
+        self.assertEqual(mock_order_to_pdf.call_args.args[0].id, self.order.id)
+        self.assertEqual(
+            mock_order_to_pdf.call_args.kwargs["order_detail_url"],
+            expected_absolute_url,
+        )
+
+
+class AdminOrderBarcodeScanPageTest(TestCase):
+    def setUp(self):
+        self.factory = RequestFactory()
+        self.user = ProjectUser.objects.create_user(username="barcode-scan-manager")
+        shop_manager_group, _ = Group.objects.get_or_create(name="Shop Manager")
+        self.user.groups.add(shop_manager_group)
+
+    def test_scan_page_renders_autofocus_input(self):
+        request = self.factory.get(reverse("admin-order-barcode-scan-page"))
+        request.user = self.user
+
+        response = project_views.admin_order_barcode_scan_page(request)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "autofocus")
+
+    def test_scan_page_redirects_absolute_order_detail_url(self):
+        detail_path = reverse("admin-order-detail-page", kwargs={"pk": 123})
+        request = self.factory.post(
+            reverse("admin-order-barcode-scan-page"),
+            data={"barcode_value": f"http://testserver{detail_path}"},
+        )
+        request.user = self.user
+
+        response = project_views.admin_order_barcode_scan_page(request)
+
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, detail_path)
+
+
+class AdminOrderScanImportWorkflowTest(TestCase):
+    def setUp(self):
+        self.factory = RequestFactory()
+        self.user = ProjectUser.objects.create_user(username="scan-import-manager")
+        shop_manager_group, _ = Group.objects.get_or_create(name="Shop Manager")
+        self.user.groups.add(shop_manager_group)
+
+    def _build_post_request(self, url, data):
+        request = self.factory.post(url, data=data)
+        request.user = self.user
+        request._messages = MagicMock()
+        return request
+
+    def test_parse_scanned_order_payload_extracts_ids_and_invalid_entries(self):
+        raw_payload = "\n".join(
+            [
+                "101",
+                "http://testserver/en-us/admin-order-detail-page/202/",
+                "invalid-value",
+                "101",
+            ]
+        )
+
+        order_ids, invalid_entries = project_views._parse_scanned_order_payload(
+            raw_payload
+        )
+
+        self.assertEqual(order_ids, [101, 202])
+        self.assertEqual(invalid_entries, ["invalid-value"])
+
+    @patch("project.views.messages.success")
+    @patch("project.views.signing.loads")
+    @patch("project.views.models.OrderScanImportAudit.objects.create")
+    @patch("project.views.models.Order.objects.filter")
+    def test_confirm_import_closes_pending_orders_and_writes_audit(
+        self,
+        mock_filter,
+        mock_create_audit,
+        mock_signing_loads,
+        mock_success_message,
+    ):
+        preview_payload = {
+            "source_filename": "scanner-export.txt",
+            "raw_payload": "101\n102",
+            "parsed_order_ids": [101, 102],
+            "invalid_entries": [],
+            "closable_order_ids": [101, 102],
+            "already_closed_order_ids": [],
+            "skipped_order_ids": [],
+            "missing_order_ids": [],
+        }
+        mock_signing_loads.return_value = preview_payload
+
+        pending_qs = MagicMock()
+        pending_qs.values_list.return_value = [101, 102]
+        update_qs = MagicMock()
+        mock_filter.side_effect = [pending_qs, update_qs]
+
+        request = self._build_post_request(
+            reverse("admin-order-scan-import-page"),
+            {
+                "action": "confirm",
+                "preview_payload": "signed-preview",
+            },
+        )
+        expected_redirect = reverse("admin-order-management-page")
+
+        response = project_views.admin_order_scan_import_page(request)
+
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, expected_redirect)
+        mock_filter.assert_any_call(id__in=[101, 102], status="pending")
+        mock_filter.assert_any_call(id__in=[101, 102])
+        update_qs.update.assert_called_once_with(status="completed")
+        mock_create_audit.assert_called_once_with(
+            imported_by=self.user,
+            source_filename="scanner-export.txt",
+            raw_payload="101\n102",
+            parsed_order_ids=[101, 102],
+            closed_order_ids=[101, 102],
+            already_closed_order_ids=[],
+            skipped_order_ids=[],
+            missing_order_ids=[],
+            invalid_entries=[],
+        )
+        mock_success_message.assert_called_once()
 
 
 class AddToCartLimitTest(TestCase):

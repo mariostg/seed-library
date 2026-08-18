@@ -953,6 +953,16 @@ urlpatterns += i18n_patterns(
         name="admin-order-detail-page",
     ),
     path(
+        "admin-order-barcode-scan-page/",
+        views.admin_order_barcode_scan_page,
+        name="admin-order-barcode-scan-page",
+    ),
+    path(
+        "admin-order-scan-import-page/",
+        views.admin_order_scan_import_page,
+        name="admin-order-scan-import-page",
+    ),
+    path(
         "admin-order-detail-pdf/<int:pk>/",
         views.admin_order_detail_pdf,
         name="admin-order-detail-pdf",

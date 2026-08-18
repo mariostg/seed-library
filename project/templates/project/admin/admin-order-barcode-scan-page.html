@@ -1,0 +1,42 @@
+{% extends "core/base.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+  {% include "project/admin/admin_links.html" %}
+
+  <section class="container flex-col-center">
+    <div class="flex-row center wide">
+      <h1>{{ title }}</h1>
+    </div>
+
+    {% if messages %}
+      <div>
+        {% for message in messages %}
+          <div class="alert alert--{{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <article class="wide">
+      <p>{% trans "Open this page on the browser, then scan the order barcode to jump to the order detail view." %}</p>
+
+      <form method="post" class="flex-col-center">
+        {% csrf_token %}
+        <label for="id_barcode_value">{% trans "Barcode value" %}</label>
+        <input
+          id="id_barcode_value"
+          name="barcode_value"
+          type="text"
+          autofocus
+          autocomplete="off"
+          spellcheck="false"
+          autocapitalize="off"
+        >
+        <button type="submit">{% trans "Open order" %}</button>
+      </form>
+    </article>
+  </section>
+{% endblock content %}

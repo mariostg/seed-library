@@ -149,6 +149,30 @@ class AdminOrderSeedApplicationForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
 
 
+class AdminOrderScanImportForm(forms.Form):
+    scan_file = forms.FileField(required=False, label=_("Scanner export file"))
+    scan_values = forms.CharField(
+        required=False,
+        label=_("Scanned values"),
+        widget=forms.Textarea(
+            attrs={"class": "input-textarea", "rows": 10, "style": "width: 500px;"}
+        ),
+        help_text=_(
+            "Optional: paste one value per line when no file export is available."
+        ),
+    )
+
+    def clean(self):
+        cleaned_data = super().clean()
+        scan_file = cleaned_data.get("scan_file")
+        scan_values = (cleaned_data.get("scan_values") or "").strip()
+        if not scan_file and not scan_values:
+            raise ValidationError(
+                _("Upload a scanner export file or paste at least one scanned value.")
+            )
+        return cleaned_data
+
+
 class AdminColourForm(forms.ModelForm):
     class Meta:
         model = models.BloomColour
