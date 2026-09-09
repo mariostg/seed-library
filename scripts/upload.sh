@@ -25,6 +25,7 @@ diff_remote_file() {
     if [ -z "$relpath" ]; then
         echo "Usage: ./upload.sh diff-dev <relative/path/to/file>"
         echo "   or: ./upload.sh diff-prod <relative/path/to/file>"
+        echo "   or: ./upload.sh diff-test <relative/path/to/file>"
         exit 1
     fi
 
@@ -93,6 +94,7 @@ print_usage() {
     echo "  sync-prod               Sync code to prod site"
     echo "  diff-dev <relative>     Diff local file against dev site file"
     echo "  diff-prod <relative>    Diff local file against prod site file"
+    echo "  diff-test <relative>    Diff local file against test site file"
     echo "  help | -h | --help      Show this help message"
 }
 
@@ -210,6 +212,8 @@ elif [ "$1" = 'diff-dev' ]; then
     diff_remote_file "$DEVSITE" "$2"
 elif [ "$1" = 'diff-prod' ]; then
     diff_remote_file "$PRODSITE" "$2"
+elif [ "$1" = 'diff-test' ]; then
+    diff_remote_file "$TESTSITE" "$2"
 elif [ "$1" = 'help' ] || [ "$1" = '-h' ] || [ "$1" = '--help' ]; then
     print_usage
 else
