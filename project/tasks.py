@@ -10,9 +10,10 @@ from django.db.models import Count, Sum
 from django.utils import timezone
 
 from project.filters import OrderFilter
-from project.models import Order
+from project.models import Donation, Order
 from project.utils import (
     render_many_orders_to_pdf,
+    send_donation_receipt_email,
     send_donation_thank_you_email,
     send_order_confirmation_email,
 )
@@ -113,6 +114,15 @@ def send_donation_thank_you_task(order_id):
     except ObjectDoesNotExist:
         return False
     return send_donation_thank_you_email(order)
+
+
+@shared_task
+def send_donation_receipt_task(donation_id):
+    try:
+        donation = Donation.objects.get(id=donation_id)
+    except ObjectDoesNotExist:
+        return False
+    return send_donation_receipt_email(donation)
 
 
 @shared_task(bind=True)

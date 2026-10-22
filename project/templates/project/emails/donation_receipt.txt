@@ -1,0 +1,14 @@
+{% load i18n %}
+{% trans "Thank You for Your Donation!" %}
+
+{% if donation.donor_name %}{% blocktrans with name=donation.donor_name %}Dear {{ name }},{% endblocktrans %}{% endif %}
+
+{% trans "We are deeply grateful for your generous donation to the Ottawa Wildflower Seed Library." %}
+
+{% blocktrans with amount=donation.amount currency=donation.currency|upper %}Donation Amount: ${{ amount }} {{ currency }}{% endblocktrans %}
+{% blocktrans with date=donation.paid_at|date:"F j, Y" %}Date: {{ date }}{% endblocktrans %}
+
+{% trans "Your support helps preserve native plant species, educate our community, and expand our seed library." %}
+
+{% trans "With gratitude," %}
+{% trans "Ottawa Wildflower Seed Library" %}

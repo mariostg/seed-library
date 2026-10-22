@@ -38,6 +38,9 @@
 - Apply migrate
 - [Set up gunicorn socket](#gunicorn-socket)
 - [Set up gunicorn service](#gunicorn-service)
+- Ensure Redis is installed and running (`redis-cli ping` should return `PONG`)
+- [Set up celery worker service](#celery-worker-service)
+- [Set up celery beat service](#celery-beat-service)
 - Set up Nginx
 
 ### Sequence of commands
@@ -167,6 +170,64 @@ ListenStream=/run/djbp.sock
 
 [Install]
 WantedBy=sockets.target
+```
+
+## Sample Celery worker service file <a id="celery-worker-service"></a>
+
+This project does not rely on the Dockerfile or Procfile on the VPS. Emails (order
+confirmation, donation thank you) are sent from Celery tasks, so a worker must be
+running on the server or nothing will ever pick up queued tasks.
+
+This files under Debian at least goes in /etc/systemd/system/
+I like to call this file djbp-celery-worker.service. Replace djbp with whatever project name is chosen.
+Set WorkingDirectory and ExecStart as appropriate.
+
+```bash
+[Unit]
+Description=celery worker djbp
+After=network.target redis-server.service
+
+[Service]
+User=mariost-gelais
+Group=www-data
+WorkingDirectory=/home/mariost-gelais/sites/djbp/
+ExecStart=/home/mariost-gelais/sites/djbp/.venv-djbp/bin/celery -A main worker \
+          --loglevel=info
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+```
+
+Enable and start it:
+
+```bash
+sudo systemctl daemon-reload
+sudo systemctl enable --now djbp-celery-worker.service
+sudo systemctl status djbp-celery-worker.service
+journalctl -u djbp-celery-worker.service -f
+```
+
+## Sample Celery beat service file <a id="celery-beat-service"></a>
+
+Only needed if the project uses scheduled (periodic) tasks. This files under Debian
+at least goes in /etc/systemd/system/. I like to call this file djbp-celery-beat.service.
+
+```bash
+[Unit]
+Description=celery beat djbp
+After=network.target redis-server.service
+
+[Service]
+User=mariost-gelais
+Group=www-data
+WorkingDirectory=/home/mariost-gelais/sites/djbp/
+ExecStart=/home/mariost-gelais/sites/djbp/.venv-djbp/bin/celery -A main beat \
+          --loglevel=info
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
 ```
 
 ## Sample Nginx config file <a id='nginx-conf'></a>

@@ -2173,7 +2173,9 @@ class Donation(Base):
     stripe_payment_intent_id = models.CharField(max_length=255, blank=True)
     stripe_subscription_id = models.CharField(max_length=255, blank=True)
     stripe_customer_id = models.CharField(max_length=255, blank=True)
-    stripe_invoice_id = models.CharField(max_length=255, blank=True, unique=True)
+    stripe_invoice_id = models.CharField(
+        max_length=255, blank=True, null=True, unique=True
+    )
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     currency = models.CharField(max_length=10, default="cad")
     status = models.CharField(

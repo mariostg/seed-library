@@ -1,0 +1,18 @@
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+  <body>
+    <h1>{% trans "Thank You for Your Donation!" %}</h1>
+    {% if donation.donor_name %}<p>{% blocktrans with name=donation.donor_name %}Dear {{ name }},{% endblocktrans %}</p>{% endif %}
+    <p>{% trans "We are deeply grateful for your generous donation to the Ottawa Wildflower Seed Library." %}</p>
+    <h2>{% trans "Donation Details" %}</h2>
+    <p>{% blocktrans with amount=donation.amount currency=donation.currency|upper %}Donation Amount: ${{ amount }} {{ currency }}{% endblocktrans %}</p>
+    <p>{% blocktrans with date=donation.paid_at|date:"F j, Y" %}Date: {{ date }}{% endblocktrans %}</p>
+    <p>{% trans "Your support helps preserve native plant species, educate our community, and expand our seed library." %}</p>
+    <p>{% trans "With gratitude," %}<br>{% trans "Ottawa Wildflower Seed Library" %}</p>
+  </body>
+</html>

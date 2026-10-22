@@ -1133,3 +1133,42 @@ def send_donation_thank_you_email(order):
             e,
         )
         return False
+
+
+def send_donation_receipt_email(donation):
+    """Send a thank-you receipt for a standalone donation."""
+    from django.core.mail import EmailMultiAlternatives
+    from django.template.loader import render_to_string
+    from django.utils.translation import gettext as _
+
+    if not donation.donor_email:
+        logger.warning(
+            "Skipping donation receipt for Donation #%s: donor email is missing",
+            donation.id,
+        )
+        return False
+
+    try:
+        context = {"donation": donation}
+        email = EmailMultiAlternatives(
+            subject=_("Thank You for Your Donation!"),
+            body=render_to_string("project/emails/donation_receipt.txt", context),
+            from_email=None,
+            to=[donation.donor_email],
+        )
+        email.attach_alternative(
+            render_to_string("project/emails/donation_receipt.html", context),
+            "text/html",
+        )
+        email.send(fail_silently=False)
+        logger.info(
+            "Donation receipt sent successfully for Donation #%s to %s",
+            donation.id,
+            donation.donor_email,
+        )
+        return True
+    except Exception as exc:
+        logger.exception(
+            "Error sending donation receipt for Donation #%s: %s", donation.id, exc
+        )
+        return False

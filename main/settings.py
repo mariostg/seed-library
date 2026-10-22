@@ -218,6 +218,9 @@ MAPBOX_ACCESS_TOKEN = os.environ.get("MAPBOX_ACCESS_TOKEN", "")
 # Stripe donation settings
 STRIPE_PUBLISHABLE_KEY = os.environ.get("STRIPE_PUBLISHABLE_KEY", "")
 STRIPE_SECRET_KEY = os.environ.get("STRIPE_SECRET_KEY", "")
+if os.environ.get("TEST_STRIPE", "False").lower() in {"1", "true", "yes", "on"}:
+    STRIPE_SECRET_KEY = os.environ.get("STRIPE_SECRET_KEY_TEST", "")
+    STRIPE_PUBLISHABLE_KEY = os.environ.get("STRIPE_PUBLISHABLE_KEY_TEST", "")
 STRIPE_WEBHOOK_SECRET = os.environ.get("STRIPE_WEBHOOK_SECRET", "")
 STRIPE_DONATION_CURRENCY = os.environ.get("STRIPE_DONATION_CURRENCY", "cad").lower()
 STRIPE_DONATION_MIN_AMOUNT = Decimal(
@@ -339,7 +342,7 @@ elif EMAIL_MODE in {"smtp", "live"}:
 else:
     raise ImproperlyConfigured("EMAIL_MODE must be one of: smtp, live, sandbox")
 
-DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL", "hello@mariostg.com")
+DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL", "")
 EMAIL_HOST = os.environ.get("EMAIL_HOST", _default_email_host)
 EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER", _default_email_user)
 EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD", _default_email_password)

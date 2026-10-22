@@ -15,6 +15,7 @@ from django.contrib.auth.models import Group, Permission
 from django.core import signing
 from django.core.files.storage import default_storage
 from django.core.paginator import Paginator
+from django.core.serializers.json import DjangoJSONEncoder
 from django.db import IntegrityError
 from django.db.models import Count, RestrictedError, Sum
 from django.db.utils import IntegrityError as DbIntegrityError
@@ -38,7 +39,7 @@ except ImportError:  # pragma: no cover - dependency should be available in runt
 from project import filters, forms, models, utils, vascan
 from project.acl_handler import group_required
 from project.models import ProjectUser
-from project.tasks import generate_filtered_orders_pdf_task
+from project.tasks import generate_filtered_orders_pdf_task, send_donation_receipt_task
 
 
 # Create your views here.
@@ -4490,6 +4491,10 @@ def stripe_webhook(request):
     except Exception:
         return HttpResponse(status=400)
 
+    if hasattr(event, "to_dict"):
+        event = event.to_dict()
+    event = json.loads(json.dumps(event, cls=DjangoJSONEncoder))
+
     try:
         webhook_event, created = models.StripeWebhookEvent.objects.get_or_create(
             stripe_event_id=event.get("id", ""),
@@ -4502,11 +4507,24 @@ def stripe_webhook(request):
     except DbIntegrityError:
         return HttpResponse(status=200)
 
-    if not created:
+    if not created and not webhook_event.processing_error:
         return HttpResponse(status=200)
 
     try:
         _process_donation_webhook_event(event)
+        event_data = (event.get("data") or {}).get("object") or {}
+        if event.get("type") == "checkout.session.completed" and event_data.get(
+            "mode"
+        ) in {"payment", "subscription"}:
+            donation = models.Donation.objects.filter(
+                stripe_checkout_session_id=event_data.get("id", ""),
+                status=models.Donation.STATUS_SUCCEEDED,
+            ).first()
+            if donation:
+                send_donation_receipt_task.delay(donation.id)
+        if webhook_event.processing_error:
+            webhook_event.processing_error = ""
+            webhook_event.save(update_fields=["processing_error", "modified"])
     except Exception as exc:
         webhook_event.processing_error = str(exc)
         webhook_event.save(update_fields=["processing_error", "modified"])
