@@ -4384,7 +4384,6 @@ def checkout(request):
                 try:
                     session = stripe.checkout.Session.create(
                         mode="payment",
-                        payment_method_types=["card"],
                         line_items=[
                             {
                                 "price_data": {
@@ -4781,7 +4780,6 @@ def create_donation_checkout_session(request):
     try:
         session = stripe.checkout.Session.create(
             mode="subscription" if is_recurring else "payment",
-            payment_method_types=["card"],
             line_items=[line_item],
             billing_address_collection="required",
             success_url=request.build_absolute_uri(reverse("donation-success")),
