@@ -51,6 +51,23 @@
               </div>
             {% endif %}
           </div>
+          <div class="input-text">
+            <label for="{{ form.accept_substitutes.id_for_label }}">
+              <input type="checkbox"
+                     name="{{ form.accept_substitutes.name }}"
+                     id="{{ form.accept_substitutes.id_for_label }}"
+                     class="form-check-input{% if form.accept_substitutes.errors %} is-invalid{% endif %}"
+                     {% if form.accept_substitutes.value %}checked{% endif %}>
+              {{ form.accept_substitutes.label }}
+            </label>
+            {% if form.accept_substitutes.errors %}
+              <div class="invalid-feedback">
+                {% for error in form.accept_substitutes.errors %}
+                  <p>{{ error }}</p>
+                {% endfor %}
+              </div>
+            {% endif %}
+          </div>
 
           <p class="form-help-text">
             {% trans "Please provide your contact information to proceed with seed ordering." %}

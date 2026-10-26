@@ -785,6 +785,7 @@ class CustomerForm(forms.ModelForm):
             "province",
             "postal_code",
             "staying_in_touch",
+            "accept_substitutes",
         ]
         widgets = {
             "first_name": forms.TextInput(
@@ -814,6 +815,12 @@ class CustomerForm(forms.ModelForm):
                     "id": "staying_in_touch",
                 }
             ),
+            "accept_substitutes": forms.CheckboxInput(
+                attrs={
+                    "class": "form-control",
+                    "id": "accept_substitutes",
+                }
+            ),
         }
         labels = {
             "first_name": _("First Name"),
@@ -823,6 +830,9 @@ class CustomerForm(forms.ModelForm):
             "postal_code": _("Postal Code"),
             "staying_in_touch": _(
                 "I would like to stay in touch with the Ottawa Wildflower Seed Library.  I agree to be contacted to learn when the plant and seed giveaways will be next available, and to receive information about the Ottawa Wildflower Seed Library's activities and events."
+            ),
+            "accept_substitutes": _(
+                "I am willing to accept substitute seeds if the requested seeds are unavailable."
             ),
         }
 

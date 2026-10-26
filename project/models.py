@@ -1907,6 +1907,9 @@ class Customer(Base):
     staying_in_touch = models.BooleanField(
         default=False, verbose_name=_("Staying in Touch")
     )
+    accept_substitutes = models.BooleanField(
+        default=False, verbose_name=_("Accept Substitutes")
+    )  # a field to indicate if the customer is willing to accept substitute seeds if the requested seeds are unavailable
     objects = CustomerManager()
 
     def __str__(self) -> str:
