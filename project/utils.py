@@ -811,6 +811,12 @@ def order_to_pdf(
             target_elements.append(
                 Paragraph(order.customer_note, target_styles["Normal"])
             )
+        if order.customer.accept_substitutes:
+            target_elements.append(Spacer(1, 12))
+            target_elements.append(
+                Paragraph("Accept Substitutes:", target_styles["Heading2"])
+            )
+            target_elements.append(Paragraph("Yes", target_styles["Normal"]))
 
     if elements is None:
         buffer = BytesIO()

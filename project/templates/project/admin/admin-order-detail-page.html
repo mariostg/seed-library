@@ -29,19 +29,22 @@ The layout and styling are designed for printing-->
         </address>
         <br>
         <div>
-          {{ order.customer.safe_email }}<br>
+          <a href="mailto:{{ order.customer.safe_email }}">{{ order.customer.safe_email }}</a><br>
         </div>
       </div>
       <div class="order-details">
         <p><strong>{% trans "Order Date:" %}</strong> {{ order.order_date }}</p>
         <p><strong>{% trans "Donation Amount:" %}</strong> {{ order.donation }}</p>
         <p><strong>{% trans "Order Application:" %}</strong> {% if order.customer.application %}{{ order.customer.application }}{% else %}{% trans "N/A" %}{% endif %}</p>
+        <p><strong>{% trans "Accept Substitutes:" %}</strong> {% if order.customer.accept_substitutes %}{% trans "Yes" %}{% else %}{% trans "No" %}{% endif %}</p>
       </div>
     </article>
-    <article class="flex-row">
-      <p><strong>{% trans "Customer Note:" %}</strong> {{ order.customer_note }}</p>
-
-    </article>
+    <!-- show the customer note only if not empty -->
+    {% if order.customer_note %}
+      <article class="flex-row">
+        <p><strong>{% trans "Customer Note:" %}</strong> {{ order.customer_note }}</p>
+      </article>
+    {% endif %}
 
     <div class="order-items">
       <h2>{% trans "Ordered Items" %}</h2>
