@@ -50,6 +50,7 @@
             <th>{% trans "Seed Quantity" %}</th>
             <th>{% trans "Donation" %}</th>
             <th>{% trans "Application" %}</th>
+            <th>{% trans "Accept Substitutes" %}</th>
             <th>{% trans "Status" %}</th>
             <th>{% trans "PDF Generated" %}</th>
             <th>{% trans "Priority" %}</th>
@@ -66,6 +67,7 @@
               <td>{{ order.total_seed_quantity|default_if_none:0 }}</td>
               <td>{{ order.donation_amount }}</td>
               <td>{{ order.customer.application }}</td>
+              <td>{% if order.customer.accept_substitutes %}{% trans "Yes" %}{% else %}{% trans "No" %}{% endif %}</td>
               <td>{{ order.status }}</td>
               <td>{% if order.pdf_generated_at %}
                 {{ order.pdf_generated_at|date:"Y-m-d H:i" }} {{ order.pdf_generated_by }}
