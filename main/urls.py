@@ -943,6 +943,16 @@ urlpatterns += i18n_patterns(
         name="admin-order-management-page",
     ),
     path(
+        _("admin-donation-report/"),
+        views.admin_donation_report_page,
+        name="admin-donation-report",
+    ),
+    path(
+        _("admin-donation-report.csv/"),
+        views.admin_donation_report_csv,
+        name="admin-donation-report-csv",
+    ),
+    path(
         _("admin-customers-in-touch-page/"),
         views.admin_customers_in_touch_page,
         name="admin-customers-in-touch-page",

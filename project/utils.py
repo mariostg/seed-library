@@ -586,7 +586,7 @@ def create_order_from_cart(request, donation_amount=0, customer_note=""):
 
     Args:
         request: Django request object
-        donation_amount: Optional donation amount (default 0)
+        donation_amount: Retained for compatibility; donations are recorded only after Stripe confirms payment.
         customer_note: Optional customer note for the order
     Returns:
         Order object or None if cart is empty or customer not found
@@ -609,14 +609,14 @@ def create_order_from_cart(request, donation_amount=0, customer_note=""):
 
     from django.db import transaction
 
-    from project.tasks import send_donation_thank_you_task, send_order_confirmation_task
+    from project.tasks import send_order_confirmation_task
 
     # Create the order and items inside an atomic transaction, and
     # enqueue email tasks after the transaction commits to avoid races.
     with transaction.atomic():
         order = Order.objects.create(
             customer=customer,
-            donation_amount=donation_amount,
+            donation_amount=0,
             customer_note=customer_note,
             status="pending",
         )
@@ -634,8 +634,6 @@ def create_order_from_cart(request, donation_amount=0, customer_note=""):
 
         # Schedule Celery tasks to run after successful commit
         transaction.on_commit(lambda: send_order_confirmation_task.delay(order.id))
-        if order.donation_amount and order.donation_amount > 0:
-            transaction.on_commit(lambda: send_donation_thank_you_task.delay(order.id))
 
     return order
 

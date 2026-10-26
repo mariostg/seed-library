@@ -1,5 +1,6 @@
 import io
 from datetime import datetime
+from decimal import Decimal
 from types import SimpleNamespace
 from unittest.mock import MagicMock, patch
 
@@ -15,6 +16,8 @@ from django.utils.translation import override
 from project import views as project_views
 from project.models import (
     Customer,
+    Donation,
+    LibrarySetting,
     Order,
     OrderSeedApplication,
     PlantNarrative,
@@ -146,6 +149,73 @@ class DonationViewsTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "project/donations.html")
         mock_stripe.checkout.Session.create.assert_not_called()
+
+
+class SeedOrderDonationCheckoutTest(TestCase):
+    def setUp(self):
+        self.client = Client(headers={"host": "localhost"})
+        self.customer = Customer.objects.create(
+            first_name="Order",
+            last_name="Donor",
+            email="order-donor@example.com",
+            address="12 Garden Road",
+            city="Ottawa",
+            province="Ontario",
+            postal_code="K1A 0B1",
+        )
+        plant = PlantProfile.objects.create(latin_name="Testus seedus")
+        ShoppingCart.objects.create(
+            customer=self.customer,
+            plant_profile=plant,
+            quantity=2,
+        )
+        LibrarySetting.objects.create(is_accepting_donations=True)
+        session = self.client.session
+        session["customer_id"] = self.customer.id
+        session.save()
+        with override("en"):
+            self.checkout_url = reverse("checkout")
+
+    @override_settings(STRIPE_SECRET_KEY="sk_test_key", STRIPE_DONATION_CURRENCY="cad")
+    @patch("project.views.stripe")
+    def test_optional_donation_creates_checkout_and_keeps_order_unpaid(
+        self, mock_stripe
+    ):
+        mock_stripe.checkout.Session.create.return_value = SimpleNamespace(
+            id="cs_seed_order_1", url="https://checkout.stripe.com/test-order-donation"
+        )
+
+        response = self.client.post(self.checkout_url, {"donation_amount": "12.50"})
+
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(
+            response.url, "https://checkout.stripe.com/test-order-donation"
+        )
+        order = Order.objects.get(customer=self.customer)
+        donation = Donation.objects.get(order=order)
+        self.assertEqual(order.donation_amount, Decimal("0.00"))
+        self.assertEqual(donation.status, Donation.STATUS_PENDING)
+        self.assertEqual(donation.stripe_checkout_session_id, "cs_seed_order_1")
+        self.assertEqual(donation.donor_email, "order-donor@example.com")
+        self.assertIn("12 Garden Road", donation.donor_address)
+        kwargs = mock_stripe.checkout.Session.create.call_args.kwargs
+        self.assertEqual(kwargs["line_items"][0]["price_data"]["unit_amount"], 1250)
+        self.assertEqual(kwargs["metadata"]["donation_id"], str(donation.id))
+
+    @override_settings(STRIPE_SECRET_KEY="sk_test_key", STRIPE_DONATION_CURRENCY="cad")
+    @patch("project.views.stripe")
+    def test_cancelled_checkout_leaves_order_without_paid_donation(self, mock_stripe):
+        mock_stripe.checkout.Session.create.return_value = SimpleNamespace(
+            id="cs_seed_order_cancel", url="https://checkout.stripe.com/test-cancel"
+        )
+
+        self.client.post(self.checkout_url, {"donation_amount": "8.00"})
+        order = Order.objects.get(customer=self.customer)
+        donation = Donation.objects.get(order=order)
+
+        self.assertEqual(order.donation_amount, Decimal("0.00"))
+        self.assertEqual(donation.status, Donation.STATUS_PENDING)
+        self.assertTrue(Order.objects.filter(pk=order.pk).exists())
 
 
 class PlantProfilePageContextTest(TestCase):

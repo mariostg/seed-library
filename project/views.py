@@ -23,6 +23,7 @@ from django.http import FileResponse, HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.utils import timezone
+from django.utils.dateparse import parse_date
 from django.utils.html import format_html
 from django.utils.translation import gettext as _
 from django.views.decorators.csrf import csrf_exempt
@@ -4311,25 +4312,112 @@ def checkout(request):
         return redirect("shopping-cart")
 
     if request.method == "POST":
-        try:
-            donation_str = request.POST.get("donation_amount", "0")
-            # Handle both comma and period as decimal separator
-            donation_str = donation_str.replace(",", ".")
-            donation_amount = float(donation_str) if donation_str else 0
-            if donation_amount < 0:
-                donation_amount = 0
-        except (ValueError, TypeError):
-            donation_amount = 0
+        raw_donation = request.POST.get("donation_amount", "0").strip()
+        donation_amount = Decimal("0.00")
+        if raw_donation:
+            try:
+                parsed_amount = Decimal(raw_donation.replace(",", "."))
+            except (InvalidOperation, ValueError):
+                messages.error(request, _("Enter a valid donation amount."))
+                return redirect("checkout")
+            if not parsed_amount.is_finite():
+                messages.error(request, _("Enter a valid donation amount."))
+                return redirect("checkout")
+            if parsed_amount < 0:
+                messages.error(request, _("Donation amount cannot be negative."))
+                return redirect("checkout")
+            if parsed_amount > Decimal("99999.99"):
+                messages.error(request, _("Donation amount is too large."))
+                return redirect("checkout")
+            donation_amount = parsed_amount.quantize(Decimal("0.01"))
+        if donation_amount is not None and donation_amount > 0:
+            if donation_amount < _get_min_donation_amount():
+                messages.error(
+                    request,
+                    _("The minimum donation is $%(amount)s.")
+                    % {"amount": _get_min_donation_amount()},
+                )
+                return redirect("checkout")
+            if not settings.STRIPE_SECRET_KEY or stripe is None:
+                messages.error(
+                    request,
+                    _(
+                        "The order can be submitted, but donation checkout is unavailable."
+                    ),
+                )
+                donation_amount = Decimal("0.00")
 
         customer_note = request.POST.get("customer_note", "").strip()
 
         order = utils.create_order_from_cart(
             request,
-            donation_amount=donation_amount,
             customer_note=customer_note,
         )
 
         if order:
+            if donation_amount and donation_amount > 0:
+                donation = models.Donation.objects.create(
+                    order=order,
+                    amount=donation_amount,
+                    currency=settings.STRIPE_DONATION_CURRENCY,
+                    status=models.Donation.STATUS_PENDING,
+                    donor_email=customer.safe_email,
+                    donor_name=f"{customer.first_name} {customer.last_name}".strip(),
+                    donor_address=", ".join(
+                        part
+                        for part in (
+                            customer.address,
+                            customer.city,
+                            customer.province,
+                            customer.postal_code,
+                        )
+                        if part
+                    ),
+                )
+                stripe.api_key = settings.STRIPE_SECRET_KEY
+                order_confirmation_url = request.build_absolute_uri(
+                    reverse("order-confirmation", kwargs={"pk": order.id})
+                )
+                try:
+                    session = stripe.checkout.Session.create(
+                        mode="payment",
+                        payment_method_types=["card"],
+                        line_items=[
+                            {
+                                "price_data": {
+                                    "currency": settings.STRIPE_DONATION_CURRENCY,
+                                    "unit_amount": int(donation_amount * 100),
+                                    "product_data": {
+                                        "name": _("Optional donation with seed order")
+                                    },
+                                },
+                                "quantity": 1,
+                            }
+                        ],
+                        customer_email=customer.safe_email,
+                        success_url=f"{order_confirmation_url}?donation=success",
+                        cancel_url=f"{order_confirmation_url}?donation=cancelled",
+                        client_reference_id=str(order.id),
+                        metadata={
+                            "donation_id": str(donation.id),
+                            "order_id": str(order.id),
+                            "is_recurring": "false",
+                        },
+                    )
+                    donation.stripe_checkout_session_id = session.id
+                    donation.save(
+                        update_fields=["stripe_checkout_session_id", "modified"]
+                    )
+                    return redirect(session.url, permanent=False)
+                except Exception:
+                    donation.status = models.Donation.STATUS_FAILED
+                    donation.save(update_fields=["status", "modified"])
+                    messages.warning(
+                        request,
+                        _(
+                            "Your seed order was submitted, but the donation payment could not be started."
+                        ),
+                    )
             messages.success(
                 request,
                 _("Order created successfully! Order #%(order_id)d")
@@ -4378,6 +4466,23 @@ def _amount_from_minor_units(minor_units):
     return (Decimal(minor_units) / Decimal("100")).quantize(Decimal("0.01"))
 
 
+def _format_donor_address(address):
+    if not isinstance(address, dict):
+        return ""
+    return ", ".join(
+        str(part).strip()
+        for part in (
+            address.get("line1"),
+            address.get("line2"),
+            address.get("city"),
+            address.get("state"),
+            address.get("postal_code"),
+            address.get("country"),
+        )
+        if part and str(part).strip()
+    )
+
+
 def _is_true(value):
     return str(value).strip().lower() in {"1", "true", "yes", "on"}
 
@@ -4386,40 +4491,81 @@ def _upsert_donation_from_checkout_session(session):
     amount = _amount_from_minor_units(session.get("amount_total"))
     metadata = session.get("metadata") or {}
     customer_details = session.get("customer_details") or {}
+    address = customer_details.get("address") or {}
+    order = None
+    donation = None
+    donation_id = metadata.get("donation_id")
+    if donation_id:
+        donation = (
+            models.Donation.objects.filter(pk=donation_id)
+            .select_related("order", "order__customer")
+            .first()
+        )
+    if donation:
+        order = donation.order
 
-    donation, _ = models.Donation.objects.get_or_create(
-        stripe_checkout_session_id=session.get("id", ""),
-        defaults={
-            "amount": amount,
-            "currency": (session.get("currency") or settings.STRIPE_DONATION_CURRENCY),
-            "status": models.Donation.STATUS_SUCCEEDED,
-            "is_recurring": session.get("mode") == "subscription"
-            or _is_true(metadata.get("is_recurring")),
-            "stripe_payment_intent_id": session.get("payment_intent") or "",
-            "stripe_subscription_id": session.get("subscription") or "",
-            "stripe_customer_id": session.get("customer") or "",
-            "donor_email": customer_details.get("email", ""),
-            "donor_name": customer_details.get("name", ""),
-            "metadata": metadata,
-            "paid_at": timezone.now(),
-        },
-    )
+    if donation is None:
+        donation, _ = models.Donation.objects.get_or_create(
+            stripe_checkout_session_id=session.get("id", ""),
+            defaults={
+                "amount": amount,
+                "currency": (
+                    session.get("currency") or settings.STRIPE_DONATION_CURRENCY
+                ),
+                "status": models.Donation.STATUS_PENDING,
+                "is_recurring": session.get("mode") == "subscription"
+                or _is_true(metadata.get("is_recurring")),
+                "stripe_payment_intent_id": session.get("payment_intent") or "",
+                "stripe_subscription_id": session.get("subscription") or "",
+                "stripe_customer_id": session.get("customer") or "",
+                "donor_email": customer_details.get("email", ""),
+                "donor_name": customer_details.get("name", ""),
+                "donor_address": _format_donor_address(address),
+                "metadata": metadata,
+            },
+        )
 
-    # Keep checkout-linked donation current if later session payload has more details.
+    payment_succeeded = session.get("payment_status", "paid") == "paid"
+    donation.stripe_checkout_session_id = session.get("id", "")
     donation.amount = amount
     donation.currency = session.get("currency") or settings.STRIPE_DONATION_CURRENCY
-    donation.status = models.Donation.STATUS_SUCCEEDED
+    donation.status = (
+        models.Donation.STATUS_SUCCEEDED
+        if payment_succeeded
+        else models.Donation.STATUS_PENDING
+    )
     donation.is_recurring = session.get("mode") == "subscription" or _is_true(
         metadata.get("is_recurring")
     )
     donation.stripe_payment_intent_id = session.get("payment_intent") or ""
     donation.stripe_subscription_id = session.get("subscription") or ""
     donation.stripe_customer_id = session.get("customer") or ""
-    donation.donor_email = customer_details.get("email", "")
-    donation.donor_name = customer_details.get("name", "")
+    if order:
+        customer = order.customer
+        donation.donor_email = customer.safe_email
+        donation.donor_name = f"{customer.first_name} {customer.last_name}".strip()
+        donation.donor_address = ", ".join(
+            part
+            for part in (
+                customer.address,
+                customer.city,
+                customer.province,
+                customer.postal_code,
+            )
+            if part
+        )
+    else:
+        donation.donor_email = customer_details.get("email", "")
+        donation.donor_name = customer_details.get("name", "")
+        donation.donor_address = _format_donor_address(address)
     donation.metadata = metadata
-    donation.paid_at = donation.paid_at or timezone.now()
+    if payment_succeeded:
+        donation.paid_at = donation.paid_at or timezone.now()
     donation.save()
+    if order and payment_succeeded:
+        order.donation_amount = amount
+        order.save(update_fields=["donation_amount"])
+    return donation
 
 
 def _upsert_donation_from_invoice(invoice, status):
@@ -4429,6 +4575,16 @@ def _upsert_donation_from_invoice(invoice, status):
     invoice_id = invoice.get("id") or ""
     if not invoice_id:
         return
+
+    subscription_id = invoice.get("subscription") or ""
+    prior_donation = (
+        models.Donation.objects.filter(stripe_subscription_id=subscription_id)
+        .exclude(donor_email="")
+        .first()
+        if subscription_id
+        else None
+    )
+    customer_address = invoice.get("customer_address") or {}
 
     donation, _ = models.Donation.objects.get_or_create(
         stripe_invoice_id=invoice_id,
@@ -4440,6 +4596,12 @@ def _upsert_donation_from_invoice(invoice, status):
             "stripe_subscription_id": invoice.get("subscription") or "",
             "stripe_customer_id": invoice.get("customer") or "",
             "stripe_payment_intent_id": invoice.get("payment_intent") or "",
+            "donor_email": invoice.get("customer_email")
+            or (prior_donation.donor_email if prior_donation else ""),
+            "donor_name": invoice.get("customer_name")
+            or (prior_donation.donor_name if prior_donation else ""),
+            "donor_address": _format_donor_address(customer_address)
+            or (prior_donation.donor_address if prior_donation else ""),
             "paid_at": (
                 timezone.now() if status == models.Donation.STATUS_SUCCEEDED else None
             ),
@@ -4454,6 +4616,11 @@ def _upsert_donation_from_invoice(invoice, status):
     donation.stripe_subscription_id = invoice.get("subscription") or ""
     donation.stripe_customer_id = invoice.get("customer") or ""
     donation.stripe_payment_intent_id = invoice.get("payment_intent") or ""
+    donation.donor_email = invoice.get("customer_email") or donation.donor_email
+    donation.donor_name = invoice.get("customer_name") or donation.donor_name
+    donation.donor_address = (
+        _format_donor_address(customer_address) or donation.donor_address
+    )
     donation.metadata = {"billing_reason": invoice.get("billing_reason", "")}
     if status == models.Donation.STATUS_SUCCEEDED:
         donation.paid_at = donation.paid_at or timezone.now()
@@ -4521,7 +4688,12 @@ def stripe_webhook(request):
                 status=models.Donation.STATUS_SUCCEEDED,
             ).first()
             if donation:
-                send_donation_receipt_task.delay(donation.id)
+                if donation.order_id:
+                    from project.tasks import send_donation_thank_you_task
+
+                    send_donation_thank_you_task.delay(donation.order_id)
+                else:
+                    send_donation_receipt_task.delay(donation.id)
         if webhook_event.processing_error:
             webhook_event.processing_error = ""
             webhook_event.save(update_fields=["processing_error", "modified"])
@@ -4602,6 +4774,7 @@ def create_donation_checkout_session(request):
             mode="subscription" if is_recurring else "payment",
             payment_method_types=["card"],
             line_items=[line_item],
+            billing_address_collection="required",
             success_url=request.build_absolute_uri(reverse("donation-success")),
             cancel_url=request.build_absolute_uri(reverse("donation-cancel")),
             metadata={
@@ -5026,6 +5199,63 @@ def admin_order_management_page(request):
         "order_count": order_count,
     }
     return render(request, "project/admin/admin-order-management-page.html", context)
+
+
+def _paid_donations_for_report(request):
+    donations = (
+        models.Donation.objects.filter(status=models.Donation.STATUS_SUCCEEDED)
+        .exclude(is_recurring=True, stripe_checkout_session_id__gt="")
+        .order_by("-paid_at", "-created")
+    )
+    date_from = request.GET.get("date_from", "")
+    date_to = request.GET.get("date_to", "")
+    parsed_from = parse_date(date_from) if date_from else None
+    parsed_to = parse_date(date_to) if date_to else None
+    if parsed_from:
+        donations = donations.filter(paid_at__date__gte=parsed_from)
+    if parsed_to:
+        donations = donations.filter(paid_at__date__lte=parsed_to)
+    return donations, date_from, date_to
+
+
+@group_required("Shop Manager")
+def admin_donation_report_page(request):
+    donations, date_from, date_to = _paid_donations_for_report(request)
+    return render(
+        request,
+        "project/admin/admin-donation-report.html",
+        {
+            "title": _("Donor Thank-You Report"),
+            "donations": donations,
+            "date_from": date_from,
+            "date_to": date_to,
+            "query_string": request.GET.urlencode(),
+        },
+    )
+
+
+@group_required("Shop Manager")
+def admin_donation_report_csv(request):
+    donations, _, _ = _paid_donations_for_report(request)
+    response = HttpResponse(content_type="text/csv; charset=utf-8")
+    response["Content-Disposition"] = (
+        'attachment; filename="donor-thank-you-report.csv"'
+    )
+    writer = csv.writer(response)
+    writer.writerow(
+        ["Full name", "Donation amount", "Address", "Email", "Donation date"]
+    )
+    for donation in donations:
+        writer.writerow(
+            [
+                donation.donor_name,
+                donation.amount,
+                donation.donor_address,
+                donation.donor_email,
+                donation.paid_at,
+            ]
+        )
+    return response
 
 
 @group_required("Shop Manager")

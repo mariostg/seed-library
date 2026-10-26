@@ -2179,6 +2179,13 @@ class Donation(Base):
     stripe_invoice_id = models.CharField(
         max_length=255, blank=True, null=True, unique=True
     )
+    order = models.ForeignKey(
+        "Order",
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="donations",
+    )
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     currency = models.CharField(max_length=10, default="cad")
     status = models.CharField(
@@ -2189,6 +2196,7 @@ class Donation(Base):
     is_recurring = models.BooleanField(default=False)
     donor_email = models.EmailField(blank=True)
     donor_name = models.CharField(max_length=255, blank=True)
+    donor_address = models.TextField(blank=True)
     metadata = models.JSONField(default=dict, blank=True)
     paid_at = models.DateTimeField(null=True, blank=True)
 

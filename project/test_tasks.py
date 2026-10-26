@@ -62,6 +62,7 @@ class OrderCeleryEnqueueTests(TransactionTestCase):
         order = utils.create_order_from_cart(request, donation_amount=5.0)
 
         self.assertIsNotNone(order)
+        self.assertEqual(order.donation_amount, 0)
 
         mock_confirm_delay.assert_called_once_with(order.id)
-        mock_donation_delay.assert_called_once_with(order.id)
+        mock_donation_delay.assert_not_called()
