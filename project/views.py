@@ -1,6 +1,7 @@
 import csv
 import io
 import json
+import logging
 import re
 from datetime import datetime
 from decimal import Decimal, InvalidOperation
@@ -41,6 +42,8 @@ from project import filters, forms, models, utils, vascan
 from project.acl_handler import group_required
 from project.models import ProjectUser
 from project.tasks import generate_filtered_orders_pdf_task, send_donation_receipt_task
+
+logger = logging.getLogger(__name__)
 
 
 # Create your views here.
@@ -3222,10 +3225,10 @@ def plant_growth_characteristics_update(request, pk):
             logger = logging.getLogger("django")
 
             # Detailed logging
-            logger.error(f"Form validation failed: {form.errors.as_json()}")
+            logger.error("Form validation failed: %s", form.errors.as_json())
 
             # Also check cleaned_data to see what passed validation
-            logger.debug(f"Cleaned data: {form.cleaned_data}")
+            logger.debug("Cleaned data: %s", form.cleaned_data)
             # Show specific error messages to user
             for field, errors in form.errors.items():
                 for error in errors:
@@ -4410,6 +4413,12 @@ def checkout(request):
                     )
                     return redirect(session.url, permanent=False)
                 except Exception:
+                    logger.exception(
+                        "Stripe Checkout session creation failed for seed order %s "
+                        "and donation %s",
+                        order.id,
+                        donation.id,
+                    )
                     donation.status = models.Donation.STATUS_FAILED
                     donation.save(update_fields=["status", "modified"])
                     messages.warning(
