@@ -2988,7 +2988,9 @@ def plant_label_pdf(request, pk):
     c = canvas.Canvas(buffer, pagesize=landscape(letter))
     c.setStrokeColor(black)
 
-    label_width = len(plant_longest_string) * 0.06818  # 1.5
+    label_width = (
+        len(plant_longest_string) * 0.08
+    )  # Changed to 0.08 to take into account bold text.
     label_margin_x = 0.1
     label_margin_y = 0.1
     line_spacing = 0.155
