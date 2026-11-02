@@ -5604,25 +5604,73 @@ def admin_order_statistics_page(request):
 
 
 # a view to display the order statistics by cities and postal codes.  The view should display a table with the following columns: city, postal code, number of orders, total donation amount.  The view should also display a chart with the number of orders by city and postal code.
-@group_required("Shop Manager")
-def admin_order_statistics_by_location_page(request):
-    """Display order statistics by city and postal code for management purposes."""
+def _location_statistics_from_request(request):
     order_date_after = request.GET.get("order_date_after", "")
     order_date_before = request.GET.get("order_date_before", "")
     stats = utils.get_order_statistics_by_location(
         order_date_after=parse_date(order_date_after) if order_date_after else None,
         order_date_before=parse_date(order_date_before) if order_date_before else None,
     )
+    return stats, order_date_after, order_date_before
+
+
+@group_required("Shop Manager")
+def admin_order_statistics_by_location_page(request):
+    """Display order statistics by city and postal code for management purposes."""
+    stats, order_date_after, order_date_before = _location_statistics_from_request(
+        request
+    )
+    query_params = request.GET.copy()
+    query_params.pop("page", None)
     context = {
         "title": _("Order Statistics by Location"),
         "order_statistics": stats,
+        "order_count": stats.count(),
         "url_name": "admin-order-statistics-by-location-page",
         "order_date_after": order_date_after,
         "order_date_before": order_date_before,
+        "query_string": query_params.urlencode(),
     }
     return render(
         request, "project/admin/admin-order-statistics-by-location-page.html", context
     )
+
+
+@group_required("Shop Manager")
+def admin_order_statistics_by_location_csv(request):
+    """Export the filtered or unfiltered location statistics as CSV."""
+    stats, _after, _before = _location_statistics_from_request(request)
+
+    def safe_cell(value):
+        # Prevent spreadsheet formula injection from customer-entered text.
+        text = "" if value is None else str(value)
+        return "'" + text if text[:1] in ("=", "+", "-", "@") else text
+
+    response = HttpResponse(content_type="text/csv; charset=utf-8")
+    response["Content-Disposition"] = (
+        'attachment; filename="order-statistics-by-location.csv"'
+    )
+    writer = csv.writer(response)
+    writer.writerow(
+        [
+            "Province",
+            "City",
+            "Postal Code",
+            "Number of Orders",
+            "Total Donation Amount",
+        ]
+    )
+    for stat in stats:
+        writer.writerow(
+            [
+                safe_cell(stat["customer__province"]),
+                safe_cell(stat["customer__city"]),
+                safe_cell(stat["customer__postal_code"]),
+                stat["number_of_orders"],
+                f"{Decimal(stat['total_donation_amount'] or 0):.2f}",
+            ]
+        )
+    return response
 
 
 @group_required("Shop Manager")

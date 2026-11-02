@@ -1,3 +1,4 @@
+import csv
 import io
 from datetime import datetime
 from decimal import Decimal
@@ -254,6 +255,7 @@ class OrderStatisticsByLocationDateFilterTest(TestCase):
 
         with override("en"):
             self.url = reverse("admin-order-statistics-by-location-page")
+            self.csv_url = reverse("admin-order-statistics-by-location-csv")
 
     def test_date_range_filters_location_order_counts_and_donations(self):
         response = self.client.get(
@@ -267,6 +269,26 @@ class OrderStatisticsByLocationDateFilterTest(TestCase):
         self.assertEqual(stats[0]["number_of_orders"], 1)
         self.assertEqual(stats[0]["total_donation_amount"], Decimal("10.00"))
         self.assertContains(response, 'value="2026-05-10"')
+
+    def test_page_links_csv_with_active_filters(self):
+        response = self.client.get(self.url, {"order_date_after": "2026-05-10"})
+
+        self.assertContains(response, self.csv_url)
+        self.assertContains(response, "order_date_after=2026-05-10")
+
+    def test_csv_export_unfiltered_and_filtered(self):
+        unfiltered = self.client.get(self.csv_url)
+        filtered = self.client.get(
+            self.csv_url,
+            {"order_date_after": "2026-05-10", "order_date_before": "2026-05-10"},
+        )
+
+        self.assertEqual(unfiltered.status_code, 200)
+        self.assertEqual(unfiltered["Content-Type"], "text/csv; charset=utf-8")
+        unfiltered_rows = list(csv.reader(io.StringIO(unfiltered.content.decode())))
+        filtered_rows = list(csv.reader(io.StringIO(filtered.content.decode())))
+        self.assertEqual(unfiltered_rows[1][3:], ["2", "60.00"])
+        self.assertEqual(filtered_rows[1][3:], ["1", "10.00"])
 
 
 class PlantProfilePageContextTest(TestCase):

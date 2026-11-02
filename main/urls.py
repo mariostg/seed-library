@@ -1007,6 +1007,11 @@ urlpatterns += i18n_patterns(
         views.admin_order_statistics_by_location_page,
         name="admin-order-statistics-by-location-page",
     ),
+    path(
+        "admin-order-statistics-by-location-csv/",
+        views.admin_order_statistics_by_location_csv,
+        name="admin-order-statistics-by-location-csv",
+    ),
 )
 
 if settings.DEBUG:

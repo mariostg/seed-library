@@ -35,8 +35,15 @@
         >
         <button type="submit" class="btn">{% trans "Apply filters" %}</button>
         <a class="btn" href="{% url 'admin-order-statistics-by-location-page' %}">{% trans "Reset" %}</a>
+        <p>{% trans "Total number of orders:" %} {{ order_count }}</p>
       </fieldset>
     </form>
+
+    <p>
+      <a href="{% url 'admin-order-statistics-by-location-csv' %}{% if query_string %}?{{ query_string }}{% endif %}">
+        {% trans "Download CSV" %}
+      </a>
+    </p>
 
     <table>
       <thead>
