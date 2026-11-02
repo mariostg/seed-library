@@ -16,6 +16,28 @@
       {% endblocktrans %}
     </p>
 
+    <form method="get" action="{% url 'admin-order-statistics-by-location-page' %}" class="order-filter-form">
+      <fieldset>
+        <legend>{% trans "Filter by order date" %}</legend>
+        <label for="id_order_date_after">{% trans "From" %}</label>
+        <input
+          id="id_order_date_after"
+          name="order_date_after"
+          type="date"
+          value="{{ order_date_after }}"
+        >
+        <label for="id_order_date_before">{% trans "To" %}</label>
+        <input
+          id="id_order_date_before"
+          name="order_date_before"
+          type="date"
+          value="{{ order_date_before }}"
+        >
+        <button type="submit" class="btn">{% trans "Apply filters" %}</button>
+        <a class="btn" href="{% url 'admin-order-statistics-by-location-page' %}">{% trans "Reset" %}</a>
+      </fieldset>
+    </form>
+
     <table>
       <thead>
         <tr>

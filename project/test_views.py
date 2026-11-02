@@ -218,6 +218,57 @@ class SeedOrderDonationCheckoutTest(TestCase):
         self.assertTrue(Order.objects.filter(pk=order.pk).exists())
 
 
+class OrderStatisticsByLocationDateFilterTest(TestCase):
+    def setUp(self):
+        self.client = Client(headers={"host": "localhost"})
+        user = ProjectUser.objects.create_user(
+            username="location-statistics-manager",
+            password="test-password",
+        )
+        shop_manager, _ = Group.objects.get_or_create(name="Shop Manager")
+        user.groups.add(shop_manager)
+        self.client.force_login(user)
+
+        customer = Customer.objects.create(
+            first_name="Location",
+            last_name="Donor",
+            email="location@example.com",
+            address="1 Main Street",
+            city="Ottawa",
+            province="Ontario",
+            postal_code="K1A 0A1",
+        )
+        included_order = Order.objects.create(
+            customer=customer,
+            donation_amount=Decimal("10.00"),
+        )
+        included_order.order_date = timezone.datetime(2026, 5, 10, tzinfo=timezone.UTC)
+        included_order.save(update_fields=["order_date"])
+
+        excluded_order = Order.objects.create(
+            customer=customer,
+            donation_amount=Decimal("50.00"),
+        )
+        excluded_order.order_date = timezone.datetime(2026, 5, 11, tzinfo=timezone.UTC)
+        excluded_order.save(update_fields=["order_date"])
+
+        with override("en"):
+            self.url = reverse("admin-order-statistics-by-location-page")
+
+    def test_date_range_filters_location_order_counts_and_donations(self):
+        response = self.client.get(
+            self.url,
+            {"order_date_after": "2026-05-10", "order_date_before": "2026-05-10"},
+        )
+
+        self.assertEqual(response.status_code, 200)
+        stats = list(response.context["order_statistics"])
+        self.assertEqual(len(stats), 1)
+        self.assertEqual(stats[0]["number_of_orders"], 1)
+        self.assertEqual(stats[0]["total_donation_amount"], Decimal("10.00"))
+        self.assertContains(response, 'value="2026-05-10"')
+
+
 class PlantProfilePageContextTest(TestCase):
     def setUp(self):
         self.client = Client()

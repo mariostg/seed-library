@@ -5607,11 +5607,18 @@ def admin_order_statistics_page(request):
 @group_required("Shop Manager")
 def admin_order_statistics_by_location_page(request):
     """Display order statistics by city and postal code for management purposes."""
-    stats = utils.get_order_statistics_by_location()
+    order_date_after = request.GET.get("order_date_after", "")
+    order_date_before = request.GET.get("order_date_before", "")
+    stats = utils.get_order_statistics_by_location(
+        order_date_after=parse_date(order_date_after) if order_date_after else None,
+        order_date_before=parse_date(order_date_before) if order_date_before else None,
+    )
     context = {
         "title": _("Order Statistics by Location"),
         "order_statistics": stats,
         "url_name": "admin-order-statistics-by-location-page",
+        "order_date_after": order_date_after,
+        "order_date_before": order_date_before,
     }
     return render(
         request, "project/admin/admin-order-statistics-by-location-page.html", context
