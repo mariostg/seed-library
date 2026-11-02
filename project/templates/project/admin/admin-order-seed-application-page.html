@@ -30,7 +30,9 @@
               {% if user.is_authenticated %}
                 <td class='actions'>
                   <a class='btn btn-edit' href="{% url "admin-order-seed-application-update" item.id %}">{% trans "Edit" %}</a>
-                  <a class='btn btn-delete' href="{% url "admin-order-seed-application-delete" item.id %}">{% trans "Delete" %}</a>
+                  {% if item.orders_count == 0 %}
+                    <a class='btn btn-delete' href="{% url "admin-order-seed-application-delete" item.id %}">{% trans "Delete" %}</a>
+                  {% endif %}
                 </td>
               {% endif %}
             </tr>
