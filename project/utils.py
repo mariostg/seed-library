@@ -167,7 +167,7 @@ def plant_label_lines(plant: PlantProfile, request: HttpRequest) -> list[LabelLi
     bloom_period = f"Bloom: {MONTHS.get(plant.bloom_start, '')} - {MONTHS.get(plant.bloom_end, '')}"
     sowing_notes = plant_sowing_notes(plant)
     sowing_time = sow_before(plant)
-    sowing_depth = plant.sowing_depth.sowing_depth
+    sowing_depth = plant.sowing_depth.sowing_depth if plant.sowing_depth else None
 
     if plant.double_dormancy:
         double_dormancy = "Double Dormancy"
