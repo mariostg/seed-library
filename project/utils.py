@@ -14,10 +14,10 @@ from django.http import HttpRequest
 from django.utils import timezone
 from exif import Image
 from PIL import Image as PILImage
+from reportlab.graphics.barcode import code128
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import letter
 from reportlab.lib.styles import getSampleStyleSheet
-from reportlab.platypus import Image as ReportLabImage
 from reportlab.platypus import (
     PageBreak,
     Paragraph,
@@ -670,7 +670,6 @@ def clear_session(request):
 # ============================================================================
 def order_to_pdf(
     order: Order,
-    order_detail_url: str | None = None,
     elements: list | None = None,
     styles=None,
     add_page_break: bool = False,
@@ -695,35 +694,29 @@ def order_to_pdf(
         title = Paragraph(f"Order #{order.id} Details", target_styles["Title"])
         target_elements.append(title)
 
-        if order_detail_url:
-            qr = qrcode.QRCode(
-                version=1,
-                error_correction=qrcode.constants.ERROR_CORRECT_M,
-                box_size=8,
-                border=2,
-            )
-            qr.add_data(order_detail_url)
-            qr.make(fit=True)
-            qr_img = qr.make_image(fill_color="black", back_color="white")
-            qr_buffer = BytesIO()
-            qr_img.save(qr_buffer, format="PNG")
-            qr_buffer.seek(0)
+        # Code 128 of the bare order ID, for scanners in record mode
+        target_elements.append(Spacer(1, 12))
+        target_elements.append(
+            Paragraph("Order barcode (order ID):", target_styles["Heading2"])
+        )
 
-            target_elements.append(Spacer(1, 12))
-            target_elements.append(
-                Paragraph(
-                    "Scan this QR code to open the order detail page:",
-                    target_styles["Heading2"],
-                )
+        purpose_of_barcode = Paragraph(
+            "Scan to record this barcode for closing this order.",
+            target_styles["Normal"],
+        )
+        target_elements.append(purpose_of_barcode)
+
+        target_elements.append(
+            code128.Code128(
+                str(order.id), barHeight=50, barWidth=1.5, humanReadable=True
             )
-            target_elements.append(ReportLabImage(qr_buffer, width=130, height=130))
-            target_elements.append(Paragraph(order_detail_url, target_styles["Normal"]))
+        )
 
         # Order Date & pdf generation date
         pdf_generation_date = datetime.now().strftime("%Y-%m-%d")
         target_elements.append(
             Paragraph(
-                f"<b>Order Date:</b> {order.order_date.strftime('%Y-%m-%d')}, <b>PDF Generated:</b> {pdf_generation_date} ",
+                f"<br/><b>Order Date:</b> {order.order_date.strftime('%Y-%m-%d')}, <b>PDF Generated:</b> {pdf_generation_date} ",
                 target_styles["Normal"],
             )
         )
