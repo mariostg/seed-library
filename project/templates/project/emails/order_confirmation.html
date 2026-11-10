@@ -143,12 +143,12 @@
   <body>
     <div class="email-container">
       <div class="header">
-        <h1>{% trans "Order Confirmed!" %}</h1>
+        <h1>{% trans "Order received!" %}</h1>
         <p>{% trans "Thank you for ordering from our library!" %}</p>
       </div>
 
       <p>{% blocktrans with name=order.customer.first_name %}Dear {{ name }},{% endblocktrans %}</p>
-      <p>{% trans "Your seed order has been confirmed and is being prepared for shipment." %}</p>
+      <p>{% trans "Our volunteers have received your order." %}</p>
 
       <div class="section">
         <h3>{% trans "Order Details" %}</h3>
@@ -212,16 +212,26 @@
         <div class="steps">
           <div class="step">
             <strong>{% trans "Seed Processing" %}</strong>
-            <p>{% trans "Your seeds will be carefully prepared and packaged. This typically takes 2-4 weeks depending on availability." %}</p>
+            <p>{% trans "Your seeds will be carefully prepared and packaged. We may not have all the seeds you requested by the time we get to your order. When you ordered, if you selected that you accept substitutions, our volunteers will proceed with substituting unavailable species. If you have not selected that you want substitutions, our volunteers will only be able to mail you seeds that are available at the moment we get to your order." %}</p>
           </div>
           <div class="step">
             <strong>{% trans "Shipment" %}</strong>
-            <p>{% trans "Once your order is ready, you'll receive an email with shipping details and tracking information." %}</p>
+            <p>{% trans "You will receive an email the day we mail your order." %}</p>
           </div>
           <div class="step">
-            <strong>{% trans "Plant Your Seeds" %}</strong>
-            <p>{% trans "Follow the seed care instructions provided in your package for best results." %}</p>
+            <strong>{% trans "Support us" %}</strong>
+            <p>{% trans "Every seed packet helps build interconnected habitat – you are an essential part of building a resilient, nature-positive future! These seed orders are our gift to you – harvested, cleaned, packed, and distributed in hand-made and hand-labelled envelopes by volunteers just like you." %} </p>
+            <p>{% trans "If you are able, we warmly welcome you to donate financially to cover postage and support the Ottawa Wildflower Seed Library’s ongoing operations: <a href='https://wildflowerseedlibrary.ca/donations/donate'>wildflowerseedlibrary.ca/donations/donate</a>. We are mindful of the significant increase in postage (from $1.24 to $2 for a regular stamp in 2027), and relying on your generosity to make sure we find good homes for all our seeds. Your one-time or monthly donation is the fuel for the operation!" %}</p>
           </div>
+        </div>
+        <div class="step">
+          <strong>{% trans "Follow us" %}</strong>
+          <p>{% trans "While you’re waiting for your seeds, please join us on social media and subscribe to our newsletter!" %}</p>
+          <p>
+            <a href="https://www.facebook.com/groups/393209995421040">{% trans "Facebook" %}</a> |
+            <a href="https://www.instagram.com/ottawawildflower/">{% trans "Instagram" %}</a> |
+            <a href="https://bloomandbuzz.substack.com/">{% trans "The Bloom and Buzz on Substack, the monthly newsletter of the Ottawa Wildflower Seed Library" %}</a>
+          </p>
         </div>
       </div>
 
