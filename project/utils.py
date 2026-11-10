@@ -1004,7 +1004,9 @@ def send_order_confirmation_email(order):
         }
 
         # Render email templates
-        subject = _("Order Confirmation - Order #%(order_id)d") % {"order_id": order.id}
+        subject = _("Your seed order has been received - Order #%(order_id)d") % {
+            "order_id": order.id
+        }
         logger.debug("Rendering email templates for Order #%s", order.id)
         html_content = render_to_string(
             "project/emails/order_confirmation.html", context

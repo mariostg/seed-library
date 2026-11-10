@@ -147,7 +147,7 @@
         <p>{% trans "Thank you for ordering from our library!" %}</p>
       </div>
 
-      <p>{% blocktrans with name=customer.name %}Dear {{ name }},{% endblocktrans %}</p>
+      <p>{% blocktrans with name=order.customer.first_name %}Dear {{ name }},{% endblocktrans %}</p>
       <p>{% trans "Your seed order has been confirmed and is being prepared for shipment." %}</p>
 
       <div class="section">
