@@ -151,14 +151,14 @@
       <p>{% trans "Our volunteers have received your order." %}</p>
 
       <div class="section">
-        <h3>{% trans "Order Details" %}</h3>
+        <h3>{% trans "Order details" %}</h3>
         <div class="order-info">
           <div class="info-item">
-            <div class="info-label">{% trans "Order ID" %}</div>
+            <div class="info-label">{% trans "Order number" %}</div>
             <div class="info-value">#{{ order.id }}</div>
           </div>
           <div class="info-item">
-            <div class="info-label">{% trans "Order Date" %}</div>
+            <div class="info-label">{% trans "Order date" %}</div>
             <div class="info-value">{{ order.order_date|date:"F j, Y" }}</div>
           </div>
           <div class="info-item">
@@ -169,12 +169,12 @@
       </div>
 
       <div class="section">
-        <h3>{% trans "Seeds Ordered" %}</h3>
+        <h3>{% trans "Seeds ordered" %}</h3>
         <table>
           <thead>
             <tr>
-              <th>{% trans "Plant Name" %}</th>
-              <th>{% trans "Latin Name" %}</th>
+              <th>{% trans "Plant name" %}</th>
+              <th>{% trans "Latin name" %}</th>
               <th>{% trans "Quantity" %}</th>
             </tr>
           </thead>
@@ -208,10 +208,10 @@
       {% endif %}
 
       <div class="section">
-        <h3>{% trans "What Happens Next?" %}</h3>
+        <h3>{% trans "What happens next?" %}</h3>
         <div class="steps">
           <div class="step">
-            <strong>{% trans "Seed Processing" %}</strong>
+            <strong>{% trans "Seed processing" %}</strong>
             <p>{% trans "Your seeds will be carefully prepared and packaged. We may not have all the seeds you requested by the time we get to your order. When you ordered, if you selected that you accept substitutions, our volunteers will proceed with substituting unavailable species. If you have not selected that you want substitutions, our volunteers will only be able to mail you seeds that are available at the moment we get to your order." %}</p>
           </div>
           <div class="step">
@@ -236,7 +236,7 @@
       </div>
 
       <div class="section">
-        <h3>{% trans "Delivery Address" %}</h3>
+        <h3>{% trans "Delivery address" %}</h3>
         <p style="margin: 0;">
           <strong>{{ order.customer.first_name }} {{ order.customer.last_name }}</strong><br>
           {{ order.customer.address }}<br>
