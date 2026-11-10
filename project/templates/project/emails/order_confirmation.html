@@ -238,9 +238,10 @@
       <div class="section">
         <h3>{% trans "Delivery Address" %}</h3>
         <p style="margin: 0;">
-          <strong>{{ customer.name }}</strong><br>
-          {{ customer.address }}<br>
-          {{ customer.postal_code }}<br>
+          <strong>{{ order.customer.first_name }} {{ order.customer.last_name }}</strong><br>
+          {{ order.customer.address }}<br>
+          {{ order.customer.city }}, {{ order.customer.province }}<br>
+          {{ order.customer.postal_code }}<br>
         </p>
       </div>
 
