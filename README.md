@@ -43,6 +43,22 @@
 - [Set up celery beat service](#celery-beat-service)
 - Set up Nginx
 
+### Local Celery worker on macOS
+
+With Celery 5.6.3 and billiard 4.3.1, the default prefork pool can fail to
+execute tasks on macOS because billiard starts its child processes with
+`spawn`. For local development, stop any existing worker and start a worker
+using the threads pool instead:
+
+```bash
+celery -A main.celery worker --loglevel=info --pool=threads --concurrency=1
+```
+
+This runs one task at a time and does not provide prefork process isolation or
+prefork time-limit behavior. It is a local workaround; the Linux service
+configuration below remains unchanged. After restarting the worker, submit the
+PDF generation request again if the previous task failed.
+
 ### Sequence of commands
 
 ```bash
