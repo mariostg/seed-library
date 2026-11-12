@@ -27,15 +27,15 @@
       <!--navigation of orders by status-->
       <ul class="nav-links admin-order-status-nav">
         <li>
-          <a href="{% url 'admin-order-filtered-to-pdf' %}{% if query_string %}?{{ query_string }}{% endif %}">
-            {% trans "PDF Filtered orders" %}
+          <a class="tooltip info" href="{% url 'admin-order-filtered-to-pdf' %}{% if query_string %}?{{ query_string }}{% endif %}">
+            {% trans "PDF Filtered orders" %} <span class="tooltiptext">{% trans "Generate a PDF of the filtered orders. If not filtered, all orders will be included." %}</span>
           </a>
         </li>
         <li>
-          <a href="{% url 'admin-order-filtered-to-pdf' %}?status=pending">{% trans "PDF Pending orders" %}</a>
+          <a class="tooltip info" href="{% url 'admin-order-filtered-to-pdf' %}?status=pending">{% trans "PDF Pending orders" %} <span class="tooltiptext">{% trans "Generate a PDF of the pending orders.  These orders should then be printed for processing." %}</span></a>
         </li>
         <li>
-          <a href="{% url 'admin-order-list-generated-pdfs' %}">{% trans "Generated PDFs" %}</a>
+          <a class="tooltip info" href="{% url 'admin-order-list-generated-pdfs' %}">{% trans "Generated PDFs" %} <span class="tooltiptext">{% trans "View all generated PDFs of orders." %}</span></a>
         </li>
       </ul>
     </nav>
