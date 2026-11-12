@@ -516,6 +516,12 @@ class PlantProfileFilter(django_filters.FilterSet):
 class OrderFilter(django_filters.FilterSet):
     """Filters used on order management page"""
 
+    # filter of order id
+    order_id = django_filters.NumberFilter(
+        field_name="id",
+        lookup_expr="exact",
+    )
+
     status = django_filters.CharFilter(
         method="filter_status",
     )
