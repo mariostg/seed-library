@@ -5579,7 +5579,7 @@ def admin_order_detail_pdf(request, pk):
         messages.error(request, _("Order not found."))
         return redirect("admin-order-management-page")
 
-    pdf = utils.order_to_pdf(order)
+    pdf = utils.order_to_pdf(order, generated_by=request.user)
     if pdf:
         response = HttpResponse(pdf, content_type="application/pdf")
         filename = f"Order_{order.id}.pdf"

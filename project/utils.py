@@ -27,7 +27,7 @@ from reportlab.platypus import (
     TableStyle,
 )
 
-from project.models import Order, PlantImage, PlantProfile
+from project.models import Order, PlantImage, PlantProfile, ProjectUser
 
 logger = logging.getLogger(__name__)
 
@@ -670,6 +670,7 @@ def clear_session(request):
 # ============================================================================
 def order_to_pdf(
     order: Order,
+    generated_by: ProjectUser | None = None,
     elements: list | None = None,
     styles=None,
     add_page_break: bool = False,
@@ -716,7 +717,7 @@ def order_to_pdf(
         pdf_generation_date = datetime.now().strftime("%Y-%m-%d")
         target_elements.append(
             Paragraph(
-                f"<br/><b>Order Date:</b> {order.order_date.strftime('%Y-%m-%d')}, <b>PDF Generated:</b> {pdf_generation_date} ",
+                f"<br/><b>Order Date:</b> {order.order_date.strftime('%Y-%m-%d')}, <b>PDF Generated:</b> {pdf_generation_date} by {generated_by if generated_by else 'N/A'} ",
                 target_styles["Normal"],
             )
         )
@@ -850,7 +851,9 @@ def mark_orders_pdf_generated(orders: list[Order], generated_by=None):
     )
 
 
-def render_many_orders_to_pdf(orders: list[Order], generated_by=None) -> BytesIO:
+def render_many_orders_to_pdf(
+    orders: list[Order], generated_by: ProjectUser = None
+) -> BytesIO:
     """
     Render multiple customer orders as defined in Order model using reportlab.
 
@@ -872,6 +875,7 @@ def render_many_orders_to_pdf(orders: list[Order], generated_by=None) -> BytesIO
     for index, order in enumerate(orders):
         order_to_pdf(
             order,
+            generated_by=generated_by,
             elements=elements,
             styles=styles,
             add_page_break=index < len(orders) - 1,
