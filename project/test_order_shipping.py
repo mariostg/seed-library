@@ -149,6 +149,22 @@ class OrderShippingTests(TestCase):
         self.assertIn("Asclepias tuberosa", email.alternatives[0].content)
         self.assertIn("shipped", email.alternatives[0].content.lower())
 
+    def test_shipping_email_logs_each_stage(self):
+        with self.assertLogs("project.utils", level="DEBUG") as logs:
+            self.assertTrue(send_order_shipped_email(self.order))
+        output = "\n".join(logs.output)
+        for expected in (
+            "Preparing order shipped email",
+            "Rendering email templates",
+            "Creating email message",
+            "Email backend=",
+            "Sending order shipped email",
+            "Order shipped email sent successfully",
+        ):
+            self.assertIn(expected, output)
+        self.assertIn(f"Order #{self.order.pk}", output)
+        self.assertIn("bcc=False", output)
+
     def test_shipping_email_can_render_in_french(self):
         with override("fr"):
             self.assertTrue(send_order_shipped_task.run(self.order.pk))
@@ -187,8 +203,11 @@ class OrderShippingTests(TestCase):
         side_effect=RuntimeError("mail failed"),
     )
     def test_shipping_mail_failure_propagates(self, _send):
-        with self.assertRaisesRegex(RuntimeError, "mail failed"):
-            send_order_shipped_email(self.order)
+        with self.assertLogs("project.utils", level="ERROR") as logs:
+            with self.assertRaisesRegex(RuntimeError, "mail failed"):
+                send_order_shipped_email(self.order)
+        self.assertIn(f"Order #{self.order.pk}", logs.output[0])
+        self.assertIn("mail failed", logs.output[0])
         _send.assert_called_once()
 
     @patch("django.core.mail.EmailMultiAlternatives.send", return_value=0)

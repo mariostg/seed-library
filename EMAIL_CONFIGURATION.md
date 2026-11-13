@@ -182,12 +182,38 @@ If you prefer not to run a worker, you can still test email rendering by calling
 
 - Emails not sent: check Django logs, Celery worker logs, and SMTP provider errors. Use console backend for local inspection.
 
+### Shipping notifications
+
+After confirming a completed order as shipped, the success message means the
+notification was **queued**, not delivered. Check the web logs for a queueing
+failure and the Celery worker logs for
+`project.tasks.send_order_shipped_task`, using the order ID to correlate entries.
+An unregistered task or no received task can indicate an outdated worker or a
+broker/queue mismatch; restart the worker with the deployed code and verify
+that it uses the same broker as the web process.
+
+The `project.utils` email log (`logs/email.log` on the worker host) records the
+configured backend, SMTP host and port, send attempt, success, and any exception
+with a traceback. Preparation, template rendering, and message creation are
+logged at DEBUG level; the email file handler is configured at INFO and will
+not record these debug messages without adjusting the logging configuration.
+A successful send means the configured backend accepted the message, not that
+it reached the inbox; check the SMTP provider and spam folder if needed.
+Unlike order confirmation emails, shipping notifications do not currently use
+the configured BCC address.
+
+Shipping notification failures do not automatically retry, and confirming an
+already shipped order does not enqueue a second notification. After diagnosing
+the problem, contact the customer or explicitly resend the notification through
+an authorized operational procedure, taking care to avoid duplicates.
+
 ## Security Best Practices
 
 1. **Never commit credentials** — Use environment variables.
 2. **Use app-specific passwords** — Don't use your main account password.
 3. **Enable TLS/SSL** — Always encrypt email transmission.
-4. **Use a worker queue for reliability** — Celery + Redis provides retries and persistence.
+4. **Use a worker queue for asynchronous delivery** — Configure and verify
+   retries and broker persistence separately when required.
 5. **Monitor email logs** — Track sent/failed emails and worker health.
 
 ## Support

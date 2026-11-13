@@ -1068,27 +1068,46 @@ def send_order_shipped_email(order):
     from django.template.loader import render_to_string
     from django.utils.translation import gettext as _
 
-    context = {
-        "order": order,
-        "order_items": order.items.select_related("plant_profile"),
-        "customer": order.customer,
-    }
-    subject = _("Your seed order has been shipped - Order #%(order_id)d") % {
-        "order_id": order.id
-    }
-    email = EmailMultiAlternatives(
-        subject=subject,
-        body=render_to_string("project/emails/order_shipped.txt", context),
-        from_email=None,
-        to=[order.customer.email],
-    )
-    email.attach_alternative(
-        render_to_string("project/emails/order_shipped.html", context), "text/html"
-    )
-    if email.send(fail_silently=False) != 1:
-        raise RuntimeError(f"Shipping notification for order {order.id} was not sent")
-    logger.info("Order shipped email sent successfully for Order #%s", order.id)
-    return True
+    try:
+        logger.debug("Preparing order shipped email for Order #%s", order.id)
+        context = {
+            "order": order,
+            "order_items": order.items.select_related("plant_profile"),
+            "customer": order.customer,
+        }
+        subject = _("Your seed order has been shipped - Order #%(order_id)d") % {
+            "order_id": order.id
+        }
+        logger.debug("Rendering email templates for Order #%s", order.id)
+        html_content = render_to_string("project/emails/order_shipped.html", context)
+        text_content = render_to_string("project/emails/order_shipped.txt", context)
+
+        logger.debug("Creating email message for Order #%s", order.id)
+        email = EmailMultiAlternatives(
+            subject=subject,
+            body=text_content,
+            from_email=None,
+            to=[order.customer.email],
+        )
+        email.attach_alternative(html_content, "text/html")
+        logger.info(
+            "Email backend=%s host=%s port=%s bcc=%s (shipping Order #%s)",
+            settings.EMAIL_BACKEND,
+            getattr(settings, "EMAIL_HOST", None),
+            getattr(settings, "EMAIL_PORT", None),
+            bool(email.bcc),
+            order.id,
+        )
+        logger.info("Sending order shipped email for Order #%s", order.id)
+        if email.send(fail_silently=False) != 1:
+            raise RuntimeError(
+                f"Shipping notification for order {order.id} was not sent"
+            )
+        logger.info("Order shipped email sent successfully for Order #%s", order.id)
+        return True
+    except Exception:
+        logger.exception("Error sending order shipped email for Order #%s", order.id)
+        raise
 
 
 def send_donation_thank_you_email(order):
