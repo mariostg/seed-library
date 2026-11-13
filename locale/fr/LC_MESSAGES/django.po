@@ -5412,6 +5412,18 @@ msgstr "SEMENCES COMMANDÉES"
 msgid "Seeds ordered"
 msgstr "Semences commandées"
 
+#: project/templates/project/emails/order_shipped.html
+msgid "Plant name"
+msgstr "Nom de la plante"
+
+#: project/templates/project/emails/order_shipped.html
+msgid "Latin name"
+msgstr "Nom latin"
+
+#: project/templates/project/emails/order_shipped.html
+msgid "Quantity"
+msgstr "Quantité"
+
 #: project/templates/project/emails/order_shipped.txt
 msgid "DELIVERY ADDRESS"
 msgstr "ADRESSE DE LIVRAISON"

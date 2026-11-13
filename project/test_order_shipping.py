@@ -1,3 +1,5 @@
+from email import policy
+from email.parser import BytesParser
 from unittest.mock import patch
 
 from django.contrib.auth.models import Group
@@ -149,6 +151,23 @@ class OrderShippingTests(TestCase):
         self.assertIn("Asclepias tuberosa", email.alternatives[0].content)
         self.assertIn("shipped", email.alternatives[0].content.lower())
 
+    def test_shipping_message_contains_plain_text_and_html_mime_parts(self):
+        with override("en"):
+            self.assertTrue(send_order_shipped_task.run(self.order.pk))
+        message = BytesParser(policy=policy.default).parsebytes(
+            mail.outbox[0].message().as_bytes()
+        )
+        self.assertEqual(message.get_content_type(), "multipart/alternative")
+        parts = list(message.iter_parts())
+        self.assertEqual(
+            [part.get_content_type() for part in parts], ["text/plain", "text/html"]
+        )
+        self.assertIn("ORDER DETAILS", parts[0].get_content())
+        self.assertIn(">Order shipped!</h1>", parts[1].get_content())
+        self.assertIn("background-color: #28a745", parts[1].get_content())
+        self.assertIn("<table", parts[1].get_content())
+        self.assertIn("Asclepias tuberosa", parts[1].get_content())
+
     def test_shipping_email_logs_each_stage(self):
         with self.assertLogs("project.utils", level="DEBUG") as logs:
             self.assertTrue(send_order_shipped_email(self.order))
@@ -174,6 +193,7 @@ class OrderShippingTests(TestCase):
         self.assertIn("expédiée", email.body)
         self.assertIn('lang="fr"', email.alternatives[0].content)
         self.assertIn("expédiée", email.alternatives[0].content)
+        self.assertIn("Nom de la plante", email.alternatives[0].content)
 
     @patch("project.views.send_order_shipped_task.delay")
     def test_shipping_view_queues_a_task_that_sends_the_email(self, delay):

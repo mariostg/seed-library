@@ -1,4 +1,3 @@
-
 {% load i18n %}
 {% get_current_language as LANGUAGE_CODE %}
 <!DOCTYPE html>
@@ -8,30 +7,58 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% trans "Order Shipped" %}</title>
   </head>
-  <body>
-    <h1>{% trans "Order shipped!" %}</h1>
-    <p>{% blocktrans with name=customer.first_name %}Dear {{ name }},{% endblocktrans %}</p>
-    <p>{% trans "Thank you for ordering seeds from our library! Your order has been shipped and is on its way." %}</p>
-    <h2>{% trans "Order details" %}</h2>
-    <p>
-      {% trans "Order ID" %}: #{{ order.id }}<br>
-      {% trans "Order Date" %}: {{ order.order_date|date:"F j, Y H:i" }}<br>
-      {% trans "Status" %}: {% trans "Shipped" %}
-    </p>
-    <h2>{% trans "Seeds ordered" %}</h2>
-    <ul>
-      {% for item in order_items %}
-        <li>{{ item.plant_profile.english_name }} ({{ item.plant_profile.latin_name }}): {{ item.quantity }}</li>
-      {% endfor %}
-    </ul>
-    <h2>{% trans "Delivery address" %}</h2>
-    <p>
-      {{ customer.first_name }} {{ customer.last_name }}<br>
-      {{ customer.address }}<br>
-      {{ customer.city }}, {{ customer.province }}<br>
-      {{ customer.postal_code }}
-    </p>
-    <p>{% trans "If you have any questions about your order, please don't hesitate to contact us." %}</p>
-    <p>{% trans "Best regards," %}<br>{% trans "Wildflower Seed Library Team" %}</p>
+  <body style="margin: 0; padding: 20px; font-family: Arial, sans-serif; line-height: 1.6; color: #333; background-color: #f9f9f9;">
+    <div style="max-width: 600px; margin: 0 auto; background-color: #fff; padding: 20px; border-radius: 8px;">
+      <div style="background-color: #28a745; color: #fff; padding: 20px; border-radius: 8px 8px 0 0; text-align: center; margin: -20px -20px 20px;">
+        <h1 style="margin: 0; font-size: 24px;">{% trans "Order shipped!" %}</h1>
+      </div>
+      <p>{% blocktrans with name=customer.first_name %}Dear {{ name }},{% endblocktrans %}</p>
+      <p>{% trans "Thank you for ordering seeds from our library! Your order has been shipped and is on its way." %}</p>
+
+      <div style="margin-bottom: 20px; padding: 15px; background-color: #f8f9fa; border-left: 4px solid #28a745;">
+        <h2 style="margin-top: 0; color: #28a745; font-size: 20px;">{% trans "Order details" %}</h2>
+        <p>
+          <strong>{% trans "Order ID" %}:</strong> #{{ order.id }}<br>
+          <strong>{% trans "Order Date" %}:</strong> {{ order.order_date|date:"F j, Y H:i" }}<br>
+          <strong>{% trans "Status" %}:</strong> {% trans "Shipped" %}
+        </p>
+      </div>
+
+      <div style="margin-bottom: 20px; padding: 15px; background-color: #f8f9fa; border-left: 4px solid #28a745;">
+        <h2 style="margin-top: 0; color: #28a745; font-size: 20px;">{% trans "Seeds ordered" %}</h2>
+        <table style="width: 100%; border-collapse: collapse;">
+          <thead>
+            <tr>
+              <th style="background-color: #28a745; color: #fff; padding: 10px; text-align: left;">{% trans "Plant name" %}</th>
+              <th style="background-color: #28a745; color: #fff; padding: 10px; text-align: left;">{% trans "Latin name" %}</th>
+              <th style="background-color: #28a745; color: #fff; padding: 10px; text-align: left;">{% trans "Quantity" %}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for item in order_items %}
+              <tr>
+                <td style="padding: 10px; border-bottom: 1px solid #eee;">{{ item.plant_profile.english_name }}</td>
+                <td style="padding: 10px; border-bottom: 1px solid #eee;"><em>{{ item.plant_profile.latin_name }}</em></td>
+                <td style="padding: 10px; border-bottom: 1px solid #eee;">{{ item.quantity }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+      <div style="margin-bottom: 20px; padding: 15px; background-color: #f8f9fa; border-left: 4px solid #28a745;">
+        <h2 style="margin-top: 0; color: #28a745; font-size: 20px;">{% trans "Delivery address" %}</h2>
+        <p style="margin: 0;">
+          <strong>{{ customer.first_name }} {{ customer.last_name }}</strong><br>
+          {{ customer.address }}<br>
+          {{ customer.city }}, {{ customer.province }}<br>
+          {{ customer.postal_code }}
+        </p>
+      </div>
+      <div style="text-align: center; padding-top: 20px; border-top: 1px solid #eee; font-size: 12px; color: #666;">
+        <p>{% trans "If you have any questions about your order, please don't hesitate to contact us." %}</p>
+        <p>{% trans "Best regards," %}<br>{% trans "Wildflower Seed Library Team" %}</p>
+      </div>
+    </div>
   </body>
 </html>
