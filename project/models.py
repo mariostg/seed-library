@@ -2037,6 +2037,7 @@ class Order(models.Model):
     ORDER_STATUS_CHOICES = [
         ("pending", _("Pending")),
         ("completed", _("Completed")),
+        ("shipped", _("Shipped")),
         ("cancelled", _("Cancelled")),
     ]
 

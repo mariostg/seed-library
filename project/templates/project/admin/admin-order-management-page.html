@@ -68,7 +68,15 @@
               <td>{{ order.donation_amount }}</td>
               <td>{{ order.customer.application }}</td>
               <td>{% if order.customer.accept_substitutes %}{% trans "Yes" %}{% else %}{% trans "No" %}{% endif %}</td>
-              <td>{{ order.status }}</td>
+              <td>
+                {{ order.get_status_display }}
+                {% if order.status == "completed" and request.user.is_shop_manager %}
+                  <form method="post" action="{% url 'admin-order-confirm-shipped' order.id %}">
+                    {% csrf_token %}
+                    <button type="submit">{% trans "Confirm Shipped" %}</button>
+                  </form>
+                {% endif %}
+              </td>
               <td>{% if order.pdf_generated_at %}
                 {{ order.pdf_generated_at|date:"Y-m-d H:i" }} {{ order.pdf_generated_by }}
               {% else %}

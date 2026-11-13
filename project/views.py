@@ -17,17 +17,19 @@ from django.core import signing
 from django.core.files.storage import default_storage
 from django.core.paginator import Paginator
 from django.core.serializers.json import DjangoJSONEncoder
-from django.db import IntegrityError
+from django.db import IntegrityError, transaction
 from django.db.models import Count, RestrictedError, Sum
 from django.db.utils import IntegrityError as DbIntegrityError
 from django.http import FileResponse, HttpResponse, JsonResponse
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.dateparse import parse_date
 from django.utils.html import format_html
 from django.utils.translation import gettext as _
 from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
+from kombu.exceptions import OperationalError
 from reportlab.lib.colors import black, red
 from reportlab.lib.pagesizes import landscape, letter
 from reportlab.lib.units import inch
@@ -41,7 +43,11 @@ except ImportError:  # pragma: no cover - dependency should be available in runt
 from project import filters, forms, models, utils, vascan
 from project.acl_handler import group_required
 from project.models import ProjectUser
-from project.tasks import generate_filtered_orders_pdf_task, send_donation_receipt_task
+from project.tasks import (
+    generate_filtered_orders_pdf_task,
+    send_donation_receipt_task,
+    send_order_shipped_task,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -5162,6 +5168,46 @@ def admin_plant_narrative_delete(request, pk):
 
 
 @group_required("Shop Manager")
+@require_POST
+def admin_order_confirm_shipped(request, pk):
+    """Mark a completed order shipped and queue its notification after commit."""
+    get_object_or_404(models.Order, pk=pk)
+    with transaction.atomic():
+        updated = models.Order.objects.filter(pk=pk, status="completed").update(
+            status="shipped"
+        )
+        if not updated:
+            messages.warning(
+                request,
+                _("Order cannot be marked as shipped because it is not completed."),
+            )
+        else:
+
+            def queue_notification():
+                try:
+                    send_order_shipped_task.delay(pk)
+                except (OperationalError, OSError):
+                    logger.exception(
+                        "Could not queue shipping notification for order %s", pk
+                    )
+                    messages.error(
+                        request,
+                        _(
+                            "Order marked as shipped, but the shipping notification "
+                            "could not be queued. Please notify the customer manually."
+                        ),
+                    )
+                else:
+                    messages.success(
+                        request,
+                        _("Order marked as shipped and shipping notification queued."),
+                    )
+
+            transaction.on_commit(queue_notification)
+    return redirect("admin-order-management-page")
+
+
+@group_required("Shop Manager")
 def admin_order_management_page(request):
     """Display orders placed by customers for management purposes. Includes pagination and order status filtering."""
     orders = (
@@ -5453,7 +5499,7 @@ def _build_order_scan_import_preview(raw_payload: str, source_filename: str):
             missing_order_ids.append(order_id)
         elif status == "pending":
             closable_order_ids.append(order_id)
-        elif status == "completed":
+        elif status in ("completed", "shipped"):
             already_closed_order_ids.append(order_id)
         else:
             skipped_order_ids.append(order_id)

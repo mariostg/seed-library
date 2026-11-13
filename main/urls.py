@@ -913,6 +913,11 @@ urlpatterns += i18n_patterns(
         name="order-confirmation",
     ),
     path(
+        _("admin-order-confirm-shipped/<int:pk>/"),
+        views.admin_order_confirm_shipped,
+        name="admin-order-confirm-shipped",
+    ),
+    path(
         _("order-history/"),
         views.order_history,
         name="order-history",

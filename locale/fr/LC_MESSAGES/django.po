@@ -5341,5 +5341,96 @@ msgstr "Connexion"
 msgid "Library Management"
 msgstr ""
 
+#: project/models.py project/templates/project/admin/admin-order-statistics-page.html
+#: project/templates/project/emails/order_shipped.html project/templates/project/emails/order_shipped.txt
+msgid "Shipped"
+msgstr "Expédiée"
+
+#: project/templates/project/admin/admin-order-management-page.html
+msgid "Confirm Shipped"
+msgstr "Confirmer l'expédition"
+
+#: project/views.py
+msgid "Order cannot be marked as shipped because it is not completed."
+msgstr "La commande ne peut pas être marquée comme expédiée, car elle n'est pas terminée."
+
+#: project/views.py
+msgid "Order marked as shipped and shipping notification queued."
+msgstr "La commande a été marquée comme expédiée et l'avis d'expédition a été mis en file d'attente."
+
+#: project/views.py
+msgid "Order marked as shipped, but the shipping notification could not be queued. Please notify the customer manually."
+msgstr "La commande a été marquée comme expédiée, mais l'avis d'expédition n'a pas pu être mis en file d'attente. Veuillez informer la clientèle manuellement."
+
+#: project/utils.py
+#, python-format
+msgid "Your seed order has been shipped - Order #%(order_id)d"
+msgstr "Votre commande de semences a été expédiée - Commande nº %(order_id)d"
+
+#: project/templates/project/emails/order_shipped.html project/templates/project/emails/order_shipped.txt
+msgid "Order Shipped"
+msgstr "Commande expédiée"
+
+#: project/templates/project/emails/order_shipped.html
+msgid "Order shipped!"
+msgstr "Commande expédiée!"
+
+#: project/templates/project/emails/order_shipped.html project/templates/project/emails/order_shipped.txt
+#, python-format
+msgid "Dear %(name)s,"
+msgstr "Bonjour %(name)s,"
+
+#: project/templates/project/emails/order_shipped.html project/templates/project/emails/order_shipped.txt
+msgid "Thank you for ordering seeds from our library! Your order has been shipped and is on its way."
+msgstr "Merci d'avoir commandé des semences auprès de notre bibliothèque! Votre commande a été expédiée et est en route."
+
+#: project/templates/project/emails/order_shipped.txt
+msgid "ORDER DETAILS"
+msgstr "DÉTAILS DE LA COMMANDE"
+
+#: project/templates/project/emails/order_shipped.html
+msgid "Order details"
+msgstr "Détails de la commande"
+
+#: project/templates/project/emails/order_shipped.html project/templates/project/emails/order_shipped.txt
+msgid "Order ID"
+msgstr "Numéro de commande"
+
+#: project/templates/project/emails/order_shipped.html project/templates/project/emails/order_shipped.txt
+msgid "Order Date"
+msgstr "Date de commande"
+
+#: project/templates/project/emails/order_shipped.html project/templates/project/emails/order_shipped.txt
+msgid "Status"
+msgstr "Statut"
+
+#: project/templates/project/emails/order_shipped.txt
+msgid "SEEDS ORDERED"
+msgstr "SEMENCES COMMANDÉES"
+
+#: project/templates/project/emails/order_shipped.html
+msgid "Seeds ordered"
+msgstr "Semences commandées"
+
+#: project/templates/project/emails/order_shipped.txt
+msgid "DELIVERY ADDRESS"
+msgstr "ADRESSE DE LIVRAISON"
+
+#: project/templates/project/emails/order_shipped.html
+msgid "Delivery address"
+msgstr "Adresse de livraison"
+
+#: project/templates/project/emails/order_shipped.html project/templates/project/emails/order_shipped.txt
+msgid "If you have any questions about your order, please don't hesitate to contact us."
+msgstr "Si vous avez des questions concernant votre commande, n'hésitez pas à nous contacter."
+
+#: project/templates/project/emails/order_shipped.html project/templates/project/emails/order_shipped.txt
+msgid "Best regards,"
+msgstr "Cordialement,"
+
+#: project/templates/project/emails/order_shipped.html project/templates/project/emails/order_shipped.txt
+msgid "Wildflower Seed Library Team"
+msgstr "L'équipe de la bibliothèque de semences de fleurs sauvages"
+
 #~ msgid "Show Environmental Requirements Info"
 #~ msgstr "Afficher les informations de besoins environnementaux"

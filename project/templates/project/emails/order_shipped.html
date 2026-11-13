@@ -1,0 +1,37 @@
+
+{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE|default:'en' }}">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% trans "Order Shipped" %}</title>
+  </head>
+  <body>
+    <h1>{% trans "Order shipped!" %}</h1>
+    <p>{% blocktrans with name=customer.first_name %}Dear {{ name }},{% endblocktrans %}</p>
+    <p>{% trans "Thank you for ordering seeds from our library! Your order has been shipped and is on its way." %}</p>
+    <h2>{% trans "Order details" %}</h2>
+    <p>
+      {% trans "Order ID" %}: #{{ order.id }}<br>
+      {% trans "Order Date" %}: {{ order.order_date|date:"F j, Y H:i" }}<br>
+      {% trans "Status" %}: {% trans "Shipped" %}
+    </p>
+    <h2>{% trans "Seeds ordered" %}</h2>
+    <ul>
+      {% for item in order_items %}
+        <li>{{ item.plant_profile.english_name }} ({{ item.plant_profile.latin_name }}): {{ item.quantity }}</li>
+      {% endfor %}
+    </ul>
+    <h2>{% trans "Delivery address" %}</h2>
+    <p>
+      {{ customer.first_name }} {{ customer.last_name }}<br>
+      {{ customer.address }}<br>
+      {{ customer.city }}, {{ customer.province }}<br>
+      {{ customer.postal_code }}
+    </p>
+    <p>{% trans "If you have any questions about your order, please don't hesitate to contact us." %}</p>
+    <p>{% trans "Best regards," %}<br>{% trans "Wildflower Seed Library Team" %}</p>
+  </body>
+</html>

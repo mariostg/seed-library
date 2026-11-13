@@ -190,23 +190,6 @@
         </table>
       </div>
 
-      {% if order.donation_amount > 0 %}
-        <div class="donation-box">
-          <h3 style="margin-top: 0; color: #856404;">{% trans "Thank You for Your Donation" %}</h3>
-          <div class="donation-amount">${{ order.donation_amount }}</div>
-          <p style="margin: 10px 0 0 0; color: #856404;">
-            {% trans "Your generous donation will help us continue our mission to preserve and promote native plants." %}
-          </p>
-        </div>
-      {% endif %}
-
-      {% if order.notes %}
-        <div class="section">
-          <h3>{% trans "Order Notes" %}</h3>
-          <p>{{ order.notes }}</p>
-        </div>
-      {% endif %}
-
       <div class="section">
         <h3>{% trans "What happens next?" %}</h3>
         <div class="steps">

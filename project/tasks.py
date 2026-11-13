@@ -16,6 +16,7 @@ from project.utils import (
     send_donation_receipt_email,
     send_donation_thank_you_email,
     send_order_confirmation_email,
+    send_order_shipped_email,
 )
 
 DEFAULT_ORDERS_PDF_RETENTION_DAYS = 7
@@ -105,6 +106,12 @@ def send_order_confirmation_task(order_id):
     except ObjectDoesNotExist:
         return False
     return send_order_confirmation_email(order)
+
+
+@shared_task
+def send_order_shipped_task(order_id):
+    order = Order.objects.select_related("customer").get(id=order_id)
+    return send_order_shipped_email(order)
 
 
 @shared_task

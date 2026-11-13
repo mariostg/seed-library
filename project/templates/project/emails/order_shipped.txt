@@ -1,0 +1,29 @@
+{% load i18n %}
+
+{% trans "Order Shipped" %}
+
+{% blocktrans with name=customer.first_name %}Dear {{ name }},{% endblocktrans %}
+
+{% trans "Thank you for ordering seeds from our library! Your order has been shipped and is on its way." %}
+
+{% trans "ORDER DETAILS" %}
+{% trans "Order ID" %}: #{{ order.id }}
+{% trans "Order Date" %}: {{ order.order_date|date:"F j, Y H:i" }}
+{% trans "Status" %}: {% trans "Shipped" %}
+
+{% trans "SEEDS ORDERED" %}
+
+{% for item in order_items %}
+  - {{ item.plant_profile.english_name }} ({{ item.plant_profile.latin_name }}): {{ item.quantity }}
+{% endfor %}
+
+{% trans "DELIVERY ADDRESS" %}
+{{ customer.first_name }} {{ customer.last_name }}
+{{ customer.address }}
+{{ customer.city }}, {{ customer.province }}
+{{ customer.postal_code }}
+
+{% trans "If you have any questions about your order, please don't hesitate to contact us." %}
+
+{% trans "Best regards," %}
+{% trans "Wildflower Seed Library Team" %}

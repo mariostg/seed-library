@@ -919,7 +919,7 @@ def get_generated_filtered_orders_pdfs():
 def get_order_statistics():
     """Get order statistics for dashboard display.
     Returns the following totals by year:
-        total orders, pending orders, completed orders, cancelled orders, and total donations by year.
+        total orders, counts by status, and total donations by year.
     """
 
     orders = (
@@ -929,6 +929,7 @@ def get_order_statistics():
             total_orders=Count("id"),
             pending_orders=Count("id", filter=Q(status="pending")),
             completed_orders=Count("id", filter=Q(status="completed")),
+            shipped_orders=Count("id", filter=Q(status="shipped")),
             cancelled_orders=Count("id", filter=Q(status="cancelled")),
             total_donations=Sum("donation_amount"),
         )
@@ -1059,6 +1060,35 @@ def send_order_confirmation_email(order):
             e,
         )
         return False
+
+
+def send_order_shipped_email(order):
+    """Send a shipping notification; propagate failures to the Celery task."""
+    from django.core.mail import EmailMultiAlternatives
+    from django.template.loader import render_to_string
+    from django.utils.translation import gettext as _
+
+    context = {
+        "order": order,
+        "order_items": order.items.select_related("plant_profile"),
+        "customer": order.customer,
+    }
+    subject = _("Your seed order has been shipped - Order #%(order_id)d") % {
+        "order_id": order.id
+    }
+    email = EmailMultiAlternatives(
+        subject=subject,
+        body=render_to_string("project/emails/order_shipped.txt", context),
+        from_email=None,
+        to=[order.customer.email],
+    )
+    email.attach_alternative(
+        render_to_string("project/emails/order_shipped.html", context), "text/html"
+    )
+    if email.send(fail_silently=False) != 1:
+        raise RuntimeError(f"Shipping notification for order {order.id} was not sent")
+    logger.info("Order shipped email sent successfully for Order #%s", order.id)
+    return True
 
 
 def send_donation_thank_you_email(order):
