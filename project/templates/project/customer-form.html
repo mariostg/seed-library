@@ -35,23 +35,6 @@
           </div>
 
           <div class="input-text">
-            <label for="{{ form.staying_in_touch.id_for_label }}">
-              <input type="checkbox"
-                     name="{{ form.staying_in_touch.name }}"
-                     id="{{ form.staying_in_touch.id_for_label }}"
-                     class="form-check-input{% if form.staying_in_touch.errors %} is-invalid{% endif %}"
-                     {% if form.staying_in_touch.value %}checked{% endif %}>
-              {{ form.staying_in_touch.label }}
-            </label>
-            {% if form.staying_in_touch.errors %}
-              <div class="invalid-feedback">
-                {% for error in form.staying_in_touch.errors %}
-                  <p>{{ error }}</p>
-                {% endfor %}
-              </div>
-            {% endif %}
-          </div>
-          <div class="input-text">
             <label for="{{ form.accept_substitutes.id_for_label }}">
               <input type="checkbox"
                      name="{{ form.accept_substitutes.name }}"
@@ -201,6 +184,24 @@
             {% if form.postal_code.errors %}
               <div class="invalid-feedback">
                 {% for error in form.postal_code.errors %}
+                  <p>{{ error }}</p>
+                {% endfor %}
+              </div>
+            {% endif %}
+          </div>
+
+          <div class="input-text">
+            <label for="{{ form.staying_in_touch.id_for_label }}">
+              <input type="checkbox"
+                     name="{{ form.staying_in_touch.name }}"
+                     id="{{ form.staying_in_touch.id_for_label }}"
+                     class="form-check-input{% if form.staying_in_touch.errors %} is-invalid{% endif %}"
+                     {% if form.staying_in_touch.value %}checked{% endif %}>
+              {{ form.staying_in_touch.label }}
+            </label>
+            {% if form.staying_in_touch.errors %}
+              <div class="invalid-feedback">
+                {% for error in form.staying_in_touch.errors %}
                   <p>{{ error }}</p>
                 {% endfor %}
               </div>
