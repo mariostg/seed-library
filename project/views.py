@@ -4144,7 +4144,12 @@ def add_to_cart(request, pk):
 
     customer = utils.get_or_create_customer_from_session(request)
     if not customer:
-        messages.info(request, _("Please create a customer profile first."))
+        messages.info(
+            request,
+            _(
+                "Please fill your personal information first, and then you will be able to edit your cart."
+            ),
+        )
         if is_htmx:
             response = HttpResponse(status=200)
             response["HX-Redirect"] = reverse("create-customer")
