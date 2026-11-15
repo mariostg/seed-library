@@ -2756,7 +2756,7 @@ msgid "Enter a non-native plant name..."
 msgstr ""
 
 #: project/templates/project/plant-search-name-form.html:58
-msgid "Show Plants that are Available Only"
+msgid "Show available seeds"
 msgstr ""
 
 #: project/templates/project/plant-search-name-form.html:63
