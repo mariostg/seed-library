@@ -1,6 +1,6 @@
 {% load i18n %}
 
-{% trans "Order Confirmation" %}
+{% trans "Order confirmation" %}
 
 {% blocktrans with order_id=order.id %}Dear {{ customer.name }},
 
