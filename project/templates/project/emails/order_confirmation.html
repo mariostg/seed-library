@@ -1,9 +1,11 @@
 {% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ LANGUAGE_CODE|default:"en" }}">
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% trans "Order Confirmation" %}</title>
     <style>
       body {
         font-family: Arial, sans-serif;
