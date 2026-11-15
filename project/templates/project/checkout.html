@@ -76,9 +76,9 @@
 
         <!-- Donation Form -->
         <div class="donation-form">
-          <h2>{% trans "Optional Donation" %}</h2>
+          <h2>{% trans "Donation (optional)" %}</h2>
           <p class="donation-help">
-            {% trans "Help us continue our seed conservation efforts with an optional donation. All proceeds support our mission to preserve and promote native plants." %}
+            {% trans "We are a 100% volunteer-run organization and every donated dollar is completely used to educate and provide free native seeds and plants to communities, schools and individuals that want to create inter-connected habitats but that might not necessarily be able to afford them. Thank you for paying it forward to help us continue our mission." %}
           </p>
 
           <form method="POST" class="checkout-form">
@@ -105,10 +105,9 @@
               </small>
             </div>
 
+            <h2>{% trans "Tell us about your project (optional)" %}</h2>
+            <p>{% trans "Your comments keep us inspired to continue our mission! We look forward in learning more about your garden story and how we contribute to it." %}</p>
             <div class="form-group">
-              <label for="customer_note">
-                {% trans "Customer Note" %} <span class="optional">({% trans "optional" %})</span>
-              </label>
               <textarea id="customer_note"
                         name="customer_note"
                         rows="4"
