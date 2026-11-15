@@ -832,7 +832,7 @@ class CustomerForm(forms.ModelForm):
                 "I agree to be notified by the Seed Library when plant and seed giveaways are held and when the seed mailout is launched."
             ),
             "accept_substitutes": _(
-                "I am willing to accept substitute seeds if the requested seeds are unavailable."
+                "I agree that the Seed Library volunteers can substitute species when what I ordered is not available anymore."
             ),
         }
 
