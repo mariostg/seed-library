@@ -5444,5 +5444,9 @@ msgstr "Cordialement,"
 msgid "Wildflower Seed Library Team"
 msgstr "L'équipe de la bibliothèque de semences de fleurs sauvages"
 
+#: project/templates/project/shopping-cart.html
+msgid "Please review your order to confirm quantities. Please note that to change the quantity of each species, you need to select the quantity, then press update to save your change. Please note that personal garden orders can order a maximum number of 25 seed envelopes."
+msgstr "Veuillez vérifier votre commande pour confirmer les quantités. Pour modifier la quantité de chaque espèce, sélectionnez la quantité, puis appuyez sur « Mettre à jour » pour enregistrer votre modification. Les commandes pour un jardin personnel sont limitées à un maximum de 25 enveloppes de semences."
+
 #~ msgid "Show Environmental Requirements Info"
 #~ msgstr "Afficher les informations de besoins environnementaux"

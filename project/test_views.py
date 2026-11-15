@@ -710,3 +710,26 @@ class AddToCartLimitTest(TestCase):
             customer=self.customer, plant_profile=self.plant
         )
         self.assertEqual(cart_item.quantity, 26)
+
+    def test_cart_displays_quantity_update_and_personal_garden_notice(self):
+        ShoppingCart.objects.create(
+            customer=self.customer, plant_profile=self.plant, quantity=1
+        )
+        with override("en"):
+            response = project_views.shopping_cart(self.request)
+        self.assertContains(
+            response,
+            "Please review your order to confirm quantities. Please note that to "
+            "change the quantity of each species, you need to select the quantity, "
+            "then press update to save your change. Please note that personal garden "
+            "orders can order a maximum number of 25 seed envelopes.",
+        )
+
+    def test_cart_displays_quantity_notice_in_french(self):
+        ShoppingCart.objects.create(
+            customer=self.customer, plant_profile=self.plant, quantity=1
+        )
+        with override("fr"):
+            response = project_views.shopping_cart(self.request)
+        self.assertContains(response, "Veuillez vérifier votre commande")
+        self.assertContains(response, "25 enveloppes de semences")
