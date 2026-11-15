@@ -40,7 +40,7 @@ DELIVERY INFORMATION
 {{ customer.address }}
 {{ customer.postal_code }}
 
-Need help?
+Have a question ? Need help?p?
 If you have any questions about your order, please don't hesitate to contact us.
 We're here to help!
 
