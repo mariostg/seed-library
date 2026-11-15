@@ -1987,7 +1987,7 @@ class ShoppingCart(models.Model):
 
     class Meta:
         unique_together = ("customer", "plant_profile")
-        verbose_name_plural = "Shopping Carts"
+        verbose_name_plural = "Shopping carts"
 
 
 class OrderSeedApplication(models.Model):
