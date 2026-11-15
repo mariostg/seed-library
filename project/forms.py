@@ -829,7 +829,7 @@ class CustomerForm(forms.ModelForm):
             "address": _("Street Address"),
             "postal_code": _("Postal Code"),
             "staying_in_touch": _(
-                "I would like to stay in touch with the Ottawa Wildflower Seed Library.  I agree to be contacted to learn when the plant and seed giveaways will be next available, and to receive information about the Ottawa Wildflower Seed Library's activities and events."
+                "I agree to be notified by the Seed Library when plant and seed giveaways are held and when the seed mailout is launched."
             ),
             "accept_substitutes": _(
                 "I am willing to accept substitute seeds if the requested seeds are unavailable."
