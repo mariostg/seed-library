@@ -1,13 +1,13 @@
 {% extends "core/base.html" %}
 {% load i18n %}
 
-{% block title %}{% trans "Shopping Cart" %}{% endblock title %}
+{% block title %}{% trans "Shopping cart" %}{% endblock title %}
 
 {% block content %}
   <main class="main-content">
     <section class="shopping-cart-section">
       <div class="cart-header">
-        <h1>{% trans "Shopping Cart" %}</h1>
+        <h1>{% trans "Shopping cart" %}</h1>
         <p class="cart-customer-info">
           {% trans "Customer:" %} <strong>{{ customer.first_name }} {{ customer.last_name }} ({{ customer.safe_email }})
             {{ customer.mailing_address }}
@@ -28,11 +28,12 @@
 
       {% if cart_items %}
         <div class="cart-items-container">
+          <p class="alert alert-warning">{% trans "Please review your order to confirm quantities. Please note that to change the quantity of each species, you need to select the quantity, then press update to save your change. Please note that personal garden orders can order a maximum number of 25 seed envelopes." %}</p>
           <table class="cart-table">
             <thead>
               <tr>
-                <th>{% trans "Plant Name" %}</th>
-                <th>{% trans "Latin Name" %}</th>
+                <th>{% trans "Plant name" %}</th>
+                <th>{% trans "Latin name" %}</th>
                 <th>{% trans "Quantity" %}</th>
                 <th>{% trans "Actions" %}</th>
               </tr>
@@ -99,8 +100,8 @@
       {% endif %}
 
       <div class="cart-info-box">
-        <h3>{% trans "About Our Seeds" %}</h3>
-        <p>{% trans "All seeds are provided free of charge. We welcome donations to support our conservation efforts." %}</p>
+        <h3>{% trans "Help us build inter-connected habitats" %}</h3>
+        <p>{% trans "We mail seeds for free. To continue our work, we need your support. Thank you for chipping in to help us continue building inter-connected habitats across Ontario, Québec, New Brunswick and Nova Scotia." %}</p>
       </div>
     </section>
   </main>
