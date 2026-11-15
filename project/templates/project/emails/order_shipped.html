@@ -7,58 +7,200 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% trans "Order Shipped" %}</title>
   </head>
-  <body style="margin: 0; padding: 20px; font-family: Arial, sans-serif; line-height: 1.6; color: #333; background-color: #f9f9f9;">
-    <div style="max-width: 600px; margin: 0 auto; background-color: #fff; padding: 20px; border-radius: 8px;">
-      <div style="background-color: #28a745; color: #fff; padding: 20px; border-radius: 8px 8px 0 0; text-align: center; margin: -20px -20px 20px;">
-        <h1 style="margin: 0; font-size: 24px;">{% trans "Order shipped!" %}</h1>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      background-color: #f9f9f9;
+    }
+    .email-container {
+      max-width: 600px;
+      margin: 0 auto;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+    }
+    .header {
+      background-color: #28a745;
+      color: #fff;
+      padding: 20px;
+      border-radius: 8px 8px 0 0;
+      text-align: center;
+      margin: -20px -20px 20px;
+    }
+    .header h1 {
+      margin: 0;
+      font-size: 24px;
+    }
+    .section {
+      margin-bottom: 20px;
+      padding: 15px;
+      background-color: #f8f9fa;
+      border-left: 4px solid #28a745;
+    }
+    .section h3 {
+      margin-top: 0;
+      color: #28a745;
+    }
+    .order-info {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .info-item {
+      padding: 8px;
+      background-color: white;
+      border-radius: 4px;
+    }
+    .info-label {
+      font-weight: bold;
+      color: #666;
+      font-size: 12px;
+    }
+    .info-value {
+      color: #333;
+      font-size: 14px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 15px;
+    }
+    table th {
+      background-color: #28a745;
+      color: white;
+      padding: 10px;
+      text-align: left;
+      font-weight: bold;
+    }
+    table td {
+      padding: 10px;
+      border-bottom: 1px solid #eee;
+    }
+    table tr:nth-child(even) {
+      background-color: #f8f9fa;
+    }
+    .status-shipped {
+      background-color: #d4edda;
+      color: #155724;
+      padding: 4px 8px;
+      border-radius: 3px;
+      font-size: 12px;
+    }
+
+    .footer {
+      text-align: center;
+      padding-top: 20px;
+      border-top: 1px solid #eee;
+      font-size: 12px;
+      color: #666;
+    }
+
+  </style>
+  <body>
+    <div class="email-container">
+      <div class="header">
+        <h1>{% trans "Order shipped!" %}</h1>
       </div>
+
       <p>{% blocktrans with name=customer.first_name %}Dear {{ name }},{% endblocktrans %}</p>
       <p>{% trans "Thank you for ordering seeds from our library! Your order has been shipped and is on its way." %}</p>
 
-      <div style="margin-bottom: 20px; padding: 15px; background-color: #f8f9fa; border-left: 4px solid #28a745;">
-        <h2 style="margin-top: 0; color: #28a745; font-size: 20px;">{% trans "Order details" %}</h2>
-        <p>
-          <strong>{% trans "Order ID" %}:</strong> #{{ order.id }}<br>
-          <strong>{% trans "Order Date" %}:</strong> {{ order.order_date|date:"F j, Y H:i" }}<br>
-          <strong>{% trans "Status" %}:</strong> {% trans "Shipped" %}
-        </p>
+      <div class="section">
+        <h3>{% trans "Order details" %}</h3>
+        <div class="order-info">
+          <div class="info-item">
+            <div class="info-label">{% trans "Order number" %}</div>
+            <div class="info-value">#{{ order.id }}</div>
+          </div>
+          <div class="info-item">
+            <div class="info-label">{% trans "Order date" %}</div>
+            <div class="info-value">{{ order.order_date|date:"F j, Y" }}</div>
+          </div>
+          <div class="info-item">
+            <div class="info-label">{% trans "Status" %}</div>
+            <div class="info-value"><span class="status-shipped">{{ order.get_status_display }}</span></div>
+          </div>
+        </div>
       </div>
 
-      <div style="margin-bottom: 20px; padding: 15px; background-color: #f8f9fa; border-left: 4px solid #28a745;">
-        <h2 style="margin-top: 0; color: #28a745; font-size: 20px;">{% trans "Seeds ordered" %}</h2>
-        <table style="width: 100%; border-collapse: collapse;">
+      <div class="section">
+        <h3>{% trans "Seeds ordered" %}</h3>
+        <table>
           <thead>
             <tr>
-              <th style="background-color: #28a745; color: #fff; padding: 10px; text-align: left;">{% trans "Plant name" %}</th>
-              <th style="background-color: #28a745; color: #fff; padding: 10px; text-align: left;">{% trans "Latin name" %}</th>
-              <th style="background-color: #28a745; color: #fff; padding: 10px; text-align: left;">{% trans "Quantity" %}</th>
+              <th>{% trans "Plant name" %}</th>
+              <th>{% trans "Latin name" %}</th>
+              <th>{% trans "Quantity" %}</th>
             </tr>
           </thead>
           <tbody>
             {% for item in order_items %}
               <tr>
-                <td style="padding: 10px; border-bottom: 1px solid #eee;">{{ item.plant_profile.english_name }}</td>
-                <td style="padding: 10px; border-bottom: 1px solid #eee;"><em>{{ item.plant_profile.latin_name }}</em></td>
-                <td style="padding: 10px; border-bottom: 1px solid #eee;">{{ item.quantity }}</td>
+                <td>{{ item.plant_profile.english_name }}</td>
+                <td><em>{{ item.plant_profile.latin_name }}</em></td>
+                <td>{{ item.quantity }}</td>
               </tr>
             {% endfor %}
           </tbody>
         </table>
       </div>
 
-      <div style="margin-bottom: 20px; padding: 15px; background-color: #f8f9fa; border-left: 4px solid #28a745;">
-        <h2 style="margin-top: 0; color: #28a745; font-size: 20px;">{% trans "Delivery address" %}</h2>
+      <div class="section">
+        <h3>{% trans "What happens next?" %}</h3>
+        <div class="steps">
+          <div class="step">
+            <strong>{% trans "Shipment" %}</strong>
+            <p>{% trans "Thank you for ordering from the Ottawa Wildflower Seed Library. We will mail your seeds today. If we have not included all the seeds you ordered, it is because those are now out of stock. Please note that our volunteers will have substituted species if you choose that option while placing the order. We encourage you to share your seeds locally to grow the movement." %}</p>
+
+            <p>{% trans "We do not track your seed order. If you have not received your seeds within a month, it is likely that Canada Post has misplaced your order. If you don’t receive your order, please contact us at <a href='mailto:info@wildflowerseedlibrary.ca'>info@wildflowerseedlibrary.ca</a> so that we can send you replacements. Please note that we will only be able to mail you seeds that we have in stock at that time and that substitutions might be needed." %}</p>
+          </div>
+
+          <div class="step">
+            <strong>{% trans "Unpacking" %}</strong>
+            <p>{% trans "To lower our mailing cost, we often use tape to attach seed envelopes to pieces of paper. To detach the envelopes, we strongly recommend that you cut the tape attaching them to the paper. Trying to pull the tape off can damage the envelopes or the labels, which have the sowing instructions." %}</p>
+          </div>
+
+          <div class="step">
+            <strong>{% trans "Sowing" %}</strong>
+            <p>{% trans "We encourage you to sow your seeds as soon as you possibly can. We do not recommend direct sowing (scattering seeds directly on the ground or on unprepared soil) as this typically results in extremely low germination rates and we want you to be successful." %}</p>
+            <p>{% trans "Instead, here are <a href='https://wildflowerseedlibrary.ca/instructions/how-to-winter-sow-2/'>winter sowing instructions</a> to sow your seeds for best chances of germination. In the springtime, you can also use our instructions to learn <a href='https://wildflowerseedlibrary.ca/instructions/how-to-transplant-seedlings/'>how to transplant your seedlings</a>." %}</p>
+          </div>
+
+          <div class="step">
+            <strong>{% trans "Support us" %}</strong>
+            <p>{% trans "All seed orders are free but we graciously accept <a href='https://wildflowerseedlibrary.ca/product/donate-money/'>one-time and monthly donations</a> to continue our work. We are so grateful for your support in making such a broad impact in Ontario, Québec, New Brunswick, and Nova Scotia in building interconnected habitat, and the brilliant humans who steward it. Your gifts are largely spent on stamps and on education efforts. " %}</p>
+          </div>
+
+          <div class="step">
+            <strong>{% trans "Follow us" %}</strong>
+            <p>{% trans "While you’re waiting for your seeds, please join us on social media and subscribe to our newsletter!" %}</p>
+            <p>
+              <a href="https://www.facebook.com/groups/393209995421040">{% trans "Facebook" %}</a> |
+              <a href="https://www.instagram.com/ottawawildflower/">{% trans "Instagram" %}</a> |
+              <a href="https://bloomandbuzz.substack.com/">{% trans "The Bloom and Buzz on Substack" %}</a>, {% trans "the monthly newsletter of the Ottawa Wildflower Seed Library" %}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h3>{% trans "Delivery address" %}</h3>
         <p style="margin: 0;">
-          <strong>{{ customer.first_name }} {{ customer.last_name }}</strong><br>
-          {{ customer.address }}<br>
-          {{ customer.city }}, {{ customer.province }}<br>
-          {{ customer.postal_code }}
+          <strong>{{ order.customer.first_name }} {{ order.customer.last_name }}</strong><br>
+          {{ order.customer.address }}<br>
+          {{ order.customer.city }}, {{ order.customer.province }}<br>
+          {{ order.customer.postal_code }}<br>
         </p>
       </div>
-      <div style="text-align: center; padding-top: 20px; border-top: 1px solid #eee; font-size: 12px; color: #666;">
-        <p>{% trans "If you have any questions about your order, please don't hesitate to contact us." %}</p>
+
+      <div class="footer">
+        <p>{% trans "If you have any questions, please don't hesitate to contact us. We're here to help!" %}</p>
         <p>{% trans "Best regards," %}<br>{% trans "Wildflower Seed Library Team" %}</p>
       </div>
+
     </div>
   </body>
 </html>
