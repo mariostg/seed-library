@@ -4093,7 +4093,7 @@ def create_customer(request):
 
     context = {
         "form": form,
-        "title": _("Create Customer Profile"),
+        "title": _("Ship to"),
         "mapbox_access_token": getattr(settings, "MAPBOX_ACCESS_TOKEN", ""),
     }
     return render(request, "project/customer-form.html", context)
