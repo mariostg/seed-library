@@ -1,29 +1,23 @@
 {% load i18n %}
 
-{% trans "Thank You for Your Donation!" %}
+{% trans "Thank You!" %}
+{% trans "Your generosity means the world to us" %}
 
-{% blocktrans with name=customer.name %}Dear {{ name }},{% endblocktrans %}
+{% blocktrans with name=order.customer.first_name %}Dear {{ name }},{% endblocktrans %}
 
-{% trans "We are deeply grateful for your generous donation!" %}
+Thank you very much for your gift to the Ottawa Wildflower Seed Library! Your donation will help us continue to provide free native seeds and plants to communities.
 
-{% blocktrans with amount=order.donation_amount %}
-DONATION DETAILS
-Donation Amount: ${{ amount }}
-Date: {{ order.order_date|date:"F j, Y" }}
-Order ID: #{{ order.id }}
-{% endblocktrans %}
+Help us continue to maintain habitat corridors for our wildlife – donate your native wildflower seeds!
 
-{% trans "Your donation will directly support our mission to:" %}
-- {% trans "Preserve and promote native plant species" %}
-- {% trans "Educate the community about local biodiversity" %}
-- {% trans "Maintain and expand our seed library" %}
-- {% trans "Support conservation efforts in our region" %}
+Because of donors like you, since 2020, over 15,000 community projects, schools and individuals have received free native seeds in Ontario, Québec, New Brunswick, and Nova Scotia. Over 80 cents of your donated dollar goes directly to the cost of postage – which leapt from $1.07 when we started in 2020 to a projected $2 in 2027.
 
-{% trans "Every donation, no matter the size, makes a real difference and helps us continue our important work." %}
+The Ottawa Wildflower Seed Library disseminates accessible scientific information about native plants, the ecosystem, and good ecological practices. We have an extensive catalogue (https://catalogue.wildflowerseedlibrary.ca) containing each species that we share. Our outreach includes an impressive social media presence and presentations and workshops across the Ottawa-Gatineau region. We have been regularly reaching more than 2,000 people each year, making education on the importance of native plants in ecosystems a core part of our impact.
 
-{% trans "Thank you for being part of our conservation community!" %}
+More broadly, your financial donation will allow us to continue engaging with communities to fulfill our stewardship role in nature, fight against biodiversity loss, create resilient ecosystems in the face of climate change, and foster Indigenous reconciliation. We welcome both one-time and monthly donations, to maintain our operations year-round.
 
-{% trans "Best regards," %}
-{% trans "Wildflower Seed Library Team" %}
+Thank you once again for your generous contribution. Please feel free to share the Ottawa Wildflower Seed Library with your networks to sustain this mailout operation into the future.
 
-{% trans "P.S. If you have any questions or would like to learn more about our work, please visit our website or contact us directly." %}
+With all my thanks,
+
+Mélanie Ouellette
+Chair and Founder

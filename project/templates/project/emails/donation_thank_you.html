@@ -20,7 +20,7 @@
         box-shadow: 0 2px 4px rgba(0,0,0,0.1);
       }
       .header {
-        background-color: #ffc107;
+        background-color: #28a745;
         color: #333;
         padding: 20px;
         border-radius: 8px 8px 0 0;
@@ -30,17 +30,7 @@
       .header h1 {
         margin: 0;
         font-size: 28px;
-        color: #856404;
-      }
-      .section {
-        margin-bottom: 20px;
-        padding: 15px;
-        background-color: #fff9e6;
-        border-left: 4px solid #ffc107;
-      }
-      .section h3 {
-        margin-top: 0;
-        color: #856404;
+        color: #000;
       }
       .donation-highlight {
         background-color: #fff3cd;
@@ -93,53 +83,31 @@
         <p>{% trans "Your generosity means the world to us" %}</p>
       </div>
 
-      <p>{% blocktrans with name=customer.name %}Dear {{ name }},{% endblocktrans %}</p>
-      <p>{% trans "We are deeply grateful for your generous donation to the Wildflower Seed Library. Your support helps us continue our vital conservation work." %}</p>
+      <p>{% blocktrans with name=order.customer.first_name %}Dear {{ name }},{% endblocktrans %}</p>
 
-      <div class="donation-highlight">
-        <div style="font-size: 14px; color: #666;">{% trans "Your Donation" %}</div>
-        <div class="donation-amount">${{ order.donation_amount }}</div>
-        <div style="font-size: 12px; color: #666;">{{ order.order_date|date:"F j, Y" }}</div>
-      </div>
+      <p>
+        Thank you very much for your gift to the Ottawa Wildflower Seed Library! Your donation will help us continue to provide free native seeds and plants to communities.
+      </p>
+      <p style="text-align: center; font-weight: bold;">Help us continue to maintain habitat corridors for our wildlife – donate your native wildflower seeds!</p>
 
-      <div class="section">
-        <h3>{% trans "Your Impact" %}</h3>
-        <p>{% trans "Your donation directly supports:" %}</p>
-        <ul class="impact-list">
-          <li>{% trans "Preserving and promoting native plant species" %}</li>
-          <li>{% trans "Educating the community about local biodiversity" %}</li>
-          <li>{% trans "Maintaining and expanding our seed library" %}</li>
-          <li>{% trans "Supporting conservation efforts in our region" %}</li>
-        </ul>
-      </div>
+      <p>Because of donors like you, since 2020, over 15,000 community projects, schools and individuals have received free native seeds in Ontario, Québec, New Brunswick, and Nova Scotia. <em>Over 80 cents of your donated dollar goes directly to the cost of postage – which leapt from $1.07 when we started in 2020 to a projected $2 in 2027.</em></p>
 
-      <div class="section">
-        <h3>{% trans "What's Next?" %}</h3>
-        <p>{% trans "In addition to your donation, you've also ordered seeds from our library. Here's what you can expect:" %}</p>
-        <ul style="margin: 10px 0; padding-left: 20px;">
-          <li>{% trans "Your seeds will be prepared and packaged within 2-4 weeks" %}</li>
-          <li>{% trans "You'll receive shipping confirmation with tracking details" %}</li>
-          <li>{% trans "Enjoy growing your plants and helping restore local ecosystems!" %}</li>
-        </ul>
-      </div>
+      <p>The Ottawa Wildflower Seed Library disseminates accessible scientific information about native plants, the ecosystem, and good ecological practices. We have an extensive <a href='https://catalogue.wildflowerseedlibrary.ca'> catalogue </a> containing each species that we share. Our outreach includes an impressive social media presence and presentations and workshops across the Ottawa-Gatineau region. We have been regularly reaching more than 2,000 people each year, making education on the importance of native plants in ecosystems a core part of our impact.
+      </p>
 
-      <div class="section">
-        <h3>{% trans "Join Our Community" %}</h3>
-        <p>{% trans "Your donation makes you an important part of our conservation mission. Stay connected to learn more about:" %}</p>
-        <ul style="margin: 10px 0; padding-left: 20px;">
-          <li>{% trans "Upcoming seed distribution events" %}</li>
-          <li>{% trans "Native plant conservation tips" %}</li>
-          <li>{% trans "Community gardening initiatives" %}</li>
-        </ul>
-      </div>
+      <p>More broadly, your financial donation will allow us to continue engaging with communities to fulfill our stewardship role in nature, fight against biodiversity loss, create resilient ecosystems in the face of climate change, and foster Indigenous reconciliation. We welcome both one-time and monthly donations, to maintain our operations year- round.</p>
 
-      <div class="footer">
-        <p style="margin: 10px 0;">{% trans "From the bottom of our hearts, thank you!" %}</p>
-        <p style="margin: 10px 0; font-weight: bold;">{% trans "Wildflower Seed Library Team" %}</p>
-        <p style="margin: 20px 0 0 0; font-size: 11px; color: #999;">
-          {% trans "If you have any questions about your donation or order, please don't hesitate to contact us." %}
-        </p>
-      </div>
+      <p>Thank you once again for your generous contribution. Please feel free to share the Ottawa Wildflower Seed Library with your networks to sustain this mailout operation into the future.
+      </p>
+
+      <p>With all my thanks,</p>
+
+      <p>
+        Mélanie Ouellette </br>
+        Chair and Founder
+      </p>
+
+
     </div>
   </body>
 </html>
