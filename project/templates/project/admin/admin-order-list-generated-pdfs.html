@@ -19,6 +19,9 @@
       </div>
     {% endif %}
 
+    <p class="alert alert--warning">
+      {% blocktrans count days=retention_days %}Generated PDFs older than {{ days }} day are deleted when a new PDF is generated. Download a copy to your computer if you need to keep it.{% plural %}Generated PDFs older than {{ days }} days are deleted when a new PDF is generated. Download a copy to your computer if you need to keep it.{% endblocktrans %}
+    </p>
     <table>
       <thead>
         <tr>

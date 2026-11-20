@@ -37,6 +37,23 @@ def _iter_storage_files(storage, root_dir):
         yield from _iter_storage_files(storage, child_dir)
 
 
+def get_orders_pdf_retention_days():
+    return max(
+        int(
+            getattr(
+                settings,
+                "ORDERS_PDF_RETENTION_DAYS",
+                getattr(
+                    settings,
+                    "PENDING_ORDERS_PDF_RETENTION_DAYS",
+                    DEFAULT_ORDERS_PDF_RETENTION_DAYS,
+                ),
+            )
+        ),
+        0,
+    )
+
+
 def cleanup_generated_orders_pdfs(retention_days=None):
     """Delete old generated order PDFs from storage.
 
@@ -49,15 +66,7 @@ def cleanup_generated_orders_pdfs(retention_days=None):
         int: Number of deleted files.
     """
     if retention_days is None:
-        retention_days = getattr(
-            settings,
-            "ORDERS_PDF_RETENTION_DAYS",
-            getattr(
-                settings,
-                "PENDING_ORDERS_PDF_RETENTION_DAYS",
-                DEFAULT_ORDERS_PDF_RETENTION_DAYS,
-            ),
-        )
+        retention_days = get_orders_pdf_retention_days()
 
     retention_days = max(int(retention_days), 0)
     cutoff = timezone.now() - timedelta(days=retention_days)

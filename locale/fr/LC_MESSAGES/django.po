@@ -5460,5 +5460,12 @@ msgstr "Toutes les utilisations"
 msgid "Invalid order seed application."
 msgstr "L'utilisation des semences sélectionnée n'est pas valide."
 
+#: project/templates/project/admin/admin-order-list-generated-pdfs.html
+#, python-format
+msgid "Generated PDFs older than %(days)s day are deleted when a new PDF is generated. Download a copy to your computer if you need to keep it."
+msgid_plural "Generated PDFs older than %(days)s days are deleted when a new PDF is generated. Download a copy to your computer if you need to keep it."
+msgstr[0] "Les PDF générés datant de plus de %(days)s jour sont supprimés lors de la génération d'un nouveau PDF. Téléchargez une copie sur votre ordinateur si vous souhaitez la conserver."
+msgstr[1] "Les PDF générés datant de plus de %(days)s jours sont supprimés lors de la génération d'un nouveau PDF. Téléchargez une copie sur votre ordinateur si vous souhaitez la conserver."
+
 #~ msgid "Show Environmental Requirements Info"
 #~ msgstr "Afficher les informations de besoins environnementaux"

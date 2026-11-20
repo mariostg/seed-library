@@ -45,6 +45,7 @@ from project.acl_handler import group_required
 from project.models import ProjectUser
 from project.tasks import (
     generate_filtered_orders_pdf_task,
+    get_orders_pdf_retention_days,
     send_donation_receipt_task,
     send_order_shipped_task,
 )
@@ -5403,6 +5404,7 @@ def admin_order_list_generated_pdfs(request):
     context = {
         "title": _("Generated Filtered Orders PDFs"),
         "generated_pdfs": generated_pdfs,
+        "retention_days": get_orders_pdf_retention_days(),
         "url_name": "admin-order-list-generated-pdfs",
     }
     return render(

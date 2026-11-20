@@ -2,10 +2,11 @@ from datetime import timedelta
 from unittest.mock import patch
 
 from django.conf import settings
-from django.test import SimpleTestCase
+from django.test import RequestFactory, SimpleTestCase, override_settings
 from django.utils import timezone
+from django.utils.translation import override
 
-from project import tasks
+from project import tasks, views
 
 
 class GeneratedOrdersPdfCleanupTests(SimpleTestCase):
@@ -49,3 +50,26 @@ class GeneratedOrdersPdfCleanupTests(SimpleTestCase):
 
         self.assertEqual(result, 4)
         mock_cleanup.assert_called_once_with(retention_days=5)
+
+    @override_settings(ORDERS_PDF_RETENTION_DAYS=3)
+    def test_notice_uses_configured_retention(self):
+        request = RequestFactory().get("/")
+        with override("en"), patch(
+            "project.views.utils.get_generated_filtered_orders_pdfs", return_value=[]
+        ):
+            response = views.admin_order_list_generated_pdfs.__wrapped__(request)
+        self.assertContains(response, "Generated PDFs older than 3 days")
+        self.assertContains(response, "Download a copy to your computer")
+
+    @override_settings(ORDERS_PDF_RETENTION_DAYS=1)
+    def test_notice_uses_singular_for_one_day(self):
+        request = RequestFactory().get("/")
+        with override("en"), patch(
+            "project.views.utils.get_generated_filtered_orders_pdfs", return_value=[]
+        ):
+            response = views.admin_order_list_generated_pdfs.__wrapped__(request)
+        self.assertContains(response, "Generated PDFs older than 1 day are deleted")
+
+    @override_settings(PENDING_ORDERS_PDF_RETENTION_DAYS=5)
+    def test_retention_uses_legacy_setting(self):
+        self.assertEqual(tasks.get_orders_pdf_retention_days(), 5)
