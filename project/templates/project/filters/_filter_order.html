@@ -61,6 +61,15 @@
           value="{{ request.GET.customer_last_name|default:'' }}"
         >
       </div>
+      <div class="input-select">
+        <label for="id_order_seed_application">{% trans "Order seed application" %}</label>
+        <select id="id_order_seed_application" name="order_seed_application">
+          <option value="">{% trans "All applications" %}</option>
+          {% for application in seed_application %}
+            <option value="{{ application.pk }}" {% if request.GET.order_seed_application == application.pk|stringformat:"s" %}selected{% endif %}>{{ application.seed_application }}</option>
+          {% endfor %}
+        </select>
+      </div>
     </fieldset>
 
     <fieldset>

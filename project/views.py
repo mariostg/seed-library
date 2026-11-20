@@ -20,7 +20,7 @@ from django.core.serializers.json import DjangoJSONEncoder
 from django.db import IntegrityError, transaction
 from django.db.models import Count, RestrictedError, Sum
 from django.db.utils import IntegrityError as DbIntegrityError
-from django.http import FileResponse, HttpResponse, JsonResponse
+from django.http import FileResponse, HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.utils import timezone
@@ -5216,7 +5216,7 @@ def admin_order_confirm_shipped(request, pk):
 def admin_order_management_page(request):
     """Display orders placed by customers for management purposes. Includes pagination and order status filtering."""
     orders = (
-        models.Order.objects.select_related("customer")
+        models.Order.objects.select_related("customer__application")
         .prefetch_related("items__plant_profile")
         .annotate(
             orderitem_count=Count("items", distinct=True),
@@ -5234,10 +5234,15 @@ def admin_order_management_page(request):
     sanitized_params = request.GET.copy()
 
     order_filter = filters.OrderFilter(sanitized_params, queryset=orders)
+    try:
+        order_filter.validate_order_seed_application()
+    except ValueError:
+        return HttpResponseBadRequest(_("Invalid order seed application."))
     filtered_orders = order_filter.qs
 
     order_count = filtered_orders.count()
     order_status_choices = models.Order.ORDER_STATUS_CHOICES
+    seed_application = models.OrderSeedApplication.objects.all()
 
     # Preserve active filter query parameters in pagination links.
     query_params = request.GET.copy()
@@ -5257,6 +5262,7 @@ def admin_order_management_page(request):
         "query_string": query_string,
         "url_name": "admin-order-management-page",
         "order_count": order_count,
+        "seed_application": seed_application,
     }
     return render(request, "project/admin/admin-order-management-page.html", context)
 
@@ -5341,6 +5347,11 @@ def admin_customers_in_touch_page(request):
 @group_required("Shop Manager")
 def admin_order_filtered_to_pdf(request):
     """Queue generation of filtered-orders PDF and return to order management page."""
+    order_filter = filters.OrderFilter(request.GET, queryset=models.Order.objects.all())
+    try:
+        order_filter.validate_order_seed_application()
+    except ValueError:
+        return HttpResponseBadRequest(_("Invalid order seed application."))
     task = generate_filtered_orders_pdf_task.delay(
         filter_params=request.GET.dict(),
         generated_by_user_id=request.user.id,

@@ -543,6 +543,15 @@ class OrderFilter(django_filters.FilterSet):
         lookup_expr="icontains",
     )
 
+    order_seed_application = django_filters.ModelChoiceFilter(
+        field_name="customer__application",
+        queryset=models.OrderSeedApplication.objects.all(),
+    )
+
+    def validate_order_seed_application(self):
+        if "order_seed_application" in self.form.errors:
+            raise ValueError("Invalid order seed application filter")
+
     # filter for an order date range, using the order_date field
     order_date_after = django_filters.DateFilter(
         field_name="order_date",

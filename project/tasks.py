@@ -96,6 +96,7 @@ def _build_filtered_orders_queryset(filter_params):
         orders = orders.filter(pdf_generated_at__isnull=True)
 
     order_filter = OrderFilter(filter_params, queryset=orders)
+    order_filter.validate_order_seed_application()
     return order_filter.qs
 
 
